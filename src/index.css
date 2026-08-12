@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* Floating badge animation for the landing hero mockup */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@layer components {
+  /* Speak Button inside html body */
+  .speak-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.2rem 0.6rem;
+    background-color: rgba(122, 30, 43, 0.08);
+    border: 1px solid rgba(122, 30, 43, 0.25);
+    color: #7A1E2B;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    font-family: monospace;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .speak-btn:hover {
+    background-color: #7A1E2B;
+    color: #ffffff;
+  }
+
+  .speak-btn svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: currentColor;
+  }
+
+  /* Hungarian word emphasis */
+  .hu-word {
+    font-family: monospace;
+    font-weight: 700;
+    color: #7A1E2B;
+  }
+
+  /* Conjugation Tables */
+  table.conj {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid #D9CBB0;
+    font-size: 0.85rem;
+  }
+
+  table.conj th {
+    background-color: #F6EFE4;
+    color: #57121C;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #D9CBB0;
+    font-family: monospace;
+  }
+
+  table.conj td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba(217, 203, 176, 0.5);
+    color: #2A2320;
+  }
+
+  table.conj tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Tick Lists */
+  ul.tick {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    space-y: 0.5rem;
+  }
+
+  ul.tick li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  ul.tick li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #2C5F58;
+    font-weight: 900;
+  }
+
+  /* Grid 2 Column */
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Task Lists */
+  ol.tasklist {
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  ol.tasklist li {
+    margin-bottom: 0.375rem;
+    font-size: 0.9rem;
+  }
+
+  /* Notes & Tasks */
+  .note {
+    background-color: rgba(44, 95, 88, 0.1);
+    border-left: 4px solid #2C5F58;
+    padding: 0.75rem 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: 0.85rem;
+    color: #1B4540;
+    margin-top: 0.75rem;
+  }
+
+  .warn {
+    background-color: rgba(194, 75, 58, 0.1);
+    border-left: 4px solid #C24B3A;
+    padding: 0.75rem 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: 0.85rem;
+    color: #8C291B;
+    margin-top: 0.75rem;
+  }
+
+  .task {
+    background-color: rgba(185, 138, 43, 0.15);
+    border-left: 4px solid #B98A2B;
+    padding: 0.75rem 1rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: 0.85rem;
+    color: #57121C;
+    font-weight: 600;
+    margin-top: 0.75rem;
+  }
+}

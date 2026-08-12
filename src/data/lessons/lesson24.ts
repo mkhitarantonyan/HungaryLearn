@@ -1,0 +1,181 @@
+import { Lesson } from '../../types';
+
+export const LESSON_24: Lesson = {
+  id: 24,
+  number: 24,
+  level: 'B1',
+  title: 'Урок 24 · Összetett mondatok',
+  subtitle: 'Сложные предложения и союзы',
+  description: 'Сочинительные и подчинительные союзы (és, de, vagy, ezért, mert, hogy, bár, ha), порядок слов и пунктуация (запятая перед союзами обязательна!).',
+  slidesCount: 11,
+  slides: [
+    {
+      id: 1,
+      eyebrow: "УРОК 24 · 1/11 · ВВЕДЕНИЕ",
+      title: "Összetett mondatok",
+      subtitle: "Связываем мысли в единую речь",
+      body: `
+   <p>Чтобы говорить красиво на уровне B1, мало простых предложений — нужно уметь связывать их в логические цепочки: «я не пришёл, <b>потому что</b> болел», «он сказал, <b>что</b> приедет», «мы пошли, <b>хотя</b> шёл дождь». В этом уроке разберём главные союзы и правила их употребления.</p>
+   <div class="note"><b>Главное правило пунктуации:</b> В венгерском языке перед ВСЕМИ подчинительными союзами (hogy, mert, ha, bár...) и большинством сочинительных (de, ezért, így...) <b>всегда ставится запятая</b>!</div>
+ `
+    },
+    {
+      id: 2,
+      eyebrow: "УРОК 24 · 2/11 · СОЧИНИТЕЛЬНЫЕ СОЮЗЫ",
+      title: "Mellérendelő kötőszavak",
+      subtitle: "Союзы, связывающие равноправные части",
+      body: `
+   <table class="conj">
+     <tr><th>Союз</th><th>Значение</th><th>Пример</th></tr>
+     <tr><td><button class="speak-btn" data-speak-text="és / s" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> és / s</button></td><td>и / а</td><td><button class="speak-btn" data-speak-text="Péter tanul, én pedig olvasok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter tanul, én pedig olvasok.</button></td></tr>
+     <tr><td><button class="speak-btn" data-speak-text="de" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> de</button></td><td>но / однако</td><td><button class="speak-btn" data-speak-text="Szeretnék menni, de nincs időm." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretnék menni, de nincs időm.</button></td></tr>
+     <tr><td><button class="speak-btn" data-speak-text="vagy" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vagy</button></td><td>или</td><td><button class="speak-btn" data-speak-text="Kávét kérsz, vagy teát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Kávét kérsz, vagy teát?</button></td></tr>
+     <tr><td><button class="speak-btn" data-speak-text="ezért" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ezért</button></td><td>поэтому</td><td><button class="speak-btn" data-speak-text="Esik az eső, ezért itthon maradunk." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Esik az eső, ezért itthon maradunk.</button></td></tr>
+     <tr><td><button class="speak-btn" data-speak-text="így" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> így</button></td><td>так что / таким образом</td><td><button class="speak-btn" data-speak-text="Kész vagyok, így elmehetek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Kész vagyok, így elmehetek.</button></td></tr>
+   </table>
+ `
+    },
+    {
+      id: 3,
+      eyebrow: "УРОК 24 · 3/11 · МЕРТ",
+      title: "Alárendelő kötőszavak: mert",
+      subtitle: "Причинный союз mert — «потому что»",
+      body: `
+   <p><span class="hu-word">mert</span> вводит причину действия («потому что» / «так как»):</p>
+   <p><button class="speak-btn" data-speak-text="Nem jöttem, mert beteg voltam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem jöttem, mert beteg voltam.</button> <span style="color:#8a7a68">(Я не пришёл, потому что был болен)</span></p>
+   <p><button class="speak-btn" data-speak-text="Azért tanulok magyarul, mert Budapesten élek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért tanulok magyarul, mert Budapesten élek.</button> <span style="color:#8a7a68">(Я учился венгерскому потому, что живу в Будапеште)</span></p>
+   <div class="note">Парная конструкция <span class="hu-word">azért..., mert...</span> («потому..., что...») делает акцент на причине ещё более упругим и четким.</div>
+ `
+    },
+    {
+      id: 4,
+      eyebrow: "УРОК 24 · 4/11 · ХОДЬ",
+      title: "Alárendelő kötőszavak: hogy",
+      subtitle: "Изъяснительный и целевой союз hogy — «что» / «чтобы»",
+      body: `
+   <p><span class="hu-word">hogy</span> имеет два основных значения в зависимости от контекста и наклонения глагола:</p>
+   <p><b>1. «что» (с изъявительным наклонением)</b> — передаёт мысли, слова, факты:</p>
+   <p><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hogy itt vagy.</button> <span style="color:#8a7a68">(Знаю, что ты здесь)</span></p>
+   <p><button class="speak-btn" data-speak-text="Azt mondta, hogy holnap jön." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt mondta, hogy holnap jön.</button> <span style="color:#8a7a68">(Он сказал, что придёт завтра)</span></p>
+   <p><b>2. «чтобы» (с повелительным наклонением из 22-го урока!)</b> — передаёт цель или приказ:</p>
+   <p><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért jöttem, hogy segítsek.</button> <span style="color:#8a7a68">(Я пришёл [для того], чтобы помочь — segítsek = повелительное наклонение 1-го лица!)</span></p>
+   <div class="warn"><b>Критическое правило:</b> В значении «чтобы» глагол в придаточном предложении ОБЯЗАТЕЛЬНО ставится в повелительное наклонение (felszólító mód)! Инфинитив, как в русском «чтобы помочь», тут использовать нельзя.</div>
+ `
+    },
+    {
+      id: 5,
+      eyebrow: "УРОК 24 · 5/11 · БАР И ХА",
+      title: "Alárendelő kötőszavak: bár / ha",
+      subtitle: "Уступительный bár («хотя») и условный ha («если»)",
+      body: `
+   <p><span class="hu-word">bár / habár</span> — «хотя / несмотря на то что»:</p>
+   <p><button class="speak-btn" data-speak-text="Elmentem, bár fáradt voltam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Elmentem, bár fáradt voltam.</button> <span style="color:#8a7a68">(Я пошёл, хотя был уставшим)</span></p>
+   <p><span class="hu-word">ha</span> — «если» (реальное или гипотетическое условие):</p>
+   <p><button class="speak-btn" data-speak-text="Ha ráérsz, gyere át!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ha ráérsz, gyere át!</button> <span style="color:#8a7a68">(Если свободен, приходи ко мне!)</span></p>
+ `
+    },
+    {
+      id: 6,
+      eyebrow: "УРОК 24 · 6/11 · ПОРЯДОК СЛОВ",
+      title: "Szórend összetett mondatokban",
+      subtitle: "Как ведут себя глагольные приставки в придаточных",
+      body: `
+   <p>В придаточных предложениях порядок слов остаётся стандартным, но если придаточное начинается с вопросительного слова или отрицания, глагольная приставка отделяется (вспомните 14-й урок):</p>
+   <p><button class="speak-btn" data-speak-text="Tudom, hol van a bolt." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hol van a bolt.</button></p>
+   <p><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt mondta, hogy nem jön el.</button> <span style="color:#8a7a68">(nem оторвало el от jön)</span></p>
+ `
+    },
+    {
+      id: 7,
+      eyebrow: "УРОК 24 · 7/11 · ПРАКТИКА",
+      title: "Gyakorló mondatok",
+      subtitle: "Тренировка союзов",
+      body: `
+   <p><button class="speak-btn" data-speak-text="Nem mentem dolgozni, mert beteg voltam, ezért itthon maradtam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem mentem dolgozni, mert beteg voltam, ezért itthon maradtam.</button> <span style="color:#8a7a68">(Я не пошёл работать, потому что был болен, поэтому остался дома)</span></p>
+   <p><button class="speak-btn" data-speak-text="Azt akarom, hogy sokat tanulj." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt akarom, hogy sokat tanulj.</button> <span style="color:#8a7a68">(Я хочу, чтобы ты много учился — hogy + повелительное tanulj!)</span></p>
+ `
+    },
+    {
+      id: 8,
+      eyebrow: "УРОК 24 · 8/11 · ДИАЛОГ",
+      title: "Párbeszéd",
+      subtitle: "Объяснение причин",
+      body: `
+   <p><b>A:</b> <button class="speak-btn" data-speak-text="Miért nem jöttél tegnap a buliba?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Miért nem jöttél tegnap a buliba?</button></p>
+   <p><b>B:</b> <button class="speak-btn" data-speak-text="Azért nem mentem, mert sokat kellett tanulnom, hogy átmenjek a vizsgán." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért nem mentem, mert sokat kellett tanulnom, hogy átmenjek a vizsgán.</button></p>
+   <p><b>A:</b> <button class="speak-btn" data-speak-text="Értem. És sikerült a vizsga?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Értem. És sikerült a vizsga?</button></p>
+   <p><b>B:</b> <button class="speak-btn" data-speak-text="Igen, sikerült, így most nagyon boldog vagyok!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Igen, sikerült, így most nagyon boldog vagyok!</button></p>
+   <div class="task">Задание 1. Найдите все союзы в диалоге (mert, hogy, így) и объясните роль каждого.</div>
+ `
+    },
+    {
+      id: 9,
+      eyebrow: "УРОК 24 · 9/11 · ЗАДАНИЯ",
+      title: "Gyakorlatok",
+      subtitle: "Проверьте себя",
+      body: `
+   <ol class="tasklist">
+     <li>Соедините два предложения с помощью mert: „Nem jöttem“ + „Sok dolgom volt“</li>
+     <li>Соедините с помощью ezért: „Esik az eső“ + „Nem megyünk ki“</li>
+     <li>Переведите: «Он пришёл, чтобы помочь» (помните про hogy + повелительное наклонение!)</li>
+     <li>Переведите: «Я знаю, что ты здесь»</li>
+     <li>Составьте сложное предложение с 2 союзами (например, mert и ezért)</li>
+   </ol>
+ `
+    },
+    {
+      id: 10,
+      eyebrow: "УРОК 24 · 10/11 · СВЯЗЬ С ДРУГИМИ ТЕМАМИ",
+      title: "Előretekintés",
+      subtitle: "Что дальше",
+      body: `
+   <p>Теперь вы умеете свободно строить сложные предложения. В следующих 4 уроках (25-28) мы перейдём к лексическому обогащению речи уровня B1: работа и карьера (25-й), здоровье и врач (26-й), путешествия и транспорт (27-й) и итоговое повторение всей грамматики (28-й).</p>
+ `
+    },
+    {
+      id: 11,
+      eyebrow: "УРОК 24 · 11/11 · ИТОГИ",
+      title: "Összefoglalás",
+      subtitle: "Итоги 24-го урока",
+      body: `
+   <ul class="tick">
+     <li>Запятая перед союзами обязательна практически всегда</li>
+     <li>Сочинительные: és, de, vagy, ezért (поэтому), így (так что)</li>
+     <li>mert — «потому что» (причина)</li>
+     <li>hogy + изъявительное = «что», hogy + повелительное = «чтобы»</li>
+     <li>bár = «хотя», ha = «если»</li>
+   </ul>
+   <div class="note"><b>Домашнее задание.</b> Напишите мини-рассказ из 6 сложных предложений с союзами mert, hogy, de, ezért, bár, ha.</div>
+ `
+    }
+  ],
+  vocabulary: [
+    { id: "l24_v1", hu: "ezért", ru: "поэтому", category: "Союзы", exampleSentence: "Esik az eső, ezért nem megyünk." },
+    { id: "l24_v2", hu: "mert", ru: "потому что", category: "Союзы", exampleSentence: "Azért jöttem, mert szeretem." },
+    { id: "l24_v3", hu: "hogy", ru: "что / чтобы", category: "Союзы", exampleSentence: "Tudom, hogy itt vagy." },
+    { id: "l24_v4", hu: "bár", ru: "хотя", category: "Союзы", exampleSentence: "Elmegyek, bár fáradt vagyok." }
+  ],
+  quiz: [
+    {
+      id: 2401,
+      question: "Какая форма наклонения глагола требуется после союза hogy в значении «чтобы»?",
+      options: ["Повелительное наклонение (felszólító mód)", "Изъявительное настоящее", "Прошедшее время", "Условное наклонение"],
+      correctIndex: 0,
+      explanation: "В значении «чтобы» союз hogy обязательно требует повелительного наклонения (например, Azért jöttem, hogy segítsek)."
+    },
+    {
+      id: 2402,
+      question: "Какое из этих слов означает «поэтому»?",
+      options: ["ezért", "mert", "bár", "hogy"],
+      correctIndex: 0,
+      explanation: "Ezért переводится как «поэтому» (следствие), а mert — «потому что» (причина)."
+    },
+    {
+      id: 2403,
+      question: "Какое главное правило пунктуации в венгерских сложных предложениях?",
+      options: ["Запятая перед союзами почти всегда обязательна", "Запятые вообще не используются", "Запятая ставится только в конце предложения", "Запятая ставится только перед és"],
+      correctIndex: 0,
+      explanation: "В венгерском языке перед большинством союзов (hogy, mert, de, ezért, ha...) запятая ставится обязательно."
+    }
+  ]
+};
