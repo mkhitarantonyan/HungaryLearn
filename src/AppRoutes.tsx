@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import App from './App';
 import LandingPage from './pages/LandingPage';
-import { ProtectedRoute } from './components/ProtectedRoute';
 import AdminGuard from './components/AdminGuard';
 import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -29,15 +28,8 @@ export default function AppRoutes() {
         {/* Public landing page */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Protected lessons page (requires registration/authentication) */}
-        <Route
-          path="/lessons"
-          element={
-            <ProtectedRoute>
-              <App />
-            </ProtectedRoute>
-          }
-        />
+        {/* Protected lessons page — first two lessons are free for anonymous users */}
+        <Route path="/lessons" element={<App />} />
 
         {/* Admin dashboard (requires admin session) */}
         <Route

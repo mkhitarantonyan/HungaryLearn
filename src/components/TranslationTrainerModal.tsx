@@ -5,6 +5,14 @@ import { getLessonTranslations } from '../utils/lessonQuizAndVocab';
 import { SpeechButton } from './SpeechButton';
 import { X, RotateCcw, Check, Languages, ChevronLeft, ChevronRight, ArrowRightLeft } from 'lucide-react';
 
+function normalizeAnswer(value: string): string {
+  return value
+    .trim()
+    .toLocaleLowerCase('hu-HU')
+    .replace(/[.!?,;:]+$/u, '')
+    .replace(/\s+/g, ' ');
+}
+
 interface TranslationTrainerModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -62,12 +70,13 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
   };
 
   const handleCheck = () => {
-    const target = currentCard.targetText.trim().toLowerCase();
-    const input = userInput.trim().toLowerCase();
-    const variants = currentCard.acceptableVariants?.map((v) => v.trim().toLowerCase()) ?? [];
-    const allAcceptable = [target, ...variants];
+    const normalizedUser = normalizeAnswer(userInput);
+    const validAnswers = [
+      currentCard.targetText,
+      ...(currentCard.acceptableVariants ?? []),
+    ].map(normalizeAnswer);
 
-    if (allAcceptable.some((v) => v === input)) {
+    if (validAnswers.includes(normalizedUser)) {
       setFeedback('correct');
     } else {
       setFeedback('wrong');
@@ -240,15 +249,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
             className="flex-1 py-3 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
           >
             <span>Следующая</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={handleNext}
-            aria-label="Следующая карточка"
-            className="p-3 rounded-xl border border-[#D9CBB0] bg-white hover:bg-[#F6EFE4] text-[#2A2320] transition-colors cursor-pointer"
-          >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4 hidden md:inline" />
           </button>
         </div>
       </motion.div>

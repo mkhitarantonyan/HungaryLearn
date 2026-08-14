@@ -16,7 +16,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A0',
     title: 'Урок 2 · Гармония гласных и базовые фразы',
     subtitle: 'Magánhangzó-harmónia, приветствия, знакомство, вопросы',
-    description: 'Фундаментальный закон гармонии гласных (передне- и заднеязычные), приветствия (Szia, Jó napot), знакомство (Hogy hívnak?), местоимения и вопрос Холь?',
+    description: 'Фундаментальный закон гармонии гласных (передне- и заднеязычные), приветствия (Szia, Jó napot), знакомство (Hogy hívnak?), местоимения и вопрос Hol? («где?»)',
     slidesCount: 10
   },
   {
@@ -71,7 +71,7 @@ export const LESSONS_META: LessonMeta[] = [
     title: 'Урок 8 · Притяжательность II и множ. число предметов',
     subtitle: '«Мои / твои / его» предметы (-im, -id, -jai/-jei)',
     description: 'Принадлежность нескольких предметов (мои книги, твои друзья), множественные притяжательные суффиксы и конструкции с несколькими обладателями.',
-    slidesCount: 11
+    slidesCount: 12
   },
   {
     id: 9,
@@ -214,7 +214,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'B1',
     title: 'Урок 24 · Összetett mondatok',
     subtitle: 'Сложные предложения и союзы',
-    description: 'Сочинительные и подчинительные союзы (és, de, vagy, ezért, mert, hogy, bár, ha), порядок слов и пунктуация (запятая перед союзами обязательна!).',
+    description: 'Сочинительные и подчинительные союзы (és, de, vagy, ezért, mert, hogy, bár, ha), порядок слов и пунктуация сложных предложений.',
     slidesCount: 11
   },
   {

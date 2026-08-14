@@ -4,20 +4,19 @@ import { Lesson } from '../types';
 import { getLessonQuiz } from '../utils/lessonQuizAndVocab';
 import { CheckCircle2, XCircle, Award, RotateCcw, ArrowRight, HelpCircle } from 'lucide-react';
 
-interface PronunciationQuizProps {
+interface LessonQuizModalProps {
   onClose: () => void;
   lesson?: Lesson;
   onQuizComplete?: (lessonNumber: number, score: number, total: number) => void;
 }
 
-export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, lesson, onQuizComplete }) => {
+export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesson, onQuizComplete }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  // Reset state when lesson changes
   useEffect(() => {
     setCurrentIdx(0);
     setSelectedOption(null);
@@ -27,11 +26,11 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
   }, [lesson?.id]);
 
   useEffect(() => {
-  if (isCompleted && lesson && onQuizComplete) {
-    const total = getLessonQuiz(lesson).length;
-    onQuizComplete(lesson.number, score, total);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (isCompleted && lesson && onQuizComplete) {
+      const total = getLessonQuiz(lesson).length;
+      onQuizComplete(lesson.number, score, total);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompleted]);
 
   const questions = lesson ? getLessonQuiz(lesson) : [];
@@ -39,8 +38,8 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
   if (questions.length === 0) {
     return (
       <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl text-center">
-        <h3 className="text-xl font-bold font-mono text-[#57121C]">Тест недоступен</h3>
-        <p className="text-sm text-[#8A7A68]">Вопросы для этого урока не сформированы.</p>
+        <h3 className="text-xl font-bold font-mono text-[#57121C]">Тест для этого урока ещё не опубликован</h3>
+        <p className="text-sm text-[#8A7A68]">Вопросы для этого урока пока не добавлены.</p>
         <button
           onClick={onClose}
           className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs md:text-sm cursor-pointer"
@@ -54,7 +53,7 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
   const question = questions[currentIdx % questions.length];
 
   const handleSelect = (idx: number) => {
-    if (selectedOption !== null) return; // Prevent changing after selection
+    if (selectedOption !== null) return;
     setSelectedOption(idx);
     setShowExplanation(true);
     if (idx === question.correctIndex) {
@@ -94,9 +93,9 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
         </p>
 
         <div className="p-4 bg-white rounded-xl border border-[#D9CBB0] text-xs text-[#8A7A68]">
-          {percentage >= 80 
-            ? "Отличный результат! Вы отлично усвоили тему этого урока." 
-            : "Хорошая попытка! Рекомендуем просмотреть слайды ещё раз для закрепления."}
+          {percentage >= 80
+            ? 'Отличный результат! Вы отлично усвоили тему этого урока.'
+            : 'Хорошая попытка! Рекомендуем просмотреть слайды ещё раз для закрепления.'}
         </div>
 
         <div className="flex justify-center gap-3">
@@ -120,7 +119,6 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
 
   return (
     <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl">
-      {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-[#D9CBB0]">
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A1E2B]">
           <HelpCircle className="w-4 h-4" />
@@ -129,22 +127,20 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
         <span className="text-xs font-mono text-[#8A7A68]">Счёт: {score}</span>
       </div>
 
-      {/* Question */}
       <h4 className="text-base md:text-lg font-bold text-[#57121C] font-mono leading-snug">
         {question.question}
       </h4>
 
-      {/* Options */}
       <div className="space-y-2.5">
         {question.options.map((option, idx) => {
-          let btnStyle = "bg-white border-[#D9CBB0] text-[#2A2320] hover:border-[#7A1E2B]/50";
+          let btnStyle = 'bg-white border-[#D9CBB0] text-[#2A2320] hover:border-[#7A1E2B]/50';
           if (selectedOption !== null) {
             if (idx === question.correctIndex) {
-              btnStyle = "bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold";
+              btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold';
             } else if (idx === selectedOption) {
-              btnStyle = "bg-red-50 border-red-400 text-red-800";
+              btnStyle = 'bg-red-50 border-red-400 text-red-800';
             } else {
-              btnStyle = "bg-white/50 border-gray-200 text-gray-400 opacity-60";
+              btnStyle = 'bg-white/50 border-gray-200 text-gray-400 opacity-60';
             }
           }
 
@@ -167,7 +163,6 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
         })}
       </div>
 
-      {/* Explanation & Next */}
       {showExplanation && (
         <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="space-y-3 pt-2">
           <div className="p-3.5 rounded-xl bg-[#2C5F58]/10 border border-[#2C5F58]/30 text-xs text-[#2C5F58] leading-relaxed">
@@ -178,7 +173,7 @@ export const PronunciationQuiz: React.FC<PronunciationQuizProps> = ({ onClose, l
             onClick={handleNext}
             className="w-full py-3 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs md:text-sm hover:bg-[#57121C] transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>{currentIdx + 1 < questions.length ? "Следующий вопрос" : "Посмотреть результаты"}</span>
+            <span>{currentIdx + 1 < questions.length ? 'Следующий вопрос' : 'Посмотреть результаты'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>

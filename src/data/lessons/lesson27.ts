@@ -27,7 +27,7 @@ export const LESSON_27: Lesson = {
    <p>Для поездки на транспорте используется творительный падеж <span class="hu-word">-val / -vel</span> (вспомните 16-й урок):</p>
    <table class="conj">
      <tr><th>Транспорт</th><th>«Ехать на...»</th></tr>
-     <tr><td>busz (автобус)</td><td><button class="speak-btn" data-speak-text="buszzal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> buszzal</button> <span class="pron">(ассимиляция v→z!)</span></td></tr>
+     <tr><td>busz (автобус)</td><td><button class="speak-btn" data-speak-text="busszal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> busszal</button> <span class="pron">(ассимиляция v→z!)</span></td></tr>
      <tr><td>vonat (поезд)</td><td><button class="speak-btn" data-speak-text="vonattal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vonattal</button> <span class="pron">(ассимиляция v→t!)</span></td></tr>
      <tr><td>villamos (трамвай)</td><td><button class="speak-btn" data-speak-text="villamossal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> villamossal</button></td></tr>
      <tr><td>repülő (самолёт)</td><td><button class="speak-btn" data-speak-text="repülővel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> repülővel</button></td></tr>
@@ -65,7 +65,7 @@ export const LESSON_27: Lesson = {
       body: `
    <p><button class="speak-btn" data-speak-text="Egy jegyet kérek Budapestre." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy jegyet kérek Budapestre.</button> <span style="color:#8a7a68">(Один билет в Будапешт, пожалуйста)</span></p>
    <p><button class="speak-btn" data-speak-text="Egy útra vagy retúr?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy útra vagy retúr?</button> <span style="color:#8a7a68">(В одну сторону или туда-обратно?)</span></p>
-   <p><button class="speak-btn" data-speak-text="Retúr jegyet kérek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Retúr jegyet kérek.</button> <span style="color:#8a7a68">(Билет туда и обратно)</span></p>
+   <p><button class="speak-btn" data-speak-text="Retúrjegyet kérek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Retúr jegyet kérek.</button> <span style="color:#8a7a68">(Билет туда и обратно)</span></p>
  `
     },
     {
@@ -145,8 +145,8 @@ export const LESSON_27: Lesson = {
       subtitle: "Итоги 27-го урока",
       body: `
    <ul class="tick">
-     <li>Транспорт: buszzal, vonattal, repülővel, metróval, gyalog</li>
-     <li>Касса: egy útra (в одну сторону) / retúr (туда-обратно)</li>
+     <li>Транспорт: busszal, vonattal, repülővel, metróval, gyalog</li>
+     <li>Касса: egy útra (в одну сторону) / retúrjegy (туда-обратно; также menettérti jegy — более формальный вариант)</li>
      <li>Отель: szobát foglalni, éjszakára (на скольких ночей)</li>
      <li>Ориентация: menjen egyenesen, forduljon jobbra/balra</li>
    </ul>
@@ -164,16 +164,16 @@ export const LESSON_27: Lesson = {
     {
       id: 2701,
       question: "Как по-венгерски сказать «на автобусе»?",
-      options: ["buszzal", "buszban", "buszon", "buszra"],
+      options: ["busszal", "buszban", "buszon", "buszra"],
       correctIndex: 0,
-      explanation: "Для транспорта используется творительный падеж -val / -vel (с ассимиляцией v->z): buszzal."
+      explanation: "busz + -val → busszal: конечный z сохраняется и удваивается, а v ассимилируется."
     },
     {
       id: 2702,
       question: "Какое выражение означает билет «туда и обратно»?",
-      options: ["retúr jegy", "egy útra jegy", "olcsó jegy", "diákjegy"],
+      options: ["retúrjegy", "egy útra jegy", "olcsó jegy", "diákjegy"],
       correctIndex: 0,
-      explanation: "Билет туда-обратно называется retúr jegy."
+      explanation: "Билет туда-обратно называется retúrjegy (menettérti jegy — более формальный вариант)."
     },
     {
       id: 2703,

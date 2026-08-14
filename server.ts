@@ -12,6 +12,8 @@ import { verifyAdminCredentials } from './src/utils/adminAuth';
 import { mergeCompletedSlides } from './src/utils/progressMerge';
 import { isSubscriptionValid } from './src/utils/subscriptionValidity';
 import { isValidAdminSession as isValidAdminSessionPure } from './src/utils/adminSessions';
+import { gradeCard } from './src/utils/spacedRepetition';
+import type { ReviewGrade } from './src/types';
 
 dotenv.config();
 
@@ -45,7 +47,7 @@ interface StudentUser {
   email: string;
   passwordHash: string;
   createdAt: string;
-  subscriptionStatus: 'trial' | 'active' | 'canceled';
+  subscriptionStatus: 'trial' | 'active' | 'past_due' | 'canceled' | 'incomplete' | 'unpaid';
   subscriptionEnd?: string;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
@@ -111,6 +113,12 @@ interface WordOverrideEntry {
   updatedAt: string;
 }
 
+interface ProcessedStripeEvent {
+  eventId: string;
+  type: string;
+  processedAt: string;
+}
+
 interface DatabaseSchema {
   users: StudentUser[];
   userSessions: UserSessionData[];
@@ -118,7 +126,12 @@ interface DatabaseSchema {
   userProgress: StudentProgress[];
   audioOverrides?: AudioOverrideEntry[];
   wordOverrides?: WordOverrideEntry[];
+  processedStripeEvents?: ProcessedStripeEvent[];
 }
+
+const processedStripeEventIds = new Map<string, ProcessedStripeEvent>();
+const LESSON_COUNT = 28;
+const QUIZ_PASS_THRESHOLD = 0.8;
 
 function ensureDbDir() {
   if (!fs.existsSync(DB_DIR)) {
@@ -169,6 +182,7 @@ function loadDatabase() {
     userProgressMap.clear();
     audioOverridesMap.clear();
     wordOverridesMap.clear();
+    processedStripeEventIds.clear();
 
     if (Array.isArray(data.users)) {
       data.users.forEach((u) => {
@@ -191,7 +205,10 @@ function loadDatabase() {
     if (Array.isArray(data.wordOverrides)) {
       data.wordOverrides.forEach((e) => wordOverridesMap.set(e.key, e));
     }
-    console.log(`[Persistence] Restored ${registeredUsersMap.size} users, ${activeUserSessions.size} sessions, ${userProgressMap.size} progress entries, ${audioOverridesMap.size} audio overrides, ${wordOverridesMap.size} word overrides from ${DB_FILE}`);
+    if (Array.isArray(data.processedStripeEvents)) {
+      data.processedStripeEvents.forEach((e) => processedStripeEventIds.set(e.eventId, e));
+    }
+    console.log(`[Persistence] Restored ${registeredUsersMap.size} users, ${activeUserSessions.size} sessions, ${userProgressMap.size} progress entries, ${audioOverridesMap.size} audio overrides, ${wordOverridesMap.size} word overrides, ${processedStripeEventIds.size} Stripe events from ${DB_FILE}`);
   } catch (err) {
     console.error("[Persistence] Failed to parse db.json:", err);
   }
@@ -222,6 +239,7 @@ function saveDatabase() {
       userProgress: Array.from(userProgressMap.values()),
       audioOverrides: Array.from(audioOverridesMap.values()),
       wordOverrides: Array.from(wordOverridesMap.values()),
+      processedStripeEvents: Array.from(processedStripeEventIds.values()),
     };
 
     // Atomic write: write to a temp file first, then rename over the real file.
@@ -286,8 +304,28 @@ function persistAudioDataUrl(keys: string[], dataUrl: string): { ok: boolean; ur
       return { ok: false, error: 'Пустой аудиофайл' };
     }
 
+    const allowed = new Map<string, string>([
+      ['audio/mpeg', '.mp3'],
+      ['audio/mp3', '.mp3'],
+      ['audio/wav', '.wav'],
+      ['audio/x-wav', '.wav'],
+      ['audio/webm', '.webm'],
+      ['audio/ogg', '.ogg'],
+      ['audio/mp4', '.m4a'],
+      ['audio/x-m4a', '.m4a'],
+    ]);
+    const extension = allowed.get(mimeType);
+    if (!extension) {
+      return { ok: false, error: 'Поддерживаются только MP3, WAV, WebM, OGG и M4A' };
+    }
+
+    const MAX_AUDIO_BYTES = 10 * 1024 * 1024;
+    if (buffer.length > MAX_AUDIO_BYTES) {
+      return { ok: false, error: 'Аудиофайл слишком большой (макс. 10 МБ)' };
+    }
+
     ensureAudioDir();
-    const fileName = `${crypto.randomUUID()}${extForMime(mimeType)}`;
+    const fileName = `${crypto.randomUUID()}${extension}`;
     fs.writeFileSync(path.join(AUDIO_DIR, fileName), buffer);
 
     const now = new Date().toISOString();
@@ -415,6 +453,10 @@ function countDueCardsFromProgress(
 }
 
 async function startServer() {
+  if (process.env.NODE_ENV === 'production' && !process.env.ADMIN_PASSWORD_HASH?.trim()) {
+    throw new Error('ADMIN_PASSWORD_HASH is required in production');
+  }
+
   // Load persisted database records from disk on startup
   loadDatabase();
 
@@ -468,6 +510,18 @@ async function startServer() {
       user.subscriptionEnd = nextMonth.toISOString();
     };
 
+    const markStripeEventProcessed = (event: Stripe.Event): void => {
+      processedStripeEventIds.set(event.id, {
+        eventId: event.id,
+        type: event.type,
+        processedAt: new Date().toISOString(),
+      });
+    };
+
+    if (processedStripeEventIds.has(event.id)) {
+      return res.json({ received: true, duplicate: true });
+    }
+
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       const userId = session.client_reference_id;
@@ -482,22 +536,31 @@ async function startServer() {
       }
 
       if (userToUpgrade) {
-        extendSubscriptionEnd(userToUpgrade);
         const customerId = getStripeCustomerId(session.customer);
         if (customerId) userToUpgrade.stripeCustomerId = customerId;
-        if (typeof session.subscription === 'string') {
-          userToUpgrade.stripeSubscriptionId = session.subscription;
+        const subscriptionId = typeof session.subscription === 'string' ? session.subscription : null;
+        if (subscriptionId) userToUpgrade.stripeSubscriptionId = subscriptionId;
+
+        if (subscriptionId) {
+          try {
+            const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+            userToUpgrade.subscriptionStatus = 'active';
+            userToUpgrade.subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
+          } catch (err) {
+            console.error('[Stripe Webhook] Failed to retrieve subscription for checkout.session.completed:', err);
+            extendSubscriptionEnd(userToUpgrade);
+          }
+        } else {
+          extendSubscriptionEnd(userToUpgrade);
         }
 
         registeredUsersMap.set(userToUpgrade.email, userToUpgrade);
         usersByIdMap.set(userToUpgrade.id, userToUpgrade);
         saveDatabase();
+        markStripeEventProcessed(event);
         console.log(`[Stripe Webhook] Успешно активирована подписка для ${userToUpgrade.email}`);
       }
-    }
-
-    // Subscription canceled / not renewed
-    if (event.type === 'customer.subscription.deleted') {
+    } else if (event.type === 'customer.subscription.deleted') {
       const subscription = event.data.object as Stripe.Subscription;
       const user = findUserByStripeCustomerId(getStripeCustomerId(subscription.customer));
       if (user) {
@@ -506,44 +569,57 @@ async function startServer() {
         registeredUsersMap.set(user.email, user);
         usersByIdMap.set(user.id, user);
         saveDatabase();
+        markStripeEventProcessed(event);
         console.log(`[Stripe Webhook] Подписка отменена для ${user.email}`);
       }
-    }
-
-    // Recurring payment succeeded — extend the active subscription
-    if (event.type === 'invoice.payment_succeeded') {
+    } else if (event.type === 'invoice.payment_succeeded') {
       const invoice = event.data.object as Stripe.Invoice;
-      if (invoice.billing_reason === 'subscription_create' || invoice.billing_reason === 'subscription_cycle') {
+      if (invoice.billing_reason === 'subscription_cycle') {
         const user = findUserByStripeCustomerId(getStripeCustomerId(invoice.customer));
         if (user) {
-          extendSubscriptionEnd(user);
+          const periodEnd = invoice.lines?.data?.[0]?.period?.end;
+          if (periodEnd) {
+            user.subscriptionStatus = 'active';
+            user.subscriptionEnd = new Date(periodEnd * 1000).toISOString();
+          } else {
+            extendSubscriptionEnd(user);
+          }
           registeredUsersMap.set(user.email, user);
           usersByIdMap.set(user.id, user);
           saveDatabase();
+          markStripeEventProcessed(event);
           console.log(`[Stripe Webhook] Платёж подтверждён — подписка продлена для ${user.email}`);
         }
       }
-    }
-
-    // Payment failed — revoke access so subscription expires
-    if (event.type === 'invoice.payment_failed') {
+    } else if (event.type === 'invoice.payment_failed') {
       const invoice = event.data.object as Stripe.Invoice;
       const user = findUserByStripeCustomerId(getStripeCustomerId(invoice.customer));
       if (user) {
-        user.subscriptionStatus = 'canceled';
-        user.subscriptionEnd = new Date().toISOString();
+        user.subscriptionStatus = 'past_due';
         registeredUsersMap.set(user.email, user);
         usersByIdMap.set(user.id, user);
         saveDatabase();
-        console.log(`[Stripe Webhook] Платёж не прошёл — подписка отключена для ${user.email}`);
+        markStripeEventProcessed(event);
+        console.log(`[Stripe Webhook] Платёж не прошёл — подписка past_due для ${user.email}`);
       }
     }
 
     return res.json({ received: true });
   });
 
-  app.use(express.json({ limit: '50mb' }));
+  app.use(express.json({ limit: '512kb' }));
   app.use(cookieParser());
+
+  app.use((_req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Permissions-Policy', 'microphone=(self)');
+    if (process.env.NODE_ENV === 'production') {
+      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    next();
+  });
 
   // Rate limiter for admin login endpoint to prevent brute-force attacks
   const loginLimiter = rateLimit({
@@ -810,7 +886,6 @@ async function startServer() {
     return res.json({ success: true, progress });
   });
 
-  // Save user progress
   app.post("/api/user/progress", (req, res) => {
     const token = getUserTokenFromReq(req);
     const user = getUserFromSessionToken(token);
@@ -826,34 +901,53 @@ async function startServer() {
       });
     }
 
-    const { viewedSlides, reviewCards, customNotes, passedQuizLessonNumber } = req.body || {};
+    const { viewedSlides, customNotes, quiz, passedQuizLessonNumber } = req.body || {};
+    if (typeof passedQuizLessonNumber === 'number') {
+      return res.status(400).json({
+        success: false,
+        message: 'Используйте quiz: { lessonNumber, score, total } вместо passedQuizLessonNumber',
+      });
+    }
+
     const existing = userProgressMap.get(user.id);
     const incomingSlides = Array.isArray(viewedSlides) ? viewedSlides : [];
-
     const mergedSlides = mergeCompletedSlides(existing?.viewedSlides ?? [], incomingSlides);
 
-    const mergedQuizzes = typeof passedQuizLessonNumber === 'number'
-      ? Array.from(new Set([...(existing?.passedQuizzes ?? []), passedQuizLessonNumber]))
-      : (existing?.passedQuizzes ?? []);
+    let mergedQuizzes = existing?.passedQuizzes ?? [];
+
+    if (quiz && typeof quiz === 'object') {
+      const { lessonNumber, score, total } = quiz;
+      const lessonExists = typeof lessonNumber === 'number'
+        && lessonNumber >= 1
+        && lessonNumber <= LESSON_COUNT;
+
+      if (!lessonExists) {
+        return res.status(400).json({ success: false, message: 'Неизвестный урок' });
+      }
+
+      if (
+        typeof score === 'number' &&
+        typeof total === 'number' &&
+        total > 0 &&
+        score >= 0 &&
+        score <= total &&
+        score / total >= QUIZ_PASS_THRESHOLD
+      ) {
+        mergedQuizzes = Array.from(new Set([...mergedQuizzes, lessonNumber]));
+      }
+    }
 
     const progress: StudentProgress = {
       userId: user.id,
       viewedSlides: mergedSlides,
       passedQuizzes: mergedQuizzes,
-      reviewCards:
-        reviewCards && typeof reviewCards === 'object'
-          ? (reviewCards as Record<string, ReviewCardState>)
-          : existing?.reviewCards,
-      customNotes:
-        typeof customNotes === 'string'
-          ? customNotes
-          : existing?.customNotes,
+      reviewCards: existing?.reviewCards,
+      customNotes: typeof customNotes === 'string' ? customNotes : existing?.customNotes,
       updatedAt: new Date().toISOString(),
     };
 
     userProgressMap.set(user.id, progress);
     saveDatabase();
-
     return res.json({ success: true, progress });
   });
 
@@ -865,21 +959,30 @@ async function startServer() {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
     }
 
-    const { cardId, newState } = req.body as {
+    const { cardId, grade } = req.body as {
       cardId?: string;
-      newState?: ReviewCardState;
+      grade?: ReviewGrade;
     };
 
-    if (!cardId || !newState) {
-      return res.status(400).json({ success: false, message: 'cardId и newState обязательны' });
+    if (!cardId || !grade) {
+      return res.status(400).json({ success: false, message: 'cardId и grade обязательны' });
+    }
+
+    const validGrades: ReviewGrade[] = ['again', 'hard', 'good', 'easy'];
+    if (!validGrades.includes(grade)) {
+      return res.status(400).json({ success: false, message: 'Недопустимое значение grade' });
     }
 
     const existing = userProgressMap.get(user.id);
-    const reviewCards: Record<string, ReviewCardState> = {
-      ...(existing?.reviewCards ?? {}),
-      [cardId]: newState,
-    };
+    const existingCards = existing?.reviewCards ?? {};
+    const existingState = existingCards[cardId];
 
+    if (!existingState) {
+      return res.status(400).json({ success: false, message: 'Карточка не найдена' });
+    }
+
+    const nextState = gradeCard(existingState, grade);
+    const reviewCards = { ...existingCards, [cardId]: nextState };
     const progress: StudentProgress = {
       userId: user.id,
       viewedSlides: existing?.viewedSlides ?? [],
@@ -892,7 +995,7 @@ async function startServer() {
     userProgressMap.set(user.id, progress);
     saveDatabaseSoon();
 
-    return res.json({ success: true });
+    return res.json({ success: true, nextState });
   });
 
   app.get("/api/user/review/due-count", (req, res) => {
@@ -978,11 +1081,10 @@ async function startServer() {
         url: session.url,
       });
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      console.error('Stripe Checkout Error:', err);
+      console.error('[Stripe Checkout Error]', err);
       return res.status(500).json({
         success: false,
-        message: 'Ошибка при создании платежной сессии Stripe: ' + message,
+        message: 'Не удалось создать платёжную сессию. Попробуйте ещё раз.',
       });
     }
   });
@@ -1056,7 +1158,7 @@ async function startServer() {
   });
 
   // Admin: upload audio under one or more keys (e.g. all slide candidate keys)
-  app.post("/api/admin/audio", (req, res) => {
+  app.post("/api/admin/audio", express.json({ limit: '10mb' }), (req, res) => {
     if (!isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
@@ -1186,7 +1288,7 @@ async function startServer() {
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://0.0.0.0:${PORT}`);
-    if (!process.env.ADMIN_PASSWORD_HASH && !process.env.ADMIN_PASSWORD) {
+    if (process.env.NODE_ENV !== 'production' && !process.env.ADMIN_PASSWORD_HASH && !process.env.ADMIN_PASSWORD) {
       console.warn('⚠️ ADMIN_PASSWORD или ADMIN_PASSWORD_HASH не заданы — вход в админ-режим на сервере отключен');
     }
   });

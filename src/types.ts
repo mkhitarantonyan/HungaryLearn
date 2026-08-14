@@ -35,6 +35,7 @@ export interface VocabularyItem {
   hu: string;
   ru: string;
   phonetic?: string;
+  ipa?: string;
   category: string;
   exampleSentence?: string;
   audioText?: string;

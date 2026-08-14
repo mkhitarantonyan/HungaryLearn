@@ -6,7 +6,7 @@ export interface UserProfile {
   id: string;
   email: string;
   createdAt: string;
-  subscriptionStatus: 'trial' | 'active' | 'canceled';
+  subscriptionStatus: 'trial' | 'active' | 'past_due' | 'canceled' | 'incomplete' | 'unpaid';
   subscriptionEnd?: string;
   // Full access granted by the administrator (all lessons without payment).
   isPrivileged?: boolean;
@@ -48,6 +48,9 @@ export function isLessonAccessible(
   if (!user) return false;
   if (user.isPrivileged) return true;
   if (user.subscriptionStatus === 'active' && user.subscriptionEnd) {
+    return new Date(user.subscriptionEnd).getTime() > Date.now();
+  }
+  if (user.subscriptionStatus === 'past_due' && user.subscriptionEnd) {
     return new Date(user.subscriptionEnd).getTime() > Date.now();
   }
   return false;
@@ -251,7 +254,7 @@ export async function syncProgressToServer(viewedSlideIds: string[]): Promise<bo
 
 export async function syncReviewCardToServer(
   cardId: string,
-  newState: ReviewCardState
+  grade: 'again' | 'hard' | 'good' | 'easy'
 ): Promise<boolean> {
   if (!currentUser) return false;
   try {
@@ -259,7 +262,7 @@ export async function syncReviewCardToServer(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ cardId, newState }),
+      body: JSON.stringify({ cardId, grade }),
     });
     return res.ok;
   } catch (err) {
@@ -267,14 +270,18 @@ export async function syncReviewCardToServer(
     return false;
   }
 }
-export async function syncQuizResultToServer(passedQuizLessonNumber: number): Promise<boolean> {
+export async function syncQuizResultToServer(
+  lessonNumber: number,
+  score: number,
+  total: number
+): Promise<boolean> {
   if (!currentUser) return false;
   try {
     const res = await fetch('/api/user/progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ passedQuizLessonNumber }),
+      body: JSON.stringify({ quiz: { lessonNumber, score, total } }),
     });
     return res.ok;
   } catch (err) {

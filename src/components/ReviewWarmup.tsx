@@ -2,13 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, ArrowRight, Flame } from 'lucide-react';
 import { speakText } from '../utils/speech';
-import { getWarmupSession, getGrammarReminder, gradeCard } from '../utils/spacedRepetition';
+import { getWarmupSession, getGrammarReminder } from '../utils/spacedRepetition';
 import type { ReviewCardState, ReviewGrade, DueReviewCard } from '../types';
 
 interface ReviewWarmupProps {
   userCardStates: Record<string, ReviewCardState>;
   completedLessonNumbers: number[];
-  onCardGraded: (cardId: string, newState: ReviewCardState) => void;
+  onCardGraded: (cardId: string, grade: ReviewGrade) => void;
   onDone: () => void;
 }
 
@@ -50,8 +50,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   const reminder = getGrammarReminder(card);
 
   const handleGrade = (grade: ReviewGrade) => {
-    const newState = gradeCard(card.state, grade);
-    onCardGraded(card.state.cardId, newState);
+    onCardGraded(card.state.cardId, grade);
     setGradedCount((c) => c + 1);
 
     if (index + 1 >= session.length) {

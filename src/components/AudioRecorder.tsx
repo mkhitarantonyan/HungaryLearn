@@ -91,6 +91,9 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         {targetTranslation && (
           <div className="text-xs text-[#2A2320]/70 font-sans">{targetTranslation}</div>
         )}
+        <p className="text-xs text-[#8A7A68] font-sans mt-2 max-w-md">
+          Скажите слово вслух, затем сравните свою запись с образцом. Тренажёр не оценивает произношение автоматически.
+        </p>
       </div>
 
       <div className="flex items-center gap-2 flex-wrap">

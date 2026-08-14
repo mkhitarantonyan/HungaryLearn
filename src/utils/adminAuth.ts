@@ -40,14 +40,11 @@ export async function verifyAdminCredentials({
     }
   }
 
-  // Plaintext fallback only when no hash is configured (e.g. local dev).
-  const normalizedPassword = adminPassword?.trim();
-  if (normalizedPassword) {
-    if (process.env.NODE_ENV === 'production') {
-      console.warn('[Security] ADMIN_PASSWORD_HASH is not set — admin login falls back to plaintext ADMIN_PASSWORD. Set a bcrypt hash in production.');
-    }
-    return password === normalizedPassword;
+  if (process.env.NODE_ENV === 'production') {
+    return false;
   }
 
-  return false;
+  // Plaintext fallback only in non-production when no hash is configured.
+  const normalizedPassword = adminPassword?.trim();
+  return !!normalizedPassword && password === normalizedPassword;
 }

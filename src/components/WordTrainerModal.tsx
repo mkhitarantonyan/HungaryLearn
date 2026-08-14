@@ -9,12 +9,12 @@ interface WordTrainerModalProps {
   isOpen: boolean;
   onClose: () => void;
   lesson?: Lesson;
+  onGrade?: (cardId: string, grade: 'again' | 'good') => void;
 }
 
-export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onClose, lesson }) => {
+export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onClose, lesson, onGrade }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [knownCount, setKnownCount] = useState<Record<string, boolean>>({});
 
   // Reset index when lesson changes or modal opens
   useEffect(() => {
@@ -54,8 +54,8 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
     setCurrentIndex((prev) => (prev - 1 + vocabulary.length) % vocabulary.length);
   };
 
-  const toggleKnown = (known: boolean) => {
-    setKnownCount(prev => ({ ...prev, [currentWord.id]: known }));
+  const markKnown = (known: boolean) => {
+    onGrade?.(currentWord.id, known ? 'good' : 'again');
     handleNext();
   };
 
@@ -154,13 +154,13 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
 
           <div className="flex items-center gap-2 flex-1">
             <button
-              onClick={() => toggleKnown(false)}
+              onClick={() => markKnown(false)}
               className="flex-1 py-3 px-2 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs md:text-sm font-semibold hover:bg-red-100 transition-colors cursor-pointer"
             >
               Ещё повторить
             </button>
             <button
-              onClick={() => toggleKnown(true)}
+              onClick={() => markKnown(true)}
               className="flex-1 py-3 px-2 rounded-xl bg-[#2C5F58] text-white text-xs md:text-sm font-semibold hover:bg-[#2C5F58]/90 transition-colors cursor-pointer flex items-center justify-center gap-1"
             >
               <Check className="w-4 h-4" />

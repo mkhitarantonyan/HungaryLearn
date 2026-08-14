@@ -23,6 +23,11 @@ export const LESSON_12: Lesson = {
    </ul>
    <p><button class="speak-btn" data-speak-text="Péter az orvosnál van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter az orvosnál van.</button> <span style="color:#8a7a68">(Петер у врача)</span></p>
    <div class="note">Для людей («находиться у кого-то») венгерский ВСЕГДА использует именно суффикс <b>-nál/-nél</b>: <button class="speak-btn" data-speak-text="Annánál vagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Annánál vagyok.</button> (Я у Анны).</div>
+   <div class="note">
+      <b>Важно:</b> «3D» — это учебная модель для запоминания трёх направлений (Где? Куда? Откуда?). 
+      Это не официальная классификация всех венгерских падежей, а удобный мнемонический приём для начинающих.
+      В реальном языке падежи могут иметь и другие значения, выходящие за рамки этой модели.
+   </div>
  `
     },
     {

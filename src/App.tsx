@@ -10,7 +10,7 @@ import { SlideDrawer } from './components/SlideDrawer';
 import { ReviewWarmup } from './components/ReviewWarmup';
 import { WordTrainerModal } from './components/WordTrainerModal';
 import { TranslationTrainerModal } from './components/TranslationTrainerModal';
-import { PronunciationQuiz } from './components/PronunciationQuiz';
+import { LessonQuizModal } from './components/LessonQuizModal';
 import { VoiceSettingsModal } from './components/VoiceSettingsModal';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { UserAuthModal } from './components/UserAuthModal';
@@ -66,6 +66,7 @@ export default function App() {
   const [passedQuizzes, setPassedQuizzes] = useState<number[]>([]);
   const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>({});
   const [showWarmup, setShowWarmup] = useState(false);
+  const [isProgressHydrated, setIsProgressHydrated] = useState(() => !getCurrentUser());
 
   const visitedLessonNumbers = useMemo(
     () => extractVisitedLessonNumbers(viewedSlideIds),
@@ -110,14 +111,21 @@ export default function App() {
 
 useEffect(() => {
   const unsubscribeUser = subscribeUserState((user) => {
-    if (!user) return;
+    if (!user) {
+      setIsProgressHydrated(true);
+      return;
+    }
     fetchUserProgress().then((data) => {
-      if (!data) return;
+      if (!data) {
+        setIsProgressHydrated(true);
+        return;
+      }
       setViewedSlideIds(Array.isArray(data.viewedSlides) ? data.viewedSlides : []);
       setPassedQuizzes(Array.isArray(data.passedQuizzes) ? data.passedQuizzes : []);
       if (data.reviewCards) {
         setReviewCardStates(data.reviewCards);
       }
+      setIsProgressHydrated(true);
     });
   });
   return () => unsubscribeUser();
@@ -153,10 +161,9 @@ useEffect(() => {
     setShowWarmup(true);
   };
 
-  const handleCardGraded = (cardId: string, newState: ReviewCardState) => {
-    setReviewCardStates((prev) => ({ ...prev, [cardId]: newState }));
-    void syncReviewCardToServer(cardId, newState);
-  };
+const handleCardGraded = (cardId: string, grade: 'again' | 'hard' | 'good' | 'easy') => {
+  void syncReviewCardToServer(cardId, grade);
+};
 
   const slides = activeLesson?.slides || [];
   const currentSlide = slides[currentSlideIndex] || slides[0];
@@ -175,6 +182,8 @@ useEffect(() => {
 }, [viewMode, activeLesson, currentSlide, isAdmin]);
 
 useEffect(() => {
+  if (!isProgressHydrated) return;
+
   const prev = lastSyncedSlidesRef.current;
   if (
     prev.length === viewedSlideIds.length &&
@@ -182,9 +191,23 @@ useEffect(() => {
   ) {
     return;
   }
-  lastSyncedSlidesRef.current = viewedSlideIds;
-  void syncProgressToServer(viewedSlideIds);
-}, [viewedSlideIds]);
+
+  void (async () => {
+    const success = await syncProgressToServer(viewedSlideIds);
+    if (success) {
+      lastSyncedSlidesRef.current = viewedSlideIds;
+      return;
+    }
+
+    window.setTimeout(() => {
+      void syncProgressToServer(viewedSlideIds).then((retrySuccess) => {
+        if (retrySuccess) {
+          lastSyncedSlidesRef.current = viewedSlideIds;
+        }
+      });
+    }, 3000);
+  })();
+}, [viewedSlideIds, isProgressHydrated]);
 
   const startNarratingSlide = (slide = currentSlide) => {
     if (!activeLesson || !slide) return;
@@ -443,20 +466,20 @@ useEffect(() => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
             >
-              <PronunciationQuiz 
-                onClose={() => setIsQuizActive(false)} 
+              <LessonQuizModal
+                onClose={() => setIsQuizActive(false)}
                 lesson={activeLesson}
                 onQuizComplete={(lessonNumber, score, total) => {
-                  if (isAdmin) return; // не засчитывать прохождение теста админом как реальный прогресс
-                  const percentage = Math.round((score / total) * 100);
-                  const PASS_THRESHOLD = 70;
-                  if (percentage >= PASS_THRESHOLD) {
-                    setPassedQuizzes((prev) =>
-                      prev.includes(lessonNumber) ? prev : [...prev, lessonNumber]
-                    );
-                    void syncQuizResultToServer(lessonNumber);
-                  }
-                }}
+                if (isAdmin) return;
+                const percentage = Math.round((score / total) * 100);
+                const PASS_THRESHOLD = 80;
+                if (percentage >= PASS_THRESHOLD) {
+                  setPassedQuizzes((prev) =>
+                    prev.includes(lessonNumber) ? prev : [...prev, lessonNumber]
+                  );
+                  void syncQuizResultToServer(lessonNumber, score, total);
+                }
+              }}
               />
             </motion.div>
           ) : (
@@ -593,6 +616,10 @@ useEffect(() => {
         isOpen={isTrainerOpen}
         onClose={() => setIsTrainerOpen(false)}
         lesson={activeLesson}
+        onGrade={(cardId, grade) => {
+          if (isAdmin) return;
+          void syncReviewCardToServer(cardId, grade);
+        }}
       />
 
       {/* Translation Trainer Modal */}

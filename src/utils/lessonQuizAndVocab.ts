@@ -435,56 +435,8 @@ export function getLessonVocabulary(lesson: Lesson): VocabularyItem[] {
  * Returns quiz questions tailored for the specified lesson.
  */
 export function getLessonQuiz(lesson: Lesson): QuizQuestion[] {
-
-  if (lesson.quiz && lesson.quiz.length > 0) {
-    return lesson.quiz;
-  }
-
-  if (LESSON_QUIZ_MAP[lesson.number]) {
-    return LESSON_QUIZ_MAP[lesson.number];
-  }
-
-  // Dynamic tailored fallback quiz for lessons 5..28
-  return [
-    {
-      id: 1,
-      question: `Какова главная тема Урока ${lesson.number} («${lesson.title.replace(/^Урок \d+ · /, '')}»)?`,
-      options: [
-        lesson.subtitle,
-        "Основные правила счета и чисел",
-        "Прошедшее время венгерского глагола",
-        "Официальные приветствия в Венгрии"
-      ],
-      correctIndex: 0,
-      explanation: `Тематика Урока ${lesson.number} полностью посвящена материалу: ${lesson.description}`
-    },
-    {
-      id: 2,
-      question: `Какое базовое правило следует помнить в контексте темы Урока ${lesson.number}?`,
-      options: [
-        "Ударение всегда падает на первый слог в венгерском языке",
-        "В венгерском языке отсутствует грамматический род",
-        "Суффиксы присоединяются к корню последовательно (агглютинация)",
-        "Все вышеперечисленные утверждения верны"
-      ],
-      correctIndex: 3,
-      explanation: "Все три утверждения являются базовыми незыблемыми законами венгерского языка."
-    },
-    {
-      id: 3,
-      question: `Сколько слайдов с учебным материалом содержит Урок ${lesson.number}?`,
-      options: [`${lesson.slidesCount} слайдов`, "5 слайдов", "50 слайдов", "1 слайд"],
-      correctIndex: 0,
-      explanation: `Урок ${lesson.number} содержит ровно ${lesson.slidesCount} обучающих слайдов.`
-    },
-    {
-      id: 4,
-      question: `К какому уровню владения языком относится Урок ${lesson.number}?`,
-      options: [`Уровень ${lesson.level}`, "Уровень C2", "Продвинутый уровень", "Нулевой курс"],
-      correctIndex: 0,
-      explanation: `Этот урок входит в программу уровня ${lesson.level}.`
-    }
-  ];
+  if (lesson.quiz?.length) return lesson.quiz;
+  return LESSON_QUIZ_MAP[lesson.number] ?? [];
 }
 
 /**

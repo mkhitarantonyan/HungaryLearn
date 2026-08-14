@@ -42,6 +42,14 @@ test('trial past period denies access', () => {
   }), false);
 });
 
+test('past_due subscription within period grants access', () => {
+  const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  assert.equal(isSubscriptionValid({
+    subscriptionStatus: 'past_due',
+    subscriptionEnd: future,
+  }), true);
+});
+
 test('canceled subscription denies access even with future end date', () => {
   const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
   assert.equal(isSubscriptionValid({
