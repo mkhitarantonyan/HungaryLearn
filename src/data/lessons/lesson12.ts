@@ -189,21 +189,114 @@ export const LESSON_12: Lesson = {
     }
   ],
   vocabulary: [
-    { id: 'l12_v1', hu: 'orvosnál', ru: 'у врача', category: 'Местные падежи' },
-    { id: 'l12_v2', hu: 'orvoshoz', ru: 'к врачу', category: 'Местные падежи' },
-    { id: 'l12_v3', hu: 'orvostól', ru: 'от врача', category: 'Местные падежи' },
-    { id: 'l12_v4', hu: 'Péternél', ru: 'у Петера', category: 'Местные падежи' },
-    { id: 'l12_v5', hu: 'Péterhez', ru: 'к Петеру', category: 'Местные падежи' },
-    { id: 'l12_v6', hu: 'Pétertől', ru: 'от Петера', category: 'Местные падежи' },
-    { id: 'l12_v7', hu: 'alatt', ru: 'под', category: 'Послелоги' },
-    { id: 'l12_v8', hu: 'felett', ru: 'над', category: 'Послелоги' },
-    { id: 'l12_v9', hu: 'mellett', ru: 'рядом с', category: 'Послелоги' },
-    { id: 'l12_v10', hu: 'előtt', ru: 'перед', category: 'Послелоги' },
-    { id: 'l12_v11', hu: 'mögött', ru: 'за', category: 'Послелоги' },
-    { id: 'l12_v12', hu: 'között', ru: 'между', category: 'Послелоги' },
-    { id: 'l12_v13', hu: 'nálam', ru: 'у меня', category: 'Местоименные формы' },
-    { id: 'l12_v14', hu: 'hozzám', ru: 'ко мне', category: 'Местоименные формы' },
-    { id: 'l12_v15', hu: 'tőlem', ru: 'от меня', category: 'Местоименные формы' },
-    { id: 'l12_v16', hu: 'két nap múlva', ru: 'через два дня', category: 'Время' }
-  ]
+    { id: 'l12_v1', hu: 'orvosnál', ru: 'у врача', category: 'Местные падежи',
+        ipa: "[ˈorvoʃnɒːl]"
+    },
+    { id: 'l12_v2', hu: 'orvoshoz', ru: 'к врачу', category: 'Местные падежи',
+        ipa: "[ˈorvoʃhoz]"
+    },
+    { id: 'l12_v3', hu: 'orvostól', ru: 'от врача', category: 'Местные падежи',
+        ipa: "[ˈorvoʃtoːl]"
+    },
+    { id: 'l12_v4', hu: 'Péternél', ru: 'у Петера', category: 'Местные падежи',
+        ipa: "[pˈɛːtɛrnɛːl]"
+    },
+    { id: 'l12_v5', hu: 'Péterhez', ru: 'к Петеру', category: 'Местные падежи',
+        ipa: "[pˈɛːtɛrhɛz]"
+    },
+    { id: 'l12_v6', hu: 'Pétertől', ru: 'от Петера', category: 'Местные падежи',
+        ipa: "[pˈɛːtɛrtøːl]"
+    },
+    { id: 'l12_v7', hu: 'alatt', ru: 'под', category: 'Послелоги',
+        ipa: "[ɒlɒtt]"
+    },
+    { id: 'l12_v8', hu: 'felett', ru: 'над', category: 'Послелоги',
+        ipa: "[fˈɛlɛtt]"
+    },
+    { id: 'l12_v9', hu: 'mellett', ru: 'рядом с', category: 'Послелоги',
+        ipa: "[mˈɛllɛtt]"
+    },
+    { id: 'l12_v10', hu: 'előtt', ru: 'перед', category: 'Послелоги',
+        ipa: "[ˈɛløːtt]"
+    },
+    { id: 'l12_v11', hu: 'mögött', ru: 'за', category: 'Послелоги',
+        ipa: "[mˈøgøtt]"
+    },
+    { id: 'l12_v12', hu: 'között', ru: 'между', category: 'Послелоги',
+        ipa: "[kˈøzøtt]"
+    },
+    { id: 'l12_v13', hu: 'nálam', ru: 'у меня', category: 'Местоименные формы',
+        ipa: "[nɒːlɒm]"
+    },
+    { id: 'l12_v14', hu: 'hozzám', ru: 'ко мне', category: 'Местоименные формы',
+        ipa: "[hˈozzɒːm]"
+    },
+    { id: 'l12_v15', hu: 'tőlem', ru: 'от меня', category: 'Местоименные формы',
+        ipa: "[tˈøːlɛm]"
+    },
+    { id: 'l12_v16', hu: 'két nap múlva', ru: 'через два дня', category: 'Время',
+        ipa: "[kˈɛːt nɒp muːlvɒ]"
+    }
+  ],
+    quiz: [
+    {
+      id: 1201,
+      question: 'Как сказать "у врача" (где?) по-венгерски?',
+      options: ['orvosnál', 'orvoshoz', 'orvostól', 'orvosban'],
+      correctIndex: 0,
+      explanation: 'Группа "Около/рядом" для вопроса "Hol?" (Где?) использует суффикс -nál/-nél: orvos + nál = orvosnál (у врача).'
+    },
+    {
+      id: 1202,
+      question: 'Как сказать "к Петеру" по-венгерски?',
+      options: ['Péternél', 'Péterhez', 'Pétertől', 'Péterben'],
+      correctIndex: 1,
+      explanation: 'Для движения к человеку используется суффикс -hoz/-hez/-höz: Péter + hez = Péterhez (к Петеру).'
+    },
+    {
+      id: 1203,
+      question: 'Как сказать "от врача" по-венгерски?',
+      options: ['orvosnál', 'orvoshoz', 'orvostól', 'orvosban'],
+      correctIndex: 2,
+      explanation: 'Для движения от человека используется суффикс -tól/-től: orvos + tól = orvostól (от врача).'
+    },
+    {
+      id: 1204,
+      question: 'Какой из следующих суффиксов НЕ относится к группе "Около/рядом"?',
+      options: ['-nál / -nél', '-hoz / -hez / -höz', '-tól / -től', '-ban / -ben'],
+      correctIndex: 3,
+      explanation: 'Суффикс -ban/-ben относится к группе "Внутри" (урок 10). Группа "Около/рядом" использует -nál/-nél (Где?), -hoz/-hez/-höz (Куда?), -tól/-től (Откуда?).'
+    },
+    {
+      id: 1205,
+      question: 'Как переводится предложение "A macska az asztal alatt van."?',
+      options: [
+        'Кошка на столе',
+        'Кошка под столом',
+        'Кошка за столом',
+        'Кошка перед столом'
+      ],
+      correctIndex: 1,
+      explanation: 'Послелог "alatt" означает "под". Венгерский использует послелоги (слова после существительного): az asztal alatt = под столом (урок 12, слайд 5).'
+    },
+    {
+      id: 1206,
+      question: 'В каких уроках мы изучали группы "Внутри" и "На поверхности"?',
+      options: [
+        'Урок 10 (Внутри) и урок 11 (На поверхности)',
+        'Урок 9 (Внутри) и урок 10 (На поверхности)',
+        'Урок 11 (Внутри) и урок 12 (На поверхности)',
+        'Урок 8 (Внутри) и урок 9 (На поверхности)'
+      ],
+      correctIndex: 0,
+      explanation: 'Группу "Внутри" мы изучали в уроке 10 (-ban/-ben, -ba/-be, -ból/-ből). Группу "На поверхности" – в уроке 11 (-n/-on/-en/-ön, -ra/-re, -ról/-ről). Теперь в уроке 12 мы завершаем систему группой "Около/рядом".'
+    }
+  ],
+  objectives: [
+    { id: 'l12_distinguish-near-cases', text: 'Различать падежи со значениями «у/около», «к» и «от».', skills: ['grammar'] },
+    { id: 'l12_form-adessive', text: 'Образовывать падеж -nál/-nél для значения «у кого/чего».', skills: ['grammar', 'writing'] },
+    { id: 'l12_form-allative', text: 'Образовывать падеж -hoz/-hez/-höz для значения «к кому/чему».', skills: ['grammar', 'writing'] },
+    { id: 'l12_form-ablative', text: 'Образовывать падеж -tól/-től для значения «от кого/чего».', skills: ['grammar', 'writing'] },
+    { id: 'l12_use-near-cases', text: 'Употреблять падежи группы «около/рядом» в диалогах.', skills: ['speaking', 'listening', 'writing'] },
+  ],
 };

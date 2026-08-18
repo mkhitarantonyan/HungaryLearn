@@ -190,21 +190,118 @@ export const LESSON_13: Lesson = {
     }
   ],
   vocabulary: [
-    { id: 'l13_v1', hu: 'múlt idő', ru: 'прошедшее время', category: 'Грамматика' },
-    { id: 'l13_v2', hu: 'tanultam', ru: 'я учился', category: 'Прошедшее время' },
-    { id: 'l13_v3', hu: 'tanultál', ru: 'ты учился', category: 'Прошедшее время' },
-    { id: 'l13_v4', hu: 'tanult', ru: 'он/она учился(-ась)', category: 'Прошедшее время' },
-    { id: 'l13_v5', hu: 'voltam', ru: 'я был', category: 'Lenni в прошлом' },
-    { id: 'l13_v6', hu: 'volt', ru: 'он/она был(-а)', category: 'Lenni в прошлом' },
-    { id: 'l13_v7', hu: 'voltak', ru: 'они были', category: 'Lenni в прошлом' },
-    { id: 'l13_v8', hu: 'nem volt', ru: 'не был / не было', category: 'Отрицание' },
-    { id: 'l13_v9', hu: 'tegnap', ru: 'вчера', category: 'Маркеры времени' },
-    { id: 'l13_v10', hu: 'tegnapelőtt', ru: 'позавчера', category: 'Маркеры времени' },
-    { id: 'l13_v11', hu: 'tavaly', ru: 'в прошлом году', category: 'Маркеры времени' },
-    { id: 'l13_v12', hu: 'a múlt héten', ru: 'на прошлой неделе', category: 'Маркеры времени' },
-    { id: 'l13_v13', hu: 'dolgoztam', ru: 'я работал', category: 'Прошедшее время' },
-    { id: 'l13_v14', hu: 'utaztam', ru: 'я путешествовал', category: 'Прошедшее время' },
-    { id: 'l13_v15', hu: 'láttam', ru: 'я видел', category: 'Прошедшее время' },
-    { id: 'l13_v16', hu: 'tetszett', ru: 'понравился / понравилось', category: 'Прошедшее время' }
-  ]
+    { id: 'l13_v1', hu: 'múlt idő', ru: 'прошедшее время', category: 'Грамматика',
+        ipa: "[mˈuːlt idøː]"
+    },
+    { id: 'l13_v2', hu: 'tanultam', ru: 'я учился', category: 'Прошедшее время',
+        ipa: "[tɒnˈultɒm]"
+    },
+    { id: 'l13_v3', hu: 'tanultál', ru: 'ты учился', category: 'Прошедшее время',
+        ipa: "[tɒnˈultɒːl]"
+    },
+    { id: 'l13_v4', hu: 'tanult', ru: 'он/она учился(-ась)', category: 'Прошедшее время',
+        ipa: "[tɒnˈult]"
+    },
+    { id: 'l13_v5', hu: 'voltam', ru: 'я был', category: 'Lenni в прошлом',
+        ipa: "[vˈoltɒm]"
+    },
+    { id: 'l13_v6', hu: 'volt', ru: 'он/она был(-а)', category: 'Lenni в прошлом',
+        ipa: "[vˈolt]"
+    },
+    { id: 'l13_v7', hu: 'voltak', ru: 'они были', category: 'Lenni в прошлом',
+        ipa: "[vˈoltɒk]"
+    },
+    { id: 'l13_v8', hu: 'nem volt', ru: 'не был / не было', category: 'Отрицание',
+        ipa: "[nˈɛm volt]"
+    },
+    { id: 'l13_v9', hu: 'tegnap', ru: 'вчера', category: 'Маркеры времени',
+        ipa: "[tˈɛgnɒp]"
+    },
+    { id: 'l13_v10', hu: 'tegnapelőtt', ru: 'позавчера', category: 'Маркеры времени',
+        ipa: "[tˈɛgnɒpɛløːtt]"
+    },
+    { id: 'l13_v11', hu: 'tavaly', ru: 'в прошлом году', category: 'Маркеры времени',
+        ipa: "[tɒvɒj]"
+    },
+    { id: 'l13_v12', hu: 'a múlt héten', ru: 'на прошлой неделе', category: 'Маркеры времени',
+        ipa: "[ɒ mˈuːlt hɛːtɛn]"
+    },
+    { id: 'l13_v13', hu: 'dolgoztam', ru: 'я работал', category: 'Прошедшее время',
+        ipa: "[dˈolgoztɒm]"
+    },
+    { id: 'l13_v14', hu: 'utaztam', ru: 'я путешествовал', category: 'Прошедшее время',
+        ipa: "[ˈutɒztɒm]"
+    },
+    { id: 'l13_v15', hu: 'láttam', ru: 'я видел', category: 'Прошедшее время',
+        ipa: "[lɒːttɒm]"
+    },
+    { id: 'l13_v16', hu: 'tetszett', ru: 'понравился / понравилось', category: 'Прошедшее время',
+        ipa: "[tˈɛtʃɛtt]"
+    }
+  ],
+    quiz: [
+    {
+      id: 1301,
+      question: 'Как образуется прошедшее время от глагола "vár" (ждать) в 1-м лице единственного числа (én)?',
+      options: ['vártam', 'vártam', 'várttam', 'vártam'],
+      correctIndex: 0,
+      explanation: 'Глаголы на гласную или "лёгкий" согласный (l, r, n, ny, j) просто добавляют -t: vár + t + am = vártam (я ждал).'
+    },
+    {
+      id: 1302,
+      question: 'Как образуется прошедшее время от глагола "dolgozik" (работать) в 3-м лице единственного числа (ő)?',
+      options: ['dolgozott', 'dolgozt', 'dolgozit', 'dolgozott'],
+      correctIndex: 0,
+      explanation: 'Основа оканчивается на "z" (сложный согласный), поэтому нужна соединительная гласная -ott: dolgoz + ott = dolgozott (он работал).'
+    },
+    {
+      id: 1303,
+      question: 'Как сказать "Петер был врачом" по-венгерски?',
+      options: [
+        'Péter orvos volt',
+        'Péter orvos van',
+        'Péter orvos voltam',
+        'Péter orvos voltál'
+      ],
+      correctIndex: 0,
+      explanation: 'В прошедшем времени глагол "lenni" (volt) ОБЯЗАТЕЛЬНО присутствует в 3-м лице: Péter orvos volt (Петер был врачом). В настоящем времени "van" опускается: Péter orvos (Петер врач).'
+    },
+    {
+      id: 1304,
+      question: 'Как сказать "Я не был дома" по-венгерски?',
+      options: [
+        'Nem voltam otthon',
+        'Nem volt otthon',
+        'Nem voltam otthon',
+        'Nincs otthon'
+      ],
+      correctIndex: 0,
+      explanation: 'Отрицание в прошедшем времени образуется с помощью "nem" перед глаголом: nem voltam otthon (я не был дома).'
+    },
+    {
+      id: 1305,
+      question: 'Какое из этих слов является маркером прошедшего времени?',
+      options: ['tegnap', 'holnap', 'ma', 'most'],
+      correctIndex: 0,
+      explanation: '"Tegnap" (вчера) – это маркер прошедшего времени. "Holnap" (завтра) – будущее, "ma" (сегодня) и "most" (сейчас) – настоящее.'
+    },
+    {
+      id: 1306,
+      question: 'В каком уроке мы изучали суффикс "-ban/-ben" для ответа на вопрос "Hol?" (Где?) в группе "Внутри"?',
+      options: [
+        'Урок 10 (местные падежи I)',
+        'Урок 11 (местные падежи II)',
+        'Урок 12 (местные падежи III)',
+        'Урок 13 (прошедшее время)'
+      ],
+      correctIndex: 0,
+      explanation: 'Суффиксы "-ban/-ben" для группы "Внутри" мы изучали в уроке 10. В уроке 13 мы применяем прошедшее время для описания действий, которые происходили "в доме", "в комнате" и т.д.'
+    }
+  ],
+  objectives: [
+    { id: 'l13_form-past', text: 'Образовывать прошедшее время глаголов с помощью -t/-tt.', skills: ['grammar', 'writing'] },
+    { id: 'l13_use-volt', text: 'Употреблять формы глагола lenni в прошедшем времени (volt, voltak).', skills: ['grammar', 'writing'] },
+    { id: 'l13_distinguish-present-past', text: 'Различать настоящее и прошедшее время на слух и в тексте.', skills: ['listening', 'reading'] },
+    { id: 'l13_tell-past', text: 'Рассказывать о прошедших событиях в простых предложениях.', skills: ['speaking', 'writing'] },
+  ],
 };

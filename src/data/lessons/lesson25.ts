@@ -155,32 +155,93 @@ export const LESSON_25: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l25_v1", hu: "munkahely", ru: "место работы / офис", category: "Работа", exampleSentence: "A munkahelyem a belvárosban van." },
-    { id: "l25_v2", hu: "kolléga", ru: "коллега", category: "Работа", exampleSentence: "Jó kollégáim vannak." },
-    { id: "l25_v3", hu: "fizetés", ru: "зарплата", category: "Работа", exampleSentence: "Hónap elején van fizetés." },
-    { id: "l25_v4", hu: "megbeszélés", ru: "совещание", category: "Работа", exampleSentence: "Tíz órakor megbeszélés lesz." }
+    { id: "l25_v1", hu: "munkahely", ru: "место работы / офис", category: "Работа", exampleSentence: "A munkahelyem a belvárosban van.",
+        ipa: "[mˈunkɒhɛj]"
+    },
+    { id: "l25_v2", hu: "kolléga", ru: "коллега", category: "Работа", exampleSentence: "Jó kollégáim vannak.",
+        ipa: "[kˈollɛːgɒ]"
+    },
+    { id: "l25_v3", hu: "fizetés", ru: "зарплата", category: "Работа", exampleSentence: "Hónap elején van fizetés.",
+        ipa: "[fˈizɛtɛːʃ]"
+    },
+    { id: "l25_v4", hu: "megbeszélés", ru: "совещание", category: "Работа", exampleSentence: "Tíz órakor megbeszélés lesz.",
+        ipa: "[mˈɛgbɛʃɛːlɛːʃ]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 2501,
-      question: "Как по-венгерски спросить «Чем ты занимаешься / Кем работаешь?»?",
-      options: ["Mivel foglalkozol?", "Hol laksz?", "Hogy hívnak?", "Hány éves vagy?"],
+      question: 'Как по-венгерски спросить «Кем ты работаешь / Чем занимаешься?»?',
+      options: [
+        'Mivel foglalkozol?',
+        'Hol laksz?',
+        'Hogy hívnak?',
+        'Hány éves vagy?'
+      ],
       correctIndex: 0,
-      explanation: "«Mivel foglalkozol?» переводится как «Чем ты занимаешься / Кем работаешь?»."
+      explanation: '«Mivel foglalkozol?» – стандартный вопрос о профессии и роде занятий. «Hol laksz?» – «Где ты живёшь?», «Hogy hívnak?» – «Как тебя зовут?», «Hány éves vagy?» – «Сколько тебе лет?».'
     },
     {
       id: 2502,
-      question: "Какое слово означает «резюме» по-венгерски?",
-      options: ["önéletrajz", "munkahely", "fizetés", "értekezlet"],
-      correctIndex: 0,
-      explanation: "«Önéletrajz» означает резюме / CV."
+      question: 'Как ответить на вопрос «Mivel foglalkozol?», используя суффикс -ként (в качестве)?',
+      options: [
+        'Mérnök vagyok.',
+        'Mérnökként dolgozom.',
+        'Mérnök munkám van.',
+        'Mérnök vagyok dolgozom.'
+      ],
+      correctIndex: 1,
+      explanation: 'Суффикс -ként означает «в качестве»: mérnök + ként = mérnökként. Правильный ответ: «Mérnökként dolgozom.» (Я работаю в качестве инженера). «Mérnök vagyok» – тоже правильный ответ, но без -ként (урок 25, слайд 2).'
     },
     {
       id: 2503,
-      question: "Какое окончание используется для обозначения срока («к понедельнику» — hétfő...)?",
-      options: ["-ra / -re", "-ban / -ben", "-nak / -nek", "-tól / -től"],
+      question: 'Как сказать по-венгерски «Я отправлю имейл»?',
+      options: [
+        'Küldök egy e-mailt.',
+        'Írok egy e-mailt.',
+        'Olvasok egy e-mailt.',
+        'Kapok egy e-mailt.'
+      ],
       correctIndex: 0,
-      explanation: "Для срока действия или завершения используется суффикс -ra / -re (например, hétfőre — к понедельнику, péntekre — к пятнице)."
+      explanation: '«Küldök egy e-mailt.» – «Я отправлю имейл». Глагол «küld» означает «отправлять/посылать». «Írok» – «пишу», «olvasok» – «читаю», «kapok» – «получаю».'
+    },
+    {
+      id: 2504,
+      question: 'Как называется резюме по-венгерски?',
+      options: ['önéletrajz', 'munkahely', 'állásinterjú', 'fizetés'],
+      correctIndex: 0,
+      explanation: '«Önéletrajz» – это резюме / CV. «Munkahely» – место работы, «állásinterjú» – собеседование, «fizetés» – зарплата (урок 25, слайд 5).'
+    },
+    {
+      id: 2505,
+      question: 'Как сказать «К пятнице будет готово» по-венгерски?',
+      options: [
+        'Péntekre kész lesz.',
+        'Pénteken kész lesz.',
+        'Péntektől kész lesz.',
+        'Péntekkor kész lesz.'
+      ],
+      correctIndex: 0,
+      explanation: 'Для указания срока (к какому времени) используется суффикс -ra/-re: péntek + re = péntekre (к пятнице). «Pénteken» – «в пятницу» (день недели), «Péntektől» – «с пятницы», «Péntekkor» – не используется для дней недели.'
+    },
+    {
+      id: 2506,
+      question: 'Какое слово из урока 24 помогает соединять причину и следствие в предложении о работе?',
+      options: [
+        'mert (потому что) – "Szeretem a munkámat, mert érdekes."',
+        'ezért (поэтому) – "Érdekes a munka, ezért szeretem."',
+        'és (и) – "Szeretem a munkámat és a kollégáimat."',
+        'Все перечисленные варианты правильные'
+      ],
+      correctIndex: 3,
+      explanation: 'Все три союза из урока 24 можно использовать в контексте работы: "mert" – причина, "ezért" – следствие, "és" – перечисление. Например: "Szeretem a munkámat, mert érdekes." (Я люблю свою работу, потому что она интересная).'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l25_name-professions', text: 'Называть профессии и места работы по-венгерски.', skills: ['speaking', 'reading', 'writing'] },
+    { id: 'l25_ask-answer-job', text: 'Задавать и отвечать на вопрос «Mivel foglalkozol?».', skills: ['speaking', 'listening'] },
+    { id: 'l25_describe-skills', text: 'Описывать свои навыки и рабочие обязанности.', skills: ['speaking', 'writing'] },
+    { id: 'l25_write-cv', text: 'Составлять краткое резюме (önéletrajz) с личными данными.', skills: ['writing'] },
+    { id: 'l25_interview-dialogue', text: 'Участвовать в диалоге-собеседовании.', skills: ['speaking', 'listening'] },
+  ],
 };

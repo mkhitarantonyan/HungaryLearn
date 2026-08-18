@@ -166,32 +166,78 @@ export const LESSON_22: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l22_v1", hu: "segíteni", ru: "помогать", category: "Глаголы", exampleSentence: "Segíts nekem, kérlek!" },
-    { id: "l22_v2", hu: "mutatni", ru: "показывать", category: "Глаголы", exampleSentence: "Mutasd meg a képet!" },
-    { id: "l22_v3", hu: "hozni", ru: "приносить", category: "Глаголы", exampleSentence: "Hozz egy vizet!" },
-    { id: "l22_v4", hu: "fordulni", ru: "поворачивать", category: "Глаголы", exampleSentence: "Fordulj balra!" }
+    { id: "l22_v1", hu: "segíteni", ru: "помогать", category: "Глаголы", exampleSentence: "Segíts nekem, kérlek!",
+        ipa: "[ʃˈɛgiːtɛni]"
+    },
+    { id: "l22_v2", hu: "mutatni", ru: "показывать", category: "Глаголы", exampleSentence: "Mutasd meg a képet!",
+        ipa: "[mˈutɒtni]"
+    },
+    { id: "l22_v3", hu: "hozni", ru: "приносить", category: "Глаголы", exampleSentence: "Hozz egy vizet!",
+        ipa: "[hˈozni]"
+    },
+    { id: "l22_v4", hu: "fordulni", ru: "поворачивать", category: "Глаголы", exampleSentence: "Fordulj balra!",
+        ipa: "[fˈordulni]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 2201,
-      question: "Какой главный суффикс-маркер повелительного наклонения в венгерском языке?",
-      options: ["-j-", "-t-", "-nn-", "-nak"],
+      question: 'Какой суффикс является маркером повелительного наклонения в венгерском языке?',
+      options: ['-j-', '-t-', '-ni', '-na/-ne'],
       correctIndex: 0,
-      explanation: "Маркером повелительного наклонения является суффикс -j- (например, várj)."
+      explanation: 'Маркером повелительного наклонения является суффикс -j-, который вставляется между основой глагола и личным окончанием: vár + j = várj! (подожди!).'
     },
     {
       id: 2202,
-      question: "Как пишется повелительная форма от глагола olvas (читать)?",
-      options: ["olvasj!", "olvass!", "olvasd!", "olvaszon!"],
+      question: 'Как образуется повелительное наклонение от глагола "olvas" (читать) в неопределённой форме (te)?',
+      options: ['olvasj!', 'olvass!', 'olvasd!', 'olvassz!'],
       correctIndex: 1,
-      explanation: "Буква s ассимилирует j: olvas + j -> olvass! (для неопределенного спряжения)."
+      explanation: 'Основа оканчивается на "s" – происходит ассимиляция: s + j → ss. Правильно: olvass! (читай!). "olvasd!" – это определённая форма (прочитай это!).'
     },
     {
       id: 2203,
-      question: "Какова вежливая форма «будьте любезны» к обращению на «Вы» (Ön)?",
-      options: ["légy szíves", "legyen szíves", "legyetek szívesek", "lenni szíves"],
+      question: 'Какая форма повелительного наклонения соответствует фразе "Скажи ему!"?',
+      options: ['Mondd meg neki!', 'Mond meg neki!', 'Mondjad meg neki!', 'Mondj meg neki!'],
+      correctIndex: 0,
+      explanation: 'Глагол "mond" (говорить/сказать) + j → mondd (ассимиляция d + j → dd). Правильно: Mondd meg neki! (Скажи ему!).'
+    },
+    {
+      id: 2204,
+      question: 'Как сказать "будь!" по-венгерски (повелительное наклонение от глагола lenni)?',
+      options: ['vagy!', 'légy!', 'legyen!', 'van!'],
       correctIndex: 1,
-      explanation: "Форма для обращения на «Вы» (Ön) — legyen szíves."
+      explanation: 'Глагол "lenni" (быть) в повелительном наклонении имеет особую основу "légy-": légy! (будь!) для 2-го лица (te). "legyen!" – это форма для ő/Ön (пусть будет / будьте!).'
+    },
+    {
+      id: 2205,
+      question: 'Какое из этих предложений использует ОПРЕДЕЛЁННОЕ повелительное наклонение?',
+      options: [
+        'Olvass egy könyvet! (Почитай какую-нибудь книгу)',
+        'Olvasd el ezt a könyvet! (Прочитай ЭТУ книгу)',
+        'Várj egy percet! (Подожди минуту!)',
+        'Írj egy levelet! (Напиши письмо!)'
+      ],
+      correctIndex: 1,
+      explanation: 'Определённое повелительное наклонение используется, когда объект конкретный/определённый: "ezt a könyvet" (ЭТУ книгу) → olvasd! (прочитай это!). Неопределённое: "egy könyvet" (какую-то книгу) → olvass! (почитай).'
+    },
+    {
+      id: 2206,
+      question: 'Как вежливо попросить незнакомого человека о помощи по-венгерски (обращение на "Вы")?',
+      options: [
+        'Segíts nekem!',
+        'Légy szíves, segíts!',
+        'Legyen szíves, segítsen!',
+        'Segítsenek nekem!'
+      ],
+      correctIndex: 2,
+      explanation: 'Для вежливого обращения на "Вы" (Ön) используется форма "legyen szíves" + повелительное наклонение с окончанием -jon/-jen: Legyen szíves, segítsen! (Будьте любезны, помогите!).'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l22_form-imperative', text: 'Образовывать повелительное наклонение с помощью -j- и его ассимиляции.', skills: ['grammar', 'writing'] },
+    { id: 'l22_use-imperative', text: 'Отдавать команды, просьбы и советы в повелительном наклонении.', skills: ['speaking', 'writing'] },
+    { id: 'l22_form-let', text: 'Использовать формы légy и legyen («будь», «пусть будет»).', skills: ['grammar', 'speaking'] },
+    { id: 'l22_polite-requests', text: 'Вежливо формулировать просьбы с помощью повелительного наклонения.', skills: ['speaking'] },
+    { id: 'l22_understand-commands', text: 'Понимать команды и указания на слух.', skills: ['listening'] },
+  ],
 };

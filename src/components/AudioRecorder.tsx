@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Square, Play, RefreshCw, Volume2 } from 'lucide-react';
+import { Mic, Square, Play, Volume2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { speakText } from '../utils/speech';
 
@@ -7,12 +7,15 @@ interface AudioRecorderProps {
   targetText: string;
   targetPhonetic?: string;
   targetTranslation?: string;
+  /** Optional callback invoked when a recording is ready (backward compatible). */
+  onRecordingReady?: (audioUrl: string) => void;
 }
 
 export const AudioRecorder: React.FC<AudioRecorderProps> = ({
   targetText,
   targetPhonetic,
-  targetTranslation
+  targetTranslation,
+  onRecordingReady
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -43,11 +46,12 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
+        onRecordingReady?.(url);
       };
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
-    } catch (err) {
+    } catch {
       setErrorMessage("Не удалось получить доступ к микрофону. Проверьте разрешения браузера.");
     }
   };
@@ -84,9 +88,9 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         <div className="text-xs uppercase tracking-wider font-mono text-[#2C5F58] font-semibold mb-1">
           Тренажёр произношения
         </div>
-        <div className="text-lg font-bold text-[#57121C] font-mono flex items-center gap-2">
-          <span>{targetText}</span>
-          {targetPhonetic && <span className="text-sm font-normal text-[#8A7A68]">{targetPhonetic}</span>}
+        <div className="flex min-w-0 flex-wrap items-center gap-2 text-lg font-bold text-[#57121C] font-mono [overflow-wrap:anywhere]">
+          <span className="min-w-0 break-words">{targetText}</span>
+          {targetPhonetic && <span className="min-w-0 break-words text-sm font-normal text-[#8A7A68]">{targetPhonetic}</span>}
         </div>
         {targetTranslation && (
           <div className="text-xs text-[#2A2320]/70 font-sans">{targetTranslation}</div>
@@ -99,8 +103,10 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
       <div className="flex items-center gap-2 flex-wrap">
         {/* Sample Audio */}
         <button
+          type="button"
           onClick={playTarget}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7A1E2B] text-white text-xs font-medium hover:bg-[#57121C] transition-colors cursor-pointer"
+          aria-label={`Прослушать образец: ${targetText}`}
+          className="flex min-h-11 items-center gap-1.5 rounded-lg bg-[#7A1E2B] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[#57121C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 cursor-pointer"
         >
           <Volume2 className="w-4 h-4" />
           <span>Образец</span>
@@ -109,31 +115,37 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         {/* Record Button */}
         {!isRecording ? (
           <motion.button
+            type="button"
             whileTap={{ scale: 0.95 }}
             onClick={startRecording}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 text-white text-xs font-medium hover:bg-red-700 transition-colors cursor-pointer"
+            aria-label="Записать ответ с микрофона"
+            className="flex min-h-11 items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50 focus-visible:ring-offset-2 cursor-pointer"
           >
             <Mic className="w-4 h-4" />
             <span>Записать голос</span>
           </motion.button>
         ) : (
           <motion.button
+            type="button"
             whileTap={{ scale: 0.95 }}
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ repeat: Infinity, duration: 1 }}
             onClick={stopRecording}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-800 text-white text-xs font-medium cursor-pointer"
+            aria-label="Остановить запись"
+            className="flex min-h-11 items-center gap-1.5 rounded-lg bg-red-800 px-3 py-1.5 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50 focus-visible:ring-offset-2 cursor-pointer"
           >
             <Square className="w-4 h-4 fill-current" />
-            <span>Остановить recording...</span>
+            <span>Остановить запись…</span>
           </motion.button>
         )}
 
         {/* Playback User Audio */}
         {audioUrl && !isRecording && (
           <button
+            type="button"
             onClick={playUserRecording}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+            aria-label="Прослушать мою запись"
+            className={`flex min-h-11 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 cursor-pointer ${
               isPlayingUser 
                 ? 'bg-[#B98A2B] text-white border-[#B98A2B]' 
                 : 'bg-white border-[#D9CBB0] text-[#2A2320] hover:bg-[#FBF7EF]'
@@ -145,7 +157,7 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
         )}
 
         {errorMessage && (
-          <p className="w-full text-xs text-red-600 font-sans mt-1">{errorMessage}</p>
+          <p className="w-full text-xs text-red-600 font-sans mt-1" role="alert">{errorMessage}</p>
         )}
       </div>
     </div>

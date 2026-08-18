@@ -53,13 +53,13 @@ function getSlideDefaultSequence(slide: SlideData, lessonNumber: number = 1): Sp
 
       case 'info':
         sequence.push({ text: 'A magyar ábécé.', lang: 'hu-HU', rate: 0.85 });
-        sequence.push({ text: 'Логика венгерского алфавита.', lang: 'ru-RU' });
+        sequence.push({ text: 'Буквы, буквенные единицы и звуки.', lang: 'ru-RU' });
         sequence.push({
-          text: 'Венгерский язык использует латинский алфавит. В венгерском как написано — так и читается! Одна буква или диграф равна одному звуку.',
+          text: 'Стандартный венгерский алфавит традиционно содержит 44 буквы и буквенные единицы, включая диграфы и триграф dzs. Это число не является количеством звуков языка.',
           lang: 'ru-RU'
         });
         sequence.push({
-          text: slide.note || 'Всего в венгерском языке 44 звука: гласные и согласные. В латинском алфавите всего 26 букв, поэтому используются буквосочетания и значки над буквами.',
+          text: slide.note || 'Венгерское написание относительно регулярно и хорошо предсказуемо, но это практическая модель, а не универсальный закон один к одному.',
           lang: 'ru-RU'
         });
         return sequence;
@@ -82,6 +82,7 @@ function getSlideDefaultSequence(slide: SlideData, lessonNumber: number = 1): Sp
       case 'vowels-long': {
         sequence.push({ text: 'Hosszú magánhangzók.', lang: 'hu-HU', rate: 0.85 });
         sequence.push({ text: 'Долгие гласные со штрихами и точками.', lang: 'ru-RU' });
+        sequence.push({ text: 'В парах a и á, e и é различаются и длительность, и качество. В остальных базовых парах центрально различие по долготе.', lang: 'ru-RU' });
         sequence.push({ text: 'Слушаем долгие гласные:', lang: 'ru-RU' });
 
         const items = VOCABULARY_LIST.filter(v => v.category === 'Долгие гласные');
@@ -96,13 +97,21 @@ function getSlideDefaultSequence(slide: SlideData, lessonNumber: number = 1): Sp
 
       case 'consonants-soft': {
         sequence.push({ text: 'Különleges mássalhangzók.', lang: 'hu-HU', rate: 0.85 });
-        sequence.push({ text: 'Мягкие согласные: дь, ть, нь, й.', lang: 'ru-RU' });
+        sequence.push({
+          text: 'Согласные gy — /ɟ/, ty — /c/, ny — /ɲ/ являются отдельными венгерскими фонемами. Русские дь, ть, нь дают только грубую подсказку и не описывают обычное русское смягчение.',
+          lang: 'ru-RU'
+        });
+        sequence.push({
+          text: 'Буквы j и ly в современном стандартном венгерском передают один звук /j/. Акустически различить их написание нельзя.',
+          lang: 'ru-RU'
+        });
 
         const softs = [
           { hu: 'gyerek', ru: 'ребёнок' },
           { hu: 'kutya', ru: 'собака' },
           { hu: 'anya', ru: 'мать' },
-          { hu: 'hely', ru: 'место' }
+          { hu: 'jég', ru: 'лёд' },
+          { hu: 'mély', ru: 'глубокий' }
         ];
         softs.forEach(item => {
           sequence.push({ text: item.hu, lang: 'hu-HU', rate: 0.8 });
@@ -153,7 +162,7 @@ function getSlideDefaultSequence(slide: SlideData, lessonNumber: number = 1): Sp
 
       case 'stress': {
         sequence.push({ text: 'Hangsúly.', lang: 'hu-HU', rate: 0.85 });
-        sequence.push({ text: 'Ударение всегда падает исключительно на первый слог.', lang: 'ru-RU' });
+        sequence.push({ text: 'В изолированном венгерском слове основное лексическое ударение падает на первый слог. Фразовая интонация и контрастное выделение рассматриваются отдельно.', lang: 'ru-RU' });
         
         sequence.push({ text: 'Budapest', lang: 'hu-HU', rate: 0.8 });
         sequence.push({ text: 'magyar', lang: 'hu-HU', rate: 0.8 });
@@ -185,7 +194,7 @@ function getSlideDefaultSequence(slide: SlideData, lessonNumber: number = 1): Sp
       case 'summary': {
         sequence.push({ text: 'Összefoglalás.', lang: 'hu-HU', rate: 0.85 });
         sequence.push({
-          text: 'Итоги первого урока. Написание и произношение совпадают. Буква s это ш, sz это с. Ударение всегда на первый слог. До встречи на следующем уроке!',
+          text: 'Итоги первого урока. Венгерская орфография относительно регулярна. S передаёт /ʃ/, sz — /s/. Gy, ty и ny передают /ɟ/, /c/ и /ɲ/, а j и ly — /j/. В изолированном слове основное ударение начинается на первом слоге.',
           lang: 'ru-RU'
         });
         return sequence;

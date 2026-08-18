@@ -1,6 +1,15 @@
 import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
+import {
+  validateActivity,
+  validateExitCheckReferences,
+  validateLessonQuestionIds,
+} from '../src/utils/activityUtils.ts';
+import type { LessonActivity } from '../src/types.ts';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const errors: string[] = [];
+const expectedPilotAssets: string[] = [];
 
 async function validateLessons(): Promise<void> {
   const seenIds = new Set<number>();
@@ -53,12 +62,61 @@ async function validateLessons(): Promise<void> {
         errors.push(`Lesson ${lesson.number}: vocabulary ${word.id} references missing lesson ${word.relatedLessonId}`);
       }
     }
+
+    // === Activity validation (pilot: lesson 15) ===
+    const activities: LessonActivity[] = [];
+    for (const slide of lesson.slides) {
+      for (const activity of slide.activities ?? []) activities.push(activity);
+    }
+
+    const activityIds = activities.map((a) => a.id);
+    const activityIdSet = new Set(activityIds);
+    if (activityIds.length !== activityIdSet.size) {
+      const dupes = new Set(activityIds.filter((id, i) => activityIds.indexOf(id) !== i));
+      for (const d of dupes) errors.push(`Lesson ${lesson.number}: duplicate activity id ${d}`);
+    }
+
+    for (const problem of validateLessonQuestionIds(activities)) {
+      errors.push(`Lesson ${lesson.number}: ${problem}`);
+    }
+
+    const objectiveIds = (lesson.objectives ?? []).map((o) => o.id);
+
+    for (const activity of activities) {
+      for (const problem of validateActivity(activity)) {
+        errors.push(`Lesson ${lesson.number}: ${problem}`);
+      }
+      if (activity.kind === 'exitCheck') {
+        for (const problem of validateExitCheckReferences(activity, objectiveIds, activityIds)) {
+          errors.push(`Lesson ${lesson.number}: ${problem}`);
+        }
+      }
+      if (activity.kind === 'listening') {
+        if (activity.audioStatus === 'published') {
+          const candidatePaths = [
+            path.join(process.cwd(), 'public', 'audio', `${activity.assetId}.mp3`),
+            path.join(process.cwd(), 'data', 'audio', `${activity.assetId}.mp3`),
+          ];
+          if (!candidatePaths.some((p) => fs.existsSync(p))) {
+            errors.push(
+              `Lesson ${lesson.number}: listening asset ${activity.assetId} is published but file missing`
+            );
+          }
+        } else {
+          expectedPilotAssets.push(`Lesson ${lesson.number}: ${activity.assetId}`);
+        }
+      }
+    }
   }
 
   if (errors.length > 0) {
     console.error('Lesson validation failed:');
     for (const err of errors) console.error(`  - ${err}`);
     process.exit(1);
+  }
+
+  for (const asset of expectedPilotAssets) {
+    console.log(`  [expected pilot asset] ${asset} — missing MP3, not an error`);
   }
 
   console.log(`Validated ${LESSONS_META.length} lessons — OK`);

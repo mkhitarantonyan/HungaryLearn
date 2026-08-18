@@ -158,33 +158,86 @@ export const LESSON_19: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l19_v1", hu: "holnapután", ru: "послезавтра", category: "Время", exampleSentence: "Holnapután találkozunk." },
-    { id: "l19_v2", hu: "jövő héten", ru: "на следующей неделе", category: "Время", exampleSentence: "Jövő héten utazom." },
-    { id: "l19_v3", hu: "jövő hónapban", ru: "в следующем месяце", category: "Время", exampleSentence: "Jövő hónapban vizsgázom." },
-    { id: "l19_v4", hu: "jövőre", ru: "в следующем году", category: "Время", exampleSentence: "Jövőre Budapestre megyek." },
-    { id: "l19_v5", hu: "hamarosan", ru: "скоро", category: "Время", exampleSentence: "Hamarosan kezdünk." }
+    { id: "l19_v1", hu: "holnapután", ru: "послезавтра", category: "Время", exampleSentence: "Holnapután találkozunk.",
+        ipa: "[hˈolnɒputɒːn]"
+    },
+    { id: "l19_v2", hu: "jövő héten", ru: "на следующей неделе", category: "Время", exampleSentence: "Jövő héten utazom.",
+        ipa: "[jˈøvøː hɛːtɛn]"
+    },
+    { id: "l19_v3", hu: "jövő hónapban", ru: "в следующем месяце", category: "Время", exampleSentence: "Jövő hónapban vizsgázom.",
+        ipa: "[jˈøvøː hoːnɒpbɒn]"
+    },
+    { id: "l19_v4", hu: "jövőre", ru: "в следующем году", category: "Время", exampleSentence: "Jövőre Budapestre megyek.",
+        ipa: "[jˈøvøːrɛ]"
+    },
+    { id: "l19_v5", hu: "hamarosan", ru: "скоро", category: "Время", exampleSentence: "Hamarosan kezdünk.",
+        ipa: "[hɒmɒrˈoʃɒn]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 1901,
-      question: "Из чего состоит сложное будущее время в венгерском языке?",
-      options: ["инфинитив смыслового глагола + спрягаемый fog", "настоящее время + fog", "прошедшее время + fog", "инфинитив + van"],
+      question: 'Из чего состоит сложное будущее время в венгерском языке?',
+      options: [
+        'Инфинитив смыслового глагола + спрягаемый fog',
+        'Настоящее время + fog',
+        'Прошедшее время + fog',
+        'Инфинитив + van'
+      ],
       correctIndex: 0,
-      explanation: "Будущее время образуется сочетанием инфинитива смыслового глагола (например, tanulni) и спрягаемой формы глагола fog (fogok, fogsz, fog...)."
+      explanation: 'Будущее время образуется сочетанием инфинитива смыслового глагола (например, tanulni) и спрягаемой формы глагола fog (fogok, fogsz, fog...).'
     },
     {
       id: 1902,
-      question: "Какая форма глагола fog используется с определенным дополнением в 1-м лице (én)?",
-      options: ["fogok", "fogom", "fogsz", "fogja"],
+      question: 'Какая форма глагола fog используется с определённым дополнением в 1-м лице единственного числа (én)?',
+      options: ['fogok', 'fogom', 'fogsz', 'fogja'],
       correctIndex: 1,
-      explanation: "Для определенного спряжения в 1-м лице используется форма fogom (например, El fogom olvasni a könyvet)."
+      explanation: 'Для определённого спряжения в 1-м лице используется форма fogom: El fogom olvasni a könyvet. (Я прочитаю эту книгу).'
     },
     {
       id: 1903,
-      question: "Где ставится отрицание nem в будущем времени?",
-      options: ["Прямо перед fog (Nem fogok dolgozni)", "После инфинитива", "В самом конце предложения", "После fog"],
+      question: 'Как образуется отрицание в будущем времени с глаголом fog?',
+      options: [
+        'Nem fogok dolgozni (nem перед fog)',
+        'Fogok nem dolgozni',
+        'Dolgozni nem fogok',
+        'Nem dolgozni fogok'
+      ],
       correctIndex: 0,
-      explanation: "Отрицательная частица nem ставится непосредственно перед вспомогательным глаголом fog."
+      explanation: 'Отрицание ставится перед вспомогательным глаголом fog: Nem fogok dolgozni (Я не буду работать).'
+    },
+    {
+      id: 1904,
+      question: 'Какое слово означает "послезавтра" по-венгерски?',
+      options: ['holnapután', 'holnap', 'jövő héten', 'tegnapelőtt'],
+      correctIndex: 0,
+      explanation: '«Послезавтра» – holnapután. Holnap – завтра, jövő héten – на следующей неделе, tegnapelőtt – позавчера (урок 19, слайд 6).'
+    },
+    {
+      id: 1905,
+      question: 'Какая форма fog используется в предложении "Autót fog venni" (Она купит машину)?',
+      options: ['fog (неопределённое спряжение, 3-е лицо)', 'fogja (определённое спряжение, 3-е лицо)', 'fogok (1-е лицо)', 'fogunk (1-е лицо мн.ч.)'],
+      correctIndex: 0,
+      explanation: '"Autót" – неопределённое дополнение (какую-то машину), поэтому используется неопределённое спряжение: fog. Если бы было "az autót" (эту конкретную машину), использовалось бы fogja.'
+    },
+    {
+      id: 1906,
+      question: 'Можно ли использовать настоящее время для выражения будущего действия в венгерском языке?',
+      options: [
+        'Да, особенно с глаголами движения и указанием времени',
+        'Нет, только будущее время с fog',
+        'Только в прошедшем времени',
+        'Только в условном наклонении'
+      ],
+      correctIndex: 0,
+      explanation: 'Да, венгерский часто использует настоящее время с указанием времени для близкого будущего, особенно с глаголами движения: Holnap Budapestre megyek. (Завтра еду в Будапешт) – настоящее время, но смысл будущего (урок 19, слайд 5).'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l19_form-future', text: 'Образовывать будущее время с помощью fog + инфинитив.', skills: ['grammar', 'writing'] },
+    { id: 'l19_conjugate-fog', text: 'Спрягать вспомогательный глагол fog по лицам.', skills: ['grammar', 'writing'] },
+    { id: 'l19_use-future-plans', text: 'Рассказывать о планах и намерениях в будущем времени.', skills: ['speaking', 'writing'] },
+    { id: 'l19_distinguish-tenses', text: 'Различать настоящее, прошедшее и будущее время на слух и в тексте.', skills: ['listening', 'reading'] },
+    { id: 'l19_make-predictions', text: 'Делать прогнозы и предположения о будущем.', skills: ['speaking', 'writing'] },
+  ],
 };

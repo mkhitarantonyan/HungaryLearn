@@ -177,21 +177,129 @@ export const LESSON_11: Lesson = {
     }
   ],
   vocabulary: [
-    { id: 'l11_v1', hu: 'asztalon', ru: 'на столе', category: 'Местные падежи' },
-    { id: 'l11_v2', hu: 'asztalra', ru: 'на стол', category: 'Местные падежи' },
-    { id: 'l11_v3', hu: 'asztalról', ru: 'со стола', category: 'Местные падежи' },
-    { id: 'l11_v4', hu: 'széken', ru: 'на стуле', category: 'Местные падежи' },
-    { id: 'l11_v5', hu: 'székre', ru: 'на стул', category: 'Местные падежи' },
-    { id: 'l11_v6', hu: 'székről', ru: 'со стула', category: 'Местные падежи' },
-    { id: 'l11_v7', hu: 'Magyarországon', ru: 'в Венгрии', category: 'География' },
-    { id: 'l11_v8', hu: 'Magyarországra', ru: 'в Венгрию', category: 'География' },
-    { id: 'l11_v9', hu: 'Magyarországról', ru: 'из Венгрии', category: 'География' },
-    { id: 'l11_v10', hu: 'Budapesten', ru: 'в Будапеште', category: 'Города' },
-    { id: 'l11_v11', hu: 'Budapestre', ru: 'в Будапешт', category: 'Города' },
-    { id: 'l11_v12', hu: 'Budapestről', ru: 'из Будапешта', category: 'Города' },
-    { id: 'l11_v13', hu: 'posta', ru: 'почта', category: 'Лексика' },
-    { id: 'l11_v14', hu: 'egyetem', ru: 'университет', category: 'Лексика' },
-    { id: 'l11_v15', hu: 'piac', ru: 'рынок', category: 'Лексика' },
-    { id: 'l11_v16', hu: 'koncert', ru: 'концерт', category: 'Лексика' }
-  ]
+    { id: 'l11_v1', hu: 'asztalon', ru: 'на столе', category: 'Местные падежи',
+        ipa: "[ɒʃtɒlˈon]"
+    },
+    { id: 'l11_v2', hu: 'asztalra', ru: 'на стол', category: 'Местные падежи',
+        ipa: "[ɒʃtɒlrɒ]"
+    },
+    { id: 'l11_v3', hu: 'asztalról', ru: 'со стола', category: 'Местные падежи',
+        ipa: "[ɒʃtɒlrˈoːl]"
+    },
+    { id: 'l11_v4', hu: 'széken', ru: 'на стуле', category: 'Местные падежи',
+        ipa: "[ʃˈɛːkɛn]"
+    },
+    { id: 'l11_v5', hu: 'székre', ru: 'на стул', category: 'Местные падежи',
+        ipa: "[ʃˈɛːkrɛ]"
+    },
+    { id: 'l11_v6', hu: 'székről', ru: 'со стула', category: 'Местные падежи',
+        ipa: "[ʃˈɛːkrøːl]"
+    },
+    { id: 'l11_v7', hu: 'Magyarországon', ru: 'в Венгрии', category: 'География',
+        ipa: "[mɒɟɒrˈorʃɒːgon]"
+    },
+    { id: 'l11_v8', hu: 'Magyarországra', ru: 'в Венгрию', category: 'География',
+        ipa: "[mɒɟɒrˈorʃɒːgrɒ]"
+    },
+    { id: 'l11_v9', hu: 'Magyarországról', ru: 'из Венгрии', category: 'География',
+        ipa: "[mɒɟɒrˈorʃɒːgroːl]"
+    },
+    { id: 'l11_v10', hu: 'Budapesten', ru: 'в Будапеште', category: 'Города',
+        ipa: "[bˈudɒpɛʃtɛn]"
+    },
+    { id: 'l11_v11', hu: 'Budapestre', ru: 'в Будапешт', category: 'Города',
+        ipa: "[bˈudɒpɛʃtrɛ]"
+    },
+    { id: 'l11_v12', hu: 'Budapestről', ru: 'из Будапешта', category: 'Города',
+        ipa: "[bˈudɒpɛʃtrøːl]"
+    },
+    { id: 'l11_v13', hu: 'posta', ru: 'почта', category: 'Лексика',
+        ipa: "[pˈoʃtɒ]"
+    },
+    { id: 'l11_v14', hu: 'egyetem', ru: 'университет', category: 'Лексика',
+        ipa: "[ˈɛɟɛtɛm]"
+    },
+    { id: 'l11_v15', hu: 'piac', ru: 'рынок', category: 'Лексика',
+        ipa: "[pˈiɒts]"
+    },
+    { id: 'l11_v16', hu: 'koncert', ru: 'концерт', category: 'Лексика',
+        ipa: "[kˈontsɛrt]"
+    }
+  ],
+    quiz: [
+    {
+      id: 1101,
+      question: 'Какой суффикс используется для ответа на вопрос "Hol?" (Где?) в группе "На поверхности"?',
+      options: [
+        '-ban / -ben',
+        '-on / -en / -ön',
+        '-ba / -be',
+        '-ról / -ről'
+      ],
+      correctIndex: 1,
+      explanation: 'В группе "На поверхности" для вопроса "Hol?" (Где?) используются суффиксы -on (задние гласные), -en (передние неогубленные), -ön (передние огубленные), а также -n после гласной.'
+    },
+    {
+      id: 1102,
+      question: 'Какой суффикс используется для ответа на вопрос "Hova?" (Куда?) в группе "На поверхности"?',
+      options: ['-ba / -be', '-ra / -re', '-ról / -ről', '-on / -en'],
+      correctIndex: 1,
+      explanation: 'Для вопроса "Hova?" (Куда?) в группе "На поверхности" используются суффиксы -ra (задние) и -re (передние) – движение на поверхность.'
+    },
+    {
+      id: 1103,
+      question: 'Как правильно сказать "Я живу в Будапеште" по-венгерски?',
+      options: [
+        'Budapesten lakom',
+        'Budapestben lakom',
+        'Budapestre lakom',
+        'Budapestban lakom'
+      ],
+      correctIndex: 0,
+      explanation: 'Венгерские города (включая Будапешт) используют группу "На поверхности" для обозначения места: Budapest + -en = Budapesten (урок 11, слайд 5). Форма "Budapestben" не существует.'
+    },
+    {
+      id: 1104,
+      question: 'Почему "Berlinben" (в Берлине) использует внутреннюю группу, а "Budapesten" (в Будапеште) – поверхностную?',
+      options: [
+        'Так исторически сложилось: Венгрия и венгерские города воспринимаются как открытая поверхность, зарубежные – как закрытые пространства',
+        'Потому что Берлин больше Будапешта',
+        'Потому что в Берлине есть стена',
+        'Это случайность, правил нет'
+      ],
+      correctIndex: 0,
+      explanation: 'Венгерский язык исторически использует поверхностную группу для Венгрии и венгерских городов (Magyarországon, Budapesten), а внутреннюю – для зарубежных стран и городов (Németországban, Berlinben).'
+    },
+    {
+      id: 1105,
+      question: 'Что из перечисленного НЕ является правильным употреблением поверхностной группы?',
+      options: [
+        'A könyv az asztalon van (Книга на столе)',
+        'Tedd a könyvet az asztalra! (Положи книгу на стол)',
+        'Elveszem a könyvet az asztalról. (Беру книгу со стола)',
+        'A szobában vagyok. (Я в комнате)'
+      ],
+      correctIndex: 3,
+      explanation: '"A szobában vagyok" – это группа "Внутри" (урок 10), так как комната – это закрытое пространство. Поверхностная группа используется для поверхностей (стол, улица, площадь) и для Венгрии/венгерских городов.'
+    },
+    {
+      id: 1106,
+      question: 'В каком уроке мы изучали группу "Внутри" (-ban/-ben, -ba/-be, -ból/-ből)?',
+      options: [
+        'Урок 8 (притяжательные суффиксы)',
+        'Урок 9 (прилагательные)',
+        'Урок 10 (местные падежи I)',
+        'Урок 11 (местные падежи II)'
+      ],
+      correctIndex: 2,
+      explanation: 'Группу "Внутри" мы изучали в уроке 10. Теперь в уроке 11 мы изучаем группу "На поверхности". Эти две группы вместе с группой "Около/рядом" (урок 12) образуют полную систему трёхмерных местных падежей.'
+    }
+  ],
+  objectives: [
+    { id: 'l11_distinguish-surface-cases', text: 'Различать значения «где?», «куда?» и «откуда?» для падежей поверхности.', skills: ['grammar'] },
+    { id: 'l11_form-superessive', text: 'Образовывать падеж -n/-on/-en/-ön для ответа на вопрос «где?».', skills: ['grammar', 'writing'] },
+    { id: 'l11_form-sublative', text: 'Образовывать падеж -ra/-re для ответа на вопрос «куда?».', skills: ['grammar', 'writing'] },
+    { id: 'l11_form-delative', text: 'Образовывать падеж -ról/-ről для ответа на вопрос «откуда?».', skills: ['grammar', 'writing'] },
+    { id: 'l11_use-surface-cases', text: 'Описывать расположение предметов на поверхности в устной и письменной речи.', skills: ['speaking', 'writing'] },
+  ],
 };

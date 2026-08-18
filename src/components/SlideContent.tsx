@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import DOMPurify from 'dompurify';
-import { SlideData } from '../types';
+import { SlideData, LearningObjective, ActivityEvidence, ActivityRuntimeState } from '../types';
 import { SpeechButton } from './SpeechButton';
 import { AudioRecorder } from './AudioRecorder';
+import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
 import { speakText } from '../utils/speech';
 import { Info, AlertTriangle, BookOpen, Eye, EyeOff } from 'lucide-react';
 
 interface SlideContentProps {
   slide: SlideData;
+  activityEvidence?: Record<string, ActivityEvidence>;
+  objectives?: LearningObjective[];
+  onActivityEvidence?: (evidence: ActivityEvidence) => void;
+  onActivityEvidenceReset?: (activityId: string) => void;
+  activityRuntime?: Record<string, ActivityRuntimeState>;
+  onActivityRuntimeChange?: (activityId: string, patch: Partial<ActivityRuntimeState>) => void;
 }
 
-export const SlideContent: React.FC<SlideContentProps> = ({ slide }) => {
+export const SlideContent: React.FC<SlideContentProps> = ({
+  slide,
+  activityEvidence,
+  objectives,
+  onActivityEvidence,
+  onActivityEvidenceReset,
+  activityRuntime,
+  onActivityRuntimeChange,
+}) => {
   // Local state for interactive word cards reveal
   const [revealedWords, setRevealedWords] = useState<Record<string, boolean>>({});
   const [hideAllTranslations, setHideAllTranslations] = useState(false);
@@ -72,7 +87,10 @@ export const SlideContent: React.FC<SlideContentProps> = ({ slide }) => {
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-mono text-[#8A7A68] w-4">{idx + 1}.</span>
                     <SpeechButton text={item.hu} />
-                    <span className="text-xs text-[#8A7A68] font-mono">{item.phonetic}</span>
+                    <span className="text-xs text-[#8A7A68] font-mono">
+                      {item.phonetic}
+                      {item.ipa && <span className="ml-1 text-gray-400">/ {item.ipa}</span>}
+                    </span>
                   </div>
 
                   <div className="text-xs font-medium font-sans">
@@ -134,6 +152,25 @@ export const SlideContent: React.FC<SlideContentProps> = ({ slide }) => {
           <BookOpen className="w-4 h-4 shrink-0 mt-0.5 text-[#B98A2B]" />
           <div>{slide.task}</div>
         </motion.div>
+      )}
+
+      {/* Interactive lesson activities (pilot: lesson 15). Old lessons have no
+          activities and render exactly as before. */}
+      {slide.activities && slide.activities.length > 0 && (
+        <div className="pt-2 space-y-4">
+          {slide.activities.map((activity) => (
+            <LessonActivityRenderer
+              key={activity.id}
+              activity={activity}
+              evidence={activityEvidence}
+              objectives={objectives}
+              onEvidence={onActivityEvidence}
+              onResetEvidence={onActivityEvidenceReset}
+              runtime={activityRuntime?.[activity.id]}
+              onRuntimeChange={(patch) => onActivityRuntimeChange?.(activity.id, patch)}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

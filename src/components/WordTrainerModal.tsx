@@ -119,7 +119,10 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
                 <div className="text-3xl md:text-4xl font-mono font-bold text-[#57121C]">
                   {currentWord.hu}
                 </div>
-                <div className="text-sm font-mono text-[#8A7A68]">{currentWord.phonetic}</div>
+                 <div className="text-sm font-mono text-[#8A7A68]">
+                  {currentWord.phonetic}
+                  {currentWord.ipa && <span className="ml-2 text-gray-400">/ {currentWord.ipa}</span>}
+                </div>
                 <div className="pt-2">
                   <SpeechButton text={currentWord.hu} label="Послушать 🔊" variant="primary" />
                 </div>

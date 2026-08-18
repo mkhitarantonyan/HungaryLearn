@@ -186,43 +186,85 @@ export const LESSON_18: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l18_v1", hu: "tanulni", ru: "учиться", category: "Инфинитив", exampleSentence: "Magyarul szeretnék tanulni." },
-    { id: "l18_v2", hu: "dolgozni", ru: "работать", category: "Инфинитив", exampleSentence: "Holnap dolgoznom kell." },
-    { id: "l18_v3", hu: "írni", ru: "писать", category: "Инфинитив", exampleSentence: "Tollal akarok írni." },
-    { id: "l18_v4", hu: "lenni", ru: "быть", category: "Инфинитив", exampleSentence: "Jó lenni itthon." },
-    { id: "l18_v5", hu: "menni", ru: "идти", category: "Инфинитив", exampleSentence: "Mennem kell." },
-    { id: "l18_v6", hu: "enni", ru: "есть", category: "Инфинитив", exampleSentence: "Szeretnék enni." },
-    { id: "l18_v7", hu: "inni", ru: "пить", category: "Инфинитив", exampleSentence: "Vizet akarok inni." },
-    { id: "l18_v8", hu: "úszni", ru: "плавать", category: "Инфинитив", exampleSentence: "Tudok úszni." }
+    { id: "l18_v1", hu: "tanulni", ru: "учиться", category: "Инфинитив", exampleSentence: "Magyarul szeretnék tanulni.",
+        ipa: "[tɒnˈulni]"
+    },
+    { id: "l18_v2", hu: "dolgozni", ru: "работать", category: "Инфинитив", exampleSentence: "Holnap dolgoznom kell.",
+        ipa: "[dˈolgozni]"
+    },
+    { id: "l18_v3", hu: "írni", ru: "писать", category: "Инфинитив", exampleSentence: "Tollal akarok írni.",
+        ipa: "[ˈiːrni]"
+    },
+    { id: "l18_v4", hu: "lenni", ru: "быть", category: "Инфинитив", exampleSentence: "Jó lenni itthon.",
+        ipa: "[lˈɛnni]"
+    },
+    { id: "l18_v5", hu: "menni", ru: "идти", category: "Инфинитив", exampleSentence: "Mennem kell.",
+        ipa: "[mˈɛnni]"
+    },
+    { id: "l18_v6", hu: "enni", ru: "есть", category: "Инфинитив", exampleSentence: "Szeretnék enni.",
+        ipa: "[ˈɛnni]"
+    },
+    { id: "l18_v7", hu: "inni", ru: "пить", category: "Инфинитив", exampleSentence: "Vizet akarok inni.",
+        ipa: "[ˈinni]"
+    },
+    { id: "l18_v8", hu: "úszni", ru: "плавать", category: "Инфинитив", exampleSentence: "Tudok úszni.",
+        ipa: "[ˈuːʃni]"
+    }
   ],
   quiz: [
     {
       id: 1801,
-      question: "Как образуется инфинитив глаголов в венгерском языке?",
-      options: ["с помощью суффикса -ni", "с помощью суффикса -ik", "с помощью суффикса -ott", "с помощью суффикса -nak"],
+      question: 'Как образуется инфинитив от глагола "tanul" (учить)?',
+      options: ['tanulni', 'tanulni', 'tanulni', 'tanulni'],
       correctIndex: 0,
-      explanation: "Инфинитив глаголов образуется прибавлением суффикса -ni к основе глагола (tanul -> tanulni)."
+      explanation: 'Инфинитив образуется прибавлением суффикса -ni: tanul + ni = tanulni (учить).'
     },
     {
       id: 1802,
-      question: "Как сказать «Мне нужно идти» без использования местоимения nekem?",
-      options: ["Menni kell", "Mennem kell", "Megyek kell", "Mented kell"],
+      question: 'Как сказать «Мне нужно идти» по-венгерски (без использования "nekem")?',
+      options: ['Menni kell', 'Mennem kell', 'Megyek kell', 'Mented kell'],
       correctIndex: 1,
-      explanation: "Лицо выражается личным окончанием на самом инфинитиве: menni + m -> mennem kell."
+      explanation: 'Лицо выражается личным окончанием на инфинитиве: menni + m = mennem (мне идти). Правильно: Mennem kell.'
     },
     {
       id: 1803,
-      question: "В чём разница между «tud» и «lehet»?",
-      options: ["tud — способность/умение, lehet — разрешение/возможность", "tud — будущее время, lehet — прошедшее", "Разницы нет", "lehet — только для людей, tud — для вещей"],
+      question: 'Какая разница между глаголами "tud" и "lehet" в венгерском языке?',
+      options: [
+        'tud – способность/умение, lehet – разрешение/возможность',
+        'tud – будущее время, lehet – прошедшее',
+        'Разницы нет, это синонимы',
+        'lehet – только для людей, tud – для вещей'
+      ],
       correctIndex: 0,
-      explanation: "Tud означает выученную способность или навык («уметь»), а lehet — физическую возможность или разрешение («можно»)."
+      explanation: 'Tud означает выученную способность или навык («уметь»): Tudok úszni. Lehet – физическую возможность или разрешение («можно»): Lehet itt dohányozni?'
     },
     {
       id: 1804,
-      question: "Какое слово выражает вежливую форму «я хотел бы»?",
-      options: ["akarok", "szeretnék", "kell", "tudok"],
+      question: 'Какое слово выражает вежливую форму «я хотел бы» в ресторане или магазине?',
+      options: ['akarok', 'szeretnék', 'kell', 'tudok'],
       correctIndex: 1,
-      explanation: "Szeretnék — условная форма «я хотел(а) бы», признанный стандарт вежливости при заказах и просьбах."
+      explanation: 'Szeretnék – это вежливая условная форма «я хотел бы». Используется в заказах и просьбах. Akarok – более прямое «я хочу».'
+    },
+    {
+      id: 1805,
+      question: 'Какой из этих глаголов требует инфинитив для выражения действия?',
+      options: ['kell (нужно)', 'lehet (можно)', 'tud (уметь)', 'все перечисленные'],
+      correctIndex: 3,
+      explanation: 'Все три модальных глагола (kell, lehet, tud) требуют инфинитива для выражения действия: Mennem kell. (Мне нужно идти), Lehet itt dohányozni? (Можно здесь курить?), Tudok úszni. (Я умею плавать).'
+    },
+    {
+      id: 1806,
+      question: 'Как сказать «Я хочу есть» по-венгерски?',
+      options: ['Enni akarok', 'Enni szeretnék', 'Ennem kell', 'Enni tudok'],
+      correctIndex: 0,
+      explanation: '«Я хочу есть» – Enni akarok. Akar – прямое «хочу». Szeretnék – более вежливое «хотел бы». Kell – «нужно», tud – «умею».'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l18_form-infinitive', text: 'Образовывать инфинитив глаголов с помощью -ni.', skills: ['grammar', 'writing'] },
+    { id: 'l18_use-modal-verbs', text: 'Употреблять модальные глаголы kell, lehet, tud, szeretne, akar с инфинитивом.', skills: ['grammar', 'speaking', 'writing'] },
+    { id: 'l18_express-necessity', text: 'Выражать необходимость (kell) и возможность (lehet, tud).', skills: ['speaking', 'writing'] },
+    { id: 'l18_express-desire', text: 'Выражать желание и намерение (szeretne, akar).', skills: ['speaking', 'writing'] },
+    { id: 'l18_understand-modals', text: 'Понимать конструкции с модальными глаголами на слух.', skills: ['listening'] },
+  ],
 };

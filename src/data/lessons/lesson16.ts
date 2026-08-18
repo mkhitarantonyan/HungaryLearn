@@ -188,43 +188,90 @@ export const LESSON_16: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l16_v1", hu: "pénz", ru: "деньги", category: "Покупки", exampleSentence: "Van elég pénzem." },
-    { id: "l16_v2", hu: "ár", ru: "цена", category: "Покупки", exampleSentence: "Jó az ár." },
-    { id: "l16_v3", hu: "bankkártya", ru: "банковская карта", category: "Покупки", exampleSentence: "Kártyával fizetek." },
-    { id: "l16_v4", hu: "nyugta", ru: "чек", category: "Покупки", exampleSentence: "Kérem a nyugtát." },
-    { id: "l16_v5", hu: "méret", ru: "размер", category: "Одежда", exampleSentence: "Milyen méret?" },
-    { id: "l16_v6", hu: "szín", ru: "цвет", category: "Одежда", exampleSentence: "Szép szín." },
-    { id: "l16_v7", hu: "kedvezmény", ru: "скидка", category: "Покупки", exampleSentence: "Nagy kedvezmény." },
-    { id: "l16_v8", hu: "próbafülke", ru: "примерочная", category: "Магазин", exampleSentence: "Hol van a próbafülke?" }
+    { id: "l16_v1", hu: "pénz", ru: "деньги", category: "Покупки", exampleSentence: "Van elég pénzem.",
+        ipa: "[pˈɛːnz]"
+    },
+    { id: "l16_v2", hu: "ár", ru: "цена", category: "Покупки", exampleSentence: "Jó az ár.",
+        ipa: "[ɒːr]"
+    },
+    { id: "l16_v3", hu: "bankkártya", ru: "банковская карта", category: "Покупки", exampleSentence: "Kártyával fizetek.",
+        ipa: "[bɒnkkɒːrtsɒ]"
+    },
+    { id: "l16_v4", hu: "nyugta", ru: "чек", category: "Покупки", exampleSentence: "Kérem a nyugtát.",
+        ipa: "[ɲˈugtɒ]"
+    },
+    { id: "l16_v5", hu: "méret", ru: "размер", category: "Одежда", exampleSentence: "Milyen méret?",
+        ipa: "[mˈɛːrɛt]"
+    },
+    { id: "l16_v6", hu: "szín", ru: "цвет", category: "Одежда", exampleSentence: "Szép szín.",
+        ipa: "[ʃˈiːn]"
+    },
+    { id: "l16_v7", hu: "kedvezmény", ru: "скидка", category: "Покупки", exampleSentence: "Nagy kedvezmény.",
+        ipa: "[kˈɛdvɛzmɛːɲ]"
+    },
+    { id: "l16_v8", hu: "próbafülke", ru: "примерочная", category: "Магазин", exampleSentence: "Hol van a próbafülke?",
+        ipa: "[prˈoːbɒfylkɛ]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 1601,
-      question: "Что происходит с суффиксом -val/-vel, если слово оканчивается на согласную (например, vonat)?",
-      options: ["v заменяется на копию этой согласной (vonattal)", "Ничего не меняется (vonatval)", "Добавляется гласная (vonatoval)", "v отпадает (vonatal)"],
+      question: 'Что происходит с суффиксом -val/-vel, если слово оканчивается на согласную (например, "vonat" – поезд)?',
+      options: [
+        'v заменяется на копию этой согласной (vonattal)',
+        'Ничего не меняется (vonatval)',
+        'Добавляется гласная (vonatoval)',
+        'v отпадает (vonatal)'
+      ],
       correctIndex: 0,
-      explanation: "Происходит полная фонетическая ассимиляция: буква v превращается в копию согласного звука на конце слова (vonat + val -> vonattal)."
+      explanation: 'Происходит полная фонетическая ассимиляция: буква v превращается в копию согласного звука на конце слова. vonat + val → vonattal (t+v → tt).'
     },
     {
       id: 1602,
-      question: "Как сказать «со мной» по-венгерски?",
-      options: ["énnel", "velem", "énval", "velgem"],
+      question: 'Как сказать «со мной» по-венгерски?',
+      options: ['énnel', 'velem', 'énval', 'velgem'],
       correctIndex: 1,
-      explanation: "Личные формы творительного падежа образуются от корня vel-: velem (со мной), veled (с тобой), vele (с ним/ней)."
+      explanation: 'Личные формы творительного падежа образуются от корня "vel-": velem (со мной), veled (с тобой), vele (с ним/ней).'
     },
     {
       id: 1603,
-      question: "Как переводится вопрос «Mennyibe kerül ez?»?",
-      options: ["Где это продается?", "Сколько это стоит?", "Есть ли скидка?", "Могу я оплатить картой?"],
+      question: 'Как переводится вопрос «Mennyibe kerül ez?»?',
+      options: ['Где это продается?', 'Сколько это стоит?', 'Есть ли скидка?', 'Могу я оплатить картой?'],
       correctIndex: 1,
-      explanation: "«Mennyibe kerül ez?» переводится как «Сколько это стоит?»."
+      explanation: '«Mennyibe kerül ez?» переводится как «Сколько это стоит?» – стандартный вопрос о цене в магазине.'
     },
     {
       id: 1604,
-      question: "Как сказать «я заплачу банковской картой»?",
-      options: ["Bankkártya fizetek", "Kártyával fizetek", "Kártyanak fizetek", "Kártyában fizetek"],
+      question: 'Как сказать «я заплачу банковской картой» по-венгерски?',
+      options: ['Bankkártya fizetek', 'Kártyával fizetek', 'Kártyanak fizetek', 'Kártyában fizetek'],
       correctIndex: 1,
-      explanation: "«Картой» образуется с творительным падежом (-val/-vel): kártya + val = kártyával."
+      explanation: '«Картой» образуется с творительным падежом (-val/-vel): kártya + val = kártyával (ассимиляция: a→á, v остаётся, так как окончание на гласную).'
+    },
+    {
+      id: 1605,
+      question: 'Как сказать «с моим другом» по-венгерски?',
+      options: ['barátommal', 'barátomval', 'barátommal', 'barátommal'],
+      correctIndex: 0,
+      explanation: 'barát (друг) + притяжательный суффикс -om (мой) → barátom. Затем творительный падеж -val: barátom + val → barátommal (ассимиляция t+v → tt).'
+    },
+    {
+      id: 1606,
+      question: 'Что происходит с конечной гласной -a/-e при добавлении суффикса -val/-vel?',
+      options: [
+        'Удлиняется до -á/-é (kutya → kutyával)',
+        'Не меняется (kutya → kutyaval)',
+        'Выпадает (kutya → kutyal)',
+        'Превращается в -o/-ö'
+      ],
+      correctIndex: 0,
+      explanation: 'При добавлении -val/-vel к словам на -a/-e конечная гласная удлиняется: a→á, e→é. Пример: kutya → kutyával, kávé → kávéval (урок 16, слайд 2).'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l16_form-instrumental', text: 'Образовывать творительный падеж с помощью -val/-vel.', skills: ['grammar', 'writing'] },
+    { id: 'l16_apply-assimilation', text: 'Применять ассимиляцию согласных в -val/-vel (например, busz → busszal).', skills: ['grammar', 'writing'] },
+    { id: 'l16_use-instrumental', text: 'Использовать творительный падеж для указания средства и сопровождения.', skills: ['grammar', 'speaking'] },
+    { id: 'l16_shop-dialogue', text: 'Вести диалог в магазине: спрашивать цену, количество и оплату.', skills: ['speaking', 'listening'] },
+    { id: 'l16_count-money', text: 'Называть цены и денежные суммы.', skills: ['speaking', 'reading', 'listening'] },
+  ],
 };

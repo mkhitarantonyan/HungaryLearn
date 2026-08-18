@@ -181,22 +181,125 @@ export const LESSON_8_3: Lesson = { // wait, exported as LESSON_10
     }
   ],
   vocabulary: [
-    { id: 'l10_v1', hu: 'hol', ru: 'где?', category: 'Вопросы места' },
-    { id: 'l10_v2', hu: 'hová', ru: 'куда?', category: 'Вопросы места' },
-    { id: 'l10_v3', hu: 'honnan', ru: 'откуда?', category: 'Вопросы места' },
-    { id: 'l10_v4', hu: 'házban', ru: 'в доме', category: 'Местные падежи' },
-    { id: 'l10_v5', hu: 'házba', ru: 'в дом', category: 'Местные падежи' },
-    { id: 'l10_v6', hu: 'házból', ru: 'из дома', category: 'Местные падежи' },
-    { id: 'l10_v7', hu: 'szobában', ru: 'в комнате', category: 'Местные падежи' },
-    { id: 'l10_v8', hu: 'szobába', ru: 'в комнату', category: 'Местные падежи' },
-    { id: 'l10_v9', hu: 'szobából', ru: 'из комнаты', category: 'Местные падежи' },
-    { id: 'l10_v10', hu: 'bolt', ru: 'магазин', category: 'Лексика' },
-    { id: 'l10_v11', hu: 'iskola', ru: 'школа', category: 'Лексика' },
-    { id: 'l10_v12', hu: 'étterem', ru: 'ресторан', category: 'Лексика' },
-    { id: 'l10_v13', hu: 'iroda', ru: 'офис', category: 'Лексика' },
-    { id: 'l10_v14', hu: 'Németországban', ru: 'в Германии', category: 'Страны' },
-    { id: 'l10_v15', hu: 'Berlinbe', ru: 'в Берлин', category: 'Города' },
-    { id: 'l10_v16', hu: 'Örményországból', ru: 'из Армении', category: 'Страны' }
-  ]
+    { id: 'l10_v1', hu: 'hol', ru: 'где?', category: 'Вопросы места',
+        ipa: "[hˈol]"
+    },
+    { id: 'l10_v2', hu: 'hová', ru: 'куда?', category: 'Вопросы места',
+        ipa: "[hˈovɒː]"
+    },
+    { id: 'l10_v3', hu: 'honnan', ru: 'откуда?', category: 'Вопросы места',
+        ipa: "[hˈonnɒn]"
+    },
+    { id: 'l10_v4', hu: 'házban', ru: 'в доме', category: 'Местные падежи',
+        ipa: "[hɒːzbɒn]"
+    },
+    { id: 'l10_v5', hu: 'házba', ru: 'в дом', category: 'Местные падежи',
+        ipa: "[hɒːzbɒ]"
+    },
+    { id: 'l10_v6', hu: 'házból', ru: 'из дома', category: 'Местные падежи',
+        ipa: "[hɒːzbˈoːl]"
+    },
+    { id: 'l10_v7', hu: 'szobában', ru: 'в комнате', category: 'Местные падежи',
+        ipa: "[ʃˈobɒːbɒn]"
+    },
+    { id: 'l10_v8', hu: 'szobába', ru: 'в комнату', category: 'Местные падежи',
+        ipa: "[ʃˈobɒːbɒ]"
+    },
+    { id: 'l10_v9', hu: 'szobából', ru: 'из комнаты', category: 'Местные падежи',
+        ipa: "[ʃˈobɒːboːl]"
+    },
+    { id: 'l10_v10', hu: 'bolt', ru: 'магазин', category: 'Лексика',
+        ipa: "[bˈolt]"
+    },
+    { id: 'l10_v11', hu: 'iskola', ru: 'школа', category: 'Лексика',
+        ipa: "[ˈiʃkolɒ]"
+    },
+    { id: 'l10_v12', hu: 'étterem', ru: 'ресторан', category: 'Лексика',
+        ipa: "[ˈɛːttɛrɛm]"
+    },
+    { id: 'l10_v13', hu: 'iroda', ru: 'офис', category: 'Лексика',
+        ipa: "[ˈirodɒ]"
+    },
+    { id: 'l10_v14', hu: 'Németországban', ru: 'в Германии', category: 'Страны',
+        ipa: "[nˈɛːmɛtorʃɒːgbɒn]"
+    },
+    { id: 'l10_v15', hu: 'Berlinbe', ru: 'в Берлин', category: 'Города',
+        ipa: "[bˈɛrlinbɛ]"
+    },
+    { id: 'l10_v16', hu: 'Örményországból', ru: 'из Армении', category: 'Страны',
+        ipa: "[ˈørmɛːɲorʃɒːgboːl]"
+    }
+  ],
+    quiz: [
+    {
+      id: 1001,
+      question: 'Какой суффикс используется для ответа на вопрос "Hol?" (Где?) в группе "Внутри"?',
+      options: ['-ban / -ben', '-ba / -be', '-ból / -ből', '-n / -on'],
+      correctIndex: 0,
+      explanation: 'Для вопроса "Hol?" (Где?) в группе "Внутри" используются суффиксы -ban (для задних гласных) и -ben (для передних гласных).'
+    },
+    {
+      id: 1002,
+      question: 'Какой суффикс используется для ответа на вопрос "Hova?" (Куда?) в группе "Внутри"?',
+      options: ['-ban / -ben', '-ba / -be', '-ból / -ből', '-ra / -re'],
+      correctIndex: 1,
+      explanation: 'Для вопроса "Hova?" (Куда?) в группе "Внутри" используются суффиксы -ba (для задних гласных) и -be (для передних гласных).'
+    },
+    {
+      id: 1003,
+      question: 'Как сказать "Я живу в Германии" по-венгерски?',
+      options: [
+        'Németországban élek',
+        'Németországba élek',
+        'Németországból élek',
+        'Németországon élek'
+      ],
+      correctIndex: 0,
+      explanation: 'Для обозначения нахождения в стране используется суффикс -ban/-ben: Németországban élek (Я живу в Германии). "Németországba" – это "в Германию" (движение), "Németországból" – "из Германии".'
+    },
+    {
+      id: 1004,
+      question: 'Как правильно сказать "Я иду в магазин" по-венгерски?',
+      options: [
+        'Megyek a boltban',
+        'Megyek a boltba',
+        'Megyek a boltból',
+        'Megyek a boltra'
+      ],
+      correctIndex: 1,
+      explanation: 'Глагол движения (megyek) требует суффикса направления -ba/-be: bolt + ba = boltba (в магазин). "Megyek a boltban" – неверно, так как -ban/-ben используется для покоя (где?).'
+    },
+    {
+      id: 1005,
+      question: 'Какое из этих предложений НЕВЕРНО с точки зрения грамматики?',
+      options: [
+        'A házban vagyok (Я в доме)',
+        'A szobába megyek (Я иду в комнату)',
+        'A kertből jövök (Я прихожу из сада)',
+        'A boltban megyek (Я иду в магазине)'
+      ],
+      correctIndex: 3,
+      explanation: '"A boltban megyek" – неверно, потому что "megyek" (иду) – это глагол движения, который требует суффикса направления -ba/-be (boltba). -ban/-ben используется только для покоя (van, lakik, él).'
+    },
+    {
+      id: 1006,
+      question: 'В каком уроке мы изучали гармонию гласных, которая влияет на выбор суффикса (-ban или -ben, -ba или -be)?',
+      options: [
+        'Урок 1 (алфавит и звуки)',
+        'Урок 2 (приветствия и lenni)',
+        'Урок 5 (числа и время)',
+        'Урок 9 (прилагательные)'
+      ],
+      correctIndex: 1,
+      explanation: 'Гармония гласных – это фундаментальный закон венгерского языка, который мы впервые изучали в уроке 2 (Magánhangzó-harmónia). Теперь мы применяем его при выборе суффиксов: -ban (задние) vs -ben (передние).'
+    }
+  ],
+  objectives: [
+    { id: 'l10_distinguish-inner-cases', text: 'Различать значения «где?», «куда?» и «откуда?» для внутренних падежей.', skills: ['grammar'] },
+    { id: 'l10_form-inessive', text: 'Образовывать падеж -ban/-ben для ответа на вопрос «где?».', skills: ['grammar', 'writing'] },
+    { id: 'l10_form-illative', text: 'Образовывать падеж -ba/-be для ответа на вопрос «куда?».', skills: ['grammar', 'writing'] },
+    { id: 'l10_form-elative', text: 'Образовывать падеж -ból/-ből для ответа на вопрос «откуда?».', skills: ['grammar', 'writing'] },
+    { id: 'l10_use-inner-cases', text: 'Употреблять внутренние падежи при описании местоположения и движения.', skills: ['speaking', 'writing', 'listening'] },
+  ],
 };
 export const LESSON_10 = LESSON_8_3;

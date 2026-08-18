@@ -160,32 +160,98 @@ export const LESSON_26: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l26_v1", hu: "fejfájás", ru: "головная боль", category: "Здоровье", exampleSentence: "Fejfájásom van." },
-    { id: "l26_v2", hu: "gyógyszer", ru: "лекарство", category: "Здоровье", exampleSentence: "Beveszem a gyógyszert." },
-    { id: "l26_v3", hu: "recept", ru: "рецепт (медицинский)", category: "Здоровье", exampleSentence: "Az orvos receptet írt." },
-    { id: "l26_v4", hu: "gyógyszertár", ru: "аптека", category: "Здоровье", exampleSentence: "A gyógyszertárban vagyok." }
+    { id: "l26_v1", hu: "fejfájás", ru: "головная боль", category: "Здоровье", exampleSentence: "Fejfájásom van.",
+        ipa: "[fˈɛjfɒːjɒːʃ]"
+    },
+    { id: "l26_v2", hu: "gyógyszer", ru: "лекарство", category: "Здоровье", exampleSentence: "Beveszem a gyógyszert.",
+        ipa: "[ɟˈoːɟʃɛr]"
+    },
+    { id: "l26_v3", hu: "recept", ru: "рецепт (медицинский)", category: "Здоровье", exampleSentence: "Az orvos receptet írt.",
+        ipa: "[rˈɛtsɛpt]"
+    },
+    { id: "l26_v4", hu: "gyógyszertár", ru: "аптека", category: "Здоровье", exampleSentence: "A gyógyszertárban vagyok.",
+        ipa: "[ɟˈoːɟʃɛrtɒːr]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 2601,
-      question: "Как правильнее сказать по-венгерски «У меня болит голова»?",
-      options: ["Fáj a fejem", "Fáj én fej", "Fej van fáj", "Nekem fej fáj"],
+      question: 'Как сказать «У меня болит голова» по-венгерски?',
+      options: [
+        'Fáj a fejem',
+        'Fáj én fej',
+        'Fej van fáj',
+        'Nekem fej fáj'
+      ],
       correctIndex: 0,
-      explanation: "Используется конструкция Fáj a + притяжательная форма части тела: Fáj a fejem."
+      explanation: 'Конструкция: Fáj + a + притяжательная форма части тела. fej → fejem (моя голова). Правильно: Fáj a fejem.'
     },
     {
       id: 2602,
-      question: "Что означает словосочетание «lázam van»?",
-      options: ["У меня температура", "У меня кружится голова", "Я простудился", "Я болен"],
+      question: 'Что означает фраза «Lázam van» по-венгерски?',
+      options: [
+        'У меня температура',
+        'У меня кружится голова',
+        'Я простудился',
+        'Я болен'
+      ],
       correctIndex: 0,
-      explanation: "Lázam van означает «у меня температура»."
+      explanation: '«Lázam van» означает «У меня температура». Láz = жар/температура, -am = притяжательный суффикс 1-го лица (моя).'
     },
     {
       id: 2603,
-      question: "Какое послелог/предлог используется для выражения «лекарство ОТ [чего-то]»?",
-      options: ["ellen", "után", "előtt", "mellett"],
+      question: 'Как спросить у врача «На что жалуетесь?» по-венгерски?',
+      options: [
+        'Mi a panasz?',
+        'Hogy van?',
+        'Mit csinál?',
+        'Hol fáj?'
+      ],
       correctIndex: 0,
-      explanation: "Послелог ellen означает «против/от» (например, fejfájás ellen — от головной боли)."
+      explanation: '«Mi a panasz?» – стандартный вопрос врача о жалобах пациента, переводится как «На что жалуетесь?» (урок 26, слайд 5).'
+    },
+    {
+      id: 2604,
+      question: 'Как сказать «Я кашляю» по-венгерски?',
+      options: [
+        'Köhögök',
+        'Köhög',
+        'Köhögnék',
+        'Köhögni'
+      ],
+      correctIndex: 0,
+      explanation: 'Глагол «köhög» (кашлять) в 1-м лице единственного числа: köhög + ök = köhögök (я кашляю).'
+    },
+    {
+      id: 2605,
+      question: 'Как попросить в аптеке что-нибудь от головной боли?',
+      options: [
+        'Szeretnék valamit fejfájás ellen.',
+        'Szeretnék valamit fejfájásra.',
+        'Szeretnék valamit fejfájástól.',
+        'Szeretnék valamit fejfájásban.'
+      ],
+      correctIndex: 0,
+      explanation: 'Послелог «ellen» означает «против/от»: fejfájás ellen – от головной боли. Правильная фраза: «Szeretnék valamit fejfájás ellen.» (Я хотел бы что-нибудь от головной боли).'
+    },
+    {
+      id: 2606,
+      question: 'Какое наклонение используется во фразе врача «Nyissa ki a száját!» (Откройте рот!)?',
+      options: [
+        'Повелительное наклонение (felszólító mód)',
+        'Изъявительное настоящее',
+        'Условное наклонение',
+        'Прошедшее время'
+      ],
+      correctIndex: 0,
+      explanation: '«Nyissa» – это повелительное наклонение от глагола «nyit» (открывать) с окончанием -ja (вежливая форма на «Вы»). Повелительное наклонение мы изучали в уроке 22.'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l26_name-body-symptoms', text: 'Описывать симптомы и части тела (Fáj a fejem).', skills: ['speaking', 'writing'] },
+    { id: 'l26_express-pain', text: 'Выражать боль и недомогание (Fáj a…, lázam van).', skills: ['speaking', 'writing'] },
+    { id: 'l26_doctor-dialogue', text: 'Вести диалог с врачом: отвечать на вопросы о состоянии.', skills: ['speaking', 'listening'] },
+    { id: 'l26_pharmacy', text: 'Объяснять в аптеке, какое лекарство нужно (gyógyszertár).', skills: ['speaking', 'listening'] },
+    { id: 'l26_understand-advice', text: 'Понимать рекомендации врача на слух.', skills: ['listening'] },
+  ],
 };

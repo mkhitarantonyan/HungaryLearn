@@ -155,32 +155,83 @@ export const LESSON_27: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l27_v1", hu: "pályaudvar", ru: "ж/д вокзал", category: "Транспорт", exampleSentence: "A Keleti pályaudvaron vagyok." },
-    { id: "l27_v2", hu: "repülőtér", ru: "аэропорт", category: "Транспорт", exampleSentence: "Kint vagyok a repülőtéren." },
-    { id: "l27_v3", hu: "szálloda", ru: "отель / гостиница", category: "Путешествия", exampleSentence: "Szép szállodában lakunk." },
-    { id: "l27_v4", hu: "foglalás", ru: "бронирование", category: "Путешествия", exampleSentence: "Megvan a foglalásom." }
+    { id: "l27_v1", hu: "pályaudvar", ru: "ж/д вокзал", category: "Транспорт", exampleSentence: "A Keleti pályaudvaron vagyok.",
+        ipa: "[pɒːjɒˈudvɒr]"
+    },
+    { id: "l27_v2", hu: "repülőtér", ru: "аэропорт", category: "Транспорт", exampleSentence: "Kint vagyok a repülőtéren.",
+        ipa: "[rˈɛpyløːtɛːr]"
+    },
+    { id: "l27_v3", hu: "szálloda", ru: "отель / гостиница", category: "Путешествия", exampleSentence: "Szép szállodában lakunk.",
+        ipa: "[ʃɒːllˈodɒ]"
+    },
+    { id: "l27_v4", hu: "foglalás", ru: "бронирование", category: "Путешествия", exampleSentence: "Megvan a foglalásom.",
+        ipa: "[fˈoglɒlɒːʃ]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 2701,
-      question: "Как по-венгерски сказать «на автобусе»?",
-      options: ["busszal", "buszban", "buszon", "buszra"],
+      question: 'Как сказать «на автобусе» по-венгерски?',
+      options: ['busszal', 'buszban', 'buszon', 'buszra'],
       correctIndex: 0,
-      explanation: "busz + -val → busszal: конечный z сохраняется и удваивается, а v ассимилируется."
+      explanation: 'busz + -val → busszal. Происходит полная ассимиляция: конечный z удваивается, а v превращается в z (busz + val → busszal).'
     },
     {
       id: 2702,
-      question: "Какое выражение означает билет «туда и обратно»?",
-      options: ["retúrjegy", "egy útra jegy", "olcsó jegy", "diákjegy"],
+      question: 'Как сказать «на поезде» по-венгерски?',
+      options: ['vonattal', 'vonatban', 'vonaton', 'vonatra'],
       correctIndex: 0,
-      explanation: "Билет туда-обратно называется retúrjegy (menettérti jegy — более формальный вариант)."
+      explanation: 'vonat + -val → vonattal. Ассимиляция: t + v → tt (vonatval → vonattal).'
     },
     {
       id: 2703,
-      question: "Какое слово означает «бронирование»?",
-      options: ["foglalás", "késés", "vágány", "átszállás"],
+      question: 'Как сказать «билет туда и обратно» по-венгерски?',
+      options: ['retúrjegy', 'egy útra jegy', 'retúr jegy', 'menetjegy'],
       correctIndex: 0,
-      explanation: "«Foglalás» означает бронирование (например, номера в отеле или столика)."
+      explanation: 'Правильное слитное написание: retúrjegy (билет туда и обратно). "Egy útra" – билет в одну сторону. "Menetjegy" – просто билет (без указания направления).'
+    },
+    {
+      id: 2704,
+      question: 'Что означает слово «foglalás» в контексте путешествий?',
+      options: [
+        'бронирование (номера в отеле, столика и т.д.)',
+        'опоздание / задержка',
+        'пересадка',
+        'рейс / маршрут'
+      ],
+      correctIndex: 0,
+      explanation: '«Foglalás» – это бронирование. Например: "Szobát szeretnék foglalni." (Я хотел бы забронировать номер). "Késés" – опоздание, "átszállás" – пересадка, "járat" – рейс (урок 27, слайд 5).'
+    },
+    {
+      id: 2705,
+      question: 'Как спросить «Как мне добраться до музея?» по-венгерски?',
+      options: [
+        'Hogyan jutok el a múzeumba?',
+        'Hol van a múzeum?',
+        'Mikor nyit a múzeum?',
+        'Mennyibe kerül a múzeum?'
+      ],
+      correctIndex: 0,
+      explanation: '«Hogyan jutok el a múzeumba?» – стандартный вопрос о том, как добраться до места. "Jutok el" – форма глагола "eljut" (добраться) с приставкой "el" (урок 27, слайд 6).'
+    },
+    {
+      id: 2706,
+      question: 'Какой падеж используется для указания средства передвижения в венгерском языке (например, "на автобусе", "на поезде")?',
+      options: [
+        'Творительный падеж (-val/-vel)',
+        'Дательный падеж (-nak/-nek)',
+        'Винительный падеж (-t)',
+        'Местный падеж (-ban/-ben)'
+      ],
+      correctIndex: 0,
+      explanation: 'Для указания средства передвижения используется творительный падеж (-val/-vel): busszal (на автобусе), vonattal (на поезде). Этот падеж мы изучали в уроке 16.'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l27_name-transport', text: 'Называть виды транспорта и использовать творительный падеж (busszal).', skills: ['speaking', 'grammar', 'writing'] },
+    { id: 'l27_buy-tickets', text: 'Покупать билеты (retúrjegy, menetjegy) и уточнять детали поездки.', skills: ['speaking', 'listening'] },
+    { id: 'l27_book-room', text: 'Бронировать номер в гостинице (foglalás).', skills: ['speaking', 'writing'] },
+    { id: 'l27_ask-directions', text: 'Спрашивать и объяснять дорогу.', skills: ['speaking', 'listening'] },
+    { id: 'l27_travel-dialogue', text: 'Вести диалог на вокзале и в гостинице.', skills: ['speaking', 'listening'] },
+  ],
 };

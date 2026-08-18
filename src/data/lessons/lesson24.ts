@@ -150,37 +150,88 @@ export const LESSON_24: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l24_v1", hu: "ezért", ru: "поэтому", category: "Союзы", exampleSentence: "Esik az eső, ezért nem megyünk." },
-    { id: "l24_v2", hu: "mert", ru: "потому что", category: "Союзы", exampleSentence: "Azért jöttem, mert szeretem." },
-    { id: "l24_v3", hu: "hogy", ru: "что / чтобы", category: "Союзы", exampleSentence: "Tudom, hogy itt vagy." },
-    { id: "l24_v4", hu: "bár", ru: "хотя", category: "Союзы", exampleSentence: "Elmegyek, bár fáradt vagyok." }
+    { id: "l24_v1", hu: "ezért", ru: "поэтому", category: "Союзы", exampleSentence: "Esik az eső, ezért nem megyünk.",
+        ipa: "[ˈɛzɛːrt]"
+    },
+    { id: "l24_v2", hu: "mert", ru: "потому что", category: "Союзы", exampleSentence: "Azért jöttem, mert szeretem.",
+        ipa: "[mˈɛrt]"
+    },
+    { id: "l24_v3", hu: "hogy", ru: "что / чтобы", category: "Союзы", exampleSentence: "Tudom, hogy itt vagy.",
+        ipa: "[hˈoɟ]"
+    },
+    { id: "l24_v4", hu: "bár", ru: "хотя", category: "Союзы", exampleSentence: "Elmegyek, bár fáradt vagyok.",
+        ipa: "[bɒːr]"
+    }
   ],
-  quiz: [
+    quiz: [
     {
       id: 2401,
-      question: "Какая форма наклонения глагола требуется после союза hogy в значении «чтобы»?",
-      options: ["Повелительное наклонение (felszólító mód)", "Изъявительное настоящее", "Прошедшее время", "Условное наклонение"],
+      question: 'Какая форма наклонения глагола требуется после союза "hogy" в значении «чтобы»?',
+      options: [
+        'Повелительное наклонение (felszólító mód)',
+        'Изъявительное настоящее',
+        'Прошедшее время',
+        'Условное наклонение'
+      ],
       correctIndex: 0,
-      explanation: "В конструкциях цели с hogy смысл «чтобы» обычно реализуется финитной формой в повелительном/сослагательном значении: Azért jöttem, hogy segítsek."
+      explanation: 'В конструкциях цели с "hogy" смысл «чтобы» реализуется повелительным наклонением: "Azért jöttem, hogy segítsek." (Я пришёл, чтобы помочь). "Segítsek" – это повелительное наклонение 1-го лица.'
     },
     {
       id: 2402,
-      question: "Какое из этих слов означает «поэтому»?",
-      options: ["ezért", "mert", "bár", "hogy"],
-      correctIndex: 0,
-      explanation: "Ezért переводится как «поэтому» (следствие), а mert — «потому что» (причина)."
+      question: 'Как переводится союз "mert" в венгерском языке?',
+      options: ['поэтому', 'потому что', 'хотя', 'если'],
+      correctIndex: 1,
+      explanation: '"Mert" – это причинный союз, переводится как «потому что» или «так как»: "Nem jöttem, mert beteg voltam." (Я не пришёл, потому что болел).'
     },
     {
       id: 2403,
-      question: "Когда перед és требуется запятая?",
+      question: 'Когда перед союзом "és" в венгерском языке ставится запятая?',
       options: [
-        "Когда és соединяет части сложного предложения",
-        "Когда és соединяет однородные члены",
-        "Перед és запятая никогда не ставится",
-        "Перед és запятая ставится всегда"
+        'Когда "és" соединяет части сложного предложения',
+        'Когда "és" соединяет однородные члены',
+        'Перед "és" запятая никогда не ставится',
+        'Перед "és" запятая ставится всегда'
       ],
       correctIndex: 0,
-      explanation: "Запятая ставится на границе частей сложного предложения. Между однородными членами, соединёнными és, запятая обычно не нужна."
+      explanation: 'Запятая ставится на границе частей сложного предложения. Между однородными членами, соединёнными "és", запятая обычно не нужна (урок 24, слайд 1).'
+    },
+    {
+      id: 2404,
+      question: 'Какое слово означает «хотя» в венгерском языке?',
+      options: ['mert', 'ezért', 'bár', 'ha'],
+      correctIndex: 2,
+      explanation: '"Bár" (или "habár") переводится как «хотя» / «несмотря на то что»: "Elmentem, bár fáradt voltam." (Я пошёл, хотя был уставшим).'
+    },
+    {
+      id: 2405,
+      question: 'В чём разница между "ezért" и "mert" в венгерском языке?',
+      options: [
+        'ezért – причина, mert – следствие',
+        'ezért – следствие (поэтому), mert – причина (потому что)',
+        'Разницы нет, это синонимы',
+        'ezért – только в начале предложения, mert – в середине'
+      ],
+      correctIndex: 1,
+      explanation: '"Ezért" означает «поэтому» и указывает на следствие: "Esik az eső, ezért itthon maradunk." (Идёт дождь, поэтому мы остаёмся дома). "Mert" – «потому что» и указывает на причину: "Nem jöttem, mert beteg voltam." (Я не пришёл, потому что болел).'
+    },
+    {
+      id: 2406,
+      question: 'В каком из этих предложений "hogy" переводится как «чтобы» (а не «что»)?',
+      options: [
+        'Tudom, hogy itt vagy. (Я знаю, что ты здесь)',
+        'Azt mondta, hogy holnap jön. (Он сказал, что придёт завтра)',
+        'Azért jöttem, hogy segítsek. (Я пришёл, чтобы помочь)',
+        'Látom, hogy dolgozol. (Я вижу, что ты работаешь)'
+      ],
+      correctIndex: 2,
+      explanation: '"Hogy" + повелительное наклонение = «чтобы»: "Azért jöttem, hogy segítsek." (Я пришёл, чтобы помочь). Во всех остальных примерах "hogy" + изъявительное наклонение = «что».'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l24_use-conjunctions', text: 'Использовать союзы és, de, mert, hogy, bár, ha для соединения предложений.', skills: ['grammar', 'writing'] },
+    { id: 'l24_build-complex-sentences', text: 'Строить сложносочинённые и сложноподчинённые предложения.', skills: ['grammar', 'writing', 'speaking'] },
+    { id: 'l24_express-cause', text: 'Выражать причину с помощью союза mert.', skills: ['grammar', 'speaking', 'writing'] },
+    { id: 'l24_express-contrast', text: 'Выражать противопоставление с de и уступку с bár.', skills: ['grammar', 'speaking', 'writing'] },
+    { id: 'l24_connect-ideas', text: 'Связывать мысли в устном рассказе с помощью союзов.', skills: ['speaking', 'writing'] },
+  ],
 };

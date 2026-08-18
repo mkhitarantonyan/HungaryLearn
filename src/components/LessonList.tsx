@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { LessonMeta } from '../types';
+import { Lesson } from '../types';
 import { BookOpen, ChevronRight, Volume2, ShieldCheck, User, Lock, CreditCard } from 'lucide-react';
 import { getCurrentUser, subscribeUserState, UserProfile, isLessonAccessible } from '../utils/userStore';
 
 interface LessonListProps {
-  lessons: LessonMeta[];
+  lessons: Lesson[];
   onSelectLesson: (lessonId: number) => void;
   onOpenAdmin: () => void;
   isAdmin: boolean;
@@ -56,11 +56,11 @@ function LessonCard({
   onSelect,
   onLockedClick,
 }: {
-  lesson: LessonMeta;
+  lesson: Lesson;
   accessible: boolean;
   accent: Accent;
   onSelect: (id: number) => void;
-  onLockedClick: (lesson: LessonMeta) => void;
+  onLockedClick: (lesson: Lesson) => void;
 }) {
   return (
     <motion.div
@@ -141,11 +141,11 @@ function LevelSection({
 }: {
   levelLabel: string;
   levelTitle: string;
-  lessons: LessonMeta[];
+  lessons: Lesson[];
   accent: Accent;
   isAccessibleFn: (n: number) => boolean;
   onSelect: (id: number) => void;
-  onLockedClick: (l: LessonMeta) => void;
+  onLockedClick: (l: Lesson) => void;
 }) {
   if (lessons.length === 0) return null;
   return (

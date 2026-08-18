@@ -171,21 +171,123 @@ export const LESSON_14: Lesson = {
     }
   ],
   vocabulary: [
-    { id: 'l14_v1', hu: 'napi rutin', ru: 'ежедневный распорядок', category: 'Тема урока' },
-    { id: 'l14_v2', hu: 'felébred', ru: 'просыпаться', category: 'Глаголы дня' },
-    { id: 'l14_v3', hu: 'felkel', ru: 'вставать', category: 'Глаголы дня' },
-    { id: 'l14_v4', hu: 'mosakodik', ru: 'умываться', category: 'Глаголы дня' },
-    { id: 'l14_v5', hu: 'fésülködik', ru: 'причесываться', category: 'Глаголы дня' },
-    { id: 'l14_v6', hu: 'felöltözik', ru: 'одеваться', category: 'Глаголы дня' },
-    { id: 'l14_v7', hu: 'reggelizik', ru: 'завтракать', category: 'Глаголы дня' },
-    { id: 'l14_v8', hu: 'ebédel', ru: 'обедать', category: 'Глаголы дня' },
-    { id: 'l14_v9', hu: 'vacsorázik', ru: 'ужинать', category: 'Глаголы дня' },
-    { id: 'l14_v10', hu: 'hazamegy', ru: 'идти домой', category: 'Глаголы дня' },
-    { id: 'l14_v11', hu: 'lefekszik', ru: 'ложиться спать', category: 'Глаголы дня' },
-    { id: 'l14_v12', hu: 'elalszik', ru: 'засыпать', category: 'Глаголы дня' },
-    { id: 'l14_v13', hu: 'magamat', ru: 'себя (меня самого)', category: 'Возвратные формы' },
-    { id: 'l14_v14', hu: 'magadat', ru: 'себя (тебя самого)', category: 'Возвратные формы' },
-    { id: 'l14_v15', hu: 'magát', ru: 'себя (его/ее самого)', category: 'Возвратные формы' },
-    { id: 'l14_v16', hu: 'zuhanyozik', ru: 'принимать душ', category: 'Бытовая лексика' }
-  ]
+    { id: 'l14_v1', hu: 'napi rutin', ru: 'ежедневный распорядок', category: 'Тема урока',
+        ipa: "[nɒpˈi rutin]"
+    },
+    { id: 'l14_v2', hu: 'felébred', ru: 'просыпаться', category: 'Глаголы дня',
+        ipa: "[fˈɛlɛːbrɛd]"
+    },
+    { id: 'l14_v3', hu: 'felkel', ru: 'вставать', category: 'Глаголы дня',
+        ipa: "[fˈɛlkɛl]"
+    },
+    { id: 'l14_v4', hu: 'mosakodik', ru: 'умываться', category: 'Глаголы дня',
+        ipa: "[mˈoʃɒkodik]"
+    },
+    { id: 'l14_v5', hu: 'fésülködik', ru: 'причесываться', category: 'Глаголы дня',
+        ipa: "[fˈɛːʃylkødik]"
+    },
+    { id: 'l14_v6', hu: 'felöltözik', ru: 'одеваться', category: 'Глаголы дня',
+        ipa: "[fˈɛløltøzik]"
+    },
+    { id: 'l14_v7', hu: 'reggelizik', ru: 'завтракать', category: 'Глаголы дня',
+        ipa: "[rˈɛggɛlizik]"
+    },
+    { id: 'l14_v8', hu: 'ebédel', ru: 'обедать', category: 'Глаголы дня',
+        ipa: "[ˈɛbɛːdɛl]"
+    },
+    { id: 'l14_v9', hu: 'vacsorázik', ru: 'ужинать', category: 'Глаголы дня',
+        ipa: "[vɒt͡ʃˈorɒːzik]"
+    },
+    { id: 'l14_v10', hu: 'hazamegy', ru: 'идти домой', category: 'Глаголы дня',
+        ipa: "[hɒzɒmˈɛɟ]"
+    },
+    { id: 'l14_v11', hu: 'lefekszik', ru: 'ложиться спать', category: 'Глаголы дня',
+        ipa: "[lˈɛfɛkʃik]"
+    },
+    { id: 'l14_v12', hu: 'elalszik', ru: 'засыпать', category: 'Глаголы дня',
+        ipa: "[ˈɛlɒlʃik]"
+    },
+    { id: 'l14_v13', hu: 'magamat', ru: 'себя (меня самого)', category: 'Возвратные формы',
+        ipa: "[mɒgɒmɒt]"
+    },
+    { id: 'l14_v14', hu: 'magadat', ru: 'себя (тебя самого)', category: 'Возвратные формы',
+        ipa: "[mɒgɒdɒt]"
+    },
+    { id: 'l14_v15', hu: 'magát', ru: 'себя (его/ее самого)', category: 'Возвратные формы',
+        ipa: "[mɒgɒːt]"
+    },
+    { id: 'l14_v16', hu: 'zuhanyozik', ru: 'принимать душ', category: 'Бытовая лексика',
+        ipa: "[zˈuhɒɲozik]"
+    }
+  ],
+    quiz: [
+    {
+      id: 1401,
+      question: 'Какой из этих глаголов является лексически возвратным (действие направлено на себя)?',
+      options: ['tanul (учиться)', 'mosakodik (умываться)', 'olvas (читать)', 'ír (писать)'],
+      correctIndex: 1,
+      explanation: 'Глагол "mosakodik" (умываться) – это возвратный глагол, действие направлено на себя. Глаголы "tanul", "olvas", "ír" – обычные переходные глаголы (урок 14, слайд 1).'
+    },
+    {
+      id: 1402,
+      question: 'Как правильно сказать "я одеваюсь" по-венгерски?',
+      options: ['felöltözök', 'felöltözöm', 'felöltözik', 'felöltözünk'],
+      correctIndex: 1,
+      explanation: 'Глагол "felöltözik" оканчивается на -ik, поэтому в 1-м лице (én) он принимает окончание -om/-em/-öm: felöltöz + öm = felöltözöm (я одеваюсь).'
+    },
+    {
+      id: 1403,
+      question: 'Как сказать "Я просыпаюсь в семь часов" по-венгерски?',
+      options: [
+        'Hét órakor felébredek',
+        'Hét órán felébredek',
+        'Hét órában felébredek',
+        'Hét órára felébredek'
+      ],
+      correctIndex: 0,
+      explanation: 'Для указания времени используется суффикс -kor: hét órakor (в семь часов). Глагол "felébred" (просыпаться) – это обычный глагол (не -ik), поэтому в 1-м лице: felébred + ek = felébredek.'
+    },
+    {
+      id: 1404,
+      question: 'Какая форма используется для выражения "я вижу себя в зеркале"?',
+      options: [
+        'Látom a tükörben',
+        'Látom magamat a tükörben',
+        'Látom magát a tükörben',
+        'Látom magad a tükörben'
+      ],
+      correctIndex: 1,
+      explanation: 'Для настоящего возвратного местоимения "себя" используется "magam" с винительным окончанием: magamat (урок 14, слайд 6).'
+    },
+    {
+      id: 1405,
+      question: 'В чём разница между "mosakodik" (умываться) и "magamat" (себя) в венгерском языке?',
+      options: [
+        '"Mosakodik" – лексически возвратный глагол (сам по себе означает "делать что-то с собой"), "magamat" – отдельное местоимение для буквального "себя"',
+        '"Mosakodik" – только для умывания лица, "magamat" – для всего тела',
+        '"Mosakodik" – настоящее время, "magamat" – прошедшее',
+        'Разницы нет, они взаимозаменяемы'
+      ],
+      correctIndex: 0,
+      explanation: '"Mosakodik" – это лексически возвратный глагол (-ik глагол), который по своему значению уже означает действие, направленное на себя. "Magamat" – это отдельное возвратное местоимение, используемое для буквального значения "себя" (урок 14, слайды 1 и 6).'
+    },
+    {
+      id: 1406,
+      question: 'В каком уроке мы изучали прошедшее время глаголов (Múlt idő)?',
+      options: [
+        'Урок 10 (местные падежи I)',
+        'Урок 12 (местные падежи III)',
+        'Урок 13 (прошедшее время)',
+        'Урок 14 (распорядок дня)'
+      ],
+      correctIndex: 2,
+      explanation: 'Прошедшее время глаголов (Múlt idő) мы изучали в уроке 13. В уроке 14 мы применяем его к глаголам распорядка дня: "Tegnap reggel felébredtem" – "Вчера утром я проснулся".'
+    }
+  ],
+  objectives: [
+    { id: 'l14_describe-routine', text: 'Описывать распорядок дня с временными выражениями.', skills: ['speaking', 'writing'] },
+    { id: 'l14_form-reflexive', text: 'Образовывать возвратные глаголы с помощью -kodik/-kedik/-ködik.', skills: ['grammar', 'writing'] },
+    { id: 'l14_use-reflexive', text: 'Употреблять возвратные глаголы (mosakodik, öltözködik) в настоящем времени.', skills: ['grammar', 'speaking'] },
+    { id: 'l14_tell-routine-time', text: 'Сообщать, во сколько и что делает человек (время + действие).', skills: ['speaking', 'listening'] },
+  ],
 };

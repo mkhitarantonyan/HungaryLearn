@@ -178,43 +178,80 @@ export const LESSON_17: Lesson = {
     }
   ],
   vocabulary: [
-    { id: "l17_v1", hu: "tavasz", ru: "весна", category: "Времена года", exampleSentence: "Tavasszal nyílnak a virágok." },
-    { id: "l17_v2", hu: "nyár", ru: "лето", category: "Времена года", exampleSentence: "Nyáron meleg van." },
-    { id: "l17_v3", hu: "ősz", ru: "осень", category: "Времена года", exampleSentence: "Ősszel esik az eső." },
-    { id: "l17_v4", hu: "tél", ru: "зима", category: "Времена года", exampleSentence: "Télen hideg van." },
-    { id: "l17_v5", hu: "vihar", ru: "гроза", category: "Погода", exampleSentence: "Nagy vihar van." },
-    { id: "l17_v6", hu: "köd", ru: "туман", category: "Погода", exampleSentence: "Sűrű köd van." },
-    { id: "l17_v7", hu: "szivárvány", ru: "радуга", category: "Погода", exampleSentence: "Szép szivárvány." },
-    { id: "l17_v8", hu: "hőség", ru: "жара", category: "Погода", exampleSentence: "Nagy hőség van nyáron." }
+    { id: "l17_v1", hu: "tavasz", ru: "весна", category: "Времена года", exampleSentence: "Tavasszal nyílnak a virágok.",
+        ipa: "[tɒvɒʃ]"
+    },
+    { id: "l17_v2", hu: "nyár", ru: "лето", category: "Времена года", exampleSentence: "Nyáron meleg van.",
+        ipa: "[ɲɒːr]"
+    },
+    { id: "l17_v3", hu: "ősz", ru: "осень", category: "Времена года", exampleSentence: "Ősszel esik az eső.",
+        ipa: "[ˈøːʃ]"
+    },
+    { id: "l17_v4", hu: "tél", ru: "зима", category: "Времена года", exampleSentence: "Télen hideg van.",
+        ipa: "[tˈɛːl]"
+    },
+    { id: "l17_v5", hu: "vihar", ru: "гроза", category: "Погода", exampleSentence: "Nagy vihar van.",
+        ipa: "[vˈihɒr]"
+    },
+    { id: "l17_v6", hu: "köd", ru: "туман", category: "Погода", exampleSentence: "Sűrű köd van.",
+        ipa: "[kˈød]"
+    },
+    { id: "l17_v7", hu: "szivárvány", ru: "радуга", category: "Погода", exampleSentence: "Szép szivárvány.",
+        ipa: "[ʃˈivɒːrvɒːɲ]"
+    },
+    { id: "l17_v8", hu: "hőség", ru: "жара", category: "Погода", exampleSentence: "Nagy hőség van nyáron.",
+        ipa: "[hˈøːʃɛːg]"
+    }
   ],
   quiz: [
     {
       id: 1701,
-      question: "Как по-венгерски сказать «Светит солнце»?",
-      options: ["Süt a nap", "Esik a nap", "Fúj a nap", "Meleg a nap"],
+      question: 'Как по-венгерски сказать «Светит солнце»?',
+      options: ['Süt a nap', 'Esik a nap', 'Fúj a nap', 'Meleg a nap'],
       correctIndex: 0,
-      explanation: "«Süt a nap» переводится как «Светит солнце»."
+      explanation: '«Süt a nap» переводится как «Светит солнце». «Esik az eső» – идёт дождь, «Fúj a szél» – дует ветер.'
     },
     {
       id: 1702,
-      question: "Как образуется форма «летом»?",
-      options: ["nyárval", "nyáron", "nyárban", "nyáral"],
-      correctIndex: 1,
-      explanation: "Форма «летом» в венгерском языке образуется с помощью суффикса -on: nyáron."
+      question: 'Как сказать «Идёт снег» по-венгерски?',
+      options: ['Havazik', 'Esik a hó', 'Hó van', 'Süt a hó'],
+      correctIndex: 0,
+      explanation: '«Идёт снег» по-венгерски – «Havazik» (безличный глагол). «Esik az eső» – дождь, а для снега используется отдельный глагол.'
     },
     {
       id: 1703,
-      question: "Как переводится форма «весной»?",
-      options: ["tavaszon", "tavaszban", "tavasszal", "tavaszra"],
+      question: 'Как переводится вопрос «Hány fok van?»?',
+      options: ['Сколько времени?', 'Какая погода?', 'Сколько градусов?', 'Который час?'],
       correctIndex: 2,
-      explanation: "«Весной» в венгерском языке — tavasszal (с суффиксом -val и ассимиляцией)."
+      explanation: '«Hány fok van?» переводится как «Сколько градусов?». Для ответа используется «Húsz fok van» (20 градусов).'
     },
     {
       id: 1704,
-      question: "Как переводится вопрос «Hány fok van?»?",
-      options: ["Сколько времени?", "Какая погода?", "Сколько градусов?", "Который час?"],
-      correctIndex: 2,
-      explanation: "«Hány fok van?» переводится как «Сколько градусов?»."
+      question: 'Как образуется форма «летом» в венгерском языке?',
+      options: ['nyárval', 'nyáron', 'nyárban', 'nyáral'],
+      correctIndex: 1,
+      explanation: 'Форма «летом» – nyáron (суффикс -on от группы «На поверхности» из урока 11).'
+    },
+    {
+      id: 1705,
+      question: 'Как сказать «осенью» по-венгерски?',
+      options: ['őszben', 'ősszel', 'őszön', 'őszre'],
+      correctIndex: 1,
+      explanation: '«Осенью» – ősszel. Это нерегулярная форма с суффиксом -vel (творительный падеж) и ассимиляцией: ősz + vel → ősszel.'
+    },
+    {
+      id: 1706,
+      question: 'Какое слово по-венгерски означает «вечер» и само по себе является наречием времени «вечером»?',
+      options: ['reggel', 'este', 'délután', 'éjjel'],
+      correctIndex: 1,
+      explanation: '«Este» – это и существительное «вечер», и наречие «вечером». «Reggel» – «утро/утром», «délután» – «после полудня/днём».'
     }
-  ]
+  ],
+  objectives: [
+    { id: 'l17_describe-weather', text: 'Описывать погоду (Esik az eső, Süt a nap).', skills: ['speaking', 'writing'] },
+    { id: 'l17_name-seasons', text: 'Называть времена года и месяцы.', skills: ['speaking', 'reading'] },
+    { id: 'l17_use-seasonal-adverbials', text: 'Употреблять формы tavasszal, nyáron, ősszel, télen.', skills: ['grammar', 'writing'] },
+    { id: 'l17_compare-seasons', text: 'Сравнивать погоду в разные времена года.', skills: ['speaking', 'writing'] },
+    { id: 'l17_understand-forecast', text: 'Понимать прогноз погоды на слух.', skills: ['listening'] },
+  ],
 };

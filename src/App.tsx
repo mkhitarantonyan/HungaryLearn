@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { LESSONS_META, loadLesson } from './data/lessons';
-import { Lesson, ReviewCardState } from './types';
+import { Lesson, ReviewCardState, ActivityEvidence, ActivityRuntimeState } from './types';
 import { LessonList } from './components/LessonList';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -21,6 +21,7 @@ import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
 import { isLessonAccessible, getCurrentUser } from './utils/userStore';
 import { subscribeAudioChanges, hasAudioForSlide } from './utils/audioRegistry';
+import { clearActivityEvidence } from './utils/activityUtils';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizResultToServer } from './utils/userStore';
 import { BookOpen, Mic, Volume2, Play, Square, Loader2 } from 'lucide-react';
 
@@ -65,6 +66,8 @@ export default function App() {
   const [viewedSlideIds, setViewedSlideIds] = useState<string[]>([]);
   const [passedQuizzes, setPassedQuizzes] = useState<number[]>([]);
   const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>({});
+  const [activityEvidence, setActivityEvidence] = useState<Record<string, ActivityEvidence>>({});
+  const [activityRuntime, setActivityRuntime] = useState<Record<string, ActivityRuntimeState>>({});
   const [showWarmup, setShowWarmup] = useState(false);
   const [isProgressHydrated, setIsProgressHydrated] = useState(() => !getCurrentUser());
 
@@ -74,6 +77,20 @@ export default function App() {
   );
 
   const [, setAudioVersion] = useState(0);
+
+  const [allLessons, setAllLessons] = useState<Lesson[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    Promise.all(LESSONS_META.map((meta) => loadLesson(meta.id))).then((lessons) => {
+      if (isMounted) {
+        setAllLessons(lessons.filter((lesson): lesson is Lesson => lesson !== null));
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -157,6 +174,8 @@ useEffect(() => {
     setSelectedLessonId(lessonId);
     setCurrentSlideIndex(0);
     setIsQuizActive(false);
+    setActivityEvidence({});
+    setActivityRuntime({});
     setViewMode('lesson');
     setShowWarmup(true);
   };
@@ -164,6 +183,14 @@ useEffect(() => {
 const handleCardGraded = (cardId: string, grade: 'again' | 'hard' | 'good' | 'easy') => {
   void syncReviewCardToServer(cardId, grade);
 };
+
+  const handleResetActivityEvidence = (activityId: string) => {
+    setActivityEvidence((prev) => clearActivityEvidence(prev, activityId));
+  };
+
+  const handleActivityRuntimeChange = (activityId: string, patch: Partial<ActivityRuntimeState>) => {
+    setActivityRuntime((prev) => ({ ...prev, [activityId]: { ...prev[activityId], ...patch } }));
+  };
 
   const slides = activeLesson?.slides || [];
   const currentSlide = slides[currentSlideIndex] || slides[0];
@@ -307,11 +334,18 @@ useEffect(() => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const targetTag = (e.target as HTMLElement)?.tagName;
+      const target = e.target as HTMLElement | null;
+      const targetTag = target?.tagName;
       if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') {
         if (e.key === 'Escape') {
-          (e.target as HTMLElement).blur();
+          target?.blur();
         }
+        return;
+      }
+
+      // Inside an interactive lesson activity, arrow keys belong to the
+      // activity (choice navigation, text entry). Do not switch slides.
+      if (target && typeof target.closest === 'function' && target.closest('[data-lesson-activity]')) {
         return;
       }
 
@@ -388,7 +422,7 @@ useEffect(() => {
     return (
       <>
         <LessonList
-          lessons={LESSONS_META}
+          lessons={allLessons}
           onSelectLesson={handleSelectLesson}
           onOpenAdmin={handleOpenAdmin}
           isAdmin={isAdmin}
@@ -459,7 +493,7 @@ useEffect(() => {
 
       {/* Main Stage */}
       <main className="flex-1 flex items-center justify-center p-4 md:p-8 relative">
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto space-y-4">
           {isQuizActive ? (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -566,7 +600,17 @@ useEffect(() => {
                   </div>
 
                   {/* Main Slide Content Component */}
-                  <SlideContent slide={currentSlide} />
+                  <SlideContent
+                    slide={currentSlide}
+                    activityEvidence={activityEvidence}
+                    objectives={activeLesson.objectives}
+                    onActivityEvidence={(evidence) =>
+                      setActivityEvidence((prev) => ({ ...prev, [evidence.activityId]: evidence }))
+                    }
+                    onActivityEvidenceReset={handleResetActivityEvidence}
+                    activityRuntime={activityRuntime}
+                    onActivityRuntimeChange={handleActivityRuntimeChange}
+                  />
                 </div>
 
                 {/* Footer Navigation within Slide */}

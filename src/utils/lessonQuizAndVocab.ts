@@ -40,9 +40,9 @@ function buildVocabMap(): Record<number, VocabularyItem[]> { return {
     { id: "l3_v1", hu: "a", ru: "определённый артикль (перед согласной)", phonetic: "[а]", category: "Артикли", exampleSentence: "a ház" },
     { id: "l3_v2", hu: "az", ru: "определённый артикль (перед гласной)", phonetic: "[аз]", category: "Артикли", exampleSentence: "az alma" },
     { id: "l3_v3", hu: "egy", ru: "неопределённый артикль / один", phonetic: "[эдь]", category: "Артикли", exampleSentence: "egy könyv" },
-    { id: "l3_v4", hu: "házak", ru: "дома (мн.ч.)", phonetic: "[ха̄зак]", category: "Множественное число", exampleSentence: "A házak nagyok.", baseWord: "ház", grammaticalTag: "tobbes-szam-k", relatedLessonId: 3 },
-    { id: "l3_v5", hu: "könyvek", ru: "книги (мн.ч.)", phonetic: "[кёнйвэк]", category: "Множественное число", baseWord: "könyv" },
-    { id: "l3_v6", hu: "asztalok", ru: "столы (мн.ч.)", phonetic: "[асталок]", category: "Множественное число", baseWord: "asztal" },
+    { id: "l3_v4", hu: "ház", ru: "дом", phonetic: "[ха̄з]", category: "Предметы", exampleSentence: "A házak nagyok.", grammaticalTag: "tobbes-szam-k", relatedLessonId: 3 },
+    { id: "l3_v5", hu: "könyv", ru: "книга", phonetic: "[кёнйв]", category: "Предметы", exampleSentence: "A könyvek itt vannak." },
+    { id: "l3_v6", hu: "asztal", ru: "стол", phonetic: "[астал]", category: "Предметы", exampleSentence: "Az asztalok nagyok." },
   ],
   4: [
     { id: "l4_v1", hu: "tanulok", ru: "я учусь", phonetic: "[танулок]", category: "Настоящее время", exampleSentence: "Magyarul tanulok.", baseWord: "tanul", grammaticalTag: "alanyi-ragozas-jelen-1sg", relatedLessonId: 4 },
