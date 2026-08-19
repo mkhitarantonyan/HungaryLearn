@@ -242,9 +242,9 @@ test('old quiz behavior remains compatible (6 inline questions)', () => {
   );
 });
 
-test('all 22 non-L1/L2/L3/L4/L5/L15 lessons have no activities', async () => {
+test('all 21 non-L1/L2/L3/L4/L5/L6/L15 lessons have no activities', async () => {
   for (const meta of LESSONS_META) {
-    if ([1, 2, 3, 4, 5, 15].includes(meta.id)) continue;
+    if ([1, 2, 3, 4, 5, 6, 15].includes(meta.id)) continue;
     const lesson = await loadLesson(meta.id);
     assert.ok(lesson, `lesson ${meta.id} failed to load`);
     const hasActivities = lesson.slides.some((s) => s.activities && s.activities.length > 0);

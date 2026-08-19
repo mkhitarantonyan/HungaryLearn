@@ -99,9 +99,9 @@ test('L2, L3, L4, L5, and L15 approved lesson modules remain byte-for-byte froze
   assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
 });
 
-test('L6 remains unmigrated and byte-for-byte unchanged', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson6.ts', import.meta.url)), '6E3AF4CF0FE65DCE911A64E06B2C91208BB8D0DABF266BED174B2682AA605022');
-  assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), false);
+test('L6 is migrated with activities and L7 remains unmigrated', () => {
+  assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '23368A7EB5059E2F54E163A726736D41B5ED7D23BB51A70315C89D5A5C5ED0BB');
 });
 
 test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {

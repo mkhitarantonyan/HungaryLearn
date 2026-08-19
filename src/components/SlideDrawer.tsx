@@ -15,7 +15,7 @@ interface SlideDrawerProps {
 export const SlideDrawer: React.FC<SlideDrawerProps> = ({
   isOpen,
   slides,
-  lessonTitle = "Оглавление Урока",
+  lessonTitle = "Содержание урока",
   currentSlide,
   onClose,
   onSelectSlide
@@ -58,18 +58,26 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
                   onSelectSlide(idx);
                   onClose();
                 }}
-                className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                aria-current={isActive ? 'step' : undefined}
+                className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center gap-3 cursor-pointer ${
                   isActive
                     ? 'bg-[#7A1E2B] text-white border-[#7A1E2B] shadow-sm'
                     : 'bg-white border-[#D9CBB0] text-[#2A2320] hover:border-[#7A1E2B]/40 hover:bg-[#F6EFE4]'
                 }`}
               >
-                <div>
+                <span
+                  className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold font-mono ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-[#F6EFE4] text-[#57121C]'
+                  }`}
+                >
+                  {idx + 1}
+                </span>
+                <div className="min-w-0 flex-1">
                   <div className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${isActive ? 'text-[#B98A2B]' : 'text-[#8A7A68]'}`}>
                     {slide.eyebrow}
                   </div>
-                  <div className="text-sm font-bold font-mono mt-0.5">{slide.title}</div>
-                  <div className={`text-xs mt-0.5 ${isActive ? 'text-white/80' : 'text-[#8A7A68]'}`}>
+                  <div className="text-sm font-bold mt-0.5 truncate">{slide.title}</div>
+                  <div className={`text-xs mt-0.5 truncate ${isActive ? 'text-white/80' : 'text-[#8A7A68]'}`}>
                     {slide.subtitle}
                   </div>
                 </div>

@@ -249,7 +249,8 @@ export async function speakSequence(
   items: SpeechItem[],
   onItemChange?: (index: number) => void,
   onComplete?: () => void,
-  isCancelled?: () => boolean
+  isCancelled?: () => boolean,
+  onAutoplayBlocked?: () => void
 ) {
   stopSpeech(); // Stop active speech and MP3 playback first
 
@@ -294,6 +295,13 @@ export async function speakSequence(
         speakNext();
       },
       (err) => {
+        if (isAutoplayBlockedError(err)) {
+          console.warn('Slide narration MP3 blocked by browser autoplay policy:', err);
+          stopSpeech();
+          if (onAutoplayBlocked) onAutoplayBlocked();
+          if (onComplete) onComplete();
+          return;
+        }
         if (item.fallbackSequence && item.fallbackSequence.length > 0) {
           console.warn('Custom audio failed, falling back to slide text TTS sequence:', err);
           items = item.fallbackSequence;
@@ -356,3 +364,13 @@ export function stopSpeech() {
   }
 }
 
+/**
+ * Browser autoplay policy signals a blocked media playback attempt with a
+ * NotAllowedError DOMException. We distinguish this from a genuine MP3 load
+ * failure (which should keep the MP3 → TTS fallback) so the narration player
+ * can surface a "press play once" hint instead of silently failing.
+ */
+function isAutoplayBlockedError(err: unknown): boolean {
+  if (typeof err !== 'object' || err === null) return false;
+  return (err as { name?: unknown }).name === 'NotAllowedError';
+}

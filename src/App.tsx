@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { LESSONS_META, loadLesson } from './data/lessons';
 import { Lesson, ReviewCardState, ActivityEvidence, ActivityRuntimeState } from './types';
@@ -15,15 +15,16 @@ import { VoiceSettingsModal } from './components/VoiceSettingsModal';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { UserAuthModal } from './components/UserAuthModal';
 import { SlideAudioModal } from './components/SlideAudioModal';
-import { speakSequence, stopSpeech } from './utils/speech';
-import { getSlideNarrativeSequence } from './utils/slideNarrator';
+import { NarrationPlayer } from './components/NarrationPlayer';
+import { PracticeMenu } from './components/PracticeMenu';
+import { useLessonNarration } from './hooks/useLessonNarration';
 import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
 import { isLessonAccessible, getCurrentUser } from './utils/userStore';
-import { subscribeAudioChanges, hasAudioForSlide } from './utils/audioRegistry';
+import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizResultToServer } from './utils/userStore';
-import { BookOpen, Mic, Volume2, Play, Square, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
   const numbers = new Set<number>();
@@ -59,10 +60,6 @@ export default function App() {
 
   const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
 
-  const [isNarrating, setIsNarrating] = useState(false);
-  // Ref mirror of isNarrating so the toggle button reacts instantly and the
-  // speech sequence can be cancelled even while voices are still loading.
-  const isNarratingRef = useRef(false);
   const [viewedSlideIds, setViewedSlideIds] = useState<string[]>([]);
   const [passedQuizzes, setPassedQuizzes] = useState<number[]>([]);
   const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>({});
@@ -79,6 +76,11 @@ export default function App() {
   const [, setAudioVersion] = useState(0);
 
   const [allLessons, setAllLessons] = useState<Lesson[]>([]);
+
+  const slides = useMemo(() => activeLesson?.slides ?? [], [activeLesson]);
+  const currentSlide = slides[currentSlideIndex] ?? slides[0];
+  const narration = useLessonNarration(activeLesson?.number, currentSlide);
+  const { play: playSlide, stop: stopNarration, autoplayEnabled } = narration;
 
   useEffect(() => {
     let isMounted = true;
@@ -170,7 +172,7 @@ useEffect(() => {
     if (lessonMeta && !isLessonAccessible(lessonMeta.number, getCurrentUser(), isAdmin)) {
       return;
     }
-    stopSpeech();
+    narration.stop();
     setSelectedLessonId(lessonId);
     setCurrentSlideIndex(0);
     setIsQuizActive(false);
@@ -191,9 +193,6 @@ const handleCardGraded = (cardId: string, grade: 'again' | 'hard' | 'good' | 'ea
   const handleActivityRuntimeChange = (activityId: string, patch: Partial<ActivityRuntimeState>) => {
     setActivityRuntime((prev) => ({ ...prev, [activityId]: { ...prev[activityId], ...patch } }));
   };
-
-  const slides = activeLesson?.slides || [];
-  const currentSlide = slides[currentSlideIndex] || slides[0];
 
   // Tracks the last state that was already synced to the server,
   // so the sync effect below only fires when completed slides actually change.
@@ -236,99 +235,85 @@ useEffect(() => {
   })();
 }, [viewedSlideIds, isProgressHydrated]);
 
-  const startNarratingSlide = (slide = currentSlide) => {
-    if (!activeLesson || !slide) return;
-    stopSpeech();
-    isNarratingRef.current = true;
-    setIsNarrating(true);
-    const sequence = getSlideNarrativeSequence(slide, activeLesson.number);
-    speakSequence(
-      sequence,
-      undefined,
-      () => {
-        isNarratingRef.current = false;
-        setIsNarrating(false);
-      },
-      () => !isNarratingRef.current
-    );
-  };
-
-  const stopNarrating = () => {
-    isNarratingRef.current = false;
-    stopSpeech();
-    setIsNarrating(false);
-  };
-
-  const handleToggleReadSlide = () => {
-    if (isNarratingRef.current) stopNarrating();
-    else startNarratingSlide();
-  };
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentSlideIndex < slides.length - 1) {
-      stopNarrating();
+      const nextIndex = currentSlideIndex + 1;
+      const nextSlide = slides[nextIndex];
+      stopNarration();
       setSlideDirection(1);
-      setCurrentSlideIndex((prev) => prev + 1);
+      setCurrentSlideIndex(nextIndex);
+      if (autoplayEnabled && nextSlide) {
+        playSlide(nextSlide);
+      }
     }
-  };
+  }, [currentSlideIndex, slides, stopNarration, playSlide, autoplayEnabled]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (currentSlideIndex > 0) {
-      stopNarrating();
+      const prevIndex = currentSlideIndex - 1;
+      const prevSlide = slides[prevIndex];
+      stopNarration();
       setSlideDirection(-1);
-      setCurrentSlideIndex((prev) => prev - 1);
+      setCurrentSlideIndex(prevIndex);
+      if (autoplayEnabled && prevSlide) {
+        playSlide(prevSlide);
+      }
     }
-  };
+  }, [currentSlideIndex, slides, stopNarration, playSlide, autoplayEnabled]);
 
-  const handleSelectSlide = (index: number) => {
-    stopNarrating();
+  const handleSelectSlide = useCallback((index: number) => {
+    const targetSlide = slides[index];
+    stopNarration();
     setSlideDirection(index > currentSlideIndex ? 1 : -1);
     setCurrentSlideIndex(index);
     setIsQuizActive(false);
-  };
+    if (autoplayEnabled && targetSlide) {
+      playSlide(targetSlide);
+    }
+  }, [currentSlideIndex, slides, stopNarration, playSlide, autoplayEnabled]);
 
   const handleBackToLessons = () => {
-    stopNarrating();
+    narration.stop();
     setViewMode('list');
   };
 
   const handleOpenTrainer = () => {
-    stopNarrating();
+    narration.stop();
     setIsTrainerOpen(true);
   };
 
   const handleOpenTranslations = () => {
-    stopNarrating();
+    narration.stop();
     setIsTranslationsOpen(true);
   };
 
   const handleOpenQuiz = () => {
-    stopNarrating();
+    narration.stop();
     setIsQuizActive(true);
   };
 
   const handleOpenDrawer = () => {
-    stopNarrating();
+    narration.stop();
     setIsDrawerOpen(true);
   };
 
   const handleOpenVoiceSettings = () => {
-    stopNarrating();
+    narration.stop();
     setIsVoiceSettingsOpen(true);
   };
 
   const handleOpenAdmin = () => {
-    stopNarrating();
+    narration.stop();
     setIsAdminLoginOpen(true);
   };
 
   const handleOpenUserModal = () => {
-    stopNarrating();
+    narration.stop();
     setIsUserModalOpen(true);
   };
 
   const handleOpenSlideAudioModal = () => {
-    stopNarrating();
+    narration.stop();
     setIsSlideAudioModalOpen(true);
   };
 
@@ -354,6 +339,7 @@ useEffect(() => {
         else if (isAdminLoginOpen) setIsAdminLoginOpen(false);
         else if (isVoiceSettingsOpen) setIsVoiceSettingsOpen(false);
         else if (isTrainerOpen) setIsTrainerOpen(false);
+        else if (isTranslationsOpen) setIsTranslationsOpen(false);
         else if (isDrawerOpen) setIsDrawerOpen(false);
         else if (isQuizActive) setIsQuizActive(false);
         return;
@@ -361,6 +347,7 @@ useEffect(() => {
 
       const isAnyModalOpen =
         isDrawerOpen ||
+        isTranslationsOpen ||
         isTrainerOpen ||
         isVoiceSettingsOpen ||
         isAdminLoginOpen ||
@@ -381,9 +368,10 @@ useEffect(() => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [
     viewMode,
-    currentSlideIndex,
-    slides.length,
+    handleNext,
+    handlePrev,
     isDrawerOpen,
+    isTranslationsOpen,
     isTrainerOpen,
     isVoiceSettingsOpen,
     isAdminLoginOpen,
@@ -428,6 +416,9 @@ useEffect(() => {
           isAdmin={isAdmin}
           onOpenVoiceSettings={handleOpenVoiceSettings}
           onOpenUserModal={handleOpenUserModal}
+          viewedSlideIds={viewedSlideIds}
+          passedQuizzes={passedQuizzes}
+          dueReviewCount={countDueCards(reviewCardStates, visitedLessonNumbers)}
         />
 
         {/* Modals on main list page as well */}
@@ -469,31 +460,39 @@ useEffect(() => {
     );
   }
 
-  const currentSlideHasAudio = hasAudioForSlide(currentSlide.id, activeLesson.number);
-
   return (
-    <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex flex-col justify-between font-sans selection:bg-[#7A1E2B] selection:text-white">
-      {/* Top Header */}
+    <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex flex-col font-sans selection:bg-[#7A1E2B] selection:text-white">
       <Header
         lessonNumber={activeLesson.number}
         lessonLevel={activeLesson.level}
+        lessonTitle={activeLesson.title}
         currentSlide={currentSlideIndex}
         totalSlides={slides.length}
-        onSelectSlide={handleSelectSlide}
-        onOpenTrainer={handleOpenTrainer}
-        onOpenTranslations={handleOpenTranslations}
-        onOpenQuiz={handleOpenQuiz}
         onOpenDrawer={handleOpenDrawer}
         onOpenAdmin={handleOpenAdmin}
         onOpenUserModal={handleOpenUserModal}
         onBackToLessons={handleBackToLessons}
-        isNarrating={isNarrating}
-        dueReviewCount={countDueCards(reviewCardStates, visitedLessonNumbers)}
       />
 
-      {/* Main Stage */}
-      <main className="flex-1 flex items-center justify-center p-4 md:p-8 relative">
-        <div className="w-full max-w-4xl mx-auto space-y-4">
+      {!isQuizActive && (
+        <NarrationPlayer
+          isPlaying={narration.isPlaying}
+          autoplayEnabled={narration.autoplayEnabled}
+          playbackRate={narration.playbackRate}
+          needsUserGesture={narration.needsUserGesture}
+          slideLabel={`${currentSlideIndex + 1} · ${currentSlide.title}`}
+          onPlayPause={narration.toggle}
+          onToggleAutoplay={() => narration.setAutoplay(!narration.autoplayEnabled)}
+          onSetPlaybackRate={narration.setPlaybackRate}
+          onOpenVoiceSettings={handleOpenVoiceSettings}
+          isAdmin={isAdmin}
+          onOpenAudioEditor={handleOpenSlideAudioModal}
+        />
+      )}
+
+      {/* Main learning canvas */}
+      <main className="flex-1 p-4 md:p-8">
+        <div className="w-full max-w-4xl mx-auto">
           {isQuizActive ? (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -504,16 +503,16 @@ useEffect(() => {
                 onClose={() => setIsQuizActive(false)}
                 lesson={activeLesson}
                 onQuizComplete={(lessonNumber, score, total) => {
-                if (isAdmin) return;
-                const percentage = Math.round((score / total) * 100);
-                const PASS_THRESHOLD = 80;
-                if (percentage >= PASS_THRESHOLD) {
-                  setPassedQuizzes((prev) =>
-                    prev.includes(lessonNumber) ? prev : [...prev, lessonNumber]
-                  );
-                  void syncQuizResultToServer(lessonNumber, score, total);
-                }
-              }}
+                  if (isAdmin) return;
+                  const percentage = Math.round((score / total) * 100);
+                  const PASS_THRESHOLD = 80;
+                  if (percentage >= PASS_THRESHOLD) {
+                    setPassedQuizzes((prev) =>
+                      prev.includes(lessonNumber) ? prev : [...prev, lessonNumber]
+                    );
+                    void syncQuizResultToServer(lessonNumber, score, total);
+                  }
+                }}
               />
             </motion.div>
           ) : (
@@ -525,81 +524,19 @@ useEffect(() => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 md:p-10 shadow-lg min-h-[480px] flex flex-col justify-between relative overflow-hidden"
+                className="bg-white border border-[#D9CBB0] rounded-2xl p-6 md:p-10 shadow-sm min-h-105 flex flex-col"
               >
-                {/* Decorative Top Accent Line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#7A1E2B] via-[#B98A2B] to-[#2C5F58]" />
-
-                {/* Eyebrow and Titles */}
-                <div>
-                  <div className="font-mono text-xs font-bold tracking-widest text-[#B98A2B] uppercase mb-1 flex items-center justify-between flex-wrap gap-2">
-                    <span>{currentSlide.eyebrow}</span>
-                    <span className="text-[10px] text-[#8A7A68]">
-                      Урок {activeLesson.number} / {LESSONS_META.length}
-                    </span>
+                <div className="flex-1">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-[#8A7A68] mb-2">
+                    {currentSlide.eyebrow}
                   </div>
-
-                  <h1 className="text-2xl md:text-4xl font-mono font-bold text-[#57121C] tracking-tight leading-tight mt-1">
+                  <h1 className="text-xl md:text-3xl font-bold text-[#57121C] leading-tight">
                     {currentSlide.title}
                   </h1>
+                  {currentSlide.subtitle && (
+                    <p className="text-sm md:text-base text-[#8A7A68] mt-1.5 mb-5">{currentSlide.subtitle}</p>
+                  )}
 
-                  <div className="text-sm md:text-base font-medium text-[#8A7A68] mt-1 mb-4">
-                    {currentSlide.subtitle}
-                  </div>
-
-                  <div className="mb-6 p-3.5 rounded-xl border border-[#D9CBB0] bg-[#F6EFE4]/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-xs shrink-0 ${
-                        currentSlideHasAudio ? 'bg-[#2C5F58] text-white' : 'bg-[#7A1E2B]/10 text-[#7A1E2B]'
-                      }`}>
-                        <Volume2 className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="font-mono text-xs font-bold text-[#57121C] flex items-center gap-2 flex-wrap">
-                          <span>{currentSlideHasAudio ? 'Озвучка диктора прикреплена к слайду' : 'Синтез речи (TTS)'}</span>
-                          <span className="px-1.5 py-0.5 rounded bg-[#D9CBB0]/40 text-[#57121C] text-[10px]">
-                            {activeLesson.number}.{currentSlide.id}
-                          </span>
-                        </div>
-                        <div className="text-[11px] text-[#8A7A68] mt-0.5">
-                          {currentSlideHasAudio
-                            ? 'Прикреплен голосовой трек диктора (MP3)'
-                            : 'Используется синтез речи. Вы можете записать или загрузить свой MP3.'}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                      <button
-                        type="button"
-                        onClick={handleToggleReadSlide}
-                        className={`px-3.5 py-1.5 rounded-lg font-mono text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
-                          isNarrating
-                            ? 'bg-[#7A1E2B] text-white animate-pulse'
-                            : currentSlideHasAudio
-                              ? 'bg-[#2C5F58] text-white hover:bg-[#2C5F58]/90'
-                              : 'bg-[#7A1E2B] text-white hover:bg-[#57121C]'
-                        }`}
-                      >
-                        {isNarrating ? <Square className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-                        <span>{isNarrating ? 'Стоп' : currentSlideHasAudio ? 'Слушать запись диктора' : 'Озвучить слайд'}</span>
-                      </button>
-
-                      {isAdmin && (
-                        <button
-                          type="button"
-                          onClick={handleOpenSlideAudioModal}
-                          className="px-2.5 py-1.5 rounded-lg border border-[#D9CBB0] bg-white hover:bg-[#F6EFE4] text-[#57121C] font-mono text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
-                          title="Загрузить, записать или изменить MP3 файл диктора к этому слайду"
-                        >
-                          <Mic className="w-3.5 h-3.5 text-[#7A1E2B]" />
-                          <span>{currentSlideHasAudio ? 'Изменить MP3' : 'Загрузить MP3'}</span>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Main Slide Content Component */}
                   <SlideContent
                     slide={currentSlide}
                     activityEvidence={activityEvidence}
@@ -613,20 +550,21 @@ useEffect(() => {
                   />
                 </div>
 
-                {/* Footer Navigation within Slide */}
-                <div className="pt-6 mt-6 border-t border-[#D9CBB0]/40 flex items-center justify-between text-xs text-[#8A7A68]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#2C5F58]"></span>
-                    <span>Используйте клавиши ← и → для переключения</span>
+                <div className="pt-6 mt-6 border-t border-[#D9CBB0]/40 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 text-xs text-[#8A7A68]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C5F58]"></span>
+                    <span>Клавиши ← и → для переключения</span>
                   </div>
 
-                  <button
-                    onClick={handleOpenTrainer}
-                    className="text-[#7A1E2B] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <BookOpen className="w-3.5 h-3.5 text-[#B98A2B]" />
-                    <span>Практика слов ({slides.length} слайдов)</span>
-                  </button>
+                  <PracticeMenu
+                    dueReviewCount={countDueCards(reviewCardStates, visitedLessonNumbers)}
+                    onOpenWords={handleOpenTrainer}
+                    onOpenTranslations={handleOpenTranslations}
+                    onOpenReview={() => {
+                      narration.stop();
+                      setShowWarmup(true);
+                    }}
+                  />
                 </div>
               </motion.div>
             </AnimatePresence>

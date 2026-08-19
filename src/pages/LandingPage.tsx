@@ -13,11 +13,9 @@ import {
   X,
   UserPlus,
   MousePointerClick,
-  LogIn,
   Check,
   Star,
 } from 'lucide-react';
-import { LESSONS_META } from '../data/lessons';
 import { getCurrentUser, subscribeUserState } from '../utils/userStore';
 import { UserAuthModal } from '../components/UserAuthModal';
 import { AdminLoginModal } from '../components/AdminLoginModal';
@@ -77,7 +75,7 @@ function SectionHeader({
   subtitle?: string;
 }) {
   return (
-    <div className="max-w-2xl mx-auto text-center mb-14 md:mb-20">
+    <div className="max-w-2xl mx-auto text-center mb-10 md:mb-14">
       <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7A1E2B]/10 border border-[#7A1E2B]/15 text-[#7A1E2B] text-xs font-bold uppercase tracking-widest mb-5">
         <Sparkles className="w-3.5 h-3.5" />
         {eyebrow}
@@ -262,7 +260,7 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
         <div className="absolute bottom-0 right-1/3 w-[26rem] h-[26rem] rounded-full bg-[#2C5F58]/8 blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-24 pb-20 md:pb-28">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-14 md:pb-20">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-10 items-center">
           {/* Left: copy */}
           <Reveal>
@@ -273,10 +271,9 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#231816] tracking-tight leading-[1.05]">
               Заговорите по-венгерски{' '}
-              <span className="text-[#7A1E2B]">с нуля</span> —{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">уже через месяц</span>
-                <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 bg-[#B98A2B]/30 -z-0 rounded-sm" />
+                <span className="relative z-10">с первых уроков</span>
+                <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 bg-[#B98A2B]/30 rounded-sm" />
               </span>
             </h1>
 
@@ -336,7 +333,7 @@ function HeroMockup() {
       {/* soft glow behind the card */}
       <div aria-hidden className="absolute -inset-5 bg-gradient-to-tr from-[#7A1E2B]/10 via-[#B98A2B]/8 to-[#2C5F58]/10 blur-2xl rounded-[3rem]" />
 
-      {/* Floating chips (absolute, animated on inner wrapper to avoid transform conflicts) */}
+      {/* Floating chips */}
       <div className="absolute -left-2 sm:-left-8 top-1/3 z-10">
         <div className="animate-float flex items-center gap-3 bg-white rounded-2xl shadow-xl shadow-[#231816]/10 border border-[#E7D9C5] px-4 py-3">
           <span className="w-9 h-9 rounded-xl bg-[#2C5F58]/10 text-[#2C5F58] flex items-center justify-center">
@@ -361,27 +358,19 @@ function HeroMockup() {
         </div>
       </div>
 
-      {/* Main card */}
+      {/* Main lesson-preview card */}
       <div className="relative bg-white rounded-3xl border border-[#E7D9C5] shadow-2xl shadow-[#231816]/10 overflow-hidden">
-        {/* Window chrome */}
-        <div className="flex items-center gap-1.5 px-5 py-3.5 border-b border-[#F0E6D6]">
-          <span className="w-3 h-3 rounded-full bg-[#E4574F]" />
-          <span className="w-3 h-3 rounded-full bg-[#E8B04B]" />
-          <span className="w-3 h-3 rounded-full bg-[#4C9E6F]" />
-          <span className="ml-3 text-[11px] font-medium text-[#B5A68F]">
-            app.magyarkurzus.ru · урок 2
-          </span>
-        </div>
-
-        {/* Slide header */}
+        {/* Compact lesson header */}
         <div className="px-5 pt-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="w-2 h-2 rounded-full bg-[#7A1E2B] shrink-0" />
-            <span className="text-[11px] font-mono font-bold text-[#57121C] truncate">
-              УРОК 2 · ГАРМОНИЯ ГЛАСНЫХ
-            </span>
+          <div className="min-w-0">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
+              A0 · Урок 2
+            </div>
+            <div className="text-base font-bold text-[#231816] truncate mt-0.5">
+              Приветствия и глагол «быть»
+            </div>
           </div>
-          <div className="flex gap-1 shrink-0">
+          <div className="flex gap-1 shrink-0" aria-hidden>
             {[0, 1, 2, 3, 4].map((i) => (
               <span
                 key={i}
@@ -393,44 +382,45 @@ function HeroMockup() {
           </div>
         </div>
 
-        {/* Word card */}
-        <div className="mx-5 mt-4 rounded-2xl border border-[#E7D9C5] bg-[#FBF7EF] p-5">
-          <div className="flex items-center justify-between gap-4">
-            <div className="min-w-0">
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
-                Венгерское слово
-              </div>
-              <div className="text-2xl md:text-[1.7rem] font-black text-[#231816] tracking-tight mt-1">
-                Magyarország
-              </div>
-              <div className="text-sm text-[#6B5D52] mt-1">[мадьарорса̄г] — Венгрия</div>
-            </div>
-            <button
-              aria-label="Прослушать слово"
-              className="w-12 h-12 shrink-0 rounded-full bg-[#7A1E2B] text-white flex items-center justify-center shadow-lg shadow-[#7A1E2B]/30 hover:scale-110 transition-transform cursor-pointer"
-            >
-              <Play className="w-5 h-5 fill-current ml-0.5" />
-            </button>
+        {/* Progress */}
+        <div className="px-5 mt-3 flex items-center gap-2.5">
+          <div className="h-1.5 flex-1 rounded-full bg-[#E7D9C5] overflow-hidden" aria-hidden>
+            <div className="h-full w-2/3 rounded-full bg-[#7A1E2B]" />
           </div>
+          <span className="font-mono text-[10px] font-bold text-[#8A7A68]">6 / 9</span>
+        </div>
 
-          {/* Audio wave */}
-          <div className="flex items-end gap-1 h-8 mt-5" aria-hidden>
-            {[10, 18, 26, 14, 30, 22, 34, 16, 24, 12, 28, 18].map((h, i) => (
-              <span
-                key={i}
-                className={`w-1 rounded-full bg-[#2C5F58] ${
-                  i % 3 === 0 ? 'opacity-40' : ''
-                }`}
-                style={{ height: `${h}px` }}
-              />
-            ))}
+        {/* Narration player concept */}
+        <div className="mx-5 mt-4 rounded-2xl border border-[#E7D9C5] bg-[#FBF7EF] p-4 flex items-center gap-4">
+          <button
+            aria-label="Прослушать фразу"
+            className="w-11 h-11 shrink-0 rounded-full bg-[#7A1E2B] text-white flex items-center justify-center shadow-lg shadow-[#7A1E2B]/30 hover:scale-105 transition-transform cursor-pointer"
+          >
+            <Play className="w-5 h-5 fill-current ml-0.5" />
+          </button>
+          <div className="min-w-0 flex-1">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
+              Озвучка
+            </div>
+            <div className="text-sm font-bold text-[#231816] mt-0.5 truncate">
+              Jó napot! — Добрый день
+            </div>
+            <div className="flex items-end gap-0.5 h-5 mt-1.5" aria-hidden>
+              {[10, 18, 14, 24, 16, 22, 12, 20].map((h, i) => (
+                <span
+                  key={i}
+                  className="w-1 rounded-full bg-[#2C5F58]"
+                  style={{ height: `${h}px`, opacity: 0.9 - (i % 2) * 0.3 }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Quiz snippet */}
+        {/* One educational activity */}
         <div className="mx-5 mt-4 rounded-2xl border border-[#E7D9C5] p-4 mb-5">
           <div className="text-xs font-bold text-[#57121C] mb-3">
-            Мини-тест · выберите перевод «Szia»
+            Выберите перевод «Szia»
           </div>
           <div className="flex flex-wrap gap-2">
             {[
@@ -451,6 +441,13 @@ function HeroMockup() {
               </span>
             ))}
           </div>
+          {/* Subtle evidence/progress cue */}
+          <div className="mt-3 pt-3 border-t border-[#E7D9C5]/70 flex items-center justify-between text-[10px] text-[#8A7A68]">
+            <span>Ответ засчитан</span>
+            <span className="inline-flex items-center gap-1 text-[#2C5F58] font-semibold">
+              <Check className="w-3 h-3" /> прогресс сохранён
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -465,32 +462,32 @@ const FEATURES = [
   {
     icon: BookOpen,
     title: 'Интерактивные уроки',
-    text: 'Теория, живые примеры и тренажёры собраны в слайды: читайте, слушайте и сразу проверяйте себя — без переключений между приложениями.',
+    text: 'Теория, живые примеры и тренажёры — в одном слайде. Читайте, слушайте и сразу проверяйте себя.',
     accent: 'text-[#7A1E2B] bg-[#7A1E2B]/10 border-[#7A1E2B]/15',
   },
   {
     icon: Headphones,
     title: 'Живая озвучка носителя',
-    text: 'Каждое слово звучит правильно. Включайте синтез речи, подключайте собственные записи диктора и настраивайте голос под себя.',
+    text: 'Каждое слово звучит правильно: синтез речи и записи диктора с настройкой голоса.',
     accent: 'text-[#2C5F58] bg-[#2C5F58]/10 border-[#2C5F58]/15',
   },
   {
     icon: Brain,
     title: 'Умное повторение',
-    text: 'Алгоритм интервальных повторений подсказывает, какие слова пора освежить, — новая лексика закрепляется надолго, а не забывается.',
+    text: 'Интервальное повторение подскажет, какие слова пора освежить, — лексика закрепляется надолго.',
     accent: 'text-[#B98A2B] bg-[#B98A2B]/10 border-[#B98A2B]/15',
   },
   {
     icon: Cloud,
     title: 'Прогресс в облаке',
-    text: 'Создайте аккаунт — прохождение уроков и карточки повторения сохраняются на сервере. Продолжайте с любого устройства.',
-    accent: 'text-[#4C6E91] bg-[#4C6E91]/10 border-[#4C6E91]/15',
+    text: 'Уроки и карточки сохраняются на сервере. Продолжайте с любого устройства.',
+    accent: 'text-[#6B5D52] bg-[#6B5D52]/10 border-[#6B5D52]/15',
   },
 ];
 
 function Features() {
   return (
-    <section id="features" className="scroll-mt-24 py-20 md:py-28 bg-white">
+    <section id="features" className="scroll-mt-24 py-16 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
@@ -517,7 +514,7 @@ function Features() {
                 <h3 className="text-lg font-bold text-[#231816] tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#6B5D52] leading-relaxed">{feature.text}</p>
+                <p className="mt-2.5 text-sm text-[#4A403A] leading-relaxed">{feature.text}</p>
               </div>
             </Reveal>
           ))}
@@ -554,7 +551,7 @@ const STEPS = [
 
 function HowItWorks() {
   return (
-    <section id="how" className="scroll-mt-24 py-20 md:py-28">
+    <section id="how" className="scroll-mt-24 py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
@@ -573,20 +570,18 @@ function HowItWorks() {
           {STEPS.map((step, idx) => (
             <Reveal key={step.title} delay={idx * 120}>
               <div className="relative h-full p-7 md:p-8 rounded-3xl bg-white border border-[#E7D9C5] hover:border-[#7A1E2B]/30 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[#231816]/8 transition-all duration-300">
-                {/* Step number */}
-                <div className="absolute top-6 right-6 font-black text-5xl text-[#E7D9C5] select-none">
-                  {idx + 1}
-                </div>
-                <div className="w-12 h-12 rounded-2xl bg-[#7A1E2B]/10 text-[#7A1E2B] flex items-center justify-center mb-6">
-                  <step.icon className="w-6 h-6" />
-                </div>
-                <div className="text-[11px] font-bold uppercase tracking-widest text-[#B98A2B] mb-2">
-                  {step.step}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-[#7A1E2B]/10 text-[#7A1E2B] flex items-center justify-center">
+                    <step.icon className="w-6 h-6" />
+                  </div>
+                  <span className="font-mono text-sm font-bold text-[#B98A2B]">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
                 </div>
                 <h3 className="text-lg font-bold text-[#231816] tracking-tight">
                   {step.title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#6B5D52] leading-relaxed">{step.text}</p>
+                <p className="mt-2.5 text-sm text-[#4A403A] leading-relaxed">{step.text}</p>
               </div>
             </Reveal>
           ))}
@@ -600,73 +595,98 @@ function HowItWorks() {
 /*  Sneak peek — real lesson previews from LESSONS_META               */
 /* ------------------------------------------------------------------ */
 
-const LEVEL_BADGE: Record<string, string> = {
-  A0: 'bg-[#7A1E2B] text-white',
-  A1: 'bg-[#2C5F58] text-white',
-  A2: 'bg-[#B98A2B] text-white',
-  B1: 'bg-[#4C6E91] text-white',
+const PREVIEW_PATH = [
+  { number: 1, hu: 'Üdvözöllek!', ru: 'Алфавит и базовые звуки' },
+  { number: 2, hu: 'Köszönés & lenni', ru: 'Приветствия и глагол «быть»' },
+  { number: 3, hu: 'Főnév, névelő, többes szám', ru: 'Артикли и множественное число' },
+  { number: 4, hu: 'Jelen idő', ru: 'Настоящее время' },
+  { number: 5, hu: 'Számok, idő, napok', ru: 'Числа, время, дни' },
+  { number: 6, hu: 'A0 összefoglaló', ru: 'Повторение уровня A0' },
+];
+
+const NEXT_LEVELS = [
+  { level: 'A1', count: 8 },
+  { level: 'A2', count: 6 },
+  { level: 'B1', count: 8 },
+];
+
+const NEXT_LEVEL_CHIP: Record<string, string> = {
+  A1: 'bg-[#2C5F58]/10 text-[#2C5F58]',
+  A2: 'bg-[#B98A2B]/10 text-[#B98A2B]',
+  B1: 'bg-[#7A1E2B]/10 text-[#7A1E2B]',
 };
 
 function SneakPeek({ onStart }: { onStart: () => void }) {
-  const previewLessons = LESSONS_META.slice(0, 6);
-
   return (
-    <section id="preview" className="scroll-mt-24 py-20 md:py-28 bg-white">
+    <section id="preview" className="scroll-mt-24 py-16 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
             eyebrow="Программа курса"
             title={
               <>
-                Загляните внутрь{' '}
-                <span className="text-[#7A1E2B]">программы</span>
+                Один учебный путь —{' '}
+                <span className="text-[#7A1E2B]">28 уроков</span>
               </>
             }
-            subtitle="Полная система из 28 уроков: от звуков и алфавита до разговорного уровня B1. Вот с чего вы начнёте."
+            subtitle="От звуков и алфавита до разговорного уровня B1. Вот как начинается ваш путь."
           />
         </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {previewLessons.map((lesson, idx) => (
-            <Reveal key={lesson.id} delay={idx * 80}>
-              <div className="group h-full flex flex-col p-6 rounded-3xl bg-[#FBF7EF] border border-[#E7D9C5] hover:bg-white hover:border-[#7A1E2B]/25 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[#231816]/8 transition-all duration-300 cursor-pointer">
-                <div className="flex items-center justify-between mb-4">
-                  <span
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${LEVEL_BADGE[lesson.level]}`}
-                  >
-                    Уровень {lesson.level}
+        <Reveal>
+          <div className="max-w-4xl mx-auto rounded-3xl bg-[#FBF7EF] border border-[#E7D9C5] overflow-hidden">
+            {/* Path header */}
+            <div className="flex items-center justify-between gap-3 px-6 md:px-8 py-5 border-b border-[#E7D9C5] bg-white/60">
+              <div className="flex items-center gap-3">
+                <span className="px-2.5 py-1 rounded-lg bg-[#7A1E2B] text-white text-[11px] font-bold">
+                  A0 · Основы
+                </span>
+                <span className="text-sm text-[#8A7A68]">Старт курса · 6 уроков</span>
+              </div>
+              <span className="font-mono text-xs text-[#8A7A68] hidden sm:block">01–06</span>
+            </div>
+
+            {/* Lesson path rows */}
+            <ol className="divide-y divide-[#E7D9C5]/70">
+              {PREVIEW_PATH.map((row) => (
+                <li
+                  key={row.number}
+                  className="flex items-center gap-4 px-6 md:px-8 py-3.5 hover:bg-white/70 transition-colors"
+                >
+                  <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-[#E7D9C5] font-mono text-xs font-bold text-[#7A1E2B] flex items-center justify-center">
+                    {String(row.number).padStart(2, '0')}
                   </span>
-                  <span className="text-[11px] font-semibold text-[#8A7A68]">
-                    {lesson.slidesCount} слайдов
+                  <span className="font-bold text-[#231816]">{row.hu}</span>
+                  <span className="ml-auto text-right text-xs text-[#8A7A68] hidden sm:block">
+                    {row.ru}
                   </span>
-                </div>
-                <h3 className="text-base font-bold text-[#231816] leading-snug group-hover:text-[#7A1E2B] transition-colors">
-                  Урок {lesson.number}. {lesson.title.replace(/^Урок \d+ · /, '')}
-                </h3>
-                <p className="mt-2 text-sm text-[#6B5D52] leading-relaxed flex-1">
-                  {lesson.subtitle}
-                </p>
-                <div className="mt-5 pt-4 border-t border-[#E7D9C5]/70 flex items-center gap-1.5 text-sm font-semibold text-[#7A1E2B]">
-                  <span>Открыть урок</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </li>
+              ))}
+            </ol>
+
+            {/* Footer / CTA */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 md:px-8 py-5 border-t border-[#E7D9C5] bg-white/60">
+              <div>
+                <div className="text-sm font-semibold text-[#231816]">Дальше по программе</div>
+                <div className="mt-1.5 flex gap-2 flex-wrap">
+                  {NEXT_LEVELS.map((l) => (
+                    <span
+                      key={l.level}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${NEXT_LEVEL_CHIP[l.level]}`}
+                    >
+                      {l.level} · {l.count} уроков
+                    </span>
+                  ))}
                 </div>
               </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={200}>
-          <div className="mt-12 text-center">
-            <button
-              onClick={onStart}
-              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#7A1E2B] text-white text-base font-bold hover:bg-[#57121C] hover:scale-105 hover:shadow-xl hover:shadow-[#7A1E2B]/30 transition-all cursor-pointer"
-            >
-              Открыть все 28 уроков
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <p className="mt-4 text-sm text-[#8A7A68]">
-              Доступ к урокам — после бесплатной регистрации
-            </p>
+              <button
+                onClick={onStart}
+                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-bold hover:bg-[#57121C] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B]"
+              >
+                Посмотреть все 28 уроков
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </Reveal>
       </div>
@@ -678,77 +698,55 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
 /*  Bottom CTA                                                        */
 /* ------------------------------------------------------------------ */
 
-function BottomCta({ user, onSignup, onLogin }: { user: { email: string } | null; onSignup: () => void; onLogin: () => void }) {
+function BottomCta({
+  user,
+  onStart,
+  onSignup,
+  onLogin,
+}: {
+  user: { email: string } | null;
+  onStart: () => void;
+  onSignup: () => void;
+  onLogin: () => void;
+}) {
   return (
-    <section id="cta" className="scroll-mt-24 py-20 md:py-28">
+    <section id="cta" className="scroll-mt-24 py-14 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#57121C] via-[#7A1E2B] to-[#57121C] text-white px-6 py-16 md:px-16 md:py-20 text-center shadow-2xl shadow-[#7A1E2B]/30">
-            {/* decorative blobs */}
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#57121C] via-[#7A1E2B] to-[#57121C] text-white px-6 py-12 md:px-16 md:py-16 text-center shadow-2xl shadow-[#7A1E2B]/30">
             <div aria-hidden className="pointer-events-none absolute inset-0">
               <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-white/8 blur-3xl" />
               <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-[#B98A2B]/15 blur-3xl" />
             </div>
 
             <div className="relative">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-bold uppercase tracking-widest mb-6">
-                <GraduationCap className="w-4 h-4" />
-                Начните бесплатно
-              </div>
-
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight max-w-2xl mx-auto">
-                {user
-                  ? 'Продолжите обучение прямо сейчас'
-                  : 'Готовы заговорить по-венгерски?'}
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight leading-tight max-w-2xl mx-auto">
+                {user ? 'Продолжите обучение прямо сейчас' : 'Готовы заговорить по-венгерски?'}
               </h2>
 
-              <p className="mt-5 text-base md:text-lg text-[#EAD0C3] max-w-xl mx-auto leading-relaxed">
+              <p className="mt-4 text-base md:text-lg text-[#EAD0C3] max-w-xl mx-auto leading-relaxed">
                 {user
                   ? 'Ваш прогресс сохранён. Вернитесь к урокам и продолжайте там, где остановились.'
-                  : 'Создайте аккаунт и получите бесплатный доступ ко всем урокам. Первые слова — уже сегодня.'}
+                  : 'Создайте аккаунт и получите бесплатный доступ к урокам. Первые слова — уже сегодня.'}
               </p>
 
-              <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-                {user ? (
-                  <button
-                    onClick={onSignup}
-                    className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#B98A2B] text-white text-base font-bold hover:bg-[#a37923] hover:scale-105 transition-all cursor-pointer"
-                  >
-                    Продолжить обучение
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={onSignup}
-                      className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#57121C] text-base font-bold hover:bg-[#F6EFE4] hover:scale-105 transition-all cursor-pointer"
-                    >
-                      Создать аккаунт бесплатно
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={onLogin}
-                      className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/25 bg-white/5 text-white text-base font-semibold hover:bg-white/15 hover:scale-105 transition-all cursor-pointer"
-                    >
-                      <LogIn className="w-4 h-4" />
-                      Уже есть аккаунт — войти
-                    </button>
-                  </>
-                )}
+              <div className="mt-8">
+                <button
+                  onClick={user ? onStart : onSignup}
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#57121C] text-base font-bold hover:bg-[#F6EFE4] hover:scale-105 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {user ? 'Продолжить обучение' : 'Создать аккаунт бесплатно'}
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
 
               {!user && (
-                <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[#EAD0C3]/90">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Check className="w-4 h-4" /> 7 дней бесплатно
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Check className="w-4 h-4" /> 28 уроков
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Check className="w-4 h-4" /> Озвучка носителя
-                  </span>
-                </div>
+                <button
+                  onClick={onLogin}
+                  className="mt-4 text-sm text-[#EAD0C3] underline underline-offset-4 hover:text-white transition-colors cursor-pointer"
+                >
+                  Уже есть аккаунт — войти
+                </button>
               )}
             </div>
           </div>
@@ -926,6 +924,7 @@ export default function LandingPage() {
         <SneakPeek onStart={handleStart} />
         <BottomCta
           user={user}
+          onStart={handleStart}
           onSignup={() => openAuth('register')}
           onLogin={() => openAuth('login')}
         />
