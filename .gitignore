@@ -10,3 +10,5 @@ coverage/
 /data/db.json.bak
 gcs-service-account.json
 *.pem
+
+.ds_agent_sessions/
