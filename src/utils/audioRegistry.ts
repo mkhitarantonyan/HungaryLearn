@@ -1,5 +1,4 @@
-// Registry for custom recorded audio files (MP3 / WAV / WebM)
-// Allows replacing synthetic TTS with real human voice recordings (Hungarian native speaker & Russian narrator)
+// Registry for prerecorded audio files (MP3 / WAV / WebM).
 //
 // Audio can come from two sources:
 //   1. Server overrides (global, admin-managed) — visible to ALL users.
@@ -9,6 +8,7 @@
 import { uploadAudioToServer, deleteAudioFromServer, loadServerAudioRegistry } from './serverSync';
 import { wordAudioMap } from '../data/wordAudioMap';
 import { audioUrl } from './audioConfig';
+import { PRESENT_SLIDE_AUDIO } from '../data/slideAudioManifest';
 
 export interface AudioMap {
   [key: string]: string; // Maps word/phrase or ID to audio URL
@@ -57,26 +57,18 @@ export function applyServerAudioRegistry(entries: Record<string, string>): void 
 // audioUrl(), so they work both locally (/audio/...) and from a CDN/cloud bucket.
 // getSlideCandidateKeys generates 'l{N}_s{S}' as the first candidate, so one key per slide is sufficient.
 //
-// Number of slides with pre-recorded narration per lesson (matches the MP3 files).
-// All 28 lessons are included.
-const SLIDE_AUDIO_COUNTS: Record<number, number> = {
-  1: 11, 2: 10, 3: 11, 4: 12, 5: 12, 6: 10, 7: 11,
-  8: 12, 9: 11, 10: 11, 11: 11, 12: 11, 13: 12, 14: 11,
-  15: 12, 16: 12, 17: 11, 18: 12, 19: 11, 20: 12, 21: 11, 22: 11,
-  23: 11, 24: 11, 25: 11, 26: 11, 27: 11, 28: 11,
-};
-
 function buildStaticAudioRegistry(): AudioMap {
   const registry: AudioMap = {};
-  for (const [lesson, slideCount] of Object.entries(SLIDE_AUDIO_COUNTS)) {
-    for (let slide = 1; slide <= slideCount; slide++) {
-      const url = audioUrl(`${lesson}.${slide}.mp3`);
-      registry[`l${lesson}_s${slide}`] = url;
-      registry[`lesson${lesson}_slide${slide}`] = url;
-      registry[`${lesson}.${slide}`] = url;
-      registry[`${lesson}_${slide}`] = url;
-      registry[`${lesson}.${slide}.mp3`] = url;
-    }
+  for (const presentKey of Object.keys(PRESENT_SLIDE_AUDIO)) {
+    const match = /^(\d+)\.(\d+)$/.exec(presentKey);
+    if (!match) continue;
+    const [, lesson, slide] = match;
+    const url = audioUrl(`${lesson}.${slide}.mp3`);
+    registry[`l${lesson}_s${slide}`] = url;
+    registry[`lesson${lesson}_slide${slide}`] = url;
+    registry[`${lesson}.${slide}`] = url;
+    registry[`${lesson}_${slide}`] = url;
+    registry[`${lesson}.${slide}.mp3`] = url;
   }
   return registry;
 }
@@ -444,24 +436,18 @@ export function stopActiveAudio(): void {
   }
 }
 
-export function playCustomAudioOrTTS(
-  text: string,
-  lang: 'hu-HU' | 'ru-RU' = 'hu-HU',
+export function playRecordedAudio(
+  key: string,
   rate?: number,
-  pitch?: number,
   onEnd?: () => void,
-  onError?: (err: unknown) => void
+  onError?: (error: unknown) => void
 ): boolean {
-  const customUrl = getAudioFileUrl(text);
+  const customUrl = getAudioFileUrl(key);
   if (customUrl) {
     try {
-      // Always stop existing audio and speech synthesis before playing new track
       stopActiveAudio();
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
 
-      console.log('[Audio] Playing custom file:', { text, url: customUrl });
+      console.log('[Audio] Playing recorded file:', { key, url: customUrl });
       const audio = new Audio(customUrl);
       audio.preload = 'auto';
       currentActiveAudio = audio;
@@ -473,7 +459,7 @@ export function playCustomAudioOrTTS(
       const handleError = (e: unknown) => {
         if (errorFired) return;
         errorFired = true;
-        console.warn(`Error playing custom audio file ${customUrl}, falling back to TTS`, e);
+        console.warn(`Recorded audio is unavailable: ${customUrl}`, e);
         if (currentActiveAudio === audio) {
           currentActiveAudio = null;
         }
@@ -497,10 +483,16 @@ export function playCustomAudioOrTTS(
           handleError(err);
         });
       }
-      return true; // Played custom audio
+      return true;
     } catch (e) {
-      console.warn('Audio construction failed, falling back to TTS');
+      console.warn(`Recorded audio is unavailable: ${customUrl}`, e);
+      stopActiveAudio();
+      onError?.(e);
+      return false;
     }
   }
-  return false; // No custom audio found
+  const error = new Error(`Recorded audio is unavailable for key: ${key}`);
+  console.warn(error.message);
+  onError?.(error);
+  return false;
 }

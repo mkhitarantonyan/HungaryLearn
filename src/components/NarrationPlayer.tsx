@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Play, Square, Settings2, Mic, Headphones, RotateCw } from 'lucide-react';
+import { Play, Square, Settings2, Mic, RotateCw } from 'lucide-react';
 import { NARRATION_PLAYBACK_RATES, type NarrationPlaybackRate } from '../hooks/useLessonNarration';
 
 interface NarrationPlayerProps {
@@ -7,11 +7,11 @@ interface NarrationPlayerProps {
   autoplayEnabled: boolean;
   playbackRate: NarrationPlaybackRate;
   needsUserGesture: boolean;
+  audioUnavailable: boolean;
   slideLabel?: string;
   onPlayPause: () => void;
   onToggleAutoplay: () => void;
   onSetPlaybackRate: (rate: NarrationPlaybackRate) => void;
-  onOpenVoiceSettings: () => void;
   isAdmin?: boolean;
   onOpenAudioEditor?: () => void;
 }
@@ -21,11 +21,11 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
   autoplayEnabled,
   playbackRate,
   needsUserGesture,
+  audioUnavailable,
   slideLabel,
   onPlayPause,
   onToggleAutoplay,
   onSetPlaybackRate,
-  onOpenVoiceSettings,
   isAdmin = false,
   onOpenAudioEditor,
 }) => {
@@ -106,7 +106,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
         </button>
 
         {/* Overflow */}
-        <div className="relative shrink-0" ref={menuRef}>
+        {isAdmin && onOpenAudioEditor && <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
@@ -124,19 +124,6 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
               className="absolute right-0 mt-1 w-56 rounded-xl border border-[#D9CBB0] bg-white shadow-lg py-1 z-40"
             >
               <button
-                type="button"
-                role="menuitem"
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenVoiceSettings();
-                }}
-                className="w-full text-left px-3 py-2 text-sm text-[#2A2320] hover:bg-[#F6EFE4] cursor-pointer flex items-center gap-2"
-              >
-                <Headphones className="w-4 h-4 text-[#7A1E2B]" />
-                Настройки голоса
-              </button>
-              {isAdmin && onOpenAudioEditor && (
-                <button
                   type="button"
                   role="menuitem"
                   onClick={() => {
@@ -147,17 +134,23 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
                 >
                   <Mic className="w-4 h-4 text-[#2C5F58]" />
                   Изменить аудио слайда
-                </button>
-              )}
+              </button>
             </div>
           )}
-        </div>
+        </div>}
       </div>
 
       {needsUserGesture && (
         <div className="max-w-4xl mx-auto px-4 md:px-8 pb-2">
           <p className="text-[11px] text-[#B98A2B] font-medium" role="status">
             Нажмите ▶ один раз, чтобы разрешить автопересказ.
+          </p>
+        </div>
+      )}
+      {audioUnavailable && (
+        <div className="max-w-4xl mx-auto px-4 md:px-8 pb-2">
+          <p className="text-[11px] text-red-700 font-medium" role="alert">
+            Записанное аудио для этого слайда недоступно.
           </p>
         </div>
       )}

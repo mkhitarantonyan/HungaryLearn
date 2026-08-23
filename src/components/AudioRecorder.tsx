@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, Square, Play, Volume2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { speakText } from '../utils/speech';
+import { playRecordedAudio } from '../utils/speech';
 
 interface AudioRecorderProps {
   targetText: string;
@@ -66,7 +66,13 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({
   };
 
   const playTarget = () => {
-    speakText(targetText, 'hu-HU', 0.8);
+    setErrorMessage('');
+    playRecordedAudio(
+      targetText,
+      0.8,
+      undefined,
+      () => setErrorMessage('Записанный образец недоступен.')
+    );
   };
 
   const playUserRecording = () => {

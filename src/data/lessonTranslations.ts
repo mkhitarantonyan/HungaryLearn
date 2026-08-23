@@ -149,7 +149,7 @@ export const LESSON_TRANSLATION_MAP: Record<number, TranslationItem[]> = {
       id: 'l8_t2',
       lessonNumber: 8,
       direction: 'ru-to-hu',
-      sourceText: 'У меня есть брат.',
+      sourceText: 'У меня есть брат или сестра.',
       targetText: 'Van egy testvérem.',
       grammaticalTag: 'birtokos-suffix-1sg',
       relatedLessonId: 8,

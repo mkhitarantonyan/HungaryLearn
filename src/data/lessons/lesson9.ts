@@ -1,4 +1,80 @@
-import { Lesson } from '../../types';
+import type { Lesson, LessonActivity } from '../../types';
+
+const ATTRIBUTIVE_ADJECTIVES: LessonActivity = {
+  kind: 'controlledPractice', id: 'l9-cp-attributive-adjectives', title: 'Прилагательное перед существительным', passCount: 5,
+  exercises: [
+    { kind: 'singleChoice', id: 'l9-attributive-1', prompt: 'большие дома', options: ['nagy házak', 'nagyabb házak', 'nagy ház'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-attributive-2', prompt: 'большой дом (винительный падеж)', options: ['nagy ház', 'nagy házat', 'nagyot ház'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l9-attributive-3', prompt: 'новая книга', options: ['újabb könyv', 'új könyv', 'újak könyv'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l9-attributive-4', prompt: 'красные машины', options: ['piros autó', 'pirosabb autók', 'piros autók'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l9-attributive-5', prompt: 'дорогой кофе (винительный падеж)', options: ['drága kávét', 'drágát kávé', 'drágább kávét'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-attributive-6', prompt: 'красивые города', options: ['szépek város', 'szép városok', 'szebb városok'], correctIndex: 1 },
+  ],
+};
+
+const COMPARATIVE_FORMS: LessonActivity = {
+  kind: 'controlledPractice', id: 'l9-cp-comparative-forms', title: 'Частые сравнительные формы', passCount: 8,
+  exercises: [
+    { kind: 'textInput', id: 'l9-comparative-1', prompt: 'nagy → больше', accept: ['nagyobb'] },
+    { kind: 'textInput', id: 'l9-comparative-2', prompt: 'kicsi → меньше', accept: ['kisebb'] },
+    { kind: 'textInput', id: 'l9-comparative-3', prompt: 'szép → красивее', accept: ['szebb'] },
+    { kind: 'textInput', id: 'l9-comparative-4', prompt: 'jó → лучше', accept: ['jobb'] },
+    { kind: 'textInput', id: 'l9-comparative-5', prompt: 'drága → дороже', accept: ['drágább'] },
+    { kind: 'textInput', id: 'l9-comparative-6', prompt: 'olcsó → дешевле', accept: ['olcsóbb'] },
+    { kind: 'textInput', id: 'l9-comparative-7', prompt: 'új → новее', accept: ['újabb'] },
+    { kind: 'textInput', id: 'l9-comparative-8', prompt: 'gyors → быстрее', accept: ['gyorsabb'] },
+    { kind: 'textInput', id: 'l9-comparative-9', prompt: 'lassú → медленнее', accept: ['lassabb'] },
+    { kind: 'textInput', id: 'l9-comparative-10', prompt: 'nehéz → труднее / тяжелее', accept: ['nehezebb'] },
+  ],
+};
+
+const SUPERLATIVE_FORMS: LessonActivity = {
+  kind: 'controlledPractice', id: 'l9-cp-superlative-forms', title: 'Сравнительная → превосходная', passCount: 5,
+  exercises: [
+    { kind: 'textInput', id: 'l9-superlative-1', prompt: 'nagyobb → самый большой', accept: ['legnagyobb'] },
+    { kind: 'textInput', id: 'l9-superlative-2', prompt: 'kisebb → самый маленький', accept: ['legkisebb'] },
+    { kind: 'textInput', id: 'l9-superlative-3', prompt: 'szebb → самый красивый', accept: ['legszebb'] },
+    { kind: 'textInput', id: 'l9-superlative-4', prompt: 'jobb → лучший', accept: ['legjobb'] },
+    { kind: 'textInput', id: 'l9-superlative-5', prompt: 'drágább → самый дорогой', accept: ['legdrágább'] },
+    { kind: 'textInput', id: 'l9-superlative-6', prompt: 'olcsóbb → самый дешёвый', accept: ['legolcsóbb'] },
+  ],
+};
+
+const MINT_COMPARISONS: LessonActivity = {
+  kind: 'controlledPractice', id: 'l9-cp-mint-comparisons', title: 'Сравнения с mint', passCount: 4,
+  exercises: [
+    { kind: 'singleChoice', id: 'l9-mint-1', prompt: 'Этот дом больше, чем тот дом.', options: ['Ez a ház nagyobb, mint az a ház.', 'Ez a ház nagy, az a ház.', 'Az a ház nagyobb, mint ez a ház.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-mint-2', prompt: 'Кофе лучше, чем чай.', options: ['A tea jobb, mint a kávé.', 'A kávé jobb, mint a tea.', 'A kávé a legjobb tea.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l9-mint-3', prompt: 'Поезд быстрее, чем автобус.', options: ['A busz gyorsabb, mint a vonat.', 'A vonat a leggyorsabb busz.', 'A vonat gyorsabb, mint a busz.'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l9-mint-4', prompt: 'Это пальто дешевле, чем чёрное пальто.', options: ['Ez a kabát olcsóbb, mint a fekete kabát.', 'A fekete kabát olcsóbb, mint ez a kabát.', 'Ez a kabát a legolcsóbb fekete kabát.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-mint-5', prompt: 'Венгерский язык труднее, чем английский.', options: ['Az angol nehezebb, mint a magyar nyelv.', 'A magyar nyelv nehezebb, mint az angol.', 'A magyar nyelv a legnehezebb angol.'], correctIndex: 1 },
+  ],
+};
+
+const WRITING_COMPARISON: LessonActivity = {
+  kind: 'writing', id: 'l9-writing-comparison', title: 'Письмо: сравни два объекта',
+  prompt: 'Напиши 3–5 связанных предложений о двух людях, местах или предметах. Используй минимум две сравнительные формы и минимум одно сравнение с mint. Превосходную форму можно добавить, если она уместна.',
+  modelAnswer: ['A piros kabát szép.', 'A kék kabát szebb, mint a piros kabát.', 'A kék kabát olcsóbb is.', 'Szerintem a kék kabát a legjobb választás.'],
+  rubric: ['Написано 3–5 связанных предложений', 'Есть минимум две сравнительные формы', 'Есть минимум одно осмысленное сравнение с mint'],
+};
+
+const RECORD_COMPARISON: LessonActivity = {
+  kind: 'recording', id: 'l9-record-comparison', title: 'Говорение: короткое сравнение',
+  instructions: 'Запиши короткое сравнение двух людей, мест или предметов. Сам факт записи остаётся PARTIAL evidence и не подтверждает языковую правильность без проверки.',
+  targetText: 'A kék kabát szebb, mint a piros kabát. A kék kabát olcsóbb is. Szerintem ez a legjobb választás.',
+  targetTranslation: 'Синее пальто красивее красного. Синее пальто также дешевле. По-моему, это лучший выбор.',
+  rubric: ['Есть минимум две сравнительные формы', 'Есть осмысленная конструкция с mint', 'Сравнение состоит из нескольких связанных фраз'],
+};
+
+const EXIT_CHECK: LessonActivity = {
+  kind: 'exitCheck', id: 'l9-exit-check', title: 'Exit check — цели урока 9', checks: [
+    { objectiveId: 'l9_use-adjectives', activityId: 'l9-cp-attributive-adjectives', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_form-comparative', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_form-superlative', activityId: 'l9-cp-superlative-forms', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_use-mint', activityId: 'l9-cp-mint-comparisons', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l9-record-comparison', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l9_compare-people', activityId: 'l9-writing-comparison', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l9-record-comparison', evidenceKind: 'speaking' }] },
+  ],
+};
 
 export const LESSON_9: Lesson = {
   id: 9,
@@ -6,7 +82,7 @@ export const LESSON_9: Lesson = {
   level: 'A1',
   title: 'Урок 9 · Melléknevek & Összehasonlítás',
   subtitle: 'Прилагательные и степени сравнения',
-  description: 'Прилагательные, их место перед существительным, правило неспрягаемости в роли определения, степени сравнения (-bb, mint), противоположности и цвета.',
+  description: 'Прилагательные перед существительным, частые сравнительные формы, конструкции с mint, превосходная степень и короткие практические сравнения.',
   slidesCount: 11,
   slides: [
     {
@@ -15,12 +91,13 @@ export const LESSON_9: Lesson = {
       title: "Melléknevek",
       subtitle: "Прилагательные — основы",
       body: `
-   <p>Прилагательные в венгерском языке ставятся <b>перед</b> существительным, к которому относятся, и (что отлично!) <b>не меняют свою форму</b> по числам и падежам, если стоят перед существительным.</p>
+   <p>В обычной атрибутивной позиции прилагательное стоит <b>перед</b> существительным и не получает суффиксы числа или падежа: их несёт существительное.</p>
    <p><button class="speak-btn" data-speak-text="nagy ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagy ház</button> <span style="color:#8a7a68">(большой дом)</span></p>
    <p><button class="speak-btn" data-speak-text="nagy házak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagy házak</button> <span style="color:#8a7a68">(большие дома)</span> — <i>обратите внимание: «nagy» не получило суффикс множественного числа -k!</i></p>
    <p><button class="speak-btn" data-speak-text="nagy házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagy házat</button> <span style="color:#8a7a68">(большой дом - винительный)</span> — <i>«nagy» не получило суффикс -t!</i></p>
-   <div class="note">Это одно из самых приятных правил венгерской грамматики: если прилагательное работает как определение («какой дом?»), оно абсолютно неизменяемо.</div>
- `
+   <div class="note">Модель урока: <b>nagy ház — nagy házak — nagy házat</b>. Перед существительным форма прилагательного обычно остаётся той же.</div>
+ `,
+      activities: [ATTRIBUTIVE_ADJECTIVES]
     },
     {
       id: 2,
@@ -42,7 +119,7 @@ export const LESSON_9: Lesson = {
        <p><button class="speak-btn" data-speak-text="gyors" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> gyors</button> (быстрый) ↔ <button class="speak-btn" data-speak-text="lassú" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> lassú</button> (медленный)</p>
      </div>
    </div>
-   <div class="note">Разница между <button class="speak-btn" data-speak-text="kis" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kis</button> и <button class="speak-btn" data-speak-text="kicsi" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kicsi</button>: <button class="speak-btn" data-speak-text="kis" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kis</button> используется ТОЛЬКО перед существительным (<button class="speak-btn" data-speak-text="egy kis ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> egy kis ház</button>), а <button class="speak-btn" data-speak-text="kicsi" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kicsi</button> — когда оно сказуемое или стоит отдельно (<button class="speak-btn" data-speak-text="A ház kicsi." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A ház kicsi.</button>).</div>
+   <div class="note"><b>kis</b> — обычная форма перед существительным: <b>kis ház</b>. Форма <b>kicsi</b> тоже возможна перед существительным: <b>kicsi ház</b>, а также часто употребляется самостоятельно или как сказуемое: <b>A ház kicsi.</b></div>
  `
     },
     {
@@ -65,7 +142,7 @@ export const LESSON_9: Lesson = {
        <p><button class="speak-btn" data-speak-text="barna" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> barna</button> — коричневый</p>
      </div>
    </div>
-   <div class="note">Интересный факт: в венгерском для красного цвета есть ДВА разных слова: <button class="speak-btn" data-speak-text="piros" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> piros</button> (для обычных предметов: яблоко, машина, платье) и <button class="speak-btn" data-speak-text="vörös" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vörös</button> (для глубокого/благородного красного: вино, кровь, закат, флаг).</div>
+   <div class="note">Для активного словаря используй <b>piros</b>. Слово <b>vörös</b> встречается в отдельных устойчивых сочетаниях, например <b>vörösbor</b> и <b>vöröshagyma</b>; это не универсальное различие оттенков.</div>
  `
     },
     {
@@ -74,13 +151,14 @@ export const LESSON_9: Lesson = {
       title: "Középfok (-bb)",
       subtitle: "Как сказать «больше», «красивее»",
       body: `
-   <p>Сравнительная степень образуется добавлением суффикса <span class="hu-word">-bb</span> к прилагательному. Если слово оканчивается на согласный, перед -bb добавляется гласная (-abb/-ebb):</p>
+   <p>Сравнительная степень часто содержит суффикс <span class="hu-word">-bb</span>, но конкретную форму лучше учить по частым моделям: основа и связующая гласная могут меняться.</p>
    <p><button class="speak-btn" data-speak-text="nagy" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagy</button> → <button class="speak-btn" data-speak-text="nagyobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagyobb</button> <span style="color:#8a7a68">(больше)</span></p>
    <p><button class="speak-btn" data-speak-text="szép" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szép</button> → <button class="speak-btn" data-speak-text="szebb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szebb</button> <span style="color:#8a7a68">(красивее)</span></p>
    <p><button class="speak-btn" data-speak-text="olcsó" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> olcsó</button> → <button class="speak-btn" data-speak-text="olcsóbb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> olcsóbb</button> <span style="color:#8a7a68">(дешевле)</span></p>
    <p><button class="speak-btn" data-speak-text="drága" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> drága</button> → <button class="speak-btn" data-speak-text="drágább" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> drágább</button> <span style="color:#8a7a68">(дороже)</span></p>
-   <div class="note">Единственное «неправильное» слово: <button class="speak-btn" data-speak-text="jó" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> jó</button> (хороший) → <button class="speak-btn" data-speak-text="jobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> jobb</button> (лучше). Всё остальное регулярно!</div>
- `
+   <div class="note">Запомни частые модели: <b>nagy → nagyobb, szép → szebb, jó → jobb, drága → drágább, olcsó → olcsóbb, új → újabb, kicsi → kisebb</b>. У <b>régi</b> возможны формы <b>régibb</b> и <b>régebbi</b>, поэтому здесь она не проверяется как единственный точный ответ.</div>
+ `,
+      activities: [COMPARATIVE_FORMS]
     },
     {
       id: 5,
@@ -92,7 +170,8 @@ export const LESSON_9: Lesson = {
    <p><button class="speak-btn" data-speak-text="Ez a ház nagyobb, mint az a ház." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ez a ház nagyobb, mint az a ház.</button> <span style="color:#8a7a68">(Этот дом больше, чем тот дом)</span></p>
    <p><button class="speak-btn" data-speak-text="A kávé jobb, mint a tea." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A kávé jobb, mint a tea.</button> <span style="color:#8a7a68">(Кофе лучше, чем чай)</span></p>
    <p><button class="speak-btn" data-speak-text="A magyar nyelv nehezebb, mint az angol." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A magyar nyelv nehezebb, mint az angol.</button> <span style="color:#8a7a68">(Венгерский язык труднее, чем английский)</span></p>
- `
+ `,
+      activities: [MINT_COMPARISONS]
     },
     {
       id: 6,
@@ -100,12 +179,13 @@ export const LESSON_9: Lesson = {
       title: "Felsőfok (leg-)",
       subtitle: "Как сказать «самый большой»",
       body: `
-   <p>Превосходная степень образуется невероятно просто: к форме сравнительной степени спереди приставляется приставка <b>leg-</b>!</p>
+   <p>Превосходная степень строится от сравнительной: <b>сравнительная форма → leg- + сравнительная форма</b>.</p>
    <p><button class="speak-btn" data-speak-text="legnagyobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legnagyobb</button> <span style="color:#8a7a68">(самый большой)</span></p>
    <p><button class="speak-btn" data-speak-text="legszebb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legszebb</button> <span style="color:#8a7a68">(самый красивый)</span></p>
-   <p><button class="speak-btn" data-speak-text="legjobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legjobb</button> <span style="color:#8a7a68">(самый лучший)</span></p>
-   <div class="note">Формула невероятно элегантная: <b>leg- + [слово+-bb]</b>. Запоминается за секунду!</div>
- `
+   <p><button class="speak-btn" data-speak-text="legjobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legjobb</button> <span style="color:#8a7a68">(лучший)</span></p>
+   <div class="note"><b>jobb = лучше; legjobb = лучший.</b> Сначала вспомни сравнительную форму, затем добавь <b>leg-</b>.</div>
+ `,
+      activities: [SUPERLATIVE_FORMS]
     },
     {
       id: 7,
@@ -115,10 +195,11 @@ export const LESSON_9: Lesson = {
       body: `
    <p><b>A:</b> <button class="speak-btn" data-speak-text="Tetszik ez a piros kabát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tetszik ez a piros kabát?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Szép, de a kék kabát szebb és olcsóbb." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szép, de a kék kabát szebb és olcsóbb.</button></p>
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Valóban! És a fekete kabát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Valóban! És a fekete kabát?</button></p>
+   <p><b>A:</b> <button class="speak-btn" data-speak-text="Tényleg? És a fekete kabát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tényleg? És a fekete kabát?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Az a legdrágább. A kék a legjobb választás." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Az a legdrágább. A kék a legjobb választás.</button></p>
-   <div class="task">Задание 1. Прочитайте диалог вслух и найдите в нём положительную, сравнительную и превосходную степени.</div>
- `
+   <div class="note">Диалог даёт контекст, но само чтение вслух не считается доказательством владения материалом.</div>
+ `,
+      activities: [RECORD_COMPARISON]
     },
     {
       id: 8,
@@ -126,14 +207,10 @@ export const LESSON_9: Lesson = {
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
       body: `
-   <ol class="tasklist">
-     <li>Образуйте сравнительную степень от: „új“, „régi“, „drága“, „jó“</li>
-     <li>Образуйте превосходную степень от тех же слов</li>
-     <li>Переведите: «Этот дом больше, чем тот дом»</li>
-     <li>Переведите: «Будапешт — самый красивый город»</li>
-     <li>Назовите 5 предметов вокруг вас и опишите их цвет и размер по-венгерски</li>
-   </ol>
- `
+   <p>Теперь свяжи изученные формы в короткий текст: выбери двух людей, два места или два предмета и сравни их.</p>
+   <div class="note">Нужны 3–5 предложений, минимум две сравнительные формы и минимум одна конструкция с <b>mint</b>.</div>
+ `,
+      activities: [WRITING_COMPARISON]
     },
     {
       id: 9,
@@ -156,14 +233,14 @@ export const LESSON_9: Lesson = {
     },
     {
       id: 10,
-      eyebrow: "УРОК 9 · 10/11 · ОСОБЫЙ СЛУЧАЙ",
+      eyebrow: "УРОК 9 · 10/11 · ДОПОЛНИТЕЛЬНОЕ РАСПОЗНАВАНИЕ",
       title: "Melléknév mint állítmány",
-      subtitle: "Когда прилагательное сказуемое",
+      subtitle: "Необязательное расширение",
       body: `
-   <p>Если прилагательное стои́т в предложении как <b>сказуемое</b> («дом какой? — большой»), оно согласуется в числе с подлежащим!</p>
+   <p><b>Дополнительно, только для распознавания:</b> прилагательное-сказуемое во множественном числе имеет форму множественного числа.</p>
    <p><button class="speak-btn" data-speak-text="A ház nagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A ház nagy.</button> <span style="color:#8a7a68">(Дом большой — ед.ч.)</span></p>
    <p><button class="speak-btn" data-speak-text="A házak nagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A házak nagyok.</button> <span style="color:#8a7a68">(Дома большие — мн.ч.: nagy + ok!)</span></p>
-   <div class="warn">Сравните: <button class="speak-btn" data-speak-text="a nagy házak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> a nagy házak</button> (большие дома — перед существительным, НЕ меняется) vs <button class="speak-btn" data-speak-text="A házak nagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A házak nagyok.</button> (Дома большие — сказуемое, ДАЁТ -ok). Тонкое и важное различие!</div>
+   <div class="warn">Сравни: <b>a nagy házak</b> (прилагательное перед существительным) и <b>A házak nagyok.</b> (прилагательное-сказуемое). Эта тема не входит в тест, практику или ExitCheck урока 9.</div>
  `
     },
     {
@@ -173,78 +250,47 @@ export const LESSON_9: Lesson = {
       subtitle: "Итоги 9-го урока",
       body: `
    <ul class="tick">
-     <li>Перед существительным прилагательное НЕ меняется ни в числе, ни в падежах</li>
-     <li>Как сказуемое — согласуется во множественном числе (A házak nagyok)</li>
-     <li>Сравнительная степень = суффикс <b>-bb</b>, союз сравнения = <b>mint</b></li>
-     <li>Превосходная степень = приставка <b>leg-</b> + сравнительная степень (legnagyobb)</li>
-     <li>Два слова для красного: piros (обычный) и vörös (глубокий)</li>
+     <li>Перед существительным прилагательное обычно не получает суффиксы числа и падежа: их несёт существительное</li>
+     <li>Частые сравнительные формы нужно узнавать и образовывать по изученным моделям</li>
+     <li>Стабильная конструкция сравнения: X + сравнительная форма + <b>mint</b> + Y</li>
+     <li>Превосходная степень: <b>leg-</b> + сравнительная форма (jobb → legjobb)</li>
+     <li>Коротко сравнивай людей, места и предметы в устной и письменной речи</li>
    </ul>
-   <div class="note"><b>Домашнее задание.</b> Сравните между собой два города или две страны на венгерском языке (5 предложений с использованием -bb, mint и leg-). В следующем уроке — «Система трёх измерений» местных падежей!</div>
- `
+   <div class="note">В следующем уроке начнётся новая тема — выражение местоположения и направления.</div>
+ `,
+      activities: [EXIT_CHECK]
     }
   ],
   vocabulary: [
-    { id: 'l9_v1', hu: 'nagy', ru: 'большой', category: 'Прилагательные',
-        ipa: "[nɒɟ]"
-    },
-    { id: 'l9_v2', hu: 'kicsi', ru: 'маленький', category: 'Прилагательные',
-        ipa: "[kˈit͡ʃi]"
-    },
-    { id: 'l9_v3', hu: 'jó', ru: 'хороший', category: 'Прилагательные',
-        ipa: "[jˈoː]"
-    },
-    { id: 'l9_v4', hu: 'rossz', ru: 'плохой', category: 'Прилагательные',
-        ipa: "[rˈoʃʃ]"
-    },
-    { id: 'l9_v5', hu: 'szép', ru: 'красивый', category: 'Прилагательные',
-        ipa: "[ʃˈɛːp]"
-    },
-    { id: 'l9_v6', hu: 'csúnya', ru: 'некрасивый', category: 'Прилагательные',
-        ipa: "[t͡ʃˈuːɲɒ]"
-    },
-    { id: 'l9_v7', hu: 'nagyobb', ru: 'больше', category: 'Сравнительная степень',
-        ipa: "[nɒɟˈobb]"
-    },
-    { id: 'l9_v8', hu: 'szebb', ru: 'красивее', category: 'Сравнительная степень',
-        ipa: "[ʃˈɛbb]"
-    },
-    { id: 'l9_v9', hu: 'legjobb', ru: 'самый лучший', category: 'Превосходная степень',
-        ipa: "[lˈɛgjobb]"
-    },
-    { id: 'l9_v10', hu: 'mint', ru: 'чем (при сравнении)', category: 'Союзы',
-        ipa: "[mˈint]"
-    },
-    { id: 'l9_v11', hu: 'piros', ru: 'красный', category: 'Цвета',
-        ipa: "[pˈiroʃ]"
-    },
-    { id: 'l9_v12', hu: 'kék', ru: 'синий', category: 'Цвета',
-        ipa: "[kˈɛːk]"
-    },
-    { id: 'l9_v13', hu: 'zöld', ru: 'зеленый', category: 'Цвета',
-        ipa: "[zˈøld]"
-    },
-    { id: 'l9_v14', hu: 'fehér', ru: 'белый', category: 'Цвета',
-        ipa: "[fˈɛhɛːr]"
-    },
-    { id: 'l9_v15', hu: 'fekete', ru: 'черный', category: 'Цвета',
-        ipa: "[fˈɛkɛtɛ]"
-    },
-    { id: 'l9_v16', hu: 'barna', ru: 'коричневый', category: 'Цвета',
-        ipa: "[bɒrnɒ]"
-    }
+    { id: 'l9_v1', hu: 'nagy', ru: 'большой', category: 'Прилагательные' },
+    { id: 'l9_v2', hu: 'kicsi', ru: 'маленький', category: 'Прилагательные' },
+    { id: 'l9_v3', hu: 'jó', ru: 'хороший', category: 'Прилагательные' },
+    { id: 'l9_v4', hu: 'rossz', ru: 'плохой', category: 'Прилагательные' },
+    { id: 'l9_v5', hu: 'szép', ru: 'красивый', category: 'Прилагательные' },
+    { id: 'l9_v6', hu: 'új', ru: 'новый', category: 'Прилагательные' },
+    { id: 'l9_v7', hu: 'régi', ru: 'старый', category: 'Прилагательные' },
+    { id: 'l9_v8', hu: 'drága', ru: 'дорогой', category: 'Прилагательные' },
+    { id: 'l9_v9', hu: 'olcsó', ru: 'дешёвый', category: 'Прилагательные' },
+    { id: 'l9_v10', hu: 'gyors', ru: 'быстрый', category: 'Прилагательные' },
+    { id: 'l9_v11', hu: 'lassú', ru: 'медленный', category: 'Прилагательные' },
+    { id: 'l9_v12', hu: 'mint', ru: 'чем (при сравнении)', category: 'Сравнение' },
+    { id: 'l9_v13', hu: 'piros', ru: 'красный', category: 'Цвета' },
+    { id: 'l9_v14', hu: 'kék', ru: 'синий', category: 'Цвета' },
+    { id: 'l9_v15', hu: 'nagyobb', ru: 'больше', category: 'Сравнительная степень' },
+    { id: 'l9_v16', hu: 'legjobb', ru: 'лучший', category: 'Превосходная степень' },
   ],
     quiz: [
     {
       id: 901,
       question: 'Как сказать "большие дома" по-венгерски?',
       options: [
-        'nagy házak (nagy не меняется)',
-        'nagyok házak',
-        'nagy házok',
-        'nagyon házak'
+        'nagy házak',
+        'nagyobb házak',
+        'nagy ház',
+        'legnagyobb házak'
       ],
       correctIndex: 0,
-      explanation: 'Прилагательное перед существительным НЕ меняется по числам и падежам: nagy házak (большие дома) – "nagy" не получает суффикс -k (урок 9, слайд 1).'
+      explanation: 'В сочетании nagy házak суффикс множественного числа получает существительное ház → házak, а прилагательное nagy остаётся в атрибутивной форме.'
     },
     {
       id: 902,
@@ -255,18 +301,18 @@ export const LESSON_9: Lesson = {
     },
     {
       id: 903,
-      question: 'Как сказать "самый лучший" по-венгерски?',
-      options: ['jóbb', 'legjobb', 'legjóbb', 'jobb'],
+      question: 'Как сказать "лучший" по-венгерски?',
+      options: ['jó', 'legjobb', 'legszebb', 'jobb'],
       correctIndex: 1,
-      explanation: 'Превосходная степень образуется приставкой leg- + сравнительная степень. Исключение: jó → jobb → legjobb (самый лучший). "jobb" – это просто "лучше".'
+      explanation: 'Частую цепочку нужно запомнить: jó → jobb → legjobb. Jobb означает «лучше», legjobb — «лучший».'
     },
     {
       id: 904,
       question: 'Как переводится предложение "A kávé jobb, mint a tea."?',
       options: [
         'Кофе лучше, чем чай',
-        'Кофе самый лучший, чем чай',
-        'Кофе хороший, как чай',
+        'Чай лучше, чем кофе',
+        'Кофе такой же, как чай',
         'Кофе хуже, чем чай'
       ],
       correctIndex: 0,
@@ -274,34 +320,34 @@ export const LESSON_9: Lesson = {
     },
     {
       id: 905,
-      question: 'Какое из этих прилагательных является сказуемым и согласуется с подлежащим во множественном числе?',
+      question: 'Как сказать «Этот поезд быстрее, чем автобус»?',
       options: [
-        'a nagy házak (nagy)',
-        'A házak nagyok (nagyok)',
-        'a szép házak (szép)',
-        'az új házak (új)'
+        'A busz gyorsabb, mint ez a vonat.',
+        'Ez a vonat gyorsabb, mint a busz.',
+        'Ez a vonat gyors és a busz.',
+        'Ez a vonat a leglassabb.'
       ],
       correctIndex: 1,
-      explanation: 'Когда прилагательное является сказуемым (отвечает на вопрос "какой?"), оно согласуется с подлежащим в числе: A házak nagyok (Дома большие). В роли определения (перед существительным) прилагательное не меняется: a nagy házak (урок 9, слайд 10).'
+      explanation: 'Модель сравнения: X + сравнительная форма + mint + Y: Ez a vonat gyorsabb, mint a busz.'
     },
     {
       id: 906,
-      question: 'В каком уроке мы изучали притяжательный суффикс для слова "ház" в 1-м лице (мой дом)?',
+      question: 'Какая форма является превосходной степенью от olcsó?',
       options: [
-        'Урок 6 (повторение A0)',
-        'Урок 7 (винительный падеж)',
-        'Урок 8 (притяжательные суффиксы)',
-        'Урок 9 (прилагательные)'
+        'olcsó',
+        'olcsóbb',
+        'legolcsóbb',
+        'legolcsó'
       ],
       correctIndex: 2,
-      explanation: 'Притяжательные суффиксы (házam, házad, háza...) мы изучали в уроке 8. Теперь в уроке 9 мы учимся описывать эти существительные с помощью прилагательных: "az én nagy házam" – "мой большой дом".'
+      explanation: 'Сначала образуется сравнительная форма olcsóbb, затем добавляется leg-: legolcsóbb.'
     }
   ],
   objectives: [
-    { id: 'l9_use-adjectives', text: 'Согласовывать прилагательное с существительным в атрибутивной позиции.', skills: ['grammar', 'writing'] },
-    { id: 'l9_form-comparative', text: 'Образовывать сравнительную степень прилагательных с помощью -bb и связующих гласных.', skills: ['grammar', 'writing'] },
-    { id: 'l9_form-superlative', text: 'Образовывать превосходную степень прилагательных с помощью leg-.', skills: ['grammar', 'writing'] },
+    { id: 'l9_use-adjectives', text: 'Правильно употреблять прилагательные перед существительным без согласования по числу и падежу.', skills: ['grammar', 'writing'] },
+    { id: 'l9_form-comparative', text: 'Образовывать частые сравнительные формы с -bb по изученным моделям основы и связующих гласных.', skills: ['grammar', 'writing'] },
+    { id: 'l9_form-superlative', text: 'Образовывать превосходную степень по модели: сравнительная форма → leg- + сравнительная форма.', skills: ['grammar', 'writing'] },
     { id: 'l9_use-mint', text: 'Строить сравнительные конструкции со словом mint.', skills: ['grammar', 'speaking'] },
-    { id: 'l9_compare-people', text: 'Описывать и сравнивать людей и предметы в устной и письменной речи.', skills: ['speaking', 'writing'] },
+    { id: 'l9_compare-people', text: 'Кратко сравнивать людей, места и предметы в устной и письменной речи.', skills: ['speaking', 'writing'] },
   ],
 };

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { SlideData } from '../types';
 import { getSlideNarrativeSequence } from '../utils/slideNarrator';
-import { speakSequence, stopSpeech, getVoiceSettings, type SpeechItem } from '../utils/speech';
+import {
+  playRecordedSequence,
+  stopRecordedAudio,
+  type RecordedAudioItem,
+} from '../utils/speech';
 import { readAutoplayPreference, writeAutoplayPreference } from '../utils/narrationPrefs';
 import { NarrationRunToken } from '../utils/narrationRunToken';
 
@@ -14,6 +18,7 @@ export interface LessonNarration {
   autoplayEnabled: boolean;
   playbackRate: NarrationPlaybackRate;
   needsUserGesture: boolean;
+  audioUnavailable: boolean;
   play: (slide?: SlideData) => void;
   stop: () => void;
   toggle: () => void;
@@ -22,23 +27,10 @@ export interface LessonNarration {
 }
 
 /**
- * Applies the selected playback speed to a narration sequence.
- * MP3 items are identified by their `fallbackSequence` marker and must play at
- * the selected speed directly (audio.playbackRate); TTS items scale their
- * curated (or default) rate. The MP3 → TTS fallback chain is preserved.
+ * Applies the selected playback speed to prerecorded narration.
  */
-function applyPlaybackRate(sequence: SpeechItem[], rate: number): SpeechItem[] {
-  const baseRate = getVoiceSettings().rate;
-  return sequence.map((item) => {
-    const next: SpeechItem = {
-      ...item,
-      rate: item.fallbackSequence ? rate : (item.rate ?? baseRate) * rate,
-    };
-    if (item.fallbackSequence) {
-      next.fallbackSequence = applyPlaybackRate(item.fallbackSequence, rate);
-    }
-    return next;
-  });
+function applyPlaybackRate(sequence: RecordedAudioItem[], rate: number): RecordedAudioItem[] {
+  return sequence.map((item) => ({ ...item, rate }));
 }
 
 export function useLessonNarration(
@@ -49,8 +41,9 @@ export function useLessonNarration(
   const [autoplayEnabled, setAutoplayEnabled] = useState<boolean>(() => readAutoplayPreference());
   const [playbackRate, setPlaybackRateState] = useState<NarrationPlaybackRate>(1);
   const [needsUserGesture, setNeedsUserGesture] = useState(false);
+  const [audioUnavailable, setAudioUnavailable] = useState(false);
 
-  // A run token invalidates stale speech callbacks after stop()/play().
+  // A run token invalidates stale audio callbacks after stop()/play().
   const tokenRef = useRef(new NarrationRunToken());
   const playingRef = useRef(false);
 
@@ -64,16 +57,17 @@ export function useLessonNarration(
     return () => {
       token.invalidate();
       playingRef.current = false;
-      stopSpeech();
+      stopRecordedAudio();
     };
   }, []);
 
   const stop = useCallback(() => {
     tokenRef.current.invalidate();
     playingRef.current = false;
-    stopSpeech();
+    stopRecordedAudio();
     setIsPlaying(false);
     setNeedsUserGesture(false);
+    setAudioUnavailable(false);
   }, []);
 
   const play = useCallback(
@@ -85,13 +79,14 @@ export function useLessonNarration(
       playingRef.current = true;
       setIsPlaying(true);
       setNeedsUserGesture(false);
+      setAudioUnavailable(false);
 
       const sequence = applyPlaybackRate(
         getSlideNarrativeSequence(target, lessonNumber),
         playbackRate
       );
 
-      speakSequence(
+      playRecordedSequence(
         sequence,
         undefined,
         () => {
@@ -106,6 +101,13 @@ export function useLessonNarration(
             playingRef.current = false;
             setIsPlaying(false);
             setNeedsUserGesture(true);
+          }
+        },
+        () => {
+          if (tokenRef.current.isCurrent(runId)) {
+            playingRef.current = false;
+            setIsPlaying(false);
+            setAudioUnavailable(true);
           }
         }
       );
@@ -140,6 +142,7 @@ export function useLessonNarration(
     autoplayEnabled,
     playbackRate,
     needsUserGesture,
+    audioUnavailable,
     play,
     stop,
     toggle,

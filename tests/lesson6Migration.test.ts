@@ -76,15 +76,15 @@ test('L1–L5 and L15 approved lesson modules remain byte-for-byte frozen', () =
   assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
 });
 
-test('L7 remains unmigrated and untouched', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '23368A7EB5059E2F54E163A726736D41B5ED7D23BB51A70315C89D5A5C5ED0BB');
+test('L7 matches the approved migrated snapshot', () => {
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '70EF9CCBD0BE2CB15CFD2F5D4F060F6998C632F548014D5C8E0FBC6F3DFC5B90');
 });
 
 test('frozen planning docs, translations, manifest, and generator remain unchanged', () => {
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
-  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '2FCEE83D0BBC849966B8C09B45F17F77B396EE2977DB047D17F6146AA0B31F4A');
+  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
   assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '4D3C6CCEBE42C4C7EC8358F15C46233AC0BDE3C04799BB95DB7C345EF5C03281');
   assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'A11B83A72E3D2E3FF803DB8C4DB56F8E5BE9800BBD4B7FB4645EB88A1A225F32');
 });

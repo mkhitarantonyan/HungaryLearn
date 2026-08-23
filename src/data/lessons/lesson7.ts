@@ -1,4 +1,129 @@
-import { Lesson } from '../../types';
+import type { Lesson, LessonActivity } from '../../types';
+
+const L7_CP_FORMS: LessonActivity = {
+  kind: 'controlledPractice',
+  id: 'l7-cp-accusative-forms',
+  title: 'Форма винительного падежа',
+  passCount: 8,
+  exercises: [
+    { kind: 'textInput', id: 'l7-form-1', prompt: 'autó → ?', accept: ['autót'] },
+    { kind: 'textInput', id: 'l7-form-2', prompt: 'alma → ?', accept: ['almát'] },
+    { kind: 'textInput', id: 'l7-form-3', prompt: 'kert → ?', accept: ['kertet'] },
+    { kind: 'textInput', id: 'l7-form-4', prompt: 'könyv → ?', accept: ['könyvet'] },
+    { kind: 'textInput', id: 'l7-form-5', prompt: 'ház → ?', accept: ['házat'] },
+    { kind: 'textInput', id: 'l7-form-6', prompt: 'asztal → ?', accept: ['asztalt'] },
+    { kind: 'textInput', id: 'l7-form-7', prompt: 'szék → ?', accept: ['széket'] },
+    { kind: 'textInput', id: 'l7-form-8', prompt: 'ember → ?', accept: ['embert'] },
+    { kind: 'textInput', id: 'l7-form-9', prompt: 'táska → ?', accept: ['táskát'] },
+    { kind: 'textInput', id: 'l7-form-10', prompt: 'kávé → ?', accept: ['kávét'] },
+  ],
+};
+
+const L7_CP_OBJECTS: LessonActivity = {
+  kind: 'controlledPractice',
+  id: 'l7-cp-object-sentences',
+  title: 'Дополнение в предложении',
+  passCount: 7,
+  exercises: [
+    { kind: 'singleChoice', id: 'l7-object-1', prompt: 'Kérek egy ___.', options: ['kávé', 'kávét', 'kávék'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-2', prompt: 'Látom a ___.', options: ['ház', 'házat', 'házak'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-3', prompt: 'Az új ___ az asztalon van.', options: ['könyv', 'könyvet', 'könyvek'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l7-object-4', prompt: 'Egy magyar ___ keresek.', options: ['nyelvkönyv', 'nyelvkönyvet', 'nyelvkönyvek'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-5', prompt: 'Megnézem az ___.', options: ['autó', 'autót', 'autók'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-6', prompt: 'Szeretsz ___?', options: ['én', 'engem', 'nekem'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-7', prompt: 'Látom ___.', options: ['ő', 'őt', 'neki'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l7-object-8', prompt: '___ egy almát.', options: ['Veszek', 'Veszem', 'Veszed'], correctIndex: 0 },
+  ],
+};
+
+const L7_READING: LessonActivity = {
+  kind: 'reading',
+  id: 'l7-reading-bookshop',
+  title: 'Чтение: в книжном магазине',
+  instructions: 'Прочитай диалог и различи формы подлежащего/словарной формы и прямого дополнения.',
+  passCount: 4,
+  content: {
+    type: 'prose',
+    title: 'A könyvesboltban',
+    paragraphs: [
+      'Eladó: Jó napot! Mit keres?',
+      'Vásárló: Egy magyar nyelvkönyvet keresek.',
+      'Eladó: Ezt a könyvet ajánlom. Kéri ezt a szótárt is?',
+      'Vásárló: Nem, köszönöm. Csak a könyvet kérem.',
+      'Az új könyv az asztalon van.',
+    ],
+  },
+  questions: [
+    { id: 'l7-reading-q1', question: 'Что ищет покупатель?', options: ['egy magyar nyelvkönyvet', 'egy szótárt', 'egy újságot'], correctIndex: 0 },
+    { id: 'l7-reading-q2', question: 'Какое слово дано в именительном падеже?', options: ['könyvet', 'szótárt', 'könyv'], correctIndex: 2 },
+    { id: 'l7-reading-q3', question: 'Какое слово является дополнением в фразе «Ezt a könyvet ajánlom»?', options: ['ezt a könyvet', 'eladó', 'az asztalon'], correctIndex: 0 },
+    { id: 'l7-reading-q4', question: 'От чего покупатель отказывается?', options: ['от словаря', 'от книги', 'от кофе'], correctIndex: 0 },
+    { id: 'l7-reading-q5', question: 'Какая пара показывает именительный → винительный?', options: ['könyv → könyvet', 'könyvet → könyv', 'szótárt → szótár'], correctIndex: 0 },
+  ],
+};
+
+const L7_CP_TRANSLATION: LessonActivity = {
+  kind: 'controlledPractice',
+  id: 'l7-cp-translation',
+  title: 'Перевод: пять коротких фраз',
+  passCount: 4,
+  exercises: [
+    { kind: 'textInput', id: 'l7-translate-1', prompt: '«Я ищу одну венгерскую книгу.»', accept: ['Egy magyar könyvet keresek.', 'Keresek egy magyar könyvet.'] },
+    { kind: 'textInput', id: 'l7-translate-2', prompt: '«Я вижу этот дом.»', accept: ['Látom ezt a házat.'] },
+    { kind: 'textInput', id: 'l7-translate-3', prompt: '«Я вижу тебя.»', accept: ['Látlak.', 'Látlak téged.'] },
+    { kind: 'textInput', id: 'l7-translate-4', prompt: '«Я прошу один кофе.»', accept: ['Kérek egy kávét.', 'Egy kávét kérek.'] },
+    { kind: 'textInput', id: 'l7-translate-5', prompt: '«Я читаю одну газету.»', accept: ['Olvasok egy újságot.', 'Egy újságot olvasok.'] },
+  ],
+};
+
+const L7_RECORDING: LessonActivity = {
+  kind: 'recording',
+  id: 'l7-record-object-sentences',
+  title: 'Говорение: три коротких дополнения',
+  instructions: 'Прочитай три предложения вслух и прослушай свою запись. Это PARTIAL evidence: автоматической оценки произношения нет.',
+  targetText: 'Kérek egy kávét. Látom ezt a házat. Látlak.',
+  targetTranslation: 'Я прошу один кофе. Я вижу этот дом. Я вижу тебя.',
+  rubric: [
+    'Произнесены все три предложения',
+    'Слышны окончания дополнений -t',
+    'В последней фразе использовано Látlak',
+  ],
+};
+
+const L7_LISTENING: LessonActivity = {
+  kind: 'listening',
+  id: 'l7-listening-accusative',
+  title: 'Аудирование: формы дополнения',
+  assetId: 'l7_listening_accusative',
+  audioStatus: 'missing',
+  transcript: 'Jó napot! Egy magyar könyvet keresek. Ezt a könyvet ajánlom. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: Látlak.',
+  passCount: 4,
+  questions: [
+    { id: 'l7-listening-q1', question: 'Что ищет говорящий?', options: ['egy magyar könyvet', 'egy magyar újságot', 'egy szótárt'], correctIndex: 0 },
+    { id: 'l7-listening-q2', question: 'Что ему рекомендуют?', options: ['ezt a könyvet', 'azt a házat', 'egy kávét'], correctIndex: 0 },
+    { id: 'l7-listening-q3', question: 'Что ещё просит говорящий?', options: ['egy kávét', 'egy almát', 'egy autót'], correctIndex: 0 },
+    { id: 'l7-listening-q4', question: 'Что он видит из окна?', options: ['a kertet', 'a házat', 'az autót'], correctIndex: 1 },
+    { id: 'l7-listening-q5', question: 'Какую форму он говорит другу?', options: ['Látlak.', 'Látom őt.', 'Látsz engem.'], correctIndex: 0 },
+  ],
+};
+
+const L7_EXIT_CHECK: LessonActivity = {
+  kind: 'exitCheck',
+  id: 'l7-exit-check',
+  title: 'Exit check — цели урока 7',
+  checks: [
+    { objectiveId: 'l7_form-accusative', activityId: 'l7-cp-accusative-forms', evidenceKind: 'grammar' },
+    {
+      objectiveId: 'l7_use-accusative-object',
+      activityId: 'l7-cp-object-sentences',
+      evidenceKind: 'grammar',
+      evidenceComponents: [{ activityId: 'l7-record-object-sentences', evidenceKind: 'speaking' }],
+    },
+    { objectiveId: 'l7_distinguish-nom-acc', activityId: 'l7-reading-bookshop', evidenceKind: 'reading' },
+    { objectiveId: 'l7_listen-accusative', activityId: 'l7-listening-accusative', evidenceKind: 'listening' },
+    { objectiveId: 'l7_translate-acc', activityId: 'l7-cp-translation', evidenceKind: 'writing' },
+  ],
+};
 
 export const LESSON_7: Lesson = {
   id: 7,
@@ -6,247 +131,197 @@ export const LESSON_7: Lesson = {
   level: 'A1',
   title: 'Урок 7 · A tárgyeset',
   subtitle: 'Винительный падеж — суффикс -t',
-  description: 'Прямое дополнение в венгерском (-t), три правила присоединения, винительный падеж личных местоимений (engem, téged, őt) и порядок слов.',
+  description: 'Прямое дополнение с -t: надёжные модели образования, частые словарные формы, личные местоимения и узкая модель 1-го лица с объектом «ты».',
   slidesCount: 11,
   slides: [
     {
       id: 1,
-      eyebrow: "УРОК 7 · 1/11 · ВВЕДЕНИЕ",
-      title: "A tárgyeset",
-      subtitle: "Винительный падеж — суффикс -t",
+      eyebrow: 'УРОК 7 · 1/11 · ПОНЯТИЕ',
+      title: 'A tárgyeset',
+      subtitle: 'Кого? Что?',
       body: `
-   <p>В венгерском языке нет предлогов вроде русского «вижу книгу» — вместо этого к слову добавляется суффикс. Прямое дополнение (винительный падеж) образуется с помощью <span class="hu-word">-t</span>, который присоединяется прямо к концу слова.</p>
-   <p>Пример: <button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Látom a házat.</button> <span style="color:#8a7a68">(Я вижу дом)</span> — <button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ház</button> <span style="color:#8a7a68">(дом)</span> превращается в <button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házat</button> <span style="color:#8a7a68">(дом-винительный)</span>.</p>
-   <div class="note">Это один из первых по-настоящему «венгерских» механизмов, который вы встречаете: вместо отдельного слова падеж «встроен» в само существительное.</div>
- `
+        <p>Прямое дополнение отвечает на вопросы «кого?» или «что?». В венгерском его обычно отмечает суффикс <span class="hu-word">-t</span>.</p>
+        <p><span class="hu-word">Látom a házat.</span> — Я вижу дом. Словарная форма <span class="hu-word">ház</span>, форма дополнения <span class="hu-word">házat</span>.</p>
+        <div class="note">Именно окончание показывает роль слова: <span class="hu-word">A ház nagy.</span> — Дом большой; <span class="hu-word">Látom a házat.</span> — Я вижу дом.</div>
+      `,
     },
     {
       id: 2,
-      eyebrow: "УРОК 7 · 2/11 · ОБРАЗОВАНИЕ",
-      title: "Hogyan képezzük?",
-      subtitle: "Три способа присоединения -t",
+      eyebrow: 'УРОК 7 · 2/11 · ОБРАЗОВАНИЕ',
+      title: 'Hogyan képezzük?',
+      subtitle: 'Надёжные модели и словарные формы',
       body: `
-   <ul class="tick">
-     <li><b>Слово на гласную (кроме a/e)</b> — просто добавляем -t: <button class="speak-btn" data-speak-text="autó" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> autó</button> → <button class="speak-btn" data-speak-text="autót" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> autót</button></li>
-     <li><b>Слово на a/e</b> — гласная удлиняется (a→á, e→é) + t: <button class="speak-btn" data-speak-text="alma" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> alma</button> → <button class="speak-btn" data-speak-text="almát" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> almát</button></li>
-     <li><b>Слово на «мягкий» согласный (l, r, j, ly, n, ny, m)</b> — часто просто -t: <button class="speak-btn" data-speak-text="tanár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanár</button> → <button class="speak-btn" data-speak-text="tanárt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanárt</button></li>
-     <li><b>Слово на другой согласный / скопление согласных</b> — нужна соединительная гласная -ot/-et/-öt: <button class="speak-btn" data-speak-text="könyv" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> könyv</button> → <button class="speak-btn" data-speak-text="könyvet" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> könyvet</button></li>
-   </ul>
-   <div class="warn">Как и с множественным числом (урок 3), у односложных слов с «а/о» иногда бывает -at вместо -ot — это нужно запоминать вместе со словом, например <button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ház</button> → <button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házat</button>.</div>
- `
+        <ul class="tick">
+          <li>После большинства гласных добавляется <b>-t</b>: <span class="hu-word">autó → autót</span>, <span class="hu-word">kávé → kávét</span>.</li>
+          <li>Конечные <b>-a/-e</b> удлиняются: <span class="hu-word">alma → almát</span>, <span class="hu-word">mese → mesét</span>.</li>
+          <li>После согласной встречается и голое <b>-t</b>, и соединительная гласная: <span class="hu-word">asztal → asztalt</span>, но <span class="hu-word">kert → kertet</span>.</li>
+        </ul>
+        <div class="warn">Выбор соединительной гласной частично лексический. На начальном уровне учи частые формы вместе с существительным: <span class="hu-word">könyv — könyvet</span>, <span class="hu-word">ház — házat</span>.</div>
+      `,
     },
     {
       id: 3,
-      eyebrow: "УРОК 7 · 3/11 · ПРИМЕРЫ",
-      title: "Példák",
-      subtitle: "Таблица примеров",
+      eyebrow: 'УРОК 7 · 3/11 · ЧАСТЫЕ ФОРМЫ',
+      title: 'Alakok együtt',
+      subtitle: 'Учим парами',
       body: `
-   <table class="conj">
-     <tr><th>Слово</th><th>Винительный</th><th>Значение</th></tr>
-     <tr><td><button class="speak-btn" data-speak-text="kutya" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kutya</button></td><td><button class="speak-btn" data-speak-text="kutyát" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kutyát</button></td><td>собака</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="alma" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> alma</button></td><td><button class="speak-btn" data-speak-text="almát" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> almát</button></td><td>яблоко</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="autó" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> autó</button></td><td><button class="speak-btn" data-speak-text="autót" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> autót</button></td><td>машина</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="tanár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanár</button></td><td><button class="speak-btn" data-speak-text="tanárt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanárt</button></td><td>учитель</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="kert" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kert</button></td><td><button class="speak-btn" data-speak-text="kertet" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertet</button></td><td>сад</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="könyv" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> könyv</button></td><td><button class="speak-btn" data-speak-text="könyvet" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> könyvet</button></td><td>книга</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ház</button></td><td><button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házat</button></td><td>дом</td></tr>
-   </table>
- `
+        <table class="conj">
+          <tr><th>Словарная форма</th><th>Дополнение</th><th>Значение</th></tr>
+          <tr><td>autó</td><td>autót</td><td>машина</td></tr>
+          <tr><td>alma</td><td>almát</td><td>яблоко</td></tr>
+          <tr><td>kert</td><td>kertet</td><td>сад</td></tr>
+          <tr><td>könyv</td><td>könyvet</td><td>книга</td></tr>
+          <tr><td>ház</td><td>házat</td><td>дом</td></tr>
+          <tr><td>asztal</td><td>asztalt</td><td>стол</td></tr>
+        </table>
+      `,
+      activities: [L7_CP_FORMS],
     },
     {
       id: 4,
-      eyebrow: "УРОК 7 · 4/11 · МЕСТОИМЕНИЯ",
-      title: "Névmások tárgyesete",
-      subtitle: "Винительный падеж личных местоимений",
+      eyebrow: 'УРОК 7 · 4/11 · МЕСТОИМЕНИЯ',
+      title: 'Névmások tárgyesete',
+      subtitle: 'Особые формы',
       body: `
-   <p>Личные местоимения в винительном падеже имеют особые, «неправильные» формы — их нужно просто запомнить.</p>
-   <table class="conj">
-     <tr><th>Именительный</th><th>Винительный</th><th>Значение</th></tr>
-     <tr><td>én</td><td><button class="speak-btn" data-speak-text="engem" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> engem</button></td><td>меня</td></tr>
-     <tr><td>te</td><td><button class="speak-btn" data-speak-text="téged" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> téged</button></td><td>тебя</td></tr>
-     <tr><td>ő</td><td><button class="speak-btn" data-speak-text="őt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> őt</button></td><td>его/её</td></tr>
-     <tr><td>mi</td><td><button class="speak-btn" data-speak-text="minket" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> minket</button></td><td>нас</td></tr>
-     <tr><td>ti</td><td><button class="speak-btn" data-speak-text="titeket" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> titeket</button></td><td>вас</td></tr>
-     <tr><td>ők</td><td><button class="speak-btn" data-speak-text="őket" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> őket</button></td><td>их</td></tr>
-   </table>
-   <div class="note">Вы уже видели форму <button class="speak-btn" data-speak-text="engem" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> engem</button> во 2-м уроке: <button class="speak-btn" data-speak-text="Mkhitárnak hívnak." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mkhitárnak hívnak.</button> <span style="color:#8a7a68">(Меня зовут ...)</span> — дословно «меня называют».</div>
- `
+        <p>Формы личных местоимений нужно запомнить отдельно.</p>
+        <table class="conj">
+          <tr><th>Кто?</th><th>Кого?</th><th>Значение</th></tr>
+          <tr><td>én</td><td>engem</td><td>меня</td></tr>
+          <tr><td>te</td><td>téged</td><td>тебя</td></tr>
+          <tr><td>ő</td><td>őt</td><td>его / её</td></tr>
+          <tr><td>mi</td><td>minket</td><td>нас</td></tr>
+          <tr><td>ti</td><td>titeket</td><td>вас</td></tr>
+          <tr><td>ők</td><td>őket</td><td>их</td></tr>
+        </table>
+        <p><span class="hu-word">Szeretsz engem?</span> — Ты любишь меня? <span class="hu-word">Látom őt.</span> — Я вижу его / её.</p>
+      `,
     },
     {
       id: 5,
-      eyebrow: "УРОК 7 · 5/11 · ГЛАГОЛЫ С ПРЯМЫМ ДОПОЛНЕНИЕМ",
-      title: "Tárgyas igék",
-      subtitle: "Частые глаголы, требующие -t",
+      eyebrow: 'УРОК 7 · 5/11 · УЗКИЙ ПРЕДПРОСМОТР',
+      title: 'Látlak',
+      subtitle: 'Я → тебя: -lak/-lek',
       body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="lát" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> lát</button> — видеть</p>
-       <p><button class="speak-btn" data-speak-text="szeret" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szeret</button> — любить</p>
-       <p><button class="speak-btn" data-speak-text="olvas" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> olvas</button> — читать</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="ír" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ír</button> — писать</p>
-       <p><button class="speak-btn" data-speak-text="ért" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ért</button> — понимать</p>
-       <p><button class="speak-btn" data-speak-text="keres" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> keres</button> — искать</p>
-     </div>
-   </div>
-   <p><button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Látom a házat.</button> <span style="color:#8a7a68">(Я вижу дом)</span></p>
-   <p><button class="speak-btn" data-speak-text="Szeretem a kávét." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretem a kávét.</button> <span style="color:#8a7a68">(Я люблю кофе)</span></p>
- `
+        <p>Когда подлежащее — <span class="hu-word">én</span> («я»), а дополнение — грамматическое 2-е лицо <span class="hu-word">téged</span> («тебя»), у глагола есть особая форма <b>-lak/-lek</b>.</p>
+        <p><span class="hu-word">Látlak.</span> — Я вижу тебя. Можно уточнить или подчеркнуть: <span class="hu-word">Látlak téged.</span></p>
+        <p><span class="hu-word">Szeretlek.</span> — Я люблю тебя.</p>
+        <div class="note">Формальное <span class="hu-word">Ön</span> грамматически ведёт себя как 3-е лицо: <span class="hu-word">Látom Önt.</span> — Я вижу Вас. Здесь изучаем только одну модель 1-го лица с объектом 2-го лица, а не полную парадигму <b>-lak/-lek</b>.</div>
+      `,
+      activities: [L7_CP_OBJECTS],
     },
     {
       id: 6,
-      eyebrow: "УРОК 7 · 6/11 · ПОРЯДОК СЛОВ",
-      title: "Szórend a tárgyesettel",
-      subtitle: "Куда ставится дополнение",
+      eyebrow: 'УРОК 7 · 6/11 · ПОРЯДОК СЛОВ',
+      title: 'A tárgy a mondatban',
+      subtitle: 'Окончание сохраняет роль слова',
       body: `
-   <p>Обычный нейтральный порядок — Подлежащее + Сказуемое + Дополнение, как в русском:</p>
-   <p><button class="speak-btn" data-speak-text="Olvasom a könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Olvasom a könyvet.</button> <span style="color:#8a7a68">(Я читаю книгу)</span></p>
-   <p>Но если дополнение хотят выделить/подчеркнуть, его ставят прямо перед глаголом (эта тема — «фокус» — подробно разберём в 24-м уроке):</p>
-   <p><button class="speak-btn" data-speak-text="A könyvet olvasom, nem az újságot." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A könyvet olvasom, nem az újságot.</button> <span style="color:#8a7a68">(Именно книгу я читаю, не журнал)</span></p>
- `
+        <p>В венгерском порядок слов зависит от контекста и фокуса. Для начала используй надёжные нейтральные образцы:</p>
+        <p><span class="hu-word">Keresek egy könyvet.</span> — Я ищу книгу. <span class="hu-word">Látom a házat.</span> — Я вижу дом.</p>
+        <p>Неопределённое дополнение сочетается с формой вроде <span class="hu-word">keresek</span>, а определённое — с формой вроде <span class="hu-word">látom</span>. Полную систему спряжения изучим отдельно.</p>
+      `,
     },
     {
       id: 7,
-      eyebrow: "УРОК 7 · 7/11 · ДИАЛОГ",
-      title: "Párbeszéd",
-      subtitle: "В магазине",
+      eyebrow: 'УРОК 7 · 7/11 · ЧТЕНИЕ',
+      title: 'A könyvesboltban',
+      subtitle: 'Именительный и винительный в контексте',
       body: `
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Jó napot! Keresek egy könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Jó napot! Keresek egy könyvet.</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Milyen könyvet keres?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Milyen könyvet keres?</button></p>
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Egy magyar nyelvkönyvet keresek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy magyar nyelvkönyvet keresek.</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Igen, van! Tessék, itt van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Igen, van! Tessék, itt van.</button></p>
-   <div class="task">Задание 1. Прочитайте диалог вслух дважды и найдите все слова в винительном падеже.</div>
- `
+        <p>В диалоге ищи дополнения по окончанию <b>-t</b>. Отдельная последняя строка показывает словарную форму <span class="hu-word">könyv</span>.</p>
+      `,
+      activities: [L7_READING],
     },
     {
       id: 8,
-      eyebrow: "УРОК 7 · 8/11 · ЗАДАНИЯ",
-      title: "Gyakorlatok",
-      subtitle: "Проверьте себя",
+      eyebrow: 'УРОК 7 · 8/11 · ПРОДУКЦИЯ',
+      title: 'Fordítás és beszéd',
+      subtitle: 'Точные фразы и запись',
       body: `
-   <ol class="tasklist">
-     <li>Поставьте в винительный падеж: „kutya“, „ház“, „kert“, „autó“</li>
-     <li>Переведите: «Я люблю тебя» (используйте винительный местоимения)</li>
-     <li>Переведите: «Ты видишь дом?»</li>
-     <li>Объясните разницу между <button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házat</button> и <button class="speak-btn" data-speak-text="kertet" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertet</button> по типу образования</li>
-     <li>Составьте 3 своих предложения с глаголами из этого урока и винительным падежом</li>
-   </ol>
- `
+        <p>Сначала введи пять коротких переводов. Затем запиши три модели: формы дополнений проверяются автоматически только в письменном задании, а запись речи остаётся PARTIAL evidence.</p>
+      `,
+      activities: [L7_CP_TRANSLATION, L7_RECORDING],
     },
     {
       id: 9,
-      eyebrow: "УРОК 7 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ",
-      title: "Kiegészítő szókincs",
-      subtitle: "Ещё несколько полезных слов",
+      eyebrow: 'УРОК 7 · 9/11 · СЛОВАРЬ',
+      title: 'Hasznos tárgyak',
+      subtitle: 'Полезные пары',
       body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="kávé" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kávé</button> — кофе</p>
-       <p><button class="speak-btn" data-speak-text="tea" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tea</button> — чай</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="újság" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> újság</button> — журнал</p>
-       <p><button class="speak-btn" data-speak-text="film" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> film</button> — фильм</p>
-     </div>
-   </div>
-   <p><button class="speak-btn" data-speak-text="Nézem a filmet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nézem a filmet.</button> <span style="color:#8a7a68">(Я смотрю фильм)</span></p>
- `
+        <div class="grid2">
+          <div><p><span class="hu-word">kávé — kávét</span> — кофе</p><p><span class="hu-word">tea — teát</span> — чай</p></div>
+          <div><p><span class="hu-word">újság — újságot</span> — газета</p><p><span class="hu-word">film — filmet</span> — фильм</p></div>
+        </div>
+        <p><span class="hu-word">Kérek egy teát.</span> — Я прошу чай. <span class="hu-word">Nézem a filmet.</span> — Я смотрю фильм.</p>
+      `,
     },
     {
       id: 10,
-      eyebrow: "УРОК 7 · 10/11 · СВЯЗЬ С ДРУГИМИ ТЕМАМИ",
-      title: "Előretekintés",
-      subtitle: "Почему это важно для будущих уроков",
+      eyebrow: 'УРОК 7 · 10/11 · АУДИРОВАНИЕ',
+      title: 'Hallásértés',
+      subtitle: 'Только по реальной записи',
       body: `
-   <p>Винительный падеж — это ключ к пониманию <b>определённого спряжения глаголов</b> (tárgyas ragozás), с которым мы кратко познакомились в уроке про прошедшее время и подробно разберём в 13-м и 21-м уроках. Всякий раз, когда в предложении есть прямое дополнение в винительном падеже, нужно решить: определённое оно или нет — и от этого зависит форма глагола.</p>
-   <div class="note">Уже сейчас начните обращать внимание: когда вы говорите «книгу» без артикля/указания — это неопределённое дополнение; когда «эту книгу» или «книгу Анны» — определённое.</div>
- `
+        <p>Это задание даёт DIRECT listening evidence только при наличии опубликованного MP3. Сейчас файл <span class="hu-word">l7_listening_accusative.mp3</span> отсутствует, поэтому аудио недоступно и результат остаётся NONE.</p>
+      `,
+      activities: [L7_LISTENING],
     },
     {
       id: 11,
-      eyebrow: "УРОК 7 · 11/11 · ИТОГИ",
-      title: "Összefoglalás",
-      subtitle: "Итоги 7-го урока",
+      eyebrow: 'УРОК 7 · 11/11 · ИТОГИ',
+      title: 'Összefoglalás',
+      subtitle: 'Что подтверждено',
       body: `
-   <ul class="tick">
-     <li>Винительный падеж = суффикс <b>-t</b>, три способа присоединения (гласная / a-e удлинение / согласная + линкер)</li>
-     <li>Личные местоимения в винительном падеже — отдельные формы, учить наизусть</li>
-     <li>Нейтральный порядок слов: Подлежащее – Сказуемое – Дополнение</li>
-     <li>Дополнение может быть определённым или неопределённым — это станет важно позже</li>
-   </ul>
-   <div class="note"><b>Домашнее задание.</b> Составьте список из 10 существительных (уже знакомых вам) и запишите их винительный падеж. В следующем уроке — семья и притяжательные суффиксы («мой», «твой», «его» и т.д., встроенные прямо в слово).</div>
- `
-    }
+        <ul class="tick">
+          <li>Прямое дополнение обычно получает окончание <b>-t</b>.</li>
+          <li>После согласных выбор голого <b>-t</b> или соединительной гласной частично лексический: учи частые пары.</li>
+          <li><span class="hu-word">Látlak.</span> — основная форма «Я вижу тебя».</li>
+          <li>Письменные задания дают DIRECT evidence, запись речи — PARTIAL, отсутствующее аудио — NONE.</li>
+        </ul>
+      `,
+      activities: [L7_EXIT_CHECK],
+    },
   ],
-    quiz: [
+  quiz: [
     {
       id: 701,
-      question: 'Как образуется винительный падеж от слова "autó" (машина)?',
-      options: [
-        'autót (просто добавляется -t)',
-        'autó (без изменений)',
-        'autót (с удлинением гласной)',
-        'autot (с соединительной гласной)'
-      ],
+      question: 'Как образуется винительный падеж от слова «autó»?',
+      options: ['autót', 'autó', 'autóat', 'autóet'],
       correctIndex: 0,
-      explanation: 'Слова на гласную (кроме a/e) просто добавляют -t: autó → autót (урок 7, слайд 2).'
+      explanation: 'После этой конечной гласной добавляется -t: autó → autót.',
     },
     {
       id: 702,
-      question: 'Как будет винительный падеж слова "ház" (дом)?',
+      question: 'Как будет винительный падеж слова «ház»?',
       options: ['házot', 'házat', 'ház', 'házt'],
       correctIndex: 1,
-      explanation: 'Односложные слова на "a/á" часто принимают -at вместо -ot: ház → házat (урок 7, слайд 2).'
+      explanation: 'Частую пару ház → házat лучше учить вместе: выбор соединительной гласной частично лексический.',
     },
     {
       id: 703,
-      question: 'Как переводится "Я вижу тебя" по-венгерски?',
-      options: [
-        'Látom téged',
-        'Látok téged',
-        'Lát téged',
-        'Látod téged'
-      ],
+      question: 'Как сказать «Я вижу тебя» по-венгерски?',
+      options: ['Látlak.', 'Látok.', 'Látom őt.', 'Látsz engem.'],
       correctIndex: 0,
-      explanation: 'Форма "látom" – это определённое спряжение. В сочетании с винительным падежом местоимения "téged" даёт "Látom téged" (Я вижу тебя). Форма "téged" – винительный падеж от "te" (урок 7, слайд 4).'
+      explanation: 'При подлежащем «я» и дополнении «тебя» используется особая форма 1-го лица с объектом 2-го лица: Látlak. При необходимости можно сказать Látlak téged.',
     },
     {
       id: 704,
-      question: 'Как сказать "Я люблю кофе" по-венгерски?',
-      options: [
-        'Szeretem a kávét',
-        'Szeretek a kávét',
-        'Szeretem a kávé',
-        'Szeretek kávét'
-      ],
+      question: 'Как сказать «Я прошу один кофе»?',
+      options: ['Kérek egy kávét.', 'Kérem egy kávé.', 'Kérsz egy kávét.', 'Kérek egy kávé.'],
       correctIndex: 0,
-      explanation: 'Глагол "szeret" в определённом спряжении (szeretem) + винительный падеж "kávét" (урок 7, слайд 5).'
+      explanation: 'Неопределённое дополнение egy kávét сочетается здесь с формой kérek.',
     },
     {
       id: 705,
       question: 'Что из перечисленного НЕ является формой винительного падежа?',
-      options: [
-        'könyvet',
-        'kutyát',
-        'ember',
-        'házat'
-      ],
+      options: ['könyvet', 'kutyát', 'ember', 'házat'],
       correctIndex: 2,
-      explanation: '"ember" (человек) – это именительный падеж, винительный будет "embert". Все остальные слова – в винительном падеже (könyv → könyvet, kutya → kutyát, ház → házat).'
+      explanation: 'ember — словарная форма; винительный падеж — embert.',
     },
     {
       id: 706,
-      question: 'В каком уроке мы изучали, как удлиняется конечная гласная при добавлении суффиксов?',
-      options: [
-        'Урок 2 (приветствия)',
-        'Урок 3 (множественное число)',
-        'Урок 5 (числительные)',
-        'Урок 6 (повторение A0)'
-      ],
-      correctIndex: 1,
-      explanation: 'В уроке 3 мы изучали правило удлинения конечных -a/-e при образовании множественного числа (alma → almák). Это же правило применяется и к винительному падежу (alma → almát).'
-    }
+      question: 'В каком варианте сначала дана словарная форма, затем винительный падеж?',
+      options: ['kert → kertet', 'házat → ház', 'könyvet → könyv', 'almát → alma'],
+      correctIndex: 0,
+      explanation: 'kert — словарная форма, kertet — форма прямого дополнения.',
+    },
   ],
   objectives: [
     { id: 'l7_form-accusative', text: 'Образовывать винительный падеж с помощью -t и связующих гласных.', skills: ['grammar', 'writing'] },

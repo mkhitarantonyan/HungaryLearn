@@ -8,7 +8,6 @@ import { LESSON_3 } from '../src/data/lessons/lesson3.ts';
 import { LESSON_4 } from '../src/data/lessons/lesson4.ts';
 import { LESSON_15 } from '../src/data/lessons/lesson15.ts';
 import { LESSON_2 } from '../src/data/lessons/lesson2.ts';
-import { LESSON_8 } from '../src/data/lessons/lesson8.ts';
 import { LESSON_16 } from '../src/data/lessons/lesson16.ts';
 import { LESSON_28 } from '../src/data/lessons/lesson28.ts';
 import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
@@ -49,7 +48,7 @@ import {
   QuestionFeedback,
 } from '../src/components/activities/QuestionSet.tsx';
 import { PROSE_READING_FIXTURE } from './fixtures/readingTaskFixtures.ts';
-import type { ActivityEvidence, LessonActivity, ReadingQuestion } from '../src/types.ts';
+import type { ActivityEvidence, ExitCheckItem, LessonActivity, ReadingQuestion } from '../src/types.ts';
 
 const l15Activities = (): LessonActivity[] =>
   LESSON_15.slides.flatMap((s) => s.activities ?? []);
@@ -110,11 +109,20 @@ function findL2Activity<T extends LessonActivity['kind']>(
   return activity as Extract<LessonActivity, { kind: T }>;
 }
 
-test('unmigrated lessons (8, 16, 28) have no interactive activities', () => {
-  for (const lesson of [LESSON_8, LESSON_16, LESSON_28]) {
+test('unmigrated lesson 28 has no interactive activities', () => {
+  for (const lesson of [LESSON_28]) {
     const hasActivities = lesson.slides.some((s) => s.activities && s.activities.length > 0);
     assert.equal(hasActivities, false, `lesson ${lesson.number} unexpectedly has activities`);
   }
+});
+
+test('migrated L16 exposes its exact activity inventory', () => {
+  const activities = LESSON_16.slides.flatMap((slide) => slide.activities ?? []);
+  assert.deepEqual(activities.map((activity) => activity.id), [
+    'l16-cp-val-vel-forms', 'l16-cp-assimilation', 'l16-cp-means-companionship', 'l16-cp-prices',
+    'l16-listening-shopping', 'l16-roleplay-shopping', 'l16-recording-means-companionship', 'l16-exit-check',
+  ]);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
 });
 
 test('L15 keeps exactly slide IDs 1..12 in order', () => {
@@ -242,9 +250,9 @@ test('old quiz behavior remains compatible (6 inline questions)', () => {
   );
 });
 
-test('all 21 non-L1/L2/L3/L4/L5/L6/L15 lessons have no activities', async () => {
+test('all lessons outside migrated L1-L16 have no activities', async () => {
   for (const meta of LESSONS_META) {
-    if ([1, 2, 3, 4, 5, 6, 15].includes(meta.id)) continue;
+    if ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(meta.id)) continue;
     const lesson = await loadLesson(meta.id);
     assert.ok(lesson, `lesson ${meta.id} failed to load`);
     const hasActivities = lesson.slides.some((s) => s.activities && s.activities.length > 0);
@@ -591,6 +599,69 @@ test('ExitCheck never shows PARTIAL completed as met', () => {
     total: 4,
   };
   assert.equal(describeEvidenceStatus(directPassed).kind, 'direct-met');
+});
+
+test('ExitCheck aggregation preserves the approved mixed-objective truth table and hard gates', () => {
+  const direct = (activityId: string, passed = true): ActivityEvidence => ({
+    activityId, attempted: true, completed: true, evidenceMode: 'direct', passed,
+  });
+  const partial = (activityId: string): ActivityEvidence => ({
+    activityId, attempted: true, completed: true, evidenceMode: 'partial', passed: false,
+  });
+  const none = (activityId: string): ActivityEvidence => ({
+    activityId, attempted: true, completed: true, evidenceMode: 'none', passed: false,
+  });
+  const mixed = (...componentKinds: ExitCheckItem['evidenceKind'][]): ExitCheckItem => ({
+    objectiveId: 'mixed',
+    activityId: 'primary',
+    evidenceKind: 'grammar',
+    evidenceComponents: componentKinds.map((evidenceKind, index) => ({
+      activityId: `component-${index + 1}`,
+      evidenceKind,
+    })),
+  });
+  const status = (
+    check: ExitCheckItem,
+    primary: ActivityEvidence | undefined,
+    components: ActivityEvidence[] = []
+  ) => describeExitCheckStatus(check, primary, Object.fromEntries(
+    components.map((component) => [component.activityId, component])
+  )).kind;
+
+  const twoKinds = mixed('listening');
+  assert.equal(status(twoKinds, direct('primary'), [direct('component-1')]), 'direct-met');
+  assert.equal(status(twoKinds, direct('primary'), [partial('component-1')]), 'partial-review');
+  assert.equal(status(twoKinds, partial('primary'), [partial('component-1')]), 'partial-review');
+  assert.equal(status(twoKinds, partial('primary'), [none('component-1')]), 'partial-review');
+  assert.equal(status(twoKinds, none('primary'), [none('component-1')]), 'none');
+  assert.equal(status(twoKinds, undefined), 'composite-incomplete');
+  assert.equal(status(twoKinds, direct('primary'), [none('component-1')]), 'partial-review');
+
+  const threeKinds = mixed('listening', 'reading');
+  assert.equal(status(threeKinds, direct('primary'), [direct('component-1'), direct('component-2')]), 'direct-met');
+  assert.equal(status(threeKinds, direct('primary'), [direct('component-1'), none('component-2')]), 'partial-review');
+  assert.equal(status(threeKinds, direct('primary'), [none('component-1'), none('component-2')]), 'partial-review');
+  assert.equal(status(threeKinds, direct('primary'), [partial('component-1'), none('component-2')]), 'partial-review');
+  assert.equal(status(threeKinds, partial('primary'), [none('component-1'), none('component-2')]), 'partial-review');
+  assert.equal(status(threeKinds, none('primary'), [none('component-1'), none('component-2')]), 'none');
+
+  assert.equal(status(twoKinds, direct('primary'), [direct('component-1', false)]), 'direct-not-met');
+  assert.equal(status(threeKinds, direct('primary'), [direct('component-1', false), none('component-2')]), 'direct-not-met');
+
+  const pureListening: ExitCheckItem = {
+    objectiveId: 'pure-listening', activityId: 'primary', evidenceKind: 'listening',
+  };
+  assert.equal(status(pureListening, none('primary')), 'none');
+  const pureListeningComposite: ExitCheckItem = {
+    ...pureListening,
+    evidenceComponents: [{ activityId: 'component-1', evidenceKind: 'listening' }],
+  };
+  assert.equal(status(pureListeningComposite, direct('primary'), [none('component-1')]), 'none');
+
+  const withPractice: ExitCheckItem = {
+    objectiveId: 'practice', activityId: 'primary', evidenceKind: 'grammar', practiceComponents: ['speaking'],
+  };
+  assert.equal(status(withPractice, direct('primary')), 'partial-components');
 });
 
 test('L15 has exactly 6 objectives', () => {
@@ -1538,7 +1609,7 @@ test('L4 has parallel 4/5 written person-form recognition', () => {
   assert.equal(controlledEvidence(true, 4, 5, 4).passed, true);
 });
 
-test('written recognition alone cannot upgrade missing listening to DIRECT met', () => {
+test('written recognition preserves PARTIAL mixed-objective evidence when listening is missing', () => {
   const exitCheck = findL4Activity('l4-exit-check', 'exitCheck');
   const check = exitCheck.checks.find((candidate) => candidate.objectiveId === 'l4_recognize-forms');
   assert.ok(check);
@@ -1569,7 +1640,7 @@ test('written recognition alone cannot upgrade missing listening to DIRECT met',
       [textEvidence.activityId]: textEvidence,
       [missingListening.activityId]: missingListening,
     }).kind,
-    'none'
+    'partial-review'
   );
 });
 
@@ -1907,15 +1978,15 @@ test('missing L2 audio produces NONE and cannot pass even at 5/5', () => {
   });
 });
 
-test('L2 TTS remains explicit practice and cannot become DIRECT listening evidence', () => {
+test('L2 missing MP3 remains unavailable and cannot fall back to browser speech', () => {
   const listening = findL2Activity('l2-listening-introduction', 'listening');
   const source = readFileSync(
     new URL('../src/components/activities/ListeningTask.tsx', import.meta.url),
     'utf8'
   );
   assert.equal(canProduceDirectListeningEvidence(listening), false);
-  assert.match(source, /TTS-превью \(практика, не оценивается\)/);
-  assert.match(source, /оно не является\s+listening evidence/);
+  assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|TTS-превью/);
+  assert.match(source, /До публикации записанного MP3 аудио недоступно/);
 });
 
 test('L2 listening questions test register, identity, basic detail, response, and closing', () => {
@@ -1986,7 +2057,7 @@ test('completed L2 interaction stays PARTIAL while required listening is missing
   assert.match(status.label, /обязательный DIRECT-компонент отсутствует/);
 });
 
-test('mixed NONE plus PARTIAL handling preserves L4 missing-listening semantics', () => {
+test('mixed NONE plus DIRECT handling preserves valid L4 text evidence as PARTIAL', () => {
   const exitCheck = findL4Activity('l4-exit-check', 'exitCheck');
   const check = exitCheck.checks.find((candidate) => candidate.objectiveId === 'l4_recognize-forms');
   assert.ok(check);
@@ -2000,7 +2071,7 @@ test('mixed NONE plus PARTIAL handling preserves L4 missing-listening semantics'
   };
   assert.equal(
     describeExitCheckStatus(check, missing, { [textEvidence.activityId]: textEvidence }).kind,
-    'none'
+    'partial-review'
   );
 });
 
@@ -2220,7 +2291,7 @@ test('existing L2 translation cards remain exact and unchanged', () => {
   ]);
   assert.equal(
     sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)),
-    '2FCEE83D0BBC849966B8C09B45F17F77B396EE2977DB047D17F6146AA0B31F4A'
+    '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D'
   );
 });
 

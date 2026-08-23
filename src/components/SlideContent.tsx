@@ -6,7 +6,7 @@ import { SpeechButton } from './SpeechButton';
 import { AudioRecorder } from './AudioRecorder';
 import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
-import { speakText } from '../utils/speech';
+import { playRecordedAudio } from '../utils/speech';
 import { Info, AlertTriangle, BookOpen, Eye, EyeOff } from 'lucide-react';
 
 interface SlideContentProps {
@@ -31,6 +31,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
   // Local state for interactive word cards reveal
   const [revealedWords, setRevealedWords] = useState<Record<string, boolean>>({});
   const [hideAllTranslations, setHideAllTranslations] = useState(false);
+  const [audioUnavailable, setAudioUnavailable] = useState(false);
 
   const toggleReveal = (id: string) => {
     setRevealedWords(prev => ({ ...prev, [id]: !prev[id] }));
@@ -40,9 +41,9 @@ export const SlideContent: React.FC<SlideContentProps> = ({
     const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-speak-text]');
     if (!btn) return;
     const text = btn.dataset.speakText;
-    const lang = (btn.dataset.speakLang as 'hu-HU' | 'ru-RU') || 'hu-HU';
     if (text) {
-      speakText(text, lang);
+      setAudioUnavailable(false);
+      playRecordedAudio(text, undefined, undefined, () => setAudioUnavailable(true));
     }
   };
 
@@ -50,6 +51,9 @@ export const SlideContent: React.FC<SlideContentProps> = ({
 
   return (
     <div className="space-y-4">
+      {audioUnavailable && (
+        <p className="text-xs text-red-700" role="alert">Записанное аудио недоступно.</p>
+      )}
       {/* Primary HTML body content from lesson data */}
       {slide.body && (
         <div

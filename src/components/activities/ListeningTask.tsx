@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Headphones, Volume2 } from 'lucide-react';
+import { Headphones } from 'lucide-react';
 import type { ActivityEvidence, ListeningTaskData } from '../../types';
 import { QuestionSet } from './QuestionSet';
-import { speakText } from '../../utils/speech';
 import { audioUrl } from '../../utils/audioConfig';
 import { canProduceDirectListeningEvidence, listeningEvidence } from '../../utils/activityUtils';
 
@@ -19,8 +18,8 @@ interface ListeningTaskProps {
  * - Published asset → real audio stimulus + questions; transcript hidden until
  *   submission; passed depends on the comprehension score (not on the MP3
  *   existing).
- * - Missing asset (pilot) → graceful "not published" state with an explicit
- *   practice/dev TTS fallback; evidenceMode = 'none', passed = false.
+ * - Missing asset (pilot) → graceful unavailable state; evidenceMode = 'none',
+ *   passed = false.
  */
 export const ListeningTask: React.FC<ListeningTaskProps> = ({
   data,
@@ -29,6 +28,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
   onResetEvidence,
 }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [audioError, setAudioError] = useState(false);
   const canDirect = canProduceDirectListeningEvidence(data);
   const audioSrc = canDirect ? audioUrl(`${data.assetId}.mp3`) : null;
 
@@ -63,7 +63,18 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
           role="region"
           aria-label="Аудиозапись диалога"
         >
-          <audio controls src={audioSrc} className="w-full" />
+          <audio
+            controls
+            src={audioSrc}
+            className="w-full"
+            onCanPlay={() => setAudioError(false)}
+            onError={() => setAudioError(true)}
+          />
+          {audioError && (
+            <p className="text-xs text-red-700 mt-2" role="alert">
+              Аудиозапись недоступна или не может быть воспроизведена.
+            </p>
+          )}
           <p className="text-[11px] text-[#8A7A68] mt-1">
             Прослушайте диалог. Повтор разрешён: первый раз — общий смысл, второй раз — детали.
           </p>
@@ -72,17 +83,8 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         <div className="rounded-xl border border-[#B98A2B]/40 bg-[#B98A2B]/10 p-3 text-xs md:text-sm text-[#57121C]">
           <p className="font-semibold">Аудиозапись для этого задания ещё не опубликована.</p>
           <p className="text-[#8A7A68] mt-1">
-            Это ожидаемый пилотный asset. Для практики доступно TTS-превью ниже — оно не является
-            listening evidence.
+            Это ожидаемый пилотный asset. До публикации записанного MP3 аудио недоступно.
           </p>
-          <button
-            type="button"
-            onClick={() => speakText(data.transcript, 'hu-HU')}
-            className="mt-2 flex min-h-11 min-w-0 flex-wrap items-center gap-1.5 rounded-lg border border-[#D9CBB0] bg-white px-3 py-1.5 text-xs font-semibold text-[#57121C] hover:bg-[#F6EFE4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 cursor-pointer"
-          >
-            <Volume2 className="w-4 h-4 text-[#B98A2B]" />
-            <span>Прослушать TTS-превью (практика, не оценивается)</span>
-          </button>
         </div>
       )}
 

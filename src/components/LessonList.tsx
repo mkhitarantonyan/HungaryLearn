@@ -6,7 +6,6 @@ import {
   Circle,
   CircleDot,
   CheckCircle2,
-  Volume2,
   ShieldCheck,
   User,
   Lock,
@@ -21,7 +20,6 @@ interface LessonListProps {
   onSelectLesson: (lessonId: number) => void;
   onOpenAdmin: () => void;
   isAdmin: boolean;
-  onOpenVoiceSettings: () => void;
   onOpenUserModal?: () => void;
   viewedSlideIds?: string[];
   passedQuizzes?: number[];
@@ -263,7 +261,6 @@ export const LessonList: React.FC<LessonListProps> = ({
   onSelectLesson,
   onOpenAdmin,
   isAdmin,
-  onOpenVoiceSettings,
   onOpenUserModal,
   viewedSlideIds = [],
   passedQuizzes = [],
@@ -346,15 +343,6 @@ export const LessonList: React.FC<LessonListProps> = ({
                   {user ? `Кабинет (${user.email.split('@')[0]})` : 'Вход / Регистрация'}
                 </button>
               )}
-
-              <button
-                onClick={onOpenVoiceSettings}
-                className="px-4 py-2.5 rounded-xl border border-[#E7D9C5] bg-white text-[#57121C] hover:bg-[#F6EFE4] transition-colors cursor-pointer text-sm font-semibold inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B]"
-                title="Настройки голоса и диктора"
-              >
-                <Volume2 className="w-4 h-4 text-[#B98A2B]" />
-                Настройки голоса
-              </button>
 
               {isAdmin && (
                 <button

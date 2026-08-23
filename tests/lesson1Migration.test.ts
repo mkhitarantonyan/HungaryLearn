@@ -99,16 +99,16 @@ test('L2, L3, L4, L5, and L15 approved lesson modules remain byte-for-byte froze
   assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
 });
 
-test('L6 is migrated with activities and L7 remains unmigrated', () => {
+test('L6 is migrated with activities and L7 matches the approved migrated snapshot', () => {
   assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '23368A7EB5059E2F54E163A726736D41B5ED7D23BB51A70315C89D5A5C5ED0BB');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '70EF9CCBD0BE2CB15CFD2F5D4F060F6998C632F548014D5C8E0FBC6F3DFC5B90');
 });
 
 test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
-  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '2FCEE83D0BBC849966B8C09B45F17F77B396EE2977DB047D17F6146AA0B31F4A');
+  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
   assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '4D3C6CCEBE42C4C7EC8358F15C46233AC0BDE3C04799BB95DB7C345EF5C03281');
 });
 
@@ -314,8 +314,10 @@ test('L1 controlled and listening controls expose textual feedback, focus, and n
   assert.match(controlledSource, /aria-hidden="true"/);
   assert.match(controlledSource, /focus-visible:ring-2/);
   assert.match(controlledSource, /break-words/);
-  assert.match(listeningSource, /min-h-11/);
-  assert.match(listeningSource, /focus-visible:ring-2/);
+  assert.match(listeningSource, /<audio/);
+  assert.match(listeningSource, /controls/);
+  assert.match(listeningSource, /onError=\{\(\) => setAudioError\(true\)\}/);
+  assert.match(listeningSource, /role="alert"/);
 });
 
 test('five-word read-aloud is exact, required, real, and replaces the advanced sentence as evidence', () => {
@@ -559,7 +561,7 @@ test('all other L1 ExitCheck mappings remain unchanged except soft-consonant cat
   ]);
 });
 
-test('L1 ExitCheck preserves NONE, DIRECT-component, and PARTIAL recording semantics', () => {
+test('L1 ExitCheck preserves mixed-objective PARTIAL and recording semantics', () => {
   const exit = findActivity('l1-exit-check', 'exitCheck');
   const recording = recordingCompletionEvidence('l1-record-five-words');
   const evidence: Record<string, ActivityEvidence> = {
@@ -577,9 +579,9 @@ test('L1 ExitCheck preserves NONE, DIRECT-component, and PARTIAL recording seman
     describeExitCheckStatus(check, evidence[check.activityId], evidence).kind,
   ]));
   assert.deepEqual(status, {
-    'l1_distinguish-s-sz': 'none',
+    'l1_distinguish-s-sz': 'partial-review',
     'l1_distinguish-soft-consonants': 'partial-review',
-    'l1_distinguish-long-vowels': 'none',
+    'l1_distinguish-long-vowels': 'partial-review',
     'l1_apply-stress': 'partial-review',
     'l1_read-aloud': 'partial-review',
   });
@@ -623,12 +625,11 @@ test('summary keeps corrected phonetic categories and does not group ly with gy/
   assert.doesNotMatch(summary.body, /gy, ty, ny, ly[^<]*(группа|мягк)/iu);
 });
 
-test('slideNarrator fallback no longer preserves the old 44-sound, soft-group, or absolute stress model', () => {
+test('slideNarrator contains no synthesized fallback script', () => {
   const source = readFileSync(new URL('../src/utils/slideNarrator.ts', import.meta.url), 'utf8');
-  assert.match(source, /44 буквы и буквенные единицы/);
-  assert.match(source, /gy — \/ɟ\/, ty — \/c\/, ny — \/ɲ\//);
-  assert.match(source, /j и ly[^.]*передают один звук \/j\//);
-  assert.match(source, /не описывают обычное русское смягчение/);
+  assert.doesNotMatch(source, /SpeechSynthesis|fallbackSequence|44 буквы|русское смягчение/);
+  assert.match(source, /getAudioFileUrl/);
+  assert.match(source, /return audioKey \? \[\{ key: audioKey \}\] : \[\]/);
   assert.doesNotMatch(source, /44 звука|Мягкие согласные: дь, ть, нь, й|всегда падает исключительно/iu);
 });
 

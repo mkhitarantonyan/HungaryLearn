@@ -7,13 +7,49 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import crypto from "crypto";
 import Stripe from "stripe";
-import fs from "fs";
 import { verifyAdminCredentials } from './src/utils/adminAuth';
 import { mergeCompletedSlides } from './src/utils/progressMerge';
 import { isSubscriptionValid } from './src/utils/subscriptionValidity';
-import { isValidAdminSession as isValidAdminSessionPure } from './src/utils/adminSessions';
 import { gradeCard } from './src/utils/spacedRepetition';
 import type { ReviewGrade } from './src/types';
+import {
+  checkDatabaseConnection,
+  closeDatabase,
+  countAudioOverridesByStoragePath,
+  createAdminSession as persistAdminSession,
+  createUserSession as persistUserSession,
+  createUserWithSession,
+  deleteAdminSession,
+  deleteAudioOverride,
+  deleteUserSession,
+  deleteWordOverride,
+  findAudioOverrideByKey,
+  findUserByEmail,
+  findUserById,
+  findUserByStripeCustomerId,
+  getDatabasePool,
+  getUserFromSessionToken,
+  getUserProgress,
+  isAdminSessionValid,
+  listAudioOverrides,
+  listUsers,
+  listWordOverrides,
+  mutateReviewCards,
+  mutateUserProgress,
+  replaceAudioOverrides,
+  runStripeEventOnce,
+  saveStudentUser,
+  upsertWordOverride,
+  type ReviewCardState,
+  type StudentUser,
+} from './src/server/db';
+import {
+  assertPrivateOverrideBucket,
+  downloadPrivateAudio,
+  removePrivateAudio,
+  uploadPrivateAudio,
+  validateAudioDataUrl,
+} from './src/server/audioStorage';
 
 dotenv.config();
 
@@ -28,410 +64,97 @@ function getStripe(): Stripe | null {
   return stripeClient;
 }
 
-// Active server sessions store
-interface SessionData {
-  token: string;
-  createdAt: number;
-  expiresAt: number;
-}
-
-interface UserSessionData {
-  token: string;
-  userId: string;
-  createdAt: number;
-  expiresAt: number;
-}
-
-interface StudentUser {
-  id: string;
-  email: string;
-  passwordHash: string;
-  createdAt: string;
-  subscriptionStatus: 'trial' | 'active' | 'past_due' | 'canceled' | 'incomplete' | 'unpaid';
-  subscriptionEnd?: string;
-  stripeCustomerId?: string;
-  stripeSubscriptionId?: string;
-  // Full access without payment, granted by the administrator.
-  isPrivileged?: boolean;
-}
-
-interface ReviewCardState {
-  cardId: string;
-  lessonNumber: number;
-  intervalDays: number;
-  easeFactor: number;
-  reps: number;
-  dueDate: string;
-  lastReviewedAt: string | null;
-}
-
-interface StudentProgress {
-  userId: string;
-  viewedSlides: string[];
-  passedQuizzes: number[];
-  reviewCards?: Record<string, ReviewCardState>;
-  customNotes?: string;
-  updatedAt: string;
-}
-
-const activeAdminSessions = new Map<string, SessionData>();
-const activeUserSessions = new Map<string, UserSessionData>();
-const registeredUsersMap = new Map<string, StudentUser>(); // email -> StudentUser
-const usersByIdMap = new Map<string, StudentUser>(); // id -> StudentUser
-const userProgressMap = new Map<string, StudentProgress>(); // userId -> StudentProgress
-const audioOverridesMap = new Map<string, AudioOverrideEntry>(); // normalized key -> audio file record
-const wordOverridesMap = new Map<string, WordOverrideEntry>(); // normalized word -> override
-
 const SESSION_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days for users
 const ADMIN_SESSION_DURATION_MS = 10 * 60 * 1000; // 10 minutes for admin sessions
-// NOTE: admin sessions must share ONE duration constant so the server-side
-// session lifetime matches the browser cookie maxAge. Otherwise the browser
-// keeps a "valid-looking" cookie that the server rejects.
-
-// Persistence layer
-const DB_DIR = path.join(process.cwd(), "data");
-const DB_FILE = path.join(DB_DIR, "db.json");
-const DB_BACKUP_FILE = DB_FILE + ".bak";
-const AUDIO_DIR = path.join(DB_DIR, "audio");
-
-// A stored audio file record. The actual bytes live on disk under AUDIO_DIR.
-interface AudioOverrideEntry {
-  key: string;
-  fileName: string;
-  mimeType: string;
-  size: number;
-  createdAt: string;
-}
-
-// A text override for a word/phrase. Audio, if any, is stored separately under
-// the word text keys via audioOverridesMap.
-interface WordOverrideEntry {
-  key: string;
-  originalText: string;
-  customText?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface ProcessedStripeEvent {
-  eventId: string;
-  type: string;
-  processedAt: string;
-}
-
-interface DatabaseSchema {
-  users: StudentUser[];
-  userSessions: UserSessionData[];
-  adminSessions: SessionData[];
-  userProgress: StudentProgress[];
-  audioOverrides?: AudioOverrideEntry[];
-  wordOverrides?: WordOverrideEntry[];
-  processedStripeEvents?: ProcessedStripeEvent[];
-}
-
-const processedStripeEventIds = new Map<string, ProcessedStripeEvent>();
 const LESSON_COUNT = 28;
 const QUIZ_PASS_THRESHOLD = 0.8;
 
-function ensureDbDir() {
-  if (!fs.existsSync(DB_DIR)) {
-    fs.mkdirSync(DB_DIR, { recursive: true });
-  }
+class ReviewCardNotFoundError extends Error {}
+
+const asyncHandler = (
+  handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<unknown>
+): express.RequestHandler => {
+  return (req, res, next) => {
+    void handler(req, res, next).catch(next);
+  };
+};
+
+async function createAdminSession(): Promise<string> {
+  const token = crypto.randomUUID();
+  const createdAt = new Date();
+  await persistAdminSession(token, createdAt, new Date(createdAt.getTime() + ADMIN_SESSION_DURATION_MS));
+  return token;
 }
 
-function ensureAudioDir() {
-  ensureDbDir();
-  if (!fs.existsSync(AUDIO_DIR)) {
-    fs.mkdirSync(AUDIO_DIR, { recursive: true });
-  }
+async function createUserSession(userId: string): Promise<string> {
+  const token = crypto.randomUUID();
+  const createdAt = new Date();
+  await persistUserSession(token, userId, createdAt, new Date(createdAt.getTime() + SESSION_DURATION_MS));
+  return token;
 }
 
-function readDatabaseRaw(): string | null {
-  if (fs.existsSync(DB_FILE)) {
+async function removeAudioObjectIfUnreferenced(storagePath: string): Promise<void> {
+  if (await countAudioOverridesByStoragePath(storagePath) > 0) return;
+  await removePrivateAudio(storagePath);
+}
+
+async function persistAudioDataUrl(
+  keys: string[],
+  dataUrl: string
+): Promise<{ ok: boolean; url?: string; error?: string }> {
+  try {
+    const upload = validateAudioDataUrl(dataUrl);
+    const uniqueKeys = Array.from(new Set(
+      keys.map((key) => String(key).trim().toLowerCase()).filter(Boolean)
+    ));
+    if (uniqueKeys.length === 0) {
+      return { ok: false, error: 'Не указан ключ аудиофайла' };
+    }
+
+    await assertPrivateOverrideBucket();
+    const storagePath = `overrides/${crypto.randomUUID()}${upload.extension}`;
+    await uploadPrivateAudio(storagePath, upload);
+
+    let previousPaths: string[];
     try {
-      return fs.readFileSync(DB_FILE, "utf-8");
-    } catch (err) {
-      console.error("[Persistence] Failed to read db.json:", err);
+      previousPaths = await replaceAudioOverrides(
+        uniqueKeys,
+        storagePath,
+        upload.mimeType,
+        upload.buffer.length
+      );
+    } catch (error) {
+      await removePrivateAudio(storagePath).catch(() => undefined);
+      throw error;
     }
-  }
-  // Fall back to the last known-good backup if the main file is missing/corrupt.
-  if (fs.existsSync(DB_BACKUP_FILE)) {
-    try {
-      console.warn("[Persistence] Falling back to db.json.bak backup");
-      return fs.readFileSync(DB_BACKUP_FILE, "utf-8");
-    } catch (err) {
-      console.error("[Persistence] Failed to read db.json.bak:", err);
-    }
-  }
-  return null;
-}
 
-function loadDatabase() {
-  ensureDbDir();
-  ensureAudioDir();
-  const raw = readDatabaseRaw();
-  if (!raw) return;
+    for (const previousPath of new Set(previousPaths)) {
+      if (previousPath !== storagePath) {
+        await removeAudioObjectIfUnreferenced(previousPath);
+      }
+    }
 
-  try {
-    const data: DatabaseSchema = JSON.parse(raw);
-
-    registeredUsersMap.clear();
-    usersByIdMap.clear();
-    activeUserSessions.clear();
-    activeAdminSessions.clear();
-    userProgressMap.clear();
-    audioOverridesMap.clear();
-    wordOverridesMap.clear();
-    processedStripeEventIds.clear();
-
-    if (Array.isArray(data.users)) {
-      data.users.forEach((u) => {
-        registeredUsersMap.set(u.email.toLowerCase(), u);
-        usersByIdMap.set(u.id, u);
-      });
-    }
-    if (Array.isArray(data.userSessions)) {
-      data.userSessions.filter(s => s.expiresAt > Date.now()).forEach((s) => activeUserSessions.set(s.token, s));
-    }
-    if (Array.isArray(data.adminSessions)) {
-      data.adminSessions.filter(s => s.expiresAt > Date.now()).forEach((s) => activeAdminSessions.set(s.token, s));
-    }
-    if (Array.isArray(data.userProgress)) {
-      data.userProgress.forEach((p) => userProgressMap.set(p.userId, p));
-    }
-    if (Array.isArray(data.audioOverrides)) {
-      data.audioOverrides.forEach((e) => audioOverridesMap.set(e.key, e));
-    }
-    if (Array.isArray(data.wordOverrides)) {
-      data.wordOverrides.forEach((e) => wordOverridesMap.set(e.key, e));
-    }
-    if (Array.isArray(data.processedStripeEvents)) {
-      data.processedStripeEvents.forEach((e) => processedStripeEventIds.set(e.eventId, e));
-    }
-    console.log(`[Persistence] Restored ${registeredUsersMap.size} users, ${activeUserSessions.size} sessions, ${userProgressMap.size} progress entries, ${audioOverridesMap.size} audio overrides, ${wordOverridesMap.size} word overrides, ${processedStripeEventIds.size} Stripe events from ${DB_FILE}`);
-  } catch (err) {
-    console.error("[Persistence] Failed to parse db.json:", err);
-  }
-}
-
-let _lastBackupTime = 0;
-const BACKUP_INTERVAL_MS = 60 * 60 * 1000; // keep a rolling backup at most once per hour
-
-function maybeBackupDatabase() {
-  const now = Date.now();
-  if (now - _lastBackupTime < BACKUP_INTERVAL_MS) return;
-  if (!fs.existsSync(DB_FILE)) return;
-  try {
-    fs.copyFileSync(DB_FILE, DB_BACKUP_FILE);
-    _lastBackupTime = now;
-  } catch (err) {
-    console.error("[Persistence] Failed to backup db.json:", err);
-  }
-}
-
-function saveDatabase() {
-  try {
-    ensureDbDir();
-    const data: DatabaseSchema = {
-      users: Array.from(registeredUsersMap.values()),
-      userSessions: Array.from(activeUserSessions.values()),
-      adminSessions: Array.from(activeAdminSessions.values()),
-      userProgress: Array.from(userProgressMap.values()),
-      audioOverrides: Array.from(audioOverridesMap.values()),
-      wordOverrides: Array.from(wordOverridesMap.values()),
-      processedStripeEvents: Array.from(processedStripeEventIds.values()),
+    return {
+      ok: true,
+      url: `/api/audio-file/${encodeURIComponent(uniqueKeys[0])}`,
     };
-
-    // Atomic write: write to a temp file first, then rename over the real file.
-    // This prevents a corrupted db.json if the process dies mid-write.
-    const tmpFile = DB_FILE + ".tmp";
-    fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), "utf-8");
-    maybeBackupDatabase();
-    fs.renameSync(tmpFile, DB_FILE);
-  } catch (err) {
-    console.error("[Persistence] Failed to save db.json:", err);
+  } catch (error) {
+    console.error('[Audio Storage] Failed to store audio override:', error);
+    const message = error instanceof Error ? error.message : 'Не удалось сохранить аудиофайл на сервере';
+    return { ok: false, error: message };
   }
 }
 
-let _saveTimer: ReturnType<typeof setTimeout> | null = null;
-function saveDatabaseSoon(): void {
-  if (_saveTimer) clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(() => { saveDatabase(); _saveTimer = null; }, 500);
-}
-
-function shutdown() {
-  console.log("[Persistence] Shutting down, flushing pending writes...");
-  if (_saveTimer) {
-    clearTimeout(_saveTimer);
-    _saveTimer = null;
-  }
-  try {
-    saveDatabase();
-  } catch (err) {
-    console.error("[Persistence] Failed to flush db.json on shutdown:", err);
-  }
+async function shutdown(): Promise<void> {
+  console.log('[Database] Shutting down PostgreSQL pool...');
+  await closeDatabase().catch((error) => {
+    console.error('[Database] Failed to close PostgreSQL pool:', error);
+  });
   process.exit(0);
 }
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
-
-// Audio file helpers
-function extForMime(mimeType: string): string {
-  const extMap: Record<string, string> = {
-    'audio/mpeg': '.mp3',
-    'audio/mp3': '.mp3',
-    'audio/wav': '.wav',
-    'audio/x-wav': '.wav',
-    'audio/webm': '.webm',
-    'audio/ogg': '.ogg',
-    'audio/mp4': '.m4a',
-    'audio/x-m4a': '.m4a',
-  };
-  return extMap[mimeType] || '';
-}
-
-// Stores one audio blob under one or more normalized keys (shared file on disk).
-function persistAudioDataUrl(keys: string[], dataUrl: string): { ok: boolean; url?: string; error?: string } {
-  try {
-    const match = /^data:([^;,]+);base64,(.+)$/s.exec(dataUrl);
-    if (!match) {
-      return { ok: false, error: 'Неподдерживаемый формат Data URL (ожидается base64)' };
-    }
-    const mimeType = match[1];
-    const buffer = Buffer.from(match[2], 'base64');
-    if (buffer.length === 0) {
-      return { ok: false, error: 'Пустой аудиофайл' };
-    }
-
-    const allowed = new Map<string, string>([
-      ['audio/mpeg', '.mp3'],
-      ['audio/mp3', '.mp3'],
-      ['audio/wav', '.wav'],
-      ['audio/x-wav', '.wav'],
-      ['audio/webm', '.webm'],
-      ['audio/ogg', '.ogg'],
-      ['audio/mp4', '.m4a'],
-      ['audio/x-m4a', '.m4a'],
-    ]);
-    const extension = allowed.get(mimeType);
-    if (!extension) {
-      return { ok: false, error: 'Поддерживаются только MP3, WAV, WebM, OGG и M4A' };
-    }
-
-    const MAX_AUDIO_BYTES = 10 * 1024 * 1024;
-    if (buffer.length > MAX_AUDIO_BYTES) {
-      return { ok: false, error: 'Аудиофайл слишком большой (макс. 10 МБ)' };
-    }
-
-    ensureAudioDir();
-    const fileName = `${crypto.randomUUID()}${extension}`;
-    fs.writeFileSync(path.join(AUDIO_DIR, fileName), buffer);
-
-    const now = new Date().toISOString();
-    const uniqueKeys = new Set(keys.map((k) => String(k).trim().toLowerCase()).filter(Boolean));
-    for (const key of uniqueKeys) {
-      const existing = audioOverridesMap.get(key);
-      audioOverridesMap.set(key, {
-        key,
-        fileName,
-        mimeType,
-        size: buffer.length,
-        createdAt: existing?.createdAt ?? now,
-      });
-    }
-    return { ok: true, url: `/api/audio-file/${encodeURIComponent(fileName)}` };
-  } catch (err) {
-    console.error("[Persistence] Failed to store audio file:", err);
-    return { ok: false, error: 'Не удалось сохранить аудиофайл на сервере' };
-  }
-}
-
-function removeAudioFileIfUnreferenced(fileName: string): void {
-  for (const entry of audioOverridesMap.values()) {
-    if (entry.fileName === fileName) return;
-  }
-  try {
-    fs.unlinkSync(path.join(AUDIO_DIR, fileName));
-  } catch (err) {
-    console.warn("[Persistence] Could not remove audio file:", fileName, err);
-  }
-}
-
-function deleteAudioOverride(key: string): void {
-  const existing = audioOverridesMap.get(key);
-  if (!existing) return;
-  audioOverridesMap.delete(key);
-  removeAudioFileIfUnreferenced(existing.fileName);
-}
-
-function createAdminSession(): string {
-  const token = crypto.randomUUID();
-  const now = Date.now();
-  activeAdminSessions.set(token, {
-    token,
-    createdAt: now,
-    expiresAt: now + ADMIN_SESSION_DURATION_MS,
-  });
-  saveDatabase();
-  return token;
-}
-
-function createUserSession(userId: string): string {
-  const token = crypto.randomUUID();
-  const now = Date.now();
-  activeUserSessions.set(token, {
-    token,
-    userId,
-    createdAt: now,
-    expiresAt: now + SESSION_DURATION_MS,
-  });
-  saveDatabase();
-  return token;
-}
-
-function isValidAdminSession(token: string | undefined): boolean {
-  const hadSessionBefore = !!token && activeAdminSessions.has(token);
-  const valid = isValidAdminSessionPure(token, activeAdminSessions);
-  if (!valid && hadSessionBefore) {
-    saveDatabaseSoon();
-  }
-  return valid;
-}
-
-function getUserFromSessionToken(token: string | undefined): StudentUser | null {
-  if (!token) return null;
-  const session = activeUserSessions.get(token);
-  if (!session) return null;
-  if (Date.now() > session.expiresAt) {
-    activeUserSessions.delete(token);
-    saveDatabaseSoon();
-    return null;
-  }
-  return usersByIdMap.get(session.userId) || null;
-}
-
-function deleteAdminSession(token: string | undefined): void {
-  if (token) {
-    activeAdminSessions.delete(token);
-    saveDatabase();
-  }
-}
-
-function deleteUserSession(token: string | undefined): void {
-  if (token) {
-    activeUserSessions.delete(token);
-    saveDatabase();
-  }
-}
-
-function findUserByStripeCustomerId(customerId: string | null | undefined): StudentUser | null {
-  if (!customerId) return null;
-  for (const user of registeredUsersMap.values()) {
-    if (user.stripeCustomerId === customerId) return user;
-  }
-  return null;
-}
+process.once('SIGINT', () => { void shutdown(); });
+process.once('SIGTERM', () => { void shutdown(); });
 
 function extractCompletedLessonNumbers(completedSlides: string[]): number[] {
   const numbers = new Set<number>();
@@ -457,11 +180,11 @@ async function startServer() {
     throw new Error('ADMIN_PASSWORD_HASH is required in production');
   }
 
-  // Load persisted database records from disk on startup
-  loadDatabase();
+  // Fail fast on missing configuration. Connectivity itself is reported by /api/health.
+  getDatabasePool();
 
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT || 3000);
 
   // Stripe Webhook Raw Body Handler (must be registered before express.json)
   app.post("/api/webhook/stripe", express.raw({ type: 'application/json' }), async (req, res) => {
@@ -510,104 +233,95 @@ async function startServer() {
       user.subscriptionEnd = nextMonth.toISOString();
     };
 
-    const markStripeEventProcessed = (event: Stripe.Event): void => {
-      processedStripeEventIds.set(event.id, {
-        eventId: event.id,
-        type: event.type,
-        processedAt: new Date().toISOString(),
+    try {
+      const processed = await runStripeEventOnce(event.id, event.type, async (dbClient) => {
+        if (event.type === 'checkout.session.completed') {
+          const session = event.data.object as Stripe.Checkout.Session;
+          const userId = session.client_reference_id;
+          const customerEmail = session.customer_email;
+
+          let userToUpgrade = userId ? await findUserById(userId, dbClient) : null;
+          if (!userToUpgrade && customerEmail) {
+            userToUpgrade = await findUserByEmail(customerEmail, dbClient);
+          }
+
+          if (userToUpgrade) {
+            const customerId = getStripeCustomerId(session.customer);
+            if (customerId) userToUpgrade.stripeCustomerId = customerId;
+            const subscriptionId = typeof session.subscription === 'string' ? session.subscription : null;
+            if (subscriptionId) userToUpgrade.stripeSubscriptionId = subscriptionId;
+
+            if (subscriptionId) {
+              try {
+                const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+                const periodEnd = subscription.items.data.reduce(
+                  (latest, item) => Math.max(latest, item.current_period_end),
+                  0
+                );
+                if (periodEnd > 0) {
+                  userToUpgrade.subscriptionStatus = 'active';
+                  userToUpgrade.subscriptionEnd = new Date(periodEnd * 1000).toISOString();
+                } else {
+                  extendSubscriptionEnd(userToUpgrade);
+                }
+              } catch (err) {
+                console.error('[Stripe Webhook] Failed to retrieve subscription for checkout.session.completed:', err);
+                extendSubscriptionEnd(userToUpgrade);
+              }
+            } else {
+              extendSubscriptionEnd(userToUpgrade);
+            }
+
+            await saveStudentUser(userToUpgrade, dbClient);
+            console.log(`[Stripe Webhook] Успешно активирована подписка для ${userToUpgrade.email}`);
+          }
+        } else if (event.type === 'customer.subscription.deleted') {
+          const subscription = event.data.object as Stripe.Subscription;
+          const user = await findUserByStripeCustomerId(getStripeCustomerId(subscription.customer), dbClient);
+          if (user) {
+            user.subscriptionStatus = 'canceled';
+            user.subscriptionEnd = new Date().toISOString();
+            await saveStudentUser(user, dbClient);
+            console.log(`[Stripe Webhook] Подписка отменена для ${user.email}`);
+          }
+        } else if (event.type === 'invoice.payment_succeeded') {
+          const invoice = event.data.object as Stripe.Invoice;
+          if (invoice.billing_reason === 'subscription_cycle') {
+            const user = await findUserByStripeCustomerId(getStripeCustomerId(invoice.customer), dbClient);
+            if (user) {
+              const periodEnd = invoice.lines?.data?.[0]?.period?.end;
+              if (periodEnd) {
+                user.subscriptionStatus = 'active';
+                user.subscriptionEnd = new Date(periodEnd * 1000).toISOString();
+              } else {
+                extendSubscriptionEnd(user);
+              }
+              await saveStudentUser(user, dbClient);
+              console.log(`[Stripe Webhook] Платёж подтверждён — подписка продлена для ${user.email}`);
+            }
+          }
+        } else if (event.type === 'invoice.payment_failed') {
+          const invoice = event.data.object as Stripe.Invoice;
+          const user = await findUserByStripeCustomerId(getStripeCustomerId(invoice.customer), dbClient);
+          if (user) {
+            user.subscriptionStatus = 'past_due';
+            await saveStudentUser(user, dbClient);
+            console.log(`[Stripe Webhook] Платёж не прошёл — подписка past_due для ${user.email}`);
+          }
+        }
       });
-    };
 
-    if (processedStripeEventIds.has(event.id)) {
-      return res.json({ received: true, duplicate: true });
+      return res.json({ received: true, ...(processed ? {} : { duplicate: true }) });
+    } catch (error) {
+      console.error('[Stripe Webhook] Database processing failed:', error);
+      return res.status(500).send('Webhook processing failed');
     }
-
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object as Stripe.Checkout.Session;
-      const userId = session.client_reference_id;
-      const customerEmail = session.customer_email;
-
-      let userToUpgrade: StudentUser | undefined;
-      if (userId) {
-        userToUpgrade = usersByIdMap.get(userId);
-      }
-      if (!userToUpgrade && customerEmail) {
-        userToUpgrade = registeredUsersMap.get(customerEmail.toLowerCase());
-      }
-
-      if (userToUpgrade) {
-        const customerId = getStripeCustomerId(session.customer);
-        if (customerId) userToUpgrade.stripeCustomerId = customerId;
-        const subscriptionId = typeof session.subscription === 'string' ? session.subscription : null;
-        if (subscriptionId) userToUpgrade.stripeSubscriptionId = subscriptionId;
-
-        if (subscriptionId) {
-          try {
-            const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-            userToUpgrade.subscriptionStatus = 'active';
-            userToUpgrade.subscriptionEnd = new Date(subscription.current_period_end * 1000).toISOString();
-          } catch (err) {
-            console.error('[Stripe Webhook] Failed to retrieve subscription for checkout.session.completed:', err);
-            extendSubscriptionEnd(userToUpgrade);
-          }
-        } else {
-          extendSubscriptionEnd(userToUpgrade);
-        }
-
-        registeredUsersMap.set(userToUpgrade.email, userToUpgrade);
-        usersByIdMap.set(userToUpgrade.id, userToUpgrade);
-        saveDatabase();
-        markStripeEventProcessed(event);
-        console.log(`[Stripe Webhook] Успешно активирована подписка для ${userToUpgrade.email}`);
-      }
-    } else if (event.type === 'customer.subscription.deleted') {
-      const subscription = event.data.object as Stripe.Subscription;
-      const user = findUserByStripeCustomerId(getStripeCustomerId(subscription.customer));
-      if (user) {
-        user.subscriptionStatus = 'canceled';
-        user.subscriptionEnd = new Date().toISOString();
-        registeredUsersMap.set(user.email, user);
-        usersByIdMap.set(user.id, user);
-        saveDatabase();
-        markStripeEventProcessed(event);
-        console.log(`[Stripe Webhook] Подписка отменена для ${user.email}`);
-      }
-    } else if (event.type === 'invoice.payment_succeeded') {
-      const invoice = event.data.object as Stripe.Invoice;
-      if (invoice.billing_reason === 'subscription_cycle') {
-        const user = findUserByStripeCustomerId(getStripeCustomerId(invoice.customer));
-        if (user) {
-          const periodEnd = invoice.lines?.data?.[0]?.period?.end;
-          if (periodEnd) {
-            user.subscriptionStatus = 'active';
-            user.subscriptionEnd = new Date(periodEnd * 1000).toISOString();
-          } else {
-            extendSubscriptionEnd(user);
-          }
-          registeredUsersMap.set(user.email, user);
-          usersByIdMap.set(user.id, user);
-          saveDatabase();
-          markStripeEventProcessed(event);
-          console.log(`[Stripe Webhook] Платёж подтверждён — подписка продлена для ${user.email}`);
-        }
-      }
-    } else if (event.type === 'invoice.payment_failed') {
-      const invoice = event.data.object as Stripe.Invoice;
-      const user = findUserByStripeCustomerId(getStripeCustomerId(invoice.customer));
-      if (user) {
-        user.subscriptionStatus = 'past_due';
-        registeredUsersMap.set(user.email, user);
-        usersByIdMap.set(user.id, user);
-        saveDatabase();
-        markStripeEventProcessed(event);
-        console.log(`[Stripe Webhook] Платёж не прошёл — подписка past_due для ${user.email}`);
-      }
-    }
-
-    return res.json({ received: true });
   });
 
-  app.use(express.json({ limit: '512kb' }));
+  app.use((req, res, next) => {
+    const limit = req.path === '/api/admin/audio' ? '14mb' : '512kb';
+    express.json({ limit })(req, res, next);
+  });
   app.use(cookieParser());
 
   app.use((_req, res, next) => {
@@ -620,6 +334,16 @@ async function startServer() {
     }
     next();
   });
+
+  app.get('/api/health', asyncHandler(async (_req, res) => {
+    try {
+      await checkDatabaseConnection();
+      return res.status(200).json({ status: 'ok', database: 'connected' });
+    } catch (error) {
+      console.error('[Health] PostgreSQL connection failed:', error);
+      return res.status(503).json({ status: 'unavailable', database: 'disconnected' });
+    }
+  }));
 
   // Rate limiter for admin login endpoint to prevent brute-force attacks
   const loginLimiter = rateLimit({
@@ -636,16 +360,16 @@ async function startServer() {
   };
 
   // API endpoint for admin session verification
-  app.get("/api/admin/verify", (req, res) => {
+  app.get("/api/admin/verify", asyncHandler(async (req, res) => {
     const token = getSessionTokenFromReq(req);
-    if (isValidAdminSession(token)) {
+    if (await isAdminSessionValid(token)) {
       return res.json({ success: true, isAdmin: true });
     }
     return res.status(401).json({ success: false, isAdmin: false, message: 'Сессия недействительна или истекла' });
-  });
+  }));
 
   // API endpoint for admin login verification (server-side check with HTTP-only cookie session)
-  app.post("/api/admin/login", loginLimiter, async (req, res) => {
+  app.post("/api/admin/login", loginLimiter, asyncHandler(async (req, res) => {
     const { username, password } = req.body || {};
 
     const adminUser = process.env.ADMIN_USERNAME?.trim() || 'admin';
@@ -671,7 +395,7 @@ async function startServer() {
       return res.status(401).json({ success: false, message: 'Неверный логин или пароль администратора' });
     }
 
-    const sessionToken = createAdminSession();
+    const sessionToken = await createAdminSession();
 
     res.cookie('admin_session', sessionToken, {
       httpOnly: true,
@@ -684,15 +408,15 @@ async function startServer() {
       success: true,
       message: 'Успешный вход в режим администратора',
     });
-  });
+  }));
 
   // API endpoint for admin logout
-  app.post("/api/admin/logout", (req, res) => {
+  app.post("/api/admin/logout", asyncHandler(async (req, res) => {
     const token = getSessionTokenFromReq(req);
-    deleteAdminSession(token);
+    await deleteAdminSession(token);
     res.clearCookie('admin_session');
     return res.json({ success: true, message: 'Сессия завершена' });
-  });
+  }));
 
   // ================= STUDENT USER API ROUTES =================
 
@@ -716,7 +440,7 @@ async function startServer() {
   });
 
   // Student User Registration
-  app.post("/api/auth/register", authLimiter, async (req, res) => {
+  app.post("/api/auth/register", authLimiter, asyncHandler(async (req, res) => {
     const { email, password } = req.body || {};
 
     if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email.trim())) {
@@ -735,7 +459,7 @@ async function startServer() {
     // expected to log in with their existing credentials. This way an attacker
     // cannot distinguish "e-mail already taken" from "account created" by status
     // code, success flag, or response timing alone.
-    if (registeredUsersMap.has(normalizedEmail)) {
+    if (await findUserByEmail(normalizedEmail)) {
       return res.json({
         success: true,
         message: 'Если этот e-mail ещё не зарегистрирован, аккаунт создан. Если у вас уже есть аккаунт — войдите с вашим паролем.',
@@ -754,10 +478,19 @@ async function startServer() {
         subscriptionEnd: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days trial
       };
 
-      registeredUsersMap.set(normalizedEmail, newStudent);
-      usersByIdMap.set(userId, newStudent);
-
-      const sessionToken = createUserSession(userId);
+      const sessionToken = crypto.randomUUID();
+      const sessionCreatedAt = new Date();
+      const created = await createUserWithSession(newStudent, {
+        token: sessionToken,
+        createdAt: sessionCreatedAt,
+        expiresAt: new Date(sessionCreatedAt.getTime() + SESSION_DURATION_MS),
+      });
+      if (!created) {
+        return res.json({
+          success: true,
+          message: 'Если этот e-mail ещё не зарегистрирован, аккаунт создан. Если у вас уже есть аккаунт — войдите с вашим паролем.',
+        });
+      }
 
       res.cookie('user_session', sessionToken, {
         httpOnly: true,
@@ -782,10 +515,10 @@ async function startServer() {
       console.error('Registration error:', err);
       return res.status(500).json({ success: false, message: 'Ошибка при создании аккаунта' });
     }
-  });
+  }));
 
   // Student User Login
-  app.post("/api/auth/login", authLimiter, async (req, res) => {
+  app.post("/api/auth/login", authLimiter, asyncHandler(async (req, res) => {
     const { email, password } = req.body || {};
 
     if (!email || !password) {
@@ -793,7 +526,7 @@ async function startServer() {
     }
 
     const normalizedEmail = String(email).trim().toLowerCase();
-    const user = registeredUsersMap.get(normalizedEmail);
+    const user = await findUserByEmail(normalizedEmail);
 
     // Anti-enumeration: identical error message whether the account exists or not,
     // so an attacker cannot probe which e-mails are registered.
@@ -807,7 +540,7 @@ async function startServer() {
       return res.status(401).json({ success: false, message: 'Неверный e-mail или пароль' });
     }
 
-    const sessionToken = createUserSession(user.id);
+    const sessionToken = await createUserSession(user.id);
 
     res.cookie('user_session', sessionToken, {
       httpOnly: true,
@@ -828,18 +561,18 @@ async function startServer() {
       },
       message: 'Успешный вход!',
     });
-  });
+  }));
 
   // Get current student user session info
-  app.get("/api/auth/me", (req, res) => {
+  app.get("/api/auth/me", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Сессия истекла или не авторизована' });
     }
 
-    const progress = userProgressMap.get(user.id) || {
+    const progress = await getUserProgress(user.id) || {
       userId: user.id,
       viewedSlides: [],
       passedQuizzes: [],
@@ -857,26 +590,26 @@ async function startServer() {
       },
       progress,
     });
-  });
+  }));
 
   // Student User Logout
-  app.post("/api/auth/logout", (req, res) => {
+  app.post("/api/auth/logout", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    deleteUserSession(token);
+    await deleteUserSession(token);
     res.clearCookie('user_session');
     return res.json({ success: true, message: 'Вышли из профиля' });
-  });
+  }));
 
   // Get user progress
-  app.get("/api/user/progress", (req, res) => {
+  app.get("/api/user/progress", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
     }
 
-    const progress = userProgressMap.get(user.id) || {
+    const progress = await getUserProgress(user.id) || {
       userId: user.id,
       viewedSlides: [],
       passedQuizzes: [],
@@ -884,11 +617,11 @@ async function startServer() {
     };
 
     return res.json({ success: true, progress });
-  });
+  }));
 
-  app.post("/api/user/progress", (req, res) => {
+  app.post("/api/user/progress", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
@@ -909,14 +642,15 @@ async function startServer() {
       });
     }
 
-    const existing = userProgressMap.get(user.id);
     const incomingSlides = Array.isArray(viewedSlides) ? viewedSlides : [];
-    const mergedSlides = mergeCompletedSlides(existing?.viewedSlides ?? [], incomingSlides);
-
-    let mergedQuizzes = existing?.passedQuizzes ?? [];
+    let quizUpdate: { lessonNumber: number; score: unknown; total: unknown } | null = null;
 
     if (quiz && typeof quiz === 'object') {
-      const { lessonNumber, score, total } = quiz;
+      const { lessonNumber, score, total } = quiz as {
+        lessonNumber?: unknown;
+        score?: unknown;
+        total?: unknown;
+      };
       const lessonExists = typeof lessonNumber === 'number'
         && lessonNumber >= 1
         && lessonNumber <= LESSON_COUNT;
@@ -925,35 +659,38 @@ async function startServer() {
         return res.status(400).json({ success: false, message: 'Неизвестный урок' });
       }
 
-      if (
-        typeof score === 'number' &&
-        typeof total === 'number' &&
-        total > 0 &&
-        score >= 0 &&
-        score <= total &&
-        score / total >= QUIZ_PASS_THRESHOLD
-      ) {
-        mergedQuizzes = Array.from(new Set([...mergedQuizzes, lessonNumber]));
-      }
+      quizUpdate = { lessonNumber, score, total };
     }
 
-    const progress: StudentProgress = {
-      userId: user.id,
-      viewedSlides: mergedSlides,
-      passedQuizzes: mergedQuizzes,
-      reviewCards: existing?.reviewCards,
-      customNotes: typeof customNotes === 'string' ? customNotes : existing?.customNotes,
-      updatedAt: new Date().toISOString(),
-    };
+    const { progress } = await mutateUserProgress(user.id, (current) => {
+      const mergedSlides = mergeCompletedSlides(current.viewedSlides, incomingSlides);
+      let mergedQuizzes = current.passedQuizzes;
 
-    userProgressMap.set(user.id, progress);
-    saveDatabase();
+      if (
+        quizUpdate &&
+        typeof quizUpdate.score === 'number' &&
+        typeof quizUpdate.total === 'number' &&
+        quizUpdate.total > 0 &&
+        quizUpdate.score >= 0 &&
+        quizUpdate.score <= quizUpdate.total &&
+        quizUpdate.score / quizUpdate.total >= QUIZ_PASS_THRESHOLD
+      ) {
+        mergedQuizzes = Array.from(new Set([...mergedQuizzes, quizUpdate.lessonNumber]));
+      }
+
+      return {
+        viewedSlides: mergedSlides,
+        passedQuizzes: mergedQuizzes,
+        customNotes: typeof customNotes === 'string' ? customNotes : current.customNotes,
+        result: undefined,
+      };
+    });
     return res.json({ success: true, progress });
-  });
+  }));
 
-  app.post("/api/user/review/grade", (req, res) => {
+  app.post("/api/user/review/grade", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
@@ -973,51 +710,51 @@ async function startServer() {
       return res.status(400).json({ success: false, message: 'Недопустимое значение grade' });
     }
 
-    const existing = userProgressMap.get(user.id);
-    const existingCards = existing?.reviewCards ?? {};
-    const existingState = existingCards[cardId];
+    try {
+      const { result: nextState } = await mutateReviewCards(user.id, (current) => {
+        const existingCards = current.reviewCards ?? {};
+        const existingState = existingCards[cardId];
 
-    if (!existingState) {
-      return res.status(400).json({ success: false, message: 'Карточка не найдена' });
+        if (!existingState) {
+          throw new ReviewCardNotFoundError('Review card not found');
+        }
+
+        const gradedState = gradeCard(existingState, grade);
+        return {
+          reviewCards: { ...existingCards, [cardId]: gradedState },
+          result: gradedState,
+        };
+      });
+
+      return res.json({ success: true, nextState });
+    } catch (error) {
+      if (error instanceof ReviewCardNotFoundError) {
+        return res.status(400).json({ success: false, message: 'Карточка не найдена' });
+      }
+      throw error;
     }
+  }));
 
-    const nextState = gradeCard(existingState, grade);
-    const reviewCards = { ...existingCards, [cardId]: nextState };
-    const progress: StudentProgress = {
-      userId: user.id,
-      viewedSlides: existing?.viewedSlides ?? [],
-      passedQuizzes: existing?.passedQuizzes ?? [],
-      reviewCards,
-      customNotes: existing?.customNotes,
-      updatedAt: new Date().toISOString(),
-    };
-
-    userProgressMap.set(user.id, progress);
-    saveDatabaseSoon();
-
-    return res.json({ success: true, nextState });
-  });
-
-  app.get("/api/user/review/due-count", (req, res) => {
+  app.get("/api/user/review/due-count", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
     }
 
-    const progress = userProgressMap.get(user.id);
+    const progress = await getUserProgress(user.id);
     const reviewCards = progress?.reviewCards ?? {};
     const completedLessons = extractCompletedLessonNumbers(progress?.viewedSlides ?? []);
     const dueCount = countDueCardsFromProgress(reviewCards, completedLessons);
 
     return res.json({ success: true, dueCount });
-  });
+  }));
 
   // Create Stripe Checkout Session
-  app.post("/api/user/create-checkout-session", async (req, res) => {
+  app.post("/api/user/create-checkout-session", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
@@ -1087,12 +824,12 @@ async function startServer() {
         message: 'Не удалось создать платёжную сессию. Попробуйте ещё раз.',
       });
     }
-  });
+  }));
 
   // Activate / Upgrade Subscription (Requires Stripe Session verification in production)
-  app.post("/api/user/subscribe", async (req, res) => {
+  app.post("/api/user/subscribe", asyncHandler(async (req, res) => {
     const token = getUserTokenFromReq(req);
-    const user = getUserFromSessionToken(token);
+    const user = await getUserFromSessionToken(token);
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация' });
@@ -1114,89 +851,91 @@ async function startServer() {
       stripeConfigured: false,
       message: 'Платёжная система не настроена. Добавьте STRIPE_SECRET_KEY в файл .env для приёма реальных платежей.',
     });
-  });
+  }));
 
   // ================= GLOBAL ADMIN-CONTENT OVERRIDES =================
   // Custom words and audio uploaded by the admin are stored on the server and
   // served to ALL users (not just the browser where the admin edited them).
 
-  const isAdminRequest = (req: express.Request): boolean => {
-    return isValidAdminSession(getSessionTokenFromReq(req));
+  const isAdminRequest = async (req: express.Request): Promise<boolean> => {
+    return isAdminSessionValid(getSessionTokenFromReq(req));
   };
 
   // Public: current global audio registry — clients fetch this on startup
-  app.get("/api/audio-registry", (req, res) => {
+  app.get("/api/audio-registry", asyncHandler(async (_req, res) => {
     const audio: Record<string, { url: string; mimeType: string; size: number }> = {};
-    for (const entry of audioOverridesMap.values()) {
+    for (const entry of await listAudioOverrides()) {
       audio[entry.key] = {
-        url: `/api/audio-file/${encodeURIComponent(entry.fileName)}`,
+        url: `/api/audio-file/${encodeURIComponent(entry.key)}`,
         mimeType: entry.mimeType,
         size: entry.size,
       };
     }
     return res.json({ success: true, audio });
-  });
+  }));
 
-  // Public: audio file bytes
-  app.get("/api/audio-file/:fileName", (req, res) => {
-    const fileName = req.params.fileName;
-    // Resolve the mime type from the override record for this file
-    let mimeType = 'application/octet-stream';
-    for (const entry of audioOverridesMap.values()) {
-      if (entry.fileName === fileName) {
-        mimeType = entry.mimeType;
-        break;
-      }
-    }
-    const filePath = path.join(AUDIO_DIR, path.basename(fileName));
-    if (!fs.existsSync(filePath)) {
+  // Public proxy: Storage paths and service-role credentials stay server-side.
+  app.get("/api/audio-file/:fileName", asyncHandler(async (req, res) => {
+    const key = String(req.params.fileName).trim().toLowerCase();
+    const entry = await findAudioOverrideByKey(key);
+    if (!entry) {
       return res.status(404).send('Audio file not found');
     }
-    res.setHeader('Content-Type', mimeType);
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    return res.sendFile(filePath);
-  });
+    try {
+      const audio = await downloadPrivateAudio(entry.storagePath);
+      res.setHeader('Content-Type', entry.mimeType);
+      res.setHeader('Content-Length', String(audio.length));
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      return res.send(audio);
+    } catch (error) {
+      console.error('[Audio Storage] Failed to download override:', error);
+      return res.status(404).send('Audio file not found');
+    }
+  }));
 
   // Admin: upload audio under one or more keys (e.g. all slide candidate keys)
-  app.post("/api/admin/audio", express.json({ limit: '10mb' }), (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.post("/api/admin/audio", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
     const { keys, dataUrl } = req.body || {};
     if (!Array.isArray(keys) || keys.length === 0 || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:')) {
       return res.status(400).json({ success: false, message: 'Поля keys (массив) и dataUrl (Data URL) обязательны' });
     }
-    const result = persistAudioDataUrl(keys, dataUrl);
+    const result = await persistAudioDataUrl(keys, dataUrl);
     if (!result.ok) {
       return res.status(400).json({ success: false, message: result.error });
     }
-    saveDatabase();
     return res.json({ success: true, url: result.url });
-  });
+  }));
 
   // Admin: remove audio override for a key
-  app.delete("/api/admin/audio/:key", (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.delete("/api/admin/audio/:key", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
     const key = String(req.params.key).trim().toLowerCase();
-    deleteAudioOverride(key);
-    saveDatabase();
+    const storagePath = await deleteAudioOverride(key);
+    if (storagePath) {
+      await removeAudioObjectIfUnreferenced(storagePath).catch((error) => {
+        console.error('[Audio Storage] Failed to remove unreferenced object:', error);
+      });
+    }
     return res.json({ success: true });
-  });
+  }));
 
   // Public: current global word overrides — clients fetch these on startup
-  app.get("/api/word-overrides", (req, res) => {
-    const overrides = Array.from(wordOverridesMap.values()).map((e) => ({
+  app.get("/api/word-overrides", asyncHandler(async (_req, res) => {
+    const overrides = (await listWordOverrides()).map((e) => ({
       originalText: e.originalText,
       customText: e.customText,
     }));
     return res.json({ success: true, overrides });
-  });
+  }));
 
   // Admin: upsert a word override (custom display text)
-  app.post("/api/admin/word-overrides", (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.post("/api/admin/word-overrides", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
     const { originalText, customText } = req.body || {};
@@ -1207,32 +946,22 @@ async function startServer() {
     const trimmedCustom = typeof customText === 'string' && customText.trim() !== ''
       ? customText.trim()
       : undefined;
-    const now = new Date().toISOString();
-    const existing = wordOverridesMap.get(key);
-    wordOverridesMap.set(key, {
-      key,
-      originalText: originalText.trim(),
-      customText: trimmedCustom,
-      createdAt: existing?.createdAt ?? now,
-      updatedAt: now,
-    });
-    saveDatabase();
+    await upsertWordOverride(key, originalText.trim(), trimmedCustom);
     return res.json({ success: true });
-  });
+  }));
 
   // Admin: remove a word override
-  app.delete("/api/admin/word-overrides/:key", (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.delete("/api/admin/word-overrides/:key", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
     const key = String(req.params.key).trim().toLowerCase();
-    wordOverridesMap.delete(key);
-    saveDatabase();
+    await deleteWordOverride(key);
     return res.json({ success: true });
-  });
+  }));
 
   // ================= ADMIN: STUDENT ACCOUNTS & PRIVILEGES =================
-  // Real student accounts registered on the platform (stored in db.json),
+  // Real student accounts registered on the platform (stored in PostgreSQL),
   // distinct from the demo users in the admin UI mock data.
 
   const serializeStudentUser = (u: StudentUser) => ({
@@ -1245,30 +974,35 @@ async function startServer() {
   });
 
   // Admin: list all real student accounts
-  app.get("/api/admin/users", (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.get("/api/admin/users", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
-    const users = Array.from(registeredUsersMap.values()).map(serializeStudentUser);
+    const users = (await listUsers()).map(serializeStudentUser);
     return res.json({ success: true, users });
-  });
+  }));
 
   // Admin: grant or revoke full-access privilege for a student account.
   // A privileged student gets all lessons and can save progress without payment.
-  app.post("/api/admin/users/:id/privilege", (req, res) => {
-    if (!isAdminRequest(req)) {
+  app.post("/api/admin/users/:id/privilege", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
-    const user = usersByIdMap.get(req.params.id);
+    const user = await findUserById(req.params.id);
     if (!user) {
       return res.status(404).json({ success: false, message: 'Пользователь не найден' });
     }
     const { privileged } = req.body || {};
     user.isPrivileged = privileged === true;
-    registeredUsersMap.set(user.email, user);
-    usersByIdMap.set(user.id, user);
-    saveDatabase();
+    await saveStudentUser(user);
     return res.json({ success: true, user: serializeStudentUser(user) });
+  }));
+
+  app.use((error: unknown, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (!req.path.startsWith('/api/')) return next(error);
+    console.error('[API] Unhandled request error:', error);
+    if (res.headersSent) return next(error);
+    return res.status(500).json({ success: false, message: 'Внутренняя ошибка сервера' });
   });
 
   // Vite middleware for development
@@ -1294,4 +1028,7 @@ async function startServer() {
   });
 }
 
-startServer();
+void startServer().catch((error) => {
+  console.error('[Server] Startup failed:', error);
+  process.exitCode = 1;
+});

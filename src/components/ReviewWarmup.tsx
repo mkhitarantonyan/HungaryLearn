@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, ArrowRight, Flame } from 'lucide-react';
-import { speakText } from '../utils/speech';
+import { playRecordedAudio } from '../utils/speech';
 import { getWarmupSession, getGrammarReminder } from '../utils/spacedRepetition';
 import type { ReviewCardState, ReviewGrade, DueReviewCard } from '../types';
 
@@ -34,6 +34,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   const [index, setIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [gradedCount, setGradedCount] = useState(0);
+  const [audioUnavailable, setAudioUnavailable] = useState(false);
 
   React.useEffect(() => {
     if (session.length === 0) {
@@ -61,7 +62,10 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
     }
   };
 
-  const playAudio = () => speakText(card.hu, 'hu-HU');
+  const playAudio = () => {
+    setAudioUnavailable(false);
+    playRecordedAudio(card.hu, undefined, undefined, () => setAudioUnavailable(true));
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A2320]/70 backdrop-blur-xs">
@@ -112,6 +116,9 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
             </button>
           </div>
           {card.phonetic && <div className="text-xs text-[#8A7A68] font-mono mb-3">{card.phonetic}</div>}
+          {audioUnavailable && (
+            <div className="text-xs text-red-700 mb-3" role="alert">Записанное аудио недоступно.</div>
+          )}
 
           <AnimatePresence mode="wait">
             {isFlipped ? (

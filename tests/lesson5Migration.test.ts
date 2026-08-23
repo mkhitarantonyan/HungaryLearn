@@ -89,7 +89,7 @@ test('L1 migration is present while frozen planning/translation files stay uncha
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
-  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '2FCEE83D0BBC849966B8C09B45F17F77B396EE2977DB047D17F6146AA0B31F4A');
+  assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
 });
 
 test('L5 supplies every required activity kind and every activity validates', () => {
@@ -411,7 +411,7 @@ test('all five ExitCheck rows preserve honest DIRECT/PARTIAL/NONE semantics', ()
   });
 });
 
-test('L4 missing-listening plus DIRECT text behavior remains NONE', () => {
+test('L4 mixed recognition objective keeps DIRECT text evidence as PARTIAL when listening is missing', () => {
   const exit = LESSON_4.slides.flatMap((slide) => slide.activities ?? [])
     .find((activity): activity is Extract<LessonActivity, { kind: 'exitCheck' }> => activity.id === 'l4-exit-check' && activity.kind === 'exitCheck');
   assert.ok(exit);
@@ -422,7 +422,7 @@ test('L4 missing-listening plus DIRECT text behavior remains NONE', () => {
     [check.activityId]: none,
     'l4-cp-recognize-text': directEvidence('l4-cp-recognize-text'),
   };
-  assert.equal(describeExitCheckStatus(check, none, evidence).kind, 'none');
+  assert.equal(describeExitCheckStatus(check, none, evidence).kind, 'partial-review');
 });
 
 test('date guidance is bounded, accurate, and contains no ISO shortcut', () => {

@@ -20,13 +20,13 @@ import {
   getAudioFileUrl,
   getSlideCandidateKeys,
   hasAudioForSlide,
-  playCustomAudioOrTTS,
+  playRecordedAudio,
   removeAudioForSlide,
   subscribeAudioChanges,
   getActiveAudioOverridesSummary,
   resetAllAudioOverrides,
 } from '../../utils/audioRegistry';
-import { speakText, stopSpeech } from '../../utils/speech';
+import { playRecordedAudio as playCourseAudio, stopRecordedAudio } from '../../utils/speech';
 import { EditWordModal } from '../../components/EditWordModal';
 import { SlideAudioModal } from '../../components/SlideAudioModal';
 import {
@@ -128,7 +128,7 @@ function WordsTab({
               {filtered.length} из {words.length} слов · с записью голоса: {withVoice}
             </span>
             <span className="text-[11px] text-gray-400">
-              При нажатии на слово ученик слышит записанный голос; если записи нет — синтез речи (TTS)
+              Если записанного файла нет, аудио для слова недоступно.
             </span>
           </div>
           <div className="overflow-x-auto">
@@ -183,7 +183,7 @@ function WordsTab({
                       </td>
                       <td className="px-5 py-3.5">
                         <Pill tone={hasAudio ? 'green' : 'slate'}>
-                          {hasAudio ? 'Голос записан' : 'TTS'}
+                          {hasAudio ? 'Голос записан' : 'Нет аудио'}
                         </Pill>
                       </td>
                       <td className="px-5 py-3.5">
@@ -208,7 +208,7 @@ function WordsTab({
                           </button>
                           <button
                             onClick={() => onReset(w)}
-                            title="Сбросить к TTS"
+                            title="Удалить записанное аудио"
                             className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer disabled:opacity-30 disabled:pointer-events-none"
                             disabled={!hasAudio && !override}
                           >
@@ -280,7 +280,7 @@ function SlidesTab({
         </div>
         <div className="text-xs text-gray-400 flex items-center gap-1.5">
           <Info className="w-3.5 h-3.5" />
-          Запись «чтения диктора» проигрывается вместо синтеза речи при нажатии «Озвучить слайд»
+          Для озвучки слайда воспроизводится только прикреплённая запись.
         </div>
       </div>
 
@@ -320,7 +320,7 @@ function SlidesTab({
                       </td>
                       <td className="px-5 py-3.5">
                         <Pill tone={hasAudio ? 'green' : 'slate'}>
-                          {hasAudio ? 'Живой голос диктора' : 'Синтез (TTS)'}
+                          {hasAudio ? 'Живой голос диктора' : 'Нет аудио'}
                         </Pill>
                       </td>
                       <td className="px-5 py-3.5">
@@ -462,15 +462,14 @@ export default function AdminAudio() {
   const playWord = (w: AdminWord) => {
     // Toggle: if this word is already playing, stop it.
     if (playingWordKey === w.key) {
-      stopSpeech();
+      stopRecordedAudio();
       setPlayingWordKey(null);
       return;
     }
-    stopSpeech();
+    stopRecordedAudio();
     setPlayingWordKey(w.key);
-    speakText(
-      getWordOverride(w.hu)?.customText || w.hu,
-      'hu-HU',
+    playCourseAudio(
+      w.hu,
       0.82,
       () => setPlayingWordKey(null),
       () => setPlayingWordKey(null)
@@ -481,22 +480,18 @@ export default function AdminAudio() {
     const key = `${lessonNumber}-${slide.id}`;
     // Toggle: if this slide is already playing, stop it.
     if (playingSlideKey === key) {
-      stopSpeech();
+      stopRecordedAudio();
       setPlayingSlideKey(null);
       return;
     }
-    stopSpeech();
+    stopRecordedAudio();
     const url = getSlideCandidateKeys(slide.id, lessonNumber)
       .map((k) => getAudioFileUrl(k))
       .find(Boolean);
     if (!url) return;
     setPlayingSlideKey(key);
-    // Use playCustomAudioOrTTS so the audio is tracked by stopActiveAudio()
-    // and can be stopped by stopSpeech() / the toggle button.
-    playCustomAudioOrTTS(
+    playRecordedAudio(
       getSlideCandidateKeys(slide.id, lessonNumber)[0],
-      'ru-RU',
-      undefined,
       undefined,
       () => setPlayingSlideKey(null),
       () => setPlayingSlideKey(null)
@@ -660,7 +655,7 @@ export default function AdminAudio() {
         message={
           <>
             Для слова <strong>{resetWord?.hu}</strong> запись голоса будет удалена. Ученики снова
-            будут слышать синтез речи (TTS).
+            больше не смогут воспроизводить аудио, пока не будет добавлена новая запись.
           </>
         }
         confirmLabel="Сбросить"
@@ -674,7 +669,7 @@ export default function AdminAudio() {
         message={
           <>
             Чтение диктора для слайда {lessonNumber}.{deleteSlide?.id} будет удалено, и слайд
-            снова будет озвучиваться синтезом речи.
+            останется без аудио, пока не будет добавлена новая запись.
           </>
         }
         confirmLabel="Удалить"

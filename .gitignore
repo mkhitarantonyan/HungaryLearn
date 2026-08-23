@@ -8,6 +8,7 @@ coverage/
 !.env.example
 /data/db.json
 /data/db.json.bak
+/data/audio/
 gcs-service-account.json
 *.pem
 

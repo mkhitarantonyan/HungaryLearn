@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { X, Pencil, Upload, Trash2, Volume2, Save, Check, Mic, Square, Loader2 } from 'lucide-react';
 import { getWordOverride, setWordOverride, removeWordOverride, WordOverride } from '../utils/adminStore';
-import { speakText, stopSpeech } from '../utils/speech';
+import { playRecordedAudio, stopRecordedAudio } from '../utils/speech';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface EditWordModalProps {
@@ -25,6 +25,7 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showConfirmReset, setShowConfirmReset] = useState(false);
+  const [audioError, setAudioError] = useState('');
 
   // Microphone recording state
   const [isRecording, setIsRecording] = useState(false);
@@ -120,22 +121,31 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
   };
 
   const handleTestAudio = () => {
-    stopSpeech();
+    stopRecordedAudio();
+    setAudioError('');
     setIsPlaying(true);
 
     if (selectedFile) {
       const tempUrl = URL.createObjectURL(selectedFile);
       const audio = new Audio(tempUrl);
       audio.onended = () => setIsPlaying(false);
-      audio.onerror = () => setIsPlaying(false);
-      audio.play().catch(() => setIsPlaying(false));
+      audio.onerror = () => {
+        setIsPlaying(false);
+        setAudioError('Записанное аудио недоступно.');
+      };
+      audio.play().catch(() => {
+        setIsPlaying(false);
+        setAudioError('Записанное аудио недоступно.');
+      });
     } else {
-      speakText(
-        customText || originalText,
-        'hu-HU',
+      playRecordedAudio(
+        originalText,
         0.82,
         () => setIsPlaying(false),
-        () => setIsPlaying(false)
+        () => {
+          setIsPlaying(false);
+          setAudioError('Записанное аудио недоступно.');
+        }
       );
     }
   };
@@ -164,6 +174,7 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
               <div className="text-xs text-[#8A7A68]">Только для Администратора</div>
             </div>
           </div>
+          {audioError && <p className="text-xs text-red-700" role="alert">{audioError}</p>}
 
           <button
             onClick={onClose}

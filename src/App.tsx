@@ -11,7 +11,6 @@ import { ReviewWarmup } from './components/ReviewWarmup';
 import { WordTrainerModal } from './components/WordTrainerModal';
 import { TranslationTrainerModal } from './components/TranslationTrainerModal';
 import { LessonQuizModal } from './components/LessonQuizModal';
-import { VoiceSettingsModal } from './components/VoiceSettingsModal';
 import { AdminLoginModal } from './components/AdminLoginModal';
 import { UserAuthModal } from './components/UserAuthModal';
 import { SlideAudioModal } from './components/SlideAudioModal';
@@ -53,7 +52,6 @@ export default function App() {
   const [isTrainerOpen, setIsTrainerOpen] = useState(false);
   const [isTranslationsOpen, setIsTranslationsOpen] = useState(false);
   const [isQuizActive, setIsQuizActive] = useState(false);
-  const [isVoiceSettingsOpen, setIsVoiceSettingsOpen] = useState(false);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [isSlideAudioModalOpen, setIsSlideAudioModalOpen] = useState(false);
@@ -297,11 +295,6 @@ useEffect(() => {
     setIsDrawerOpen(true);
   };
 
-  const handleOpenVoiceSettings = () => {
-    narration.stop();
-    setIsVoiceSettingsOpen(true);
-  };
-
   const handleOpenAdmin = () => {
     narration.stop();
     setIsAdminLoginOpen(true);
@@ -337,7 +330,6 @@ useEffect(() => {
       if (e.key === 'Escape') {
         if (isSlideAudioModalOpen) setIsSlideAudioModalOpen(false);
         else if (isAdminLoginOpen) setIsAdminLoginOpen(false);
-        else if (isVoiceSettingsOpen) setIsVoiceSettingsOpen(false);
         else if (isTrainerOpen) setIsTrainerOpen(false);
         else if (isTranslationsOpen) setIsTranslationsOpen(false);
         else if (isDrawerOpen) setIsDrawerOpen(false);
@@ -349,7 +341,6 @@ useEffect(() => {
         isDrawerOpen ||
         isTranslationsOpen ||
         isTrainerOpen ||
-        isVoiceSettingsOpen ||
         isAdminLoginOpen ||
         isSlideAudioModalOpen ||
         isUserModalOpen ||
@@ -373,7 +364,6 @@ useEffect(() => {
     isDrawerOpen,
     isTranslationsOpen,
     isTrainerOpen,
-    isVoiceSettingsOpen,
     isAdminLoginOpen,
     isSlideAudioModalOpen,
     isUserModalOpen,
@@ -414,7 +404,6 @@ useEffect(() => {
           onSelectLesson={handleSelectLesson}
           onOpenAdmin={handleOpenAdmin}
           isAdmin={isAdmin}
-          onOpenVoiceSettings={handleOpenVoiceSettings}
           onOpenUserModal={handleOpenUserModal}
           viewedSlideIds={viewedSlideIds}
           passedQuizzes={passedQuizzes}
@@ -422,10 +411,6 @@ useEffect(() => {
         />
 
         {/* Modals on main list page as well */}
-        <VoiceSettingsModal
-          isOpen={isVoiceSettingsOpen}
-          onClose={() => setIsVoiceSettingsOpen(false)}
-        />
         <AdminLoginModal
           isOpen={isAdminLoginOpen}
           onClose={() => setIsAdminLoginOpen(false)}
@@ -480,11 +465,11 @@ useEffect(() => {
           autoplayEnabled={narration.autoplayEnabled}
           playbackRate={narration.playbackRate}
           needsUserGesture={narration.needsUserGesture}
+          audioUnavailable={narration.audioUnavailable}
           slideLabel={`${currentSlideIndex + 1} · ${currentSlide.title}`}
           onPlayPause={narration.toggle}
           onToggleAutoplay={() => narration.setAutoplay(!narration.autoplayEnabled)}
           onSetPlaybackRate={narration.setPlaybackRate}
-          onOpenVoiceSettings={handleOpenVoiceSettings}
           isAdmin={isAdmin}
           onOpenAudioEditor={handleOpenSlideAudioModal}
         />
@@ -609,12 +594,6 @@ useEffect(() => {
         isOpen={isTranslationsOpen}
         onClose={() => setIsTranslationsOpen(false)}
         lesson={activeLesson}
-      />
-
-      {/* Voice Settings Modal */}
-      <VoiceSettingsModal
-        isOpen={isVoiceSettingsOpen}
-        onClose={() => setIsVoiceSettingsOpen(false)}
       />
 
       {/* User Auth & Profile Modal */}

@@ -48,7 +48,7 @@ test('slide narration never references assessment listening assets', () => {
     for (const slide of lesson.slides) {
       const sequence = getSlideNarrativeSequence(slide, number);
       for (const item of sequence) {
-        assert.doesNotMatch(item.text.toLowerCase(), /l\d+_listening_/, `slide ${number}.${slide.id}`);
+        assert.doesNotMatch(item.key.toLowerCase(), /l\d+_listening_/, `slide ${number}.${slide.id}`);
       }
     }
   }
@@ -58,7 +58,7 @@ test('slide narration does not read a hidden listening transcript or its answers
   const listeningSlide = LESSON_6.slides.find((slide) => slide.id === 6);
   assert.ok(listeningSlide);
   const joined = getSlideNarrativeSequence(listeningSlide, 6)
-    .map((item) => item.text)
+    .map((item) => item.key)
     .join(' ');
   assert.doesNotMatch(joined, /Mikor tanulsz magyarul/);
   assert.doesNotMatch(joined, /Kedden öt órakor tanulok/);
@@ -92,11 +92,11 @@ test('NarrationPlayer exposes play, autoplay toggle, and speed', () => {
       autoplayEnabled: false,
       playbackRate: 1,
       needsUserGesture: false,
+      audioUnavailable: false,
       slideLabel: '4 · Jelen idő',
       onPlayPause: () => undefined,
       onToggleAutoplay: () => undefined,
       onSetPlaybackRate: () => undefined,
-      onOpenVoiceSettings: () => undefined,
       isAdmin: false,
     })
   );
@@ -178,7 +178,6 @@ test('learning path level ranges are 1–6 / 7–14 / 15–20 / 21–28', () => 
       onSelectLesson: () => undefined,
       onOpenAdmin: () => undefined,
       isAdmin: false,
-      onOpenVoiceSettings: () => undefined,
       viewedSlideIds: [],
       passedQuizzes: [],
       dueReviewCount: 0,

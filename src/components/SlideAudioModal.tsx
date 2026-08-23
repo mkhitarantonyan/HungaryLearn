@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { X, Mic, Square, Play, Upload, Trash2, Volume2, Save, Check, Music, Lock, ShieldCheck, Loader2, RotateCcw } from 'lucide-react';
 import { saveAudioForSlide, removeAudioForSlide, hasAudioForSlide, getAudioFileUrl, getSlideCandidateKeys, subscribeAudioChanges, resetAllAudioOverrides } from '../utils/audioRegistry';
-import { stopSpeech } from '../utils/speech';
+import { stopRecordedAudio } from '../utils/speech';
 import { isAdminLoggedIn, subscribeAdminState } from '../utils/adminStore';
 import { ConfirmDialog } from './ConfirmDialog';
 
@@ -109,7 +109,7 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
       onOpenAdminLogin?.();
       return;
     }
-    stopSpeech();
+    stopRecordedAudio();
 
     setIsSaving(true);
     try {
@@ -143,7 +143,7 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
 
   const confirmDeleteAudio = async () => {
     setShowConfirmDelete(false);
-    stopSpeech();
+    stopRecordedAudio();
     await removeAudioForSlide(slideId, lessonNumber);
     setHasCustomAudio(false);
     setSelectedFile(null);
@@ -154,7 +154,7 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
   };
 
   const handleTestAudio = () => {
-    stopSpeech();
+    stopRecordedAudio();
     if (activeAudioRef.current) {
       activeAudioRef.current.pause();
     }
@@ -238,7 +238,7 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
                 </span>
               ) : (
                 <span className="text-[#B98A2B]">
-                  ⚡ Синтетический диктор (TTS)
+                  Записанное аудио отсутствует
                 </span>
               )}
             </div>

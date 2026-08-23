@@ -748,6 +748,20 @@ export function describeExitCheckStatus(
     describeEvidenceStatus(evidence[component.activityId])
   );
   const qualifyingStatuses = [primaryStatus, ...componentStatuses];
+  const qualifyingEvidenceKinds = new Set([
+    check.evidenceKind,
+    ...(check.evidenceComponents ?? []).map((component) => component.evidenceKind),
+  ]);
+  const isMixedObjective = qualifyingEvidenceKinds.size > 1;
+
+  // A failed required DIRECT producer remains a hard gate even when another
+  // component has produced evidence or is unavailable.
+  if (qualifyingStatuses.some((status) => status.kind === 'direct-not-met')) {
+    return {
+      kind: 'direct-not-met',
+      label: 'DIRECT · не met',
+    };
+  }
 
   // A completed human-reviewed producer is still genuine PARTIAL evidence
   // when a required DIRECT producer is unavailable (for example, a role-play
@@ -763,16 +777,24 @@ export function describeExitCheckStatus(
     };
   }
 
+  // Distinct declared evidence kinds represent legitimate subskills of one
+  // mixed objective. Preserve successful DIRECT evidence as PARTIAL when a
+  // different required subskill is unavailable; pure-skill hard gates stay NONE.
+  if (
+    isMixedObjective &&
+    qualifyingStatuses.some((status) => status.kind === 'none') &&
+    qualifyingStatuses.some((status) => status.kind === 'direct-met')
+  ) {
+    return {
+      kind: 'partial-review',
+      label: 'PARTIAL · evidence получено · обязательный DIRECT-компонент отсутствует',
+    };
+  }
+
   if (qualifyingStatuses.some((status) => status.kind === 'none')) {
     return {
       kind: 'none',
       label: 'NONE · обязательный DIRECT-компонент отсутствует',
-    };
-  }
-  if (qualifyingStatuses.some((status) => status.kind === 'direct-not-met')) {
-    return {
-      kind: 'direct-not-met',
-      label: 'DIRECT · не met',
     };
   }
   if (qualifyingStatuses.some((status) => status.kind === 'not-started')) {
