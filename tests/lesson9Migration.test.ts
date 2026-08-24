@@ -136,7 +136,7 @@ test('L9 productive tasks require connected comparison and remain review evidenc
   assert.equal(writing.modelAnswer?.length, 4);
   assert.equal(writing.rubric?.length, 3);
   assert.ok(recording.instructions);
-  assert.match(recording.instructions, /PARTIAL evidence/);
+  assert.match(recording.instructions, /проверь формы -bb и конструкцию с mint/);
   assert.match(recording.targetText ?? '', /szebb.*mint.*olcsóbb.*legjobb/s);
   assert.equal(recording.rubric?.length, 3);
 
@@ -221,6 +221,6 @@ test('L9 metadata is exact and frozen L15 remains byte-for-byte unchanged', () =
   assert.equal(meta.slidesCount, LESSON_9.slidesCount);
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586'
+    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
   );
 });

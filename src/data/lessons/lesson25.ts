@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L25_ACTIVITIES = createMigrationActivities({
+  lessonId: 25,
+  controlledTitle: 'Работа и собеседование: ключевые формулировки',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'singleChoice', id: 'l25-cp-1', prompt: 'Как спросить о профессии?', options: ['Mivel foglalkozol?', 'Hol laksz?'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l25-cp-2', prompt: '«Я работаю учителем».', accept: ['Tanárként dolgozom', 'Tanárként dolgozom.'] },
+    { kind: 'singleChoice', id: 'l25-cp-3', prompt: 'Выбери навык для резюме.', options: ['Jól beszélek angolul.', 'Tegnap esett.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-4', prompt: 'Как сказать «у меня три года опыта»?', options: ['Három év tapasztalatom van.', 'Három év vagyok.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-5', prompt: 'Вежливо спроси о начале работы.', options: ['Mikor kezdhetek?', 'Mikor kezdesz?'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: короткое объявление о работе',
+  readingParagraphs: ['Budapesti iroda ügyfélszolgálati munkatársat keres. Fontos a jó kommunikáció és az angol nyelvtudás. Tapasztalat előny, de nem feltétel. Jelentkezés önéletrajzzal.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l25-read-1', question: 'Milyen munkatársat keresnek?', options: ['Ügyfélszolgálatit', 'Orvost', 'Tanárt'], correctIndex: 0 },
+    { id: 'l25-read-2', question: 'Melyik nyelv fontos?', options: ['Angol', 'Francia', 'Olasz'], correctIndex: 0 },
+    { id: 'l25-read-3', question: 'Kötelező a tapasztalat?', options: ['Igen', 'Nem'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: фрагмент собеседования',
+  listeningTranscript: 'Interjúztató: Mivel foglalkozott korábban?\nJelölt: Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l25-listen-1', question: 'Hol dolgozott a jelölt?', options: ['Egy szállodában', 'Egy iskolában', 'Egy kórházban'], correctIndex: 0 },
+    { id: 'l25-listen-2', question: 'Mennyi ideig dolgozott ott?', options: ['Két hónapig', 'Két évig', 'Tíz évig'], correctIndex: 1 },
+    { id: 'l25-listen-3', question: 'Mit szeret?', options: ['Egyedül dolgozni', 'Emberekkel dolgozni', 'Utazni'], correctIndex: 1 },
+  ],
+  writingTitle: 'Письмо: краткое резюме',
+  writingPrompt: 'Составь краткое резюме: имя, город, образование или профессия, опыт, языки и два навыка. Используй 6–8 коротких строк.',
+  writingModel: ['Név: Anna Kovács', 'Lakóhely: Budapest', 'Tapasztalat: két év ügyfélszolgálaton', 'Nyelvek: magyar, angol', 'Készségek: jó kommunikáció, pontos munkavégzés'],
+  writingRubric: ['Есть личные данные и опыт', 'Указаны языки и навыки', 'Формат легко просмотреть'],
+  recordingTitle: 'Говорение: мини-собеседование',
+  recordingInstructions: 'Представься, назови профессию или опыт и два сильных навыка. Заверши вопросом работодателю.',
+  recordingTarget: 'Két év tapasztalatom van. Jól beszélek angolul, és szeretek emberekkel dolgozni. Mikor kezdhetek?',
+  objectiveChecks: [
+    { objectiveId: 'l25_name-professions', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l25_ask-answer-job', activity: 'listening', evidenceKind: 'listening' },
+    { objectiveId: 'l25_describe-skills', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l25_write-cv', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l25_interview-dialogue', activity: 'recording', evidenceKind: 'speaking' },
+  ],
+});
 
 export const LESSON_25: Lesson = {
   id: 25,
@@ -118,6 +162,7 @@ export const LESSON_25: Lesson = {
       eyebrow: "УРОК 25 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L25_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Ответьте на вопрос „Mivel foglalkozol?“ двумя способами (через або через -ként)</li>

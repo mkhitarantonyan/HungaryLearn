@@ -68,25 +68,25 @@ test('L6 migration keeps the curriculum at exactly 139 objectives', async () => 
 });
 
 test('L1–L5 and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson1.ts', import.meta.url)), 'C654FF34375034B9346CDD1B7847C4945818ABC176ED89669590E6A366D02505');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '91DF3BC496A79898F421D42E7B7F376ED1BA108A3F81C6886777364C65B6EA19');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), '7FF81838BB2610D46A5B1F93408A419D7D668287388F705D75F3AAF3D0F898BF');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'E44AFA95D968A513F649C3B193AE2CEED588596DA53EEFB1008132ED1A3D4852');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson5.ts', import.meta.url)), 'F13947BD8C817B686DFA82B1B91BD48CA45CD37EA0796148B29AF2D6517C3F50');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson1.ts', import.meta.url)), '0983505394BCD274E7F39B5AED1EA6566F9AF0B294436EAB6B1F83A168C68321');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson5.ts', import.meta.url)), '9FD17087140B54C3D1B7370803A231E8E567D7D3BD0FC7412358BDA831F35710');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });
 
 test('L7 matches the approved migrated snapshot', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '70EF9CCBD0BE2CB15CFD2F5D4F060F6998C632F548014D5C8E0FBC6F3DFC5B90');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
 });
 
 test('frozen planning docs, translations, manifest, and generator remain unchanged', () => {
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
-  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
-  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
+  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
+  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '4D3C6CCEBE42C4C7EC8358F15C46233AC0BDE3C04799BB95DB7C345EF5C03281');
-  assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'A11B83A72E3D2E3FF803DB8C4DB56F8E5BE9800BBD4B7FB4645EB88A1A225F32');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'ACDD1475B09193263AC369F31CDF66493C7962BBFF803576DDA2F0EEA89353C3');
+  assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'F9249BEF9F8C6DE95C4CAD634F8DE0D6BD0204025A24EE5512F8AF6F0B2CA793');
 });
 
 test('L6 exposes every required generic activity kind and no new shared kind', () => {
@@ -203,16 +203,16 @@ test('ReadingTask never satisfies the listening objective', () => {
   assert.equal(referenced.includes('l6-reading-a0-profile'), false);
 });
 
-test('L6 listening has the exact asset id, missing state, five questions, and a 4/5 threshold', () => {
+test('L6 listening has the exact asset id, published state, five questions, and a 4/5 threshold', () => {
   const listening = findActivity('l6-listening-a0-review', 'listening');
   assert.equal(listening.assetId, 'l6_listening_a0_review');
-  assert.equal(listening.audioStatus, 'missing');
+  assert.equal(listening.audioStatus, 'published');
   assert.equal(listening.questions.length, 5);
   assert.equal(listening.passCount, 4);
-  assert.equal(existsSync(new URL('../public/audio/l6_listening_a0_review.mp3', import.meta.url)), false);
+  assert.equal(existsSync(new URL('../public/audio/l6_listening_a0_review.mp3', import.meta.url)), true);
   const evidence = listeningEvidence(listening, 5, 5);
-  assert.equal(evidence.passed, false);
-  assert.equal(evidence.evidenceMode, 'none');
+  assert.equal(evidence.passed, true);
+  assert.equal(evidence.evidenceMode, 'direct');
 });
 
 test('L6 listening covers gist, name, day, time, and a schedule detail', () => {

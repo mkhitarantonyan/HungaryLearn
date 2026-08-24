@@ -102,7 +102,7 @@ const L6_LISTENING_A0_REVIEW: LessonActivity = {
   id: 'l6-listening-a0-review',
   title: 'Аудирование: знакомство и расписание',
   assetId: 'l6_listening_a0_review',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   transcript: 'A: Szia! A nevem Anna. Hogy hívnak?\nB: Szia! Péter vagyok.\nA: Hogy vagy?\nB: Jól vagyok, köszönöm.\nA: Mikor tanulsz magyarul?\nB: Kedden öt órakor tanulok. Csütörtökön nyolckor dolgozom. Szombaton háromkor olvasok.\nA: Köszönöm. Szia!\nB: Szia!',
   passCount: 4,
   questions: [
@@ -118,7 +118,7 @@ const L6_RECORD_PRONUNCIATION_REVIEW: LessonActivity = {
   kind: 'recording',
   id: 'l6-record-pronunciation-review',
   title: 'Запись: повторение произношения',
-  instructions: 'Прочитай шесть слов, повторяя изученные звуки. Запись подтверждает попытку, но не оценивается автоматически.',
+  instructions: 'Прочитай шесть слов, повторяя изученные звуки, затем сравни запись с моделями.',
   targetText: 'szép, sok, magyar, kutya, nyár, hely',
   targetPhonetic: '/seːp/ · /ʃok/ · /mɒɟɒr/ · /kucɒ/ · /ɲaːr/ · /hɛj/',
   targetTranslation: 'красивый · много · венгр · собака · лето · место',
@@ -137,14 +137,14 @@ const L6_ROLEPLAY_SCHEDULE: LessonActivity = {
   id: 'l6-roleplay-schedule',
   title: 'Говорение: расписание в мини-диалоге',
   partnerLabel: 'Partner · Собеседник',
-  completionMessage: 'Оба ответа о расписании записаны. Запись подтверждает выполнение, но не доказывает правильность речи: результат остаётся PARTIAL до проверки.',
+  completionMessage: 'Оба ответа о расписании записаны. Прослушай их и проверь, понятны ли день и время.',
   startTurnId: 'l6-rp-start',
   turns: [
     { id: 'l6-rp-start', speaker: 'stage', stageLabel: 'Короткий диалог о расписании', next: 'l6-rp-q1' },
     { id: 'l6-rp-q1', speaker: 'waiter', prompt: 'Mikor tanulsz magyarul?', next: 'l6-rp-a1' },
-    { id: 'l6-rp-a1', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время учёбы. Запись не оценивается автоматически.', model: 'Kedden öt órakor tanulok.', next: 'l6-rp-q2' },
+    { id: 'l6-rp-a1', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время учёбы, затем сравни с моделью.', model: 'Kedden öt órakor tanulok.', next: 'l6-rp-q2' },
     { id: 'l6-rp-q2', speaker: 'waiter', prompt: 'Mikor dolgozol?', next: 'l6-rp-a2' },
-    { id: 'l6-rp-a2', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время работы. Запись не оценивается автоматически.', model: 'Csütörtökön nyolckor dolgozom.', next: 'l6-rp-end' },
+    { id: 'l6-rp-a2', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время работы, затем сравни с моделью.', model: 'Csütörtökön nyolckor dolgozom.', next: 'l6-rp-end' },
     { id: 'l6-rp-end', speaker: 'stage', stageLabel: 'Диалог завершён' },
   ],
 };
@@ -168,7 +168,7 @@ const L6_RECORD_PROFILE: LessonActivity = {
   kind: 'recording',
   id: 'l6-record-profile',
   title: 'Запись: рассказ о себе',
-  instructions: 'Сначала выполни l6-writing-profile, затем запиши те же данные о себе устно короткими фразами. Запись не оценивается автоматически.',
+  instructions: 'Сначала заполни письменный профиль, затем расскажи те же сведения о себе короткими фразами и прослушай запись.',
   targetText: 'A nevem … … vagyok. Magyarul tanulok / dolgozom. …-n … órakor …',
   targetTranslation: 'Меня зовут … Я … Я учу венгерский / работаю. В … в … часов …',
   rubric: [
@@ -176,14 +176,14 @@ const L6_RECORD_PROFILE: LessonActivity = {
     'Названа национальность или происхождение.',
     'Названо одно текущее действие.',
     'Назван один день и время.',
-    'Запись реальна и не оценивается автоматически.',
+    'Речь понятна при повторном прослушивании.',
   ],
 };
 
 const L6_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l6-exit-check',
-  title: 'Exit check — цели урока 6',
+  title: 'Проверка целей урока 6',
   checks: [
     { objectiveId: 'l6_review-alphabet', activityId: 'l6-cp-decoding', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l6-record-pronunciation-review', evidenceKind: 'pronunciation' }] },
     { objectiveId: 'l6_review-verb-conj', activityId: 'l6-cp-present-verbs', evidenceKind: 'grammar' },
@@ -199,7 +199,7 @@ export const LESSON_6: Lesson = {
   level: 'A0',
   title: 'Урок 6 · A0 összefoglaló',
   subtitle: 'Повторение и закрепление уровня A0',
-  description: 'Низкострессовое повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и рефлексия по evidence. Без новой грамматики A1.',
+  description: 'Спокойное повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и итоговая самопроверка. Без новой грамматики A1.',
   slidesCount: 10,
   slides: [
     {
@@ -260,7 +260,7 @@ export const LESSON_6: Lesson = {
       subtitle: 'Короткое знакомство и расписание',
       body: `
         <p>Прослушай мини-диалог и ответь на пять вопросов, затем выполни ролевой диалог о расписании.</p>
-        <div class="note">До публикации MP3 аудирование не даёт DIRECT evidence: TTS и транскрипт — только практика.</div>
+        <div class="note">Аудирование станет доступно после публикации отдельной записи. Текст диалога можно использовать для подготовки.</div>
       `,
       activities: [L6_LISTENING_A0_REVIEW, L6_ROLEPLAY_SCHEDULE],
     },
@@ -278,12 +278,12 @@ export const LESSON_6: Lesson = {
       id: 8,
       eyebrow: 'УРОК 6 · 8/10 · РЕФЛЕКСИЯ',
       title: 'Mit mutat az ExitCheck?',
-      subtitle: 'Рефлексия по evidence, без оценки мастерства',
+      subtitle: 'Что уже получается и что повторить',
       body: `
-        <p>Посмотри на результаты ExitCheck и различай три вида evidence:</p>
+        <p>Посмотри на результаты и отметь, что уже можно проверить прямо сейчас:</p>
         <ul class="tick">
-          <li><b>DIRECT</b> — надёжно проверенные задания (спряжение, множественное число и артикли, декодирование).</li>
-          <li><b>PARTIAL</b> — записанная или открытая продукция, которая ждёт проверки (произношение, письмо, говорение).</li>
+          <li><b>Проверено в уроке</b> — спряжение, множественное число, артикли и чтение слов.</li>
+          <li><b>Для самопроверки</b> — произношение, письмо и говорение; их полезно переслушать или показать преподавателю.</li>
           <li><b>MISSING</b> — например, ещё не опубликованное аудио для аудирования.</li>
         </ul>
         <p>Ответь себе на три вопроса: какие две области ощущаются сильными? какую одну область повторить? какое одно следующее действие выбрать?</p>
@@ -307,8 +307,8 @@ export const LESSON_6: Lesson = {
       body: `
         <p>Ты завершил обзор материала A0. ExitCheck показывает, какие компоненты подтверждены напрямую, какие требуют проверки и что стоит повторить.</p>
         <ul class="tick">
-          <li><b>DIRECT</b>: декодирование, спряжение, множественное число и артикли.</li>
-          <li><b>PARTIAL</b>: произношение, письмо и говорение — ждут проверки.</li>
+          <li><b>Автоматически проверяется</b>: чтение слов, спряжение, множественное число и артикли.</li>
+          <li><b>Проверь самостоятельно</b>: произношение, письмо и говорение.</li>
           <li><b>MISSING</b>: аудирование остаётся открытым до публикации MP3.</li>
         </ul>
       `,

@@ -1,8 +1,8 @@
 import { Lesson, LessonActivity } from '../../types';
 
-export const L5_LISTENING_TRANSCRIPT = `A blokk. Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.
+export const L5_LISTENING_TRANSCRIPT = `Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.
 
-B blokk. A dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.`;
+A dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.`;
 
 const L5_CP_NUMBER_RECOGNITION: LessonActivity = {
   kind: 'controlledPractice',
@@ -105,7 +105,7 @@ const L5_LISTENING_NUMBER_DICTATION: LessonActivity = {
   id: 'l5-listening-number-dictation',
   title: 'Аудирование A: диктант чисел',
   assetId: 'l5_listening_time',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   transcript: L5_LISTENING_TRANSCRIPT,
   passCount: 8,
   questions: [
@@ -127,11 +127,11 @@ const L5_LISTENING_TIME_SCHEDULE: LessonActivity = {
   id: 'l5-listening-time-schedule',
   title: 'Аудирование B: дата и расписание',
   assetId: 'l5_listening_time',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   transcript: L5_LISTENING_TRANSCRIPT,
   passCount: 4,
   questions: [
-    { id: 'l5-listen-schedule-q1', question: 'Какая дата звучит в начале блока B?', options: ['2026. augusztus 3.', '2026. augusztus 13.', '2026. szeptember 3.'], correctIndex: 0 },
+    { id: 'l5-listen-schedule-q1', question: 'Какая дата звучит после диктанта чисел?', options: ['2026. augusztus 3.', '2026. augusztus 13.', '2026. szeptember 3.'], correctIndex: 0 },
     { id: 'l5-listen-schedule-q2', question: 'Когда говорящий занимается венгерским?', options: ['hétfőn nyolckor', 'szerdán háromkor', 'pénteken ötkor'], correctIndex: 0 },
     { id: 'l5-listen-schedule-q3', question: 'Когда говорящий работает?', options: ['hétfőn nyolckor', 'szerdán háromkor', 'szombaton tízkor'], correctIndex: 1 },
     { id: 'l5-listen-schedule-q4', question: 'Когда говорящий читает?', options: ['pénteken öt órakor', 'szerdán háromkor', 'szombaton tízkor'], correctIndex: 0 },
@@ -144,7 +144,7 @@ const L5_ROLEPLAY_SCHEDULE: LessonActivity = {
   id: 'l5-roleplay-schedule',
   title: 'Говорение: числа, календарь и встреча',
   partnerLabel: 'Partner · Собеседник',
-  completionMessage: 'Все шесть коротких образцов записаны. Они остаются PARTIAL и ждут проверки речи.',
+  completionMessage: 'Все шесть коротких образцов записаны. Прослушай их и сравни с моделями урока.',
   startTurnId: 'l5-stage-number-sample',
   turns: [
     { id: 'l5-stage-number-sample', speaker: 'stage', stageLabel: 'Короткий образец чисел', next: 'l5-record-number-sample' },
@@ -186,7 +186,7 @@ const L5_WRITING_SCHEDULE: LessonActivity = {
 const L5_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l5-exit-check',
-  title: 'Exit check — цели урока 5',
+  title: 'Проверка целей урока 5',
   checks: [
     {
       objectiveId: 'l5_count-1-100',
@@ -318,7 +318,7 @@ export const LESSON_5: Lesson = {
       eyebrow: 'УРОК 5 · 8/12 · АУДИРОВАНИЕ A',
       title: 'Hallás utáni számok',
       subtitle: 'Десять услышанных чисел',
-      body: '<p>Прослушай блок A и введи каждое число по-венгерски. До публикации MP3 TTS остаётся только практикой и не даёт DIRECT evidence.</p>',
+      body: '<p>Прослушай блок A и введи каждое число по-венгерски. Задание станет доступно после публикации отдельной записи.</p>',
       activities: [L5_LISTENING_NUMBER_DICTATION],
     },
     {
@@ -326,7 +326,7 @@ export const LESSON_5: Lesson = {
       eyebrow: 'УРОК 5 · 9/12 · АУДИРОВАНИЕ B',
       title: 'Dátum és program',
       subtitle: 'Дата, день и время в одном расписании',
-      body: '<p>Прослушай блок B и выбери точные детали даты и расписания. Чтение календаря не заменяет это listening evidence.</p>',
+      body: '<p>Прослушай блок B и выбери точные детали даты и расписания. Ответы нужно найти именно в аудиозаписи, а не в календаре.</p>',
       activities: [L5_LISTENING_TIME_SCHEDULE],
     },
     {
@@ -334,7 +334,7 @@ export const LESSON_5: Lesson = {
       eyebrow: 'УРОК 5 · 10/12 · ГОВОРЕНИЕ',
       title: 'Rövid időpont-egyeztetés',
       subtitle: 'Числа, время и два обмена о встрече',
-      body: '<p>Запиши короткие образцы. Наличие записи подтверждает выполнение, но не доказывает правильность речи: результат остаётся PARTIAL до проверки.</p>',
+      body: '<p>Запиши короткие образцы, затем прослушай их и сравни с моделями урока.</p>',
       activities: [L5_ROLEPLAY_SCHEDULE],
     },
     {

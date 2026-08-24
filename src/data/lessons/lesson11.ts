@@ -123,7 +123,7 @@ const L11_RECORDING: LessonActivity = {
   kind: 'recording',
   id: 'l11-record-surface-locations',
   title: 'Говорение: где, куда, откуда',
-  instructions: 'Ответь тремя короткими фразами на Hol? Hová? Honnan? Наличие записи означает только выполнение; speaking evidence остаётся PARTIAL до проверки человеком.',
+  instructions: 'Ответь тремя короткими фразами на Hol? Hová? Honnan? Затем прослушай запись и проверь окончания по таблице.',
   targetText: 'Budapesten vagyok. Budapestre utazom. Budapestről jövök.',
   targetTranslation: 'Я нахожусь в Будапеште. Я еду в Будапешт. Я приезжаю из Будапешта.',
   rubric: [
@@ -136,7 +136,7 @@ const L11_RECORDING: LessonActivity = {
 const L11_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l11-exit-check',
-  title: 'Exit check — цели урока 11',
+  title: 'Проверка целей урока 11',
   checks: [
     { objectiveId: 'l11_distinguish-surface-cases', activityId: 'l11-cp-meaning-family', evidenceKind: 'grammar' },
     { objectiveId: 'l11_form-superessive', activityId: 'l11-cp-superessive', evidenceKind: 'grammar' },
@@ -272,7 +272,7 @@ export const LESSON_11: Lesson = {
       title: 'Írás és beszéd',
       subtitle: 'Точные предложения и запись для проверки',
       body: `
-        <p>Пять ограниченных письменных контекстов проверяются автоматически. Запись трёх ответов подтверждает выполнение, но не правильность произношения и остаётся PARTIAL evidence.</p>
+        <p>Пять коротких письменных ситуаций проверяются в уроке. После записи трёх ответов прослушай их и сверь окончания с моделями.</p>
       `,
       activities: [L11_CP_WRITING, L11_RECORDING],
     },

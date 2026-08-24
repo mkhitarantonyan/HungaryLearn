@@ -1,257 +1,225 @@
-import { Lesson } from '../../types';
+import { Lesson, LessonActivity } from '../../types';
+
+const cp = (
+  id: string,
+  title: string,
+  passCount: number,
+  exercises: Extract<LessonActivity, { kind: 'controlledPractice' }>['exercises'],
+): LessonActivity => ({ kind: 'controlledPractice', id, title, passCount, exercises });
+
+const L17_CP_SEASONS_MONTHS = cp('l17-cp-seasons-months', 'Времена года и месяцы', 10, [
+  { kind: 'singleChoice', id: 'l17-month-1', prompt: 'január', options: ['tél', 'tavasz', 'nyár', 'ősz'], correctIndex: 0 },
+  { kind: 'singleChoice', id: 'l17-month-2', prompt: 'február', options: ['tavasz', 'tél', 'ősz', 'nyár'], correctIndex: 1 },
+  { kind: 'singleChoice', id: 'l17-month-3', prompt: 'március', options: ['nyár', 'ősz', 'tavasz', 'tél'], correctIndex: 2 },
+  { kind: 'singleChoice', id: 'l17-month-4', prompt: 'április', options: ['tavasz', 'nyár', 'tél', 'ősz'], correctIndex: 0 },
+  { kind: 'singleChoice', id: 'l17-month-5', prompt: 'május', options: ['ősz', 'tavasz', 'nyár', 'tél'], correctIndex: 1 },
+  { kind: 'singleChoice', id: 'l17-month-6', prompt: 'június', options: ['tél', 'tavasz', 'nyár', 'ősz'], correctIndex: 2 },
+  { kind: 'singleChoice', id: 'l17-month-7', prompt: 'július', options: ['nyár', 'ősz', 'tél', 'tavasz'], correctIndex: 0 },
+  { kind: 'singleChoice', id: 'l17-month-8', prompt: 'augusztus', options: ['tavasz', 'nyár', 'ősz', 'tél'], correctIndex: 1 },
+  { kind: 'singleChoice', id: 'l17-month-9', prompt: 'szeptember', options: ['tél', 'nyár', 'ősz', 'tavasz'], correctIndex: 2 },
+  { kind: 'singleChoice', id: 'l17-month-10', prompt: 'október', options: ['ősz', 'tavasz', 'nyár', 'tél'], correctIndex: 0 },
+  { kind: 'singleChoice', id: 'l17-month-11', prompt: 'november', options: ['nyár', 'ősz', 'tél', 'tavasz'], correctIndex: 1 },
+  { kind: 'singleChoice', id: 'l17-month-12', prompt: 'december', options: ['tavasz', 'ősz', 'tél', 'nyár'], correctIndex: 2 },
+]);
+
+const L17_CP_ADVERBIALS = cp('l17-cp-seasonal-adverbials', 'Когда? Сезонные формы', 5, [
+  { kind: 'textInput', id: 'l17-adv-1', prompt: 'tavasz → «весной»', accept: ['tavasszal'], explanation: 'tavasz + -val → tavasszal: v уподобляется sz, долгий sz пишется ssz.' },
+  { kind: 'textInput', id: 'l17-adv-2', prompt: 'nyár → «летом»', accept: ['nyáron'], explanation: 'nyár + -on → nyáron.' },
+  { kind: 'textInput', id: 'l17-adv-3', prompt: 'ősz → «осенью»', accept: ['ősszel'], explanation: 'ősz + -vel → ősszel: v уподобляется sz.' },
+  { kind: 'textInput', id: 'l17-adv-4', prompt: 'tél → «зимой»', accept: ['télen'], explanation: 'tél + -en → télen.' },
+  { kind: 'fillGap', id: 'l17-adv-5', prompt: '___ gyakran esik az eső. (tavasz)', accept: ['Tavasszal', 'tavasszal'] },
+  { kind: 'fillGap', id: 'l17-adv-6', prompt: '___ meleg van. (nyár)', accept: ['Nyáron', 'nyáron'] },
+]);
+
+const L17_WRITING_WEATHER: LessonActivity = {
+  kind: 'writing',
+  id: 'l17-writing-current-weather',
+  title: 'Письмо: погода сегодня',
+  prompt: 'Напиши 4 коротких предложения о погоде сегодня или о вымышленной погоде. Укажи минимум одно погодное явление, температуру и ещё две детали. Открытый текст требует проверки.',
+  modelAnswer: ['Ma süt a nap.', 'Húsz fok van.', 'Fúj a szél.', 'Nem esik az eső.'],
+  rubric: ['4 предложения', 'есть погодное явление', 'есть температура', 'есть ещё две погодные детали'],
+};
+
+const L17_RECORDING_WEATHER_SEASONS: LessonActivity = {
+  kind: 'recording',
+  id: 'l17-recording-weather-seasons',
+  title: 'Говорение: сезоны и погода',
+  instructions: 'Назови четыре времени года, затем запиши 2–3 фразы о погоде. Запись требует проверки.',
+  targetText: 'Tavasz, nyár, ősz, tél. Ma süt a nap. Húsz fok van.',
+  targetTranslation: 'Весна, лето, осень, зима. Сегодня светит солнце. Двадцать градусов.',
+  rubric: ['названы 4 сезона', 'есть описание погоды', 'есть температура или дополнительная погодная деталь'],
+};
+
+const L17_LISTENING: LessonActivity = {
+  kind: 'listening',
+  id: 'l17-listening-weather',
+  title: 'Аудирование: короткий прогноз',
+  assetId: 'l17_listening_weather',
+  audioStatus: 'published',
+  passCount: 4,
+  transcript: 'Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz.',
+  questions: [
+    { id: 'l17-list-1', question: 'Melyik városról szól az előrejelzés?', options: ['Budapestről', 'Bécsről', 'Szegedről'], correctIndex: 0 },
+    { id: 'l17-list-2', question: 'Milyen ma az ég?', options: ['Felhős', 'Napos', 'Havas'], correctIndex: 0 },
+    { id: 'l17-list-3', question: 'Hány fok van ma?', options: ['10', '15', '20'], correctIndex: 1 },
+    { id: 'l17-list-4', question: 'Mi történik délután?', options: ['Esik az eső', 'Havazik', 'Süt a nap'], correctIndex: 0 },
+    { id: 'l17-list-5', question: 'Milyen idő lesz holnap?', options: ['Napos', 'Felhős és esős', 'Havas'], correctIndex: 0 },
+  ],
+};
+
+const L17_WRITING_COMPARE: LessonActivity = {
+  kind: 'writing',
+  id: 'l17-writing-season-comparison',
+  title: 'Письмо: сравниваем сезоны',
+  prompt: 'Напиши 3–5 предложений и сравни минимум два времени года по трём признакам погоды. Используй знакомую модель из L9: -bb + mint, минимум два раза. Открытый текст требует проверки.',
+  modelAnswer: [
+    'Nyáron melegebb az idő, mint télen.',
+    'Télen hidegebb az idő, mint tavasszal.',
+    'Tavasszal gyakran esik az eső, nyáron pedig gyakran süt a nap.',
+    'Ősszel hidegebb az idő, mint nyáron.',
+  ],
+  rubric: ['минимум 2 сезона', 'минимум 3 погодных признака', 'минимум 2 сравнения с -bb и mint'],
+};
+
+const L17_RECORDING_COMPARE: LessonActivity = {
+  kind: 'recording',
+  id: 'l17-recording-season-comparison',
+  title: 'Говорение: сравнение сезонов',
+  instructions: 'Запиши 3–4 фразы, сравнивая минимум два сезона. Используй минимум два сравнения с -bb и mint. Запись требует проверки.',
+  targetText: 'Nyáron melegebb az idő, mint télen. Télen hidegebb az idő, mint tavasszal. Tavasszal gyakran esik az eső.',
+  targetTranslation: 'Летом погода теплее, чем зимой. Зимой холоднее, чем весной. Весной часто идёт дождь.',
+  rubric: ['минимум 2 сезона', 'минимум 2 сравнения', 'погодная лексика урока'],
+};
+
+const L17_EXIT: LessonActivity = {
+  kind: 'exitCheck',
+  id: 'l17-exit-check',
+  title: 'Проверка целей урока',
+  checks: [
+    { objectiveId: 'l17_describe-weather', activityId: 'l17-writing-current-weather', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l17-recording-weather-seasons', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l17_name-seasons', activityId: 'l17-cp-seasons-months', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l17-recording-weather-seasons', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l17_use-seasonal-adverbials', activityId: 'l17-cp-seasonal-adverbials', evidenceKind: 'grammar' },
+    { objectiveId: 'l17_compare-seasons', activityId: 'l17-writing-season-comparison', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l17-recording-season-comparison', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l17_understand-forecast', activityId: 'l17-listening-weather', evidenceKind: 'listening' },
+  ],
+};
 
 export const LESSON_17: Lesson = {
   id: 17,
   number: 17,
   level: 'A2',
   title: 'Урок 17 · Időjárás és évszakok',
-  subtitle: 'Погода и времена года',
-  description: 'Описание погоды (Süt a nap, esik az eső), температура (Hány fok van?), времена года и их особые суффиксы (tavasszal, nyáron, ősszel, télen), части дня.',
+  subtitle: 'Погода, времена года и месяцы',
+  description: 'Базовое описание погоды и температуры, четыре времени года, месяцы, формы tavasszal/nyáron/ősszel/télen, сравнение сезонов и короткий прогноз на слух.',
   slidesCount: 11,
   slides: [
     {
       id: 1,
-      eyebrow: "УРОК 17 · 1/11 · ПОГОДА",
-      title: "Milyen az idő?",
-      subtitle: "Как описать погоду",
-      body: `
-   <p>Слово <span class="hu-word">idő</span> означает и «время», и «погода» — смысл понятен из контекста. Погодные явления часто описываются безличными глаголами (без подлежащего, как русское «идёт дождь»):</p>
-   <table class="conj">
-     <tr><th>Хунгаререн</th><th>Значение</th></tr>
-     <tr><td><button class="speak-btn" data-speak-text="Süt a nap." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Süt a nap.</button></td><td>Светит солнце</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="Esik az eső." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Esik az eső.</button></td><td>Идёт дождь</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="Fúj a szél." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Fúj a szél.</button></td><td>Дует ветер</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="Havazik." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Havazik.</button></td><td>Идёт снег</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="Felhős az ég." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Felhős az ég.</button></td><td>Облачно/пасмурно</td></tr>
-   </table>
- `
+      eyebrow: 'УРОК 17 · 1/11 · ПОГОДА',
+      title: 'Milyen az idő?',
+      subtitle: 'Как описать погоду',
+      body: `<p>Слово <span class="hu-word">idő</span> может означать «время» или «погода» — значение определяется контекстом. В погодных фразах используются разные модели: иногда есть обычное подлежащее, а иногда достаточно одного глагола.</p><table class="conj"><tr><th>Венгерский</th><th>Значение</th></tr><tr><td>Süt a nap.</td><td>Светит солнце</td></tr><tr><td>Esik az eső.</td><td>Идёт дождь</td></tr><tr><td>Fúj a szél.</td><td>Дует ветер</td></tr><tr><td>Havazik.</td><td>Идёт снег</td></tr><tr><td>Felhős az ég.</td><td>Небо облачное / облачно</td></tr></table><div class="note">В Süt a nap, Esik az eső и Fúj a szél есть подлежащее: nap, eső, szél. Havazik употребляется без отдельного подлежащего.</div>`,
     },
     {
       id: 2,
-      eyebrow: "УРОК 17 · 2/11 · ТЕМПЕРАТУРА",
-      title: "Hány fok van?",
-      subtitle: "Спрашиваем и называем температуру",
-      body: `
-   <p><button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Hány fok van?</button> <span style="color:#8a7a68">(Сколько градусов?)</span></p>
-   <p><button class="speak-btn" data-speak-text="Húsz fok van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Húsz fok van.</button> <span style="color:#8a7a68">(Двадцать градусов)</span></p>
-   <p><button class="speak-btn" data-speak-text="Meleg van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Meleg van.</button> <span style="color:#8a7a68">(Тепло)</span></p>
-   <p><button class="speak-btn" data-speak-text="Hideg van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Hideg van.</button> <span style="color:#8a7a68">(Холодно)</span></p>
-   <div class="note">Как и с прилагательными-сказуемыми (9-й урок), тут „van“ снова опускается: не „meleg van van“, а просто <button class="speak-btn" data-speak-text="Meleg van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Meleg van.</button>.</div>
- `
+      eyebrow: 'УРОК 17 · 2/11 · ТЕМПЕРАТУРА',
+      title: 'Hány fok van?',
+      subtitle: 'Спрашиваем и называем температуру',
+      body: `<p><b>Hány fok van?</b> — Сколько градусов?</p><p><b>Húsz fok van.</b> — Двадцать градусов.</p><p><b>Meleg van.</b> — Тепло. <b>Hideg van.</b> — Холодно.</p><div class="note">В погодных выражениях Meleg van / Hideg van слово <b>van</b> нужно. Сравни с L9: <b>Az idő meleg.</b> — «Погода тёплая», где в 3-м лице настоящего времени отдельная связка не ставится.</div>`,
     },
     {
       id: 3,
-      eyebrow: "УРОК 17 · 3/11 · ВРЕМЕНА ГОДА",
-      title: "Évszakok",
-      subtitle: "Времена года",
-      body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="tavasz" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tavasz</button> — весна</p>
-       <p><button class="speak-btn" data-speak-text="nyár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyár</button> — лето</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="ősz" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ősz</button> — осень</p>
-       <p><button class="speak-btn" data-speak-text="tél" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tél</button> — зима</p>
-     </div>
-   </div>
- `
+      eyebrow: 'УРОК 17 · 3/11 · ВРЕМЕНА ГОДА',
+      title: 'Évszakok',
+      subtitle: 'Времена года',
+      body: `<div class="grid2"><div><p><b>tavasz</b> — весна</p><p><b>nyár</b> — лето</p></div><div><p><b>ősz</b> — осень</p><p><b>tél</b> — зима</p></div></div>`,
     },
     {
       id: 4,
-      eyebrow: "УРОК 17 · 4/11 · «ВЕСНОЙ, ЛЕТОМ...»",
-      title: "Évszakok határozói alakja",
-      subtitle: "Особый набор форм — нужно просто запомнить",
-      body: `
-   <p>Формы «весной», «летом», «осенью», «зимой» в венгерском — исключение: каждое время года использует <b>свой собственный</b> суффикс, без единой логики между ними. Это классический набор, который заучивают целиком.</p>
-   <table class="conj">
-     <tr><th>Время года</th><th>Форма «...-ой/-ю»</th></tr>
-     <tr><td><button class="speak-btn" data-speak-text="tavasz" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tavasz</button></td><td><button class="speak-btn" data-speak-text="tavasszal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tavasszal</button> <span class="pron">(суффикс -val, с ассимиляцией!)</span></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="nyár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyár</button></td><td><button class="speak-btn" data-speak-text="nyáron" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyáron</button> <span class="pron">(суффикс -on, как исключение из 11-го урока)</span></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="ősz" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ősz</button></td><td><button class="speak-btn" data-speak-text="ősszel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ősszel</button> <span class="pron">(суффикс -vel, с ассимиляцией!)</span></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="tél" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tél</button></td><td><button class="speak-btn" data-speak-text="télen" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> télen</button> <span class="pron">(суффикс -en)</span></td></tr>
-   </table>
-   <div class="warn">Заметьте: <button class="speak-btn" data-speak-text="tavasszal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tavasszal</button> и <button class="speak-btn" data-speak-text="ősszel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ősszel</button> используют творительный падеж из 16-го урока (с ассимиляцией v→sz/ssz!), а <button class="speak-btn" data-speak-text="nyáron" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyáron</button> и <button class="speak-btn" data-speak-text="télen" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> télen</button> — падеж «на поверхности» из 11-го урока. Такое смешение суффиксов в одной смысловой группе — не редкость в венгерском, это нужно просто выучить как есть.</div>
- `
+      eyebrow: 'УРОК 17 · 4/11 · «ВЕСНОЙ, ЛЕТОМ...»',
+      title: 'Tavasszal, nyáron, ősszel, télen',
+      subtitle: 'Четыре частотные формы времени',
+      activities: [L17_CP_ADVERBIALS],
+      body: `<p>Чтобы сказать «весной / летом / осенью / зимой», запомни четыре частотные формы целиком. При этом их строение связано с уже знакомыми суффиксами.</p><table class="conj"><tr><th>Сезон</th><th>Когда?</th><th>Связь с прошлой темой</th></tr><tr><td>tavasz</td><td><b>tavasszal</b></td><td>-val; v уподобляется sz, долгий sz пишется ssz</td></tr><tr><td>nyár</td><td><b>nyáron</b></td><td>-on</td></tr><tr><td>ősz</td><td><b>ősszel</b></td><td>-vel; v уподобляется sz</td></tr><tr><td>tél</td><td><b>télen</b></td><td>-en</td></tr></table><div class="note">Это не четыре «случайных исключения»: tavasszal/ősszel повторяют модель -val/-vel из L16, а nyáron/télen используют знакомые -on/-en. Для свободной речи сами четыре сезонные формы всё равно полезно запомнить как готовый набор.</div>`,
     },
     {
       id: 5,
-      eyebrow: "УРОК 17 · 5/11 · ЧАСТИ ДНЯ",
-      title: "A nap részei",
-      subtitle: "Утро, день, вечер, ночь",
-      body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> reggel</button> — утро</p>
-       <p><button class="speak-btn" data-speak-text="délelőtt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> délelőtt</button> — первая половина дня</p>
-       <p><button class="speak-btn" data-speak-text="dél" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> dél</button> — полдень</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> délután</button> — вторая половина дня</p>
-       <p><button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> este</button> — вечер</p>
-       <p><button class="speak-btn" data-speak-text="éjjel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> éjjel</button> — ночь</p>
-     </div>
-   </div>
-   <div class="note">Эти слова уже сами по себе функционируют как наречия времени, без дополнительного суффикса: <button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> reggel</button> = «утром» (а не «утро»).</div>
- `
+      eyebrow: 'УРОК 17 · 5/11 · МЕСЯЦЫ',
+      title: 'Hónapok és évszakok',
+      subtitle: '12 месяцев по сезонам',
+      activities: [L17_CP_SEASONS_MONTHS],
+      body: `<table class="conj"><tr><th>Сезон</th><th>Месяцы</th></tr><tr><td><b>tél</b></td><td>december, január, február</td></tr><tr><td><b>tavasz</b></td><td>március, április, május</td></tr><tr><td><b>nyár</b></td><td>június, július, augusztus</td></tr><tr><td><b>ősz</b></td><td>szeptember, október, november</td></tr></table><div class="note">Это повторение названий месяцев из L5: теперь нужно быстро соотносить их с четырьмя сезонами. Формы дат и порядковые числительные сюда не входят.</div>`,
     },
     {
       id: 6,
-      eyebrow: "УРОК 17 · 6/11 · ПРЕДЛОЖЕНИЯ",
-      title: "Gyakorló mondatok",
-      subtitle: "Практика",
-      body: `
-   <p><button class="speak-btn" data-speak-text="Nyáron meleg van, télen pedig hideg." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nyáron meleg van, télen pedig hideg.</button> <span style="color:#8a7a68">(Летом жарко, а зимой холодно)</span></p>
-   <p><button class="speak-btn" data-speak-text="Tavasszal gyakran esik az eső." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tavasszal gyakran esik az eső.</button> <span style="color:#8a7a68">(Весной часто идёт дождь)</span></p>
-   <p><button class="speak-btn" data-speak-text="Ma reggel sütött a nap, most pedig felhős az ég." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ma reggel sütött a nap, most pedig felhős az ég.</button> <span style="color:#8a7a68">(Сегодня утром светило солнце, а сейчас облачно)</span></p>
- `
+      eyebrow: 'УРОК 17 · 6/11 · ОПИСАНИЕ ПОГОДЫ',
+      title: 'Milyen ma az idő?',
+      subtitle: 'Собираем короткое описание',
+      activities: [L17_WRITING_WEATHER, L17_RECORDING_WEATHER_SEASONS],
+      body: `<p><b>Ma süt a nap.</b> — Сегодня светит солнце.</p><p><b>Húsz fok van.</b> — Двадцать градусов.</p><p><b>Fúj a szél.</b> — Дует ветер.</p><p><b>Nem esik az eső.</b> — Дождь не идёт.</p><div class="note">Для короткого A2-описания достаточно 3–4 простых погодных деталей. Письменный и устный открытые ответы сохраняются как PARTIAL evidence и требуют проверки.</div>`,
     },
     {
       id: 7,
-      eyebrow: "УРОК 17 · 7/11 · ДИАЛОГ",
-      title: "Párbeszéd",
-      subtitle: "Разговор о погоде",
-      body: `
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Milyen ma az idő?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Milyen ma az idő?</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Nagyon szép, süt a nap és meleg van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nagyon szép, süt a nap és meleg van.</button></p>
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Szerinted holnap is ilyen lesz?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szerinted holnap is ilyen lesz?</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Nem hiszem, esőt mondtak a híradóban." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem hiszem, esőt mondtak a híradóban.</button></p>
-   <div class="task">Задание 1. Прочитайте диалог вслух, затем опишите сегодняшнюю реальную погоду по-венгерски.</div>
- `
+      eyebrow: 'УРОК 17 · 7/11 · ПРОГНОЗ ПОГОДЫ',
+      title: 'Időjárás-jelentés',
+      subtitle: 'Понимаем короткий прогноз на слух',
+      activities: [L17_LISTENING],
+      body: `<p>В коротком прогнозе ищи пять вещей: <b>место, день, облачность/осадки, температуру и ещё одну погодную деталь</b>.</p><p>Полезные опоры: <b>ma</b> — сегодня, <b>holnap</b> — завтра, <b>délután</b> — после полудня, <b>este</b> — вечером, <b>napos</b> — солнечный.</p><div class="note"><b>Holnap ... lesz</b> встречается здесь как готовая форма для понимания прогноза. Будущее время с fog + инфинитив будет в L19.</div><div class="warn">Отдельная запись для этого задания ещё не опубликована, поэтому аудирование пока недоступно.</div>`,
     },
     {
       id: 8,
-      eyebrow: "УРОК 17 · 8/11 · ЗАДАНИЯ",
-      title: "Gyakorlatok",
-      subtitle: "Проверьте себя",
-      body: `
-   <ol class="tasklist">
-     <li>Опишите погоду за окном сейчас — минимум 2 предложения</li>
-     <li>Назовите все 4 времени года и их особые наречные формы, без подсказки</li>
-     <li>Переведите: «Зимой идёт снег, а летом светит солнце»</li>
-     <li>Спросите «Сколько градусов?» и ответьте любым числом</li>
-     <li>Составьте предложение с частью дня (утро/вечер) и погодным явлением</li>
-   </ol>
- `
+      eyebrow: 'УРОК 17 · 8/11 · СРАВНЕНИЕ',
+      title: 'Évszakok összehasonlítása',
+      subtitle: 'Повторяем сравнительную степень из L9',
+      activities: [L17_WRITING_COMPARE, L17_RECORDING_COMPARE],
+      body: `<p><b>Nyáron melegebb az idő, mint télen.</b> — Летом погода теплее, чем зимой.</p><p><b>Télen hidegebb az idő, mint tavasszal.</b> — Зимой холоднее, чем весной.</p><p><b>Tavasszal gyakran esik az eső, nyáron pedig gyakran süt a nap.</b> — Весной часто идёт дождь, а летом часто светит солнце.</p><div class="note">Здесь нет новой модели сравнения: используется уже знакомая из L9 схема сравнительной степени <b>-bb + mint</b>, теперь с погодой и сезонами.</div>`,
     },
     {
       id: 9,
-      eyebrow: "УРОК 17 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ",
-      title: "Kiegészítő szókincs",
-      subtitle: "Ещё погодные слова",
-      body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="vihar" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vihar</button> — гроза</p>
-       <p><button class="speak-btn" data-speak-text="köd" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> köd</button> — туман</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="szivárvány" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szivárvány</button> — радуга</p>
-       <p><button class="speak-btn" data-speak-text="hőség" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> hőség</button> — жара</p>
-     </div>
-   </div>
- `
+      eyebrow: 'УРОК 17 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ',
+      title: 'Kiegészítő szókincs',
+      subtitle: 'Ещё погодные слова для узнавания',
+      body: `<div class="grid2"><div><p><b>vihar</b> — буря / шторм</p><p><b>köd</b> — туман</p></div><div><p><b>szivárvány</b> — радуга</p><p><b>hőség</b> — жара</p></div></div><div class="note">Это расширение словаря. Эти четыре слова не являются отдельной обязательной целью L17.</div>`,
     },
     {
       id: 10,
-      eyebrow: "УРОК 17 · 10/11 · СВЯЗЬ С ДРУГИМИ ТЕМАМИ",
-      title: "Előretekintés",
-      subtitle: "Что дальше",
-      body: `
-   <p>В следующем уроке — модальные глаголы: kell (нужно), lehet (можно), tud (уметь), szeretne (хотел бы). Эти слова понадобятся вам практически в каждом разговоре — от «мне нужно идти» до «я хотел бы попробовать».</p>
- `
+      eyebrow: 'УРОК 17 · 10/11 · ГРАНИЦЫ УРОКА',
+      title: 'Mit nem tanulunk még?',
+      subtitle: 'Что пока только узнаём',
+      body: `<p>L17 учит говорить о текущей погоде, сезонах и простом сравнении. В прогнозе можно встретить готовое <b>holnap ... lesz</b>, но продуктивное будущее время здесь не является целью.</p><p>Следующий урок L18 посвящён инфинитиву и модальным конструкциям; системное будущее с <b>fog + инфинитив</b> будет позже, в L19.</p>`,
     },
     {
       id: 11,
-      eyebrow: "УРОК 17 · 11/11 · ИТОГИ",
-      title: "Összefoglalás",
-      subtitle: "Итоги 17-го урока",
-      body: `
-   <ul class="tick">
-     <li>Погодные явления — безличные глаголы (süt a nap, esik az eső...)</li>
-     <li>Температура и «тепло/холодно» — без van, как прилагательные-сказуемые</li>
-     <li>Времена года «в форме наречия» — особый, нерегулярный набор суффиксов, заучивается целиком</li>
-     <li>Части дня (reggel, este...) сами по себе служат наречиями времени</li>
-   </ul>
-   <div class="note"><b>Домашнее задание.</b> Опишите погоду в каждом из 4 времён года в вашем родном городе — минимум по 1 предложению на сезон.</div>
- `
-    }
+      eyebrow: 'УРОК 17 · 11/11 · ИТОГИ',
+      title: 'Összefoglalás',
+      subtitle: 'Проверка целей 17-го урока',
+      activities: [L17_EXIT],
+      body: `<ul class="tick"><li>Базовые погодные модели: Süt a nap, Esik az eső, Fúj a szél, Havazik</li><li>Температура: Hány fok van? / Húsz fok van; Meleg van / Hideg van</li><li>Сезоны и 12 месяцев</li><li>tavasszal, nyáron, ősszel, télen</li><li>Сравнение сезонов через знакомую модель -bb + mint</li><li>Короткий прогноз на слух станет доступен после публикации отдельной записи</li></ul><div class="note"><b>Домашнее задание.</b> Напиши и запиши 3–5 предложений, сравнивая погоду минимум в двух сезонах.</div>`,
+    },
   ],
   vocabulary: [
-    { id: "l17_v1", hu: "tavasz", ru: "весна", category: "Времена года", exampleSentence: "Tavasszal nyílnak a virágok.",
-        ipa: "[tɒvɒʃ]"
-    },
-    { id: "l17_v2", hu: "nyár", ru: "лето", category: "Времена года", exampleSentence: "Nyáron meleg van.",
-        ipa: "[ɲɒːr]"
-    },
-    { id: "l17_v3", hu: "ősz", ru: "осень", category: "Времена года", exampleSentence: "Ősszel esik az eső.",
-        ipa: "[ˈøːʃ]"
-    },
-    { id: "l17_v4", hu: "tél", ru: "зима", category: "Времена года", exampleSentence: "Télen hideg van.",
-        ipa: "[tˈɛːl]"
-    },
-    { id: "l17_v5", hu: "vihar", ru: "гроза", category: "Погода", exampleSentence: "Nagy vihar van.",
-        ipa: "[vˈihɒr]"
-    },
-    { id: "l17_v6", hu: "köd", ru: "туман", category: "Погода", exampleSentence: "Sűrű köd van.",
-        ipa: "[kˈød]"
-    },
-    { id: "l17_v7", hu: "szivárvány", ru: "радуга", category: "Погода", exampleSentence: "Szép szivárvány.",
-        ipa: "[ʃˈivɒːrvɒːɲ]"
-    },
-    { id: "l17_v8", hu: "hőség", ru: "жара", category: "Погода", exampleSentence: "Nagy hőség van nyáron.",
-        ipa: "[hˈøːʃɛːg]"
-    }
+    { id: 'l17_v1', hu: 'tavasz', ru: 'весна', category: 'Времена года', exampleSentence: 'Tavasszal gyakran esik az eső.' },
+    { id: 'l17_v2', hu: 'nyár', ru: 'лето', category: 'Времена года', exampleSentence: 'Nyáron meleg van.' },
+    { id: 'l17_v3', hu: 'ősz', ru: 'осень', category: 'Времена года', exampleSentence: 'Ősszel hidegebb az idő, mint nyáron.' },
+    { id: 'l17_v4', hu: 'tél', ru: 'зима', category: 'Времена года', exampleSentence: 'Télen hideg van.' },
+    { id: 'l17_v5', hu: 'eső', ru: 'дождь', category: 'Погода', exampleSentence: 'Esik az eső.' },
+    { id: 'l17_v6', hu: 'szél', ru: 'ветер', category: 'Погода', exampleSentence: 'Fúj a szél.' },
+    { id: 'l17_v7', hu: 'havazik', ru: 'идёт снег', category: 'Погода', exampleSentence: 'Télen gyakran havazik.' },
+    { id: 'l17_v8', hu: 'fok', ru: 'градус', category: 'Температура', exampleSentence: 'Húsz fok van.' },
   ],
   quiz: [
-    {
-      id: 1701,
-      question: 'Как по-венгерски сказать «Светит солнце»?',
-      options: ['Süt a nap', 'Esik a nap', 'Fúj a nap', 'Meleg a nap'],
-      correctIndex: 0,
-      explanation: '«Süt a nap» переводится как «Светит солнце». «Esik az eső» – идёт дождь, «Fúj a szél» – дует ветер.'
-    },
-    {
-      id: 1702,
-      question: 'Как сказать «Идёт снег» по-венгерски?',
-      options: ['Havazik', 'Esik a hó', 'Hó van', 'Süt a hó'],
-      correctIndex: 0,
-      explanation: '«Идёт снег» по-венгерски – «Havazik» (безличный глагол). «Esik az eső» – дождь, а для снега используется отдельный глагол.'
-    },
-    {
-      id: 1703,
-      question: 'Как переводится вопрос «Hány fok van?»?',
-      options: ['Сколько времени?', 'Какая погода?', 'Сколько градусов?', 'Который час?'],
-      correctIndex: 2,
-      explanation: '«Hány fok van?» переводится как «Сколько градусов?». Для ответа используется «Húsz fok van» (20 градусов).'
-    },
-    {
-      id: 1704,
-      question: 'Как образуется форма «летом» в венгерском языке?',
-      options: ['nyárval', 'nyáron', 'nyárban', 'nyáral'],
-      correctIndex: 1,
-      explanation: 'Форма «летом» – nyáron (суффикс -on от группы «На поверхности» из урока 11).'
-    },
-    {
-      id: 1705,
-      question: 'Как сказать «осенью» по-венгерски?',
-      options: ['őszben', 'ősszel', 'őszön', 'őszre'],
-      correctIndex: 1,
-      explanation: '«Осенью» – ősszel. Это нерегулярная форма с суффиксом -vel (творительный падеж) и ассимиляцией: ősz + vel → ősszel.'
-    },
-    {
-      id: 1706,
-      question: 'Какое слово по-венгерски означает «вечер» и само по себе является наречием времени «вечером»?',
-      options: ['reggel', 'este', 'délután', 'éjjel'],
-      correctIndex: 1,
-      explanation: '«Este» – это и существительное «вечер», и наречие «вечером». «Reggel» – «утро/утром», «délután» – «после полудня/днём».'
-    }
+    { id: 1701, question: 'Как по-венгерски сказать «Светит солнце»?', options: ['Süt a nap', 'Esik az eső', 'Fúj a szél', 'Havazik'], correctIndex: 0, explanation: 'Süt a nap — «Светит солнце»; a nap здесь является подлежащим.' },
+    { id: 1702, question: 'Какой короткий глагол означает «идёт снег»?', options: ['Havazik', 'Fúj a szél', 'Esik az eső', 'Süt a nap'], correctIndex: 0, explanation: 'Havazik — частотный глагол «идёт снег / снег идёт».' },
+    { id: 1703, question: 'Как переводится вопрос «Hány fok van?»', options: ['Сколько времени?', 'Какая погода?', 'Сколько градусов?', 'Который час?'], correctIndex: 2, explanation: 'Hány fok van? — «Сколько градусов?» Например: Húsz fok van.' },
+    { id: 1704, question: 'Как сказать «летом»?', options: ['nyárval', 'nyáron', 'nyárban', 'nyáral'], correctIndex: 1, explanation: 'nyár + -on → nyáron. Это одна из четырёх изученных сезонных форм.' },
+    { id: 1705, question: 'Как сказать «осенью»?', options: ['őszben', 'ősszel', 'őszön', 'őszre'], correctIndex: 1, explanation: 'ősz + -vel → ősszel: v уподобляется конечному sz, как в модели -val/-vel из L16.' },
+    { id: 1706, question: 'Какой месяц относится к осени (ősz)?', options: ['április', 'július', 'október', 'január'], correctIndex: 2, explanation: 'Сентябрь, октябрь и ноябрь относятся к осени: szeptember, október, november.' },
   ],
   objectives: [
-    { id: 'l17_describe-weather', text: 'Описывать погоду (Esik az eső, Süt a nap).', skills: ['speaking', 'writing'] },
-    { id: 'l17_name-seasons', text: 'Называть времена года и месяцы.', skills: ['speaking', 'reading'] },
-    { id: 'l17_use-seasonal-adverbials', text: 'Употреблять формы tavasszal, nyáron, ősszel, télen.', skills: ['grammar', 'writing'] },
-    { id: 'l17_compare-seasons', text: 'Сравнивать погоду в разные времена года.', skills: ['speaking', 'writing'] },
-    { id: 'l17_understand-forecast', text: 'Понимать прогноз погоды на слух.', skills: ['listening'] },
+    { id: 'l17_describe-weather', text: 'Описывать текущую погоду в 3–4 простых фразах.', skills: ['speaking', 'writing'] },
+    { id: 'l17_name-seasons', text: 'Называть четыре времени года и соотносить 12 месяцев с сезонами.', skills: ['speaking', 'reading'] },
+    { id: 'l17_use-seasonal-adverbials', text: 'Употреблять формы tavasszal, nyáron, ősszel, télen в изученных контекстах.', skills: ['grammar', 'writing'] },
+    { id: 'l17_compare-seasons', text: 'Сравнивать погоду минимум в двух сезонах, используя знакомую модель -bb + mint.', skills: ['speaking', 'writing'] },
+    { id: 'l17_understand-forecast', text: 'Понимать ключевые детали короткого прогноза погоды на слух.', skills: ['listening'] },
   ],
 };

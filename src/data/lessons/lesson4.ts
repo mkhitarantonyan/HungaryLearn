@@ -52,7 +52,7 @@ const L4_LISTENING_PRESENT_FORMS: LessonActivity = {
   id: 'l4-listening-present-forms',
   title: 'Аудирование: кто что делает?',
   assetId: 'l4_listening_present_forms',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   passCount: 4,
   transcript: 'Én minden nap magyarul tanulok.\nTe reggel otthon sokat olvasol.\nPéter most ír, Anna pedig olvas.\nMi magyarul beszélünk és együtt tanulunk.\nŐk minden nap dolgoznak.',
   questions: [
@@ -107,14 +107,14 @@ const L4_WRITING_ACTIONS: LessonActivity = {
     'Есть 3–4 законченных предложения',
     'Использованы формы настоящего времени из урока',
     'Хотя бы одно предложение содержит nem перед глаголом',
-    'Текст понятен без автоматической оценки языка',
+    'Текст понятен читателю',
   ],
 };
 
 const L4_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l4-exit-check',
-  title: 'Exit check — цели урока 4',
+  title: 'Проверка целей урока 4',
   checks: [
     { objectiveId: 'l4_conjugate-present', activityId: 'l4-cp-conjugation', evidenceKind: 'grammar' },
     {
@@ -351,7 +351,7 @@ export const LESSON_4: Lesson = {
       targetText: 'Magyarul tanulok. Nem olvasok. Tanulsz magyarul?',
       targetPhonetic: '[мадьярул танулок. нэм олвашок. танулс мадьярул?]',
       targetTranslation: 'Я учу венгерский. Я не читаю. Ты учишь венгерский?',
-      task: 'Устная практика: произнеси утверждение, отрицание и вопрос. Запись помогает сравнить себя с образцом, но не оценивается автоматически и не является доказательством mastery.',
+      task: 'Устная практика: произнеси утверждение, отрицание и вопрос. Затем сравни свою запись с образцом.',
       activities: [L4_EXIT_CHECK],
       body: `
    <ul class="tick">
@@ -369,8 +369,8 @@ export const LESSON_4: Lesson = {
     { id: 'l4_v2', hu: 'olvas', ru: 'читать', category: 'Core Verbs', exampleSentence: 'Péter olvas.' },
     { id: 'l4_v3', hu: 'ír', ru: 'писать', category: 'Core Verbs', exampleSentence: 'Anna ír.' },
     { id: 'l4_v4', hu: 'beszél', ru: 'говорить', category: 'Core Verbs', exampleSentence: 'Magyarul beszélünk.' },
-    { id: 'l4_v5', hu: 'dolgozik', ru: 'работать', category: '-ik Preview', exampleSentence: 'Péter dolgozik.', baseWord: 'dolgozik' },
-    { id: 'l4_v6', hu: 'lakik', ru: 'жить / проживать', category: '-ik Preview', exampleSentence: 'Budapesten lakom.', baseWord: 'lakik' },
+    { id: 'l4_v5', hu: 'dolgozik', ru: 'работать', category: '-ik · знакомство', exampleSentence: 'Péter dolgozik.', baseWord: 'dolgozik' },
+    { id: 'l4_v6', hu: 'lakik', ru: 'жить / проживать', category: '-ik · знакомство', exampleSentence: 'Budapesten lakom.', baseWord: 'lakik' },
     { id: 'l4_v7', hu: 'nem', ru: 'не (отрицательная частица)', category: 'Functional Core', exampleSentence: 'Nem tanulok.' },
   ],
   quiz: [

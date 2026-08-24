@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { X, Mic, Square, Play, Upload, Trash2, Volume2, Save, Check, Music, Lock, ShieldCheck, Loader2, RotateCcw } from 'lucide-react';
-import { saveAudioForSlide, removeAudioForSlide, hasAudioForSlide, getAudioFileUrl, getSlideCandidateKeys, subscribeAudioChanges, resetAllAudioOverrides } from '../utils/audioRegistry';
+import { saveAudioForSlide, removeAudioForSlide, hasAudioForSlide, getAudioFileUrl, getSlideCandidateKeys, subscribeAudioChanges } from '../utils/audioRegistry';
 import { stopRecordedAudio } from '../utils/speech';
 import { isAdminLoggedIn, subscribeAdminState } from '../utils/adminStore';
 import { ConfirmDialog } from './ConfirmDialog';

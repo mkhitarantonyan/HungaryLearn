@@ -44,17 +44,17 @@ test('bounded forms, volt contexts, and reading use approved thresholds', () => 
   assert.doesNotMatch(reading.instructions ?? '', /вслух|суффикс/i);
 });
 
-test('missing dedicated audio stays NONE without narration or TTS fallback', () => {
+test('published dedicated audio produces DIRECT without narration or TTS fallback', () => {
   const listening = find('l13-listening-tense-contrast', 'listening');
-  assert.equal(listening.assetId, 'l13_listening_tense_contrast'); assert.equal(listening.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l13_listening_tense_contrast.mp3', import.meta.url)), false);
-  assert.equal(listeningEvidence(listening, 5, 5).evidenceMode, 'none'); assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^13\./);
+  assert.equal(listening.assetId, 'l13_listening_tense_contrast'); assert.equal(listening.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l13_listening_tense_contrast.mp3', import.meta.url)), true);
+  assert.equal(listeningEvidence(listening, 5, 5).evidenceMode, 'direct'); assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^13\./);
 });
 
 test('production is connected and review-only', () => {
   const writing = find('l13-writing-past-story', 'writing'); const recording = find('l13-recording-past-story', 'recording');
   assert.match(writing.prompt, /4–5.*связан.*маркер/s); assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial');
-  assert.match(recording.instructions ?? '', /PARTIAL evidence/); assert.equal(recordingCompletionEvidence(recording.id).evidenceMode, 'partial'); assert.equal(recordingCompletionEvidence(recording.id).passed, false);
+  assert.match(recording.instructions ?? '', /проверь маркеры времени и формы глаголов/); assert.equal(recordingCompletionEvidence(recording.id).evidenceMode, 'partial'); assert.equal(recordingCompletionEvidence(recording.id).passed, false);
 });
 
 test('ExitCheck resolves DIRECT DIRECT PARTIAL PARTIAL', () => {
@@ -65,7 +65,7 @@ test('ExitCheck resolves DIRECT DIRECT PARTIAL PARTIAL', () => {
     'l13-listening-tense-contrast': { activityId: 'l13-listening-tense-contrast', attempted: true, completed: true, ...listeningEvidence(listening, 5, 5) },
     'l13-writing-past-story': { activityId: 'l13-writing-past-story', attempted: true, selfReviewed: true, ...written }, 'l13-recording-past-story': recordingCompletionEvidence('l13-recording-past-story'),
   };
-  assert.deepEqual(Object.fromEntries(exit.checks.map((check) => [check.objectiveId, describeExitCheckStatus(check, evidence[check.activityId], evidence).kind])), { 'l13_form-past': 'direct-met', 'l13_use-volt': 'direct-met', 'l13_distinguish-present-past': 'partial-review', 'l13_tell-past': 'partial-review' });
+  assert.deepEqual(Object.fromEntries(exit.checks.map((check) => [check.objectiveId, describeExitCheckStatus(check, evidence[check.activityId], evidence).kind])), { 'l13_form-past': 'direct-met', 'l13_use-volt': 'direct-met', 'l13_distinguish-present-past': 'direct-met', 'l13_tell-past': 'partial-review' });
 });
 
 test('copy is bounded, qualified, preview-only, and linguistically corrected', () => {
@@ -73,7 +73,7 @@ test('copy is bounded, qualified, preview-only, and linguistically corrected', (
   assert.match(source, /одно продуктивное морфологическое прошедшее время/); assert.match(source, /сам глагол, глагольные приставки и контекст/);
   assert.match(source, /не правило.*любого глагола/s); assert.match(source, /Полная система.*урок(?:е|у) 20/i);
   assert.doesNotMatch(source, /ТРИ ТИПА|всего ОДНО|покрывает все оттенки|ОБЯЗАТЕЛЬНО присутствует всегда/);
-  assert.match(source, /Предварительный обзор, вне оцениваемых целей/); assert.doesNotMatch(JSON.stringify({ activities, quiz: LESSON_13.quiz }), /Olvastam egy könyvet|Olvastam a könyvet|határozott/i);
+  assert.match(source, /На будущее/); assert.match(source, /Пока достаточно заметить этот контраст/); assert.doesNotMatch(JSON.stringify({ activities, quiz: LESSON_13.quiz }), /Olvastam egy könyvet|Olvastam a könyvet|határozott/i);
   assert.match(source, /A moziban voltam a barátaimmal/); assert.doesNotMatch(source, /mozinál/);
   assert.doesNotMatch(source, /финальный урок уровня A1|Вы завершили уровень A1|15 предложений|будущем|21-м уроке/); assert.match(source, /Урок 14 завершит уровень A1/);
   assert.ok((LESSON_13.vocabulary ?? []).every((item) => item.ipa === undefined));
@@ -86,7 +86,7 @@ test('quiz options are unique and L13 metadata is aligned', () => {
 });
 
 test('frozen L14, frozen L15, and later L20 remain byte-identical', () => {
-  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), '53AC1D1CBB63F7938F2423574F99ED43202C4089F6FEF8D5020A3D58251FB705');
-  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
-  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), '73ED8495F9D6732BCC71F0A8CA7BAE3274949943DA5357F42BF0EB7AD1144D48');
+  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'F719EE96AAFE518BE31C50276C1CACEC91B8D28B5997C77B9B9626EB106E0F45');
+  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
+  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), 'DCD4ED5B9ADDF1D7AD93582CE09E44F302B3DD4C34C8EED090D70CEA16F36AA4');
 });

@@ -1,4 +1,53 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L23_ACTIVITIES = createMigrationActivities({
+  lessonId: 23,
+  controlledTitle: 'Условное наклонение: формы и функции',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'fillGap', id: 'l23-cp-1', prompt: 'én + vár → условная форма', accept: ['várnék'] },
+    { kind: 'fillGap', id: 'l23-cp-2', prompt: 'ő + lenni → условная форма', accept: ['lenne'] },
+    { kind: 'fillGap', id: 'l23-cp-3', prompt: 'mi + menni → условная форма', accept: ['mennénk'] },
+    { kind: 'singleChoice', id: 'l23-cp-4', prompt: 'Выбери вежливый заказ.', options: ['Kérek egy kávét.', 'Szeretnék egy kávét.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l23-cp-5', prompt: 'Закончи: Ha lenne időm, ...', options: ['utaznék', 'utaztam'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: планы на свободный день',
+  readingParagraphs: ['Ha szabad lenne a hétvégém, kirándulnék a hegyekben. Jó időben sokat sétálnék, este pedig egy kis étteremben vacsoráznék.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l23-read-1', question: 'Hová menne a beszélő?', options: ['A hegyekbe', 'Az irodába', 'Az orvoshoz'], correctIndex: 0 },
+    { id: 'l23-read-2', question: 'Mit csinálna jó időben?', options: ['Sokat sétálna', 'Dolgozna', 'Aludna'], correctIndex: 0 },
+    { id: 'l23-read-3', question: 'Hol vacsorázna?', options: ['Otthon', 'Egy étteremben', 'A vonaton'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: желания и условия',
+  listeningTranscript: 'Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l23-listen-1', question: 'Mit szeretne a beszélő?', options: ['Többet utazni', 'Többet dolgozni', 'Kevesebbet pihenni'], correctIndex: 0 },
+    { id: 'l23-listen-2', question: 'Mire lenne szüksége?', options: ['Több pénzre', 'Több szabadságra', 'Új autóra'], correctIndex: 1 },
+    { id: 'l23-listen-3', question: 'Mit csinálna nyáron?', options: ['Sokat úszna', 'Síelne', 'Tanulna'], correctIndex: 0 },
+  ],
+  writingTitle: 'Письмо: если бы у меня был свободный день',
+  writingPrompt: 'Напиши 5 связанных фраз о том, что ты сделал бы в свободный день. Используй ha, lenne и минимум три условные формы.',
+  writingModel: ['Ha lenne egy szabad napom, sokáig aludnék.', 'Délután találkoznék a barátaimmal.', 'Este moziba mennénk.'],
+  writingRubric: ['Есть условие с ha', 'Использовано lenne', 'Есть минимум три условные формы'],
+  recordingTitle: 'Говорение: желание и гипотеза',
+  recordingInstructions: 'Скажи, чего ты хотел бы, и объясни, что сделал бы при одном условии.',
+  recordingTarget: 'Szeretnék többet utazni. Ha lenne időm, gyakrabban mennék Budapestre.',
+  objectiveChecks: [
+    { objectiveId: 'l23_form-conditional', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l23_use-lenne', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l23_build-if-clauses', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l23_express-wishes', activity: 'recording', evidenceKind: 'speaking' },
+    {
+      objectiveId: 'l23_understand-conditional',
+      activity: 'reading',
+      evidenceKind: 'reading',
+      evidenceComponents: [{ activity: 'listening', evidenceKind: 'listening' }],
+    },
+  ],
+});
 
 export const LESSON_23: Lesson = {
   id: 23,
@@ -118,6 +167,7 @@ export const LESSON_23: Lesson = {
       eyebrow: "УРОК 23 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L23_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Образуйте условную форму (1-е л. ед.ч., неопределённая) от: tanul, dolgozik, utazik, van</li>

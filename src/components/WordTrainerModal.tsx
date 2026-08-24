@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lesson } from '../types';
 import { getLessonVocabulary } from '../utils/lessonQuizAndVocab';
+import { getCanonicalCardIdForVocabulary } from '../data/vocabularyCatalog';
 import { SpeechButton } from './SpeechButton';
 import { X, Volume2, RotateCcw, Check, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -55,7 +56,8 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
   };
 
   const markKnown = (known: boolean) => {
-    onGrade?.(currentWord.id, known ? 'good' : 'again');
+    const cardId = getCanonicalCardIdForVocabulary(currentWord.id);
+    if (cardId) onGrade?.(cardId, known ? 'good' : 'again');
     handleNext();
   };
 

@@ -60,14 +60,14 @@ const WRITING_COMPARISON: LessonActivity = {
 
 const RECORD_COMPARISON: LessonActivity = {
   kind: 'recording', id: 'l9-record-comparison', title: 'Говорение: короткое сравнение',
-  instructions: 'Запиши короткое сравнение двух людей, мест или предметов. Сам факт записи остаётся PARTIAL evidence и не подтверждает языковую правильность без проверки.',
+  instructions: 'Запиши короткое сравнение двух людей, мест или предметов, затем проверь формы -bb и конструкцию с mint.',
   targetText: 'A kék kabát szebb, mint a piros kabát. A kék kabát olcsóbb is. Szerintem ez a legjobb választás.',
   targetTranslation: 'Синее пальто красивее красного. Синее пальто также дешевле. По-моему, это лучший выбор.',
   rubric: ['Есть минимум две сравнительные формы', 'Есть осмысленная конструкция с mint', 'Сравнение состоит из нескольких связанных фраз'],
 };
 
 const EXIT_CHECK: LessonActivity = {
-  kind: 'exitCheck', id: 'l9-exit-check', title: 'Exit check — цели урока 9', checks: [
+  kind: 'exitCheck', id: 'l9-exit-check', title: 'Проверка целей урока 9', checks: [
     { objectiveId: 'l9_use-adjectives', activityId: 'l9-cp-attributive-adjectives', evidenceKind: 'grammar' },
     { objectiveId: 'l9_form-comparative', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l9_form-superlative', activityId: 'l9-cp-superlative-forms', evidenceKind: 'grammar' },

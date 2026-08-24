@@ -43,7 +43,7 @@ const DAILY_ROUTINE_READING: LessonActivity = {
 
 const ROUTINE_LISTENING: LessonActivity = {
   kind: 'listening', id: 'l14-listening-routine', title: 'Аудирование: распорядок Анны',
-  assetId: 'l14_listening_routine', audioStatus: 'missing',
+  assetId: 'l14_listening_routine', audioStatus: 'published',
   transcript: 'Anna reggel fél hétkor felébred. Hét órakor reggelizik. Nyolckor dolgozni megy. Délben ebédel. Este hatkor hazamegy, és tizenegykor lefekszik.',
   passCount: 4,
   questions: [
@@ -68,14 +68,14 @@ const DAILY_ROUTINE_WRITING: LessonActivity = {
 
 const DAILY_ROUTINE_RECORDING: LessonActivity = {
   kind: 'recording', id: 'l14-record-daily-routine', title: 'Говорение: мой день и расписание',
-  instructions: 'Запиши короткий рассказ о своём обычном дне: назови несколько действий и минимум два времени. Запись остаётся PARTIAL evidence и требует проверки человеком.',
+  instructions: 'Запиши короткий рассказ о своём обычном дне: назови несколько действий и минимум два времени. Затем проверь последовательность и формы глаголов.',
   targetText: 'Reggel hét órakor felébredek. Utána mosakodom és felöltözöm. Fél nyolckor reggelizem. Este tizenegykor lefekszem.',
   targetTranslation: 'Утром я просыпаюсь в семь. Затем умываюсь и одеваюсь. В половине восьмого завтракаю. Вечером ложусь в одиннадцать.',
   rubric: ['Названы несколько последовательных действий', 'Есть минимум два выражения времени', 'Использована хотя бы одна изученная форма routine/-ik глагола'],
 };
 
 const EXIT_CHECK: LessonActivity = {
-  kind: 'exitCheck', id: 'l14-exit-check', title: 'Exit check — цели урока 14', checks: [
+  kind: 'exitCheck', id: 'l14-exit-check', title: 'Проверка целей урока 14', checks: [
     { objectiveId: 'l14_describe-routine', activityId: 'l14-writing-daily-routine', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l14-record-daily-routine', evidenceKind: 'speaking' }] },
     { objectiveId: 'l14_form-reflexive', activityId: 'l14-cp-routine-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l14_use-reflexive', activityId: 'l14-cp-routine-context', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l14-record-daily-routine', evidenceKind: 'speaking' }] },
@@ -110,7 +110,7 @@ export const LESSON_14: Lesson = {
    <p><b>Látom magamat a tükörben.</b> — Я вижу себя в зеркале.</p><div class="note">Этот блок служит только для распознавания и не входит в Quiz или ExitCheck урока 14.</div>` },
     { id: 7, eyebrow: 'УРОК 14 · 7/11 · ДИАЛОГ И АУДИРОВАНИЕ', title: 'Mikor kelsz fel?', subtitle: 'Расписание в вопросах и ответах', body: `
    <p><b>A:</b> Hány órakor kelsz fel általában?</p><p><b>B:</b> Általában hét órakor kelek fel.</p><p><b>A:</b> És mikor fekszel le?</p><p><b>B:</b> Általában éjfél körül fekszem le.</p>
-   <div class="note">Отдельная запись для аудирования ещё не опубликована. Озвучка слайда не заменяет assessment MP3.</div>`, activities: [ROUTINE_LISTENING, DAILY_ROUTINE_RECORDING] },
+   <div class="note">Отдельная запись для аудирования ещё не опубликована, поэтому задание пока недоступно.</div>`, activities: [ROUTINE_LISTENING, DAILY_ROUTINE_RECORDING] },
     { id: 8, eyebrow: 'УРОК 14 · 8/11 · ПИСЬМО', title: 'Az én napom', subtitle: 'Связный рассказ о своём дне', body: `<p>Собери знакомые действия и время в один короткий рассказ. Открытый текст проверяется по рубрике и остаётся материалом для последующей проверки.</p>`, activities: [DAILY_ROUTINE_WRITING] },
     { id: 9, eyebrow: 'УРОК 14 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ', title: 'Kiegészítő szókincs', subtitle: 'Необязательные бытовые глаголы', body: `
    <div class="grid2"><div><p><b>zuhanyozik</b> — принимать душ</p><p><b>pihen</b> — отдыхать</p></div><div><p><b>sétál</b> — гулять</p><p><b>takarít</b> — убираться</p></div></div>

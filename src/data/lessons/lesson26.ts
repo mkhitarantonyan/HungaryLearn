@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L26_ACTIVITIES = createMigrationActivities({
+  lessonId: 26,
+  controlledTitle: 'Симптомы, боль и советы врача',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'fillGap', id: 'l26-cp-1', prompt: '«У меня болит голова».', accept: ['Fáj a fejem', 'Fáj a fejem.'] },
+    { kind: 'fillGap', id: 'l26-cp-2', prompt: '«У меня температура».', accept: ['Lázam van', 'Lázam van.'] },
+    { kind: 'singleChoice', id: 'l26-cp-3', prompt: 'Что говорят при кашле?', options: ['Köhögök.', 'Fáj a lábam.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l26-cp-4', prompt: 'Совет врача: «Отдыхайте».', options: ['Pihenjen!', 'Pihentem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l26-cp-5', prompt: 'В аптеке попроси лекарство от боли.', options: ['Kérek valamit fájdalomra.', 'Kérek egy jegyet.'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: памятка пациенту',
+  readingParagraphs: ['Ha láza van, pihenjen és igyon sok folyadékot. Erős fájdalom vagy nehéz légzés esetén hívjon orvost. Antibiotikumot csak orvosi javaslatra szedjen.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l26-read-1', question: 'Mit tegyen, ha láza van?', options: ['Pihenjen és igyon', 'Sportoljon', 'Dolgozzon'], correctIndex: 0 },
+    { id: 'l26-read-2', question: 'Mikor hívjon orvost?', options: ['Erős fájdalomnál', 'Enyhe éhségnél', 'Unalomnál'], correctIndex: 0 },
+    { id: 'l26-read-3', question: 'Mikor szedjen antibiotikumot?', options: ['Bármikor', 'Orvosi javaslatra', 'Csak reggel'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: рекомендации врача',
+  listeningTranscript: 'A torka piros, de a tüdeje tiszta. Maradjon otthon két napig, igyon sok teát, és vegye be ezt a gyógyszert naponta kétszer.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l26-listen-1', question: 'Milyen a beteg torka?', options: ['Piros', 'Egészséges', 'Hideg'], correctIndex: 0 },
+    { id: 'l26-listen-2', question: 'Mennyi ideig maradjon otthon?', options: ['Két napig', 'Egy hétig', 'Egy hónapig'], correctIndex: 0 },
+    { id: 'l26-listen-3', question: 'Hányszor vegye be a gyógyszert?', options: ['Naponta egyszer', 'Naponta kétszer', 'Hetente kétszer'], correctIndex: 1 },
+  ],
+  writingTitle: 'Письмо: сообщение врачу',
+  writingPrompt: 'Опиши врачу 4–5 фразами, что болит, когда началось, какие есть симптомы и что ты уже сделал.',
+  writingModel: ['Tegnap óta fáj a torkom.', 'Köhögök, és egy kicsit lázas vagyok.', 'Teát ittam, de nem lettem jobban.'],
+  writingRubric: ['Названы симптом и длительность', 'Есть дополнительная важная деталь', 'Сообщение понятно врачу'],
+  recordingTitle: 'Говорение: приём у врача',
+  recordingInstructions: 'Ответь на вопросы врача: что болит, как давно и есть ли температура. Затем повтори одну рекомендацию врача своими словами.',
+  recordingTarget: 'Tegnap óta fáj a torkom, és lázam van. Az orvos azt mondta, hogy pihenjek és igyak sok teát.',
+  objectiveChecks: [
+    { objectiveId: 'l26_name-body-symptoms', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l26_express-pain', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l26_doctor-dialogue', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l26_pharmacy', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l26_understand-advice', activity: 'listening', evidenceKind: 'listening' },
+  ],
+});
 
 export const LESSON_26: Lesson = {
   id: 26,
@@ -124,6 +168,7 @@ export const LESSON_26: Lesson = {
       eyebrow: "УРОК 26 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L26_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Скажите «У меня болит...» для слов: fej, torok, has, fog, hát</li>

@@ -551,9 +551,10 @@ export function controlledEvidence(
 export function listeningEvidence(
   listening: ListeningTaskData,
   score: number,
-  total: number
+  total: number,
+  audioPlayable: boolean = true
 ): ScoredEvidence {
-  const published = listening.audioStatus === 'published';
+  const published = listening.audioStatus === 'published' && audioPlayable;
   const passCount = listening.passCount ?? 3;
   return {
     passed: published && score >= passCount,

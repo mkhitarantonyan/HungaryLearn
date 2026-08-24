@@ -10,7 +10,8 @@ import Stripe from "stripe";
 import { verifyAdminCredentials } from './src/utils/adminAuth';
 import { mergeCompletedSlides } from './src/utils/progressMerge';
 import { isSubscriptionValid } from './src/utils/subscriptionValidity';
-import { gradeCard } from './src/utils/spacedRepetition';
+import { countDueCards, createInitialCardState, gradeCard } from './src/utils/spacedRepetition';
+import { resolveVocabularyCard } from './src/data/vocabularyCatalog';
 import type { ReviewGrade } from './src/types';
 import {
   checkDatabaseConnection,
@@ -32,17 +33,20 @@ import {
   getUserProgress,
   isAdminSessionValid,
   listAudioOverrides,
-  listUsers,
+  listUsersForAdmin,
   listWordOverrides,
   mutateReviewCards,
   mutateUserProgress,
   replaceAudioOverrides,
   runStripeEventOnce,
   saveStudentUser,
+  updateUserPrivilege,
   upsertWordOverride,
-  type ReviewCardState,
   type StudentUser,
 } from './src/server/db';
+import { isAuthorizedAdminSession, parseAdminUserListQuery, parsePrivilegeUpdate } from './src/server/adminValidation';
+import { serializeAdminUser } from './src/server/adminUsers';
+import { LESSONS_META } from './src/data/lessons';
 import {
   assertPrivateOverrideBucket,
   downloadPrivateAudio,
@@ -163,16 +167,6 @@ function extractCompletedLessonNumbers(completedSlides: string[]): number[] {
     if (match) numbers.add(parseInt(match[1], 10));
   }
   return Array.from(numbers);
-}
-
-function countDueCardsFromProgress(
-  reviewCards: Record<string, ReviewCardState>,
-  completedLessons: number[]
-): number {
-  const now = Date.now();
-  return Object.values(reviewCards).filter((state) => {
-    return completedLessons.includes(state.lessonNumber) && new Date(state.dueDate).getTime() <= now;
-  }).length;
 }
 
 async function startServer() {
@@ -713,12 +707,14 @@ async function startServer() {
     try {
       const { result: nextState } = await mutateReviewCards(user.id, (current) => {
         const existingCards = current.reviewCards ?? {};
-        const existingState = existingCards[cardId];
+        const curriculumCard = resolveVocabularyCard(cardId);
 
-        if (!existingState) {
+        if (!curriculumCard) {
           throw new ReviewCardNotFoundError('Review card not found');
         }
 
+        const existingState = existingCards[cardId]
+          ?? createInitialCardState(cardId, curriculumCard.lessonIntroduced);
         const gradedState = gradeCard(existingState, grade);
         return {
           reviewCards: { ...existingCards, [cardId]: gradedState },
@@ -746,7 +742,7 @@ async function startServer() {
     const progress = await getUserProgress(user.id);
     const reviewCards = progress?.reviewCards ?? {};
     const completedLessons = extractCompletedLessonNumbers(progress?.viewedSlides ?? []);
-    const dueCount = countDueCardsFromProgress(reviewCards, completedLessons);
+    const dueCount = countDueCards(reviewCards, completedLessons);
 
     return res.json({ success: true, dueCount });
   }));
@@ -858,7 +854,7 @@ async function startServer() {
   // served to ALL users (not just the browser where the admin edited them).
 
   const isAdminRequest = async (req: express.Request): Promise<boolean> => {
-    return isAdminSessionValid(getSessionTokenFromReq(req));
+    return isAuthorizedAdminSession(getSessionTokenFromReq(req), isAdminSessionValid);
   };
 
   // Public: current global audio registry — clients fetch this on startup
@@ -961,42 +957,56 @@ async function startServer() {
   }));
 
   // ================= ADMIN: STUDENT ACCOUNTS & PRIVILEGES =================
-  // Real student accounts registered on the platform (stored in PostgreSQL),
-  // distinct from the demo users in the admin UI mock data.
+  // Real student accounts registered on the platform and stored in PostgreSQL.
 
-  const serializeStudentUser = (u: StudentUser) => ({
-    id: u.id,
-    email: u.email,
-    createdAt: u.createdAt,
-    subscriptionStatus: u.subscriptionStatus,
-    subscriptionEnd: u.subscriptionEnd,
-    isPrivileged: u.isPrivileged === true,
-  });
-
-  // Admin: list all real student accounts
+  // Admin: paginated list of real student accounts.
   app.get("/api/admin/users", asyncHandler(async (req, res) => {
     if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
-    const users = (await listUsers()).map(serializeStudentUser);
-    return res.json({ success: true, users });
+    let query;
+    try {
+      query = parseAdminUserListQuery(req.query);
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Некорректный запрос' });
+    }
+    const page = await listUsersForAdmin(query);
+    return res.json({
+      success: true,
+      users: page.users.map(serializeAdminUser),
+      pagination: { total: page.total, limit: query.limit, offset: query.offset },
+    });
+  }));
+
+  // Admin: code-backed lesson catalog. It is intentionally read-only because
+  // runtime lessons are versioned TypeScript modules, not PostgreSQL records.
+  app.get("/api/admin/lessons", asyncHandler(async (req, res) => {
+    if (!await isAdminRequest(req)) {
+      return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
+    }
+    return res.json({ success: true, lessons: LESSONS_META });
   }));
 
   // Admin: grant or revoke full-access privilege for a student account.
   // A privileged student gets all lessons and can save progress without payment.
-  app.post("/api/admin/users/:id/privilege", asyncHandler(async (req, res) => {
+  const updatePrivilegeHandler = asyncHandler(async (req, res) => {
     if (!await isAdminRequest(req)) {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
-    const user = await findUserById(req.params.id);
+    let privileged: boolean;
+    try {
+      privileged = parsePrivilegeUpdate(req.body);
+    } catch (error) {
+      return res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Некорректный запрос' });
+    }
+    const user = await updateUserPrivilege(req.params.id, privileged);
     if (!user) {
       return res.status(404).json({ success: false, message: 'Пользователь не найден' });
     }
-    const { privileged } = req.body || {};
-    user.isPrivileged = privileged === true;
-    await saveStudentUser(user);
-    return res.json({ success: true, user: serializeStudentUser(user) });
-  }));
+    return res.json({ success: true, user: serializeAdminUser(user) });
+  });
+  app.patch("/api/admin/users/:id/privilege", updatePrivilegeHandler);
+  app.post("/api/admin/users/:id/privilege", updatePrivilegeHandler);
 
   app.use((error: unknown, req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (!req.path.startsWith('/api/')) return next(error);

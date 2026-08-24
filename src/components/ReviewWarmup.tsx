@@ -27,8 +27,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
 }) => {
   const session = useMemo(
     () => getWarmupSession(userCardStates, completedLessonNumbers, 8),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [userCardStates, completedLessonNumbers]
   );
 
   const [index, setIndex] = useState(0);

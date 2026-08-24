@@ -53,7 +53,7 @@ const L15_LISTENING: LessonActivity = {
   id: 'l15-listening-restaurant',
   title: 'Аудирование: диалог в ресторане',
   assetId: 'l15_listening_restaurant',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   passCount: 3,
   transcript: 'Pincér: Jó estét! Mit kér?\nVendég: Szeretnék egy gulyáslevest és egy limonádét.\nPincér: Sajnos nincs limonádé, csak narancslé van.\nVendég: Rendben, akkor egy narancslevet kérek.\nPincér: És főételt?\nVendég: Igen, egy rántott sajtot kérek.\nPincér: Rendben, hozom rögtön.',
   questions: [

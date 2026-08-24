@@ -6,11 +6,29 @@ import reactHooks from 'eslint-plugin-react-hooks';
 export default [
   {
     ignores: ['dist/**', '**/dist/**', 'node_modules/**', '.eslint-report.json'],
+  },
+  {
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
   },
   js.configs.recommended,
+  {
+    files: ['scripts/**/*.{js,cjs,mjs}', '*.config.js', '*.config.mjs'],
+    languageOptions: {
+      globals: {
+        Buffer: 'readonly',
+        URL: 'readonly',
+        __dirname: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly',
+        module: 'readonly',
+        process: 'readonly',
+        require: 'readonly',
+        setTimeout: 'readonly',
+      },
+    },
+  },
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

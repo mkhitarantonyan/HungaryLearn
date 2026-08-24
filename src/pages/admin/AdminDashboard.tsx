@@ -11,14 +11,8 @@ import {
 import { useAdminData } from '../../admin/AdminDataContext';
 import { PageHeader, Pill } from '../../components/admin/AdminUi';
 
-const ROLE_TONE: Record<string, 'gray' | 'indigo' | 'amber'> = {
-  student: 'gray',
-  admin: 'indigo',
-  editor: 'amber',
-};
-
 export default function AdminDashboard() {
-  const { users, lessons } = useAdminData();
+  const { users, lessons, loading, error } = useAdminData();
 
   const stats = [
     {
@@ -26,11 +20,11 @@ export default function AdminDashboard() {
       value: users.length,
       icon: Users,
       accent: 'bg-indigo-50 text-indigo-600',
-      delta: `${users.filter((u) => u.status === 'active').length} активных`,
+      delta: `${users.filter((u) => u.isPrivileged).length} с привилегией`,
     },
     {
       label: 'Активные подписки',
-      value: users.filter((u) => u.subscription === 'active').length,
+      value: users.filter((u) => u.subscriptionStatus === 'active').length,
       icon: CreditCard,
       accent: 'bg-emerald-50 text-emerald-600',
       delta: 'оплачено через Stripe',
@@ -43,20 +37,20 @@ export default function AdminDashboard() {
       delta: `${lessons.reduce((s, l) => s + l.slidesCount, 0)} слайдов`,
     },
     {
-      label: 'Опубликовано',
-      value: lessons.filter((l) => l.status === 'published').length,
+      label: 'Уровней курса',
+      value: new Set(lessons.map((lesson) => lesson.level)).size,
       icon: Eye,
       accent: 'bg-rose-50 text-rose-600',
-      delta: `${lessons.filter((l) => l.status === 'draft').length} в черновиках`,
+      delta: 'каталог version-controlled',
     },
   ];
 
   const recentUsers = [...users]
-    .sort((a, b) => b.registeredAt.localeCompare(a.registeredAt))
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
     .slice(0, 5);
 
   const recentLessons = [...lessons]
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .sort((a, b) => b.number - a.number)
     .slice(0, 5);
 
   const fmtDate = (iso: string) => new Date(iso).toLocaleDateString('ru-RU');
@@ -76,6 +70,9 @@ export default function AdminDashboard() {
           </Link>
         }
       />
+
+      {error && <div role="alert" className="mb-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+      {loading && <div className="mb-5 text-sm text-gray-500">Загрузка данных PostgreSQL…</div>}
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-8">
@@ -113,16 +110,16 @@ export default function AdminDashboard() {
             {recentUsers.map((user) => (
               <li key={user.id} className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors">
                 <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center text-[11px] font-bold shrink-0">
-                  {user.name.split(' ').map((p) => p[0]).slice(0, 2).join('')}
+                  {user.email.slice(0, 2).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium text-gray-900 truncate">{user.name}</div>
-                  <div className="text-xs text-gray-500 truncate">{user.email}</div>
+                  <div className="text-sm font-medium text-gray-900 truncate">{user.email}</div>
+                  <div className="text-xs text-gray-500 truncate">{user.subscriptionStatus}</div>
                 </div>
                 <div className="hidden sm:block">
-                  <Pill tone={ROLE_TONE[user.role]}>{user.role}</Pill>
+                  <Pill tone={user.isPrivileged ? 'indigo' : 'gray'}>{user.isPrivileged ? 'privileged' : 'student'}</Pill>
                 </div>
-                <div className="text-xs text-gray-400 whitespace-nowrap">{fmtDate(user.registeredAt)}</div>
+                <div className="text-xs text-gray-400 whitespace-nowrap">{fmtDate(user.createdAt)}</div>
               </li>
             ))}
           </ul>
@@ -149,12 +146,10 @@ export default function AdminDashboard() {
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium text-gray-900 truncate">{lesson.title}</div>
                   <div className="text-xs text-gray-500">
-                    {lesson.module} · {lesson.level} · {lesson.slidesCount} сл.
+                    Урок {lesson.number} · {lesson.level} · {lesson.slidesCount} сл.
                   </div>
                 </div>
-                <Pill tone={lesson.status === 'published' ? 'green' : 'slate'}>
-                  {lesson.status === 'published' ? 'Опубликован' : 'Черновик'}
-                </Pill>
+                <Pill tone="green">В сборке</Pill>
               </li>
             ))}
           </ul>

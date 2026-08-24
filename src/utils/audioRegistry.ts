@@ -8,7 +8,7 @@
 import { uploadAudioToServer, deleteAudioFromServer, loadServerAudioRegistry } from './serverSync';
 import { wordAudioMap } from '../data/wordAudioMap';
 import { audioUrl } from './audioConfig';
-import { PRESENT_SLIDE_AUDIO } from '../data/slideAudioManifest';
+import { PRESENT_SLIDE_AUDIO, SLIDE_AUDIO_VERSIONS } from '../data/slideAudioManifest';
 
 export interface AudioMap {
   [key: string]: string; // Maps word/phrase or ID to audio URL
@@ -63,7 +63,9 @@ function buildStaticAudioRegistry(): AudioMap {
     const match = /^(\d+)\.(\d+)$/.exec(presentKey);
     if (!match) continue;
     const [, lesson, slide] = match;
-    const url = audioUrl(`${lesson}.${slide}.mp3`);
+    const version = SLIDE_AUDIO_VERSIONS[`${lesson}.${slide}`];
+    const baseUrl = audioUrl(`${lesson}.${slide}.mp3`);
+    const url = version ? `${baseUrl}?v=${version}` : baseUrl;
     registry[`l${lesson}_s${slide}`] = url;
     registry[`lesson${lesson}_slide${slide}`] = url;
     registry[`${lesson}.${slide}`] = url;
@@ -288,44 +290,84 @@ export function getActiveAudioOverridesSummary(): AudioOverridesSummary {
   };
 }
 
-export async function resetAllAudioOverrides(): Promise<{ count: number; keys: string[] }> {
+export interface ResetAudioOverridesResult {
+  count: number;
+  keys: string[];
+  success: boolean;
+  failedServerKeys: string[];
+  localCleanupSucceeded: boolean;
+}
+
+interface ResetAudioOverridesDependencies {
+  deleteServerOverride?: (key: string) => Promise<boolean>;
+  clearPersistedLocalOverrides?: () => Promise<void>;
+}
+
+async function clearPersistedLocalAudioOverrides(): Promise<void> {
+  if (typeof window === 'undefined') return;
+
+  localStorage.removeItem(DISABLED_KEYS_LS);
+  const db = await openDb();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+  await new Promise<void>((resolve, reject) => {
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error ?? new Error('IndexedDB audio cleanup failed'));
+    tx.onabort = () => reject(tx.error ?? new Error('IndexedDB audio cleanup aborted'));
+  });
+}
+
+export async function resetAllAudioOverrides(
+  dependencies: ResetAudioOverridesDependencies = {}
+): Promise<ResetAudioOverridesResult> {
   const summary = getActiveAudioOverridesSummary();
   const allKeysArray = Array.from(new Set([
     ...summary.serverOverrides,
     ...summary.customOverrides,
     ...summary.disabledKeys,
   ]));
+  const deleteServerOverride = dependencies.deleteServerOverride ?? deleteAudioFromServer;
+  const clearPersistedLocalOverrides = dependencies.clearPersistedLocalOverrides
+    ?? clearPersistedLocalAudioOverrides;
 
   disabledStaticKeys.clear();
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.removeItem(DISABLED_KEYS_LS);
-    } catch (e) {}
-  }
-
   for (const key of Object.keys(customAudioRegistry)) {
     delete customAudioRegistry[key];
   }
-  if (typeof window !== 'undefined') {
-    try {
-      const db = await openDb();
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      tx.objectStore(STORE_NAME).clear();
-    } catch (err) {
-      console.warn('Could not clear IndexedDB audio store:', err);
-    }
-  }
-
   for (const key of Object.keys(serverAudioRegistry)) {
     delete serverAudioRegistry[key];
   }
-  for (const key of allKeysArray) {
-    void deleteAudioFromServer(key);
+
+  let localCleanupSucceeded = true;
+  try {
+    await clearPersistedLocalOverrides();
+  } catch (error) {
+    localCleanupSucceeded = false;
+    console.warn('Could not clear persisted local audio overrides:', error);
   }
 
+  const serverDeletionResults = await Promise.allSettled(
+    summary.serverOverrides.map(async (key) => {
+      if (!await deleteServerOverride(key)) {
+        throw new Error(`Server rejected deletion for audio key: ${key}`);
+      }
+      return key;
+    })
+  );
+  const failedServerKeys = summary.serverOverrides.filter(
+    (_key, index) => serverDeletionResults[index].status === 'rejected'
+  );
+
   notifyAudioChanges();
-  console.log(`[AudioRegistry] Reset all overrides. Cleared ${allKeysArray.length} keys:`, allKeysArray);
-  return { count: allKeysArray.length, keys: allKeysArray };
+  const success = localCleanupSucceeded && failedServerKeys.length === 0;
+  console.log(`[AudioRegistry] Reset all overrides. Processed ${allKeysArray.length} keys:`, allKeysArray);
+  return {
+    count: allKeysArray.length,
+    keys: allKeysArray,
+    success,
+    failedServerKeys,
+    localCleanupSucceeded,
+  };
 }
 
 export function registerAudioFile(key: string, url: string) {

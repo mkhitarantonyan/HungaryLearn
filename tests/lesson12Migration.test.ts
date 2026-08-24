@@ -67,9 +67,9 @@ test('dialogue is present-based and Hová terminology is consistent', () => {
   assert.doesNotMatch(source, /\bHova\b|Péternél leszek|\bleszek\b/);
 });
 
-test('missing dedicated listening remains NONE and production remains PARTIAL', () => {
-  const listening = find('l12-listening-near-locations', 'listening'); assert.equal(listening.assetId, 'l12_listening_near_locations'); assert.equal(listening.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l12_listening_near_locations.mp3', import.meta.url)), false); assert.equal(listeningEvidence(listening, 5, 5).evidenceMode, 'none');
+test('published dedicated listening is DIRECT and production remains PARTIAL', () => {
+  const listening = find('l12-listening-near-locations', 'listening'); assert.equal(listening.assetId, 'l12_listening_near_locations'); assert.equal(listening.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l12_listening_near_locations.mp3', import.meta.url)), true); assert.equal(listeningEvidence(listening, 5, 5).evidenceMode, 'direct');
   assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^12\./);
   const writing = find('l12-writing-near-exchange', 'writing'); const recording = find('l12-recording-near-exchange', 'recording');
   assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial'); assert.equal(recordingCompletionEvidence(recording.id).evidenceMode, 'partial'); assert.equal(recordingCompletionEvidence(recording.id).passed, false);
@@ -94,8 +94,8 @@ test('quiz is core, contextual, unique, and metadata matches', () => {
 });
 
 test('frozen L11, L13, L14, and L15 remain byte-identical', () => {
-  assert.equal(hash(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), 'EE31B2494B9991561C9576E2B1BDFEA578F2B5A4FB0F0C03A71751488FA47FA7');
-  assert.equal(hash(new URL('../src/data/lessons/lesson13.ts', import.meta.url)), '3265409FF81BAF60029D7129AE212BC83CA6FF91033F23D6B649F6FFDCB278F2');
-  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), '53AC1D1CBB63F7938F2423574F99ED43202C4089F6FEF8D5020A3D58251FB705');
-  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(hash(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), '6CD30773439EFEDCABDE47DE30316711BC6908BEDFEFA615359D9A3AD619ADF9');
+  assert.equal(hash(new URL('../src/data/lessons/lesson13.ts', import.meta.url)), 'E38898DAC48639D8C6B57CD19376277ADDBDF0A6AC1458D9E6DF413E033123FC');
+  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'F719EE96AAFE518BE31C50276C1CACEC91B8D28B5997C77B9B9626EB106E0F45');
+  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

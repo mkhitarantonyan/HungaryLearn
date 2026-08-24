@@ -119,14 +119,14 @@ test('reading directly checks nominative/accusative contrast and translation has
   assert.match(JSON.stringify(translation), /Látlak/);
 });
 
-test('missing L7 listening asset remains NONE and lesson data contains no TTS fallback reference', () => {
+test('published L7 listening asset is DIRECT and lesson data contains no TTS fallback reference', () => {
   const listening = findActivity('l7-listening-accusative', 'listening');
   assert.equal(listening.assetId, 'l7_listening_accusative');
-  assert.equal(listening.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l7_listening_accusative.mp3', import.meta.url)), false);
+  assert.equal(listening.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l7_listening_accusative.mp3', import.meta.url)), true);
   assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: false,
-    evidenceMode: 'none',
+    passed: true,
+    evidenceMode: 'direct',
     score: 5,
     total: 5,
   });
@@ -134,7 +134,7 @@ test('missing L7 listening asset remains NONE and lesson data contains no TTS fa
   assert.doesNotMatch(lessonSource, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
 });
 
-test('L7 ExitCheck reports DIRECT, PARTIAL, and NONE without overclaiming', () => {
+test('L7 ExitCheck reports published listening as DIRECT without overclaiming', () => {
   const exit = findActivity('l7-exit-check', 'exitCheck');
   const listening = findActivity('l7-listening-accusative', 'listening');
   const listeningScore = listeningEvidence(listening, 5, 5);
@@ -159,7 +159,7 @@ test('L7 ExitCheck reports DIRECT, PARTIAL, and NONE without overclaiming', () =
     'l7_form-accusative': 'direct-met',
     'l7_use-accusative-object': 'partial-review',
     'l7_distinguish-nom-acc': 'direct-met',
-    'l7_listen-accusative': 'none',
+    'l7_listen-accusative': 'direct-met',
     'l7_translate-acc': 'direct-met',
   });
 });
@@ -174,6 +174,6 @@ test('L7 catalog metadata matches the lesson and frozen L15 remains byte-for-byt
   assert.equal(meta.slidesCount, LESSON_7.slidesCount);
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586'
+    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
   );
 });

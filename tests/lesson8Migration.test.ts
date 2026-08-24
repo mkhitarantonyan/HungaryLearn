@@ -99,12 +99,12 @@ test('ReadingTask checks relationships and ownership rather than suffix spotting
   assert.doesNotMatch(reading.instructions ?? '', /найди.*суффикс/i);
 });
 
-test('missing dedicated MP3 stays NONE and has no TTS or narration fallback', () => {
+test('published dedicated MP3 is DIRECT and has no TTS or narration fallback', () => {
   const listening = findActivity('l8-listening-possessives', 'listening');
   assert.equal(listening.assetId, 'l8_listening_possessives');
-  assert.equal(listening.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l8_listening_possessives.mp3', import.meta.url)), false);
-  assert.deepEqual(listeningEvidence(listening, 4, 4), { passed: false, evidenceMode: 'none', score: 4, total: 4 });
+  assert.equal(listening.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l8_listening_possessives.mp3', import.meta.url)), true);
+  assert.deepEqual(listeningEvidence(listening, 4, 4), { passed: true, evidenceMode: 'direct', score: 4, total: 4 });
   const source = readFileSync(new URL('../src/data/lessons/lesson8.ts', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
   assert.doesNotMatch(listening.assetId, /^8\./);
@@ -134,7 +134,7 @@ test('ExitCheck resolves the approved PARTIAL/DIRECT/PARTIAL/PARTIAL/PARTIAL vec
     'l8_name-family': 'partial-review',
     'l8_form-possessive': 'direct-met',
     'l8_use-possessive': 'partial-review',
-    'l8_distinguish-possessors': 'partial-review',
+    'l8_distinguish-possessors': 'direct-met',
     'l8_describe-family': 'partial-review',
   });
 
@@ -147,7 +147,7 @@ test('ExitCheck resolves the approved PARTIAL/DIRECT/PARTIAL/PARTIAL/PARTIAL vec
     describeExitCheckStatus(possessorCheck, evidence[possessorCheck.activityId], {
       'l8-listening-possessives': evidence['l8-listening-possessives'],
     }).kind,
-    'partial-review'
+    'direct-met'
   );
   assert.equal(
     possessorCheck.evidenceComponents.some((component) => component.activityId === 'l8-writing-family-description'),
@@ -202,8 +202,8 @@ test('L8 metadata and translation cards align while frozen lessons remain unchan
   assert.equal(meta.description, LESSON_8.description);
   assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.sourceText, 'У меня есть брат или сестра.');
   assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.targetText, 'Van egy testvérem.');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '70EF9CCBD0BE2CB15CFD2F5D4F060F6998C632F548014D5C8E0FBC6F3DFC5B90');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), 'EF95C2BBE4F4054AB8E05708EFB2B953DFDA624AF9F9BF786CF9CE4346FB4211');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), 'EE31B2494B9991561C9576E2B1BDFEA578F2B5A4FB0F0C03A71751488FA47FA7');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), 'D57C22E3D7DE3D307AFF59646952D9A4C643F877CE31B98206C84D6B8C145045');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), '6CD30773439EFEDCABDE47DE30316711BC6908BEDFEFA615359D9A3AD619ADF9');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

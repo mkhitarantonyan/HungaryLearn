@@ -11,6 +11,9 @@ import { LessonList } from '../src/components/LessonList.tsx';
 import { AUTOPLAY_STORAGE_KEY, readAutoplayPreference, writeAutoplayPreference } from '../src/utils/narrationPrefs.ts';
 import { NarrationRunToken } from '../src/utils/narrationRunToken.ts';
 import { getSlideNarrativeSequence } from '../src/utils/slideNarrator.ts';
+import { getAudioFileUrl } from '../src/utils/audioRegistry.ts';
+import { PRESENT_SLIDE_AUDIO, SLIDE_AUDIO_VERSIONS } from '../src/data/slideAudioManifest.ts';
+import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 import { LESSON_1 } from '../src/data/lessons/lesson1.ts';
 import { LESSON_6 } from '../src/data/lessons/lesson6.ts';
 import { LESSON_15 } from '../src/data/lessons/lesson15.ts';
@@ -63,6 +66,36 @@ test('slide narration does not read a hidden listening transcript or its answers
   assert.doesNotMatch(joined, /Mikor tanulsz magyarul/);
   assert.doesNotMatch(joined, /Kedden öt órakor tanulok/);
   assert.doesNotMatch(joined, /Szombaton háromkor olvasok/);
+});
+
+test('every course slide resolves only its own versioned narration file', async () => {
+  let slideCount = 0;
+  const expectedManifestKeys = new Set<string>();
+
+  for (const meta of LESSONS_META) {
+    const lesson = await loadLesson(meta.number);
+    assert.ok(lesson, `lesson ${meta.number} failed to load`);
+    for (const slide of lesson.slides) {
+      slideCount += 1;
+      const manifestKey: string = `${lesson.number}.${slide.id}`;
+      const narrationKey: string = `l${lesson.number}_s${slide.id}`;
+      expectedManifestKeys.add(manifestKey);
+
+      assert.equal(PRESENT_SLIDE_AUDIO[manifestKey], true, `missing narration for ${manifestKey}`);
+      assert.match(SLIDE_AUDIO_VERSIONS[manifestKey] ?? '', /^[a-f0-9]{12}$/);
+      assert.deepEqual(getSlideNarrativeSequence(slide, lesson.number), [{ key: narrationKey }]);
+
+      const url = getAudioFileUrl(narrationKey);
+      assert.ok(url, `missing audio URL for ${manifestKey}`);
+      assert.match(
+        url,
+        new RegExp(`/audio/${lesson.number}\\.${slide.id}\\.mp3\\?v=${SLIDE_AUDIO_VERSIONS[manifestKey]}$`)
+      );
+    }
+  }
+
+  assert.equal(slideCount, 314);
+  assert.deepEqual(new Set(Object.keys(SLIDE_AUDIO_VERSIONS)), expectedManifestKeys);
 });
 
 test('Header no longer renders Слова/Перевод/Тест and shows progress + outline', () => {

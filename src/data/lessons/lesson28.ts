@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L28_ACTIVITIES = createMigrationActivities({
+  lessonId: 28,
+  controlledTitle: 'Итоговое повторение: форма, значение и связь',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'singleChoice', id: 'l28-cp-1', prompt: 'ház + ban + possessive «мой»', options: ['házamban', 'házbanom'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l28-cp-2', prompt: '«Я прочитал эту книгу».', options: ['Elolvastam ezt a könyvet.', 'Elolvasok ezt a könyvet.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l28-cp-3', prompt: 'Вежливая просьба.', options: ['Legyen szíves, segítsen!', 'Segítettem tegnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l28-cp-4', prompt: 'Гипотеза.', options: ['Ha lenne időm, utaznék.', 'Mert tegnap utaztam.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l28-cp-5', prompt: 'Причина и контраст.', options: ['Szeretem, mert érdekes, de nehéz.', 'Szeretem ha érdekes mert.'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: личный опыт изучения языка',
+  readingParagraphs: ['Két éve kezdtem magyarul tanulni, mert Budapestre költöztem. Eleinte nehéz volt a sok toldalék, de ma már megértem a hétköznapi beszélgetéseket. Szeretnék folyékonyabban beszélni, ezért minden nap hallgatok magyar műsorokat.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l28-read-1', question: 'Miért kezdett magyarul tanulni?', options: ['Budapestre költözött', 'Új munkát keresett', 'Vizsgára készült'], correctIndex: 0 },
+    { id: 'l28-read-2', question: 'Mi volt eleinte nehéz?', options: ['A sok toldalék', 'Az ábécé', 'A számok'], correctIndex: 0 },
+    { id: 'l28-read-3', question: 'Mit csinál minden nap?', options: ['Magyar műsorokat hallgat', 'Levelet ír', 'Nyelvtant tanít'], correctIndex: 0 },
+  ],
+  listeningTitle: 'Аудирование: планы дальнейшего обучения',
+  listeningTranscript: 'Jövőre szeretnék nyelvvizsgát tenni. Ha több időm lesz, hetente kétszer beszélgetek majd magyar barátokkal, mert a folyékony beszédet szeretném fejleszteni.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l28-listen-1', question: 'Mit szeretne tenni jövőre?', options: ['Nyelvvizsgát tenni', 'Elköltözni', 'Munkát váltani'], correctIndex: 0 },
+    { id: 'l28-listen-2', question: 'Milyen gyakran szeretne beszélgetni?', options: ['Naponta', 'Hetente kétszer', 'Havonta'], correctIndex: 1 },
+    { id: 'l28-listen-3', question: 'Mit szeretne fejleszteni?', options: ['A folyékony beszédet', 'A kézírást', 'A fordítást'], correctIndex: 0 },
+  ],
+  writingTitle: 'Итоговый текст: мой опыт, мнение и план',
+  writingPrompt: 'Напиши 10–12 связанных фраз: коротко расскажи о прошлом опыте, опиши настоящее, объясни мнение и назови будущий план с условием.',
+  writingModel: ['Két éve kezdtem magyarul tanulni.', 'Most már sok mindent megértek, de még szeretnék folyékonyabban beszélni.', 'Ha lesz időm, jövőre nyelvvizsgát teszek.'],
+  writingRubric: ['Есть прошлое, настоящее и будущее', 'Мнение подкреплено причиной', 'Есть условие и связный переход между мыслями'],
+  recordingTitle: 'Итоговое говорение: связный рассказ',
+  recordingInstructions: 'Запиши 1–2 минуты связной речи: прошлый опыт, нынешняя ситуация, мнение с причиной и будущий план.',
+  recordingTarget: 'Két éve kezdtem tanulni. Most rendszeresen gyakorlok, mert szeretnék folyékonyabban beszélni. Ha lesz időm, jövőre vizsgát teszek.',
+  objectiveChecks: [
+    { objectiveId: 'l28_review-agglutination', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l28_review-cases', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l28_review-moods', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l28_integrate-skills', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l28_self-assess', activity: 'recording', evidenceKind: 'speaking' },
+  ],
+});
 
 export const LESSON_28: Lesson = {
   id: 28,
@@ -123,6 +167,7 @@ export const LESSON_28: Lesson = {
       eyebrow: "УРОК 28 · 9/11 · ИТОГОВЫЙ ТЕСТ",
       title: "Záróteszt",
       subtitle: "Финальный самоконтроль B1",
+      activities: L28_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Напишите 3 формы глагола tanul: прошедшее (ő), повелительное (ő), условное (ő)</li>

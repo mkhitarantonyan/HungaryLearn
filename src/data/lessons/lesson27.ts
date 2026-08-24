@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L27_ACTIVITIES = createMigrationActivities({
+  lessonId: 27,
+  controlledTitle: 'Поездка: транспорт, билет, отель и дорога',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'fillGap', id: 'l27-cp-1', prompt: 'busz + -val/-vel', accept: ['busszal'] },
+    { kind: 'singleChoice', id: 'l27-cp-2', prompt: 'Попроси билет туда и обратно.', options: ['Egy retúrjegyet kérek.', 'Egy szobát kérek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l27-cp-3', prompt: 'Сообщи о бронировании.', options: ['Van egy foglalásom.', 'Fáj a fejem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l27-cp-4', prompt: 'Спроси, где остановка.', options: ['Hol van a megálló?', 'Mikor reggelizik?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l27-cp-5', prompt: 'Указание: «Идите прямо».', options: ['Menjen egyenesen.', 'Jöjjön tegnap.'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: информация о поездке',
+  readingParagraphs: ['A vonat 9:10-kor indul Budapestről, és 11:35-kor érkezik Pécsre. A jegy a második osztályra szól. Pécsen a 3-as helyi busszal lehet a szállodához menni.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l27-read-1', question: 'Mikor indul a vonat?', options: ['9:10-kor', '11:35-kor', '3-kor'], correctIndex: 0 },
+    { id: 'l27-read-2', question: 'Hová érkezik?', options: ['Pécsre', 'Szegedre', 'Bécsbe'], correctIndex: 0 },
+    { id: 'l27-read-3', question: 'Melyik busszal lehet a szállodához menni?', options: ['A 2-essel', 'A 3-assal', 'A 10-essel'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: на рецепции отеля',
+  listeningTranscript: 'Vendég: Jó estét! Van egy foglalásom Kovács névre, két éjszakára.\nRecepciós: Igen, látom. A szobája a második emeleten van, a reggeli hét és tíz óra között.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l27-listen-1', question: 'Milyen névre szól a foglalás?', options: ['Kovács', 'Nagy', 'Szabó'], correctIndex: 0 },
+    { id: 'l27-listen-2', question: 'Hány éjszakára?', options: ['Egy', 'Kettő', 'Három'], correctIndex: 1 },
+    { id: 'l27-listen-3', question: 'Mikor van reggeli?', options: ['7 és 10 között', '10 és 12 között', 'Egész nap'], correctIndex: 0 },
+  ],
+  writingTitle: 'Письмо: запрос в гостиницу',
+  writingPrompt: 'Напиши короткий запрос в гостиницу: даты, число гостей, тип номера и один вопрос об услуге или транспорте.',
+  writingModel: ['Kétágyas szobát szeretnék foglalni június 10-től 12-ig.', 'Két vendég érkezik.', 'Van parkoló a szállodánál?'],
+  writingRubric: ['Указаны даты и гости', 'Назван тип номера', 'Есть практический вопрос'],
+  recordingTitle: 'Говорение: билет, заселение и дорога',
+  recordingInstructions: 'Запиши три короткие ситуации: покупка билета, заселение по бронированию и вопрос о дороге.',
+  recordingTarget: 'Egy retúrjegyet kérek Pécsre. Van egy foglalásom Kovács névre. Elnézést, hol van a buszmegálló?',
+  objectiveChecks: [
+    { objectiveId: 'l27_name-transport', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l27_buy-tickets', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l27_book-room', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l27_ask-directions', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l27_travel-dialogue', activity: 'listening', evidenceKind: 'listening' },
+  ],
+});
 
 export const LESSON_27: Lesson = {
   id: 27,
@@ -119,6 +163,7 @@ export const LESSON_27: Lesson = {
       eyebrow: "УРОК 27 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L27_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Назовите 5 видов транспорта с суффиксом -val/-vel</li>

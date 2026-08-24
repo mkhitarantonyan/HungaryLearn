@@ -1,4 +1,53 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L20_ACTIVITIES = createMigrationActivities({
+  lessonId: 20,
+  controlledTitle: 'Прошедшее время: формы и выбор спряжения',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'fillGap', id: 'l20-cp-1', prompt: 'én + vár → прошедшее время', accept: ['vártam'] },
+    { kind: 'fillGap', id: 'l20-cp-2', prompt: 'ő + dolgozik → прошедшее время', accept: ['dolgozott'] },
+    { kind: 'fillGap', id: 'l20-cp-3', prompt: 'ő + megy → прошедшее время', accept: ['ment'] },
+    { kind: 'singleChoice', id: 'l20-cp-4', prompt: 'Выбери: «Я читал одну книгу».', options: ['Olvastam egy könyvet.', 'Olvastam a könyvet.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l20-cp-5', prompt: 'Выбери: «Я прочитал эту книгу».', options: ['Olvastam egy könyvet.', 'Olvastam a könyvet.'], correctIndex: 1 },
+  ],
+  readingTitle: 'Чтение: вчерашний день Анны',
+  readingParagraphs: ['Tegnap Anna korán felkelt. Reggelizett, majd busszal munkába ment. Délután találkozott a barátaival, este pedig otthon olvasott.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l20-read-1', question: 'Mikor kelt fel Anna?', options: ['Korán', 'Délben', 'Este'], correctIndex: 0 },
+    { id: 'l20-read-2', question: 'Hogyan ment munkába?', options: ['Autóval', 'Busszal', 'Gyalog'], correctIndex: 1 },
+    { id: 'l20-read-3', question: 'Mit csinált este?', options: ['Olvasott', 'Dolgozott', 'Utazott'], correctIndex: 0 },
+  ],
+  listeningTitle: 'Аудирование: короткий рассказ о прошлом',
+  listeningTranscript: 'Tegnap Péter nem dolgozott. Délelőtt bevásárolt, délután pedig meglátogatta a testvérét. Este együtt főztek.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l20-listen-1', question: 'Dolgozott Péter tegnap?', options: ['Igen', 'Nem'], correctIndex: 1 },
+    { id: 'l20-listen-2', question: 'Kit látogatott meg?', options: ['A barátját', 'A testvérét', 'Az orvost'], correctIndex: 1 },
+    { id: 'l20-listen-3', question: 'Mit csináltak este?', options: ['Főztek', 'Tanultak', 'Utaztak'], correctIndex: 0 },
+  ],
+  writingTitle: 'Письмо: мой вчерашний день',
+  writingPrompt: 'Напиши 6 связанных фраз о вчерашнем дне. Используй минимум три разных глагола в прошедшем времени и один маркер последовательности.',
+  writingModel: ['Tegnap korán felkeltem.', 'Reggeliztem, aztán munkába mentem.', 'Este találkoztam a barátommal.'],
+  writingRubric: ['Есть не менее шести связанных фраз', 'Прошедшие формы понятны', 'Есть маркер последовательности'],
+  recordingTitle: 'Говорение: что было вчера',
+  recordingInstructions: 'Расскажи о вчерашнем дне 5–6 связанными фразами и затем прослушай запись.',
+  recordingTarget: 'Tegnap dolgoztam, aztán találkoztam a barátaimmal. Este otthon pihentem.',
+  objectiveChecks: [
+    { objectiveId: 'l20_form-past-regular', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l20_form-past-irregular', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l20_use-definite-indefinite', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l20_narrate-past', activity: 'writing', evidenceKind: 'writing' },
+    {
+      objectiveId: 'l20_understand-past-texts',
+      activity: 'reading',
+      evidenceKind: 'reading',
+      evidenceComponents: [{ activity: 'listening', evidenceKind: 'listening' }],
+    },
+  ],
+});
 
 export const LESSON_20: Lesson = {
   id: 20,
@@ -142,6 +191,7 @@ export const LESSON_20: Lesson = {
       eyebrow: "УРОК 20 · 10/12 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L20_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Поставьте в прошедшее время: „tanulok“, „dolgozom“, „vagyok“</li>

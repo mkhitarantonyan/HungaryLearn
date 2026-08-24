@@ -80,7 +80,7 @@ export interface ProgressMutationResult<Result> {
   result: Result;
 }
 
-interface AppUserRow extends QueryResultRow {
+export interface AppUserRow extends QueryResultRow {
   id: string;
   email: string;
   password_hash: string;
@@ -245,6 +245,64 @@ export async function listUsers(): Promise<StudentUser[]> {
     'select * from public.app_users order by created_at asc'
   );
   return result.rows.map(mapStudentUserRow);
+}
+
+export interface AdminUserListOptions {
+  limit: number;
+  offset: number;
+  search?: string;
+  sort: 'createdAt' | 'email';
+  direction: 'asc' | 'desc';
+}
+
+export interface AdminUserListResult {
+  users: StudentUser[];
+  total: number;
+}
+
+export async function listUsersForAdmin(
+  options: AdminUserListOptions,
+  client?: ProgressTransactionClient
+): Promise<AdminUserListResult> {
+  const database = client ?? getDatabasePool();
+  const search = options.search?.trim() || null;
+  const orderColumn = options.sort === 'email' ? 'email' : 'created_at';
+  const orderDirection = options.direction === 'asc' ? 'asc' : 'desc';
+  const values = [search, options.limit, options.offset];
+  const [rows, count] = await Promise.all([
+    database.query<AppUserRow>(
+      `select * from public.app_users
+        where ($1::text is null or email ilike '%' || $1 || '%')
+        order by ${orderColumn} ${orderDirection}, id asc
+        limit $2 offset $3`,
+      values
+    ),
+    database.query<{ count: string } & QueryResultRow>(
+      `select count(*)::text as count from public.app_users
+        where ($1::text is null or email ilike '%' || $1 || '%')`,
+      [search]
+    ),
+  ]);
+  return {
+    users: rows.rows.map(mapStudentUserRow),
+    total: Number(count.rows[0]?.count ?? 0),
+  };
+}
+
+export async function updateUserPrivilege(
+  id: string,
+  privileged: boolean,
+  client?: ProgressTransactionClient
+): Promise<StudentUser | null> {
+  if (!isUuid(id)) return null;
+  const result = await (client ?? getDatabasePool()).query<AppUserRow>(
+    `update public.app_users
+        set is_privileged = $2
+      where id = $1
+      returning *`,
+    [id, privileged]
+  );
+  return result.rows[0] ? mapStudentUserRow(result.rows[0]) : null;
 }
 
 export async function createUserWithSession(

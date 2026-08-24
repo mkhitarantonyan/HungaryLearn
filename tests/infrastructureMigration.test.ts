@@ -90,12 +90,12 @@ test('course audio uploader is explicit, scoped, recursive, and verified', () =>
   assert.match(script, /sha256\(verifiedBuffer\)/);
 });
 
-test('all local static course audio remains present and missing assessments stay missing', () => {
+test('all local static course audio remains present and published Listening assets are non-empty', () => {
   const audioDirectory = path.join(projectRoot, 'public', 'audio');
   const audioFiles = readdirSync(audioDirectory).filter((name) => /\.(mp3|wav|webm|ogg|m4a|mp4)$/i.test(name));
-  assert.equal(audioFiles.length, 511);
+  assert.equal(audioFiles.length, 538);
 
-  const intentionallyMissing = [
+  const publishedListening = [
     'l1_listening_s_sz.mp3',
     'l1_listening_soft_consonants.mp3',
     'l1_listening_vowel_length.mp3',
@@ -104,8 +104,10 @@ test('all local static course audio remains present and missing assessments stay
     'l5_listening_time.mp3',
     'l6_listening_a0_review.mp3',
   ];
-  for (const fileName of intentionallyMissing) {
-    assert.equal(existsSync(path.join(audioDirectory, fileName)), false, fileName);
+  for (const fileName of publishedListening) {
+    const filePath = path.join(audioDirectory, fileName);
+    assert.equal(existsSync(filePath), true, fileName);
+    assert.ok(readFileSync(filePath).byteLength > 0, fileName);
   }
 });
 

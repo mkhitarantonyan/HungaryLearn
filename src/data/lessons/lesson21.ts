@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L21_ACTIVITIES = createMigrationActivities({
+  lessonId: 21,
+  controlledTitle: 'Два спряжения в реальных фразах',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'singleChoice', id: 'l21-cp-1', prompt: '«Я читаю одну книгу».', options: ['Olvasok egy könyvet.', 'Olvasom egy könyvet.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l21-cp-2', prompt: '«Я читаю эту книгу».', options: ['Olvasok a könyvet.', 'Olvasom a könyvet.'], correctIndex: 1 },
+    { kind: 'fillGap', id: 'l21-cp-3', prompt: '«Я вижу тебя».', accept: ['Látlak', 'Látlak.'] },
+    { kind: 'singleChoice', id: 'l21-cp-4', prompt: 'Выбери фразу с engem.', options: ['Ő lát engem.', 'Ő látja engem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l21-cp-5', prompt: 'Выбери фразу о конкретном фильме.', options: ['Nézek egy filmet.', 'Nézem a filmet.'], correctIndex: 1 },
+  ],
+  readingTitle: 'Чтение: разговор о книге и фильме',
+  readingParagraphs: ['Anna egy új könyvet olvas, Péter pedig a tegnapi filmet nézi. Anna szereti a történetet, de Péter nem szereti a filmet.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l21-read-1', question: 'Mit olvas Anna?', options: ['Egy új könyvet', 'A tegnapi újságot', 'Egy levelet'], correctIndex: 0 },
+    { id: 'l21-read-2', question: 'Melyik tárgy meghatározott?', options: ['egy új könyvet', 'a tegnapi filmet', 'egy történetet'], correctIndex: 1 },
+    { id: 'l21-read-3', question: 'Szereti Péter a filmet?', options: ['Igen', 'Nem'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: что и кого видят друзья',
+  listeningTranscript: 'A: Látod azt a házat?\nB: Igen, látom.\nA: És engem látsz a képen?\nB: Igen, téged is látlak.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l21-listen-1', question: 'Mit látnak először?', options: ['Egy házat', 'Egy autót', 'Egy könyvet'], correctIndex: 0 },
+    { id: 'l21-listen-2', question: 'Melyik forma hangzik el a házzal?', options: ['látok', 'látom', 'látlak'], correctIndex: 1 },
+    { id: 'l21-listen-3', question: 'Melyik forma jelenti: «я вижу тебя»?', options: ['látom', 'látsz', 'látlak'], correctIndex: 2 },
+  ],
+  writingTitle: 'Письмо: неопределённое и конкретное',
+  writingPrompt: 'Напиши пять пар коротких фраз: сначала о любом предмете, затем о конкретном. В одной паре используй -lak/-lek.',
+  writingModel: ['Olvasok egy könyvet. Olvasom a könyvet.', 'Nézek egy filmet. Nézem a filmet.', 'Látlak téged.'],
+  writingRubric: ['Контраст дополнений понятен', 'Формы спряжения согласованы с дополнением', 'Есть пример -lak/-lek'],
+  recordingTitle: 'Говорение: выбери спряжение в контексте',
+  recordingInstructions: 'Расскажи, что ты обычно читаешь или смотришь и что читаешь или смотришь сейчас.',
+  recordingTarget: 'Gyakran olvasok könyveket. Most ezt a könyvet olvasom.',
+  objectiveChecks: [
+    { objectiveId: 'l21_choose-conjugation', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l21_use-object-pronouns', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l21_form-lak-lek', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l21_distinguish-conjugations', activity: 'listening', evidenceKind: 'listening' },
+    { objectiveId: 'l21_apply-conjugation', activity: 'writing', evidenceKind: 'writing' },
+  ],
+});
 
 export const LESSON_21: Lesson = {
   id: 21,
@@ -119,6 +163,7 @@ export const LESSON_21: Lesson = {
       eyebrow: "УРОК 21 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L21_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Выберите правильную форму: „Látom / látok engem?“</li>

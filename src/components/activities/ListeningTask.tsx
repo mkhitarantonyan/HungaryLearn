@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Headphones } from 'lucide-react';
 import type { ActivityEvidence, ListeningTaskData } from '../../types';
 import { QuestionSet } from './QuestionSet';
@@ -29,13 +29,26 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
 }) => {
   const [submitted, setSubmitted] = useState(false);
   const [audioError, setAudioError] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const canDirect = canProduceDirectListeningEvidence(data);
   const audioSrc = canDirect ? audioUrl(`${data.assetId}.mp3`) : null;
 
+  useEffect(() => {
+    setSubmitted(false);
+    setAudioError(false);
+    setAudioReady(false);
+  }, [data.id, data.assetId, data.audioStatus]);
+
   const handleSubmit = (score: number, total: number) => {
     setSubmitted(true);
-    const result = listeningEvidence(data, score, total);
+    const result = listeningEvidence(data, score, total, audioReady && !audioError);
     onEvidence({ activityId: data.id, attempted: true, completed: true, ...result });
+  };
+
+  const handleAudioError = () => {
+    setAudioReady(false);
+    setAudioError(true);
+    onResetEvidence?.(data.id);
   };
 
   return (
@@ -49,9 +62,13 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
             {evidence.score}/{evidence.total} · DIRECT · met
           </span>
+        ) : evidence?.completed && evidence.evidenceMode === 'direct' ? (
+          <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#8A7A68]">
+            {evidence.score}/{evidence.total} · DIRECT · не met
+          </span>
         ) : evidence?.completed ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#8A7A68]">
-            практика ({evidence.score}/{evidence.total}) · без прямого evidence
+            {evidence.score}/{evidence.total} · NONE · audio недоступно
           </span>
         ) : null}
       </div>
@@ -59,16 +76,19 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
       {/* Audio stimulus */}
       {canDirect && audioSrc ? (
         <div
-          className="rounded-xl border border-[#D9CBB0] bg-white p-3"
+          className="min-w-0 overflow-hidden rounded-xl border border-[#D9CBB0] bg-white p-3"
           role="region"
-          aria-label="Аудиозапись диалога"
+          aria-label={`Аудиозапись: ${data.title ?? 'аудирование'}`}
         >
           <audio
             controls
             src={audioSrc}
-            className="w-full"
-            onCanPlay={() => setAudioError(false)}
-            onError={() => setAudioError(true)}
+            className="block w-full max-w-full"
+            onCanPlay={() => {
+              setAudioReady(true);
+              setAudioError(false);
+            }}
+            onError={handleAudioError}
           />
           {audioError && (
             <p className="text-xs text-red-700 mt-2" role="alert">
@@ -76,7 +96,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
             </p>
           )}
           <p className="text-[11px] text-[#8A7A68] mt-1">
-            Прослушайте диалог. Повтор разрешён: первый раз — общий смысл, второй раз — детали.
+            Прослушайте запись. Повтор разрешён: первый раз — общий смысл, второй раз — детали.
           </p>
         </div>
       ) : (

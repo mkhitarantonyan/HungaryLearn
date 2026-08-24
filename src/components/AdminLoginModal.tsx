@@ -138,7 +138,9 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
                 type="button"
                 onClick={async () => {
                   const res = await resetAllAudioOverrides();
-                  setResetSuccessMsg(`Успешно сброшено ${res.count} переопределений. Приложение полностью вернулось к файлам из public/audio/!`);
+                  setResetSuccessMsg(res.success
+                    ? `Успешно сброшено ${res.count} переопределений. Приложение полностью вернулось к файлам из public/audio/!`
+                    : `Локальные данные сброшены не полностью или сервер не удалил ключи: ${res.failedServerKeys.join(', ') || 'локальное хранилище'}. Повторите попытку.`);
                 }}
                 className="w-full py-2 px-3 rounded-xl bg-[#7A1E2B] hover:bg-[#57121C] text-white font-mono font-semibold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
@@ -207,4 +209,3 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     </div>
   );
 };
-

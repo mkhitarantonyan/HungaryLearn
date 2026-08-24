@@ -14,6 +14,10 @@ function isDuplicateStripeEvent(
   return processed.has(eventId);
 }
 
+function shouldExtendSubscription(billingReason: string | null): boolean {
+  return billingReason === 'subscription_cycle';
+}
+
 test('stripe webhook skips duplicate event ids', () => {
   const processed = new Map<string, ProcessedStripeEvent>();
   processed.set('evt_123', {
@@ -27,13 +31,9 @@ test('stripe webhook skips duplicate event ids', () => {
 });
 
 test('invoice.payment_succeeded should not extend on subscription_create', () => {
-  const billingReason = 'subscription_create';
-  const shouldExtend = billingReason === 'subscription_cycle';
-  assert.equal(shouldExtend, false);
+  assert.equal(shouldExtendSubscription('subscription_create'), false);
 });
 
 test('invoice.payment_succeeded should extend on subscription_cycle', () => {
-  const billingReason = 'subscription_cycle';
-  const shouldExtend = billingReason === 'subscription_cycle';
-  assert.equal(shouldExtend, true);
+  assert.equal(shouldExtendSubscription('subscription_cycle'), true);
 });

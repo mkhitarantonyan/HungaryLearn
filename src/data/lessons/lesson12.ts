@@ -27,7 +27,7 @@ const ABLATIVE = formPractice('l12-cp-ablative-forms', 'Формы -tól/-től',
 
 const LISTENING: LessonActivity = {
   kind: 'listening', id: 'l12-listening-near-locations', title: 'Аудирование: у кого, к кому, от кого?',
-  assetId: 'l12_listening_near_locations', audioStatus: 'missing', passCount: 4,
+  assetId: 'l12_listening_near_locations', audioStatus: 'published', passCount: 4,
   transcript: 'Anna Péterhez megy. Péter most az orvosnál van. Az orvostól jön, utána Annához megy egy könyvért.',
   questions: [
     { id: 'l12-listening-q1', question: 'К кому идёт Анна?', options: ['Péterhez', 'az orvoshoz', 'a testvéréhez'], correctIndex: 0 },
@@ -47,14 +47,14 @@ const WRITING: LessonActivity = {
 
 const RECORDING: LessonActivity = {
   kind: 'recording', id: 'l12-recording-near-exchange', title: 'Говорение: практический обмен',
-  instructions: 'Запиши короткий ответ или обмен с формами у/к/от. Запись остаётся PARTIAL evidence и требует проверки человеком.',
+  instructions: 'Запиши короткий ответ или обмен с формами у/к/от, затем проверь окончания по памятке урока.',
   targetText: 'Hová mész? Péterhez megyek. Honnan jössz? Az orvostól jövök.',
   targetTranslation: 'К кому ты идёшь? Я иду к Петеру. Откуда ты идёшь? Я иду от врача.',
   rubric: ['Есть минимум две короткие связанные реплики', 'Использованы минимум две изученные relation-группы', 'Ответ понятен в практическом контексте'],
 };
 
 const EXIT_CHECK: LessonActivity = {
-  kind: 'exitCheck', id: 'l12-exit-check', title: 'Exit check — цели урока 12', checks: [
+  kind: 'exitCheck', id: 'l12-exit-check', title: 'Проверка целей урока 12', checks: [
     { objectiveId: 'l12_distinguish-near-cases', activityId: 'l12-cp-near-meanings', evidenceKind: 'grammar' },
     { objectiveId: 'l12_form-adessive', activityId: 'l12-cp-adessive-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l12_form-allative', activityId: 'l12-cp-allative-forms', evidenceKind: 'grammar' },
@@ -84,7 +84,7 @@ export const LESSON_12: Lesson = {
       <table class="conj"><tr><th>Отношение</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>внутри</td><td>-ban/-ben</td><td>-ba/-be</td><td>-ból/-ből</td></tr><tr><td>на поверхности</td><td>-n/-on/-en/-ön</td><td>-ra/-re</td><td>-ról/-ről</td></tr><tr><td>у / около / к / от</td><td>-nál/-nél</td><td>-hoz/-hez/-höz</td><td>-tól/-től</td></tr></table>
       <div class="note">Таблица сравнивает три часто используемые пространственные группы по Hol? / Hová? / Honnan?. Это учебная модель, а не полное описание всех способов выражения пространства в венгерском.</div>` },
     { id: 6, eyebrow: 'УРОК 12 · 6/11 · ДИАЛОГ', title: 'Párbeszéd', subtitle: 'К врачу и от врача', body: `<p><b>A:</b> Hová mész?</p><p><b>B:</b> Az orvoshoz megyek, mert beteg vagyok.</p><p><b>A:</b> Honnan jössz?</p><p><b>B:</b> Az orvostól jövök.</p><p><b>A:</b> És utána?</p><p><b>B:</b> Utána Péterhez megyek.</p><p>Отдельный статический пример: <b>Péternél vagyok.</b></p>` },
-    { id: 7, eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ', title: 'Kihez? Kinél? Kitől?', subtitle: 'Короткий обмен на слух', body: `<p>Определи отношение, цель и источник в коротком разговоре.</p><div class="note">Assessment MP3 ещё не опубликован. Озвучка слайда не заменяет запись и не создаёт listening evidence.</div>`, activities: [LISTENING] },
+    { id: 7, eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ', title: 'Kihez? Kinél? Kitől?', subtitle: 'Короткий обмен на слух', body: `<p>Определи отношение, цель и источник в коротком разговоре.</p><div class="note">Отдельная запись для задания ещё не опубликована, поэтому аудирование пока недоступно.</div>`, activities: [LISTENING] },
     { id: 8, eyebrow: 'УРОК 12 · 8/11 · ПРАКТИЧЕСКИЙ ОБМЕН', title: 'Írás és beszéd', subtitle: 'Письмо и говорение', body: `<p>Используй ядро урока в коротком обмене. Открытые ответы требуют проверки и не становятся автоматически правильными после отправки или записи.</p>`, activities: [WRITING, RECORDING] },
     { id: 9, eyebrow: 'УРОК 12 · 9/11 · БЛОК B · ДОПОЛНИТЕЛЬНО', title: 'Kiválasztott névutók', subtitle: 'Выбранные послелоги — enrichment', body: `
       <p><b>Дополнительно, вне целей и проходных заданий:</b> alatt — под; felett/fölött — над; mellett — рядом; előtt — перед; mögött — позади; között — между.</p><p><b>A macska az asztal alatt van.</b> — Кошка под столом.</p>
@@ -93,7 +93,7 @@ export const LESSON_12: Lesson = {
     { id: 10, eyebrow: 'УРОК 12 · 10/11 · БЛОК B · ДОПОЛНИТЕЛЬНО', title: 'Személyes alakok és idő', subtitle: 'Личные формы и временные chunks — enrichment', body: `
       <p><b>Дополнительное распознавание:</b> nálam/nálad/nála; hozzám/<b>hozzád</b>/hozzá; tőlem/tőled/tőle. У этих падежных форм есть личные формы: nálam «у меня», hozzám «ко мне», tőlem «от меня».</p>
       <p>Полезные временные chunks: <b>kilenctől</b> — с девяти часов; <b>ebéd előtt</b> — до обеда; <b>ebéd után</b> — после обеда; <b>két nap múlva</b> — через два дня.</p>
-      <div class="note">Эти формы и chunks не входят в ControlledPractice, Quiz или ExitCheck урока 12.</div>` },
+      <div class="note">Эти формы даны для знакомства. В обязательных упражнениях урока они не проверяются.</div>` },
     { id: 11, eyebrow: 'УРОК 12 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Три отношения в практическом контексте', body: `<ul class="tick"><li>Hol? — -nál/-nél</li><li>Hová? — -hoz/-hez/-höz</li><li>Honnan? — -tól/-től</li><li>Выбранные послелоги и личные формы остаются дополнительным материалом</li></ul><div class="note">Следующий урок вводит прошедшее время. В L12 остаёмся в настоящем времени и работаем с местом и направлением.</div>`, activities: [EXIT_CHECK] },
   ],
   vocabulary: [

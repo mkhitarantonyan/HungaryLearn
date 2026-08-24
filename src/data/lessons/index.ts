@@ -52,7 +52,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A0',
     title: 'Урок 6 · A0 összefoglaló',
     subtitle: 'Повторение и закрепление уровня A0',
-    description: 'Низкострессовое повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и рефлексия по evidence. Без новой грамматики A1.',
+    description: 'Спокойное повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и итоговая самопроверка. Без новой грамматики A1.',
     slidesCount: 10
   },
   {
@@ -150,8 +150,8 @@ export const LESSONS_META: LessonMeta[] = [
     number: 17,
     level: 'A2',
     title: 'Урок 17 · Időjárás és évszakok',
-    subtitle: 'Погода и времена года',
-    description: 'Описание погоды (Süt a nap, esik az eső), температура (Hány fok van?), времена года и их особые суффиксы (tavasszal, nyáron, ősszel, télen), части дня.',
+    subtitle: 'Погода, времена года и месяцы',
+    description: 'Базовое описание погоды и температуры, четыре времени года, месяцы, формы tavasszal/nyáron/ősszel/télen, сравнение сезонов и короткий прогноз на слух.',
     slidesCount: 11
   },
   {
@@ -159,8 +159,8 @@ export const LESSONS_META: LessonMeta[] = [
     number: 18,
     level: 'A2',
     title: 'Урок 18 · Módbeli segédigék',
-    subtitle: 'Модальные глаголы и инфинитив',
-    description: 'Образование инфинитива (-ni), глагол kell с личным инфинитивом (mennem kell), lehet (можно), tud (уметь), szeretne (хотел бы) и akar (хотеть).',
+    subtitle: 'Инфинитив и частотные модальные конструкции',
+    description: 'Базовый инфинитив, ограниченная модель личного инфинитива с kell и различие kell, lehet, tud, szeretnék и akarok в практических ситуациях.',
     slidesCount: 12
   },
   {
@@ -168,8 +168,8 @@ export const LESSONS_META: LessonMeta[] = [
     number: 19,
     level: 'A2',
     title: 'Урок 19 · A jövő idő',
-    subtitle: 'Будущее время (fog + инфинитив)',
-    description: 'Образование будущего времени с помощью вспомогательного глагола fog и инфинитива, два спряжения fog (fogok / fogom), отрицание и маркеры времени.',
+    subtitle: 'Будущее с fog + инфинитив и планы',
+    description: 'Будущее с fog + инфинитив, неопределённая парадигма fog, отрицание, настоящее время для будущих планов, знакомство с определёнными формами, планы, прогнозы и различение времён.',
     slidesCount: 11
   },
   {

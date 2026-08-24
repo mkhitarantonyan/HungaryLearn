@@ -76,10 +76,10 @@ test('curriculum remains exactly 139 objectives', async () => {
 });
 
 test('L2, L3, L4, and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '91DF3BC496A79898F421D42E7B7F376ED1BA108A3F81C6886777364C65B6EA19');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), '7FF81838BB2610D46A5B1F93408A419D7D668287388F705D75F3AAF3D0F898BF');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'E44AFA95D968A513F649C3B193AE2CEED588596DA53EEFB1008132ED1A3D4852');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });
 
 test('L1 migration is present while frozen planning/translation files stay unchanged', async () => {
@@ -87,8 +87,8 @@ test('L1 migration is present while frozen planning/translation files stay uncha
   assert.ok(lesson1);
   assert.equal(lesson1.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
-  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
-  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
+  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
+  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
 });
 
@@ -128,17 +128,17 @@ test('legacy L2/L4/L15 listening questions remain choice-shaped and unchanged', 
   }
 });
 
-test('number dictation has ten exact inputs, 8/10 threshold, one missing asset', () => {
+test('number dictation has ten exact inputs, 8/10 threshold, and one published shared asset', () => {
   const dictation = findActivity('l5-listening-number-dictation', 'listening');
   assert.equal(dictation.questions.length, 10);
   assert.ok(dictation.questions.every((question) => 'kind' in question && question.kind === 'textInput'));
   assert.equal(dictation.passCount, 8);
   assert.equal(dictation.assetId, 'l5_listening_time');
-  assert.equal(dictation.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l5_listening_time.mp3', import.meta.url)), false);
+  assert.equal(dictation.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l5_listening_time.mp3', import.meta.url)), true);
   assert.deepEqual(listeningEvidence(dictation, 10, 10), {
-    passed: false,
-    evidenceMode: 'none',
+    passed: true,
+    evidenceMode: 'direct',
     score: 10,
     total: 10,
   });

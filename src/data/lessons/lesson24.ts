@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L24_ACTIVITIES = createMigrationActivities({
+  lessonId: 24,
+  controlledTitle: 'Союзы: смысловая связь между частями',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'singleChoice', id: 'l24-cp-1', prompt: 'Nem megyek el, ___ fáradt vagyok.', options: ['mert', 'de', 'és'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l24-cp-2', prompt: 'Fáradt vagyok, ___ befejezem a munkát.', options: ['de', 'mert', 'hogy'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l24-cp-3', prompt: 'Tudom, ___ holnap jössz.', options: ['hogy', 'bár', 'és'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l24-cp-4', prompt: '___ esik, sétálni megyünk.', options: ['Bár', 'Mert', 'És'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l24-cp-5', prompt: '___ jó idő lesz, kirándulunk.', options: ['Ha', 'De', 'Hogy'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: решение на выходные',
+  readingParagraphs: ['Szombaton kirándulni szeretnénk, de az időjárás bizonytalan. Ha süt a nap, a hegyekbe megyünk. Ha esik, otthon maradunk, mert nem szeretünk esőben sétálni.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l24-read-1', question: 'Miért bizonytalan a program?', options: ['Az időjárás miatt', 'A munka miatt', 'A pénz miatt'], correctIndex: 0 },
+    { id: 'l24-read-2', question: 'Mikor mennek a hegyekbe?', options: ['Ha süt a nap', 'Ha esik', 'Ha dolgoznak'], correctIndex: 0 },
+    { id: 'l24-read-3', question: 'Miért maradnak otthon esőben?', options: ['Mert fáradtak', 'Mert nem szeretnek esőben sétálni', 'Mert nincs autójuk'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: мнение и причина',
+  listeningTranscript: 'Szerintem jó ez a lakás, mert világos és közel van a munkámhoz. Bár kicsi, mégis kényelmes. Megnézem még egyszer, és utána döntök.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l24-listen-1', question: 'Miért tetszik a lakás?', options: ['Világos és közel van', 'Nagy és olcsó', 'Új és csendes'], correctIndex: 0 },
+    { id: 'l24-listen-2', question: 'Mi a lakás hátránya?', options: ['Sötét', 'Kicsi', 'Messze van'], correctIndex: 1 },
+    { id: 'l24-listen-3', question: 'Mikor dönt a beszélő?', options: ['Azonnal', 'Egy újabb megtekintés után', 'Jövőre'], correctIndex: 1 },
+  ],
+  writingTitle: 'Письмо: мнение с аргументами',
+  writingPrompt: 'Напиши 7–8 связанных фраз о выборе жилья, работы или поездки. Вырази мнение, две причины, контраст и условие.',
+  writingModel: ['Szerintem ez a munka érdekes, mert sok emberrel találkozom.', 'Bár messze van, jól fizet.', 'Ha megkapom az állást, elfogadom.'],
+  writingRubric: ['Есть мнение и причины', 'Использованы контраст и условие', 'Фразы образуют связный текст'],
+  recordingTitle: 'Говорение: объясни своё решение',
+  recordingInstructions: 'Выскажи мнение, назови две причины и один контраргумент. Свяжи реплики союзами урока.',
+  recordingTarget: 'Szerintem ez jó döntés, mert hasznos. Bár nehéz, megpróbálom, ha lesz időm.',
+  objectiveChecks: [
+    { objectiveId: 'l24_use-conjunctions', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l24_build-complex-sentences', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l24_express-cause', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l24_express-contrast', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l24_connect-ideas', activity: 'recording', evidenceKind: 'speaking' },
+  ],
+});
 
 export const LESSON_24: Lesson = {
   id: 24,
@@ -113,6 +157,7 @@ export const LESSON_24: Lesson = {
       eyebrow: "УРОК 24 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L24_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Соедините два предложения с помощью mert: „Nem jöttem“ + „Sok dolgom volt“</li>

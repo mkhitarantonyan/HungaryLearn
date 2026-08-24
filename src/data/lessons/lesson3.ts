@@ -110,7 +110,7 @@ const L3_WRITING_ROOM: LessonActivity = {
 const L3_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l3-exit-check',
-  title: 'Exit check — цели урока 3',
+  title: 'Проверка целей урока 3',
   checks: [
     { objectiveId: 'l3_choose-article', activityId: 'l3-cp-articles', evidenceKind: 'grammar' },
     { objectiveId: 'l3_form-plural', activityId: 'l3-cp-plurals', evidenceKind: 'grammar' },
@@ -167,7 +167,7 @@ export const LESSON_3: Lesson = {
       title: "Az egy",
       subtitle: "«egy» — и «один», и неопределенный артикль",
       activities: [L3_CP_EGY],
-      task: 'Неоцениваемая устная практика: оглянись вокруг и назови два предмета по модели «egy + существительное». Запись не требуется и mastery не начисляется.',
+      task: 'Устная практика: оглянись вокруг и назови два предмета по модели «egy + существительное». Запись не требуется.',
       body: `
    <p><span class="hu-word">egy</span> означает и число «один», и служит в качестве неопределенного артикля («a/an» в английском).</p>
    <p><button class="speak-btn" data-speak-text="egy ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> egy ház</button> <span style="color:#8a7a68">(какой-то дом / один дом)</span></p>
@@ -317,6 +317,14 @@ export const LESSON_3: Lesson = {
    <div class="note"><b>Домашнее задание:</b> запишите 10 предметов из вашего дома в единственном и множественном числе, рядом друг с другом. В следующем уроке мы перейдем к спряжению в настоящем времени — это первый шаг к построению полноценных предложений.</div>
  `
     }
+  ],
+  vocabulary: [
+    { id: 'l3_v1', hu: 'a', ru: 'определённый артикль (перед согласной)', phonetic: '[а]', category: 'Артикли', exampleSentence: 'a ház' },
+    { id: 'l3_v2', hu: 'az', ru: 'определённый артикль (перед гласной)', phonetic: '[аз]', category: 'Артикли', exampleSentence: 'az alma' },
+    { id: 'l3_v3', hu: 'egy', ru: 'неопределённый артикль / один', phonetic: '[эдь]', category: 'Артикли', exampleSentence: 'egy könyv' },
+    { id: 'l3_v4', hu: 'ház', ru: 'дом', phonetic: '[ха̄з]', category: 'Предметы', exampleSentence: 'A házak nagyok.', grammaticalTag: 'tobbes-szam-k', relatedLessonId: 3 },
+    { id: 'l3_v5', hu: 'könyv', ru: 'книга', phonetic: '[кёнйв]', category: 'Предметы', exampleSentence: 'A könyvek itt vannak.' },
+    { id: 'l3_v6', hu: 'asztal', ru: 'стол', phonetic: '[астал]', category: 'Предметы', exampleSentence: 'Az asztalok nagyok.' },
   ],
     quiz: [
     {

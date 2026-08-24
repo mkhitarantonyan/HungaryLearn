@@ -110,7 +110,7 @@ const L10_LISTENING: LessonActivity = {
   id: 'l10-listening-inner-locations',
   title: 'Аудирование: маршрут Марка',
   assetId: 'l10_listening_inner_locations',
-  audioStatus: 'missing',
+  audioStatus: 'published',
   transcript: 'Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból.',
   passCount: 4,
   questions: [
@@ -140,7 +140,7 @@ const L10_RECORDING: LessonActivity = {
   kind: 'recording',
   id: 'l10-record-inner-locations',
   title: 'Говорение: где, куда, откуда',
-  instructions: 'Запиши три коротких ответа. Запись остаётся PARTIAL evidence и требует проверки человеком.',
+  instructions: 'Запиши три коротких ответа, затем проверь, различаются ли в них где, куда и откуда.',
   targetText: 'A házban vagyok. Bemegyek a boltba. Kijövök a boltból.',
   targetTranslation: 'Я нахожусь в доме. Я вхожу в магазин. Я выхожу из магазина.',
   rubric: [
@@ -153,7 +153,7 @@ const L10_RECORDING: LessonActivity = {
 const L10_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l10-exit-check',
-  title: 'Exit check — цели урока 10',
+  title: 'Проверка целей урока 10',
   checks: [
     { objectiveId: 'l10_distinguish-inner-cases', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
     { objectiveId: 'l10_form-inessive', activityId: 'l10-cp-inessive', evidenceKind: 'grammar' },
@@ -271,7 +271,7 @@ export const LESSON_10: Lesson = {
       id: 8,
       eyebrow: 'УРОК 10 · 8/11 · ЧТЕНИЕ',
       title: 'Hol vagy most?',
-      subtitle: 'Диалог как evidence понимания',
+      subtitle: 'Понимаем пространственные отношения в диалоге',
       body: `
         <p>Прочитай диалог и проследи три отношения: место внутри, цель внутрь и источник изнутри.</p>
       `,
@@ -283,7 +283,7 @@ export const LESSON_10: Lesson = {
       title: 'Írás és beszéd',
       subtitle: 'Точные предложения и короткая запись',
       body: `
-        <p>Письменная часть проверяет пять ограниченных контекстов автоматически. Запись трёх ответов остаётся PARTIAL и не оценивается как произносительное мастерство.</p>
+        <p>Письменная часть проверяет пять коротких ситуаций. После записи трёх ответов прослушай их и сверь падежные формы с моделями.</p>
       `,
       activities: [L10_CP_WRITING, L10_RECORDING],
     },
@@ -293,7 +293,7 @@ export const LESSON_10: Lesson = {
       title: 'Hallásértés',
       subtitle: 'Только по реальной записи',
       body: `
-        <p>Задание использует только настоящий файл <span class="hu-word">l10_listening_inner_locations.mp3</span>. Сейчас он отсутствует, поэтому аудио недоступно, а listening evidence остаётся NONE.</p>
+        <p>Отдельная запись для этого задания ещё не опубликована, поэтому аудирование пока недоступно.</p>
       `,
       activities: [L10_LISTENING],
     },

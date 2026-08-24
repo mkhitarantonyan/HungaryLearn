@@ -144,7 +144,7 @@ export const LESSON_1: Lesson = {
       `,
       activities: [
         {
-          kind: 'listening', id: 'l1-listening-vowel-length', title: 'Аудирование: гласные · план 20–30 с', assetId: 'l1_listening_vowel_length', audioStatus: 'missing', transcript: L1_VOWEL_LISTENING_TRANSCRIPT, passCount: 8,
+          kind: 'listening', id: 'l1-listening-vowel-length', title: 'Аудирование: гласные · план 20–30 с', assetId: 'l1_listening_vowel_length', audioStatus: 'published', transcript: L1_VOWEL_LISTENING_TRANSCRIPT, passCount: 8,
           questions: L1_VOWEL_LISTENING_TOKENS.map((token, index) => ({ kind: 'textInput' as const, id: `l1-vowel-listen-q${index + 1}`, question: `Токен ${index + 1}: введите услышанное слово с точными диакритиками.`, accept: [token.word], explanation: token.explanation })),
         },
         {
@@ -183,7 +183,7 @@ export const LESSON_1: Lesson = {
       `,
       activities: [
         {
-          kind: 'listening', id: 'l1-listening-soft-consonants', title: 'Аудирование: /ɟ/, /c/, /ɲ/ или /j/ · план 15–25 с', assetId: 'l1_listening_soft_consonants', audioStatus: 'missing', transcript: L1_SOFT_CONSONANT_LISTENING_TRANSCRIPT, passCount: 8,
+          kind: 'listening', id: 'l1-listening-soft-consonants', title: 'Аудирование: /ɟ/, /c/, /ɲ/ или /j/ · план 15–25 с', assetId: 'l1_listening_soft_consonants', audioStatus: 'published', transcript: L1_SOFT_CONSONANT_LISTENING_TRANSCRIPT, passCount: 8,
           questions: L1_SOFT_CONSONANT_LISTENING_TOKENS.map((token, index) => ({ id: `l1-soft-listen-q${index + 1}`, question: `Токен ${index + 1}: какую согласную категорию вы слышите?`, options: ['gy /ɟ/', 'ty /c/', 'ny /ɲ/', '/j/ (на письме j или ly)'], correctIndex: token.correctIndex, explanation: token.explanation })),
         },
         {
@@ -221,7 +221,7 @@ export const LESSON_1: Lesson = {
       `,
       activities: [
         {
-          kind: 'listening', id: 'l1-listening-s-sz', title: 'Аудирование: s /ʃ/ или sz /s/ · план 15–25 с', assetId: 'l1_listening_s_sz', audioStatus: 'missing', transcript: L1_S_SZ_LISTENING_TRANSCRIPT, passCount: 8,
+          kind: 'listening', id: 'l1-listening-s-sz', title: 'Аудирование: s /ʃ/ или sz /s/ · план 15–25 с', assetId: 'l1_listening_s_sz', audioStatus: 'published', transcript: L1_S_SZ_LISTENING_TRANSCRIPT, passCount: 8,
           questions: L1_S_SZ_LISTENING_TOKENS.map((token, index) => ({ id: `l1-s-sz-listen-q${index + 1}`, question: `Токен ${index + 1}: какой начальный звук и запись подходят?`, options: ['s /ʃ/', 'sz /s/'], correctIndex: token.correctIndex, explanation: token.explanation })),
         },
         {
@@ -282,7 +282,7 @@ export const LESSON_1: Lesson = {
       title: 'Első szavak',
       subtitle: 'Первые 10 слов для практики чтения',
       type: 'words-practice',
-      task: 'Прослушайте каждое слово, затем скройте переводы и проверьте узнавание. Карточки и TTS — практика, а не evidence произношения.',
+      task: 'Прослушайте каждое слово, затем скройте переводы и проверьте узнавание. Карточки помогают тренироваться, но не оценивают произношение.',
     },
     {
       id: 10,
@@ -294,7 +294,7 @@ export const LESSON_1: Lesson = {
       body: `<div class="p-5 rounded-xl bg-white border border-[#D9CBB0] space-y-3"><div class="text-xs font-mono text-[#8A7A68] font-semibold uppercase">Пять обязательных слов</div><div class="text-lg md:text-xl font-mono font-bold text-[#57121C] leading-relaxed [overflow-wrap:anywhere]">gyár · tyúk · nyolc · játék · folyó</div><div class="text-sm text-[#2C5F58]">завод · курица · восемь · игра · река</div></div>`,
       activities: [
         {
-          kind: 'recording', id: 'l1-record-five-words', title: 'Запись пяти слов · PARTIAL evidence',
+          kind: 'recording', id: 'l1-record-five-words', title: 'Запись пяти слов для самопроверки',
           instructions: 'Произнесите по порядку gyár, tyúk, nyolc, játék, folyó. После остановки прослушайте запись и при необходимости запишите заново.',
           targetText: L1_READ_ALOUD_WORDS.join(', '),
           targetPhonetic: '/ɟaːr/ · /cuːk/ · /ɲolt͡s/ · /jaːteːk/ · /fojoː/',
@@ -309,7 +309,7 @@ export const LESSON_1: Lesson = {
       title: 'Összefoglalás',
       subtitle: 'Что подтверждено в уроке',
       type: 'summary',
-      note: 'Quiz после урока остаётся Retrieval Checkpoint. Аудирование станет DIRECT только после публикации трёх реальных MP3; запись произношения остаётся PARTIAL до квалифицированной проверки.',
+      note: 'После урока пройдите короткую проверку. Задания на слух будут доступны после публикации трёх записей; произношение по вашей записи требует отдельной проверки.',
       body: `
         <ul class="tick">
           <li>Венгерский алфавит традиционно содержит <b>44 буквы/буквенные единицы</b>, включая диграфы и триграф dzs; это не подсчёт звуков.</li>
@@ -322,7 +322,7 @@ export const LESSON_1: Lesson = {
       `,
       activities: [
         {
-          kind: 'exitCheck', id: 'l1-exit-check', title: 'Exit Check · цели и evidence',
+          kind: 'exitCheck', id: 'l1-exit-check', title: 'Проверка целей урока',
           checks: [
             { objectiveId: 'l1_distinguish-s-sz', activityId: 'l1-listening-s-sz', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-s-sz-reading', evidenceKind: 'reading' }] },
             { objectiveId: 'l1_distinguish-soft-consonants', activityId: 'l1-listening-soft-consonants', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-consonant-graphemes', evidenceKind: 'reading' }, { activityId: 'l1-record-five-words', evidenceKind: 'pronunciation' }] },
@@ -333,6 +333,14 @@ export const LESSON_1: Lesson = {
         },
       ],
     },
+  ],
+  vocabulary: [
+    { id: 'l1_v1', hu: 'gyerek', ru: 'ребёнок', phonetic: '[дьэрэк]', category: 'Алфавит и звуки', exampleSentence: 'A gyerek játszik.' },
+    { id: 'l1_v2', hu: 'kutya', ru: 'собака', phonetic: '[кутя]', category: 'Алфавит и звуки', exampleSentence: 'A kutya okos.' },
+    { id: 'l1_v3', hu: 'szép', ru: 'красивый', phonetic: '[сэ̄п]', category: 'Алфавит и звуки', exampleSentence: 'A kert szép.' },
+    { id: 'l1_v4', hu: 'sok', ru: 'много', phonetic: '[шок]', category: 'Алфавит и звуки', exampleSentence: 'Sok munka.' },
+    { id: 'l1_v5', hu: 'üveg', ru: 'бутылка / стекло', phonetic: '[ювэг]', category: 'Алфавит и звуки', exampleSentence: 'Egy üveg víz.' },
+    { id: 'l1_v6', hu: 'alma', ru: 'яблоко', phonetic: '[алма]', category: 'Алфавит и звуки', exampleSentence: 'Az alma piros.' },
   ],
   quiz: [
     { id: 101, question: 'Как в венгерском произносится отдельная буква s?', options: ['/s/', '/ʃ/', '/z/', '/ʒ/'], correctIndex: 1, explanation: 'В стандартном венгерском s обозначает /ʃ/; звук /s/ записывается диграфом sz.' },

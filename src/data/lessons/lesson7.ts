@@ -80,7 +80,7 @@ const L7_RECORDING: LessonActivity = {
   kind: 'recording',
   id: 'l7-record-object-sentences',
   title: 'Говорение: три коротких дополнения',
-  instructions: 'Прочитай три предложения вслух и прослушай свою запись. Это PARTIAL evidence: автоматической оценки произношения нет.',
+  instructions: 'Прочитай три предложения вслух, прослушай запись и сравни её с образцом.',
   targetText: 'Kérek egy kávét. Látom ezt a házat. Látlak.',
   targetTranslation: 'Я прошу один кофе. Я вижу этот дом. Я вижу тебя.',
   rubric: [
@@ -95,8 +95,8 @@ const L7_LISTENING: LessonActivity = {
   id: 'l7-listening-accusative',
   title: 'Аудирование: формы дополнения',
   assetId: 'l7_listening_accusative',
-  audioStatus: 'missing',
-  transcript: 'Jó napot! Egy magyar könyvet keresek. Ezt a könyvet ajánlom. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: Látlak.',
+  audioStatus: 'published',
+  transcript: 'Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”',
   passCount: 4,
   questions: [
     { id: 'l7-listening-q1', question: 'Что ищет говорящий?', options: ['egy magyar könyvet', 'egy magyar újságot', 'egy szótárt'], correctIndex: 0 },
@@ -110,7 +110,7 @@ const L7_LISTENING: LessonActivity = {
 const L7_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l7-exit-check',
-  title: 'Exit check — цели урока 7',
+  title: 'Проверка целей урока 7',
   checks: [
     { objectiveId: 'l7_form-accusative', activityId: 'l7-cp-accusative-forms', evidenceKind: 'grammar' },
     {
@@ -236,7 +236,7 @@ export const LESSON_7: Lesson = {
       title: 'Fordítás és beszéd',
       subtitle: 'Точные фразы и запись',
       body: `
-        <p>Сначала введи пять коротких переводов. Затем запиши три модели: формы дополнений проверяются автоматически только в письменном задании, а запись речи остаётся PARTIAL evidence.</p>
+        <p>Сначала введи пять коротких переводов. Затем запиши три модели и сравни речь с написанными формами.</p>
       `,
       activities: [L7_CP_TRANSLATION, L7_RECORDING],
     },
@@ -259,7 +259,7 @@ export const LESSON_7: Lesson = {
       title: 'Hallásértés',
       subtitle: 'Только по реальной записи',
       body: `
-        <p>Это задание даёт DIRECT listening evidence только при наличии опубликованного MP3. Сейчас файл <span class="hu-word">l7_listening_accusative.mp3</span> отсутствует, поэтому аудио недоступно и результат остаётся NONE.</p>
+        <p>Отдельная запись для этого задания ещё не опубликована, поэтому аудирование пока недоступно.</p>
       `,
       activities: [L7_LISTENING],
     },
@@ -273,11 +273,19 @@ export const LESSON_7: Lesson = {
           <li>Прямое дополнение обычно получает окончание <b>-t</b>.</li>
           <li>После согласных выбор голого <b>-t</b> или соединительной гласной частично лексический: учи частые пары.</li>
           <li><span class="hu-word">Látlak.</span> — основная форма «Я вижу тебя».</li>
-          <li>Письменные задания дают DIRECT evidence, запись речи — PARTIAL, отсутствующее аудио — NONE.</li>
+          <li>Письменные формы проверяются в уроке; устную запись сравни с образцом. Аудирование откроется после публикации записи.</li>
         </ul>
       `,
       activities: [L7_EXIT_CHECK],
     },
+  ],
+  vocabulary: [
+    { id: 'l7_v1', hu: 'házat', ru: 'дом (вин. падеж)', phonetic: '[ха̄зат]', category: 'Винительный падеж -t', exampleSentence: 'Látom a házat.', baseWord: 'ház', grammaticalTag: 'targyeset-t', relatedLessonId: 7 },
+    { id: 'l7_v2', hu: 'kávét', ru: 'кофе (вин. падеж)', phonetic: '[ка̄вэ̄т]', category: 'Винительный падеж -t', exampleSentence: 'Szeretem a kávét.', baseWord: 'kávé' },
+    { id: 'l7_v3', hu: 'könyvet', ru: 'книгу (вин. падеж)', phonetic: '[кёнйвэт]', category: 'Винительный падеж -t', baseWord: 'könyv' },
+    { id: 'l7_v4', hu: 'látom', ru: 'я вижу (его/её/это)', phonetic: '[ла̄том]', category: 'Определённое спряжение', baseWord: 'lát' },
+    { id: 'l7_v5', hu: 'szeretem', ru: 'я люблю (его/её/это)', phonetic: '[сэретэм]', category: 'Определённое спряжение', baseWord: 'szeret' },
+    { id: 'l7_v6', hu: 'almát', ru: 'яблоко (вин. падеж)', phonetic: '[алма̄т]', category: 'Винительный падеж -t', baseWord: 'alma' },
   ],
   quiz: [
     {

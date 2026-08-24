@@ -1,17 +1,12 @@
-import { LESSON_VOCABULARY_MAP } from './lessonQuizAndVocab';
 import { LESSONS_META } from '../data/lessons';
-import type { ReviewCardState, ReviewGrade, DueReviewCard, VocabularyItem } from '../types';
+import { findReviewStateForCard, VOCABULARY_CARDS } from '../data/vocabularyCatalog';
+import type { ReviewCardState, ReviewGrade, DueReviewCard, VocabularyCard } from '../types';
 
 const DEFAULT_EASE = 2.5;
 const MIN_EASE = 1.3;
 
-export function getAllVocabularyCards(): VocabularyItem[] {
-  const all: VocabularyItem[] = [];
-  for (const lesson of LESSONS_META) {
-    const items = LESSON_VOCABULARY_MAP[lesson.number] ?? [];
-    all.push(...items);
-  }
-  return all;
+export function getAllVocabularyCards(): VocabularyCard[] {
+  return [...VOCABULARY_CARDS];
 }
 
 export function createInitialCardState(cardId: string, lessonNumber: number): ReviewCardState {
@@ -81,10 +76,10 @@ export function getWarmupSession(
   const due: DueReviewCard[] = [];
 
   for (const item of allCards) {
-    const lessonNumber = extractLessonNumber(item.id);
+    const lessonNumber = item.lessonIntroduced;
     if (!completedLessonNumbers.includes(lessonNumber)) continue;
 
-    const state = userCardStates[item.id] ?? createInitialCardState(item.id, lessonNumber);
+    const state = findReviewStateForCard(item.id, userCardStates) ?? createInitialCardState(item.id, lessonNumber);
     if (new Date(state.dueDate) > now) continue;
 
     due.push({
@@ -104,11 +99,6 @@ export function getWarmupSession(
   due.sort((a, b) => new Date(a.state.dueDate).getTime() - new Date(b.state.dueDate).getTime());
 
   return due.slice(0, limit);
-}
-
-function extractLessonNumber(cardId: string): number {
-  const match = cardId.match(/^l(\d+)_/);
-  return match ? parseInt(match[1], 10) : 0;
 }
 
 export function getGrammarReminder(card: DueReviewCard): string | null {

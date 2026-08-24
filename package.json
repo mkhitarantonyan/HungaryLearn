@@ -10,7 +10,7 @@
     "generate:manifest": "tsx scripts/generate-audio-manifest.ts",
     "audio:migrate": "tsx scripts/upload-course-audio-to-supabase.ts",
     "predev": "npm run generate:manifest",
-    "prebuild": "npm run generate:manifest",
+    "prebuild": "npm run export:vocabulary && npm run generate:manifest",
     "dev": "tsx server.ts",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
@@ -18,7 +18,11 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit && eslint .",
     "test": "tsx --test tests/*.test.ts",
-    "validate:lessons": "tsx scripts/validateLessons.ts"
+    "validate:lessons": "tsx scripts/validateLessons.ts",
+    "export:listening": "tsx scripts/export-listening-plan.ts",
+    "validate:listening": "tsx scripts/validateListeningAudio.ts",
+    "export:vocabulary": "tsx scripts/export-vocabulary.ts",
+    "validate:vocabulary": "tsx scripts/validateVocabulary.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.112.3",

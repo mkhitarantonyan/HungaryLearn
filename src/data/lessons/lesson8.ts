@@ -63,7 +63,7 @@ const OWNER_TEXT: LessonActivity = {
 
 const POSSESSIVE_LISTENING: LessonActivity = {
   kind: 'listening', id: 'l8-listening-possessives', title: 'Аудирование: кто владелец?',
-  assetId: 'l8_listening_possessives', audioStatus: 'missing', passCount: 4,
+  assetId: 'l8_listening_possessives', audioStatus: 'published', passCount: 4,
   transcript: 'Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?',
   questions: [
     { id: 'l8-listening-q1', question: 'Чья мать — учительница?', options: ['Анны', 'Петера', 'слушателя'], correctIndex: 0 },
@@ -93,14 +93,14 @@ const FAMILY_WRITING: LessonActivity = {
 
 const FAMILY_RECORDING: LessonActivity = {
   kind: 'recording', id: 'l8-record-family-description', title: 'Говорение: коротко о семье',
-  instructions: 'Запиши короткое описание. Наличие записи остаётся PARTIAL evidence и не доказывает правильность без проверки.',
+  instructions: 'Запиши короткое описание, затем прослушай его и проверь притяжательные формы по памятке урока.',
   targetText: 'Anna vagyok. Van egy testvérem. Anyám tanár, apám orvos. A testvérem neve Alex.',
   targetTranslation: 'Я Анна. У меня есть брат или сестра. Моя мать — учительница, мой отец — врач. Моего брата или мою сестру зовут Алекс.',
   rubric: ['Произнесены 4–5 связанных предложений', 'Есть минимум две притяжательные формы', 'Понятно, кто кому приходится родственником'],
 };
 
 const EXIT_CHECK: LessonActivity = {
-  kind: 'exitCheck', id: 'l8-exit-check', title: 'Exit check — цели урока 8', checks: [
+  kind: 'exitCheck', id: 'l8-exit-check', title: 'Проверка целей урока 8', checks: [
     { objectiveId: 'l8_name-family', activityId: 'l8-cp-family-vocabulary', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-record-family-description', evidenceKind: 'speaking' }] },
     { objectiveId: 'l8_form-possessive', activityId: 'l8-cp-singular-possessives', evidenceKind: 'grammar' },
     { objectiveId: 'l8_use-possessive', activityId: 'l8-cp-family-captions', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-writing-family-description', evidenceKind: 'writing' }, { activityId: 'l8-record-family-description', evidenceKind: 'speaking' }] },
@@ -201,7 +201,7 @@ export const LESSON_8: Lesson = {
       eyebrow: 'УРОК 8 · 8/12 · ПИСЬМО',
       title: 'Írás: a családom',
       subtitle: 'Описание из 4–5 предложений',
-      body: '<p>Используй минимум две притяжательные формы. Открытый ответ остаётся PARTIAL и требует проверки.</p>',
+      body: '<p>Используй минимум две притяжательные формы. После написания проверь окончания по таблице урока.</p>',
       activities: [FAMILY_WRITING],
     },
     {
@@ -217,7 +217,7 @@ export const LESSON_8: Lesson = {
       eyebrow: 'УРОК 8 · 10/12 · АУДИРОВАНИЕ',
       title: 'Hallásértés',
       subtitle: 'Только по специальной записи',
-      body: '<p>Файл <b>l8_listening_possessives.mp3</b> отсутствует: аудио недоступно, listening evidence — NONE. Озвучивание слайдов не подменяет проверку.</p>',
+      body: '<p>Отдельная запись для этого задания ещё не опубликована, поэтому аудирование пока недоступно.</p>',
       activities: [POSSESSIVE_LISTENING],
     },
     {

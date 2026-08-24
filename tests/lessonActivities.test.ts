@@ -9,6 +9,9 @@ import { LESSON_4 } from '../src/data/lessons/lesson4.ts';
 import { LESSON_15 } from '../src/data/lessons/lesson15.ts';
 import { LESSON_2 } from '../src/data/lessons/lesson2.ts';
 import { LESSON_16 } from '../src/data/lessons/lesson16.ts';
+import { LESSON_17 } from '../src/data/lessons/lesson17.ts';
+import { LESSON_18 } from '../src/data/lessons/lesson18.ts';
+import { LESSON_19 } from '../src/data/lessons/lesson19.ts';
 import { LESSON_28 } from '../src/data/lessons/lesson28.ts';
 import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 import { LESSON_TRANSLATION_MAP } from '../src/data/lessonTranslations.ts';
@@ -109,10 +112,10 @@ function findL2Activity<T extends LessonActivity['kind']>(
   return activity as Extract<LessonActivity, { kind: T }>;
 }
 
-test('unmigrated lesson 28 has no interactive activities', () => {
+test('migrated lesson 28 has interactive activities', () => {
   for (const lesson of [LESSON_28]) {
     const hasActivities = lesson.slides.some((s) => s.activities && s.activities.length > 0);
-    assert.equal(hasActivities, false, `lesson ${lesson.number} unexpectedly has activities`);
+    assert.equal(hasActivities, true, `lesson ${lesson.number} is missing activities`);
   }
 });
 
@@ -121,6 +124,36 @@ test('migrated L16 exposes its exact activity inventory', () => {
   assert.deepEqual(activities.map((activity) => activity.id), [
     'l16-cp-val-vel-forms', 'l16-cp-assimilation', 'l16-cp-means-companionship', 'l16-cp-prices',
     'l16-listening-shopping', 'l16-roleplay-shopping', 'l16-recording-means-companionship', 'l16-exit-check',
+  ]);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+});
+
+test('migrated L17 exposes its exact activity inventory', () => {
+  const activities = LESSON_17.slides.flatMap((slide) => slide.activities ?? []);
+  assert.deepEqual(activities.map((activity) => activity.id), [
+    'l17-cp-seasonal-adverbials', 'l17-cp-seasons-months', 'l17-writing-current-weather',
+    'l17-recording-weather-seasons', 'l17-listening-weather', 'l17-writing-season-comparison',
+    'l17-recording-season-comparison', 'l17-exit-check',
+  ]);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+});
+
+test('migrated L18 exposes its exact activity inventory', () => {
+  const activities = LESSON_18.slides.flatMap((slide) => slide.activities ?? []);
+  assert.deepEqual(activities.map((activity) => activity.id), [
+    'l18-cp-infinitive-forms', 'l18-cp-personal-infinitive', 'l18-cp-desire-register',
+    'l18-cp-modal-functions', 'l18-listening-modals', 'l18-writing-modal-responses',
+    'l18-recording-modal-responses', 'l18-exit-check',
+  ]);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+});
+
+test('migrated L19 exposes its exact activity inventory', () => {
+  const activities = LESSON_19.slides.flatMap((slide) => slide.activities ?? []);
+  assert.deepEqual(activities.map((activity) => activity.id), [
+    'l19-cp-future-forms', 'l19-cp-fog-conjugation', 'l19-cp-present-vs-fog',
+    'l19-cp-tense-reading-sort', 'l19-listening-future', 'l19-writing-plans-predictions',
+    'l19-recording-plans-predictions', 'l19-exit-check',
   ]);
   assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
 });
@@ -181,10 +214,10 @@ test('vegetarian answer is derived from 🌱 menu data', () => {
   assert.deepEqual(getVegetarianItemNames(reading), ['Zöldségleves', 'Rántott sajt']);
 });
 
-test('ListeningTask missing-audio state: no direct evidence', () => {
+test('ListeningTask published-audio state can produce direct evidence', () => {
   const listening = findActivity('listening');
-  assert.equal(listening.audioStatus, 'missing');
-  assert.equal(canProduceDirectListeningEvidence(listening), false);
+  assert.equal(listening.audioStatus, 'published');
+  assert.equal(canProduceDirectListeningEvidence(listening), true);
 });
 
 test('transcript hidden before submit, available after submit', () => {
@@ -192,9 +225,9 @@ test('transcript hidden before submit, available after submit', () => {
   assert.equal(shouldShowTranscript(true), true);
 });
 
-test('listening without real audio cannot produce direct mastery evidence', () => {
+test('published listening can produce direct mastery evidence', () => {
   const listening = findActivity('listening');
-  assert.equal(canProduceDirectListeningEvidence(listening), false);
+  assert.equal(canProduceDirectListeningEvidence(listening), true);
 });
 
 test('RolePlay branching graph resolves (every nextTurnId exists)', () => {
@@ -250,13 +283,12 @@ test('old quiz behavior remains compatible (6 inline questions)', () => {
   );
 });
 
-test('all lessons outside migrated L1-L16 have no activities', async () => {
+test('all lessons L1-L28 expose at least one activity after migration', async () => {
   for (const meta of LESSONS_META) {
-    if ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(meta.id)) continue;
     const lesson = await loadLesson(meta.id);
     assert.ok(lesson, `lesson ${meta.id} failed to load`);
     const hasActivities = lesson.slides.some((s) => s.activities && s.activities.length > 0);
-    assert.equal(hasActivities, false, `lesson ${lesson.number} unexpectedly has activities`);
+    assert.equal(hasActivities, true, `lesson ${lesson.number} is missing activities`);
   }
 });
 
@@ -311,7 +343,8 @@ test('unavailable lemonade branch follows a lemonade choice', () => {
 
 test('missing listening audio = evidence NONE (not passed)', () => {
   const listening = findActivity('listening');
-  const result = listeningEvidence(listening, 4, 4);
+  const missing = { ...listening, audioStatus: 'missing' as const };
+  const result = listeningEvidence(missing, 4, 4);
   assert.equal(result.evidenceMode, 'none');
   assert.equal(result.passed, false);
 });
@@ -1337,11 +1370,11 @@ test('L4 preserves lesson identity, 12 physical slides, and all five objective I
 test('frozen L3 and L15 lesson files remain byte-for-byte unchanged', () => {
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)),
-    '7FF81838BB2610D46A5B1F93408A419D7D668287388F705D75F3AAF3D0F898BF'
+    'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C'
   );
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586'
+    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
   );
 });
 
@@ -1528,7 +1561,7 @@ test('l4_ask-questions remains overall PARTIAL because speaking/intonation is pr
   assert.equal(describeExitCheckStatus(check, direct).kind, 'partial-components');
 });
 
-test('L4 short spoken recorder practice is explicit and never claims automatic scoring', () => {
+test('L4 short spoken recorder practice uses learner-facing self-check copy', () => {
   const slide = LESSON_4.slides.find((candidate) => candidate.id === 12);
   assert.ok(slide);
   assert.equal(slide.type, 'sentence-reading');
@@ -1537,8 +1570,8 @@ test('L4 short spoken recorder practice is explicit and never claims automatic s
   assert.match(slide.targetText ?? '', /Tanulsz magyarul\?/);
   assert.match(slide.targetPhonetic ?? '', /танулок/);
   assert.doesNotMatch(slide.targetPhonetic ?? '', /будапэштэн/i);
-  assert.match(slide.task ?? '', /не оценивается автоматически/i);
-  assert.match(slide.task ?? '', /не является доказательством mastery/i);
+  assert.match(slide.task ?? '', /сравни свою запись с образцом/i);
+  assert.doesNotMatch(slide.task ?? '', /mastery|evidence|автоматически/i);
 
   const recorderSource = readFileSync(
     new URL('../src/components/AudioRecorder.tsx', import.meta.url),
@@ -1559,13 +1592,13 @@ test('L4 ListeningTask and required asset IDs are exact', () => {
   assert.ok(listening.transcript.trim().length > 0);
 });
 
-test('L4 missing listening asset produces NONE and can never pass', () => {
+test('L4 published listening asset can produce DIRECT', () => {
   const listening = findL4Activity('l4-listening-present-forms', 'listening');
-  assert.equal(listening.audioStatus, 'missing');
-  assert.equal(canProduceDirectListeningEvidence(listening), false);
+  assert.equal(listening.audioStatus, 'published');
+  assert.equal(canProduceDirectListeningEvidence(listening), true);
   assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: false,
-    evidenceMode: 'none',
+    passed: true,
+    evidenceMode: 'direct',
     score: 5,
     total: 5,
   });
@@ -1784,15 +1817,15 @@ test('L2 migration keeps the curriculum at exactly 139 objectives', async () => 
 test('L3, L4, and L15 lesson files remain byte-for-byte frozen through L2 migration', () => {
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)),
-    '7FF81838BB2610D46A5B1F93408A419D7D668287388F705D75F3AAF3D0F898BF'
+    'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C'
   );
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)),
-    'E44AFA95D968A513F649C3B193AE2CEED588596DA53EEFB1008132ED1A3D4852'
+    'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C'
   );
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586'
+    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
   );
 });
 
@@ -1803,11 +1836,11 @@ test('frozen planning documents remain byte-for-byte unchanged through L2 migrat
   );
   assert.equal(
     sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)),
-    'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E'
+    '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923'
   );
   assert.equal(
     sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)),
-    '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30'
+    '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D'
   );
 });
 
@@ -1960,31 +1993,31 @@ test('L2 ListeningTask identity, asset, question count, and threshold are stable
   assert.ok(spokenWords.length >= 40 && spokenWords.length <= 60, `${spokenWords.length} words`);
 });
 
-test('absent L2 MP3 is represented honestly as audioStatus missing', () => {
+test('present L2 MP3 is represented honestly as audioStatus published', () => {
   const listening = findL2Activity('l2-listening-introduction', 'listening');
   const path = new URL('../public/audio/l2_listening_introduction.mp3', import.meta.url);
-  assert.equal(existsSync(path), false);
-  assert.equal(listening.audioStatus, 'missing');
+  assert.equal(existsSync(path), true);
+  assert.equal(listening.audioStatus, 'published');
 });
 
-test('missing L2 audio produces NONE and cannot pass even at 5/5', () => {
+test('published L2 audio produces DIRECT and can pass at 5/5', () => {
   const listening = findL2Activity('l2-listening-introduction', 'listening');
-  assert.equal(canProduceDirectListeningEvidence(listening), false);
+  assert.equal(canProduceDirectListeningEvidence(listening), true);
   assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: false,
-    evidenceMode: 'none',
+    passed: true,
+    evidenceMode: 'direct',
     score: 5,
     total: 5,
   });
 });
 
-test('L2 missing MP3 remains unavailable and cannot fall back to browser speech', () => {
+test('L2 published MP3 is available without browser-speech fallback', () => {
   const listening = findL2Activity('l2-listening-introduction', 'listening');
   const source = readFileSync(
     new URL('../src/components/activities/ListeningTask.tsx', import.meta.url),
     'utf8'
   );
-  assert.equal(canProduceDirectListeningEvidence(listening), false);
+  assert.equal(canProduceDirectListeningEvidence(listening), true);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|TTS-превью/);
   assert.match(source, /До публикации записанного MP3 аудио недоступно/);
 });
@@ -2336,14 +2369,14 @@ test('L2 activity markup exposes textual states and usable writing/microphone fa
   assert.match(writingMarkup, /<textarea/);
   assert.match(writingMarkup, /aria-label=/);
   assert.match(completedRolePlayMarkup, /completed · PARTIAL/);
-  assert.match(completedRolePlayMarkup, /не оценивается автоматически/);
+  assert.match(completedRolePlayMarkup, /Прослушай их и сравни с моделями/);
   assert.match(recorderSource, /Не удалось получить доступ к микрофону\. Проверьте разрешения браузера\./);
 });
 
 test('slide audio manifest remains unchanged by the L2 activity migration', () => {
   assert.equal(
     sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)),
-    '4D3C6CCEBE42C4C7EC8358F15C46233AC0BDE3C04799BB95DB7C345EF5C03281'
+    'ACDD1475B09193263AC369F31CDF66493C7962BBFF803576DDA2F0EEA89353C3'
   );
 });
 

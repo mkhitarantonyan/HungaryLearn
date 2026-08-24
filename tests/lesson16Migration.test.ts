@@ -50,6 +50,12 @@ test('barátommal and personal/chunk scope are protected', () => {
 test('shopping dialogue and prices remain bounded', () => {
   assert.match(source, /Цена → количество → оплата/); assert.match(source, /Mennyibe kerül\?/); assert.match(source, /Kérek két darabot/); assert.match(source, /Kártyával fizetek/);
   assert.match(source, /500, 1000, 1500, 2000 и 2500 Ft/); assert.match(source, /не полная система больших чисел/); assert.match(source, /forint остаётся в единственном числе/);
+  for (const priceWord of ['ötszáz forint', 'ezer forint', 'ezerötszáz forint', 'kétezer forint', 'kétezer-ötszáz forint']) assert.match(source, new RegExp(priceWord));
+  const listening = find('l16-listening-shopping', 'listening'); assert.match(listening.transcript, /Egy pulóvert kérek/);
+  const firstQuestion = listening.questions[0]; assert.ok(firstQuestion); assert.ok('options' in firstQuestion); assert.equal(firstQuestion.options[firstQuestion.correctIndex], 'Egy pulóvert');
+  const rolePlay = find('l16-roleplay-shopping', 'rolePlay');
+  const recordedModels = rolePlay.turns.filter((turn) => turn.speaker === 'learner' && turn.responseMode === 'recorded').map((turn) => turn.model ?? '').join(' ');
+  assert.match(recordedModels, /Ezerötszáz forint/); assert.match(recordedModels, /Kérek két darabot/); assert.match(recordedModels, /Kártyával fizetek/);
   assert.doesNotMatch(JSON.stringify({ activities, quiz: LESSON_16.quiz }), /килограмм|литр|условн.*наклон|образуй.*-hat|-het.*образуй/i);
 });
 
@@ -61,10 +67,10 @@ test('quiz Q1601-Q1606 is unique, defensible, and corrected', () => {
   assert.match(LESSON_16.quiz?.find((question) => question.id === 1606)?.question ?? '', /краткими конечными a\/e/); assert.doesNotMatch(LESSON_16.quiz?.find((question) => question.id === 1606)?.explanation ?? '', /kávé/);
 });
 
-test('IPA is removed and missing assessment listening stays NONE', () => {
+test('IPA is removed and published assessment listening is DIRECT', () => {
   assert.ok((LESSON_16.vocabulary ?? []).every((item) => item.ipa === undefined));
-  const listening = find('l16-listening-shopping', 'listening'); assert.equal(listening.assetId, 'l16_listening_shopping'); assert.equal(listening.audioStatus, 'missing'); assert.equal(listening.passCount, 3); assert.equal(listening.questions.length, 4);
-  assert.equal(existsSync(new URL('../public/audio/l16_listening_shopping.mp3', import.meta.url)), false); assert.equal(listeningEvidence(listening, 4, 4).evidenceMode, 'none'); assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^16\./);
+  const listening = find('l16-listening-shopping', 'listening'); assert.equal(listening.assetId, 'l16_listening_shopping'); assert.equal(listening.audioStatus, 'published'); assert.equal(listening.passCount, 3); assert.equal(listening.questions.length, 4);
+  assert.equal(existsSync(new URL('../public/audio/l16_listening_shopping.mp3', import.meta.url)), true); assert.equal(listeningEvidence(listening, 4, 4).evidenceMode, 'direct'); assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^16\./);
 });
 
 test('ExitCheck resolves DIRECT DIRECT PARTIAL PARTIAL PARTIAL', () => {
@@ -77,8 +83,7 @@ test('ExitCheck resolves DIRECT DIRECT PARTIAL PARTIAL PARTIAL', () => {
   assert.deepEqual(exit.checks.map((check) => describeExitCheckStatus(check, evidence[check.activityId], evidence).kind), ['direct-met', 'direct-met', 'partial-review', 'partial-review', 'partial-review']);
 });
 
-test('metadata matches and frozen L15/L17 remain byte-identical', () => {
+test('metadata matches and frozen L15 remains byte-identical', () => {
   const meta = LESSONS_META.find((candidate) => candidate.id === 16); assert.ok(meta); assert.equal(meta.title, LESSON_16.title); assert.equal(meta.subtitle, LESSON_16.subtitle); assert.equal(meta.description, LESSON_16.description);
-  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
-  assert.equal(hash(new URL('../src/data/lessons/lesson17.ts', import.meta.url)), '60798E934F60E0940CB4D9881E97DE7974871EB8FF0749C67DEB3F153D12D931');
+  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

@@ -1,4 +1,48 @@
 import { Lesson } from '../../types';
+import { createMigrationActivities } from './migrationActivityFactory';
+
+const L22_ACTIVITIES = createMigrationActivities({
+  lessonId: 22,
+  controlledTitle: 'Повелительное наклонение: форма и ситуация',
+  controlledPassCount: 4,
+  controlledExercises: [
+    { kind: 'fillGap', id: 'l22-cp-1', prompt: 'te + vár → повелительная форма', accept: ['várj'] },
+    { kind: 'fillGap', id: 'l22-cp-2', prompt: 'te + olvas → повелительная форма', accept: ['olvass'] },
+    { kind: 'fillGap', id: 'l22-cp-3', prompt: 'ön + lenni → вежливая форма', accept: ['legyen'] },
+    { kind: 'singleChoice', id: 'l22-cp-4', prompt: 'Вежливо попроси открыть окно.', options: ['Nyisd ki az ablakot!', 'Legyen szíves, nyissa ki az ablakot!'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l22-cp-5', prompt: 'Дай дружеский совет: «Отдохни!»', options: ['Pihenj!', 'Pihenek.'], correctIndex: 0 },
+  ],
+  readingTitle: 'Чтение: объявление в библиотеке',
+  readingParagraphs: ['Kérjük, beszéljen halkan! Kapcsolja ki a telefonját, és az olvasóteremben ne egyen. Ha segítségre van szüksége, kérdezze a könyvtárost.'],
+  readingPassCount: 2,
+  readingQuestions: [
+    { id: 'l22-read-1', question: 'Hogyan kell beszélni?', options: ['Hangosan', 'Halkan', 'Gyorsan'], correctIndex: 1 },
+    { id: 'l22-read-2', question: 'Mit kell kikapcsolni?', options: ['A telefont', 'A lámpát', 'A számítógépet'], correctIndex: 0 },
+    { id: 'l22-read-3', question: 'Kit lehet megkérdezni?', options: ['Az orvost', 'A könyvtárost', 'A pincért'], correctIndex: 1 },
+  ],
+  listeningTitle: 'Аудирование: просьбы и указания',
+  listeningTranscript: 'Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra.',
+  listeningPassCount: 2,
+  listeningQuestions: [
+    { id: 'l22-listen-1', question: 'Mit kérnek először?', options: ['Jöjjön be', 'Menjen el', 'Telefonáljon'], correctIndex: 0 },
+    { id: 'l22-listen-2', question: 'Mennyi ideig kell várni?', options: ['Egy percet', 'Egy órát', 'Egy napot'], correctIndex: 0 },
+    { id: 'l22-listen-3', question: 'Hová ne tegye a táskát?', options: ['A székre', 'Az asztalra', 'A földre'], correctIndex: 1 },
+  ],
+  writingTitle: 'Письмо: дружеские и вежливые просьбы',
+  writingPrompt: 'Напиши четыре реплики: две дружеские команды или совета и две вежливые просьбы незнакомому человеку.',
+  writingModel: ['Várj egy percet!', 'Pihenj egy kicsit!', 'Legyen szíves, segítsen!', 'Kérem, írja alá itt!'],
+  writingRubric: ['Есть четыре реплики', 'Регистр соответствует ситуации', 'Повелительные формы понятны'],
+  recordingTitle: 'Говорение: попроси и посоветуй',
+  recordingInstructions: 'Произнеси одну дружескую просьбу, один совет и одну вежливую просьбу.',
+  recordingTarget: 'Várj egy percet! Pihenj egy kicsit! Legyen szíves, segítsen!',
+  objectiveChecks: [
+    { objectiveId: 'l22_form-imperative', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l22_use-imperative', activity: 'writing', evidenceKind: 'writing' },
+    { objectiveId: 'l22_form-let', activity: 'controlled', evidenceKind: 'grammar' },
+    { objectiveId: 'l22_polite-requests', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l22_understand-commands', activity: 'listening', evidenceKind: 'listening' },
+  ],
+});
 
 export const LESSON_22: Lesson = {
   id: 22,
@@ -129,6 +173,7 @@ export const LESSON_22: Lesson = {
       eyebrow: "УРОК 22 · 9/11 · ЗАДАНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
+      activities: L22_ACTIVITIES,
       body: `
    <ol class="tasklist">
      <li>Образуйте повелительное наклонение (te, неопределённое) от: tanul, ír, olvas, hoz, mutat</li>

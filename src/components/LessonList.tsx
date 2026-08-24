@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Lesson } from '../types';
+import type { Lesson } from '../types';
 import {
   ArrowRight,
   ChevronRight,
@@ -13,7 +13,10 @@ import {
   RefreshCw,
   GraduationCap,
 } from 'lucide-react';
-import { getCurrentUser, subscribeUserState, UserProfile, isLessonAccessible } from '../utils/userStore';
+import { getCurrentUser, subscribeUserState, isLessonAccessible } from '../utils/userStore';
+import type { UserProfile } from '../utils/userStore';
+import { getLessonProgressState } from '../utils/lessonProgress';
+import type { LessonProgressState } from '../utils/lessonProgress';
 
 interface LessonListProps {
   lessons: Lesson[];
@@ -26,18 +29,17 @@ interface LessonListProps {
   dueReviewCount?: number;
 }
 
-/* ---- Lesson progress states ---- */
-type LessonProgressStatus = 'not-started' | 'in-progress' | 'passed';
-
-function lessonStatus(
-  lessonNumber: number,
+function lessonProgress(
+  lesson: Lesson,
   viewedSlideIds: string[],
   passedQuizzes: number[]
-): LessonProgressStatus {
-  if (passedQuizzes.includes(lessonNumber)) return 'passed';
-  const prefix = `l${lessonNumber}_`;
-  if (viewedSlideIds.some((id) => id.startsWith(prefix))) return 'in-progress';
-  return 'not-started';
+): ReturnType<typeof getLessonProgressState> {
+  return getLessonProgressState({
+    lessonNumber: lesson.number,
+    requiredSlideIds: lesson.slides.map((slide) => slide.id),
+    viewedSlideIds,
+    quizPassed: passedQuizzes.includes(lesson.number),
+  });
 }
 
 /* ---- Curriculum level modules ---- */
@@ -67,23 +69,28 @@ function determineCurrentLesson(
   viewedSlideIds: string[],
   passedQuizzes: number[],
   isAccessibleFn: (n: number) => boolean
-): { lesson: Lesson; status: LessonProgressStatus } | null {
+): { lesson: Lesson; status: LessonProgressState } | null {
   const accessible = lessons
     .filter((l) => isAccessibleFn(l.number))
     .sort((a, b) => a.number - b.number);
   if (accessible.length === 0) return null;
 
-  const inProgress = accessible.find(
-    (l) =>
-      !passedQuizzes.includes(l.number) &&
-      viewedSlideIds.some((id) => id.startsWith(`l${l.number}_`))
+  const progressByLesson = new Map(
+    accessible.map((lesson) => [lesson.number, lessonProgress(lesson, viewedSlideIds, passedQuizzes)])
   );
-  if (inProgress) return { lesson: inProgress, status: 'in-progress' };
 
-  const next = accessible.find((l) => !passedQuizzes.includes(l.number));
-  if (next) return { lesson: next, status: 'not-started' };
+  const inProgress = accessible.find((lesson) => progressByLesson.get(lesson.number)?.state === 'in_progress');
+  if (inProgress) return { lesson: inProgress, status: 'in_progress' };
 
-  return { lesson: accessible[accessible.length - 1], status: 'passed' };
+  const contentCompleted = accessible.find(
+    (lesson) => progressByLesson.get(lesson.number)?.state === 'content_completed'
+  );
+  if (contentCompleted) return { lesson: contentCompleted, status: 'content_completed' };
+
+  const next = accessible.find((lesson) => progressByLesson.get(lesson.number)?.state === 'not_started');
+  if (next) return { lesson: next, status: 'not_started' };
+
+  return { lesson: accessible[accessible.length - 1], status: 'quiz_passed' };
 }
 
 /* ---- Single lesson card ---- */
@@ -97,32 +104,34 @@ function LessonCard({
 }: {
   lesson: Lesson;
   accessible: boolean;
-  status: LessonProgressStatus;
+  status: LessonProgressState;
   highlight: 'current' | 'next' | null;
   onSelect: (id: number) => void;
   onLockedClick: (lesson: Lesson) => void;
 }) {
   const StatusIcon = !accessible
     ? Lock
-    : status === 'passed'
+    : status === 'quiz_passed' || status === 'content_completed'
       ? CheckCircle2
-      : status === 'in-progress'
+      : status === 'in_progress'
         ? CircleDot
         : Circle;
 
   const statusLabel = !accessible
     ? 'Доступ по подписке'
-    : status === 'passed'
-      ? 'Проверено'
-      : status === 'in-progress'
-        ? 'В процессе'
-        : 'Начать';
+    : status === 'quiz_passed'
+      ? 'Квиз пройден'
+      : status === 'content_completed'
+        ? 'Материал пройден'
+        : status === 'in_progress'
+          ? 'В процессе'
+          : 'Не начат';
 
   const statusColor = !accessible
     ? 'text-[#8A7A68]'
-    : status === 'passed'
+    : status === 'quiz_passed' || status === 'content_completed'
       ? 'text-[#2C5F58]'
-      : status === 'in-progress'
+      : status === 'in_progress'
         ? 'text-[#B98A2B]'
         : 'text-[#8A7A68]';
 
@@ -132,14 +141,14 @@ function LessonCard({
       ? 'bg-white border-[#7A1E2B] ring-1 ring-[#7A1E2B]/25 shadow-lg shadow-[#7A1E2B]/10'
       : highlight === 'next'
         ? 'bg-white border-[#B98A2B]/70 shadow-sm'
-        : status === 'passed'
+        : status === 'quiz_passed' || status === 'content_completed'
           ? 'bg-[#FBF7EF] border-[#E7D9C5] opacity-90'
           : 'bg-[#FBF7EF] border-[#E7D9C5]';
 
   const hover = accessible
     ? highlight === 'current'
       ? 'hover:shadow-xl hover:shadow-[#7A1E2B]/15'
-      : status === 'passed'
+      : status === 'quiz_passed' || status === 'content_completed'
         ? 'hover:border-[#E7D9C5]'
         : 'hover:border-[#7A1E2B]/40 hover:bg-white hover:shadow-md hover:-translate-y-0.5'
     : '';
@@ -149,7 +158,7 @@ function LessonCard({
       type="button"
       onClick={() => (accessible ? onSelect(lesson.id) : onLockedClick(lesson))}
       aria-current={highlight === 'current' ? 'step' : undefined}
-      aria-label={`Урок ${lesson.number} — ${shortTitle(lesson)}${accessible ? '' : ', доступ по подписке'}`}
+      aria-label={`Урок ${lesson.number} — ${shortTitle(lesson)}, статус: ${statusLabel}`}
       className={`group relative text-left w-full h-full flex flex-col rounded-2xl border p-5 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B] ${surface} ${hover}`}
     >
       <div className="flex items-center justify-between mb-3">
@@ -213,8 +222,9 @@ function LevelSection({
   onLockedClick: (l: Lesson) => void;
 }) {
   if (lessons.length === 0) return null;
-  const total = level.to - level.from + 1;
-  const passedCount = passedQuizzes.filter((n) => n >= level.from && n <= level.to).length;
+  const lessonNumbers = new Set(lessons.map((lesson) => lesson.number));
+  const total = lessons.length;
+  const passedCount = passedQuizzes.filter((number) => lessonNumbers.has(number)).length;
   const pct = Math.min(100, Math.round((passedCount / total) * 100));
 
   return (
@@ -230,10 +240,17 @@ function LevelSection({
           </span>
         </div>
         <span className="text-sm text-[#6B5D52] whitespace-nowrap">
-          <span className="font-bold text-[#2C5F58]">{passedCount}</span> / {total} проверено
+          <span className="font-bold text-[#2C5F58]">{passedCount}</span> / {total} квизов пройдено
         </span>
       </div>
-      <div className="h-1.5 rounded-full bg-[#E7D9C5]/70 overflow-hidden mb-5" aria-hidden="true">
+      <div
+        role="progressbar"
+        aria-label={`Доля пройденных квизов уровня ${level.key}`}
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-valuenow={passedCount}
+        className="h-1.5 rounded-full bg-[#E7D9C5]/70 overflow-hidden mb-5"
+      >
         <div className="h-full rounded-full bg-[#2C5F58] transition-all duration-500" style={{ width: `${pct}%` }} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
@@ -245,7 +262,7 @@ function LevelSection({
               key={lesson.id}
               lesson={lesson}
               accessible={isAccessibleFn(lesson.number)}
-              status={lessonStatus(lesson.number, viewedSlideIds, passedQuizzes)}
+              status={lessonProgress(lesson, viewedSlideIds, passedQuizzes).state}
               highlight={highlightFor(lesson)}
               onSelect={onSelect}
               onLockedClick={onLockedClick}
@@ -282,8 +299,8 @@ export const LessonList: React.FC<LessonListProps> = ({
 
   const highlightFor = (lesson: Lesson): 'current' | 'next' | null => {
     if (lesson.number !== currentNumber) return null;
-    if (currentStatus === 'in-progress') return 'current';
-    if (currentStatus === 'not-started') return 'next';
+    if (currentStatus === 'in_progress' || currentStatus === 'content_completed') return 'current';
+    if (currentStatus === 'not_started') return 'next';
     return null;
   };
 
@@ -291,18 +308,20 @@ export const LessonList: React.FC<LessonListProps> = ({
   const showPayBanner = user && !isAdmin && user.subscriptionStatus !== 'active' && !user.isPrivileged;
 
   const currentCtaLabel =
-    currentStatus === 'in-progress'
+    currentStatus === 'in_progress'
       ? 'Продолжить урок'
-      : currentStatus === 'not-started'
+      : currentStatus === 'not_started'
         ? 'Начать урок'
         : 'Открыть урок';
 
   const currentEyebrow =
-    currentStatus === 'in-progress'
+    currentStatus === 'in_progress'
       ? 'Ваш текущий урок'
-      : currentStatus === 'not-started'
-        ? 'Рекомендуемый урок'
-        : 'Урок пройден';
+      : currentStatus === 'content_completed'
+        ? 'Материал просмотрен'
+        : currentStatus === 'not_started'
+          ? 'Рекомендуемый урок'
+          : 'Квиз этого урока пройден';
 
   return (
     <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex flex-col font-sans selection:bg-[#7A1E2B] selection:text-white">
@@ -385,9 +404,9 @@ export const LessonList: React.FC<LessonListProps> = ({
                     Урок {current.lesson.number} · {shortTitle(current.lesson)}
                   </p>
                   <p className="mt-1 text-sm text-[#6B5D52]">{current.lesson.subtitle}</p>
-                  {currentStatus === 'passed' && hasLockedLessons && (
+                  {currentStatus === 'quiz_passed' && hasLockedLessons && (
                     <p className="mt-1.5 text-xs text-[#8A7A68]">
-                      Все доступные уроки пройдены — подписка откроет следующие уровни.
+                      Для всех доступных уроков пройдены квизы — подписка откроет следующие уровни.
                     </p>
                   )}
                 </div>

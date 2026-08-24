@@ -12,14 +12,14 @@ export const LessonProgress: React.FC<LessonProgressProps> = ({ current, total }
   return (
     <div className="flex items-center gap-2.5 min-w-0">
       <span className="shrink-0 text-xs font-semibold text-[#57121C] font-mono tabular-nums">
-        {step} из {total}
+        Материал: {step} из {total}
       </span>
       <div
         role="progressbar"
         aria-valuemin={1}
         aria-valuemax={total}
         aria-valuenow={step}
-        aria-label={`Шаг ${step} из ${total}`}
+        aria-label={`Прогресс материала: шаг ${step} из ${total}`}
         className="flex-1 h-1.5 rounded-full bg-[#E5D7C3] overflow-hidden min-w-16"
       >
         <div

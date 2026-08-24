@@ -140,14 +140,14 @@ test('context practice and ReadingTask test spatial relations rather than suffix
   assert.doesNotMatch(reading.instructions ?? '', /найди.*суффикс/i);
 });
 
-test('missing assessment MP3 stays NONE and narration is never substituted', () => {
+test('published assessment MP3 produces DIRECT and narration is never substituted', () => {
   const listening = findActivity('l10-listening-inner-locations', 'listening');
   assert.equal(listening.assetId, 'l10_listening_inner_locations');
-  assert.equal(listening.audioStatus, 'missing');
-  assert.equal(existsSync(new URL('../public/audio/l10_listening_inner_locations.mp3', import.meta.url)), false);
+  assert.equal(listening.audioStatus, 'published');
+  assert.equal(existsSync(new URL('../public/audio/l10_listening_inner_locations.mp3', import.meta.url)), true);
   assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: false,
-    evidenceMode: 'none',
+    passed: true,
+    evidenceMode: 'direct',
     score: 5,
     total: 5,
   });
@@ -221,6 +221,6 @@ test('L10 metadata is exact and frozen L15 remains byte-for-byte unchanged', () 
   assert.equal(meta.slidesCount, LESSON_10.slidesCount);
   assert.equal(
     sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586'
+    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
   );
 });

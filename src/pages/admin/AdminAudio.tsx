@@ -515,7 +515,9 @@ export default function AdminAudio() {
 
   const handleResetOverrides = async () => {
     const res = await resetAllAudioOverrides();
-    setResetMsg(`Сброшено ${res.count} переопределений! Приложение полностью вернулось к файлам из public/audio/.`);
+    setResetMsg(res.success
+      ? `Сброшено ${res.count} переопределений! Приложение полностью вернулось к файлам из public/audio/.`
+      : `Сброс завершён с ошибками. Не удалены серверные ключи: ${res.failedServerKeys.join(', ') || 'нет'}${res.localCleanupSucceeded ? '' : '; локальное хранилище не очищено'}.`);
   };
 
   return (

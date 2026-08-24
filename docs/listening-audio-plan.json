@@ -1,0 +1,3218 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "src/data/lessons/lesson1.ts ... lesson28.ts",
+  "audioRoot": "public/audio",
+  "summary": {
+    "lessons": 28,
+    "lessonsWithListening": 25,
+    "listeningActivities": 28,
+    "uniqueAssets": 27,
+    "dialogue": 8,
+    "monologue": 15,
+    "token_sequence": 3,
+    "dictation": 1
+  },
+  "intentionalSharedAssets": [
+    {
+      "assetId": "l5_listening_time",
+      "activityIds": [
+        "l5-listening-number-dictation",
+        "l5-listening-time-schedule"
+      ],
+      "reason": "One ordered recording intentionally serves the number-dictation block and the following date/schedule comprehension block."
+    }
+  ],
+  "coverage": [
+    {
+      "lesson": 1,
+      "title": "Урок 1 · Üdvözöllek! Алфавит и базовые звуки",
+      "hasListening": true,
+      "activityCount": 3,
+      "listeningObjectiveIds": [
+        "l1_distinguish-s-sz",
+        "l1_distinguish-soft-consonants",
+        "l1_distinguish-long-vowels"
+      ]
+    },
+    {
+      "lesson": 2,
+      "title": "Урок 2 · Köszönés & lenni",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l2_greet-introduce",
+        "l2_ask-answer-questions"
+      ]
+    },
+    {
+      "lesson": 3,
+      "title": "Урок 3 · Főnév, névelő, többes szám",
+      "hasListening": false,
+      "activityCount": 0,
+      "listeningObjectiveIds": [],
+      "absenceAssessment": "Intentional: article/plural objectives do not require listening comprehension."
+    },
+    {
+      "lesson": 4,
+      "title": "Урок 4 · Jelen idő",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l4_recognize-forms"
+      ]
+    },
+    {
+      "lesson": 5,
+      "title": "Урок 5 · Számok, idő, napok",
+      "hasListening": true,
+      "activityCount": 2,
+      "listeningObjectiveIds": [
+        "l5_count-1-100",
+        "l5_tell-time",
+        "l5_use-time-in-speech"
+      ]
+    },
+    {
+      "lesson": 6,
+      "title": "Урок 6 · A0 összefoglaló",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l6_review-numbers"
+      ]
+    },
+    {
+      "lesson": 7,
+      "title": "Урок 7 · A tárgyeset",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l7_listen-accusative"
+      ]
+    },
+    {
+      "lesson": 8,
+      "title": "Урок 8 · A család & Birtokos ragozás",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l8_distinguish-possessors"
+      ]
+    },
+    {
+      "lesson": 9,
+      "title": "Урок 9 · Melléknevek & Összehasonlítás",
+      "hasListening": false,
+      "activityCount": 0,
+      "listeningObjectiveIds": [],
+      "absenceAssessment": "Intentional: adjective/comparison objectives do not require listening comprehension."
+    },
+    {
+      "lesson": 10,
+      "title": "Урок 10 · Helyhatározók I",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l10_use-inner-cases"
+      ]
+    },
+    {
+      "lesson": 11,
+      "title": "Урок 11 · Helyhatározók II",
+      "hasListening": false,
+      "activityCount": 0,
+      "listeningObjectiveIds": [],
+      "absenceAssessment": "Intentional: surface-location objectives are assessed through controlled, reading and production activities."
+    },
+    {
+      "lesson": 12,
+      "title": "Урок 12 · Helyhatározók III",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l12_use-near-cases"
+      ]
+    },
+    {
+      "lesson": 13,
+      "title": "Урок 13 · A múlt idő",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l13_distinguish-present-past"
+      ]
+    },
+    {
+      "lesson": 14,
+      "title": "Урок 14 · Napi rutin",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l14_tell-routine-time"
+      ]
+    },
+    {
+      "lesson": 15,
+      "title": "Урок 15 · Ételek és étterem",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l15_understand-restaurant-dialogue"
+      ]
+    },
+    {
+      "lesson": 16,
+      "title": "Урок 16 · Vásárlás és eszközhatározó",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l16_shop-dialogue",
+        "l16_count-money"
+      ]
+    },
+    {
+      "lesson": 17,
+      "title": "Урок 17 · Időjárás és évszakok",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l17_understand-forecast"
+      ]
+    },
+    {
+      "lesson": 18,
+      "title": "Урок 18 · Módbeli segédigék",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l18_understand-modals"
+      ]
+    },
+    {
+      "lesson": 19,
+      "title": "Урок 19 · A jövő idő",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l19_distinguish-tenses"
+      ]
+    },
+    {
+      "lesson": 20,
+      "title": "Урок 20 · A múlt idő",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l20_understand-past-texts"
+      ]
+    },
+    {
+      "lesson": 21,
+      "title": "Урок 21 · Alanyi és tárgyas ragozás II",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l21_distinguish-conjugations"
+      ]
+    },
+    {
+      "lesson": 22,
+      "title": "Урок 22 · A felszólító mód",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l22_understand-commands"
+      ]
+    },
+    {
+      "lesson": 23,
+      "title": "Урок 23 · A feltételes mód",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l23_understand-conditional"
+      ]
+    },
+    {
+      "lesson": 24,
+      "title": "Урок 24 · Összetett mondatok",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": []
+    },
+    {
+      "lesson": 25,
+      "title": "Урок 25 · Munka és karrier",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l25_ask-answer-job",
+        "l25_interview-dialogue"
+      ]
+    },
+    {
+      "lesson": 26,
+      "title": "Урок 26 · Egészség és orvos",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l26_doctor-dialogue",
+        "l26_pharmacy",
+        "l26_understand-advice"
+      ]
+    },
+    {
+      "lesson": 27,
+      "title": "Урок 27 · Utazás és közlekedés",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": [
+        "l27_buy-tickets",
+        "l27_ask-directions",
+        "l27_travel-dialogue"
+      ]
+    },
+    {
+      "lesson": 28,
+      "title": "Урок 28 · A B1 szint összefoglalása",
+      "hasListening": true,
+      "activityCount": 1,
+      "listeningObjectiveIds": []
+    }
+  ],
+  "activities": [
+    {
+      "lesson": 1,
+      "lessonTitle": "Урок 1 · Üdvözöllek! Алфавит и базовые звуки",
+      "slideId": 4,
+      "activityIndex": 0,
+      "activityId": "l1-listening-vowel-length",
+      "title": "Аудирование: гласные · план 20–30 с",
+      "assetId": "l1_listening_vowel_length",
+      "filename": "l1_listening_vowel_length.mp3",
+      "audioStatus": "published",
+      "transcript": "hat. hát. meg. még. kor. kór. öröm. őr. út. tűz.",
+      "questionCount": 10,
+      "passCount": 8,
+      "questions": [
+        {
+          "id": "l1-vowel-listen-q1",
+          "prompt": "Токен 1: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "hat"
+        },
+        {
+          "id": "l1-vowel-listen-q2",
+          "prompt": "Токен 2: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "hát"
+        },
+        {
+          "id": "l1-vowel-listen-q3",
+          "prompt": "Токен 3: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "meg"
+        },
+        {
+          "id": "l1-vowel-listen-q4",
+          "prompt": "Токен 4: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "még"
+        },
+        {
+          "id": "l1-vowel-listen-q5",
+          "prompt": "Токен 5: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "kor"
+        },
+        {
+          "id": "l1-vowel-listen-q6",
+          "prompt": "Токен 6: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "kór"
+        },
+        {
+          "id": "l1-vowel-listen-q7",
+          "prompt": "Токен 7: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "öröm"
+        },
+        {
+          "id": "l1-vowel-listen-q8",
+          "prompt": "Токен 8: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "őr"
+        },
+        {
+          "id": "l1-vowel-listen-q9",
+          "prompt": "Токен 9: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "út"
+        },
+        {
+          "id": "l1-vowel-listen-q10",
+          "prompt": "Токен 10: введите услышанное слово с точными диакритиками.",
+          "correctAnswer": "tűz"
+        }
+      ],
+      "type": "token_sequence",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "hat",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hát",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "meg",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "még",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kor",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kór",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "öröm",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "őr",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "út",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "tűz",
+          "pauseAfterMs": 900
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l1_distinguish-s-sz",
+        "l1_distinguish-soft-consonants",
+        "l1_distinguish-long-vowels"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-long-vowels"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 1,
+      "lessonTitle": "Урок 1 · Üdvözöllek! Алфавит и базовые звуки",
+      "slideId": 5,
+      "activityIndex": 0,
+      "activityId": "l1-listening-soft-consonants",
+      "title": "Аудирование: /ɟ/, /c/, /ɲ/ или /j/ · план 15–25 с",
+      "assetId": "l1_listening_soft_consonants",
+      "filename": "l1_listening_soft_consonants.mp3",
+      "audioStatus": "published",
+      "transcript": "magyar. kutya. nyár. jó. hegy. kártya. kenyér. hely. hagyma. lány.",
+      "questionCount": 10,
+      "passCount": 8,
+      "questions": [
+        {
+          "id": "l1-soft-listen-q1",
+          "prompt": "Токен 1: какую согласную категорию вы слышите?",
+          "correctAnswer": "gy /ɟ/"
+        },
+        {
+          "id": "l1-soft-listen-q2",
+          "prompt": "Токен 2: какую согласную категорию вы слышите?",
+          "correctAnswer": "ty /c/"
+        },
+        {
+          "id": "l1-soft-listen-q3",
+          "prompt": "Токен 3: какую согласную категорию вы слышите?",
+          "correctAnswer": "ny /ɲ/"
+        },
+        {
+          "id": "l1-soft-listen-q4",
+          "prompt": "Токен 4: какую согласную категорию вы слышите?",
+          "correctAnswer": "/j/ (на письме j или ly)"
+        },
+        {
+          "id": "l1-soft-listen-q5",
+          "prompt": "Токен 5: какую согласную категорию вы слышите?",
+          "correctAnswer": "gy /ɟ/"
+        },
+        {
+          "id": "l1-soft-listen-q6",
+          "prompt": "Токен 6: какую согласную категорию вы слышите?",
+          "correctAnswer": "ty /c/"
+        },
+        {
+          "id": "l1-soft-listen-q7",
+          "prompt": "Токен 7: какую согласную категорию вы слышите?",
+          "correctAnswer": "ny /ɲ/"
+        },
+        {
+          "id": "l1-soft-listen-q8",
+          "prompt": "Токен 8: какую согласную категорию вы слышите?",
+          "correctAnswer": "/j/ (на письме j или ly)"
+        },
+        {
+          "id": "l1-soft-listen-q9",
+          "prompt": "Токен 9: какую согласную категорию вы слышите?",
+          "correctAnswer": "gy /ɟ/"
+        },
+        {
+          "id": "l1-soft-listen-q10",
+          "prompt": "Токен 10: какую согласную категорию вы слышите?",
+          "correctAnswer": "ny /ɲ/"
+        }
+      ],
+      "type": "token_sequence",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "magyar",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kutya",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "nyár",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "jó",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hegy",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kártya",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kenyér",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hely",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hagyma",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "lány",
+          "pauseAfterMs": 900
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l1_distinguish-s-sz",
+        "l1_distinguish-soft-consonants",
+        "l1_distinguish-long-vowels"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-soft-consonants"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 1,
+      "lessonTitle": "Урок 1 · Üdvözöllek! Алфавит и базовые звуки",
+      "slideId": 6,
+      "activityIndex": 0,
+      "activityId": "l1-listening-s-sz",
+      "title": "Аудирование: s /ʃ/ или sz /s/ · план 15–25 с",
+      "assetId": "l1_listening_s_sz",
+      "filename": "l1_listening_s_sz.mp3",
+      "audioStatus": "published",
+      "transcript": "sál. szó. sör. szoba. séta. szín. sima. sziget. só. szőlő.",
+      "questionCount": 10,
+      "passCount": 8,
+      "questions": [
+        {
+          "id": "l1-s-sz-listen-q1",
+          "prompt": "Токен 1: какой начальный звук и запись подходят?",
+          "correctAnswer": "s /ʃ/"
+        },
+        {
+          "id": "l1-s-sz-listen-q2",
+          "prompt": "Токен 2: какой начальный звук и запись подходят?",
+          "correctAnswer": "sz /s/"
+        },
+        {
+          "id": "l1-s-sz-listen-q3",
+          "prompt": "Токен 3: какой начальный звук и запись подходят?",
+          "correctAnswer": "s /ʃ/"
+        },
+        {
+          "id": "l1-s-sz-listen-q4",
+          "prompt": "Токен 4: какой начальный звук и запись подходят?",
+          "correctAnswer": "sz /s/"
+        },
+        {
+          "id": "l1-s-sz-listen-q5",
+          "prompt": "Токен 5: какой начальный звук и запись подходят?",
+          "correctAnswer": "s /ʃ/"
+        },
+        {
+          "id": "l1-s-sz-listen-q6",
+          "prompt": "Токен 6: какой начальный звук и запись подходят?",
+          "correctAnswer": "sz /s/"
+        },
+        {
+          "id": "l1-s-sz-listen-q7",
+          "prompt": "Токен 7: какой начальный звук и запись подходят?",
+          "correctAnswer": "s /ʃ/"
+        },
+        {
+          "id": "l1-s-sz-listen-q8",
+          "prompt": "Токен 8: какой начальный звук и запись подходят?",
+          "correctAnswer": "sz /s/"
+        },
+        {
+          "id": "l1-s-sz-listen-q9",
+          "prompt": "Токен 9: какой начальный звук и запись подходят?",
+          "correctAnswer": "s /ʃ/"
+        },
+        {
+          "id": "l1-s-sz-listen-q10",
+          "prompt": "Токен 10: какой начальный звук и запись подходят?",
+          "correctAnswer": "sz /s/"
+        }
+      ],
+      "type": "token_sequence",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "sál",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szó",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sör",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szoba",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "séta",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szín",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sima",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sziget",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "só",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szőlő",
+          "pauseAfterMs": 900
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l1_distinguish-s-sz",
+        "l1_distinguish-soft-consonants",
+        "l1_distinguish-long-vowels"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-s-sz"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 2,
+      "lessonTitle": "Урок 2 · Köszönés & lenni",
+      "slideId": 7,
+      "activityIndex": 0,
+      "activityId": "l2-listening-introduction",
+      "title": "Аудирование: первое знакомство",
+      "assetId": "l2_listening_introduction",
+      "filename": "l2_listening_introduction.mp3",
+      "audioStatus": "published",
+      "transcript": "A: Szia! A nevem Anna. Ki vagy te?\nB: Szia! Én Péter vagyok.\nA: Magyar vagy?\nB: Igen, magyar vagyok. Budapesten élek. És te?\nA: Anna vagyok. Örmény vagyok. Budapesten élek.\nB: Nagyon örülök. Hogy vagy?\nA: Jól vagyok, köszönöm. Hogy vagy?\nB: Jól vagyok, köszönöm.\nA: Viszlát!\nB: Viszlát!",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l2-listen-q1",
+          "prompt": "Какой регистр общения используют собеседники?",
+          "correctAnswer": "неофициальный"
+        },
+        {
+          "id": "l2-listen-q2",
+          "prompt": "На вопрос «Ki vagy te?» что отвечает второй собеседник?",
+          "correctAnswer": "Péter vagyok."
+        },
+        {
+          "id": "l2-listen-q3",
+          "prompt": "Что второй собеседник сообщает о себе?",
+          "correctAnswer": "Он венгр."
+        },
+        {
+          "id": "l2-listen-q4",
+          "prompt": "Как первый собеседник отвечает на вопрос о самочувствии?",
+          "correctAnswer": "Хорошо, спасибо."
+        },
+        {
+          "id": "l2-listen-q5",
+          "prompt": "Чем заканчивается разговор?",
+          "correctAnswer": "прощанием"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Szia! A nevem Anna. Ki vagy te?"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia! Én Péter vagyok."
+        },
+        {
+          "speaker": "A",
+          "text": "Magyar vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, magyar vagyok. Budapesten élek. És te?"
+        },
+        {
+          "speaker": "A",
+          "text": "Anna vagyok. Örmény vagyok. Budapesten élek."
+        },
+        {
+          "speaker": "B",
+          "text": "Nagyon örülök. Hogy vagy?"
+        },
+        {
+          "speaker": "A",
+          "text": "Jól vagyok, köszönöm. Hogy vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Jól vagyok, köszönöm."
+        },
+        {
+          "speaker": "A",
+          "text": "Viszlát!"
+        },
+        {
+          "speaker": "B",
+          "text": "Viszlát!"
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l2_greet-introduce",
+        "l2_ask-answer-questions"
+      ],
+      "objectiveIds": [
+        "l2_greet-introduce",
+        "l2_ask-answer-questions"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 4,
+      "lessonTitle": "Урок 4 · Jelen idő",
+      "slideId": 10,
+      "activityIndex": 0,
+      "activityId": "l4-listening-present-forms",
+      "title": "Аудирование: кто что делает?",
+      "assetId": "l4_listening_present_forms",
+      "filename": "l4_listening_present_forms.mp3",
+      "audioStatus": "published",
+      "transcript": "Én minden nap magyarul tanulok.\nTe reggel otthon sokat olvasol.\nPéter most ír, Anna pedig olvas.\nMi magyarul beszélünk és együtt tanulunk.\nŐk minden nap dolgoznak.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l4-listen-q1",
+          "prompt": "Какое лицо выражено в первой реплике?",
+          "correctAnswer": "én"
+        },
+        {
+          "id": "l4-listen-q2",
+          "prompt": "Какое действие названо во второй реплике?",
+          "correctAnswer": "читать — olvas"
+        },
+        {
+          "id": "l4-listen-q3",
+          "prompt": "Какое лицо выражают формы глаголов в третьей реплике?",
+          "correctAnswer": "ő"
+        },
+        {
+          "id": "l4-listen-q4",
+          "prompt": "Какое лицо выражено в четвёртой реплике?",
+          "correctAnswer": "mi"
+        },
+        {
+          "id": "l4-listen-q5",
+          "prompt": "Какое лицо выражено в пятой реплике?",
+          "correctAnswer": "ők"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Én minden nap magyarul tanulok.\nTe reggel otthon sokat olvasol.\nPéter most ír, Anna pedig olvas.\nMi magyarul beszélünk és együtt tanulunk.\nŐk minden nap dolgoznak."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l4_recognize-forms"
+      ],
+      "objectiveIds": [
+        "l4_recognize-forms"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 5,
+      "lessonTitle": "Урок 5 · Számok, idő, napok",
+      "slideId": 8,
+      "activityIndex": 0,
+      "activityId": "l5-listening-number-dictation",
+      "title": "Аудирование A: диктант чисел",
+      "assetId": "l5_listening_time",
+      "filename": "l5_listening_time.mp3",
+      "audioStatus": "published",
+      "transcript": "Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.\n\nA dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+      "questionCount": 10,
+      "passCount": 8,
+      "questions": [
+        {
+          "id": "l5-listen-number-1",
+          "prompt": "Запись 1: введи услышанное число по-венгерски.",
+          "correctAnswer": "négy"
+        },
+        {
+          "id": "l5-listen-number-2",
+          "prompt": "Запись 2: введи услышанное число по-венгерски.",
+          "correctAnswer": "tizenhárom"
+        },
+        {
+          "id": "l5-listen-number-3",
+          "prompt": "Запись 3: введи услышанное число по-венгерски.",
+          "correctAnswer": "húsz"
+        },
+        {
+          "id": "l5-listen-number-4",
+          "prompt": "Запись 4: введи услышанное число по-венгерски.",
+          "correctAnswer": "huszonkettő"
+        },
+        {
+          "id": "l5-listen-number-5",
+          "prompt": "Запись 5: введи услышанное число по-венгерски.",
+          "correctAnswer": "harmincnyolc"
+        },
+        {
+          "id": "l5-listen-number-6",
+          "prompt": "Запись 6: введи услышанное число по-венгерски.",
+          "correctAnswer": "negyvenhét"
+        },
+        {
+          "id": "l5-listen-number-7",
+          "prompt": "Запись 7: введи услышанное число по-венгерски.",
+          "correctAnswer": "ötvenhat"
+        },
+        {
+          "id": "l5-listen-number-8",
+          "prompt": "Запись 8: введи услышанное число по-венгерски.",
+          "correctAnswer": "hatvankilenc"
+        },
+        {
+          "id": "l5-listen-number-9",
+          "prompt": "Запись 9: введи услышанное число по-венгерски.",
+          "correctAnswer": "nyolcvannégy"
+        },
+        {
+          "id": "l5-listen-number-10",
+          "prompt": "Запись 10: введи услышанное число по-венгерски.",
+          "correctAnswer": "száz"
+        }
+      ],
+      "type": "dictation",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Négy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Tizenhárom",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Húsz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Huszonkettő",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Harmincnyolc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Negyvenhét",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Ötvenhat",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Hatvankilenc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Nyolcvannégy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Száz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "A dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+          "pauseAfterMs": 600
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l5_count-1-100",
+        "l5_tell-time",
+        "l5_use-time-in-speech"
+      ],
+      "objectiveIds": [
+        "l5_count-1-100"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 5,
+      "lessonTitle": "Урок 5 · Számok, idő, napok",
+      "slideId": 9,
+      "activityIndex": 0,
+      "activityId": "l5-listening-time-schedule",
+      "title": "Аудирование B: дата и расписание",
+      "assetId": "l5_listening_time",
+      "filename": "l5_listening_time.mp3",
+      "audioStatus": "published",
+      "transcript": "Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.\n\nA dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l5-listen-schedule-q1",
+          "prompt": "Какая дата звучит после диктанта чисел?",
+          "correctAnswer": "2026. augusztus 3."
+        },
+        {
+          "id": "l5-listen-schedule-q2",
+          "prompt": "Когда говорящий занимается венгерским?",
+          "correctAnswer": "hétfőn nyolckor"
+        },
+        {
+          "id": "l5-listen-schedule-q3",
+          "prompt": "Когда говорящий работает?",
+          "correctAnswer": "szerdán háromkor"
+        },
+        {
+          "id": "l5-listen-schedule-q4",
+          "prompt": "Когда говорящий читает?",
+          "correctAnswer": "pénteken öt órakor"
+        },
+        {
+          "id": "l5-listen-schedule-q5",
+          "prompt": "Когда говорящий пишет?",
+          "correctAnswer": "szombaton tízkor"
+        }
+      ],
+      "type": "dictation",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Négy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Tizenhárom",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Húsz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Huszonkettő",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Harmincnyolc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Negyvenhét",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Ötvenhat",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Hatvankilenc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Nyolcvannégy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Száz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "A dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+          "pauseAfterMs": 600
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l5_count-1-100",
+        "l5_tell-time",
+        "l5_use-time-in-speech"
+      ],
+      "objectiveIds": [
+        "l5_tell-time",
+        "l5_use-time-in-speech"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 6,
+      "lessonTitle": "Урок 6 · A0 összefoglaló",
+      "slideId": 6,
+      "activityIndex": 0,
+      "activityId": "l6-listening-a0-review",
+      "title": "Аудирование: знакомство и расписание",
+      "assetId": "l6_listening_a0_review",
+      "filename": "l6_listening_a0_review.mp3",
+      "audioStatus": "published",
+      "transcript": "A: Szia! A nevem Anna. Hogy hívnak?\nB: Szia! Péter vagyok.\nA: Hogy vagy?\nB: Jól vagyok, köszönöm.\nA: Mikor tanulsz magyarul?\nB: Kedden öt órakor tanulok. Csütörtökön nyolckor dolgozom. Szombaton háromkor olvasok.\nA: Köszönöm. Szia!\nB: Szia!",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l6-listen-q1",
+          "prompt": "О чём этот короткий разговор?",
+          "correctAnswer": "знакомство и расписание"
+        },
+        {
+          "id": "l6-listen-q2",
+          "prompt": "Как зовут второго собеседника?",
+          "correctAnswer": "Péter"
+        },
+        {
+          "id": "l6-listen-q3",
+          "prompt": "В какой день собеседник занимается венгерским?",
+          "correctAnswer": "kedden"
+        },
+        {
+          "id": "l6-listen-q4",
+          "prompt": "Во сколько собеседник занимается венгерским?",
+          "correctAnswer": "öt órakor"
+        },
+        {
+          "id": "l6-listen-q5",
+          "prompt": "Что собеседник делает в субботу?",
+          "correctAnswer": "olvas"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Szia! A nevem Anna. Hogy hívnak?"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia! Péter vagyok."
+        },
+        {
+          "speaker": "A",
+          "text": "Hogy vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Jól vagyok, köszönöm."
+        },
+        {
+          "speaker": "A",
+          "text": "Mikor tanulsz magyarul?"
+        },
+        {
+          "speaker": "B",
+          "text": "Kedden öt órakor tanulok. Csütörtökön nyolckor dolgozom. Szombaton háromkor olvasok."
+        },
+        {
+          "speaker": "A",
+          "text": "Köszönöm. Szia!"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia!"
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l6_review-numbers"
+      ],
+      "objectiveIds": [
+        "l6_review-numbers"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 7,
+      "lessonTitle": "Урок 7 · A tárgyeset",
+      "slideId": 10,
+      "activityIndex": 0,
+      "activityId": "l7-listening-accusative",
+      "title": "Аудирование: формы дополнения",
+      "assetId": "l7_listening_accusative",
+      "filename": "l7_listening_accusative.mp3",
+      "audioStatus": "published",
+      "transcript": "Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l7-listening-q1",
+          "prompt": "Что ищет говорящий?",
+          "correctAnswer": "egy magyar könyvet"
+        },
+        {
+          "id": "l7-listening-q2",
+          "prompt": "Что ему рекомендуют?",
+          "correctAnswer": "ezt a könyvet"
+        },
+        {
+          "id": "l7-listening-q3",
+          "prompt": "Что ещё просит говорящий?",
+          "correctAnswer": "egy kávét"
+        },
+        {
+          "id": "l7-listening-q4",
+          "prompt": "Что он видит из окна?",
+          "correctAnswer": "a házat"
+        },
+        {
+          "id": "l7-listening-q5",
+          "prompt": "Какую форму он говорит другу?",
+          "correctAnswer": "Látlak."
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”"
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l7_listen-accusative"
+      ],
+      "objectiveIds": [
+        "l7_listen-accusative"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 8,
+      "lessonTitle": "Урок 8 · A család & Birtokos ragozás",
+      "slideId": 10,
+      "activityIndex": 0,
+      "activityId": "l8-listening-possessives",
+      "title": "Аудирование: кто владелец?",
+      "assetId": "l8_listening_possessives",
+      "filename": "l8_listening_possessives.mp3",
+      "audioStatus": "published",
+      "transcript": "Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?",
+      "questionCount": 4,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l8-listening-q1",
+          "prompt": "Чья мать — учительница?",
+          "correctAnswer": "Анны"
+        },
+        {
+          "id": "l8-listening-q2",
+          "prompt": "Кто врач?",
+          "correctAnswer": "отец Анны"
+        },
+        {
+          "id": "l8-listening-q3",
+          "prompt": "Чей дом большой?",
+          "correctAnswer": "Петера"
+        },
+        {
+          "id": "l8-listening-q4",
+          "prompt": "О чьей семье спрашивает Анна?",
+          "correctAnswer": "о семье слушателя"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?"
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l8_distinguish-possessors"
+      ],
+      "objectiveIds": [
+        "l8_distinguish-possessors"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 10,
+      "lessonTitle": "Урок 10 · Helyhatározók I",
+      "slideId": 10,
+      "activityIndex": 0,
+      "activityId": "l10-listening-inner-locations",
+      "title": "Аудирование: маршрут Марка",
+      "assetId": "l10_listening_inner_locations",
+      "filename": "l10_listening_inner_locations.mp3",
+      "audioStatus": "published",
+      "transcript": "Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l10-listening-q1",
+          "prompt": "Где Марк утром?",
+          "correctAnswer": "a szobában"
+        },
+        {
+          "id": "l10-listening-q2",
+          "prompt": "Куда он входит в девять?",
+          "correctAnswer": "az iskolába"
+        },
+        {
+          "id": "l10-listening-q3",
+          "prompt": "Откуда он выходит днём?",
+          "correctAnswer": "az iskolából"
+        },
+        {
+          "id": "l10-listening-q4",
+          "prompt": "Где он встречает Анну?",
+          "correctAnswer": "a boltban"
+        },
+        {
+          "id": "l10-listening-q5",
+          "prompt": "Откуда он выходит в конце?",
+          "correctAnswer": "a boltból"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l10_use-inner-cases"
+      ],
+      "objectiveIds": [
+        "l10_use-inner-cases"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 12,
+      "lessonTitle": "Урок 12 · Helyhatározók III",
+      "slideId": 7,
+      "activityIndex": 0,
+      "activityId": "l12-listening-near-locations",
+      "title": "Аудирование: у кого, к кому, от кого?",
+      "assetId": "l12_listening_near_locations",
+      "filename": "l12_listening_near_locations.mp3",
+      "audioStatus": "published",
+      "transcript": "Anna Péterhez megy. Péter most az orvosnál van. Az orvostól jön, utána Annához megy egy könyvért.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l12-listening-q1",
+          "prompt": "К кому идёт Анна?",
+          "correctAnswer": "Péterhez"
+        },
+        {
+          "id": "l12-listening-q2",
+          "prompt": "Где сейчас Петер?",
+          "correctAnswer": "az orvosnál"
+        },
+        {
+          "id": "l12-listening-q3",
+          "prompt": "Откуда он идёт?",
+          "correctAnswer": "az orvostól"
+        },
+        {
+          "id": "l12-listening-q4",
+          "prompt": "К кому он идёт после врача?",
+          "correctAnswer": "Annához"
+        },
+        {
+          "id": "l12-listening-q5",
+          "prompt": "Какие отношения звучат?",
+          "correctAnswer": "Hová?, Hol? и Honnan?"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Anna Péterhez megy. Péter most az orvosnál van. Az orvostól jön, utána Annához megy egy könyvért."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l12_use-near-cases"
+      ],
+      "objectiveIds": [
+        "l12_use-near-cases"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 13,
+      "lessonTitle": "Урок 13 · A múlt idő",
+      "slideId": 8,
+      "activityIndex": 0,
+      "activityId": "l13-listening-tense-contrast",
+      "title": "Аудирование: сейчас и вчера",
+      "assetId": "l13_listening_tense_contrast",
+      "filename": "l13_listening_tense_contrast.mp3",
+      "audioStatus": "published",
+      "transcript": "Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l13-listening-q1",
+          "prompt": "Что Петер делает сегодня?",
+          "correctAnswer": "otthon dolgozik"
+        },
+        {
+          "id": "l13-listening-q2",
+          "prompt": "Работал ли он вчера?",
+          "correctAnswer": "нет"
+        },
+        {
+          "id": "l13-listening-q3",
+          "prompt": "Где он гулял утром?",
+          "correctAnswer": "a parkban"
+        },
+        {
+          "id": "l13-listening-q4",
+          "prompt": "С кем он был днём?",
+          "correctAnswer": "a barátaival"
+        },
+        {
+          "id": "l13-listening-q5",
+          "prompt": "Какой маркер указывает на прошлое?",
+          "correctAnswer": "tegnap"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l13_distinguish-present-past"
+      ],
+      "objectiveIds": [
+        "l13_distinguish-present-past"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 14,
+      "lessonTitle": "Урок 14 · Napi rutin",
+      "slideId": 7,
+      "activityIndex": 0,
+      "activityId": "l14-listening-routine",
+      "title": "Аудирование: распорядок Анны",
+      "assetId": "l14_listening_routine",
+      "filename": "l14_listening_routine.mp3",
+      "audioStatus": "published",
+      "transcript": "Anna reggel fél hétkor felébred. Hét órakor reggelizik. Nyolckor dolgozni megy. Délben ebédel. Este hatkor hazamegy, és tizenegykor lefekszik.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l14-listening-q1",
+          "prompt": "Когда Анна просыпается?",
+          "correctAnswer": "fél hétkor"
+        },
+        {
+          "id": "l14-listening-q2",
+          "prompt": "Что она делает в семь?",
+          "correctAnswer": "reggelizik"
+        },
+        {
+          "id": "l14-listening-q3",
+          "prompt": "Куда она идёт в восемь?",
+          "correctAnswer": "dolgozni"
+        },
+        {
+          "id": "l14-listening-q4",
+          "prompt": "Когда она возвращается домой?",
+          "correctAnswer": "este hatkor"
+        },
+        {
+          "id": "l14-listening-q5",
+          "prompt": "Какое действие завершает распорядок?",
+          "correctAnswer": "lefekszik"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Anna reggel fél hétkor felébred. Hét órakor reggelizik. Nyolckor dolgozni megy. Délben ebédel. Este hatkor hazamegy, és tizenegykor lefekszik."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l14_tell-routine-time"
+      ],
+      "objectiveIds": [
+        "l14_tell-routine-time"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 15,
+      "lessonTitle": "Урок 15 · Ételek és étterem",
+      "slideId": 7,
+      "activityIndex": 0,
+      "activityId": "l15-listening-restaurant",
+      "title": "Аудирование: диалог в ресторане",
+      "assetId": "l15_listening_restaurant",
+      "filename": "l15_listening_restaurant.mp3",
+      "audioStatus": "published",
+      "transcript": "Pincér: Jó estét! Mit kér?\nVendég: Szeretnék egy gulyáslevest és egy limonádét.\nPincér: Sajnos nincs limonádé, csak narancslé van.\nVendég: Rendben, akkor egy narancslevet kérek.\nPincér: És főételt?\nVendég: Igen, egy rántott sajtot kérek.\nPincér: Rendben, hozom rögtön.",
+      "questionCount": 4,
+      "passCount": 3,
+      "questions": [
+        {
+          "id": "l15-list-q1",
+          "prompt": "Hol játszódik a párbeszéd?",
+          "correctAnswer": "Az étteremben"
+        },
+        {
+          "id": "l15-list-q2",
+          "prompt": "Mit szeretne inni a vendég?",
+          "correctAnswer": "Limonádét"
+        },
+        {
+          "id": "l15-list-q3",
+          "prompt": "Mi nincs az étteremben?",
+          "correctAnswer": "Limonádé"
+        },
+        {
+          "id": "l15-list-q4",
+          "prompt": "Milyen főételt kér a vendég?",
+          "correctAnswer": "Rántott sajtot"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Pincér",
+        "Vendég"
+      ],
+      "segments": [
+        {
+          "speaker": "Pincér",
+          "text": "Jó estét! Mit kér?"
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Szeretnék egy gulyáslevest és egy limonádét."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "Sajnos nincs limonádé, csak narancslé van."
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Rendben, akkor egy narancslevet kérek."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "És főételt?"
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Igen, egy rántott sajtot kérek."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "Rendben, hozom rögtön."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l15_understand-restaurant-dialogue"
+      ],
+      "objectiveIds": [
+        "l15_understand-restaurant-dialogue"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 16,
+      "lessonTitle": "Урок 16 · Vásárlás és eszközhatározó",
+      "slideId": 8,
+      "activityIndex": 0,
+      "activityId": "l16-listening-shopping",
+      "title": "Аудирование: покупка",
+      "assetId": "l16_listening_shopping",
+      "filename": "l16_listening_shopping.mp3",
+      "audioStatus": "published",
+      "transcript": "Vásárló: Jó napot! Egy pulóvert kérek. Mennyibe kerül?\nEladó: Ezerötszáz forint.\nVásárló: Kérek két darabot. Fizethetek kártyával?\nEladó: Igen, természetesen.",
+      "questionCount": 4,
+      "passCount": 3,
+      "questions": [
+        {
+          "id": "l16-list-1",
+          "prompt": "Mit kér a vásárló?",
+          "correctAnswer": "Egy pulóvert"
+        },
+        {
+          "id": "l16-list-2",
+          "prompt": "Hány darabot kér?",
+          "correctAnswer": "Kettőt"
+        },
+        {
+          "id": "l16-list-3",
+          "prompt": "Mennyibe kerül?",
+          "correctAnswer": "1500 Ft"
+        },
+        {
+          "id": "l16-list-4",
+          "prompt": "Hogyan szeretne fizetni?",
+          "correctAnswer": "Kártyával"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Vásárló",
+        "Eladó"
+      ],
+      "segments": [
+        {
+          "speaker": "Vásárló",
+          "text": "Jó napot! Egy pulóvert kérek. Mennyibe kerül?"
+        },
+        {
+          "speaker": "Eladó",
+          "text": "Ezerötszáz forint."
+        },
+        {
+          "speaker": "Vásárló",
+          "text": "Kérek két darabot. Fizethetek kártyával?"
+        },
+        {
+          "speaker": "Eladó",
+          "text": "Igen, természetesen."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l16_shop-dialogue",
+        "l16_count-money"
+      ],
+      "objectiveIds": [
+        "l16_shop-dialogue",
+        "l16_count-money"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 17,
+      "lessonTitle": "Урок 17 · Időjárás és évszakok",
+      "slideId": 7,
+      "activityIndex": 0,
+      "activityId": "l17-listening-weather",
+      "title": "Аудирование: короткий прогноз",
+      "assetId": "l17_listening_weather",
+      "filename": "l17_listening_weather.mp3",
+      "audioStatus": "published",
+      "transcript": "Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l17-list-1",
+          "prompt": "Melyik városról szól az előrejelzés?",
+          "correctAnswer": "Budapestről"
+        },
+        {
+          "id": "l17-list-2",
+          "prompt": "Milyen ma az ég?",
+          "correctAnswer": "Felhős"
+        },
+        {
+          "id": "l17-list-3",
+          "prompt": "Hány fok van ma?",
+          "correctAnswer": "15"
+        },
+        {
+          "id": "l17-list-4",
+          "prompt": "Mi történik délután?",
+          "correctAnswer": "Esik az eső"
+        },
+        {
+          "id": "l17-list-5",
+          "prompt": "Milyen idő lesz holnap?",
+          "correctAnswer": "Napos"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l17_understand-forecast"
+      ],
+      "objectiveIds": [
+        "l17_understand-forecast"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 18,
+      "lessonTitle": "Урок 18 · Módbeli segédigék",
+      "slideId": 8,
+      "activityIndex": 0,
+      "activityId": "l18-listening-modals",
+      "title": "Аудирование: что люди могут, должны и хотят?",
+      "assetId": "l18_listening_modals",
+      "filename": "l18_listening_modals.mp3",
+      "audioStatus": "published",
+      "transcript": "A: Ma este szeretnék moziba menni, de előbb dolgoznom kell. Holnap tudok veled találkozni.\nB: Jó. Lehet a parkban sétálni?\nA: Igen. Péter nem tud jönni, mert tanulnia kell. Anna otthon akar maradni.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l18-list-1",
+          "prompt": "Mit szeretne az első beszélő ma este?",
+          "correctAnswer": "Moziba menni"
+        },
+        {
+          "id": "l18-list-2",
+          "prompt": "Mit kell tennie az első beszélőnek előbb?",
+          "correctAnswer": "Dolgoznia kell"
+        },
+        {
+          "id": "l18-list-3",
+          "prompt": "Mikor tud találkozni az első beszélő?",
+          "correctAnswer": "Holnap"
+        },
+        {
+          "id": "l18-list-4",
+          "prompt": "Miért nem tud Péter jönni?",
+          "correctAnswer": "Tanulnia kell"
+        },
+        {
+          "id": "l18-list-5",
+          "prompt": "Mit akar Anna?",
+          "correctAnswer": "Otthon maradni"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Ma este szeretnék moziba menni, de előbb dolgoznom kell. Holnap tudok veled találkozni."
+        },
+        {
+          "speaker": "B",
+          "text": "Jó. Lehet a parkban sétálni?"
+        },
+        {
+          "speaker": "A",
+          "text": "Igen. Péter nem tud jönni, mert tanulnia kell. Anna otthon akar maradni."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l18_understand-modals"
+      ],
+      "objectiveIds": [
+        "l18_understand-modals"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 19,
+      "lessonTitle": "Урок 19 · A jövő idő",
+      "slideId": 9,
+      "activityIndex": 0,
+      "activityId": "l19-listening-future",
+      "title": "Аудирование: три времени и планы",
+      "assetId": "l19_listening_future",
+      "filename": "l19_listening_future.mp3",
+      "audioStatus": "published",
+      "transcript": "Tegnap Ádám otthon dolgozott. Ma a könyvtárban tanul. Holnap Budapestre fog utazni. A hétvégén pihenni fog. Szerinte vasárnap esni fog. Jövő héten a barátai is dolgozni fognak.",
+      "questionCount": 5,
+      "passCount": 4,
+      "questions": [
+        {
+          "id": "l19-list-1",
+          "prompt": "Melyik mondat beszél a múltról?",
+          "correctAnswer": "Tegnap Ádám otthon dolgozott."
+        },
+        {
+          "id": "l19-list-2",
+          "prompt": "Melyik mondat van jelen időben?",
+          "correctAnswer": "Ma a könyvtárban tanul."
+        },
+        {
+          "id": "l19-list-3",
+          "prompt": "Mit fog Ádám csinálni holnap?",
+          "correctAnswer": "Budapestre fog utazni."
+        },
+        {
+          "id": "l19-list-4",
+          "prompt": "Mit fog Ádám csinálni a hétvégén?",
+          "correctAnswer": "Pihenni fog."
+        },
+        {
+          "id": "l19-list-5",
+          "prompt": "Mi a jóslat vasárnapra?",
+          "correctAnswer": "Esni fog."
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Tegnap Ádám otthon dolgozott. Ma a könyvtárban tanul. Holnap Budapestre fog utazni. A hétvégén pihenni fog. Szerinte vasárnap esni fog. Jövő héten a barátai is dolgozni fognak."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l19_distinguish-tenses"
+      ],
+      "objectiveIds": [
+        "l19_distinguish-tenses"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 20,
+      "lessonTitle": "Урок 20 · A múlt idő",
+      "slideId": 10,
+      "activityIndex": 2,
+      "activityId": "l20-listening-context",
+      "title": "Аудирование: короткий рассказ о прошлом",
+      "assetId": "l20_listening_context",
+      "filename": "l20_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Tegnap Péter nem dolgozott. Délelőtt bevásárolt, délután pedig meglátogatta a testvérét. Este együtt főztek.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l20-listen-1",
+          "prompt": "Dolgozott Péter tegnap?",
+          "correctAnswer": "Nem"
+        },
+        {
+          "id": "l20-listen-2",
+          "prompt": "Kit látogatott meg?",
+          "correctAnswer": "A testvérét"
+        },
+        {
+          "id": "l20-listen-3",
+          "prompt": "Mit csináltak este?",
+          "correctAnswer": "Főztek"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Tegnap Péter nem dolgozott. Délelőtt bevásárolt, délután pedig meglátogatta a testvérét. Este együtt főztek."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l20_understand-past-texts"
+      ],
+      "objectiveIds": [
+        "l20_understand-past-texts"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 21,
+      "lessonTitle": "Урок 21 · Alanyi és tárgyas ragozás II",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l21-listening-context",
+      "title": "Аудирование: что и кого видят друзья",
+      "assetId": "l21_listening_context",
+      "filename": "l21_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "A: Látod azt a házat?\nB: Igen, látom.\nA: És engem látsz a képen?\nB: Igen, téged is látlak.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l21-listen-1",
+          "prompt": "Mit látnak először?",
+          "correctAnswer": "Egy házat"
+        },
+        {
+          "id": "l21-listen-2",
+          "prompt": "Melyik forma hangzik el a házzal?",
+          "correctAnswer": "látom"
+        },
+        {
+          "id": "l21-listen-3",
+          "prompt": "Melyik forma jelenti: «я вижу тебя»?",
+          "correctAnswer": "látlak"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Látod azt a házat?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, látom."
+        },
+        {
+          "speaker": "A",
+          "text": "És engem látsz a képen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, téged is látlak."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l21_distinguish-conjugations"
+      ],
+      "objectiveIds": [
+        "l21_distinguish-conjugations"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 22,
+      "lessonTitle": "Урок 22 · A felszólító mód",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l22-listening-context",
+      "title": "Аудирование: просьбы и указания",
+      "assetId": "l22_listening_context",
+      "filename": "l22_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l22-listen-1",
+          "prompt": "Mit kérnek először?",
+          "correctAnswer": "Jöjjön be"
+        },
+        {
+          "id": "l22-listen-2",
+          "prompt": "Mennyi ideig kell várni?",
+          "correctAnswer": "Egy percet"
+        },
+        {
+          "id": "l22-listen-3",
+          "prompt": "Hová ne tegye a táskát?",
+          "correctAnswer": "Az asztalra"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l22_understand-commands"
+      ],
+      "objectiveIds": [
+        "l22_understand-commands"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 23,
+      "lessonTitle": "Урок 23 · A feltételes mód",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l23-listening-context",
+      "title": "Аудирование: желания и условия",
+      "assetId": "l23_listening_context",
+      "filename": "l23_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l23-listen-1",
+          "prompt": "Mit szeretne a beszélő?",
+          "correctAnswer": "Többet utazni"
+        },
+        {
+          "id": "l23-listen-2",
+          "prompt": "Mire lenne szüksége?",
+          "correctAnswer": "Több szabadságra"
+        },
+        {
+          "id": "l23-listen-3",
+          "prompt": "Mit csinálna nyáron?",
+          "correctAnswer": "Sokat úszna"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l23_understand-conditional"
+      ],
+      "objectiveIds": [
+        "l23_understand-conditional"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 24,
+      "lessonTitle": "Урок 24 · Összetett mondatok",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l24-listening-context",
+      "title": "Аудирование: мнение и причина",
+      "assetId": "l24_listening_context",
+      "filename": "l24_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Szerintem jó ez a lakás, mert világos és közel van a munkámhoz. Bár kicsi, mégis kényelmes. Megnézem még egyszer, és utána döntök.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l24-listen-1",
+          "prompt": "Miért tetszik a lakás?",
+          "correctAnswer": "Világos és közel van"
+        },
+        {
+          "id": "l24-listen-2",
+          "prompt": "Mi a lakás hátránya?",
+          "correctAnswer": "Kicsi"
+        },
+        {
+          "id": "l24-listen-3",
+          "prompt": "Mikor dönt a beszélő?",
+          "correctAnswer": "Egy újabb megtekintés után"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Szerintem jó ez a lakás, mert világos és közel van a munkámhoz. Bár kicsi, mégis kényelmes. Megnézem még egyszer, és utána döntök."
+        }
+      ],
+      "lessonListeningObjectiveIds": [],
+      "objectiveIds": [],
+      "evidenceRelationship": "practice_only"
+    },
+    {
+      "lesson": 25,
+      "lessonTitle": "Урок 25 · Munka és karrier",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l25-listening-context",
+      "title": "Аудирование: фрагмент собеседования",
+      "assetId": "l25_listening_context",
+      "filename": "l25_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Interjúztató: Mivel foglalkozott korábban?\nJelölt: Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l25-listen-1",
+          "prompt": "Hol dolgozott a jelölt?",
+          "correctAnswer": "Egy szállodában"
+        },
+        {
+          "id": "l25-listen-2",
+          "prompt": "Mennyi ideig dolgozott ott?",
+          "correctAnswer": "Két évig"
+        },
+        {
+          "id": "l25-listen-3",
+          "prompt": "Mit szeret?",
+          "correctAnswer": "Emberekkel dolgozni"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Interjúztató",
+        "Jelölt"
+      ],
+      "segments": [
+        {
+          "speaker": "Interjúztató",
+          "text": "Mivel foglalkozott korábban?"
+        },
+        {
+          "speaker": "Jelölt",
+          "text": "Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l25_ask-answer-job",
+        "l25_interview-dialogue"
+      ],
+      "objectiveIds": [
+        "l25_ask-answer-job"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 26,
+      "lessonTitle": "Урок 26 · Egészség és orvos",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l26-listening-context",
+      "title": "Аудирование: рекомендации врача",
+      "assetId": "l26_listening_context",
+      "filename": "l26_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "A torka piros, de a tüdeje tiszta. Maradjon otthon két napig, igyon sok teát, és vegye be ezt a gyógyszert naponta kétszer.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l26-listen-1",
+          "prompt": "Milyen a beteg torka?",
+          "correctAnswer": "Piros"
+        },
+        {
+          "id": "l26-listen-2",
+          "prompt": "Mennyi ideig maradjon otthon?",
+          "correctAnswer": "Két napig"
+        },
+        {
+          "id": "l26-listen-3",
+          "prompt": "Hányszor vegye be a gyógyszert?",
+          "correctAnswer": "Naponta kétszer"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "A torka piros, de a tüdeje tiszta. Maradjon otthon két napig, igyon sok teát, és vegye be ezt a gyógyszert naponta kétszer."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l26_doctor-dialogue",
+        "l26_pharmacy",
+        "l26_understand-advice"
+      ],
+      "objectiveIds": [
+        "l26_understand-advice"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 27,
+      "lessonTitle": "Урок 27 · Utazás és közlekedés",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l27-listening-context",
+      "title": "Аудирование: на рецепции отеля",
+      "assetId": "l27_listening_context",
+      "filename": "l27_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Vendég: Jó estét! Van egy foglalásom Kovács névre, két éjszakára.\nRecepciós: Igen, látom. A szobája a második emeleten van, a reggeli hét és tíz óra között.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l27-listen-1",
+          "prompt": "Milyen névre szól a foglalás?",
+          "correctAnswer": "Kovács"
+        },
+        {
+          "id": "l27-listen-2",
+          "prompt": "Hány éjszakára?",
+          "correctAnswer": "Kettő"
+        },
+        {
+          "id": "l27-listen-3",
+          "prompt": "Mikor van reggeli?",
+          "correctAnswer": "7 és 10 között"
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Vendég",
+        "Recepciós"
+      ],
+      "segments": [
+        {
+          "speaker": "Vendég",
+          "text": "Jó estét! Van egy foglalásom Kovács névre, két éjszakára."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Igen, látom. A szobája a második emeleten van, a reggeli hét és tíz óra között."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l27_buy-tickets",
+        "l27_ask-directions",
+        "l27_travel-dialogue"
+      ],
+      "objectiveIds": [
+        "l27_travel-dialogue"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
+      "lesson": 28,
+      "lessonTitle": "Урок 28 · A B1 szint összefoglalása",
+      "slideId": 9,
+      "activityIndex": 2,
+      "activityId": "l28-listening-context",
+      "title": "Аудирование: планы дальнейшего обучения",
+      "assetId": "l28_listening_context",
+      "filename": "l28_listening_context.mp3",
+      "audioStatus": "published",
+      "transcript": "Jövőre szeretnék nyelvvizsgát tenni. Ha több időm lesz, hetente kétszer beszélgetek majd magyar barátokkal, mert a folyékony beszédet szeretném fejleszteni.",
+      "questionCount": 3,
+      "passCount": 2,
+      "questions": [
+        {
+          "id": "l28-listen-1",
+          "prompt": "Mit szeretne tenni jövőre?",
+          "correctAnswer": "Nyelvvizsgát tenni"
+        },
+        {
+          "id": "l28-listen-2",
+          "prompt": "Milyen gyakran szeretne beszélgetni?",
+          "correctAnswer": "Hetente kétszer"
+        },
+        {
+          "id": "l28-listen-3",
+          "prompt": "Mit szeretne fejleszteni?",
+          "correctAnswer": "A folyékony beszédet"
+        }
+      ],
+      "type": "monologue",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Jövőre szeretnék nyelvvizsgát tenni. Ha több időm lesz, hetente kétszer beszélgetek majd magyar barátokkal, mert a folyékony beszédet szeretném fejleszteni."
+        }
+      ],
+      "lessonListeningObjectiveIds": [],
+      "objectiveIds": [],
+      "evidenceRelationship": "practice_only"
+    }
+  ],
+  "assets": [
+    {
+      "lessonNumbers": [
+        1
+      ],
+      "assetId": "l1_listening_vowel_length",
+      "filename": "l1_listening_vowel_length.mp3",
+      "audioStatus": "published",
+      "type": "token_sequence",
+      "transcript": "hat. hát. meg. még. kor. kór. öröm. őr. út. tűz.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "hat",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hát",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "meg",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "még",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kor",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kór",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "öröm",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "őr",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "út",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "tűz",
+          "pauseAfterMs": 900
+        }
+      ],
+      "activityIds": [
+        "l1-listening-vowel-length"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-long-vowels"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        1
+      ],
+      "assetId": "l1_listening_soft_consonants",
+      "filename": "l1_listening_soft_consonants.mp3",
+      "audioStatus": "published",
+      "type": "token_sequence",
+      "transcript": "magyar. kutya. nyár. jó. hegy. kártya. kenyér. hely. hagyma. lány.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "magyar",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kutya",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "nyár",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "jó",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hegy",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kártya",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "kenyér",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hely",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "hagyma",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "lány",
+          "pauseAfterMs": 900
+        }
+      ],
+      "activityIds": [
+        "l1-listening-soft-consonants"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-soft-consonants"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        1
+      ],
+      "assetId": "l1_listening_s_sz",
+      "filename": "l1_listening_s_sz.mp3",
+      "audioStatus": "published",
+      "type": "token_sequence",
+      "transcript": "sál. szó. sör. szoba. séta. szín. sima. sziget. só. szőlő.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "sál",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szó",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sör",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szoba",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "séta",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szín",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sima",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "sziget",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "só",
+          "pauseAfterMs": 900
+        },
+        {
+          "speaker": null,
+          "text": "szőlő",
+          "pauseAfterMs": 900
+        }
+      ],
+      "activityIds": [
+        "l1-listening-s-sz"
+      ],
+      "objectiveIds": [
+        "l1_distinguish-s-sz"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        2
+      ],
+      "assetId": "l2_listening_introduction",
+      "filename": "l2_listening_introduction.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "A: Szia! A nevem Anna. Ki vagy te?\nB: Szia! Én Péter vagyok.\nA: Magyar vagy?\nB: Igen, magyar vagyok. Budapesten élek. És te?\nA: Anna vagyok. Örmény vagyok. Budapesten élek.\nB: Nagyon örülök. Hogy vagy?\nA: Jól vagyok, köszönöm. Hogy vagy?\nB: Jól vagyok, köszönöm.\nA: Viszlát!\nB: Viszlát!",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Szia! A nevem Anna. Ki vagy te?"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia! Én Péter vagyok."
+        },
+        {
+          "speaker": "A",
+          "text": "Magyar vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, magyar vagyok. Budapesten élek. És te?"
+        },
+        {
+          "speaker": "A",
+          "text": "Anna vagyok. Örmény vagyok. Budapesten élek."
+        },
+        {
+          "speaker": "B",
+          "text": "Nagyon örülök. Hogy vagy?"
+        },
+        {
+          "speaker": "A",
+          "text": "Jól vagyok, köszönöm. Hogy vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Jól vagyok, köszönöm."
+        },
+        {
+          "speaker": "A",
+          "text": "Viszlát!"
+        },
+        {
+          "speaker": "B",
+          "text": "Viszlát!"
+        }
+      ],
+      "activityIds": [
+        "l2-listening-introduction"
+      ],
+      "objectiveIds": [
+        "l2_greet-introduce",
+        "l2_ask-answer-questions"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        4
+      ],
+      "assetId": "l4_listening_present_forms",
+      "filename": "l4_listening_present_forms.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Én minden nap magyarul tanulok.\nTe reggel otthon sokat olvasol.\nPéter most ír, Anna pedig olvas.\nMi magyarul beszélünk és együtt tanulunk.\nŐk minden nap dolgoznak.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Én minden nap magyarul tanulok.\nTe reggel otthon sokat olvasol.\nPéter most ír, Anna pedig olvas.\nMi magyarul beszélünk és együtt tanulunk.\nŐk minden nap dolgoznak."
+        }
+      ],
+      "activityIds": [
+        "l4-listening-present-forms"
+      ],
+      "objectiveIds": [
+        "l4_recognize-forms"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        5
+      ],
+      "assetId": "l5_listening_time",
+      "filename": "l5_listening_time.mp3",
+      "audioStatus": "published",
+      "type": "dictation",
+      "transcript": "Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.\n\nA dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Négy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Tizenhárom",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Húsz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Huszonkettő",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Harmincnyolc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Negyvenhét",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Ötvenhat",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Hatvankilenc",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Nyolcvannégy",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "Száz",
+          "pauseAfterMs": 1200
+        },
+        {
+          "speaker": null,
+          "text": "A dátum: kétezer-huszonhat augusztus harmadika. Ma hétfő van. Hétfőn nyolckor magyarul tanulok. Szerdán háromkor dolgozom. Pénteken öt órakor olvasok. Szombaton tízkor írok.",
+          "pauseAfterMs": 600
+        }
+      ],
+      "activityIds": [
+        "l5-listening-number-dictation",
+        "l5-listening-time-schedule"
+      ],
+      "objectiveIds": [
+        "l5_count-1-100",
+        "l5_tell-time",
+        "l5_use-time-in-speech"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        6
+      ],
+      "assetId": "l6_listening_a0_review",
+      "filename": "l6_listening_a0_review.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "A: Szia! A nevem Anna. Hogy hívnak?\nB: Szia! Péter vagyok.\nA: Hogy vagy?\nB: Jól vagyok, köszönöm.\nA: Mikor tanulsz magyarul?\nB: Kedden öt órakor tanulok. Csütörtökön nyolckor dolgozom. Szombaton háromkor olvasok.\nA: Köszönöm. Szia!\nB: Szia!",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Szia! A nevem Anna. Hogy hívnak?"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia! Péter vagyok."
+        },
+        {
+          "speaker": "A",
+          "text": "Hogy vagy?"
+        },
+        {
+          "speaker": "B",
+          "text": "Jól vagyok, köszönöm."
+        },
+        {
+          "speaker": "A",
+          "text": "Mikor tanulsz magyarul?"
+        },
+        {
+          "speaker": "B",
+          "text": "Kedden öt órakor tanulok. Csütörtökön nyolckor dolgozom. Szombaton háromkor olvasok."
+        },
+        {
+          "speaker": "A",
+          "text": "Köszönöm. Szia!"
+        },
+        {
+          "speaker": "B",
+          "text": "Szia!"
+        }
+      ],
+      "activityIds": [
+        "l6-listening-a0-review"
+      ],
+      "objectiveIds": [
+        "l6_review-numbers"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        7
+      ],
+      "assetId": "l7_listening_accusative",
+      "filename": "l7_listening_accusative.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”"
+        }
+      ],
+      "activityIds": [
+        "l7-listening-accusative"
+      ],
+      "objectiveIds": [
+        "l7_listen-accusative"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        8
+      ],
+      "assetId": "l8_listening_possessives",
+      "filename": "l8_listening_possessives.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?"
+        }
+      ],
+      "activityIds": [
+        "l8-listening-possessives"
+      ],
+      "objectiveIds": [
+        "l8_distinguish-possessors"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        10
+      ],
+      "assetId": "l10_listening_inner_locations",
+      "filename": "l10_listening_inner_locations.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból."
+        }
+      ],
+      "activityIds": [
+        "l10-listening-inner-locations"
+      ],
+      "objectiveIds": [
+        "l10_use-inner-cases"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        12
+      ],
+      "assetId": "l12_listening_near_locations",
+      "filename": "l12_listening_near_locations.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Anna Péterhez megy. Péter most az orvosnál van. Az orvostól jön, utána Annához megy egy könyvért.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Anna Péterhez megy. Péter most az orvosnál van. Az orvostól jön, utána Annához megy egy könyvért."
+        }
+      ],
+      "activityIds": [
+        "l12-listening-near-locations"
+      ],
+      "objectiveIds": [
+        "l12_use-near-cases"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        13
+      ],
+      "assetId": "l13_listening_tense_contrast",
+      "filename": "l13_listening_tense_contrast.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek."
+        }
+      ],
+      "activityIds": [
+        "l13-listening-tense-contrast"
+      ],
+      "objectiveIds": [
+        "l13_distinguish-present-past"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        14
+      ],
+      "assetId": "l14_listening_routine",
+      "filename": "l14_listening_routine.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Anna reggel fél hétkor felébred. Hét órakor reggelizik. Nyolckor dolgozni megy. Délben ebédel. Este hatkor hazamegy, és tizenegykor lefekszik.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Anna reggel fél hétkor felébred. Hét órakor reggelizik. Nyolckor dolgozni megy. Délben ebédel. Este hatkor hazamegy, és tizenegykor lefekszik."
+        }
+      ],
+      "activityIds": [
+        "l14-listening-routine"
+      ],
+      "objectiveIds": [
+        "l14_tell-routine-time"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        15
+      ],
+      "assetId": "l15_listening_restaurant",
+      "filename": "l15_listening_restaurant.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Pincér: Jó estét! Mit kér?\nVendég: Szeretnék egy gulyáslevest és egy limonádét.\nPincér: Sajnos nincs limonádé, csak narancslé van.\nVendég: Rendben, akkor egy narancslevet kérek.\nPincér: És főételt?\nVendég: Igen, egy rántott sajtot kérek.\nPincér: Rendben, hozom rögtön.",
+      "speakers": [
+        "Pincér",
+        "Vendég"
+      ],
+      "segments": [
+        {
+          "speaker": "Pincér",
+          "text": "Jó estét! Mit kér?"
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Szeretnék egy gulyáslevest és egy limonádét."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "Sajnos nincs limonádé, csak narancslé van."
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Rendben, akkor egy narancslevet kérek."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "És főételt?"
+        },
+        {
+          "speaker": "Vendég",
+          "text": "Igen, egy rántott sajtot kérek."
+        },
+        {
+          "speaker": "Pincér",
+          "text": "Rendben, hozom rögtön."
+        }
+      ],
+      "activityIds": [
+        "l15-listening-restaurant"
+      ],
+      "objectiveIds": [
+        "l15_understand-restaurant-dialogue"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        16
+      ],
+      "assetId": "l16_listening_shopping",
+      "filename": "l16_listening_shopping.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Vásárló: Jó napot! Egy pulóvert kérek. Mennyibe kerül?\nEladó: Ezerötszáz forint.\nVásárló: Kérek két darabot. Fizethetek kártyával?\nEladó: Igen, természetesen.",
+      "speakers": [
+        "Vásárló",
+        "Eladó"
+      ],
+      "segments": [
+        {
+          "speaker": "Vásárló",
+          "text": "Jó napot! Egy pulóvert kérek. Mennyibe kerül?"
+        },
+        {
+          "speaker": "Eladó",
+          "text": "Ezerötszáz forint."
+        },
+        {
+          "speaker": "Vásárló",
+          "text": "Kérek két darabot. Fizethetek kártyával?"
+        },
+        {
+          "speaker": "Eladó",
+          "text": "Igen, természetesen."
+        }
+      ],
+      "activityIds": [
+        "l16-listening-shopping"
+      ],
+      "objectiveIds": [
+        "l16_shop-dialogue",
+        "l16_count-money"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        17
+      ],
+      "assetId": "l17_listening_weather",
+      "filename": "l17_listening_weather.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz."
+        }
+      ],
+      "activityIds": [
+        "l17-listening-weather"
+      ],
+      "objectiveIds": [
+        "l17_understand-forecast"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        18
+      ],
+      "assetId": "l18_listening_modals",
+      "filename": "l18_listening_modals.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "A: Ma este szeretnék moziba menni, de előbb dolgoznom kell. Holnap tudok veled találkozni.\nB: Jó. Lehet a parkban sétálni?\nA: Igen. Péter nem tud jönni, mert tanulnia kell. Anna otthon akar maradni.",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Ma este szeretnék moziba menni, de előbb dolgoznom kell. Holnap tudok veled találkozni."
+        },
+        {
+          "speaker": "B",
+          "text": "Jó. Lehet a parkban sétálni?"
+        },
+        {
+          "speaker": "A",
+          "text": "Igen. Péter nem tud jönni, mert tanulnia kell. Anna otthon akar maradni."
+        }
+      ],
+      "activityIds": [
+        "l18-listening-modals"
+      ],
+      "objectiveIds": [
+        "l18_understand-modals"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        19
+      ],
+      "assetId": "l19_listening_future",
+      "filename": "l19_listening_future.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Tegnap Ádám otthon dolgozott. Ma a könyvtárban tanul. Holnap Budapestre fog utazni. A hétvégén pihenni fog. Szerinte vasárnap esni fog. Jövő héten a barátai is dolgozni fognak.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Tegnap Ádám otthon dolgozott. Ma a könyvtárban tanul. Holnap Budapestre fog utazni. A hétvégén pihenni fog. Szerinte vasárnap esni fog. Jövő héten a barátai is dolgozni fognak."
+        }
+      ],
+      "activityIds": [
+        "l19-listening-future"
+      ],
+      "objectiveIds": [
+        "l19_distinguish-tenses"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        20
+      ],
+      "assetId": "l20_listening_context",
+      "filename": "l20_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Tegnap Péter nem dolgozott. Délelőtt bevásárolt, délután pedig meglátogatta a testvérét. Este együtt főztek.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Tegnap Péter nem dolgozott. Délelőtt bevásárolt, délután pedig meglátogatta a testvérét. Este együtt főztek."
+        }
+      ],
+      "activityIds": [
+        "l20-listening-context"
+      ],
+      "objectiveIds": [
+        "l20_understand-past-texts"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        21
+      ],
+      "assetId": "l21_listening_context",
+      "filename": "l21_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "A: Látod azt a házat?\nB: Igen, látom.\nA: És engem látsz a képen?\nB: Igen, téged is látlak.",
+      "speakers": [
+        "A",
+        "B"
+      ],
+      "segments": [
+        {
+          "speaker": "A",
+          "text": "Látod azt a házat?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, látom."
+        },
+        {
+          "speaker": "A",
+          "text": "És engem látsz a képen?"
+        },
+        {
+          "speaker": "B",
+          "text": "Igen, téged is látlak."
+        }
+      ],
+      "activityIds": [
+        "l21-listening-context"
+      ],
+      "objectiveIds": [
+        "l21_distinguish-conjugations"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        22
+      ],
+      "assetId": "l22_listening_context",
+      "filename": "l22_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra."
+        }
+      ],
+      "activityIds": [
+        "l22-listening-context"
+      ],
+      "objectiveIds": [
+        "l22_understand-commands"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        23
+      ],
+      "assetId": "l23_listening_context",
+      "filename": "l23_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék."
+        }
+      ],
+      "activityIds": [
+        "l23-listening-context"
+      ],
+      "objectiveIds": [
+        "l23_understand-conditional"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        24
+      ],
+      "assetId": "l24_listening_context",
+      "filename": "l24_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Szerintem jó ez a lakás, mert világos és közel van a munkámhoz. Bár kicsi, mégis kényelmes. Megnézem még egyszer, és utána döntök.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Szerintem jó ez a lakás, mert világos és közel van a munkámhoz. Bár kicsi, mégis kényelmes. Megnézem még egyszer, és utána döntök."
+        }
+      ],
+      "activityIds": [
+        "l24-listening-context"
+      ],
+      "objectiveIds": []
+    },
+    {
+      "lessonNumbers": [
+        25
+      ],
+      "assetId": "l25_listening_context",
+      "filename": "l25_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Interjúztató: Mivel foglalkozott korábban?\nJelölt: Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni.",
+      "speakers": [
+        "Interjúztató",
+        "Jelölt"
+      ],
+      "segments": [
+        {
+          "speaker": "Interjúztató",
+          "text": "Mivel foglalkozott korábban?"
+        },
+        {
+          "speaker": "Jelölt",
+          "text": "Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni."
+        }
+      ],
+      "activityIds": [
+        "l25-listening-context"
+      ],
+      "objectiveIds": [
+        "l25_ask-answer-job"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        26
+      ],
+      "assetId": "l26_listening_context",
+      "filename": "l26_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "A torka piros, de a tüdeje tiszta. Maradjon otthon két napig, igyon sok teát, és vegye be ezt a gyógyszert naponta kétszer.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "A torka piros, de a tüdeje tiszta. Maradjon otthon két napig, igyon sok teát, és vegye be ezt a gyógyszert naponta kétszer."
+        }
+      ],
+      "activityIds": [
+        "l26-listening-context"
+      ],
+      "objectiveIds": [
+        "l26_understand-advice"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        27
+      ],
+      "assetId": "l27_listening_context",
+      "filename": "l27_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Vendég: Jó estét! Van egy foglalásom Kovács névre, két éjszakára.\nRecepciós: Igen, látom. A szobája a második emeleten van, a reggeli hét és tíz óra között.",
+      "speakers": [
+        "Vendég",
+        "Recepciós"
+      ],
+      "segments": [
+        {
+          "speaker": "Vendég",
+          "text": "Jó estét! Van egy foglalásom Kovács névre, két éjszakára."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Igen, látom. A szobája a második emeleten van, a reggeli hét és tíz óra között."
+        }
+      ],
+      "activityIds": [
+        "l27-listening-context"
+      ],
+      "objectiveIds": [
+        "l27_travel-dialogue"
+      ]
+    },
+    {
+      "lessonNumbers": [
+        28
+      ],
+      "assetId": "l28_listening_context",
+      "filename": "l28_listening_context.mp3",
+      "audioStatus": "published",
+      "type": "monologue",
+      "transcript": "Jövőre szeretnék nyelvvizsgát tenni. Ha több időm lesz, hetente kétszer beszélgetek majd magyar barátokkal, mert a folyékony beszédet szeretném fejleszteni.",
+      "speakers": [],
+      "segments": [
+        {
+          "speaker": null,
+          "text": "Jövőre szeretnék nyelvvizsgát tenni. Ha több időm lesz, hetente kétszer beszélgetek majd magyar barátokkal, mert a folyékony beszédet szeretném fejleszteni."
+        }
+      ],
+      "activityIds": [
+        "l28-listening-context"
+      ],
+      "objectiveIds": []
+    }
+  ],
+  "missingFiles": []
+}

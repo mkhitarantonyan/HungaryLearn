@@ -92,24 +92,24 @@ test('L1 migration keeps the curriculum at exactly 139 objectives', async () => 
 });
 
 test('L2, L3, L4, L5, and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '91DF3BC496A79898F421D42E7B7F376ED1BA108A3F81C6886777364C65B6EA19');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), '7FF81838BB2610D46A5B1F93408A419D7D668287388F705D75F3AAF3D0F898BF');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'E44AFA95D968A513F649C3B193AE2CEED588596DA53EEFB1008132ED1A3D4852');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson5.ts', import.meta.url)), 'F13947BD8C817B686DFA82B1B91BD48CA45CD37EA0796148B29AF2D6517C3F50');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson5.ts', import.meta.url)), '9FD17087140B54C3D1B7370803A231E8E567D7D3BD0FC7412358BDA831F35710');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });
 
 test('L6 is migrated with activities and L7 matches the approved migrated snapshot', () => {
   assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '70EF9CCBD0BE2CB15CFD2F5D4F060F6998C632F548014D5C8E0FBC6F3DFC5B90');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
 });
 
 test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
-  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), 'B8F4165A237CC7B511D3AA108F5418CE2BAB2DB8DD39E3A394013B0F6491FC2E');
-  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '94FB08607855A6A7759916AFA8E8424FDEB136F241ADC7020FBDD9339E86AD30');
+  assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
+  assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '4D3C6CCEBE42C4C7EC8358F15C46233AC0BDE3C04799BB95DB7C345EF5C03281');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'ACDD1475B09193263AC369F31CDF66493C7962BBFF803576DDA2F0EEA89353C3');
 });
 
 test('L1 translations and effective six-card vocabulary remain exact', () => {
@@ -169,7 +169,7 @@ test('L1 teaches quality plus duration for a/á and e/é', () => {
   assert.match(lessonText, /длительность, и качество/iu);
 });
 
-test('all three required L1 ListeningTasks have exact IDs, assets, missing state, and thresholds', () => {
+test('all three required L1 ListeningTasks have exact IDs, published state, and thresholds', () => {
   const expected = [
     ['l1-listening-s-sz', 'l1_listening_s_sz'],
     ['l1-listening-soft-consonants', 'l1_listening_soft_consonants'],
@@ -178,13 +178,13 @@ test('all three required L1 ListeningTasks have exact IDs, assets, missing state
   for (const [id, assetId] of expected) {
     const listening = findActivity(id, 'listening');
     assert.equal(listening.assetId, assetId);
-    assert.equal(listening.audioStatus, 'missing');
+    assert.equal(listening.audioStatus, 'published');
     assert.equal(listening.passCount, 8);
     assert.equal(listening.questions.length, 10);
-    assert.equal(existsSync(new URL(`../public/audio/${assetId}.mp3`, import.meta.url)), false);
+    assert.equal(existsSync(new URL(`../public/audio/${assetId}.mp3`, import.meta.url)), true);
     assert.deepEqual(listeningEvidence(listening, 10, 10), {
-      passed: false,
-      evidenceMode: 'none',
+      passed: true,
+      evidenceMode: 'direct',
       score: 10,
       total: 10,
     });
@@ -316,7 +316,8 @@ test('L1 controlled and listening controls expose textual feedback, focus, and n
   assert.match(controlledSource, /break-words/);
   assert.match(listeningSource, /<audio/);
   assert.match(listeningSource, /controls/);
-  assert.match(listeningSource, /onError=\{\(\) => setAudioError\(true\)\}/);
+  assert.match(listeningSource, /onError=\{handleAudioError\}/);
+  assert.match(listeningSource, /audioReady && !audioError/);
   assert.match(listeningSource, /role="alert"/);
 });
 
@@ -633,11 +634,11 @@ test('slideNarrator contains no synthesized fallback script', () => {
   assert.doesNotMatch(source, /44 звука|Мягкие согласные: дь, ть, нь, й|всегда падает исключительно/iu);
 });
 
-test('physical L1 slide narration exists but assessment MP3s remain absent and uncredited', () => {
+test('physical L1 slide narration and published assessment MP3s remain separate', () => {
   for (let slide = 1; slide <= 11; slide += 1) {
     assert.equal(existsSync(new URL(`../public/audio/1.${slide}.mp3`, import.meta.url)), true);
   }
   for (const assetId of ['l1_listening_s_sz', 'l1_listening_soft_consonants', 'l1_listening_vowel_length']) {
-    assert.equal(existsSync(new URL(`../public/audio/${assetId}.mp3`, import.meta.url)), false);
+    assert.equal(existsSync(new URL(`../public/audio/${assetId}.mp3`, import.meta.url)), true);
   }
 });

@@ -46,6 +46,34 @@ export interface VocabularyItem {
   baseWord?: string;
   grammaticalTag?: string;
   relatedLessonId?: number;
+  srsEligible?: boolean;
+  srsExclusionReason?: string;
+}
+
+export interface VocabularyLexeme {
+  id: string;
+  lemma: string;
+  translation: string;
+  lessonIntroduced: number;
+  usedInLessons: number[];
+  forms: string[];
+}
+
+export interface VocabularyCard extends VocabularyItem {
+  lexemeId: string;
+  lessonIntroduced: number;
+  usedInLessons: number[];
+  sourceVocabularyIds: string[];
+}
+
+export interface VocabularyInventoryEntry extends VocabularyItem {
+  lessonNumber: number;
+  curriculumOrder: number;
+  lemma: string;
+  lexemeId: string;
+  cardId: string | null;
+  srsEligible: boolean;
+  srsExclusionReason?: string;
 }
 
 export interface QuizQuestion {

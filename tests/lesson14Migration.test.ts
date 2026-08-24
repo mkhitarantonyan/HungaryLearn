@@ -112,15 +112,15 @@ test('ReadingTask checks sequence, actions, and times rather than suffix spottin
   assert.doesNotMatch(reading.instructions ?? '', /найди.*суффикс/i);
 });
 
-test('missing routine assessment stays NONE with no TTS or narration fallback', () => {
+test('published routine assessment is DIRECT with no TTS or narration fallback', () => {
   const listening = findActivity('l14-listening-routine', 'listening');
   assert.equal(listening.assetId, 'l14_listening_routine');
-  assert.equal(listening.audioStatus, 'missing');
+  assert.equal(listening.audioStatus, 'published');
   assert.equal(listening.questions.length, 5);
   assert.equal(listening.passCount, 4);
-  assert.equal(existsSync(new URL('../public/audio/l14_listening_routine.mp3', import.meta.url)), false);
+  assert.equal(existsSync(new URL('../public/audio/l14_listening_routine.mp3', import.meta.url)), true);
   assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: false, evidenceMode: 'none', score: 5, total: 5,
+    passed: true, evidenceMode: 'direct', score: 5, total: 5,
   });
   const source = readFileSync(new URL('../src/data/lessons/lesson14.ts', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
@@ -135,7 +135,7 @@ test('writing and recording stay review-only and enforce the connected-routine b
   assert.equal(writing.rubric.length, 3);
   const writingScore = writingEvidence(writing.modelAnswer.join(' '), true);
   assert.deepEqual(writingScore, { completed: true, passed: false, evidenceMode: 'partial' });
-  assert.match(recording.instructions ?? '', /PARTIAL evidence/);
+  assert.match(recording.instructions ?? '', /проверь последовательность и формы глаголов/);
   assert.equal(recording.rubric?.length, 3);
   assert.equal(recordingCompletionEvidence(recording.id).evidenceMode, 'partial');
   assert.equal(recordingCompletionEvidence(recording.id).passed, false);
@@ -203,5 +203,5 @@ test('Q1401-Q1406 are unique objective-aligned retrieval and metadata matches', 
   assert.equal(meta.description, LESSON_14.description);
   assert.equal(meta.level, LESSON_14.level);
   assert.equal(meta.slidesCount, LESSON_14.slidesCount);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), '022977AD8EAAAE2A14FDDEF2FF792FA35D5A0A882EDF66E93BFF5B68B9D9E586');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

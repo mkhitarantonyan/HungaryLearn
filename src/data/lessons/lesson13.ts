@@ -40,7 +40,7 @@ const TENSE_READING: LessonActivity = {
 
 const TENSE_LISTENING: LessonActivity = {
   kind: 'listening', id: 'l13-listening-tense-contrast', title: 'Аудирование: сейчас и вчера',
-  assetId: 'l13_listening_tense_contrast', audioStatus: 'missing', passCount: 4,
+  assetId: 'l13_listening_tense_contrast', audioStatus: 'published', passCount: 4,
   transcript: 'Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek.',
   questions: [
     { id: 'l13-listening-q1', question: 'Что Петер делает сегодня?', options: ['otthon dolgozik', 'a parkban sétált', 'filmet nézett'], correctIndex: 0 },
@@ -60,14 +60,14 @@ const PAST_WRITING: LessonActivity = {
 
 const PAST_RECORDING: LessonActivity = {
   kind: 'recording', id: 'l13-recording-past-story', title: 'Говорение: что было вчера?',
-  instructions: 'Запиши 4–5 простых связанных фраз о прошлом событии. Запись остаётся PARTIAL evidence и требует проверки человеком.',
+  instructions: 'Запиши 4–5 простых связанных фраз о прошлом событии, затем проверь маркеры времени и формы глаголов.',
   targetText: 'Tegnap otthon voltam. Reggel dolgoztam. Délután a parkban sétáltam. Este filmet néztem.',
   targetTranslation: 'Вчера я был дома. Утром работал. Днём гулял в парке. Вечером смотрел фильм.',
   rubric: ['Есть 4–5 связанных фраз', 'Использован маркер прошлого', 'Использованы изученные формы прошлого'],
 };
 
 const EXIT_CHECK: LessonActivity = {
-  kind: 'exitCheck', id: 'l13-exit-check', title: 'Exit check — цели урока 13', checks: [
+  kind: 'exitCheck', id: 'l13-exit-check', title: 'Проверка целей урока 13', checks: [
     { objectiveId: 'l13_form-past', activityId: 'l13-cp-past-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l13_use-volt', activityId: 'l13-cp-volt-contexts', evidenceKind: 'grammar' },
     { objectiveId: 'l13_distinguish-present-past', activityId: 'l13-reading-tense-contrast', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l13-listening-tense-contrast', evidenceKind: 'listening' }] },
@@ -98,8 +98,8 @@ export const LESSON_13: Lesson = {
     { id: 5, eyebrow: 'УРОК 13 · 5/12 · ОТРИЦАНИЕ', title: 'Tagadás', subtitle: 'nem + прошедшая форма', body: `<p><b>Nem voltam otthon.</b> — Я не был дома.</p><p><b>Péter nem dolgozott tegnap.</b> — Петер вчера не работал.</p><p><b>Nem láttam semmit.</b> — Я ничего не видел.</p><p><b>Nem volt időm.</b> — У меня не было времени.</p>` },
     { id: 6, eyebrow: 'УРОК 13 · 6/12 · ВРЕМЯ', title: 'Időhatározók', subtitle: 'Маркеры прошлого', body: `<div class="grid2"><div><p><b>tegnap</b> — вчера</p><p><b>tegnapelőtt</b> — позавчера</p><p><b>a múlt héten</b> — на прошлой неделе</p></div><div><p><b>a múlt hónapban</b> — в прошлом месяце</p><p><b>tavaly</b> — в прошлом году</p><p><b>régebben</b> — раньше (дополнительно)</p></div></div><p><b>Tavaly Budapestre utaztam.</b></p>` },
     { id: 7, eyebrow: 'УРОК 13 · 7/12 · ДИАЛОГ', title: 'Mit csináltál tegnap?', subtitle: 'Вчерашний день', body: `<p><b>A:</b> Szia! Mit csináltál tegnap?</p><p><b>B:</b> Tegnap reggel dolgoztam, délután pedig a parkban sétáltam. És te?</p><p><b>A:</b> A moziban voltam a barátaimmal. Egy jó filmet néztünk.</p><p><b>B:</b> Jó volt a film?</p><p><b>A:</b> Igen, nagyon tetszett!</p><div class="note"><b>tetszett</b> — готовая частотная фраза, не новая продуктивная модель.</div>`, activities: [TENSE_READING] },
-    { id: 8, eyebrow: 'УРОК 13 · 8/12 · АУДИРОВАНИЕ', title: 'Ma vagy tegnap?', subtitle: 'Настоящее и прошлое на слух', body: `<p>Отличи сегодняшнее действие от вчерашнего и услышь маркер времени.</p><div class="note">Отдельная assessment-запись ещё не опубликована. Озвучка слайда не заменяет MP3 и не создаёт listening evidence.</div>`, activities: [TENSE_LISTENING] },
-    { id: 9, eyebrow: 'УРОК 13 · 9/12 · PREVIEW', title: 'Kitekintés: tárgyas ragozás', subtitle: 'Необязательный анонс', body: `<p><b>Предварительный обзор, вне оцениваемых целей:</b> определённость дополнения может влиять на спряжение.</p><p>В некоторых лицах формы совпадают: <b>Olvastam egy könyvet / Olvastam a könyvet</b> не показывает различие парадигм.</p><div class="note">Здесь нет продуктивного или оцениваемого задания. Полная система относится к уроку 20.</div>` },
+    { id: 8, eyebrow: 'УРОК 13 · 8/12 · АУДИРОВАНИЕ', title: 'Ma vagy tegnap?', subtitle: 'Настоящее и прошлое на слух', body: `<p>Отличи сегодняшнее действие от вчерашнего и услышь маркер времени.</p><div class="note">Отдельная запись для задания ещё не опубликована, поэтому аудирование пока недоступно.</div>`, activities: [TENSE_LISTENING] },
+    { id: 9, eyebrow: 'УРОК 13 · 9/12 · ЗНАКОМСТВО С ТЕМОЙ', title: 'Kitekintés: tárgyas ragozás', subtitle: 'Короткий взгляд вперёд', body: `<p><b>На будущее:</b> определённость дополнения может влиять на спряжение.</p><p>В некоторых лицах формы совпадают: <b>Olvastam egy könyvet / Olvastam a könyvet</b> не показывает различие парадигм.</p><div class="note">Пока достаточно заметить этот контраст. Полная система относится к уроку 20.</div>` },
     { id: 10, eyebrow: 'УРОК 13 · 10/12 · ПИСЬМО', title: 'Mi történt tegnap?', subtitle: 'Мини-история', body: `<p>Соедини формы и маркер времени. Открытый ответ требует проверки.</p>`, activities: [PAST_WRITING] },
     { id: 11, eyebrow: 'УРОК 13 · 11/12 · ГОВОРЕНИЕ', title: 'Mesélj a tegnapról!', subtitle: 'Устный рассказ', body: `<p>Расскажи о прошлом событии. Сам факт записи не доказывает языковую правильность.</p>`, activities: [PAST_RECORDING] },
     { id: 12, eyebrow: 'УРОК 13 · 12/12 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Впереди урок 14', body: `<ul class="tick"><li>Частотные формы прошлого</li><li>Формы volt в контексте</li><li>Настоящее и прошлое в тексте</li><li>Короткий рассказ о прошлом</li></ul><div class="note">Урок 14 завершит уровень A1. Полная система прошедшего времени будет в уроке 20.</div>`, activities: [EXIT_CHECK] },
