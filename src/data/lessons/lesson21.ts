@@ -89,7 +89,7 @@ export const LESSON_21: Lesson = {
      <li>Имена собственные (имена людей, города, страны...): <button class="speak-btn" data-speak-text="Látom Pétert." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Látom Pétert.</button></li>
      <li>Притяжательные формы (моего/твоего/его...): <button class="speak-btn" data-speak-text="Szeretem a barátomat." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretem a barátomat.</button></li>
      <li>Личные местоимения 3-го лица (őt — его/её, őket — их): <button class="speak-btn" data-speak-text="Látom őt." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Látom őt.</button></li>
-     <li>Придаточные предложения с <span class="hu-word">hogy</span>: <button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hogy itt vagy.</button> <span class="pron">(знаю [что?], что ты здесь)</span></li>
+     <li>Объектное придаточное содержания с <span class="hu-word">hogy</span> после подходящего переходного глагола может выступать содержанием прямого дополнения: <button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hogy itt vagy.</button> <span class="pron">(tudom: знаю [что?], что ты здесь)</span></li>
    </ul>
  `
     },
@@ -130,8 +130,8 @@ export const LESSON_21: Lesson = {
       title: "Tárgyas ragozás visszaható igéknél",
       subtitle: "Случай 3: возвратные глаголы с -kodik/-kedik",
       body: `
-   <p>Глаголы с суффиксами <span class="hu-word">-kodik / -kedik / -ködik</span> (например, <button class="speak-btn" data-speak-text="mosakodik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> mosakodik</button> — умываться, <button class="speak-btn" data-speak-text="öltözködik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> öltözködik</button> — одеваться) <b>не имеют определённого спряжения вообще</b>, потому что действие направлено на самого себя и не может принимать внешний объект.</p>
-   <p><button class="speak-btn" data-speak-text="Mosakszom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mosakszom.</button> <span style="color:#8a7a68">(Я умываюсь)</span> — только неопределённое (точнее, ik-спряжение)!</p>
+   <p>Изученные здесь глаголы <button class="speak-btn" data-speak-text="mosakodik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> mosakodik</button> (умываться) и <button class="speak-btn" data-speak-text="öltözködik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> öltözködik</button> (одеваться) в этих значениях непереходные: у них нет прямого объекта.</p>
+   <p><button class="speak-btn" data-speak-text="Mosakodom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mosakodom.</button> <span style="color:#8a7a68">(Я умываюсь)</span> — неопределённая форма изученного mosakodik.</p>
  `
     },
     {
@@ -141,8 +141,8 @@ export const LESSON_21: Lesson = {
       subtitle: "Проверьте своё чутьё спряжений",
       body: `
    <p><button class="speak-btn" data-speak-text="Szeretem a zenét." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretem a zenét.</button> <span style="color:#8a7a68">(Люблю музыку — a zenét = определённое)</span></p>
-   <p><button class="speak-btn" data-speak-text="Szeretek zenét hallgatni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretek zenét hallgatni.</button> <span style="color:#8a7a68">(Люблю слушать музыку — hallgatni = инфинитив без прямого объекта, szeret)</span></p>
-   <p><button class="speak-btn" data-speak-text="Nem hallom, mit mondasz." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem hallom, mit mondasz.</button> <span style="color:#8a7a68">(Не слышу, что ты говоришь — hallom = определённое из-за придаточного предложения!)</span></p>
+   <p><button class="speak-btn" data-speak-text="Szeretek zenét hallgatni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretek zenét hallgatni.</button> <span style="color:#8a7a68">(szeretek — неопределённая форма; hallgatni — инфинитивное дополнение, а zenét — неопределённый прямой объект глагола hallgatni)</span></p>
+   <p><button class="speak-btn" data-speak-text="Nem hallom, mit mondasz." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem hallom, mit mondasz.</button> <span style="color:#8a7a68">(Встроенный вопрос mit mondasz здесь передаёт содержание объекта глагола hallom; это не означает, что любое придаточное автоматически требует определённой формы)</span></p>
  `
     },
     {
@@ -259,27 +259,17 @@ export const LESSON_21: Lesson = {
     },
     {
       id: 2105,
-      question: 'Какие глаголы НЕ имеют определённого спряжения в венгерском языке?',
-      options: [
-        'Глаголы движения (megy, jön)',
-        'Возвратные глаголы на -kodik/-kedik/-ködik (mosakodik, öltözködik)',
-        'Модальные глаголы (kell, lehet)',
-        'Глаголы с приставками (bemegy, kimegy)'
-      ],
-      correctIndex: 1,
-      explanation: 'Возвратные глаголы на -kodik/-kedik/-ködik (умываться, одеваться) не имеют определённого спряжения, потому что действие направлено на самого себя и не может принимать внешний объект (урок 21, слайд 6).'
+      question: 'Какая форма соответствует "Я умываюсь" от изученного mosakodik?',
+      options: ['Mosakodom.', 'Mosakom.', 'Mosakszom.', 'Mosakodja.'],
+      correctIndex: 0,
+      explanation: 'Изученная форма 1-го лица единственного числа от mosakodik — Mosakodom. В значении «умываться» этот глагол употребляется без прямого объекта.'
     },
     {
       id: 2106,
-      question: 'Какое спряжение используется в главном предложении с придаточным "hogy" (например, "Tudom, hogy itt vagy")?',
-      options: [
-        'Неопределённое спряжение (alanyi)',
-        'Определённое спряжение (tárgyas)',
-        'Форма -lak/-lek',
-        'Повелительное наклонение'
-      ],
-      correctIndex: 1,
-      explanation: 'Придаточные предложения с "hogy" (что) требуют определённого спряжения в главном предложении: Tudom, hogy itt vagy. (Я знаю, что ты здесь) – потому что придаточное "hogy itt vagy" воспринимается как конкретный объект (урок 21, слайд 3).'
+      question: 'Какой вариант правильно завершает "___, hogy itt vagy." со значением «Я знаю, что ты здесь»?',
+      options: ['Tudom', 'Tudok', 'Tudlak', 'Tudjam'],
+      correctIndex: 0,
+      explanation: 'Правильно: Tudom, hogy itt vagy. Здесь объектное придаточное передаёт содержание того, что известно, поэтому у переходного tud употребляется определённая форма tudom. Это не универсальное правило для любого предложения с hogy.'
     }
   ],
   objectives: [

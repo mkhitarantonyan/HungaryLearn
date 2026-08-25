@@ -71,9 +71,9 @@ export const LESSON_25: Lesson = {
    <p>Главный вопрос о роде занятий:</p>
    <p><button class="speak-btn" data-speak-text="Mivel foglalkozol?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mivel foglalkozol?</button> <span style="color:#8a7a68">(Чем ты занимаешься? / Кем работаешь?)</span></p>
    <p><button class="speak-btn" data-speak-text="Mivel foglalkozik?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mivel foglalkozik?</button> <span style="color:#8a7a68">(на «Вы»)</span></p>
-   <p>Способы ответа (вспомните 9-й урок — пропуск van при существительном-сказуемом!):</p>
+   <p>Способы ответа (сравните с именным сказуемым из 2-го урока: в настоящем времени 3-го лица связка van обычно не ставится):</p>
    <p><button class="speak-btn" data-speak-text="Mérnök vagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mérnök vagyok.</button> <span style="color:#8a7a68">(Я инженер)</span></p>
-   <p><button class="speak-btn" data-speak-text="Informatikusként dolgozom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Informatikusként dolgozom.</button> <span style="color:#8a7a68">(Работаю в качестве айтишника/программиста — суффикс -ként из 16-го урока!)</span></p>
+   <p><button class="speak-btn" data-speak-text="Informatikusként dolgozom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Informatikusként dolgozom.</button> <span style="color:#8a7a68">(Работаю в качестве айтишника/программиста; -ként означает «в качестве / в роли» и здесь дано как дополнительная модель)</span></p>
  `
     },
     {
@@ -271,15 +271,15 @@ export const LESSON_25: Lesson = {
     },
     {
       id: 2506,
-      question: 'Какое слово из урока 24 помогает соединять причину и следствие в предложении о работе?',
+      question: 'Как правильно объяснить с помощью mert, почему вам нравится работа?',
       options: [
-        'mert (потому что) – "Szeretem a munkámat, mert érdekes."',
-        'ezért (поэтому) – "Érdekes a munka, ezért szeretem."',
-        'és (и) – "Szeretem a munkámat és a kollégáimat."',
-        'Все перечисленные варианты правильные'
+        'Szeretem a munkámat, mert érdekes.',
+        'Szeretem a munkámat, hogy érdekes.',
+        'Szeretem a munkámat, ezért mert érdekes.',
+        'Szeretem a munkámat, érdekes mert.'
       ],
-      correctIndex: 3,
-      explanation: 'Все три союза из урока 24 можно использовать в контексте работы: "mert" – причина, "ezért" – следствие, "és" – перечисление. Например: "Szeretem a munkámat, mert érdekes." (Я люблю свою работу, потому что она интересная).'
+      correctIndex: 0,
+      explanation: 'Mert вводит причину: Szeretem a munkámat, mert érdekes. — «Мне нравится моя работа, потому что она интересная».'
     }
   ],
   objectives: [

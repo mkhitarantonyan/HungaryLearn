@@ -85,10 +85,10 @@ export const LESSON_28: Lesson = {
    <table class="conj">
      <tr><th>Форма</th><th>Маркер</th><th>Пример (tanul)</th></tr>
      <tr><td>Настоящее время (Jelen idő)</td><td>чистый корень + окончания</td><td><button class="speak-btn" data-speak-text="tanul" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanul</button></td></tr>
-     <tr><td>Прошедшее время (Múlt idő)</td><td>суффикс -t / -tt (урок 20)</td><td><button class="speak-btn" data-speak-text="tanult" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanult</button></td></tr>
+     <tr><td>Прошедшее время (Múlt idő)</td><td>-t / -ott/-ett/-ött + личные окончания; модель зависит от глагола (урок 20)</td><td><button class="speak-btn" data-speak-text="tanult" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanult</button></td></tr>
      <tr><td>Будущее время (Jövő idő)</td><td>fog + инфинитив (урок 19)</td><td><button class="speak-btn" data-speak-text="tanulni fog" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulni fog</button></td></tr>
      <tr><td>Повелительное наклонение (Felszólító mód)</td><td>суффикс -j- (урок 22)</td><td><button class="speak-btn" data-speak-text="tanuljon!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanuljon!</button></td></tr>
-     <tr><td>Условное наклонение (Feltételes mód)</td><td>суффикс -na/-ne (урок 23)</td><td><button class="speak-btn" data-speak-text="tanulna" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulna</button></td></tr>
+     <tr><td>Условное наклонение (Feltételes mód)</td><td>-na/-ne/-ná/-né + личные окончания (урок 23)</td><td><button class="speak-btn" data-speak-text="tanulna" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulna</button></td></tr>
    </table>
  `
     },
@@ -131,8 +131,8 @@ export const LESSON_28: Lesson = {
       subtitle: "Поведение приставок (be, ki, fel, le, el, meg, át, vissza...)",
       body: `
    <p>1. В обычном утверждении приставка стоит перед глаголом: <button class="speak-btn" data-speak-text="Elmegyek a boltba." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Elmegyek a boltba.</button></p>
-   <p>2. При отрицании nem отрывает приставку: <button class="speak-btn" data-speak-text="Nem megyek el." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem megyek el.</button></p>
-   <p>3. С модальными глаголами приставка встает перед инфинитивом или отходит назад: <button class="speak-btn" data-speak-text="El akarok menni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> El akarok menni.</button></p>
+   <p>2. В нейтральном отрицании приставка отделяется и следует после спрягаемого глагола: <button class="speak-btn" data-speak-text="Nem megyek el." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem megyek el.</button></p>
+   <p>3. С модальным глаголом нейтральное утверждение: <button class="speak-btn" data-speak-text="El akarok menni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> El akarok menni.</button> При отрицании модального глагола: <button class="speak-btn" data-speak-text="Nem akarok elmenni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem akarok elmenni.</button></p>
  `
     },
     {
@@ -234,9 +234,9 @@ export const LESSON_28: Lesson = {
     {
       id: 2802,
       question: 'Какой маркер используется для образования прошедшего времени в венгерском языке?',
-      options: ['суффикс -t / -tt', 'суффикс -na / -ne', 'суффикс -j-', 'вспомогательный глагол fog'],
+      options: ['-t / -ott/-ett/-ött', '-na/-ne/-ná/-né', 'суффикс -j-', 'вспомогательный глагол fog'],
       correctIndex: 0,
-      explanation: 'Прошедшее время образуется с помощью суффикса -t или -tt (tanult, olvasott). "fog" – для будущего времени, "-na/-ne" – для условного наклонения, "-j-" – для повелительного.'
+      explanation: 'Прошедшее время образуется по моделям -t и -ott/-ett/-ött с личными окончаниями; выбор модели зависит от глагола (tanult, olvasott). Fog используется для будущего времени, -na/-ne/-ná/-né — для условного наклонения, -j- — для повелительного.'
     },
     {
       id: 2803,
@@ -266,25 +266,25 @@ export const LESSON_28: Lesson = {
       id: 2805,
       question: 'Что происходит с глагольной приставкой в отрицательном предложении (например, "elmegyek" → "nem megyek el")?',
       options: [
-        'Приставка отделяется от глагола и уходит в конец предложения',
+        'Приставка отделяется и в нейтральном отрицании следует после спрягаемого глагола',
         'Приставка остаётся перед глаголом (nem elmegyek)',
         'Приставка исчезает',
         'Приставка и глагол меняются местами'
       ],
       correctIndex: 0,
-      explanation: 'При отрицании "nem" отрывает приставку от глагола: elmegyek → Nem megyek el. Приставка уходит в конец предложения (урок 28, слайд 6).'
+      explanation: 'В нейтральном отрицании приставка отделяется и следует после спрягаемого глагола: elmegyek → Nem megyek el. Это не означает, что она обязана стоять в конце всего предложения.'
     },
     {
       id: 2806,
-      question: 'Как правильно сформулировать завершение курса уровня B1 в соответствии с методическими рекомендациями?',
+      question: 'Как правильно выразить гипотетическое условие «Если бы у меня было больше времени, я бы больше путешествовал(а)»?',
       options: [
-        'Поздравляем! Вы достигли уровня B1 и можете считать себя сертифицированным специалистом.',
-        'Вы завершили программу материалов уровня B1. Для объективной оценки нужны отдельные задания на чтение, аудирование, письмо и говорение.',
-        'Вы теперь свободно говорите на венгерском языке на уровне носителя.',
-        'Вы сдали официальный экзамен на уровень B1.'
+        'Ha több időm lenne, többet utaznék.',
+        'Ha több időm van, többet utaznék.',
+        'Ha több időm lenne, többet utazok.',
+        'Ha több időm volt, többet utaznék.'
       ],
-      correctIndex: 1,
-      explanation: 'Корректная формулировка: завершение программы материалов не является независимым подтверждением CEFR-уровня B1. Для объективной оценки нужны отдельные задания на reading, listening, writing и speaking (урок 28, слайд 11).'
+      correctIndex: 0,
+      explanation: 'В гипотетическом условии с ha условное наклонение используется в обеих частях: lenne («было бы») и utaznék («я путешествовал(а) бы»).'
     }
   ],
   objectives: [

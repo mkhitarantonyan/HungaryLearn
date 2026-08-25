@@ -110,7 +110,7 @@ export const LESSON_14: Lesson = {
    <p><b>Látom magamat a tükörben.</b> — Я вижу себя в зеркале.</p><div class="note">Этот блок служит только для распознавания и не входит в Quiz или ExitCheck урока 14.</div>` },
     { id: 7, eyebrow: 'УРОК 14 · 7/11 · ДИАЛОГ И АУДИРОВАНИЕ', title: 'Mikor kelsz fel?', subtitle: 'Расписание в вопросах и ответах', body: `
    <p><b>A:</b> Hány órakor kelsz fel általában?</p><p><b>B:</b> Általában hét órakor kelek fel.</p><p><b>A:</b> És mikor fekszel le?</p><p><b>B:</b> Általában éjfél körül fekszem le.</p>
-   <div class="note">Отдельная запись для аудирования ещё не опубликована, поэтому задание пока недоступно.</div>`, activities: [ROUTINE_LISTENING, DAILY_ROUTINE_RECORDING] },
+   <div class="note">Прослушай разговор и ответь на вопросы, затем выполни задание на говорение.</div>`, activities: [ROUTINE_LISTENING, DAILY_ROUTINE_RECORDING] },
     { id: 8, eyebrow: 'УРОК 14 · 8/11 · ПИСЬМО', title: 'Az én napom', subtitle: 'Связный рассказ о своём дне', body: `<p>Собери знакомые действия и время в один короткий рассказ. Открытый текст проверяется по рубрике и остаётся материалом для последующей проверки.</p>`, activities: [DAILY_ROUTINE_WRITING] },
     { id: 9, eyebrow: 'УРОК 14 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ', title: 'Kiegészítő szókincs', subtitle: 'Необязательные бытовые глаголы', body: `
    <div class="grid2"><div><p><b>zuhanyozik</b> — принимать душ</p><p><b>pihen</b> — отдыхать</p></div><div><p><b>sétál</b> — гулять</p><p><b>takarít</b> — убираться</p></div></div>

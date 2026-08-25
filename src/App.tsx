@@ -23,7 +23,7 @@ import { isLessonAccessible, getCurrentUser } from './utils/userStore';
 import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizResultToServer } from './utils/userStore';
-import { Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2 } from 'lucide-react';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
   const numbers = new Set<number>();
@@ -45,6 +45,7 @@ export default function App() {
   const [selectedLessonId, setSelectedLessonId] = useState<number>(1);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [isLoadingLesson, setIsLoadingLesson] = useState(false);
+  const [lessonLoadError, setLessonLoadError] = useState<string | null>(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState(0);
 
@@ -73,24 +74,12 @@ export default function App() {
 
   const [, setAudioVersion] = useState(0);
 
-  const [allLessons, setAllLessons] = useState<Lesson[]>([]);
+  const allLessons = LESSONS_META;
 
   const slides = useMemo(() => activeLesson?.slides ?? [], [activeLesson]);
   const currentSlide = slides[currentSlideIndex] ?? slides[0];
   const narration = useLessonNarration(activeLesson?.number, currentSlide);
   const { play: playSlide, stop: stopNarration, autoplayEnabled } = narration;
-
-  useEffect(() => {
-    let isMounted = true;
-    Promise.all(LESSONS_META.map((meta) => loadLesson(meta.id))).then((lessons) => {
-      if (isMounted) {
-        setAllLessons(lessons.filter((lesson): lesson is Lesson => lesson !== null));
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -152,17 +141,28 @@ useEffect(() => {
     let isMounted = true;
     if (viewMode === 'lesson' && (!activeLesson || activeLesson.id !== selectedLessonId)) {
       setIsLoadingLesson(true);
-      loadLesson(selectedLessonId).then((lesson) => {
-        if (isMounted) {
-          if (lesson) setActiveLesson(lesson);
-          setIsLoadingLesson(false);
-        }
-      });
+      setLessonLoadError(null);
+      loadLesson(selectedLessonId, { admin: isAdmin })
+        .then((lesson) => {
+          if (!isMounted) return;
+          if (lesson) {
+            setActiveLesson(lesson);
+          } else {
+            setLessonLoadError('Урок не найден.');
+          }
+        })
+        .catch((error: unknown) => {
+          if (!isMounted) return;
+          setLessonLoadError(error instanceof Error ? error.message : 'Урок сейчас недоступен.');
+        })
+        .finally(() => {
+          if (isMounted) setIsLoadingLesson(false);
+        });
     }
     return () => {
       isMounted = false;
     };
-  }, [selectedLessonId, viewMode]);
+  }, [selectedLessonId, viewMode, isAdmin, activeLesson]);
 
   const handleSelectLesson = (lessonId: number) => {
     // Guard: prevent opening a lesson the user hasn't unlocked yet.
@@ -176,6 +176,7 @@ useEffect(() => {
     setIsQuizActive(false);
     setActivityEvidence({});
     setActivityRuntime({});
+    setLessonLoadError(null);
     setViewMode('lesson');
     setShowWarmup(true);
   };
@@ -420,6 +421,25 @@ useEffect(() => {
           onClose={() => setIsUserModalOpen(false)}
         />
       </>
+    );
+  }
+
+  if (lessonLoadError) {
+    return (
+      <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans">
+        <div className="max-w-md rounded-2xl border border-[#D9CBB0] bg-white p-7 text-center shadow-sm">
+          <AlertCircle className="w-9 h-9 text-[#7A1E2B] mx-auto" />
+          <h1 className="mt-3 text-xl font-bold text-[#57121C]">Не удалось открыть урок</h1>
+          <p className="mt-2 text-sm text-[#6B5D52]">{lessonLoadError}</p>
+          <button
+            type="button"
+            onClick={handleBackToLessons}
+            className="mt-5 px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
+          >
+            Вернуться к урокам
+          </button>
+        </div>
+      </div>
     );
   }
 

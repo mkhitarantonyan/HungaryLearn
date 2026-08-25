@@ -173,3 +173,10 @@ test('lesson navigation percentage is explicitly labelled as material progress',
   assert.match(source, /Материал: \{step\} из \{total\}/);
   assert.match(source, /Прогресс материала: шаг/);
 });
+
+test('quiz completion copy reports a pass only at the 80 percent threshold', () => {
+  const source = readFileSync(new URL('../src/components/LessonQuizModal.tsx', import.meta.url), 'utf8');
+  assert.match(source, /const passed = percentage >= 80/);
+  assert.match(source, /passed \? 'Тест пройден!' : 'Тест завершён'/);
+  assert.doesNotMatch(source, /усвоили тему/);
+});

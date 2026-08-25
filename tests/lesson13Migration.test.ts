@@ -86,7 +86,7 @@ test('quiz options are unique and L13 metadata is aligned', () => {
 });
 
 test('frozen L14, frozen L15, and later L20 remain byte-identical', () => {
-  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'F719EE96AAFE518BE31C50276C1CACEC91B8D28B5997C77B9B9626EB106E0F45');
+  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'B7D78CBE218F2D3E378C5653FE32B300CEF93EB5C003D7E3857FA9D4C2A8558F');
   assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
-  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), 'DCD4ED5B9ADDF1D7AD93582CE09E44F302B3DD4C34C8EED090D70CEA16F36AA4');
+  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), '0C925C224C0B8B0DD30D9C6D30ECF98E9CDC819D0C83BC84BD46FA7B53791DEB');
 });

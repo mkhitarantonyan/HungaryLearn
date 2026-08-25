@@ -84,7 +84,7 @@ export const LESSON_23: Lesson = {
      <tr><td>ti</td><td><button class="speak-btn" data-speak-text="tanulnátok" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulnátok</button></td><td><button class="speak-btn" data-speak-text="kérnétek" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kérnétek</button></td><td>вы учились бы / вы просили бы</td></tr>
      <tr><td>ők</td><td><button class="speak-btn" data-speak-text="tanulnának" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulnának</button></td><td><button class="speak-btn" data-speak-text="kérnének" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kérnének</button></td><td>они учились бы / они просили бы</td></tr>
    </table>
-   <div class="note">Вам уже знакома форма <button class="speak-btn" data-speak-text="kérnék" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kérnék</button> из 15-го урока («я попросил бы...») и <button class="speak-btn" data-speak-text="szeretnék" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szeretnék</button> из 18-го урока («я хотел бы...») — это именно неопределённое условное наклонение 1-го лица!</div>
+   <div class="note">В 15-м уроке вы видели форму <span class="hu-word">kérek</span>; сравните: <span class="hu-word">kérek → kérnék</span> («прошу → попросил(а) бы»). Форма <button class="speak-btn" data-speak-text="szeretnék" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szeretnék</button> («я хотел(а) бы») знакома из 18-го урока. Обе формы показывают неопределённое условное наклонение 1-го лица.</div>
  `
     },
     {
@@ -257,7 +257,7 @@ export const LESSON_23: Lesson = {
     {
       id: 2305,
       question: 'Какая форма глагола "tanul" (учиться) в неопределённом условном наклонении 1-го лица множественного числа (mi)?',
-      options: ['tanulnánk', 'tanulnánk', 'tanulnánk', 'tanulnánk'],
+      options: ['tanulnánk', 'tanulnátok', 'tanulnának', 'tanulnék'],
       correctIndex: 0,
       explanation: 'Условное наклонение для "mi" (мы) в неопределённой форме: tanul + n + á + nk = tanulnánk (мы учились бы).'
     },

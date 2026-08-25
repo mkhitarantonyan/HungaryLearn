@@ -1,4 +1,6 @@
 import { Lesson, LessonMeta } from '../../types';
+import { LESSON_1 } from './lesson1';
+import { LESSON_2 } from './lesson2';
 
 export const LESSONS_META: LessonMeta[] = [
   {
@@ -255,58 +257,81 @@ export const LESSONS_META: LessonMeta[] = [
   }
 ];
 
-type LessonModule = { default?: Lesson; [key: string]: unknown };
-
-const lessonLoaders: Record<number, () => Promise<LessonModule>> = {
-  1: () => import('./lesson1'),
-  2: () => import('./lesson2'),
-  3: () => import('./lesson3'),
-  4: () => import('./lesson4'),
-  5: () => import('./lesson5'),
-  6: () => import('./lesson6'),
-  7: () => import('./lesson7'),
-  8: () => import('./lesson8'),
-  9: () => import('./lesson9'),
-  10: () => import('./lesson10'),
-  11: () => import('./lesson11'),
-  12: () => import('./lesson12'),
-  13: () => import('./lesson13'),
-  14: () => import('./lesson14'),
-  15: () => import('./lesson15'),
-  16: () => import('./lesson16'),
-  17: () => import('./lesson17'),
-  18: () => import('./lesson18'),
-  19: () => import('./lesson19'),
-  20: () => import('./lesson20'),
-  21: () => import('./lesson21'),
-  22: () => import('./lesson22'),
-  23: () => import('./lesson23'),
-  24: () => import('./lesson24'),
-  25: () => import('./lesson25'),
-  26: () => import('./lesson26'),
-  27: () => import('./lesson27'),
-  28: () => import('./lesson28'),
-};
-
 const lessonCache: Record<number, Lesson> = {};
 
-export async function loadLesson(id: number): Promise<Lesson | null> {
+export class LessonLoadError extends Error {
+  constructor(
+    message: string,
+    readonly status?: number
+  ) {
+    super(message);
+    this.name = 'LessonLoadError';
+  }
+}
+
+interface LessonApiResponse {
+  success?: boolean;
+  lesson?: Lesson;
+  message?: string;
+}
+
+interface LessonLoadOptions {
+  admin?: boolean;
+}
+
+const freeLessons: Record<number, Lesson> = {
+  1: LESSON_1,
+  2: LESSON_2,
+};
+
+async function loadLessonOnServer(id: number): Promise<Lesson | null> {
+  // Vite must not follow this server-only boundary into browser chunks.
+  const serverModulePath = '../../server/lessonLoader';
+  const { loadServerLesson } = await import(/* @vite-ignore */ serverModulePath) as {
+    loadServerLesson: (lessonNumber: number) => Promise<Lesson | null>;
+  };
+  return loadServerLesson(id);
+}
+
+export async function loadLesson(id: number, options: LessonLoadOptions = {}): Promise<Lesson | null> {
   if (lessonCache[id]) {
     return lessonCache[id];
   }
-  const loader = lessonLoaders[id];
-  if (!loader) return null;
-  try {
-    const mod = await loader();
-    const lesson = (mod.default || mod[`LESSON_${id}`]) as Lesson | undefined;
-    if (lesson) {
-      lessonCache[id] = lesson;
-      return lesson;
-    }
-  } catch (err) {
-    console.error(`Failed to load lesson ${id}`, err);
+
+  if (!Number.isInteger(id) || id < 1 || id > 28) return null;
+
+  const freeLesson = freeLessons[id];
+  if (freeLesson) {
+    lessonCache[id] = freeLesson;
+    return freeLesson;
   }
-  return null;
+
+  if (typeof window === 'undefined') {
+    const lesson = await loadLessonOnServer(id);
+    if (lesson) lessonCache[id] = lesson;
+    return lesson;
+  }
+
+  const endpoint = options.admin ? `/api/admin/lessons/${id}` : `/api/lessons/${id}`;
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+    });
+  } catch {
+    throw new LessonLoadError('Не удалось связаться с сервером. Попробуйте ещё раз.');
+  }
+
+  const payload = await response.json().catch(() => ({})) as LessonApiResponse;
+  if (!response.ok || !payload.lesson) {
+    throw new LessonLoadError(
+      payload.message || 'Урок сейчас недоступен.',
+      response.status
+    );
+  }
+
+  return payload.lesson;
 }
 
 export function getLessonMetaById(id: number): LessonMeta | undefined {

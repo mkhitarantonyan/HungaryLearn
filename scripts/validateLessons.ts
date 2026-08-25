@@ -47,6 +47,21 @@ async function validateLessons(): Promise<void> {
         errors.push(`Lesson ${lesson.number}: duplicate quiz id ${item.id}`);
       }
       quizIds.add(item.id);
+      if (item.question.trim().length === 0) {
+        errors.push(`Lesson ${lesson.number}: quiz ${item.id} has an empty question`);
+      }
+      if (item.options.length === 0) {
+        errors.push(`Lesson ${lesson.number}: quiz ${item.id} has no options`);
+      }
+      const normalizedOptions = item.options.map((option) => option.replace(/\s+/g, ' ').trim());
+      normalizedOptions.forEach((option, index) => {
+        if (option.length === 0) {
+          errors.push(`Lesson ${lesson.number}: quiz ${item.id} option ${index} is empty`);
+        }
+      });
+      if (new Set(normalizedOptions).size !== normalizedOptions.length) {
+        errors.push(`Lesson ${lesson.number}: quiz ${item.id} has duplicate options`);
+      }
       if (item.correctIndex < 0 || item.correctIndex >= item.options.length) {
         errors.push(`Lesson ${lesson.number}: quiz ${item.id} has invalid correctIndex`);
       }

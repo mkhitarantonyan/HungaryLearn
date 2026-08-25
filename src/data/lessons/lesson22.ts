@@ -127,7 +127,7 @@ export const LESSON_22: Lesson = {
      <tr><th>Кто</th><th>Форма</th><th>Значение</th></tr>
      <tr><td>(te)</td><td><button class="speak-btn" data-speak-text="légy! / legyél!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> légy! / legyél!</button></td><td>будь!</td></tr>
      <tr><td>(ő / Ön)</td><td><button class="speak-btn" data-speak-text="legyen!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legyen!</button></td><td>пусть будет! / будьте! (Вы)</td></tr>
-     <tr><td>(mi)</td><td><button class="speak-btn" data-speak-text="legyünk!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legyünk!</button></td><td>будемте!</td></tr>
+     <tr><td>(mi)</td><td><button class="speak-btn" data-speak-text="legyünk!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legyünk!</button></td><td>давайте будем!</td></tr>
      <tr><td>(ti)</td><td><button class="speak-btn" data-speak-text="legyetek!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legyetek!</button></td><td>будьте! (вы)</td></tr>
      <tr><td>(ők / Önök)</td><td><button class="speak-btn" data-speak-text="legyenek!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legyenek!</button></td><td>пусть будут! / будьте! (Вы, мн.ч.)</td></tr>
    </table>
@@ -241,10 +241,10 @@ export const LESSON_22: Lesson = {
     },
     {
       id: 2203,
-      question: 'Какая форма повелительного наклонения соответствует фразе "Скажи ему!"?',
-      options: ['Mondd meg neki!', 'Mond meg neki!', 'Mondjad meg neki!', 'Mondj meg neki!'],
+      question: 'Какая КРАТКАЯ определённая форма повелительного наклонения соответствует фразе "Скажи ему!"?',
+      options: ['Mondd meg neki!', 'Mond meg neki!', 'Mondja meg neki!', 'Mondj meg neki!'],
       correctIndex: 0,
-      explanation: 'Глагол "mond" (говорить/сказать) + j → mondd (ассимиляция d + j → dd). Правильно: Mondd meg neki! (Скажи ему!).'
+      explanation: 'Краткая определённая форма: Mondd meg neki! Форма Mondjad meg neki! — тоже правильная длинная альтернатива, поэтому она намеренно не используется как неправильный вариант.'
     },
     {
       id: 2204,

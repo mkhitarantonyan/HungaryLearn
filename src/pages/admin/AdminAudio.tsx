@@ -422,7 +422,7 @@ export default function AdminAudio() {
       };
 
       VOCABULARY_LIST.forEach((v) => add(v.hu, v.ru, v.phonetic, 1));
-      const lessons = await Promise.all(LESSONS_META.map((l) => loadLesson(l.id)));
+      const lessons = await Promise.all(LESSONS_META.map((l) => loadLesson(l.id, { admin: true })));
       lessons.forEach((lesson) => {
         if (!lesson) return;
         (lesson.vocabulary ?? []).forEach((v) => add(v.hu, v.ru, v.phonetic, lesson.number));
@@ -442,7 +442,7 @@ export default function AdminAudio() {
   useEffect(() => {
     let cancelled = false;
     setLoadingSlides(true);
-    loadLesson(lessonNumber).then((lesson) => {
+    loadLesson(lessonNumber, { admin: true }).then((lesson) => {
       if (cancelled) return;
       setSlides(lesson?.slides.map((s) => ({ id: s.id, title: s.title })) ?? []);
       setLoadingSlides(false);

@@ -47,6 +47,8 @@ import {
 import { isAuthorizedAdminSession, parseAdminUserListQuery, parsePrivilegeUpdate } from './src/server/adminValidation';
 import { serializeAdminUser } from './src/server/adminUsers';
 import { LESSONS_META } from './src/data/lessons';
+import { parseLessonNumber, resolveLessonRequest } from './src/server/lessonAccess';
+import { loadServerLesson } from './src/server/lessonLoader';
 import {
   assertPrivateOverrideBucket,
   downloadPrivateAudio,
@@ -418,6 +420,20 @@ async function startServer() {
   const getUserTokenFromReq = (req: express.Request): string | undefined => {
     return req.cookies?.user_session || req.headers.authorization?.replace('Bearer ', '');
   };
+
+  app.get('/api/lessons/:lessonNumber', asyncHandler(async (req, res) => {
+    const rawLessonNumber = req.params.lessonNumber;
+    const lessonNumber = parseLessonNumber(rawLessonNumber);
+    if (lessonNumber === null) {
+      return res.status(400).json({ success: false, message: 'Некорректный номер урока' });
+    }
+
+    const user = lessonNumber > 2
+      ? await getUserFromSessionToken(getUserTokenFromReq(req))
+      : null;
+    const result = await resolveLessonRequest(rawLessonNumber, user, loadServerLesson);
+    return res.status(result.status).json(result.body);
+  }));
 
 
 
@@ -985,6 +1001,29 @@ async function startServer() {
       return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
     }
     return res.json({ success: true, lessons: LESSONS_META });
+  }));
+
+  app.get('/api/admin/lessons/:lessonNumber', asyncHandler(async (req, res) => {
+    const token = getSessionTokenFromReq(req);
+    if (!(await isAdminSessionValid(token))) {
+      return res.status(401).json({ success: false, message: 'Требуется авторизация администратора' });
+    }
+
+    const lessonNumber = parseLessonNumber(req.params.lessonNumber);
+    if (lessonNumber === null) {
+      return res.status(400).json({ success: false, message: 'Некорректный номер урока' });
+    }
+
+    try {
+      const lesson = await loadServerLesson(lessonNumber);
+      if (!lesson) {
+        return res.status(404).json({ success: false, message: 'Урок не найден' });
+      }
+      return res.status(200).json({ success: true, lesson });
+    } catch (error) {
+      console.error(`[Admin Lessons] Failed to load lesson ${lessonNumber}:`, error);
+      return res.status(500).json({ success: false, message: 'Не удалось загрузить урок' });
+    }
   }));
 
   // Admin: grant or revoke full-access privilege for a student account.

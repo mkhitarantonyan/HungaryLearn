@@ -81,20 +81,23 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
 
   if (isCompleted) {
     const percentage = Math.round((score / questions.length) * 100);
+    const passed = percentage >= 80;
     return (
       <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-lg mx-auto text-center space-y-6 shadow-xl">
         <div className="w-16 h-16 bg-[#B98A2B]/20 text-[#B98A2B] rounded-full flex items-center justify-center mx-auto">
           <Award className="w-10 h-10" />
         </div>
-        <h3 className="text-2xl font-bold font-mono text-[#57121C]">Тест пройден!</h3>
+        <h3 className="text-2xl font-bold font-mono text-[#57121C]">
+          {passed ? 'Тест пройден!' : 'Тест завершён'}
+        </h3>
         <p className="text-xs font-mono text-[#B98A2B] uppercase font-bold">Урок {lesson?.number}: {lesson?.title}</p>
         <p className="text-sm text-[#2A2320]">
           Вы правильно ответили на <strong className="text-[#7A1E2B]">{score} из {questions.length}</strong> вопросов ({percentage}%).
         </p>
 
         <div className="p-4 bg-white rounded-xl border border-[#D9CBB0] text-xs text-[#8A7A68]">
-          {percentage >= 80
-            ? 'Отличный результат! Вы отлично усвоили тему этого урока.'
+          {passed
+            ? 'Отличный результат! Порог этой проверки достигнут.'
             : 'Хорошая попытка! Рекомендуем просмотреть слайды ещё раз для закрепления.'}
         </div>
 

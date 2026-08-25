@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { Lesson } from '../types';
+import type { LessonMeta } from '../types';
 import {
   ArrowRight,
   ChevronRight,
@@ -13,13 +13,13 @@ import {
   RefreshCw,
   GraduationCap,
 } from 'lucide-react';
-import { getCurrentUser, subscribeUserState, isLessonAccessible } from '../utils/userStore';
+import { FREE_LESSON_COUNT, getCurrentUser, subscribeUserState, isLessonAccessible } from '../utils/userStore';
 import type { UserProfile } from '../utils/userStore';
 import { getLessonProgressState } from '../utils/lessonProgress';
 import type { LessonProgressState } from '../utils/lessonProgress';
 
 interface LessonListProps {
-  lessons: Lesson[];
+  lessons: LessonMeta[];
   onSelectLesson: (lessonId: number) => void;
   onOpenAdmin: () => void;
   isAdmin: boolean;
@@ -30,13 +30,13 @@ interface LessonListProps {
 }
 
 function lessonProgress(
-  lesson: Lesson,
+  lesson: LessonMeta,
   viewedSlideIds: string[],
   passedQuizzes: number[]
 ): ReturnType<typeof getLessonProgressState> {
   return getLessonProgressState({
     lessonNumber: lesson.number,
-    requiredSlideIds: lesson.slides.map((slide) => slide.id),
+    requiredSlideIds: Array.from({ length: lesson.slidesCount }, (_, index) => index + 1),
     viewedSlideIds,
     quizPassed: passedQuizzes.includes(lesson.number),
   });
@@ -58,18 +58,18 @@ const LEVEL_CHIP: Record<string, string> = {
 };
 
 /** Strip the "Урок N · " prefix for a compact, scanable title. */
-function shortTitle(lesson: Lesson): string {
+function shortTitle(lesson: LessonMeta): string {
   const stripped = lesson.title.replace(/^Урок\s+\d+\s*·\s*/i, '').trim();
   return stripped || lesson.title;
 }
 
 /* ---- "Continue learning" resolution — uses only existing progress ---- */
 function determineCurrentLesson(
-  lessons: Lesson[],
+  lessons: LessonMeta[],
   viewedSlideIds: string[],
   passedQuizzes: number[],
   isAccessibleFn: (n: number) => boolean
-): { lesson: Lesson; status: LessonProgressState } | null {
+): { lesson: LessonMeta; status: LessonProgressState } | null {
   const accessible = lessons
     .filter((l) => isAccessibleFn(l.number))
     .sort((a, b) => a.number - b.number);
@@ -102,12 +102,12 @@ function LessonCard({
   onSelect,
   onLockedClick,
 }: {
-  lesson: Lesson;
+  lesson: LessonMeta;
   accessible: boolean;
   status: LessonProgressState;
   highlight: 'current' | 'next' | null;
   onSelect: (id: number) => void;
-  onLockedClick: (lesson: Lesson) => void;
+  onLockedClick: (lesson: LessonMeta) => void;
 }) {
   const StatusIcon = !accessible
     ? Lock
@@ -213,13 +213,13 @@ function LevelSection({
   onLockedClick,
 }: {
   level: { key: string; title: string; from: number; to: number };
-  lessons: Lesson[];
+  lessons: LessonMeta[];
   isAccessibleFn: (n: number) => boolean;
   viewedSlideIds: string[];
   passedQuizzes: number[];
-  highlightFor: (lesson: Lesson) => 'current' | 'next' | null;
+  highlightFor: (lesson: LessonMeta) => 'current' | 'next' | null;
   onSelect: (id: number) => void;
-  onLockedClick: (l: Lesson) => void;
+  onLockedClick: (l: LessonMeta) => void;
 }) {
   if (lessons.length === 0) return null;
   const lessonNumbers = new Set(lessons.map((lesson) => lesson.number));
@@ -297,7 +297,7 @@ export const LessonList: React.FC<LessonListProps> = ({
   const currentNumber = current?.lesson.number ?? null;
   const currentStatus = current?.status ?? null;
 
-  const highlightFor = (lesson: Lesson): 'current' | 'next' | null => {
+  const highlightFor = (lesson: LessonMeta): 'current' | 'next' | null => {
     if (lesson.number !== currentNumber) return null;
     if (currentStatus === 'in_progress' || currentStatus === 'content_completed') return 'current';
     if (currentStatus === 'not_started') return 'next';
@@ -305,7 +305,7 @@ export const LessonList: React.FC<LessonListProps> = ({
   };
 
   const hasLockedLessons = lessons.some((l) => !isAccessibleFn(l.number));
-  const showPayBanner = user && !isAdmin && user.subscriptionStatus !== 'active' && !user.isPrivileged;
+  const showPayBanner = user && !isAdmin && !isAccessibleFn(FREE_LESSON_COUNT + 1);
 
   const currentCtaLabel =
     currentStatus === 'in_progress'

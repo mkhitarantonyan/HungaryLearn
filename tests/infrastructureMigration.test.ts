@@ -119,3 +119,30 @@ test('normalized e-mail uniqueness is represented by a local idempotent migratio
   assert.match(migration, /create unique index if not exists/i);
   assert.match(migration, /lower\(email\)/i);
 });
+
+test('fresh PostgreSQL migration defines every server-side persistence table and protects it with RLS', () => {
+  const migration = readFileSync(
+    path.join(projectRoot, 'supabase', 'migrations', '20260822134454_app_users_email_unique.sql'),
+    'utf8'
+  );
+  const requiredTables = [
+    'app_users',
+    'user_sessions',
+    'admin_sessions',
+    'user_progress',
+    'processed_stripe_events',
+    'word_overrides',
+    'audio_overrides',
+  ];
+  for (const table of requiredTables) {
+    assert.match(migration, new RegExp(`create table if not exists public\\.${table}\\b`, 'i'), table);
+    assert.match(migration, new RegExp(`alter table public\\.${table} enable row level security`, 'i'), table);
+  }
+  assert.match(migration, /review_cards jsonb not null default '\{\}'::jsonb/i);
+});
+
+test('browser subscription access is restored only from a server-verified session', () => {
+  const userStore = readFileSync(path.join(projectRoot, 'src', 'utils', 'userStore.ts'), 'utf8');
+  assert.doesNotMatch(userStore, /localStorage\.getItem\([^)]*student_profile/i);
+  assert.match(userStore, /catch \(err\)[\s\S]*?setCurrentUser\(null\)[\s\S]*?return null;/);
+});

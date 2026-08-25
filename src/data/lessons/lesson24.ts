@@ -124,7 +124,7 @@ export const LESSON_24: Lesson = {
       title: "Szórend összetett mondatokban",
       subtitle: "Как ведут себя глагольные приставки в придаточных",
       body: `
-   <p>В придаточных предложениях порядок слов остаётся стандартным, но если придаточное начинается с вопросительного слова или отрицания, глагольная приставка отделяется (вспомните 14-й урок):</p>
+   <p>Само придаточное предложение не заставляет глагольную приставку отделяться. Внутри него действуют обычные правила фокуса, вопроса и отрицания; сравните со знакомыми приставочными глаголами из 14-го урока:</p>
    <p><button class="speak-btn" data-speak-text="Tudom, hol van a bolt." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hol van a bolt.</button></p>
    <p><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt mondta, hogy nem jön el.</button> <span style="color:#8a7a68">(nem оторвало el от jön)</span></p>
  `

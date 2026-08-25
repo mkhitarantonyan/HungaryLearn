@@ -78,9 +78,9 @@ export const LESSON_20: Lesson = {
       title: "-t- vagy -ott-/-ett-/-ött-?",
       subtitle: "Когда нужна соединительная гласная",
       body: `
-   <p>Если основа заканчивается на гласную или на «лёгкий» согласный (l, r, n, j...), добавляется просто <span class="hu-word">-t-</span>:</p>
+   <p>В венгерском прошедшее время строится по моделям с <span class="hu-word">-t</span> и <span class="hu-word">-ott/-ett/-ött</span>. Выбор модели зависит от конкретного глагола и типа его основы, поэтому надёжнее запоминать форму вместе с глаголом:</p>
    <p><button class="speak-btn" data-speak-text="vár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vár</button> → <button class="speak-btn" data-speak-text="várt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> várt</button>, <button class="speak-btn" data-speak-text="kér" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kér</button> → <button class="speak-btn" data-speak-text="kért" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kért</button></p>
-   <p>Если основа заканчивается на t, d, s, sz, z, zs или скопление согласных, нужна соединительная гласная (гармония, как в 3-м уроке):</p>
+   <p>Сравните глаголы, которые используют модель с соединительной гласной:</p>
    <p><button class="speak-btn" data-speak-text="dolgozik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> dolgozik</button> → <button class="speak-btn" data-speak-text="dolgozott" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> dolgozott</button> <span style="color:#8a7a68">(работать → работал)</span>, <button class="speak-btn" data-speak-text="fest" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> fest</button> → <button class="speak-btn" data-speak-text="festett" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> festett</button> <span style="color:#8a7a68">(рисовать → рисовал)</span>, <button class="speak-btn" data-speak-text="köt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> köt</button> → <button class="speak-btn" data-speak-text="kötött" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kötött</button> <span style="color:#8a7a68">(завязывать → завязал)</span></p>
  `
     },
@@ -248,15 +248,10 @@ export const LESSON_20: Lesson = {
     quiz: [
     {
       id: 2001,
-      question: 'Когда в прошедшем времени используется соединительная гласная (-ott/-ett/-ött) вместо простого -t?',
-      options: [
-        'Когда основа оканчивается на гласную или "лёгкий" согласный (l, r, n, j)',
-        'Когда основа оканчивается на t, d, s, sz, z, zs или скопление согласных',
-        'Когда глагол имеет приставку (be-, ki-, fel-)',
-        'Всегда, без исключений'
-      ],
-      correctIndex: 1,
-      explanation: 'Соединительная гласная (-ott/-ett/-ött) нужна, когда основа заканчивается на t, d, s, sz, z, zs или скопление согласных: dolgozik → dolgozott, fest → festett, köt → kötött.'
+      question: 'Какая правильная форма прошедшего времени ő от dolgozik?',
+      options: ['dolgozott', 'dolgozt', 'dolgozik', 'dolgozna'],
+      correctIndex: 0,
+      explanation: 'Правильная форма 3-го лица единственного числа в прошедшем времени: dolgozik → dolgozott. У этого глагола используется модель -ott.'
     },
     {
       id: 2002,
@@ -303,15 +298,10 @@ export const LESSON_20: Lesson = {
     },
     {
       id: 2006,
-      question: 'В каком уроке мы учились образовывать будущее время с помощью вспомогательного глагола "fog"?',
-      options: [
-        'Урок 17 (погода и времена года)',
-        'Урок 18 (модальные глаголы)',
-        'Урок 19 (будущее время)',
-        'Урок 20 (прошедшее время полностью)'
-      ],
-      correctIndex: 2,
-      explanation: 'Будущее время (jövő idő) с глаголом fog мы изучали в уроке 19. Теперь в уроке 20 мы завершаем систему времён прошедшим временем: у вас есть настоящее (урок 4), будущее (урок 19) и прошедшее (уроки 13 и 20).'
+      question: 'Какое предложение описывает действие в прошлом?',
+      options: ['Tegnap dolgoztam.', 'Most dolgozom.', 'Holnap dolgozni fogok.', 'Holnap dolgozom.'],
+      correctIndex: 0,
+      explanation: 'Tegnap означает «вчера», а dolgoztam — форма прошедшего времени: «Вчера я работал(а)».'
     }
   ],
   objectives: [

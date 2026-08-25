@@ -68,7 +68,7 @@ export const LESSON_26: Lesson = {
       title: "Fáj a...",
       subtitle: "Конструкция «У меня болит...»",
       body: `
-   <p>Чтобы сказать «у меня болит [часть тела]», используется глагол <span class="hu-word">fáj</span> (единственное число) или <span class="hu-word">fájnak</span> (множественное число) + притяжательная форма части тела (из 15-го урока!):</p>
+   <p>Чтобы сказать «у меня болит [часть тела]», используется глагол <span class="hu-word">fáj</span> (единственное число) или <span class="hu-word">fájnak</span> (множественное число) + притяжательная форма части тела (сравните с притяжательными формами из 8-го урока):</p>
    <p><button class="speak-btn" data-speak-text="Fáj a fejem." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Fáj a fejem.</button> <span style="color:#8a7a68">(У меня болит голова — буквально «болит моя голова»)</span></p>
    <p><button class="speak-btn" data-speak-text="Fáj a torkom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Fáj a torkom.</button> <span style="color:#8a7a68">(У меня болит горло)</span></p>
    <p><button class="speak-btn" data-speak-text="Fáj a hasam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Fáj a hasam.</button> <span style="color:#8a7a68">(У меня болит живот)</span></p>
@@ -146,7 +146,7 @@ export const LESSON_26: Lesson = {
       subtitle: "Описание своего состояния",
       body: `
    <p><button class="speak-btn" data-speak-text="Tegnap óta fáj a torkom és lázam is van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tegnap óta fáj a torkom és lázam is van.</button> <span style="color:#8a7a68">(Со вчерашнего дня у меня болит горло и есть температура)</span></p>
-   <p><button class="speak-btn" data-speak-text="Szedje ezt a gyógyszert három napig!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szedje ezt a gyógyszert három napig!</button> <span style="color:#8a7a68">(Принимайте это лекарство три дня! — суффикс -ig из 11-го урока!)</span></p>
+   <p><button class="speak-btn" data-speak-text="Szedje ezt a gyógyszert három napig!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szedje ezt a gyógyszert három napig!</button> <span style="color:#8a7a68">(Принимайте это лекарство три дня! — három napig означает «в течение трёх дней», полезная временная модель)</span></p>
  `
     },
     {
@@ -269,15 +269,15 @@ export const LESSON_26: Lesson = {
     },
     {
       id: 2605,
-      question: 'Как попросить в аптеке что-нибудь от головной боли?',
+      question: 'Какой вариант правильно использует ellen в просьбе о средстве от головной боли?',
       options: [
         'Szeretnék valamit fejfájás ellen.',
-        'Szeretnék valamit fejfájásra.',
         'Szeretnék valamit fejfájástól.',
-        'Szeretnék valamit fejfájásban.'
+        'Szeretnék valamit fejfájásban.',
+        'Szeretnék valamit fejfájással.'
       ],
       correctIndex: 0,
-      explanation: 'Послелог «ellen» означает «против/от»: fejfájás ellen – от головной боли. Правильная фраза: «Szeretnék valamit fejfájás ellen.» (Я хотел бы что-нибудь от головной боли).'
+      explanation: 'Ellen означает «против / от»: fejfájás ellen. Форма fejfájásra тоже может звучать естественно в такой просьбе, поэтому она намеренно не используется как неправильный вариант.'
     },
     {
       id: 2606,

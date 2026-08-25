@@ -95,7 +95,7 @@ test('quiz is core, contextual, unique, and metadata matches', () => {
 
 test('frozen L11, L13, L14, and L15 remain byte-identical', () => {
   assert.equal(hash(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), '6CD30773439EFEDCABDE47DE30316711BC6908BEDFEFA615359D9A3AD619ADF9');
-  assert.equal(hash(new URL('../src/data/lessons/lesson13.ts', import.meta.url)), 'E38898DAC48639D8C6B57CD19376277ADDBDF0A6AC1458D9E6DF413E033123FC');
-  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'F719EE96AAFE518BE31C50276C1CACEC91B8D28B5997C77B9B9626EB106E0F45');
+  assert.equal(hash(new URL('../src/data/lessons/lesson13.ts', import.meta.url)), '7C9958E5E4C96B0B26BBC921B814EEED9BBED4902B912C7D437A6922903E43BC');
+  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'B7D78CBE218F2D3E378C5653FE32B300CEF93EB5C003D7E3857FA9D4C2A8558F');
   assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

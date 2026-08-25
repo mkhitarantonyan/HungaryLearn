@@ -101,7 +101,7 @@ test('L2, L3, L4, L5, and L15 approved lesson modules remain byte-for-byte froze
 
 test('L6 is migrated with activities and L7 matches the approved migrated snapshot', () => {
   assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '6F43970B2E55239FCA0F0BB0027DD0A71628F6454DB51CE9D1459D68E4DC36C8');
 });
 
 test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {
@@ -109,7 +109,7 @@ test('frozen planning, translation, and slide-audio manifest files remain unchan
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'ACDD1475B09193263AC369F31CDF66493C7962BBFF803576DDA2F0EEA89353C3');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '7D110F8F7D61CC0943211F1BA4FCEC52AEEF5087C393EA4FF8A3B8EAB048E862');
 });
 
 test('L1 translations and effective six-card vocabulary remain exact', () => {

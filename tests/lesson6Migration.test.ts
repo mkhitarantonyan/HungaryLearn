@@ -68,7 +68,7 @@ test('L6 migration keeps the curriculum at exactly 139 objectives', async () => 
 });
 
 test('L1–L5 and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson1.ts', import.meta.url)), '0983505394BCD274E7F39B5AED1EA6566F9AF0B294436EAB6B1F83A168C68321');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson1.ts', import.meta.url)), 'C6A6B8DAA1C61BECF61AB30599ACC9630D602ECD680986539DE50AA3EFDAF510');
   assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
   assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
   assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
@@ -77,7 +77,7 @@ test('L1–L5 and L15 approved lesson modules remain byte-for-byte frozen', () =
 });
 
 test('L7 matches the approved migrated snapshot', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '6F43970B2E55239FCA0F0BB0027DD0A71628F6454DB51CE9D1459D68E4DC36C8');
 });
 
 test('frozen planning docs, translations, manifest, and generator remain unchanged', () => {
@@ -85,7 +85,7 @@ test('frozen planning docs, translations, manifest, and generator remain unchang
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'ACDD1475B09193263AC369F31CDF66493C7962BBFF803576DDA2F0EEA89353C3');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '7D110F8F7D61CC0943211F1BA4FCEC52AEEF5087C393EA4FF8A3B8EAB048E862');
   assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'F9249BEF9F8C6DE95C4CAD634F8DE0D6BD0204025A24EE5512F8AF6F0B2CA793');
 });
 

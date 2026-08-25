@@ -91,7 +91,7 @@ export const LESSON_27: Lesson = {
      <div>
        <p><button class="speak-btn" data-speak-text="pályaudvar" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> pályaudvar</button> — ж/д вокзал</p>
        <p><button class="speak-btn" data-speak-text="repülőtér" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> repülőtér</button> — аэропорт</p>
-       <p><button class="speak-btn" data-speak-text="vágány" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vágány</button> — путь / платформа</p>
+       <p><button class="speak-btn" data-speak-text="vágány" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vágány</button> — железнодорожный путь / номер пути</p>
      </div>
      <div>
        <p><button class="speak-btn" data-speak-text="járat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> járat</button> — рейс / маршрут</p>
@@ -109,7 +109,7 @@ export const LESSON_27: Lesson = {
       body: `
    <p><button class="speak-btn" data-speak-text="Egy jegyet kérek Budapestre." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy jegyet kérek Budapestre.</button> <span style="color:#8a7a68">(Один билет в Будапешт, пожалуйста)</span></p>
    <p><button class="speak-btn" data-speak-text="Egy útra vagy retúr?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy útra vagy retúr?</button> <span style="color:#8a7a68">(В одну сторону или туда-обратно?)</span></p>
-   <p><button class="speak-btn" data-speak-text="Retúrjegyet kérek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Retúr jegyet kérek.</button> <span style="color:#8a7a68">(Билет туда и обратно)</span></p>
+   <p><button class="speak-btn" data-speak-text="Retúrjegyet kérek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Retúrjegyet kérek.</button> <span style="color:#8a7a68">(Билет туда и обратно)</span></p>
  `
     },
     {
@@ -219,7 +219,7 @@ export const LESSON_27: Lesson = {
       question: 'Как сказать «на автобусе» по-венгерски?',
       options: ['busszal', 'buszban', 'buszon', 'buszra'],
       correctIndex: 0,
-      explanation: 'busz + -val → busszal. Происходит полная ассимиляция: конечный z удваивается, а v превращается в z (busz + val → busszal).'
+      explanation: 'busz + -val → busszal. Звук v полностью уподобляется конечному согласному /s/, который в слове busz записывается как sz; долгий /sː/ в busszal передаётся сочетанием ssz.'
     },
     {
       id: 2702,

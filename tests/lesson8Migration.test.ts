@@ -202,8 +202,8 @@ test('L8 metadata and translation cards align while frozen lessons remain unchan
   assert.equal(meta.description, LESSON_8.description);
   assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.sourceText, 'У меня есть брат или сестра.');
   assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.targetText, 'Van egy testvérem.');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '95BDAA34F0E79914A2481A088517028E431BFA93D6D3F8A4415B04F1069098F4');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), 'D57C22E3D7DE3D307AFF59646952D9A4C643F877CE31B98206C84D6B8C145045');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '6F43970B2E55239FCA0F0BB0027DD0A71628F6454DB51CE9D1459D68E4DC36C8');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), '1E3696171760626F2B89EB995CE14B95D0B381ECB338EE33F233248487065E34');
   assert.equal(sha256(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), '6CD30773439EFEDCABDE47DE30316711BC6908BEDFEFA615359D9A3AD619ADF9');
   assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

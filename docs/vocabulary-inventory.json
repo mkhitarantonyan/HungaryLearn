@@ -2629,7 +2629,7 @@
     },
     {
       "id": "lex_l23_v2",
-      "lemma": "fürödni",
+      "lemma": "fürdik",
       "translation": "купаться",
       "lessonIntroduced": 23,
       "usedInLessons": [
@@ -5688,7 +5688,7 @@
       "ipa": "[fˈyrødni]",
       "lessonNumber": 23,
       "curriculumOrder": 1,
-      "lemma": "fürödni",
+      "lemma": "fürdik",
       "lexemeId": "lex_l23_v2",
       "cardId": "card_l23_v2",
       "srsEligible": true
@@ -6147,7 +6147,6 @@
     "l28_v5"
   ],
   "qaFlags": [
-    "L23 fürödni: словарная форма/лемма требует проверки носителем (fürdik/fürödik); автоматическое объединение не выполнено.",
     "Переводы и морфологические группировки проверены структурно, но не заменяют полную проверку носителем венгерского."
   ]
 }

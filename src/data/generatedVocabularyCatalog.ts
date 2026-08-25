@@ -2781,7 +2781,7 @@ export const GENERATED_VOCABULARY_ENTRIES = [
     "ipa": "[fˈyrødni]",
     "lessonNumber": 23,
     "curriculumOrder": 1,
-    "lemma": "fürödni",
+    "lemma": "fürdik",
     "lexemeId": "lex_l23_v2",
     "cardId": "card_l23_v2",
     "srsEligible": true
@@ -5129,7 +5129,7 @@ export const GENERATED_VOCABULARY_LEXEMES = [
   },
   {
     "id": "lex_l23_v2",
-    "lemma": "fürödni",
+    "lemma": "fürdik",
     "translation": "купаться",
     "lessonIntroduced": 23,
     "usedInLessons": [
@@ -8042,7 +8042,7 @@ export const GENERATED_VOCABULARY_CARDS = [
     "category": "Глаголы",
     "exampleSentence": "Jó lenne fürödni a tóban.",
     "ipa": "[fˈyrødni]",
-    "baseWord": "fürödni",
+    "baseWord": "fürdik",
     "lexemeId": "lex_l23_v2",
     "lessonIntroduced": 23,
     "usedInLessons": [

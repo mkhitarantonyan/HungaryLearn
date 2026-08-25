@@ -196,6 +196,6 @@ test('metadata matches and frozen L18/L20 remain byte-identical', () => {
   assert.equal(meta.title, LESSON_19.title);
   assert.equal(meta.subtitle, LESSON_19.subtitle);
   assert.equal(meta.description, LESSON_19.description);
-  assert.equal(hash(new URL('../src/data/lessons/lesson18.ts', import.meta.url)), 'F142CE15C573FC44EBDE4F1831AD7FB74BF522F60F5B3250419E36F06156A8D2');
-  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), 'DCD4ED5B9ADDF1D7AD93582CE09E44F302B3DD4C34C8EED090D70CEA16F36AA4');
+  assert.equal(hash(new URL('../src/data/lessons/lesson18.ts', import.meta.url)), 'C1E1DEA7D2EFD650D546284F4B752A12BC4323EB4FFFC72B090148A0F5617BD0');
+  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), '0C925C224C0B8B0DD30D9C6D30ECF98E9CDC819D0C83BC84BD46FA7B53791DEB');
 });

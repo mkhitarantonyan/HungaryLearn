@@ -68,6 +68,7 @@ export const VOCABULARY_LEMMA_OVERRIDES: Readonly<Record<string, string>> = {
   l22_v2: 'mutat',
   l22_v3: 'hoz',
   l22_v4: 'fordul',
+  l23_v2: 'fürdik',
 };
 
 export const VOCABULARY_SRS_EXCLUSIONS: Readonly<Record<string, string>> = {
@@ -76,6 +77,5 @@ export const VOCABULARY_SRS_EXCLUSIONS: Readonly<Record<string, string>> = {
 };
 
 export const VOCABULARY_QA_FLAGS = [
-  'L23 fürödni: словарная форма/лемма требует проверки носителем (fürdik/fürödik); автоматическое объединение не выполнено.',
   'Переводы и морфологические группировки проверены структурно, но не заменяют полную проверку носителем венгерского.',
 ] as const;

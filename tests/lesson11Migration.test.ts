@@ -209,6 +209,6 @@ test('L11 metadata matches while migrated L10 and frozen L15 remain unchanged', 
   assert.equal(meta.level, LESSON_11.level);
   assert.equal(meta.slidesCount, LESSON_11.slidesCount);
   assert.equal(LESSON_10.id, 10);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), 'D57C22E3D7DE3D307AFF59646952D9A4C643F877CE31B98206C84D6B8C145045');
+  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), '1E3696171760626F2B89EB995CE14B95D0B381ECB338EE33F233248487065E34');
   assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
 });

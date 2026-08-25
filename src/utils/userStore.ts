@@ -1,6 +1,7 @@
 // Utility for Student User Authentication, Profile, Subscription, and Progress Syncing
 
 import type { ReviewCardState } from '../types';
+import { isSubscriptionValid } from './subscriptionValidity';
 
 export interface UserProfile {
   id: string;
@@ -23,7 +24,6 @@ type UserListener = (user: UserProfile | null) => void;
 const userListeners: Set<UserListener> = new Set();
 
 let currentUser: UserProfile | null = null;
-const LOCAL_USER_KEY = 'magyar_student_profile';
 
 // Number of lessons available without a paid subscription (free preview).
 export const FREE_LESSON_COUNT = 2;
@@ -35,8 +35,7 @@ export const FREE_LESSON_COUNT = 2;
  *  - Lessons 1..FREE_LESSON_COUNT are free for everyone (including anonymous).
  *  - Admins always have full access.
  *  - Privileged accounts (granted by admin) always have full access.
- *  - Users with an active paid subscription have full access.
- *  - Trial / canceled / expired users only get the free lessons.
+ *  - Existing subscription semantics decide trial/active/past_due access and expiry.
  */
 export function isLessonAccessible(
   lessonNumber: number,
@@ -46,40 +45,15 @@ export function isLessonAccessible(
   if (lessonNumber <= FREE_LESSON_COUNT) return true;
   if (isAdmin) return true;
   if (!user) return false;
-  if (user.isPrivileged) return true;
-  if (user.subscriptionStatus === 'active' && user.subscriptionEnd) {
-    return new Date(user.subscriptionEnd).getTime() > Date.now();
-  }
-  if (user.subscriptionStatus === 'past_due' && user.subscriptionEnd) {
-    return new Date(user.subscriptionEnd).getTime() > Date.now();
-  }
-  return false;
+  return isSubscriptionValid(user);
 }
 
 export function getCurrentUser(): UserProfile | null {
-  if (currentUser) return currentUser;
-  if (typeof window !== 'undefined') {
-    const raw = localStorage.getItem(LOCAL_USER_KEY);
-    if (raw) {
-      try {
-        currentUser = JSON.parse(raw);
-      } catch {
-        currentUser = null;
-      }
-    }
-  }
   return currentUser;
 }
 
 function setCurrentUser(user: UserProfile | null) {
   currentUser = user;
-  if (typeof window !== 'undefined') {
-    if (user) {
-      localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(user));
-    } else {
-      localStorage.removeItem(LOCAL_USER_KEY);
-    }
-  }
   notifyUserListeners(user);
 }
 
@@ -110,10 +84,12 @@ export async function checkUserSessionServer(): Promise<UserProfile | null> {
         return data.user;
       }
     }
+    setCurrentUser(null);
   } catch (err) {
     console.warn('Failed to verify student user session:', err);
+    setCurrentUser(null);
   }
-  return getCurrentUser();
+  return null;
 }
 
 // Register student user
