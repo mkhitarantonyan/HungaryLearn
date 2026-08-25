@@ -31,13 +31,12 @@ test('paid lesson request returns the lesson for an entitled user', async () => 
   assert.equal(result.body.lesson?.number, 3);
 });
 
-test('paid lesson request preserves an unexpired trial entitlement', async () => {
+test('paid lesson request rejects an unpaid user', async () => {
   const result = await resolveLessonRequest('3', {
-    subscriptionStatus: 'trial',
-    subscriptionEnd: future,
+    subscriptionStatus: 'unpaid',
   }, loadServerLesson);
-  assert.equal(result.status, 200);
-  assert.equal(result.body.lesson?.number, 3);
+  assert.equal(result.status, 403);
+  assert.equal(result.body.lesson, undefined);
 });
 
 test('paid lesson request returns the lesson for a privileged user', async () => {

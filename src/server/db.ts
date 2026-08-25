@@ -2,7 +2,6 @@ import { Pool } from 'pg';
 import type { PoolClient, QueryResultRow } from 'pg';
 
 export type SubscriptionStatus =
-  | 'trial'
   | 'active'
   | 'past_due'
   | 'canceled'

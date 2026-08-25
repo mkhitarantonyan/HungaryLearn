@@ -23,7 +23,7 @@ function row(overrides: Partial<AppUserRow> = {}): AppUserRow {
     email: 'learner@example.com',
     password_hash: 'bcrypt-secret',
     created_at: '2026-08-22T10:00:00.000Z',
-    subscription_status: 'trial',
+    subscription_status: 'unpaid',
     subscription_end: null,
     stripe_customer_id: 'cus_secret_reference',
     stripe_subscription_id: 'sub_secret_reference',

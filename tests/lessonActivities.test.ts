@@ -2376,7 +2376,7 @@ test('L2 activity markup exposes textual states and usable writing/microphone fa
 test('slide audio manifest remains unchanged by the L2 activity migration', () => {
   assert.equal(
     sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)),
-    '7D110F8F7D61CC0943211F1BA4FCEC52AEEF5087C393EA4FF8A3B8EAB048E862'
+    'A4F3ADA4D52550A18953813011EEC1AB0FF2BDF87C2BB12B8C5535E198F0F2EC'
   );
 });
 

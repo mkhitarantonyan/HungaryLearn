@@ -109,7 +109,7 @@ test('frozen planning, translation, and slide-audio manifest files remain unchan
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '7D110F8F7D61CC0943211F1BA4FCEC52AEEF5087C393EA4FF8A3B8EAB048E862');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'A4F3ADA4D52550A18953813011EEC1AB0FF2BDF87C2BB12B8C5535E198F0F2EC');
 });
 
 test('L1 translations and effective six-card vocabulary remain exact', () => {

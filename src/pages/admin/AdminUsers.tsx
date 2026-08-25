@@ -7,7 +7,6 @@ import { PageHeader, Pill, SecondaryButton } from '../../components/admin/AdminU
 function subscriptionLabel(user: AdminUser): string {
   if (user.isPrivileged) return 'Полный доступ';
   if (user.subscriptionStatus === 'active') return 'Премиум';
-  if (user.subscriptionStatus === 'trial') return 'Триал';
   if (user.subscriptionStatus === 'past_due') return 'Просрочено';
   return 'Без подписки';
 }

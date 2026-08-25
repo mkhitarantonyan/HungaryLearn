@@ -233,7 +233,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                 </p>
 
                 <div className="pt-2 flex items-center justify-between border-t border-white/10">
-                  <span className="text-xs font-medium text-white/90">Стоимость: $9.99 / месяц</span>
+                  <span className="text-xs font-medium text-white/90">Стоимость: 44 500 Ft / месяц</span>
                   {user.isPrivileged ? (
                     <span className="text-xs font-semibold text-indigo-200 flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Доступ предоставлен администратором

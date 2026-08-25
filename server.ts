@@ -484,8 +484,8 @@ async function startServer() {
         email: normalizedEmail,
         passwordHash,
         createdAt: new Date().toISOString(),
-        subscriptionStatus: 'trial',
-        subscriptionEnd: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days trial
+        subscriptionStatus: 'unpaid',
+        subscriptionEnd: undefined,
       };
 
       const sessionToken = crypto.randomUUID();

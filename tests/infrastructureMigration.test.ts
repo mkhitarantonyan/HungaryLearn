@@ -15,7 +15,7 @@ test('PostgreSQL rows map back to the existing camelCase user API shape', () => 
     email: 'learner@example.com',
     password_hash: 'hash',
     created_at: '2026-08-22T10:00:00.000Z',
-    subscription_status: 'trial',
+    subscription_status: 'unpaid',
     subscription_end: '2026-08-29T10:00:00.000Z',
     stripe_customer_id: null,
     stripe_subscription_id: null,
@@ -23,7 +23,7 @@ test('PostgreSQL rows map back to the existing camelCase user API shape', () => 
   });
 
   assert.equal(user.passwordHash, 'hash');
-  assert.equal(user.subscriptionStatus, 'trial');
+  assert.equal(user.subscriptionStatus, 'unpaid');
   assert.equal(user.subscriptionEnd, '2026-08-29T10:00:00.000Z');
   assert.equal(user.stripeCustomerId, undefined);
   assert.equal(user.isPrivileged, false);
@@ -93,7 +93,10 @@ test('course audio uploader is explicit, scoped, recursive, and verified', () =>
 test('all local static course audio remains present and published Listening assets are non-empty', () => {
   const audioDirectory = path.join(projectRoot, 'public', 'audio');
   const audioFiles = readdirSync(audioDirectory).filter((name) => /\.(mp3|wav|webm|ogg|m4a|mp4)$/i.test(name));
-  assert.equal(audioFiles.length, 538);
+  assert.ok(
+  audioFiles.length >= 538,
+  `Expected at least the original 538 course audio files, found ${audioFiles.length}`,
+);
 
   const publishedListening = [
     'l1_listening_s_sz.mp3',

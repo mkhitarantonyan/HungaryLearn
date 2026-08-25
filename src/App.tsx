@@ -137,32 +137,51 @@ useEffect(() => {
   return () => unsubscribeUser();
 }, []);
 
-  useEffect(() => {
-    let isMounted = true;
-    if (viewMode === 'lesson' && (!activeLesson || activeLesson.id !== selectedLessonId)) {
-      setIsLoadingLesson(true);
-      setLessonLoadError(null);
-      loadLesson(selectedLessonId, { admin: isAdmin })
-        .then((lesson) => {
-          if (!isMounted) return;
-          if (lesson) {
-            setActiveLesson(lesson);
-          } else {
-            setLessonLoadError('Урок не найден.');
-          }
-        })
-        .catch((error: unknown) => {
-          if (!isMounted) return;
-          setLessonLoadError(error instanceof Error ? error.message : 'Урок сейчас недоступен.');
-        })
-        .finally(() => {
-          if (isMounted) setIsLoadingLesson(false);
-        });
+useEffect(() => {
+  if (viewMode !== 'lesson') {
+    return;
+  }
+
+  let cancelled = false;
+
+  const loadSelectedLesson = async () => {
+    setIsLoadingLesson(true);
+    setLessonLoadError(null);
+
+    try {
+      const lesson = await loadLesson(selectedLessonId, { admin: isAdmin });
+
+      if (cancelled) return;
+
+      if (!lesson) {
+        setActiveLesson(null);
+        setLessonLoadError('Урок не найден.');
+        return;
+      }
+
+      setActiveLesson(lesson);
+    } catch (error: unknown) {
+      if (cancelled) return;
+
+      setActiveLesson(null);
+      setLessonLoadError(
+        error instanceof Error
+          ? error.message
+          : 'Урок сейчас недоступен.'
+      );
+    } finally {
+      if (!cancelled) {
+        setIsLoadingLesson(false);
+      }
     }
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedLessonId, viewMode, isAdmin, activeLesson]);
+  };
+
+  void loadSelectedLesson();
+
+  return () => {
+    cancelled = true;
+  };
+}, [selectedLessonId, viewMode, isAdmin]);
 
   const handleSelectLesson = (lessonId: number) => {
     // Guard: prevent opening a lesson the user hasn't unlocked yet.

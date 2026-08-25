@@ -1,4 +1,9 @@
-export type SubscriptionStatus = 'trial' | 'active' | 'past_due' | 'canceled' | 'incomplete' | 'unpaid';
+export type SubscriptionStatus =
+  | 'active'
+  | 'past_due'
+  | 'canceled'
+  | 'incomplete'
+  | 'unpaid';
 
 export interface AdminUser {
   id: string;

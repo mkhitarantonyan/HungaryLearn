@@ -7,7 +7,12 @@ export interface UserProfile {
   id: string;
   email: string;
   createdAt: string;
-  subscriptionStatus: 'trial' | 'active' | 'past_due' | 'canceled' | 'incomplete' | 'unpaid';
+  subscriptionStatus:
+  | 'active'
+  | 'past_due'
+  | 'canceled'
+  | 'incomplete'
+  | 'unpaid';
   subscriptionEnd?: string;
   // Full access granted by the administrator (all lessons without payment).
   isPrivileged?: boolean;
@@ -35,7 +40,7 @@ export const FREE_LESSON_COUNT = 2;
  *  - Lessons 1..FREE_LESSON_COUNT are free for everyone (including anonymous).
  *  - Admins always have full access.
  *  - Privileged accounts (granted by admin) always have full access.
- *  - Existing subscription semantics decide trial/active/past_due access and expiry.
+ *  - Only an active, non-expired subscription grants paid lesson access.
  */
 export function isLessonAccessible(
   lessonNumber: number,
