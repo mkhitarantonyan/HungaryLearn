@@ -1,5 +1,5 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useMemo, useState, useEffect } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
@@ -12,46 +12,8 @@ import {
   AudioLines,
   Languages,
 } from 'lucide-react';
-import { logoutAdmin } from '../utils/adminStore';
+import { getAdminAuthSnapshot, logoutAdmin, subscribeAdminAuthState } from '../utils/adminStore';
 import { AdminDataProvider } from '../admin/AdminDataContext';
-
-/* ---- Admin inactivity auto-logout (10 minutes) ---- */
-const ADMIN_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
-
-function useAdminInactivityTimeout() {
-  const navigate = useNavigate();
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const resetTimer = () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(async () => {
-        await logoutAdmin();
-        navigate('/');
-      }, ADMIN_TIMEOUT_MS);
-    };
-
-    // Reset on any user activity
-    const events = ['mousedown', 'keydown', 'scroll', 'touchstart', 'mousemove'];
-    events.forEach((evt) => window.addEventListener(evt, resetTimer, { passive: true }));
-    resetTimer();
-
-    // Logout when the page is closed / unloaded
-    const handleUnload = () => {
-      navigator.sendBeacon(
-        '/api/admin/logout',
-        new Blob([JSON.stringify({})], { type: 'application/json' })
-      );
-    };
-    window.addEventListener('beforeunload', handleUnload);
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      events.forEach((evt) => window.removeEventListener(evt, resetTimer));
-      window.removeEventListener('beforeunload', handleUnload);
-    };
-  }, [navigate]);
-}
 
 const NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -72,11 +34,8 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
-  const navigate = useNavigate();
-
   const handleLogout = async () => {
     await logoutAdmin();
-    navigate('/');
   };
 
   return (
@@ -161,10 +120,10 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [adminEmail, setAdminEmail] = useState(getAdminAuthSnapshot().email);
   const location = useLocation();
 
-  // Auto-logout after 10 minutes of inactivity or on page close.
-  useAdminInactivityTimeout();
+  useEffect(() => subscribeAdminAuthState((snapshot) => setAdminEmail(snapshot.email)), []);
 
   const pageTitle = useMemo(
     () => PAGE_TITLES[location.pathname] ?? 'Администрирование',
@@ -217,11 +176,11 @@ export default function AdminLayout() {
               <div className="hidden sm:flex items-center gap-3">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold">
-                    A
+                    {(adminEmail?.[0] || 'A').toUpperCase()}
                   </div>
                   <div className="leading-tight">
                     <div className="text-sm font-semibold text-gray-900">Администратор</div>
-                    <div className="text-[11px] text-gray-500">admin@magyarkurzus.ru</div>
+                    <div className="max-w-48 truncate text-[11px] text-gray-500">{adminEmail || 'Firebase admin'}</div>
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-[11px] font-semibold">

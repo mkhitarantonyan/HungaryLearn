@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { MessageCircle, Mic, ArrowRight, Flag, CheckCircle2 } from 'lucide-react';
+import { MessageCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 import type { ActivityEvidence, ActivityRuntimeState, RolePlayData, RolePlayTurn } from '../../types';
-import { AudioRecorder } from '../AudioRecorder';
 import {
-  canAdvanceRecordedTurn,
   rolePlayChoiceResult,
   advancesRolePlay,
   restoreRolePlayTurnId,
   rolePlayCompletionEvidence,
-  rolePlayRecordingRequirementMet,
 } from '../../utils/activityUtils';
 
 interface RolePlayProps {
@@ -23,39 +20,20 @@ interface RolePlayProps {
  * Controlled role-play with branching.
  * Pilot honesty: the app does NOT automatically understand free Hungarian speech.
  * Learner turns are `choice` (explicit options, with correct/feedback branching)
- * or `recorded` (self-review; Next is gated until a recording exists).
+ * or text-only self-practice. No learner audio is captured or evaluated.
  */
 export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, runtime, onRuntimeChange }) => {
   const [currentTurnId, setCurrentTurnId] = useState<string>(() => restoreRolePlayTurnId(data, runtime));
-  const [recordingDone, setRecordingDone] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isEnded, setIsEnded] = useState<boolean>(() => evidence?.completed === true);
-  // Local (component-scoped) record of which recorded turns were completed.
-  const [completedRecordings, setCompletedRecordings] = useState<Set<string>>(() => new Set());
 
   const turn: RolePlayTurn | undefined = data.turns.find((t) => t.id === currentTurnId);
 
-  const handleRecordingReady = (turnId: string) => {
-    setRecordingDone(true);
-    setCompletedRecordings((prev) => {
-      const next = new Set(prev);
-      next.add(turnId);
-      return next;
-    });
-  };
-
   const finish = () => {
     setIsEnded(true);
-    // No automatic speech evaluation: recording ≠ proven communicative
-    // objective. Completion is PARTIAL, never auto-passed, and selfReviewed
-    // is not fabricated (no explicit self-review rubric in the role-play).
-    // recordingCompleted is only true when required recorded turns were done.
-    onEvidence(
-      rolePlayCompletionEvidence(
-        data.id,
-        rolePlayRecordingRequirementMet(data, completedRecordings)
-      )
-    );
+    // Guided interaction is PARTIAL and never auto-passed. No learner voice is
+    // captured and completion does not claim speaking competence.
+    onEvidence(rolePlayCompletionEvidence(data.id));
   };
 
   const advanceTo = (nextId?: string) => {
@@ -64,7 +42,6 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
       return;
     }
     setFeedback(null);
-    setRecordingDone(false);
     setCurrentTurnId(nextId);
     onRuntimeChange?.({ rolePlayCurrentTurnId: nextId });
   };
@@ -93,7 +70,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
   const isStage = turn.speaker === 'stage';
   const isLearner = turn.speaker === 'learner';
   const isChoice = isLearner && turn.responseMode === 'choice';
-  const isRecorded = isLearner && turn.responseMode === 'recorded';
+  const isSelfPractice = isLearner && turn.responseMode === 'selfPractice';
   const isSystemCategory = isLearner && turn.responseMode === 'systemCategory';
 
   const handleChoice = (option: string) => {
@@ -105,8 +82,6 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
     }
     advanceTo(result.nextTurnId);
   };
-
-  const nextDisabled = isRecorded && !canAdvanceRecordedTurn(recordingDone);
 
   return (
     <div className="rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 md:p-5 space-y-4">
@@ -154,12 +129,11 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
               {turn.model && (
                 <p className="text-sm md:text-base font-mono text-[#57121C] mb-2">„{turn.model}”</p>
               )}
-              {isRecorded && (
-                <AudioRecorder
-                  targetText={turn.model ?? 'Mondd ki a válaszodat.'}
-                  targetTranslation={turn.prompt}
-                  onRecordingReady={() => handleRecordingReady(turn.id)}
-                />
+              {isSelfPractice && (
+                <p className="text-xs text-[#8A7A68]">
+                  Произнеси ответ вслух для самопрактики или просто продумай его. Микрофон,
+                  запись и автоматическая оценка не используются.
+                </p>
               )}
               {isSystemCategory && (
                 <p className="text-xs text-[#8A7A68]">
@@ -200,24 +174,12 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         <div className="flex justify-end pt-2">
           <button
             onClick={() => advanceTo(turn.next)}
-            disabled={nextDisabled}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#7A1E2B] text-white text-xs md:text-sm font-semibold hover:bg-[#57121C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#7A1E2B] text-white text-xs md:text-sm font-semibold hover:bg-[#57121C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 cursor-pointer"
           >
             <span>Дальше</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-      )}
-
-      {isRecorded && recordingDone && (
-        <p className="text-[11px] text-emerald-700 flex items-center gap-1" aria-live="polite">
-          <Flag className="w-3.5 h-3.5" /> Запись готова — прослушай себя и нажми «Дальше».
-        </p>
-      )}
-      {isRecorded && !recordingDone && (
-        <p className="text-[11px] text-[#8A7A68] flex items-center gap-1">
-          <Mic className="w-3.5 h-3.5" /> Сначала запиши свой ответ — «Дальше» станет доступна после записи.
-        </p>
       )}
     </div>
   );

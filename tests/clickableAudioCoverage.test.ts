@@ -120,8 +120,7 @@ test('every learner-facing clickable pronunciation target has a physical mapped 
     `Clickable audio coverage failures (${failures.length}):\n${failures.join('\n')}`,
   );
 
-  assert.ok(
-    targets.size >= 700,
-    `Unexpectedly small clickable-audio inventory: ${targets.size}`,
-  );
+  // P4 removes three redundant clickable examples while reducing L15 to eleven slides.
+  // No MP3 is removed; every remaining clickable target still has a physical mapping.
+  assert.equal(targets.size, 758, `Clickable-audio inventory changed: ${targets.size}/758`);
 });

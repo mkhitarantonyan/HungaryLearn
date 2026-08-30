@@ -1,8 +1,9 @@
 export type SubscriptionStatus =
   | 'active'
+  | 'cancelled'
+  | 'expired'
   | 'past_due'
-  | 'canceled'
-  | 'incomplete'
+  | 'paused'
   | 'unpaid';
 
 export interface AdminUser {
@@ -10,8 +11,13 @@ export interface AdminUser {
   email: string;
   createdAt: string;
   subscriptionStatus: SubscriptionStatus;
-  subscriptionEnd?: string;
+  accessUntil?: string;
   isPrivileged: boolean;
+  provider?: 'lemonsqueezy' | null;
+  lemonCustomerId?: string | null;
+  lemonSubscriptionId?: string | null;
+  lemonVariantId?: string | null;
+  testMode?: boolean;
 }
 
 export interface AdminLesson {

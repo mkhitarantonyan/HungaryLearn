@@ -1,43 +1,44 @@
 import type { Lesson, LessonActivity } from '../../types';
 
 const ROUTINE_FORMS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l14-cp-routine-forms', title: 'Формы изученных глаголов распорядка дня', passCount: 5,
+  kind: 'controlledPractice', id: 'l14-cp-routine-forms', title: 'A1 checkpoint: язык повседневного дня', passCount: 13,
   exercises: [
-    { kind: 'textInput', id: 'l14-forms-1', prompt: 'mosakodik → én', accept: ['mosakodom'] },
-    { kind: 'textInput', id: 'l14-forms-2', prompt: 'felöltözik → én (стандартная форма курса)', accept: ['felöltözöm'] },
-    { kind: 'textInput', id: 'l14-forms-3', prompt: 'lefekszik → én', accept: ['lefekszem'] },
-    { kind: 'textInput', id: 'l14-forms-4', prompt: 'eszik → én', accept: ['eszem'] },
-    { kind: 'textInput', id: 'l14-forms-5', prompt: 'mosakodik → te', accept: ['mosakodsz'] },
-    { kind: 'textInput', id: 'l14-forms-6', prompt: 'felöltözik → ő', accept: ['felöltözik'] },
-  ],
-};
-
-const ROUTINE_CONTEXT: LessonActivity = {
-  kind: 'controlledPractice', id: 'l14-cp-routine-context', title: 'Глаголы распорядка дня в контексте', passCount: 4,
-  exercises: [
-    { kind: 'singleChoice', id: 'l14-context-1', prompt: 'Reggel megmosom az arcomat: __.', options: ['Mosakodom', 'Vacsorázom', 'Elalszom'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l14-context-2', prompt: 'Felveszem a ruháimat: __.', options: ['Felkelek', 'Felöltözöm', 'Felébredek'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l14-context-3', prompt: 'Este ágyba megyek: __.', options: ['Lefekszem', 'Reggelizem', 'Fésülködöm'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l14-context-4', prompt: 'Reggel ételt eszem: __.', options: ['Ebédelünk', 'Reggelizem', 'Hazamegyek'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l14-context-5', prompt: 'Fésűvel rendezem a hajamat: __.', options: ['Fogat mosok', 'Fésülködöm', 'Felkelek'], correctIndex: 1 },
+    { kind: 'fillGap', id: 'l14-forms-1', prompt: 'Reggel ___. (én, mosakodik)', accept: ['mosakodom'] },
+    { kind: 'fillGap', id: 'l14-forms-2', prompt: 'Reggel gyorsan ___. (én, felöltözik)', accept: ['felöltözöm'] },
+    { kind: 'fillGap', id: 'l14-forms-3', prompt: 'Este tizenegykor ___. (én, lefekszik)', accept: ['lefekszem'] },
+    { kind: 'fillGap', id: 'l14-forms-4', prompt: 'Délben levest ___. (én, eszik)', accept: ['eszem'] },
+    { kind: 'singleChoice', id: 'l14-forms-5', prompt: 'Типичное начало буднего дня.', options: ['Hétköznap hatkor kelek.', 'Este hatkor reggelizem.', 'Délben lefekszem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-6', prompt: 'Как сказать время завтрака?', options: ['Hét órakor reggelizem.', 'Hét órában reggelizem.', 'Hét órára eszem tegnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-7', prompt: 'Куда ты идёшь к восьми?', options: ['Nyolcra megyek dolgozni.', 'Nyolcon vagyok dolgozni.', 'Nyolctól jövök dolgozni.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-8', prompt: 'Выбери естественное выражение частоты.', options: ['Általában busszal megyek.', 'Általában tegnap megyek.', 'Busszal általában voltam holnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-9', prompt: 'Что происходит после работы?', options: ['Munka után bevásárolok.', 'Munka előtt hazajöttem holnap.', 'Délben felébredek este.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-10', prompt: 'Как спросить о распорядке другого человека?', options: ['Mikor kelsz fel hétköznap?', 'Mikor keltem fel tegnap én?', 'Hová órakor vagy?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-11', prompt: 'Укажи знакомый объект в винительном падеже.', options: ['Reggel kávét iszom.', 'Reggel kávé van iszom.', 'Reggel kávéhoz jövök.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-12', prompt: 'Место учёбы и время.', options: ['Nyolckor az iskolában vagyok.', 'Nyolckor az iskolára vagyok.', 'Nyolckor az iskolából megyek be.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-13', prompt: 'Выбери логичную последовательность.', options: ['Felkelek, reggelizem, majd dolgozni megyek.', 'Lefekszem, felkelek, azután reggelizem este.', 'Vacsorázom, majd reggel felébredek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-14', prompt: 'Выбери корректное описание редкой привычки.', options: ['Ritkán nézek tévét este.', 'Ritkán tegnap néztem mindig.', 'Néha ritkán mindig tévét.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-15', prompt: 'Как противопоставить будни и выходные?', options: ['Hétköznap korán kelek, hétvégén viszont tovább alszom.', 'Hétköznap hétvégén mindig tegnap.', 'Hétvégéről korán kelek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l14-forms-16', prompt: 'Какой вопрос естественно задать собеседнику?', options: ['És te hogyan mész dolgozni?', 'És te hol dolgoztam?', 'És te mikor vagy tegnap?'], correctIndex: 0 },
   ],
 };
 
 const DAILY_ROUTINE_READING: LessonActivity = {
-  kind: 'reading', id: 'l14-reading-daily-routine', title: 'Чтение: один обычный день',
-  instructions: 'Прочитай связный распорядок дня и ответь на вопросы о последовательности, действиях и времени.', passCount: 4,
-  content: { type: 'prose', title: 'Egy nap', paragraphs: [
-    'Reggel hét órakor felébredek. Utána mosakodom és felöltözöm.',
-    'Fél nyolckor reggelizem, majd dolgozni megyek.',
-    'Délben ebédelek, este pedig hazamegyek.',
-    'Vacsora után magyarul tanulok, és este tizenegykor lefekszem.',
+  kind: 'reading', id: 'l14-reading-daily-routine', title: 'Чтение: два разных будних дня',
+  instructions: 'Сравни два распорядка: время, транспорт, работу/учёбу, частоту и вечерние занятия.', passCount: 6,
+  content: { type: 'prose', title: 'Két különböző hétköznap', paragraphs: [
+    'Anna hétköznap fél hétkor ébred fel. Gyorsan mosakodik, fogat mos és felöltözik, majd hét órakor reggelizik. Általában teát iszik és egy szendvicset eszik. Fél nyolckor busszal indul a munkahelyére. Az út húsz perc, ezért ritkán késik el. Nyolctól négyig egy irodában dolgozik. Délben a kollégáival ebédel, és ebéd után néha röviden sétál. Munka után gyakran bevásárol, kedden és csütörtökön pedig magyarórára megy. Este vacsorát készít, kicsit olvas, és fél tizenegykor lefekszik.',
+    'Bence később kezdi a napot. Hét órakor kel fel, de otthon ritkán reggelizik. Csak egy kávét iszik, majd negyed nyolckor kerékpárral megy az egyetemre, ahol nyolc órától tanul. Délelőtt három órája van. Ebédet általában az egyetemi étteremben eszik a barátaival. Délután háromkor hazamegy, majd egy órát pihen. Hetente kétszer kosárlabdázik a barátaival, más napokon pedig a könyvtárban tanul. Este gyakran filmet néz vagy zenét hallgat, ezért csak éjfél körül fekszik le.',
+    'Anna korábban kel és korábban fekszik le, mint Bence. Anna busszal jár, Bence pedig kerékpárral. Mindketten sokat dolgoznak vagy tanulnak, de másképp pihennek. Hétvégén egyiküknek sem kell korán kelnie: Anna a családjával találkozik, Bence pedig gyakran kirándul. Vasárnap este mindketten otthon készülnek a következő hétre, és időben összepakolják a táskájukat.',
   ] },
   questions: [
-    { id: 'l14-reading-q1', question: 'Во сколько рассказчик просыпается?', options: ['hét órakor', 'fél nyolckor', 'tizenegykor'], correctIndex: 0 },
-    { id: 'l14-reading-q2', question: 'Что он делает после пробуждения?', options: ['ebédel', 'mosakodik és felöltözik', 'hazamegy'], correctIndex: 1 },
-    { id: 'l14-reading-q3', question: 'Когда он завтракает?', options: ['délben', 'este', 'fél nyolckor'], correctIndex: 2 },
-    { id: 'l14-reading-q4', question: 'Что происходит раньше?', options: ['hazamegy', 'ebédel', 'lefekszik'], correctIndex: 1 },
-    { id: 'l14-reading-q5', question: 'Что он делает после ужина?', options: ['magyarul tanul', 'dolgozni megy', 'felöltözik'], correctIndex: 0 },
+    { id: 'l14-reading-q1', question: 'Кто просыпается раньше?', options: ['Анна', 'Бенце', 'оба одновременно'], correctIndex: 0 },
+    { id: 'l14-reading-q2', question: 'Что Анна обычно ест на завтрак?', options: ['бутерброд', 'суп', 'ничего'], correctIndex: 0 },
+    { id: 'l14-reading-q3', question: 'Как Анна добирается на работу?', options: ['на велосипеде', 'на автобусе', 'пешком'], correctIndex: 1 },
+    { id: 'l14-reading-q4', question: 'Где Бенце обычно обедает?', options: ['дома', 'в университетском ресторане', 'в офисе'], correctIndex: 1 },
+    { id: 'l14-reading-q5', question: 'Что Бенце делает дважды в неделю?', options: ['ходит на венгерский', 'играет в баскетбол', 'делает покупки'], correctIndex: 1 },
+    { id: 'l14-reading-q6', question: 'Кто ложится спать позже?', options: ['Анна', 'Бенце', 'не сказано'], correctIndex: 1 },
+    { id: 'l14-reading-q7', question: 'Какое важное различие в транспорте?', options: ['Анна едет автобусом, Бенце — велосипедом', 'оба едут автобусом', 'Анна идёт пешком, Бенце едет поездом'], correctIndex: 0 },
+    { id: 'l14-reading-q8', question: 'Какой вывод поддерживает текст?', options: ['их дни одинаковы', 'у обоих есть работа/учёба, но разный отдых', 'Бенце никогда не отдыхает'], correctIndex: 1 },
   ],
 };
 
@@ -55,31 +56,49 @@ const ROUTINE_LISTENING: LessonActivity = {
   ],
 };
 
-const DAILY_ROUTINE_WRITING: LessonActivity = {
-  kind: 'writing', id: 'l14-writing-daily-routine', title: 'Письмо: мой распорядок дня',
-  prompt: 'Напиши 6–8 связанных предложений о своём обычном дне. Укажи минимум шесть действий в понятном порядке и минимум три выражения времени.',
-  modelAnswer: [
-    'Reggel hét órakor felébredek.', 'Utána felkelek, mosakodom és felöltözöm.',
-    'Fél nyolckor reggelizem.', 'Nyolc órakor dolgozni megyek.',
-    'Délben ebédelek, este pedig hazamegyek.', 'Este tizenegykor lefekszem.',
+const ROUTINE_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l14-roleplay-routine-comparison', title: 'Ролевая игра: сравниваем распорядок', partnerLabel: 'Új kolléga', completionMessage: 'Összehasonlítottátok a napirendeteket.', startTurnId: 'l14-rp-s1',
+  turns: [
+    { id: 'l14-rp-s1', speaker: 'waiter', prompt: 'Szia! Mikor kelsz fel hétköznap?', next: 'l14-rp-l1' },
+    { id: 'l14-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови время подъёма и задай встречный вопрос.', model: 'Hétköznap fél hétkor kelek fel. És te mikor kelsz?', next: 'l14-rp-s2' },
+    { id: 'l14-rp-s2', speaker: 'waiter', prompt: 'Én hétkor kelek. Mit reggelizel?', next: 'l14-rp-l2' },
+    { id: 'l14-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Расскажи о завтраке.', model: 'Általában szendvicset eszem és teát iszom.', next: 'l14-rp-s3' },
+    { id: 'l14-rp-s3', speaker: 'waiter', prompt: 'Mikor kezdődik a munkád vagy az iskolád?', next: 'l14-rp-l3' },
+    { id: 'l14-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови время начала и транспорт.', model: 'Nyolckor kezdek, és busszal megyek dolgozni.', next: 'l14-rp-s4' },
+    { id: 'l14-rp-s4', speaker: 'waiter', prompt: 'Én kerékpárral járok. Hol ebédelsz?', next: 'l14-rp-l4' },
+    { id: 'l14-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови место и время обеда, затем задай второй встречный вопрос.', model: 'Délben a kollégáimmal ebédelek. Te hol ebédelsz?', next: 'l14-rp-s5' },
+    { id: 'l14-rp-s5', speaker: 'waiter', prompt: 'Az egyetemen. Mit csinálsz munka után?', next: 'l14-rp-l5' },
+    { id: 'l14-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Опиши действие после работы.', model: 'Munka után gyakran bevásárolok, majd hazamegyek.', next: 'l14-rp-s6' },
+    { id: 'l14-rp-s6', speaker: 'waiter', prompt: 'És mit csinálsz este?', next: 'l14-rp-l6' },
+    { id: 'l14-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Опиши вечер и частоту.', model: 'Este általában olvasok, de néha filmet nézek.', next: 'l14-rp-s7' },
+    { id: 'l14-rp-s7', speaker: 'waiter', prompt: 'Hétvégén is ilyen a napod?', next: 'l14-rp-l7' },
+    { id: 'l14-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови отличие выходного дня.', model: 'Nem, hétvégén tovább alszom, és később reggelizem.', next: 'l14-rp-s8' },
+    { id: 'l14-rp-s8', speaker: 'waiter', prompt: 'Mikor fekszel le hétköznap?', next: 'l14-rp-l8' },
+    { id: 'l14-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови время и вежливо заверши.', model: 'Általában fél tizenegykor fekszem le. Érdekes volt összehasonlítani a napunkat!', next: 'l14-rp-s9' },
+    { id: 'l14-rp-s9', speaker: 'waiter', prompt: 'Szerintem is. Szia!' },
   ],
-  rubric: ['Есть 6–8 связанных предложений', 'Названы минимум шесть действий в логичном порядке', 'Использованы минимум три выражения времени'],
 };
 
-const DAILY_ROUTINE_RECORDING: LessonActivity = {
-  kind: 'recording', id: 'l14-record-daily-routine', title: 'Говорение: мой день и расписание',
-  instructions: 'Запиши короткий рассказ о своём обычном дне: назови несколько действий и минимум два времени. Затем проверь последовательность и формы глаголов.',
-  targetText: 'Reggel hét órakor felébredek. Utána mosakodom és felöltözöm. Fél nyolckor reggelizem. Este tizenegykor lefekszem.',
-  targetTranslation: 'Утром я просыпаюсь в семь. Затем умываюсь и одеваюсь. В половине восьмого завтракаю. Вечером ложусь в одиннадцать.',
-  rubric: ['Названы несколько последовательных действий', 'Есть минимум два выражения времени', 'Использована хотя бы одна изученная форма routine/-ik глагола'],
+const DAILY_ROUTINE_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l14-writing-daily-routine', title: 'Письмо: мой распорядок дня',
+  prompt: 'Напиши 90–110 слов о вымышленном обычном буднем дне. Укажи подъём, завтрак, время начала, дорогу, работу/учёбу, обед, вторую половину дня, вечер, выражения частоты и одно отличие от выходных.',
+  modelAnswer: ['Hétköznap általában fél hétkor ébredek fel. Felkelek, mosakodom és gyorsan felöltözöm. Hét órakor reggelizem: szendvicset eszem és teát iszom. Fél nyolckor busszal indulok a munkahelyemre, mert nyolckor kezdek dolgozni. Az út körülbelül húsz perc, és ritkán kések el. Délben a kollégáimmal ebédelek. Délután négyig dolgozom, azután gyakran bevásárolok. Este otthon vacsorát készítek, majd magyarul tanulok vagy egy rövid könyvet is olvasok. Ritkán nézek tévét, de néha zenét hallgatok a szobámban. Tizenegy óra előtt lefekszem, mert reggel korán kelek. Hétvégén viszont tovább alszom, később reggelizem, és több időt töltök a barátaimmal.'],
+  rubric: ['90–110 слов', 'полный будний распорядок', 'время и транспорт', 'выражения частоты', 'контраст с выходным', 'понятная последовательность'],
+};
+
+const DAILY_ROUTINE_SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори около 2 минут о типичном буднем дне и сравни его с выходным. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Назови время, действия, транспорт, частоту, вечер и одно отличие выходного дня.',
+  rubric: ['будний распорядок', 'время и частота', 'вечер', 'контраст с выходным'],
 };
 
 const EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck', id: 'l14-exit-check', title: 'Проверка целей урока 14', checks: [
-    { objectiveId: 'l14_describe-routine', activityId: 'l14-writing-daily-routine', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l14-record-daily-routine', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l14_describe-routine', activityId: 'l14-reading-daily-routine', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l14-writing-daily-routine', evidenceKind: 'writing' }] },
     { objectiveId: 'l14_form-reflexive', activityId: 'l14-cp-routine-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l14_use-reflexive', activityId: 'l14-cp-routine-context', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l14-record-daily-routine', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l14_tell-routine-time', activityId: 'l14-listening-routine', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l14-record-daily-routine', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l14_use-reflexive', activityId: 'l14-cp-routine-forms', evidenceKind: 'grammar' },
+    { objectiveId: 'l14_tell-routine-time', activityId: 'l14-listening-routine', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l14-roleplay-routine-comparison', evidenceKind: 'interaction' }] },
   ],
 };
 
@@ -87,36 +106,20 @@ export const LESSON_14: Lesson = {
   id: 14, number: 14, level: 'A1',
   title: 'Урок 14 · Napi rutin',
   subtitle: 'Распорядок дня, частые -ik-глаголы и время',
-  description: 'Распорядок дня, частые формы настоящего времени routine/-ik-глаголов, выражения времени и короткий связный рассказ о своём дне.',
+  description: 'Интегрированный checkpoint конца A1: распорядок дня, время, частота, знакомая грамматика, Reading, Listening и открытая продукция без автоматической сертификации.',
   slidesCount: 11,
   slides: [
-    { id: 1, eyebrow: 'УРОК 14 · 1/11 · УРОВЕНЬ A1 · ВВЕДЕНИЕ', title: 'Napi rutin', subtitle: 'Распорядок дня и знакомый класс -ik', body: `
-   <p>Из урока 4 мы помним: глагол с формой на <b>-ik</b> в 3-м лице относится к особому классу спряжения. Это характеристика формы, а не готовое значение «делать с собой».</p>
-   <p><b>reggelizik</b> (завтракать), <b>vacsorázik</b> (ужинать) и <b>eszik</b> (есть) — -ik-глаголы, но не возвратные действия.</p>
-   <p>Некоторые изучаемые глаголы распорядка дня по словарному значению соответствуют русским глаголам с «-ся»: <b>mosakodik</b>, <b>fésülködik</b>, <b>felöltözik</b>.</p>
-   <div class="note">Учим эти глаголы как готовые слова и их формы. Окончания <b>-kodik/-kedik/-ködik</b> не являются формулой, по которой на уровне A1 можно самостоятельно создавать новые глаголы.</div>` },
-    { id: 2, eyebrow: 'УРОК 14 · 2/11 · СЛОВАРЬ', title: 'Napi cselekvések', subtitle: 'Основные действия дня', body: `
-   <div class="grid2"><div><p><b>felébred</b> — просыпаться</p><p><b>felkel</b> — вставать</p><p><b>mosakodik</b> — умываться / мыться</p><p><b>fésülködik</b> — причёсываться</p><p><b>felöltözik</b> — одеться / завершить одевание</p><p><b>fogat mos</b> — чистить зубы</p></div><div><p><b>reggelizik</b> — завтракать</p><p><b>ebédel</b> — обедать</p><p><b>vacsorázik</b> — ужинать</p><p><b>hazamegy</b> — идти домой</p><p><b>lefekszik</b> — ложиться спать</p><p><b>elalszik</b> — засыпать</p></div></div>` },
-    { id: 3, eyebrow: 'УРОК 14 · 3/11 · ФОРМЫ', title: 'Ikes igék — én', subtitle: 'Небольшое продолжение урока 4', body: `
-   <p>В качестве стандартных форм курса используй: <b>mosakodom, felöltözöm, lefekszem, eszem</b>.</p>
-   <p><b>eszik → eszem</b> — частый особый глагол из урока 4. Он показывает, что принадлежность к классу -ik ничего сама по себе не говорит о возвратном значении.</p>
-   <div class="note">В современной речи у многих -ik-глаголов встречаются варианты 1-го лица с <b>-k</b>. Здесь мы тренируем стандартные формы с <b>-m</b> и не объявляем разговорные варианты «невозможным венгерским».</div>`, activities: [ROUTINE_FORMS] },
-    { id: 4, eyebrow: 'УРОК 14 · 4/11 · ВРЕМЯ + ДЕЙСТВИЕ', title: 'Mikor csinálom?', subtitle: 'Возвращаемся к времени из урока 5', body: `
-   <p><b>Hét órakor felébredek.</b> — Я просыпаюсь в семь часов.</p><p><b>Fél nyolckor reggelizem.</b> — Я завтракаю в половине восьмого.</p><p><b>Este tizenegykor lefekszem.</b> — Вечером я ложусь спать в одиннадцать.</p>
-   <div class="note"><b>reggel</b> — утром, <b>délben</b> — в полдень, <b>este</b> — вечером, <b>éjfél körül</b> — около полуночи.</div>`, activities: [ROUTINE_CONTEXT] },
-    { id: 5, eyebrow: 'УРОК 14 · 5/11 · ЧТЕНИЕ', title: 'Egy nap', subtitle: 'Один обычный день', body: `<p>Прочитай рассказ как связную последовательность действий. Понимание проверяют вопросы; само чтение вслух не доказывает правильность или понимание.</p>`, activities: [DAILY_ROUTINE_READING] },
-    { id: 6, eyebrow: 'УРОК 14 · 6/11 · ДОПОЛНИТЕЛЬНО', title: 'Magam és magamat', subtitle: 'Необязательное распознавание', body: `
-   <p><b>Дополнительно, вне целей и проходных заданий урока:</b> формы <b>magam, magad, maga</b> могут означать «сам / себя» в зависимости от конструкции. В винительном падеже полные формы: <b>magamat, magadat, magát</b>.</p>
-   <p><b>Látom magamat a tükörben.</b> — Я вижу себя в зеркале.</p><div class="note">Этот блок служит только для распознавания и не входит в Quiz или ExitCheck урока 14.</div>` },
-    { id: 7, eyebrow: 'УРОК 14 · 7/11 · ДИАЛОГ И АУДИРОВАНИЕ', title: 'Mikor kelsz fel?', subtitle: 'Расписание в вопросах и ответах', body: `
-   <p><b>A:</b> Hány órakor kelsz fel általában?</p><p><b>B:</b> Általában hét órakor kelek fel.</p><p><b>A:</b> És mikor fekszel le?</p><p><b>B:</b> Általában éjfél körül fekszem le.</p>
-   <div class="note">Прослушай разговор и ответь на вопросы, затем выполни задание на говорение.</div>`, activities: [ROUTINE_LISTENING, DAILY_ROUTINE_RECORDING] },
-    { id: 8, eyebrow: 'УРОК 14 · 8/11 · ПИСЬМО', title: 'Az én napom', subtitle: 'Связный рассказ о своём дне', body: `<p>Собери знакомые действия и время в один короткий рассказ. Открытый текст проверяется по рубрике и остаётся материалом для последующей проверки.</p>`, activities: [DAILY_ROUTINE_WRITING] },
-    { id: 9, eyebrow: 'УРОК 14 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ', title: 'Kiegészítő szókincs', subtitle: 'Необязательные бытовые глаголы', body: `
-   <div class="grid2"><div><p><b>zuhanyozik</b> — принимать душ</p><p><b>pihen</b> — отдыхать</p></div><div><p><b>sétál</b> — гулять</p><p><b>takarít</b> — убираться</p></div></div>
-   <div class="note"><b>öltözködik</b> может обозначать процесс или манеру одеваться в зависимости от контекста. Это обогащение; в основных заданиях используется <b>felöltözik</b>.</div>` },
-    { id: 10, eyebrow: 'УРОК 14 · 10/11 · ГРАНИЦА УРОКА', title: 'Az A1 vége', subtitle: 'Завершение уровня A1', body: `<p>В этом уроке остаёмся в настоящем времени и описываем обычный день. Следующий урок открывает уровень A2 новой темой.</p>` },
-    { id: 11, eyebrow: 'УРОК 14 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Итоги урока 14', body: `<ul class="tick"><li>-ik обозначает класс глагола, а не автоматическое возвратное значение</li><li>Формы изученных routine-глаголов употребляются как готовые словарные модели</li><li>Время и последовательность связывают действия в рассказ о дне</li></ul>`, activities: [EXIT_CHECK] },
+    { id: 1, eyebrow: 'УРОК 14 · 1/11 · A1 CHECKPOINT', title: 'Napi rutin', subtitle: 'Распорядок дня и знакомый класс -ik', body: `<p>Из L4 мы помним: форма на <b>-ik</b> в 3-м лице обозначает класс спряжения, а не автоматическое значение «делать с собой».</p><p><b>reggelizik, vacsorázik, eszik</b> — -ik-глаголы, но не возвратные действия. <b>mosakodik, fésülködik, felöltözik</b> по значению соответствуют некоторым русским глаголам с «-ся».</p><div class="note">Окончания -kodik/-kedik/-ködik не являются формулой создания новых глаголов. L14 проверяет интеграцию знакомого A1-языка и не выдаёт CEFR-сертификат.</div>` },
+    { id: 2, eyebrow: 'УРОК 14 · 2/11 · СЛОВАРЬ', title: 'Napi cselekvések', subtitle: 'Действия от утра до вечера', body: `<div class="grid2"><div><p><b>felébred, felkel</b></p><p><b>mosakodik, fésülködik</b></p><p><b>felöltözik, fogat mos</b></p><p><b>reggelizik, eszik, iszik</b></p></div><div><p><b>dolgozik, tanul</b></p><p><b>ebédel, hazamegy</b></p><p><b>találkozik, vacsorázik</b></p><p><b>lefekszik, elalszik</b></p></div></div>` },
+    { id: 3, eyebrow: 'УРОК 14 · 3/11 · ФОРМЫ И ВРЕМЯ', title: 'Mikor és milyen gyakran?', subtitle: 'Знакомые модели в связном дне', body: `<p>Стандартные формы курса: <b>mosakodom, felöltözöm, lefekszem, eszem</b>. Разговорные варианты некоторых -ik-глаголов не объявляются «невозможным венгерским».</p><p><b>Hét órakor reggelizem. Nyolcra megyek dolgozni. Délben ebédelek. Munka után hazamegyek.</b></p><p><b>általában, gyakran, néha, ritkán, hétvégén</b></p><div class="note"><b>öltözködik</b> остаётся дополнительным словом; в основных заданиях используется <b>felöltözik</b>.</div>` },
+    { id: 4, eyebrow: 'УРОК 14 · 4/11 · LANGUAGE USE', title: 'Integrált A1 gyakorlat', subtitle: 'Не только -ik-спряжение', body: `<p>Шестнадцать контекстов соединяют действия дня, формы -ik-глаголов, время, частоту, винительный падеж и знакомые формы места.</p>`, activities: [ROUTINE_FORMS] },
+    { id: 5, eyebrow: 'УРОК 14 · 5/11 · ЧТЕНИЕ', title: 'Két különböző hétköznap', subtitle: 'Сравнение двух распорядков', body: `<p>Понимание проверяется по деталям, хронологии, частоте, различиям и одному простому выводу.</p>`, activities: [DAILY_ROUTINE_READING] },
+    { id: 6, eyebrow: 'УРОК 14 · 6/11 · АУДИРОВАНИЕ', title: 'Anna napirendje', subtitle: 'Существующая синхронизированная запись', body: `<p>Прослушай расписание Анны. Asset, транскрипт и вопросы сохранены без изменений.</p>`, activities: [ROUTINE_LISTENING] },
+    { id: 7, eyebrow: 'УРОК 14 · 7/11 · ВЗАИМОДЕЙСТВИЕ', title: 'Milyen a napod?', subtitle: 'Сравнение распорядка с новым коллегой', body: `<p>Ответь о восьми частях дня и задай собеседнику минимум два встречных вопроса.</p>`, activities: [ROUTINE_ROLEPLAY] },
+    { id: 8, eyebrow: 'УРОК 14 · 8/11 · ПИСЬМО', title: 'Az én hétköznapom', subtitle: 'Будний день и отличие выходного', body: `<p>Открытый текст остаётся PARTIAL до квалифицированной проверки.</p>`, activities: [DAILY_ROUTINE_WRITING] },
+    { id: 9, eyebrow: 'УРОК 14 · 9/11 · УСТНАЯ САМОПРАКТИКА', title: 'Hétköznap és hétvégén', subtitle: 'Только текстовая инструкция', body: `<p>Самопрактика не использует микрофон, не оценивается и не создаёт evidence.</p>`, optionalSpeaking: DAILY_ROUTINE_SPEAKING },
+    { id: 10, eyebrow: 'УРОК 14 · 10/11 · A1 CHECKPOINT MODEL', title: 'Mit igazolnak az eredmények?', subtitle: 'Доказательства, а не сертификат', body: `<ul class="tick"><li><b>Language Use</b>: DIRECT после порога Controlled Practice</li><li><b>Reading</b>: DIRECT после порога</li><li><b>Listening</b>: DIRECT после порога и успешной загрузки MP3</li><li><b>Writing</b>: PARTIAL</li><li><b>Interaction</b>: PARTIAL</li><li><b>Optional Speaking</b>: NO evidence</li></ul><div class="note">Прохождение Quiz или завершение урока не означает автоматически «A1 achieved» и не является CEFR-сертификацией.</div>` },
+    { id: 11, eyebrow: 'УРОК 14 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Честный итог конца A1', body: `<ul class="tick"><li>Распорядок, время и частота</li><li>Изученные -ik/routine-формы</li><li>Понимание расписания в тексте и аудио</li><li>Открытая продукция требует проверки</li></ul>`, activities: [EXIT_CHECK] },
   ],
   vocabulary: [
     { id: 'l14_v1', hu: 'napi rutin', ru: 'ежедневный распорядок', category: 'Тема урока' },

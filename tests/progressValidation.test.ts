@@ -1,27 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { verifyAdminCredentials } from '../src/utils/adminAuth.ts';
+import { mergeProgressState } from '../functions/src/progress/model.ts';
 
-test('rejects plaintext admin password in production even when ADMIN_PASSWORD is set', async () => {
-  const originalEnv = process.env.NODE_ENV;
-  process.env.NODE_ENV = 'production';
-
-  try {
-    const result = await verifyAdminCredentials({
-      username: 'admin',
-      password: 'admin123',
-      adminUsername: 'admin',
-      adminPassword: 'admin123',
-      adminPasswordHash: '',
-    });
-    assert.equal(result, false);
-  } finally {
-    process.env.NODE_ENV = originalEnv;
-  }
-});
-
-test('quiz pass threshold requires at least 80%', () => {
-  const threshold = 0.8;
-  assert.equal(4 / 5 >= threshold, true);
-  assert.equal(3 / 5 >= threshold, false);
+const empty = { viewedSlides: [], passedQuizzes: [], reviewCards: {} };
+test('quiz pass threshold is exactly 80 percent', () => {
+  assert.deepEqual(mergeProgressState(empty, { quiz: { lessonNumber: 1, score: 4, total: 5 } }).passedQuizzes, [1]);
+  assert.deepEqual(mergeProgressState(empty, { quiz: { lessonNumber: 1, score: 3, total: 5 } }).passedQuizzes, []);
 });

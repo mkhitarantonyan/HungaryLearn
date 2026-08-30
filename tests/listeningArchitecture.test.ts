@@ -31,7 +31,7 @@ const syntheticListening = (audioStatus: ListeningTaskData['audioStatus']): List
 
 test('A: every Listening activity exposes the complete publication contract', async () => {
   const entries = await collectListeningPlan();
-  assert.equal(entries.length, 28);
+  assert.equal(entries.length, 32);
   for (const entry of entries) {
     assert.ok(entry.activityId);
     assert.ok(entry.assetId);
@@ -79,7 +79,7 @@ test('D: the only intentional shared asset is documented with both L5 activities
     },
   ]);
   assert.deepEqual(validateListeningPlan(entries), []);
-  assert.equal(buildListeningAssets(entries).length, 27);
+  assert.equal(buildListeningAssets(entries).length, 31);
 });
 
 test('E: published status without a physical MP3 fails validation', async () => {
@@ -201,8 +201,8 @@ test('generated JSON stays byte-semantically synchronized with lesson source', a
   assert.deepEqual(generated.activities, activities);
   assert.deepEqual(generated.assets, buildListeningAssets(activities));
   assert.deepEqual(generated.coverage, coverage);
-  assert.equal(generated.summary.listeningActivities, 28);
-  assert.equal(generated.summary.uniqueAssets, 27);
+  assert.equal(generated.summary.listeningActivities, 32);
+  assert.equal(generated.summary.uniqueAssets, 31);
 });
 
 test('ListeningTask remains mobile-safe, accessible, repeatable, and free of narration/TTS fallback', () => {

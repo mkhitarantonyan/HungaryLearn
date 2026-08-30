@@ -114,22 +114,11 @@ const L6_LISTENING_A0_REVIEW: LessonActivity = {
   ],
 };
 
-const L6_RECORD_PRONUNCIATION_REVIEW: LessonActivity = {
-  kind: 'recording',
-  id: 'l6-record-pronunciation-review',
-  title: 'Запись: повторение произношения',
-  instructions: 'Прочитай шесть слов, повторяя изученные звуки, затем сравни запись с моделями.',
-  targetText: 'szép, sok, magyar, kutya, nyár, hely',
-  targetPhonetic: '/seːp/ · /ʃok/ · /mɒɟɒr/ · /kucɒ/ · /ɲaːr/ · /hɛj/',
-  targetTranslation: 'красивый · много · венгр · собака · лето · место',
-  rubric: [
-    'Произнесены все шесть слов.',
-    's (sok) и sz (szép) различаются.',
-    'gy /ɟ/, ty /c/, ny /ɲ/ различимы в magyar, kutya, nyár.',
-    'j/ly реализуется как /j/ в hely.',
-    'Долгие гласные (szép, nyár) сохраняются.',
-    'Основное словесное ударение начинается на первом слоге.',
-  ],
+const L6_RECORD_PRONUNCIATION_REVIEW = {
+  title: 'Устная практика: повторение произношения',
+  instructions: 'Прочитай шесть слов, повторяя изученные звуки, затем сравни ответ с моделями.',
+  prompt: 'szép, sok, magyar, kutya, nyár, hely',
+  rubric: ['Задача выполнена', 'Фразы связаны по смыслу'],
 };
 
 const L6_ROLEPLAY_SCHEDULE: LessonActivity = {
@@ -137,14 +126,14 @@ const L6_ROLEPLAY_SCHEDULE: LessonActivity = {
   id: 'l6-roleplay-schedule',
   title: 'Говорение: расписание в мини-диалоге',
   partnerLabel: 'Partner · Собеседник',
-  completionMessage: 'Оба ответа о расписании записаны. Прослушай их и проверь, понятны ли день и время.',
+  completionMessage: 'Оба ответа о расписании отработаны. Проверь по моделям, понятны ли день и время.',
   startTurnId: 'l6-rp-start',
   turns: [
     { id: 'l6-rp-start', speaker: 'stage', stageLabel: 'Короткий диалог о расписании', next: 'l6-rp-q1' },
     { id: 'l6-rp-q1', speaker: 'waiter', prompt: 'Mikor tanulsz magyarul?', next: 'l6-rp-a1' },
-    { id: 'l6-rp-a1', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время учёбы, затем сравни с моделью.', model: 'Kedden öt órakor tanulok.', next: 'l6-rp-q2' },
+    { id: 'l6-rp-a1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Ответь, назвав день и время учёбы, затем сравни с моделью.', model: 'Kedden öt órakor tanulok.', next: 'l6-rp-q2' },
     { id: 'l6-rp-q2', speaker: 'waiter', prompt: 'Mikor dolgozol?', next: 'l6-rp-a2' },
-    { id: 'l6-rp-a2', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, назвав день и время работы, затем сравни с моделью.', model: 'Csütörtökön nyolckor dolgozom.', next: 'l6-rp-end' },
+    { id: 'l6-rp-a2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Ответь, назвав день и время работы, затем сравни с моделью.', model: 'Csütörtökön nyolckor dolgozom.', next: 'l6-rp-end' },
     { id: 'l6-rp-end', speaker: 'stage', stageLabel: 'Диалог завершён' },
   ],
 };
@@ -164,20 +153,11 @@ const L6_WRITING_PROFILE: LessonActivity = {
   ],
 };
 
-const L6_RECORD_PROFILE: LessonActivity = {
-  kind: 'recording',
-  id: 'l6-record-profile',
-  title: 'Запись: рассказ о себе',
-  instructions: 'Сначала заполни письменный профиль, затем расскажи те же сведения о себе короткими фразами и прослушай запись.',
-  targetText: 'A nevem … … vagyok. Magyarul tanulok / dolgozom. …-n … órakor …',
-  targetTranslation: 'Меня зовут … Я … Я учу венгерский / работаю. В … в … часов …',
-  rubric: [
-    'Названо имя.',
-    'Названа национальность или происхождение.',
-    'Названо одно текущее действие.',
-    'Назван один день и время.',
-    'Речь понятна при повторном прослушивании.',
-  ],
+const L6_RECORD_PROFILE = {
+  title: 'Устная практика: рассказ о себе',
+  instructions: 'Сначала заполни письменный профиль, затем расскажи те же сведения о себе короткими фразами и проверь ответ по опорам.',
+  prompt: 'A nevem … … vagyok. Magyarul tanulok / dolgozom. …-n … órakor …',
+  rubric: ['Задача выполнена', 'Фразы связаны по смыслу'],
 };
 
 const L6_EXIT_CHECK: LessonActivity = {
@@ -185,11 +165,11 @@ const L6_EXIT_CHECK: LessonActivity = {
   id: 'l6-exit-check',
   title: 'Проверка целей урока 6',
   checks: [
-    { objectiveId: 'l6_review-alphabet', activityId: 'l6-cp-decoding', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l6-record-pronunciation-review', evidenceKind: 'pronunciation' }] },
+    { objectiveId: 'l6_review-alphabet', activityId: 'l6-cp-decoding', evidenceKind: 'reading' },
     { objectiveId: 'l6_review-verb-conj', activityId: 'l6-cp-present-verbs', evidenceKind: 'grammar' },
     { objectiveId: 'l6_review-numbers', activityId: 'l6-listening-a0-review', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l6-roleplay-schedule', evidenceKind: 'interaction' }] },
     { objectiveId: 'l6_review-plural', activityId: 'l6-cp-plural-articles', evidenceKind: 'grammar' },
-    { objectiveId: 'l6_self-assess', activityId: 'l6-writing-profile', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l6-record-profile', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l6_self-assess', activityId: 'l6-writing-profile', evidenceKind: 'writing' },
   ],
 };
 
@@ -221,7 +201,7 @@ export const LESSON_6: Lesson = {
       body: `
         <p>Повтори: <b>s = /ʃ/</b>, <b>sz = /s/</b>, <b>gy = /ɟ/</b>, <b>ty = /c/</b>, <b>ny = /ɲ/</b>, <b>j = ly = /j/</b>. Долгие гласные значимы, а основное ударение падает на первый слог.</p>
       `,
-      activities: [L6_CP_DECODING, L6_RECORD_PRONUNCIATION_REVIEW],
+      activities: [L6_CP_DECODING], optionalSpeaking: L6_RECORD_PRONUNCIATION_REVIEW,
     },
     {
       id: 3,
@@ -272,7 +252,7 @@ export const LESSON_6: Lesson = {
       body: `
         <p>Сначала напиши короткий профиль, затем запиши те же данные устно. Используй только структуры уроков 1–5.</p>
       `,
-      activities: [L6_WRITING_PROFILE, L6_RECORD_PROFILE],
+      activities: [L6_WRITING_PROFILE], optionalSpeaking: L6_RECORD_PROFILE,
     },
     {
       id: 8,

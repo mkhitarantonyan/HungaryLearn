@@ -5,9 +5,9 @@
   "summary": {
     "lessons": 28,
     "lessonsWithListening": 25,
-    "listeningActivities": 28,
-    "uniqueAssets": 27,
-    "dialogue": 8,
+    "listeningActivities": 32,
+    "uniqueAssets": 31,
+    "dialogue": 12,
     "monologue": 15,
     "token_sequence": 3,
     "dictation": 1
@@ -210,7 +210,7 @@
       "lesson": 21,
       "title": "Урок 21 · Alanyi és tárgyas ragozás II",
       "hasListening": true,
-      "activityCount": 1,
+      "activityCount": 2,
       "listeningObjectiveIds": [
         "l21_distinguish-conjugations"
       ]
@@ -219,7 +219,7 @@
       "lesson": 22,
       "title": "Урок 22 · A felszólító mód",
       "hasListening": true,
-      "activityCount": 1,
+      "activityCount": 2,
       "listeningObjectiveIds": [
         "l22_understand-commands"
       ]
@@ -228,7 +228,7 @@
       "lesson": 23,
       "title": "Урок 23 · A feltételes mód",
       "hasListening": true,
-      "activityCount": 1,
+      "activityCount": 2,
       "listeningObjectiveIds": [
         "l23_understand-conditional"
       ]
@@ -237,7 +237,7 @@
       "lesson": 24,
       "title": "Урок 24 · Összetett mondatok",
       "hasListening": true,
-      "activityCount": 1,
+      "activityCount": 2,
       "listeningObjectiveIds": []
     },
     {
@@ -1155,7 +1155,7 @@
     {
       "lesson": 7,
       "lessonTitle": "Урок 7 · A tárgyeset",
-      "slideId": 10,
+      "slideId": 8,
       "activityIndex": 0,
       "activityId": "l7-listening-accusative",
       "title": "Аудирование: формы дополнения",
@@ -1211,7 +1211,7 @@
     {
       "lesson": 8,
       "lessonTitle": "Урок 8 · A család & Birtokos ragozás",
-      "slideId": 10,
+      "slideId": 7,
       "activityIndex": 0,
       "activityId": "l8-listening-possessives",
       "title": "Аудирование: кто владелец?",
@@ -1262,7 +1262,7 @@
     {
       "lesson": 10,
       "lessonTitle": "Урок 10 · Helyhatározók I",
-      "slideId": 10,
+      "slideId": 8,
       "activityIndex": 0,
       "activityId": "l10-listening-inner-locations",
       "title": "Аудирование: маршрут Марка",
@@ -1374,7 +1374,7 @@
     {
       "lesson": 13,
       "lessonTitle": "Урок 13 · A múlt idő",
-      "slideId": 8,
+      "slideId": 7,
       "activityIndex": 0,
       "activityId": "l13-listening-tense-contrast",
       "title": "Аудирование: сейчас и вчера",
@@ -1430,7 +1430,7 @@
     {
       "lesson": 14,
       "lessonTitle": "Урок 14 · Napi rutin",
-      "slideId": 7,
+      "slideId": 6,
       "activityIndex": 0,
       "activityId": "l14-listening-routine",
       "title": "Аудирование: распорядок Анны",
@@ -1564,7 +1564,7 @@
     {
       "lesson": 16,
       "lessonTitle": "Урок 16 · Vásárlás és eszközhatározó",
-      "slideId": 8,
+      "slideId": 6,
       "activityIndex": 0,
       "activityId": "l16-listening-shopping",
       "title": "Аудирование: покупка",
@@ -1632,7 +1632,7 @@
     {
       "lesson": 17,
       "lessonTitle": "Урок 17 · Időjárás és évszakok",
-      "slideId": 7,
+      "slideId": 6,
       "activityIndex": 0,
       "activityId": "l17-listening-weather",
       "title": "Аудирование: короткий прогноз",
@@ -1688,7 +1688,7 @@
     {
       "lesson": 18,
       "lessonTitle": "Урок 18 · Módbeli segédigék",
-      "slideId": 8,
+      "slideId": 7,
       "activityIndex": 0,
       "activityId": "l18-listening-modals",
       "title": "Аудирование: что люди могут, должны и хотят?",
@@ -1755,7 +1755,7 @@
     {
       "lesson": 19,
       "lessonTitle": "Урок 19 · A jövő idő",
-      "slideId": 9,
+      "slideId": 8,
       "activityIndex": 0,
       "activityId": "l19-listening-future",
       "title": "Аудирование: три времени и планы",
@@ -1811,8 +1811,8 @@
     {
       "lesson": 20,
       "lessonTitle": "Урок 20 · A múlt idő",
-      "slideId": 10,
-      "activityIndex": 2,
+      "slideId": 8,
+      "activityIndex": 1,
       "activityId": "l20-listening-context",
       "title": "Аудирование: короткий рассказ о прошлом",
       "assetId": "l20_listening_context",
@@ -1916,6 +1916,122 @@
       "evidenceRelationship": "required_exit_check"
     },
     {
+      "lesson": 21,
+      "lessonTitle": "Урок 21 · Alanyi és tárgyas ragozás II",
+      "slideId": 9,
+      "activityIndex": 3,
+      "activityId": "l21-listening-b-context",
+      "title": "Аудирование B: выбираем фильм",
+      "assetId": "l21_listening_b_film_choice",
+      "filename": "l21_listening_b_film_choice.mp3",
+      "audioStatus": "published",
+      "transcript": "Dóra: Szia, hallasz engem?\nMárk: Igen, most már hallak. Mit csinálsz?\nDóra: Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?\nMárk: A Késői vonatot? Igen, ismerem. Tegnap láttam.\nDóra: És tetszett?\nMárk: Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már.\nDóra: Én őt nem ismerem. Miről szól a film?\nMárk: Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát.\nDóra: Jól hangzik. Akkor ezt nézem meg.\nMárk: Van egy másik jó film is. Küldjek róla egy linket?\nDóra: Igen, küldd el! Megnézem az előzetest is.\nMárk: Rendben, mindjárt elküldöm.\nDóra: Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam.\nMárk: Jó, várlak.",
+      "questionCount": 6,
+      "passCount": 5,
+      "questions": [
+        {
+          "id": "l21-listen-b-1",
+          "prompt": "Miért telefonál Dóra Márknak?",
+          "correctAnswer": "Mert filmet keres estére."
+        },
+        {
+          "id": "l21-listen-b-2",
+          "prompt": "Mikor látta Márk a magyar filmet?",
+          "correctAnswer": "Tegnap."
+        },
+        {
+          "id": "l21-listen-b-3",
+          "prompt": "Mi nem tetszett teljesen Márknak?",
+          "correctAnswer": "Az eleje egy kicsit lassú volt."
+        },
+        {
+          "id": "l21-listen-b-4",
+          "prompt": "Ismeri Dóra a főszereplőt?",
+          "correctAnswer": "Nem, nem ismeri."
+        },
+        {
+          "id": "l21-listen-b-5",
+          "prompt": "Mit küld Márk Dórának?",
+          "correctAnswer": "Egy linket egy másik filmről."
+        },
+        {
+          "id": "l21-listen-b-6",
+          "prompt": "Mit fog Dóra tenni másnap?",
+          "correctAnswer": "Felhívja Márkot, és elmondja, melyik filmet választotta."
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Dóra",
+        "Márk"
+      ],
+      "segments": [
+        {
+          "speaker": "Dóra",
+          "text": "Szia, hallasz engem?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Igen, most már hallak. Mit csinálsz?"
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "A Késői vonatot? Igen, ismerem. Tegnap láttam."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "És tetszett?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Én őt nem ismerem. Miről szól a film?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Jól hangzik. Akkor ezt nézem meg."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Van egy másik jó film is. Küldjek róla egy linket?"
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Igen, küldd el! Megnézem az előzetest is."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Rendben, mindjárt elküldöm."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Jó, várlak."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l21_distinguish-conjugations"
+      ],
+      "objectiveIds": [
+        "l21_distinguish-conjugations"
+      ],
+      "evidenceRelationship": "required_exit_check"
+    },
+    {
       "lesson": 22,
       "lessonTitle": "Урок 22 · A felszólító mód",
       "slideId": 9,
@@ -1951,6 +2067,112 @@
         {
           "speaker": null,
           "text": "Kérem, jöjjön be! Üljön le, és várjon egy percet. Ne tegye a táskáját az asztalra."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l22_understand-commands"
+      ],
+      "objectiveIds": [],
+      "evidenceRelationship": "practice_only"
+    },
+    {
+      "lesson": 22,
+      "lessonTitle": "Урок 22 · A felszólító mód",
+      "slideId": 9,
+      "activityIndex": 3,
+      "activityId": "l22-listening-b-context",
+      "title": "Аудирование B: первый день в офисе",
+      "assetId": "l22_listening_b_office_instructions",
+      "filename": "l22_listening_b_office_instructions.mp3",
+      "audioStatus": "published",
+      "transcript": "Recepciós: Jó reggelt! Ön az új kolléga?\nDolgozó: Igen, ma van az első munkanapom.\nRecepciós: Rendben. Először kérem, mutassa meg a személyi igazolványát. Utána vegye át ezt a belépőkártyát, és írja alá ezt a papírt.\nDolgozó: Rendben. Ezután hová menjek?\nRecepciós: Menjen fel a harmadik emeletre lifttel. Amikor kilép a liftből, forduljon jobbra, és keresse meg a 315-ös irodát.\nDolgozó: Elnézést, nem értettem az iroda számát. Mondja még egyszer, kérem!\nRecepciós: Természetesen. Háromszáztizenöt. A folyosó végén találja.\nDolgozó: Köszönöm. Van még valami, amit tudnom kell?\nRecepciós: Igen. Ne használja a hátsó bejáratot, mert ahhoz még nincs jogosultsága. Ha ebédelni megy, tegye a belépőkártyát a táskájába, ne hagyja az asztalon.\nDolgozó: Értem.\nRecepciós: Ha bármilyen problémája van, hívja a recepciót, vagy kérdezze Annát a 315-ös irodában.\nDolgozó: Rendben, köszönöm szépen a segítséget.",
+      "questionCount": 6,
+      "passCount": 5,
+      "questions": [
+        {
+          "id": "l22-listen-b-1",
+          "prompt": "Mit kell először megmutatnia a dolgozónak?",
+          "correctAnswer": "A személyi igazolványát."
+        },
+        {
+          "id": "l22-listen-b-2",
+          "prompt": "Melyik emeletre kell mennie?",
+          "correctAnswer": "A harmadik emeletre."
+        },
+        {
+          "id": "l22-listen-b-3",
+          "prompt": "Miért kér ismétlést?",
+          "correctAnswer": "Mert nem értette az iroda számát."
+        },
+        {
+          "id": "l22-listen-b-4",
+          "prompt": "Mi az iroda száma?",
+          "correctAnswer": "315."
+        },
+        {
+          "id": "l22-listen-b-5",
+          "prompt": "Melyik bejáratot nem használhatja?",
+          "correctAnswer": "A hátsó bejáratot."
+        },
+        {
+          "id": "l22-listen-b-6",
+          "prompt": "Kihez fordulhat segítségért?",
+          "correctAnswer": "A recepcióhoz vagy Annához."
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Recepciós",
+        "Dolgozó"
+      ],
+      "segments": [
+        {
+          "speaker": "Recepciós",
+          "text": "Jó reggelt! Ön az új kolléga?"
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Igen, ma van az első munkanapom."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Rendben. Először kérem, mutassa meg a személyi igazolványát. Utána vegye át ezt a belépőkártyát, és írja alá ezt a papírt."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Rendben. Ezután hová menjek?"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Menjen fel a harmadik emeletre lifttel. Amikor kilép a liftből, forduljon jobbra, és keresse meg a 315-ös irodát."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Elnézést, nem értettem az iroda számát. Mondja még egyszer, kérem!"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Természetesen. Háromszáztizenöt. A folyosó végén találja."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Köszönöm. Van még valami, amit tudnom kell?"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Igen. Ne használja a hátsó bejáratot, mert ahhoz még nincs jogosultsága. Ha ebédelni megy, tegye a belépőkártyát a táskájába, ne hagyja az asztalon."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Értem."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Ha bármilyen problémája van, hívja a recepciót, vagy kérdezze Annát a 315-ös irodában."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Rendben, köszönöm szépen a segítséget."
         }
       ],
       "lessonListeningObjectiveIds": [
@@ -2002,6 +2224,121 @@
       "lessonListeningObjectiveIds": [
         "l23_understand-conditional"
       ],
+      "objectiveIds": [],
+      "evidenceRelationship": "practice_only"
+    },
+    {
+      "lesson": 23,
+      "lessonTitle": "Урок 23 · A feltételes mód",
+      "slideId": 9,
+      "activityIndex": 3,
+      "activityId": "l23-listening-b-context",
+      "title": "Аудирование B: свободная неделя",
+      "assetId": "l23_listening_b_free_week",
+      "filename": "l23_listening_b_free_week.mp3",
+      "audioStatus": "published",
+      "transcript": "Nóra: Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?\nÁdám: Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék.\nNóra: Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni.\nÁdám: De ha egész héten otthon lennél, nem unatkoznál?\nNóra: Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet.\nÁdám: Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága.\nNóra: Ez igaz. Hová mennél pontosan?\nÁdám: Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett.\nNóra: Én egy egész hetet nem szeretnék utazással tölteni.\nÁdám: Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni.\nNóra: Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék.\nÁdám: Akkor este megnézhetnénk a lehetőségeket.\nNóra: Rendben. Küldj néhány ajánlatot, és választunk.",
+      "questionCount": 7,
+      "passCount": 6,
+      "questions": [
+        {
+          "id": "l23-listen-b-1",
+          "prompt": "Mit tenne Ádám egy szabad héten?",
+          "correctAnswer": "Elutazna, talán Horvátországba."
+        },
+        {
+          "id": "l23-listen-b-2",
+          "prompt": "Miért maradna Nóra inkább otthon?",
+          "correctAnswer": "Mert sokat dolgozik, és pihenni szeretne."
+        },
+        {
+          "id": "l23-listen-b-3",
+          "prompt": "Mitől lehetne olcsóbb az utazás?",
+          "correctAnswer": "Ha időben vennének jegyet."
+        },
+        {
+          "id": "l23-listen-b-4",
+          "prompt": "Miért nem tetszik Nórának Ádám első terve?",
+          "correctAnswer": "Nem akarja az egész hetet utazással tölteni."
+        },
+        {
+          "id": "l23-listen-b-5",
+          "prompt": "Milyen kompromisszumot javasol Ádám?",
+          "correctAnswer": "Négy nap utazást és három nap otthoni pihenést."
+        },
+        {
+          "id": "l23-listen-b-6",
+          "prompt": "Mi kell ahhoz, hogy Nóra is elutazzon?",
+          "correctAnswer": "Olcsó szállást kell találniuk."
+        },
+        {
+          "id": "l23-listen-b-7",
+          "prompt": "A beszélgetés végén közelebb kerülnek-e a közös döntéshez?",
+          "correctAnswer": "Igen, este együtt megnézik a lehetőségeket."
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Nóra",
+        "Ádám"
+      ],
+      "segments": [
+        {
+          "speaker": "Nóra",
+          "text": "Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?"
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "De ha egész héten otthon lennél, nem unatkoznál?"
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Ez igaz. Hová mennél pontosan?"
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Én egy egész hetet nem szeretnék utazással tölteni."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Akkor este megnézhetnénk a lehetőségeket."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Rendben. Küldj néhány ajánlatot, és választunk."
+        }
+      ],
+      "lessonListeningObjectiveIds": [
+        "l23_understand-conditional"
+      ],
       "objectiveIds": [
         "l23_understand-conditional"
       ],
@@ -2048,6 +2385,109 @@
       "lessonListeningObjectiveIds": [],
       "objectiveIds": [],
       "evidenceRelationship": "practice_only"
+    },
+    {
+      "lesson": 24,
+      "lessonTitle": "Урок 24 · Összetett mondatok",
+      "slideId": 9,
+      "activityIndex": 3,
+      "activityId": "l24-listening-b-context",
+      "title": "Аудирование B: центр или окраина",
+      "assetId": "l24_listening_b_city_or_suburbs",
+      "filename": "l24_listening_b_city_or_suburbs.mp3",
+      "audioStatus": "published",
+      "transcript": "Eszter: Én biztosan a belvárosban maradnék. Szeretem, hogy szinte minden közel van, és nem kell sok időt utazással töltenem.\nGábor: Én viszont szívesebben költöznék a város szélére. A belváros kényelmes, de szerintem túl zajos, és a lakások is nagyon drágák.\nEszter: Ez igaz, bár nekem fontosabb a jó közlekedés. Innen tíz perc alatt beérek a munkahelyemre, este pedig könnyen találkozom a barátaimmal.\nGábor: Nekem most majdnem egy órába telik hazajutni, mégis szeretem, hogy nyugodtabb környéken lakom. Ráadásul nagyobb lakást tudtam bérelni ugyanannyi pénzért.\nEszter: Viszont ha este programod van a központban, sokkal nehezebb hazamenned.\nGábor: Igen, ez valóban hátrány. Másrészt nem járok minden este a belvárosba. Hétvégén pedig inkább otthon vagy a természetben vagyok.\nEszter: Akkor valószínűleg mások az igényeink. Én most még nem szeretnék kiköltözni.\nGábor: Én sem mondom, hogy mindenkinek jobb. Ha valaki minden nap bent dolgozik, és sok programra jár, a belváros praktikusabb lehet.\nEszter: Ebben egyetértek. Szerintem végül az a fontos, hogy az ember tudja, mi fontos neki: a nyugalom, az ár vagy az, hogy minden közel legyen.\nGábor: Pontosan. Nincs olyan megoldás, amely mindenkinek tökéletes.",
+      "questionCount": 7,
+      "passCount": 6,
+      "questions": [
+        {
+          "id": "l24-listen-b-1",
+          "prompt": "Miért szeret Eszter a belvárosban lakni?",
+          "correctAnswer": "Mert szinte minden közel van, és keveset kell utaznia."
+        },
+        {
+          "id": "l24-listen-b-2",
+          "prompt": "Mi Gábor két fő érve a külsőbb kerület mellett?",
+          "correctAnswer": "Nyugodtabb, és ugyanannyi pénzért nagyobb lakást bérelhet."
+        },
+        {
+          "id": "l24-listen-b-3",
+          "prompt": "Milyen hátrányt ismer el Gábor?",
+          "correctAnswer": "Este nehezebb hazajutni a központból."
+        },
+        {
+          "id": "l24-listen-b-4",
+          "prompt": "Miben különbözik Eszter és Gábor életmódja?",
+          "correctAnswer": "Eszternek fontos a központ és a gyakori programok; Gábor inkább otthon vagy a természetben tölti a hétvégét."
+        },
+        {
+          "id": "l24-listen-b-5",
+          "prompt": "Miben értenek egyet a végén?",
+          "correctAnswer": "A jó választás az egyéni igényektől és fontossági sorrendtől függ."
+        },
+        {
+          "id": "l24-listen-b-6",
+          "prompt": "Ki állítja azt, hogy a belváros mindenkinek jobb?",
+          "correctAnswer": "Egyikük sem."
+        },
+        {
+          "id": "l24-listen-b-7",
+          "prompt": "Mi a beszélgetés fő következtetése?",
+          "correctAnswer": "Nincs mindenki számára tökéletes megoldás."
+        }
+      ],
+      "type": "dialogue",
+      "speakers": [
+        "Eszter",
+        "Gábor"
+      ],
+      "segments": [
+        {
+          "speaker": "Eszter",
+          "text": "Én biztosan a belvárosban maradnék. Szeretem, hogy szinte minden közel van, és nem kell sok időt utazással töltenem."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Én viszont szívesebben költöznék a város szélére. A belváros kényelmes, de szerintem túl zajos, és a lakások is nagyon drágák."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Ez igaz, bár nekem fontosabb a jó közlekedés. Innen tíz perc alatt beérek a munkahelyemre, este pedig könnyen találkozom a barátaimmal."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Nekem most majdnem egy órába telik hazajutni, mégis szeretem, hogy nyugodtabb környéken lakom. Ráadásul nagyobb lakást tudtam bérelni ugyanannyi pénzért."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Viszont ha este programod van a központban, sokkal nehezebb hazamenned."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Igen, ez valóban hátrány. Másrészt nem járok minden este a belvárosba. Hétvégén pedig inkább otthon vagy a természetben vagyok."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Akkor valószínűleg mások az igényeink. Én most még nem szeretnék kiköltözni."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Én sem mondom, hogy mindenkinek jobb. Ha valaki minden nap bent dolgozik, és sok programra jár, a belváros praktikusabb lehet."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Ebben egyetértek. Szerintem végül az a fontos, hogy az ember tudja, mi fontos neki: a nyugalom, az ár vagy az, hogy minden közel legyen."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Pontosan. Nincs olyan megoldás, amely mindenkinek tökéletes."
+        }
+      ],
+      "lessonListeningObjectiveIds": [],
+      "objectiveIds": [
+        "l24_connect-ideas"
+      ],
+      "evidenceRelationship": "required_exit_check"
     },
     {
       "lesson": 25,
@@ -2147,6 +2587,7 @@
         "l26_understand-advice"
       ],
       "objectiveIds": [
+        "l26_doctor-dialogue",
         "l26_understand-advice"
       ],
       "evidenceRelationship": "required_exit_check"
@@ -3044,6 +3485,84 @@
     },
     {
       "lessonNumbers": [
+        21
+      ],
+      "assetId": "l21_listening_b_film_choice",
+      "filename": "l21_listening_b_film_choice.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Dóra: Szia, hallasz engem?\nMárk: Igen, most már hallak. Mit csinálsz?\nDóra: Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?\nMárk: A Késői vonatot? Igen, ismerem. Tegnap láttam.\nDóra: És tetszett?\nMárk: Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már.\nDóra: Én őt nem ismerem. Miről szól a film?\nMárk: Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát.\nDóra: Jól hangzik. Akkor ezt nézem meg.\nMárk: Van egy másik jó film is. Küldjek róla egy linket?\nDóra: Igen, küldd el! Megnézem az előzetest is.\nMárk: Rendben, mindjárt elküldöm.\nDóra: Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam.\nMárk: Jó, várlak.",
+      "speakers": [
+        "Dóra",
+        "Márk"
+      ],
+      "segments": [
+        {
+          "speaker": "Dóra",
+          "text": "Szia, hallasz engem?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Igen, most már hallak. Mit csinálsz?"
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "A Késői vonatot? Igen, ismerem. Tegnap láttam."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "És tetszett?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Én őt nem ismerem. Miről szól a film?"
+        },
+        {
+          "speaker": "Márk",
+          "text": "Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Jól hangzik. Akkor ezt nézem meg."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Van egy másik jó film is. Küldjek róla egy linket?"
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Igen, küldd el! Megnézem az előzetest is."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Rendben, mindjárt elküldöm."
+        },
+        {
+          "speaker": "Dóra",
+          "text": "Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam."
+        },
+        {
+          "speaker": "Márk",
+          "text": "Jó, várlak."
+        }
+      ],
+      "activityIds": [
+        "l21-listening-b-context"
+      ],
+      "objectiveIds": [
+        "l21_distinguish-conjugations"
+      ]
+    },
+    {
+      "lessonNumbers": [
         22
       ],
       "assetId": "l22_listening_context",
@@ -3060,6 +3579,74 @@
       ],
       "activityIds": [
         "l22-listening-context"
+      ],
+      "objectiveIds": []
+    },
+    {
+      "lessonNumbers": [
+        22
+      ],
+      "assetId": "l22_listening_b_office_instructions",
+      "filename": "l22_listening_b_office_instructions.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Recepciós: Jó reggelt! Ön az új kolléga?\nDolgozó: Igen, ma van az első munkanapom.\nRecepciós: Rendben. Először kérem, mutassa meg a személyi igazolványát. Utána vegye át ezt a belépőkártyát, és írja alá ezt a papírt.\nDolgozó: Rendben. Ezután hová menjek?\nRecepciós: Menjen fel a harmadik emeletre lifttel. Amikor kilép a liftből, forduljon jobbra, és keresse meg a 315-ös irodát.\nDolgozó: Elnézést, nem értettem az iroda számát. Mondja még egyszer, kérem!\nRecepciós: Természetesen. Háromszáztizenöt. A folyosó végén találja.\nDolgozó: Köszönöm. Van még valami, amit tudnom kell?\nRecepciós: Igen. Ne használja a hátsó bejáratot, mert ahhoz még nincs jogosultsága. Ha ebédelni megy, tegye a belépőkártyát a táskájába, ne hagyja az asztalon.\nDolgozó: Értem.\nRecepciós: Ha bármilyen problémája van, hívja a recepciót, vagy kérdezze Annát a 315-ös irodában.\nDolgozó: Rendben, köszönöm szépen a segítséget.",
+      "speakers": [
+        "Recepciós",
+        "Dolgozó"
+      ],
+      "segments": [
+        {
+          "speaker": "Recepciós",
+          "text": "Jó reggelt! Ön az új kolléga?"
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Igen, ma van az első munkanapom."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Rendben. Először kérem, mutassa meg a személyi igazolványát. Utána vegye át ezt a belépőkártyát, és írja alá ezt a papírt."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Rendben. Ezután hová menjek?"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Menjen fel a harmadik emeletre lifttel. Amikor kilép a liftből, forduljon jobbra, és keresse meg a 315-ös irodát."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Elnézést, nem értettem az iroda számát. Mondja még egyszer, kérem!"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Természetesen. Háromszáztizenöt. A folyosó végén találja."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Köszönöm. Van még valami, amit tudnom kell?"
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Igen. Ne használja a hátsó bejáratot, mert ahhoz még nincs jogosultsága. Ha ebédelni megy, tegye a belépőkártyát a táskájába, ne hagyja az asztalon."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Értem."
+        },
+        {
+          "speaker": "Recepciós",
+          "text": "Ha bármilyen problémája van, hívja a recepciót, vagy kérdezze Annát a 315-ös irodában."
+        },
+        {
+          "speaker": "Dolgozó",
+          "text": "Rendben, köszönöm szépen a segítséget."
+        }
+      ],
+      "activityIds": [
+        "l22-listening-b-context"
       ],
       "objectiveIds": [
         "l22_understand-commands"
@@ -3083,6 +3670,78 @@
       ],
       "activityIds": [
         "l23-listening-context"
+      ],
+      "objectiveIds": []
+    },
+    {
+      "lessonNumbers": [
+        23
+      ],
+      "assetId": "l23_listening_b_free_week",
+      "filename": "l23_listening_b_free_week.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Nóra: Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?\nÁdám: Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék.\nNóra: Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni.\nÁdám: De ha egész héten otthon lennél, nem unatkoznál?\nNóra: Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet.\nÁdám: Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága.\nNóra: Ez igaz. Hová mennél pontosan?\nÁdám: Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett.\nNóra: Én egy egész hetet nem szeretnék utazással tölteni.\nÁdám: Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni.\nNóra: Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék.\nÁdám: Akkor este megnézhetnénk a lehetőségeket.\nNóra: Rendben. Küldj néhány ajánlatot, és választunk.",
+      "speakers": [
+        "Nóra",
+        "Ádám"
+      ],
+      "segments": [
+        {
+          "speaker": "Nóra",
+          "text": "Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?"
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "De ha egész héten otthon lennél, nem unatkoznál?"
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Ez igaz. Hová mennél pontosan?"
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Én egy egész hetet nem szeretnék utazással tölteni."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék."
+        },
+        {
+          "speaker": "Ádám",
+          "text": "Akkor este megnézhetnénk a lehetőségeket."
+        },
+        {
+          "speaker": "Nóra",
+          "text": "Rendben. Küldj néhány ajánlatot, és választunk."
+        }
+      ],
+      "activityIds": [
+        "l23-listening-b-context"
       ],
       "objectiveIds": [
         "l23_understand-conditional"
@@ -3108,6 +3767,68 @@
         "l24-listening-context"
       ],
       "objectiveIds": []
+    },
+    {
+      "lessonNumbers": [
+        24
+      ],
+      "assetId": "l24_listening_b_city_or_suburbs",
+      "filename": "l24_listening_b_city_or_suburbs.mp3",
+      "audioStatus": "published",
+      "type": "dialogue",
+      "transcript": "Eszter: Én biztosan a belvárosban maradnék. Szeretem, hogy szinte minden közel van, és nem kell sok időt utazással töltenem.\nGábor: Én viszont szívesebben költöznék a város szélére. A belváros kényelmes, de szerintem túl zajos, és a lakások is nagyon drágák.\nEszter: Ez igaz, bár nekem fontosabb a jó közlekedés. Innen tíz perc alatt beérek a munkahelyemre, este pedig könnyen találkozom a barátaimmal.\nGábor: Nekem most majdnem egy órába telik hazajutni, mégis szeretem, hogy nyugodtabb környéken lakom. Ráadásul nagyobb lakást tudtam bérelni ugyanannyi pénzért.\nEszter: Viszont ha este programod van a központban, sokkal nehezebb hazamenned.\nGábor: Igen, ez valóban hátrány. Másrészt nem járok minden este a belvárosba. Hétvégén pedig inkább otthon vagy a természetben vagyok.\nEszter: Akkor valószínűleg mások az igényeink. Én most még nem szeretnék kiköltözni.\nGábor: Én sem mondom, hogy mindenkinek jobb. Ha valaki minden nap bent dolgozik, és sok programra jár, a belváros praktikusabb lehet.\nEszter: Ebben egyetértek. Szerintem végül az a fontos, hogy az ember tudja, mi fontos neki: a nyugalom, az ár vagy az, hogy minden közel legyen.\nGábor: Pontosan. Nincs olyan megoldás, amely mindenkinek tökéletes.",
+      "speakers": [
+        "Eszter",
+        "Gábor"
+      ],
+      "segments": [
+        {
+          "speaker": "Eszter",
+          "text": "Én biztosan a belvárosban maradnék. Szeretem, hogy szinte minden közel van, és nem kell sok időt utazással töltenem."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Én viszont szívesebben költöznék a város szélére. A belváros kényelmes, de szerintem túl zajos, és a lakások is nagyon drágák."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Ez igaz, bár nekem fontosabb a jó közlekedés. Innen tíz perc alatt beérek a munkahelyemre, este pedig könnyen találkozom a barátaimmal."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Nekem most majdnem egy órába telik hazajutni, mégis szeretem, hogy nyugodtabb környéken lakom. Ráadásul nagyobb lakást tudtam bérelni ugyanannyi pénzért."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Viszont ha este programod van a központban, sokkal nehezebb hazamenned."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Igen, ez valóban hátrány. Másrészt nem járok minden este a belvárosba. Hétvégén pedig inkább otthon vagy a természetben vagyok."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Akkor valószínűleg mások az igényeink. Én most még nem szeretnék kiköltözni."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Én sem mondom, hogy mindenkinek jobb. Ha valaki minden nap bent dolgozik, és sok programra jár, a belváros praktikusabb lehet."
+        },
+        {
+          "speaker": "Eszter",
+          "text": "Ebben egyetértek. Szerintem végül az a fontos, hogy az ember tudja, mi fontos neki: a nyugalom, az ár vagy az, hogy minden közel legyen."
+        },
+        {
+          "speaker": "Gábor",
+          "text": "Pontosan. Nincs olyan megoldás, amely mindenkinek tökéletes."
+        }
+      ],
+      "activityIds": [
+        "l24-listening-b-context"
+      ],
+      "objectiveIds": [
+        "l24_connect-ideas"
+      ]
     },
     {
       "lessonNumbers": [
@@ -3159,6 +3880,7 @@
         "l26-listening-context"
       ],
       "objectiveIds": [
+        "l26_doctor-dialogue",
         "l26_understand-advice"
       ]
     },

@@ -32,11 +32,3 @@ export function parsePrivilegeUpdate(body: unknown): boolean {
   if (typeof privileged !== 'boolean') throw new Error('Поле privileged должно быть boolean');
   return privileged;
 }
-
-export async function isAuthorizedAdminSession(
-  token: string | undefined,
-  validate: (candidate: string | undefined) => Promise<boolean>
-): Promise<boolean> {
-  if (!token) return false;
-  return validate(token);
-}

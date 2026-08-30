@@ -1,63 +1,41 @@
 import type { Lesson, LessonActivity } from '../../types';
 
-const FAMILY_VOCABULARY: LessonActivity = {
-  kind: 'controlledPractice', id: 'l8-cp-family-vocabulary', title: 'A család — базовая лексика', passCount: 6,
-  exercises: [
-    { kind: 'singleChoice', id: 'l8-family-1', prompt: 'apa', options: ['отец', 'мать', 'ребёнок'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l8-family-2', prompt: 'anya', options: ['бабушка', 'мать', 'дочь'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l8-family-3', prompt: 'Брат / сестра; sibling без указания пола', options: ['testvér', 'fiú', 'férj'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l8-family-4', prompt: 'feleség', options: ['дочь', 'жена', 'сестра'], correctIndex: 1 },
-    { kind: 'textInput', id: 'l8-family-5', prompt: 'ребёнок', accept: ['gyerek'] },
-    { kind: 'textInput', id: 'l8-family-6', prompt: 'бабушка', accept: ['nagymama'] },
-    { kind: 'textInput', id: 'l8-family-7', prompt: 'дедушка', accept: ['nagypapa'] },
-    { kind: 'textInput', id: 'l8-family-8', prompt: 'муж', accept: ['férj'] },
-  ],
-};
-
 const SINGULAR_POSSESSIVES: LessonActivity = {
-  kind: 'controlledPractice', id: 'l8-cp-singular-possessives', title: 'Один предмет: én, te, ő', passCount: 8,
+  kind: 'controlledPractice', id: 'l8-cp-singular-possessives', title: 'Контекстная практика: семья и принадлежность', passCount: 11,
   exercises: [
-    { kind: 'textInput', id: 'l8-possessive-1', prompt: 'ház → мой дом', accept: ['házam'] },
-    { kind: 'textInput', id: 'l8-possessive-2', prompt: 'ház → твой дом', accept: ['házad'] },
-    { kind: 'textInput', id: 'l8-possessive-3', prompt: 'ház → его/её дом', accept: ['háza'] },
-    { kind: 'textInput', id: 'l8-possessive-4', prompt: 'anya → моя мать', accept: ['anyám'] },
-    { kind: 'textInput', id: 'l8-possessive-5', prompt: 'anya → твоя мать', accept: ['anyád'] },
-    { kind: 'textInput', id: 'l8-possessive-6', prompt: 'anya → его/её мать', accept: ['anyja'] },
-    { kind: 'textInput', id: 'l8-possessive-7', prompt: 'apa → мой отец', accept: ['apám'] },
-    { kind: 'textInput', id: 'l8-possessive-8', prompt: 'apa → твой отец', accept: ['apád'] },
-    { kind: 'textInput', id: 'l8-possessive-9', prompt: 'apa → его/её отец', accept: ['apja'] },
-    { kind: 'textInput', id: 'l8-possessive-10', prompt: 'testvér → мой брат / моя сестра', accept: ['testvérem'] },
+    { kind: 'singleChoice', id: 'l8-possessive-1', prompt: 'Кто такой testvér?', options: ['брат или сестра', 'родитель', 'супруг'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l8-possessive-2', prompt: 'Представь свою мать.', options: ['Ez az anyukám.', 'Ez az anyukád.', 'Ez az anyja.'], correctIndex: 0 },
+    { kind: 'textInput', id: 'l8-possessive-3', prompt: 'ház → мой дом', accept: ['házam'] },
+    { kind: 'textInput', id: 'l8-possessive-4', prompt: 'ház → твой дом', accept: ['házad'] },
+    { kind: 'textInput', id: 'l8-possessive-5', prompt: 'ház → его/её дом', accept: ['háza'] },
+    { kind: 'singleChoice', id: 'l8-possessive-6', prompt: 'У меня есть брат или сестра.', options: ['Van egy testvérem.', 'Nincs testvérem.', 'Ez Anna testvére.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l8-possessive-7', prompt: 'У меня нет брата или сестры.', options: ['Van egy testvérem.', 'Nincs testvérem.', 'A testvéred neve?'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l8-possessive-8', prompt: 'Моя мать — учительница.', options: ['Anyám tanár.', 'Anyád tanár.', 'Anyja tanár.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l8-possessive-9', prompt: 'Брат/сестра собеседника живёт в Будапеште.', options: ['A testvérem Budapesten lakik.', 'A testvéred Budapesten lakik.', 'A testvére Budapest.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l8-possessive-10', prompt: 'Спроси имя брата или сестры.', options: ['Mi a testvéred neve?', 'Hol a testvérem?', 'Ki neve testvér?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l8-possessive-11', prompt: 'Спроси, где живут родители.', options: ['Hol laknak a szüleid?', 'Hány éves a szüleid?', 'Mi a szülők?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l8-possessive-12', prompt: 'Спроси возраст сына.', options: ['Hol lakik a fiad?', 'Hány éves a fiad?', 'Mi a fiad dolgozik?'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l8-possessive-13', prompt: 'Чья это книга?', options: ['Ez a könyvem.', 'Ez Anna könyve.', 'Оба варианта выражают владельца.'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l8-possessive-14', prompt: 'У Анны есть дочь; назови её.', options: ['Ő Anna lánya.', 'Ő Anna lányom.', 'Ő Anna lányod.'], correctIndex: 0 },
   ],
 };
 
 const FAMILY_READING: LessonActivity = {
-  kind: 'reading', id: 'l8-reading-family-profile', title: 'Чтение: Anna családja',
-  instructions: 'Прочитай описание и ответь по смыслу: кто кому приходится родственником и кому что принадлежит.', passCount: 4,
-  content: { type: 'prose', title: 'Anna családja', paragraphs: [
-    'Anna vagyok. Van egy testvérem: Péter.',
-    'Anyám neve Éva, apám neve Gábor.',
-    'Péter háza nagy. Az én házam kicsi.',
-    'Én vagyok Péter testvére.',
+  kind: 'reading', id: 'l8-reading-family-profile', title: 'Чтение: две соседские семьи',
+  instructions: 'Прочитай описание и сравни две вымышленные семьи: отношения, возраст, работу, место и общие занятия.', passCount: 6,
+  content: { type: 'prose', title: 'Két család egy házban', paragraphs: [
+    'Budapesten, egy nagy házban két család lakik. A második emeleten lakik a Kovács család. Az apa neve Gábor, negyvenkét éves, és egy iskolában tanár. A felesége, Éva, negyvenéves és orvos. Két gyerekük van. A fiuk, Marci, tizennégy éves, a lányuk, Lili, tízéves. Marci szeret olvasni és focizni, Lili pedig gyakran rajzol és zenét hallgat. A család kutyájának neve Mázli.',
+    'A harmadik emeleten Anna és a testvére, Péter lakik. Anna huszonöt éves és egy irodában dolgozik. Péter huszonkét éves egyetemista. A szüleik nem Budapesten laknak, hanem egy kis városban. Anna lakása kisebb, mint a Kovács család lakása, de világos és kényelmes. Péter kerékpárja az udvaron van.',
+    'A két család szombaton gyakran együtt reggelizik az udvaron. Gábor kávét készít, Anna süteményt hoz, a gyerekek pedig Mázlival játszanak. A Kovács család nagyobb, Anna családja kisebb, de jó szomszédok és sok időt töltenek együtt.',
   ] },
   questions: [
-    { id: 'l8-reading-q1', question: 'Кем Петер приходится Анне?', options: ['её братом', 'её отцом', 'её мужем'], correctIndex: 0 },
-    { id: 'l8-reading-q2', question: 'Кто мать Анны?', options: ['Петер', 'Ева', 'Габор'], correctIndex: 1 },
-    { id: 'l8-reading-q3', question: 'Чей дом большой?', options: ['Анны', 'Петера', 'Габора'], correctIndex: 1 },
-    { id: 'l8-reading-q4', question: 'Чей дом маленький?', options: ['Анны', 'Петера', 'Евы'], correctIndex: 0 },
-    { id: 'l8-reading-q5', question: 'Кем Анна приходится Петеру?', options: ['его матерью', 'его сестрой', 'его женой'], correctIndex: 1 },
-  ],
-};
-
-const OWNER_TEXT: LessonActivity = {
-  kind: 'controlledPractice', id: 'l8-cp-owner-text', title: 'Кто владелец: én, te или ő?', passCount: 6,
-  exercises: [
-    { kind: 'singleChoice', id: 'l8-owner-1', prompt: 'házam', options: ['én', 'te', 'ő'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l8-owner-2', prompt: 'házad', options: ['én', 'te', 'ő'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l8-owner-3', prompt: 'háza', options: ['én', 'te', 'ő'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l8-owner-4', prompt: 'anyám', options: ['én', 'te', 'ő'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l8-owner-5', prompt: 'anyád', options: ['én', 'te', 'ő'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l8-owner-6', prompt: 'anyja', options: ['én', 'te', 'ő'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l8-owner-7', prompt: 'testvéred', options: ['én', 'te', 'ő'], correctIndex: 1 },
+    { id: 'l8-reading-q1', question: 'Сколько детей в семье Ковач?', options: ['один', 'два', 'три'], correctIndex: 1 },
+    { id: 'l8-reading-q2', question: 'Кем Лили приходится Марци?', options: ['сестрой', 'матерью', 'женой'], correctIndex: 0 },
+    { id: 'l8-reading-q3', question: 'Кем работает Ева?', options: ['учительницей', 'врачом', 'в офисе'], correctIndex: 1 },
+    { id: 'l8-reading-q4', question: 'Сколько лет Петеру?', options: ['22', '25', '42'], correctIndex: 0 },
+    { id: 'l8-reading-q5', question: 'Где живут родители Анны и Петера?', options: ['в Будапеште', 'в маленьком городе', 'в школе'], correctIndex: 1 },
+    { id: 'l8-reading-q6', question: 'Что семьи часто делают вместе по субботам?', options: ['завтракают во дворе', 'работают в офисе', 'ездят в университет'], correctIndex: 0 },
+    { id: 'l8-reading-q7', question: 'Какое различие названо в тексте?', options: ['семья Ковач больше', 'у Анны три ребёнка', 'обе семьи одинакового размера'], correctIndex: 0 },
   ],
 };
 
@@ -73,39 +51,51 @@ const POSSESSIVE_LISTENING: LessonActivity = {
   ],
 };
 
-const FAMILY_CAPTIONS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l8-cp-family-captions', title: 'Короткие предложения о семье', passCount: 4,
-  exercises: [
-    { kind: 'textInput', id: 'l8-caption-1', prompt: 'Мой отец — врач.', accept: ['Apám orvos.', 'Az apám orvos.'] },
-    { kind: 'textInput', id: 'l8-caption-2', prompt: 'Твоя мать — учительница.', accept: ['Anyád tanár.', 'Az anyád tanár.'] },
-    { kind: 'textInput', id: 'l8-caption-3', prompt: 'Его/её дом большой.', accept: ['A háza nagy.', 'Háza nagy.'] },
-    { kind: 'textInput', id: 'l8-caption-4', prompt: 'Моего брата / мою сестру зовут Алекс.', accept: ['A testvérem neve Alex.', 'Testvérem neve Alex.'] },
-    { kind: 'textInput', id: 'l8-caption-5', prompt: 'Твой брат / твоя сестра умный/умная.', accept: ['A testvéred okos.', 'Testvéred okos.'] },
+
+const FAMILY_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l8-roleplay-family-talk', title: 'Ролевая игра: знакомство и семья', partnerLabel: 'Új osztálytárs', completionMessage: 'Bemutattátok a családotokat.', startTurnId: 'l8-rp-s1',
+  turns: [
+    { id: 'l8-rp-s1', speaker: 'waiter', prompt: 'Szia! Van testvéred?', next: 'l8-rp-l1' },
+    { id: 'l8-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Ответь, есть ли у тебя брат или сестра.', model: 'Igen, van egy testvérem.', next: 'l8-rp-s2' },
+    { id: 'l8-rp-s2', speaker: 'waiter', prompt: 'Mi a testvéred neve?', next: 'l8-rp-l2' },
+    { id: 'l8-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови имя и возраст.', model: 'A testvérem neve Dóra, és húszéves.', next: 'l8-rp-s3' },
+    { id: 'l8-rp-s3', speaker: 'waiter', prompt: 'Mit csinál Dóra?', next: 'l8-rp-l3' },
+    { id: 'l8-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови занятие или работу.', model: 'Dóra egyetemista.', next: 'l8-rp-s4' },
+    { id: 'l8-rp-s4', speaker: 'waiter', prompt: 'Hol lakik a testvéred?', next: 'l8-rp-l4' },
+    { id: 'l8-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови место.', model: 'A testvérem Budapesten lakik.', next: 'l8-rp-s5' },
+    { id: 'l8-rp-s5', speaker: 'waiter', prompt: 'És mit csinálnak a szüleid?', next: 'l8-rp-l5' },
+    { id: 'l8-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Кратко расскажи о родителях.', model: 'Anyám tanár, apám pedig orvos.', next: 'l8-rp-s6' },
+    { id: 'l8-rp-s6', speaker: 'waiter', prompt: 'Mit csináltok együtt?', next: 'l8-rp-l6' },
+    { id: 'l8-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови совместное занятие.', model: 'Vasárnap együtt ebédelünk és sétálunk.', next: 'l8-rp-s7' },
+    { id: 'l8-rp-s7', speaker: 'waiter', prompt: 'Érdekes család!', next: 'l8-rp-l7' },
+    { id: 'l8-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Задай хотя бы один вопрос о семье собеседника.', model: 'És neked van testvéred?', next: 'l8-rp-s8' },
+    { id: 'l8-rp-s8', speaker: 'waiter', prompt: 'Nincs testvérem, de nagy a családom.', next: 'l8-rp-l8' },
+    { id: 'l8-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Отреагируй и заверши разговор.', model: 'Értem. Köszönöm a beszélgetést!', next: 'l8-rp-s9' },
+    { id: 'l8-rp-s9', speaker: 'waiter', prompt: 'Én is köszönöm. Szia!' },
   ],
 };
 
 const FAMILY_WRITING: LessonActivity = {
   kind: 'writing', id: 'l8-writing-family-description', title: 'Письмо: моя семья',
-  prompt: 'Напиши связное описание семьи из 4–5 предложений. Используй минимум две подходящие притяжательные формы.',
-  modelAnswer: ['Anna vagyok.', 'Van egy testvérem.', 'A testvérem neve Alex.', 'Anyám tanár.', 'Apám orvos.'],
-  rubric: ['Написано 4–5 связанных предложений', 'Использованы минимум две подходящие притяжательные формы', 'Родственники названы по смыслу'],
+  prompt: 'Напиши 60–80 слов о вымышленной семье. Представь 3–5 человек, их отношения, возраст или работу, место жизни/работы/учёбы, одну принадлежность и одно совместное занятие.',
+  modelAnswer: ['A Szabó családban öten vannak. Az apa neve Tamás, negyvenéves és szakács. Az anya, Júlia, harmincnyolc éves és tanár. Két lányuk és egy fiuk van. A nagyobb lányuk Budapesten tanul, a fiú még iskolás. A kisebb lányuk nyolcéves. A család háza egy kis városban van, és van egy kutyájuk is. Vasárnap együtt ebédelnek, délután pedig gyakran sétálnak. Mindannyian nagyon kedvesek.'],
+  rubric: ['60–80 слов', '3–5 членов семьи', 'отношения и возраст или работа', 'место и одна принадлежность', 'одно совместное занятие'],
 };
 
-const FAMILY_RECORDING: LessonActivity = {
-  kind: 'recording', id: 'l8-record-family-description', title: 'Говорение: коротко о семье',
-  instructions: 'Запиши короткое описание, затем прослушай его и проверь притяжательные формы по памятке урока.',
-  targetText: 'Anna vagyok. Van egy testvérem. Anyám tanár, apám orvos. A testvérem neve Alex.',
-  targetTranslation: 'Я Анна. У меня есть брат или сестра. Моя мать — учительница, мой отец — врач. Моего брата или мою сестру зовут Алекс.',
-  rubric: ['Произнесены 4–5 связанных предложений', 'Есть минимум две притяжательные формы', 'Понятно, кто кому приходится родственником'],
+const FAMILY_SPEAKING = {
+  title: 'Говорение: коротко о семье',
+  instructions: 'Говори 1–1.5 минуты о вымышленной семье: отношения, возраст или работа и место. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Представь 3–5 человек и объясни, кто кому приходится родственником.',
+  rubric: ['отношения', 'возраст или работа', 'место', 'понятное описание'],
 };
 
 const EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck', id: 'l8-exit-check', title: 'Проверка целей урока 8', checks: [
-    { objectiveId: 'l8_name-family', activityId: 'l8-cp-family-vocabulary', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-record-family-description', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l8_name-family', activityId: 'l8-cp-singular-possessives', evidenceKind: 'grammar' },
     { objectiveId: 'l8_form-possessive', activityId: 'l8-cp-singular-possessives', evidenceKind: 'grammar' },
-    { objectiveId: 'l8_use-possessive', activityId: 'l8-cp-family-captions', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-writing-family-description', evidenceKind: 'writing' }, { activityId: 'l8-record-family-description', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l8_distinguish-possessors', activityId: 'l8-cp-owner-text', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l8-listening-possessives', evidenceKind: 'listening' }] },
-    { objectiveId: 'l8_describe-family', activityId: 'l8-writing-family-description', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-record-family-description', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l8_use-possessive', activityId: 'l8-cp-singular-possessives', evidenceKind: 'grammar' },
+    { objectiveId: 'l8_distinguish-possessors', activityId: 'l8-listening-possessives', evidenceKind: 'listening' },
+    { objectiveId: 'l8_describe-family', activityId: 'l8-writing-family-description', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l8-roleplay-family-talk', evidenceKind: 'interaction' }] },
   ],
 };
 
@@ -115,12 +105,12 @@ export const LESSON_8: Lesson = {
   level: 'A1',
   title: 'Урок 8 · A család & Birtokos ragozás',
   subtitle: 'Семья и притяжательные формы: én, te, ő',
-  description: 'Базовая лексика семьи, формы одного обладаемого предмета при владельцах én/te/ő и короткое связное описание семьи.',
-  slidesCount: 12,
+  description: 'Семья и принадлежность в раннем A1: формы одного обладаемого предмета для én/te/ő, понятное чтение, разговор и связное описание.',
+  slidesCount: 11,
   slides: [
     {
       id: 1,
-      eyebrow: 'УРОК 8 · 1/12 · СЕМЬЯ',
+      eyebrow: 'УРОК 8 · 1/11 · СЕМЬЯ',
       title: 'A család',
       subtitle: 'Базовая лексика семьи',
       body: `
@@ -128,11 +118,10 @@ export const LESSON_8: Lesson = {
         <p><b>testvér</b> — брат / сестра; sibling без указания пола. Для уточнения: <b>fiútestvér</b>, <b>lánytestvér</b>.</p>
         <p><b>nagymama</b> — бабушка; <b>nagypapa</b> — дедушка; <b>feleség</b> — жена; <b>férj</b> — муж; <b>gyerek</b> — ребёнок.</p>
       `,
-      activities: [FAMILY_VOCABULARY],
     },
     {
       id: 2,
-      eyebrow: 'УРОК 8 · 2/12 · МОДЕЛЬ',
+      eyebrow: 'УРОК 8 · 2/11 · МОДЕЛЬ',
       title: 'A birtokos személyrag',
       subtitle: 'Владелец отмечается на существительном',
       body: `
@@ -143,7 +132,7 @@ export const LESSON_8: Lesson = {
     },
     {
       id: 3,
-      eyebrow: 'УРОК 8 · 3/12 · ФОРМЫ',
+      eyebrow: 'УРОК 8 · 3/11 · ФОРМЫ',
       title: 'Egy birtok: én, te, ő',
       subtitle: 'Один предмет и три владельца',
       body: `
@@ -151,11 +140,10 @@ export const LESSON_8: Lesson = {
         <p>У слов на согласный бывают разные соединительные гласные: <b>házam/házad</b>, но <b>testvérem/testvéred</b>. Учи их как проверенные модели.</p>
         <div class=note>Нельзя вывести все формы из одного механического правила.</div>
       `,
-      activities: [SINGULAR_POSSESSIVES],
     },
     {
       id: 4,
-      eyebrow: 'УРОК 8 · 4/12 · СЕМЕЙНЫЕ ФОРМЫ',
+      eyebrow: 'УРОК 8 · 4/11 · СЕМЕЙНЫЕ ФОРМЫ',
       title: 'Anya, apa, testvér',
       subtitle: 'Частые проверенные модели',
       body: `
@@ -166,73 +154,63 @@ export const LESSON_8: Lesson = {
     },
     {
       id: 5,
-      eyebrow: 'УРОК 8 · 5/12 · ВЛАДЕЛЕЦ',
+      eyebrow: 'УРОК 8 · 5/11 · КОНТЕКСТНАЯ ПРАКТИКА',
       title: 'Kié?',
-      subtitle: 'Форма показывает én, te или ő',
+      subtitle: 'Семья, владелец, van/nincs и бытовые вопросы',
       body: `
         <p><b>anyám</b> указывает на én, <b>anyád</b> — на te, <b>anyja</b> — на ő.</p>
         <p>Контраст: <b>Az én házam nagy, a te házad kicsi.</b> — Мой дом большой, а твой маленький.</p>
       `,
-      activities: [OWNER_TEXT],
+      activities: [SINGULAR_POSSESSIVES],
     },
     {
       id: 6,
-      eyebrow: 'УРОК 8 · 6/12 · ЧТЕНИЕ',
-      title: 'Anna családja',
-      subtitle: 'Понимание семьи и отношений',
+      eyebrow: 'УРОК 8 · 6/11 · ЧТЕНИЕ',
+      title: 'Két család egy házban',
+      subtitle: 'Две соседские семьи',
       body: '<p>Определи родственников и владельцев по смыслу, а не просто по окончаниям.</p>',
       activities: [FAMILY_READING],
     },
     {
       id: 7,
-      eyebrow: 'УРОК 8 · 7/12 · ПРЕДЛОЖЕНИЯ',
-      title: 'Mondatok a családról',
-      subtitle: 'Естественные короткие фразы',
-      body: `
-        <p><b>Anyám tanár.</b> — Моя мать — учительница. <b>Apám orvos.</b> — Мой отец — врач.</p>
-        <p><b>A testvérem neve Alex.</b> — Моего брата / мою сестру зовут Алекс.</p>
-        <p><b>Van egy testvérem.</b> — У меня есть брат или сестра.</p>
-        <div class=note><b>Van egy testvérem</b> — готовая фраза. Полную конструкцию с nekem/neked/neki изучим позже; это не цель L8.</div>
-      `,
-      activities: [FAMILY_CAPTIONS],
-    },
-    {
-      id: 8,
-      eyebrow: 'УРОК 8 · 8/12 · ПИСЬМО',
-      title: 'Írás: a családom',
-      subtitle: 'Описание из 4–5 предложений',
-      body: '<p>Используй минимум две притяжательные формы. После написания проверь окончания по таблице урока.</p>',
-      activities: [FAMILY_WRITING],
-    },
-    {
-      id: 9,
-      eyebrow: 'УРОК 8 · 9/12 · ГОВОРЕНИЕ',
-      title: 'Beszéd: a családom',
-      subtitle: 'Короткое устное описание',
-      body: '<p>Наличие записи не доказывает языковую правильность без проверки.</p>',
-      activities: [FAMILY_RECORDING],
-    },
-    {
-      id: 10,
-      eyebrow: 'УРОК 8 · 10/12 · АУДИРОВАНИЕ',
+      eyebrow: 'УРОК 8 · 7/11 · АУДИРОВАНИЕ',
       title: 'Hallásértés',
-      subtitle: 'Только по специальной записи',
-      body: '<p>Прослушайте запись и выберите ответы по содержанию.</p>',
+      subtitle: 'Существующая специальная запись',
+      body: `
+        <p>Прослушай описание семьи и определи родственников и владельцев. Asset, transcript и вопросы сохранены.</p>
+      `,
       activities: [POSSESSIVE_LISTENING],
     },
     {
-      id: 11,
-      eyebrow: 'УРОК 8 · 11/12 · ДОПОЛНИТЕЛЬНО',
-      title: 'Opcionális kitekintés',
-      subtitle: 'Необязательное узнавание',
-      body: '<p><b>Необязательно:</b> позже встретится <b>házaim</b> — «мои дома». Форма не входит в продуктивные задания, критерии прохождения или итог L8.</p>',
+      id: 8,
+      eyebrow: 'УРОК 8 · 8/11 · ВЗАИМОДЕЙСТВИЕ',
+      title: 'Beszélgetés a családról',
+      subtitle: 'Разговор с новым знакомым',
+      body: '<p>Ответь о вымышленной семье и задай собеседнику встречный вопрос. RolePlay остаётся PARTIAL.</p>',
+      activities: [FAMILY_ROLEPLAY],
     },
     {
-      id: 12,
-      eyebrow: 'УРОК 8 · 12/12 · ИТОГИ',
+      id: 9,
+      eyebrow: 'УРОК 8 · 9/11 · ПИСЬМО',
+      title: 'Írás: egy kitalált család',
+      subtitle: 'Связное описание 60–80 слов',
+      body: '<p>Опиши отношения, возраст или работу, место, принадлежность и совместное занятие. Writing остаётся PARTIAL.</p>',
+      activities: [FAMILY_WRITING],
+    },
+    {
+      id: 10,
+      eyebrow: 'УРОК 8 · 10/11 · УСТНАЯ САМОПРАКТИКА',
+      title: 'Beszéd: egy család',
+      subtitle: 'Только текстовая инструкция',
+      body: '<p>Необязательная практика не использует микрофон, не оценивается и не создаёт evidence.</p>',
+      optionalSpeaking: FAMILY_SPEAKING,
+    },
+    {
+      id: 11,
+      eyebrow: 'УРОК 8 · 11/11 · ИТОГИ',
       title: 'Összefoglalás',
       subtitle: 'Проверь пять целей',
-      body: '<ul class=tick><li>Продуктивная тема: один предмет и владельцы én/te/ő.</li><li>Владелец отмечается на существительном: házam, házad, háza.</li><li>Семейные формы: anyám/anyád/anyja, apám/apád/apja, testvérem/testvéred/testvére.</li><li>Явное местоимение служит контрасту.</li><li>Описание семьи: 4–5 предложений и минимум две притяжательные формы.</li></ul>',
+      body: '<ul class=tick><li>Продуктивная тема: один предмет и владельцы én/te/ő.</li><li>Владелец отмечается на существительном: házam, házad, háza.</li><li>Семейные формы: anyám/anyád/anyja, apám/apád/apja, testvérem/testvéred/testvére.</li><li>Множественное обладаемое <b>házaim</b> остаётся только необязательным распознаванием и не входит в scoring.</li><li>Controlled Practice, Reading и Listening могут быть DIRECT; Writing и RolePlay остаются PARTIAL.</li></ul>',
       activities: [EXIT_CHECK],
     },
   ],

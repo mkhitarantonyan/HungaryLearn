@@ -1,29 +1,44 @@
 import type { Lesson, LessonActivity } from '../../types';
 
 const NEAR_MEANINGS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l12-cp-near-meanings', title: 'Hol? Hová? Honnan?', passCount: 8,
+  kind: 'controlledPractice', id: 'l12-cp-near-meanings', title: 'Контекстная практика: транспорт и маршрут', passCount: 11,
   exercises: [
-    ['Anna lakásán vagyok. Hol?', ['Annánál', 'Annához', 'Annától'], 0],
-    ['Péter irányába megyek. Hová?', ['Péternél', 'Péterhez', 'Pétertől'], 1],
-    ['Most jövök az orvostól. Honnan?', ['orvosnál', 'orvoshoz', 'orvostól'], 2],
-    ['A barátom otthonában vagyok. Hol?', ['barátnál', 'baráthoz', 'baráttól'], 0],
-    ['A testvéremhez indulok. Hová?', ['testvérnél', 'testvérhez', 'testvértől'], 1],
-    ['Péter házától jövök. Honnan?', ['Péternél', 'Péterhez', 'Pétertől'], 2],
-    ['Az asztalnál állok. Hol?', ['asztalnál', 'asztalhoz', 'asztaltól'], 0],
-    ['Az elnök irányába megyek. Hová?', ['elnöknél', 'elnökhöz', 'elnöktől'], 1],
-    ['Annától kaptam a könyvet. Kitől?', ['Annánál', 'Annához', 'Annától'], 2],
-    ['A doktor rendelőjében vagyok. Kinél?', ['orvosnál', 'orvoshoz', 'orvostól'], 0],
+    ['Ты уже у врача. Что скажешь?', ['Az orvosnál vagyok.', 'Az orvoshoz megyek.', 'Az orvostól jövök.'], 0],
+    ['Ты направляешься к Анне.', ['Annánál vagyok.', 'Annához megyek.', 'Annától jövök.'], 1],
+    ['Ты возвращаешься от Петера.', ['Péternél vagyok.', 'Péterhez megyek.', 'Pétertől jövök.'], 2],
+    ['Как спросить дорогу к библиотеке?', ['Hogyan jutok el a könyvtárhoz?', 'Hol jövök a könyvtártól?', 'Kinél van a könyvtár?'], 0],
+    ['Ты спрашиваешь, где остановка.', ['Hol van a megálló?', 'Hová van a megálló?', 'Honnan a megálló?'], 0],
+    ['Какой транспорт выбрать?', ['Melyik busszal menjek?', 'Melyik busznál vagyok?', 'Melyik busztól jövök?'], 0],
+    ['Инструкция: сядьте на автобус.', ['Szálljon fel a buszra.', 'Szálljon le a buszról.', 'Forduljon balra.'], 0],
+    ['Инструкция: выйдите на следующей остановке.', ['Szálljon fel a következő megállónál.', 'Szálljon le a következő megállónál.', 'Menjen a megállótól.'], 1],
+    ['Нужно ли делать пересадку?', ['Át kell szállni?', 'Hol kell állni?', 'Kihez kell menni?'], 0],
+    ['Уточни, где выходить.', ['Hol kell leszállnom?', 'Honnan kell felszállnom?', 'Kinél kell lennem?'], 0],
+    ['После остановки нужно идти прямо.', ['A megállótól menjen egyenesen.', 'A megállóhoz szálljon fel.', 'A megállónál forduljon vissza busszal.'], 0],
+    ['Остановка находится перед аптекой.', ['A megálló a gyógyszertár előtt van.', 'A megálló a gyógyszertárhoz megy.', 'A megálló a gyógyszertártól jön.'], 0],
+    ['Ты не понял и просишь повторить.', ['Elnézést, még egyszer, kérem.', 'Köszönöm, nem kell.', 'Jól van a megálló.'], 0],
+    ['Проверь, правильно ли понял конечное направление.', ['Jól értem, hogy a banknál jobbra fordulok?', 'Hol értem a bankot?', 'A banktól értem.'], 0],
   ].map(([prompt, options, correctIndex], index) => ({ kind: 'singleChoice' as const, id: `l12-meaning-${index + 1}`, prompt: prompt as string, options: options as string[], correctIndex: correctIndex as number })),
 };
 
-const formPractice = (id: string, title: string, prompts: string[], answers: string[]): LessonActivity => ({
-  kind: 'controlledPractice', id, title, passCount: 5,
-  exercises: prompts.map((prompt, index) => ({ kind: 'textInput' as const, id: `${id}-${index + 1}`, prompt, accept: [answers[index]] })),
-});
-
-const ADESSIVE = formPractice('l12-cp-adessive-forms', 'Формы -nál/-nél', ['orvos → Hol?', 'asztal → Hol?', 'Péter → Kinél?', 'testvér → Kinél?', 'Anna → Kinél?', 'elnök → Kinél?'], ['orvosnál', 'asztalnál', 'Péternél', 'testvérnél', 'Annánál', 'elnöknél']);
-const ALLATIVE = formPractice('l12-cp-allative-forms', 'Формы -hoz/-hez/-höz', ['orvos → Hová?', 'barát → Kihez?', 'Péter → Kihez?', 'testvér → Kihez?', 'elnök → Kihez?', 'Anna → Kihez?'], ['orvoshoz', 'baráthoz', 'Péterhez', 'testvérhez', 'elnökhöz', 'Annához']);
-const ABLATIVE = formPractice('l12-cp-ablative-forms', 'Формы -tól/-től', ['orvos → Honnan?', 'barát → Kitől?', 'Péter → Kitől?', 'testvér → Kitől?', 'Anna → Kitől?', 'elnök → Kitől?'], ['orvostól', 'baráttól', 'Pétertől', 'testvértől', 'Annától', 'elnöktől']);
+const READING: LessonActivity = {
+  kind: 'reading', id: 'l12-reading-library-route', title: 'Чтение: дорога в библиотеку', passCount: 6,
+  instructions: 'Прочитай маршрут Анны и ответь по смыслу: транспорт, последовательность, ошибка и исправление.',
+  content: { type: 'prose', title: 'Hogyan jut el Anna a könyvtárba?', paragraphs: [
+    'Anna délelőtt a Nyugati pályaudvarnál van. Egy új könyvtárhoz szeretne eljutni, mert egy magyar könyvet keres a tanfolyamához. Nem ismeri ezt a városrészt. Az információs pultnál megkérdezi, melyik busszal menjen. Az ügyintéző azt mondja, hogy szálljon fel a 9-es buszra, és a negyedik megállónál szálljon le. Átszállni nem kell.',
+    'Anna felszáll a buszra, de úgy érti, hogy a harmadik megállónál kell leszállnia. Ott nem lát könyvtárat, csak egy nagy gyógyszertárat. Megnézi a címet a telefonján, és látja, hogy rossz helyen van. Megkérdez egy nőt: „Elnézést, hol van a könyvtár?” A nő elmagyarázza, hogy Anna egy megállóval korábban szállt le. A könyvtár a következő megállónál van.',
+    'Anna újra buszra száll, és most jó helyen száll le. A megállótól egyenesen megy, a második utcánál balra fordul. Elmegy egy pékség mellett, majd meglát egy kis parkot. A könyvtár a parknál, a posta előtt van. Anna még egyszer ellenőrzi a címet, azután bemegy az épületbe. Örül, hogy végül megtalálta a helyes utat, és még időben érkezett.',
+  ] },
+  questions: [
+    { id: 'l12-reading-q1', question: 'Где Анна находится в начале?', options: ['у вокзала Ньюгати', 'у библиотеки', 'у почты'], correctIndex: 0 },
+    { id: 'l12-reading-q2', question: 'На каком транспорте она едет?', options: ['на метро', 'на автобусе 9', 'на трамвае'], correctIndex: 1 },
+    { id: 'l12-reading-q3', question: 'На какой остановке ей нужно выйти?', options: ['на третьей', 'на четвёртой', 'на пятой'], correctIndex: 1 },
+    { id: 'l12-reading-q4', question: 'Какую ошибку совершает Анна?', options: ['садится не в тот автобус', 'выходит на остановку раньше', 'поворачивает направо'], correctIndex: 1 },
+    { id: 'l12-reading-q5', question: 'Что она видит после ошибочного выхода?', options: ['аптеку', 'библиотеку', 'пекарню'], correctIndex: 0 },
+    { id: 'l12-reading-q6', question: 'Как исправляется маршрут?', options: ['она идёт обратно к вокзалу', 'садится снова и едет ещё одну остановку', 'берёт такси'], correctIndex: 1 },
+    { id: 'l12-reading-q7', question: 'Какой ориентир находится перед библиотекой?', options: ['рынок', 'почта', 'вокзал'], correctIndex: 1 },
+    { id: 'l12-reading-q8', question: 'Какова последняя часть маршрута?', options: ['прямо, затем налево у второй улицы', 'направо у первой улицы', 'только одна остановка пешком'], correctIndex: 0 },
+  ],
+};
 
 const LISTENING: LessonActivity = {
   kind: 'listening', id: 'l12-listening-near-locations', title: 'Аудирование: у кого, к кому, от кого?',
@@ -38,63 +53,70 @@ const LISTENING: LessonActivity = {
   ],
 };
 
-const WRITING: LessonActivity = {
-  kind: 'writing', id: 'l12-writing-near-exchange', title: 'Письмо: короткий обмен',
-  prompt: 'Напиши 2–4 короткие реплики или предложения о том, у кого ты находишься, к кому идёшь и/или от кого возвращаешься. Используй осмысленно минимум две из трёх изученных групп.',
-  modelAnswer: ['Hová mész?', 'Péterhez megyek.', 'Honnan jössz?', 'Az orvostól jövök.'],
-  rubric: ['Есть 2–4 связанные короткие реплики или предложения', 'Осмысленно использованы минимум две relation-группы', 'Формы отвечают выбранным Hol? / Hová? / Honnan?'],
+const ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l12-roleplay-public-route', title: 'Ролевая игра: как доехать до библиотеки', partnerLabel: 'Információ', completionMessage: 'Sikerült pontosítani az útvonalat.', startTurnId: 'l12-rp-s1',
+  turns: [
+    { id: 'l12-rp-s1', speaker: 'waiter', prompt: 'Jó napot kívánok! Segíthetek?', next: 'l12-rp-l1' },
+    { id: 'l12-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси, как добраться до библиотеки.', model: 'Jó napot! Hogyan jutok el a könyvtárhoz?', next: 'l12-rp-s2' },
+    { id: 'l12-rp-s2', speaker: 'waiter', prompt: 'Menjen a 9-es busszal.', next: 'l12-rp-l2' },
+    { id: 'l12-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси, где находится автобусная остановка.', model: 'Hol van a buszmegálló?', next: 'l12-rp-s3' },
+    { id: 'l12-rp-s3', speaker: 'waiter', prompt: 'A megálló a gyógyszertár előtt van. Szálljon fel a 9-es buszra.', next: 'l12-rp-l3' },
+    { id: 'l12-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси, где выходить.', model: 'Hol kell leszállnom?', next: 'l12-rp-s4' },
+    { id: 'l12-rp-s4', speaker: 'waiter', prompt: 'A harmadik megállónál szálljon le.', next: 'l12-rp-l4' },
+    { id: 'l12-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Покажи непонимание и попроси повторить.', model: 'Elnézést, nem értettem. Még egyszer, kérem.', next: 'l12-rp-s5' },
+    { id: 'l12-rp-s5', speaker: 'waiter', prompt: 'A negyedik megállónál, nem a harmadiknál.', next: 'l12-rp-l5' },
+    { id: 'l12-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди исправленную остановку и спроси об ориентире.', model: 'Jól értem, hogy a negyedik megállónál szállok le? Mit látok ott?', next: 'l12-rp-s6' },
+    { id: 'l12-rp-s6', speaker: 'waiter', prompt: 'Igen. Ott van egy pékség.', next: 'l12-rp-l6' },
+    { id: 'l12-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси о последнем пешем отрезке.', model: 'És a pékségtől merre menjek?', next: 'l12-rp-s7' },
+    { id: 'l12-rp-s7', speaker: 'waiter', prompt: 'Menjen egyenesen, majd a második utcánál forduljon balra. A könyvtár a parknál van.', next: 'l12-rp-l7' },
+    { id: 'l12-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Повтори финальную часть маршрута.', model: 'Tehát a pékségtől egyenesen megyek, majd balra fordulok, és a parknál keresem a könyvtárat.', next: 'l12-rp-s8' },
+    { id: 'l12-rp-s8', speaker: 'waiter', prompt: 'Pontosan.', next: 'l12-rp-l8' },
+    { id: 'l12-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Поблагодари и заверши разговор.', model: 'Köszönöm szépen a segítséget. Viszontlátásra!', next: 'l12-rp-s9' },
+    { id: 'l12-rp-s9', speaker: 'waiter', prompt: 'Szívesen. Viszontlátásra!' },
+  ],
 };
 
-const RECORDING: LessonActivity = {
-  kind: 'recording', id: 'l12-recording-near-exchange', title: 'Говорение: практический обмен',
-  instructions: 'Запиши короткий ответ или обмен с формами у/к/от, затем проверь окончания по памятке урока.',
-  targetText: 'Hová mész? Péterhez megyek. Honnan jössz? Az orvostól jövök.',
-  targetTranslation: 'К кому ты идёшь? Я иду к Петеру. Откуда ты идёшь? Я иду от врача.',
-  rubric: ['Есть минимум две короткие связанные реплики', 'Использованы минимум две изученные relation-группы', 'Ответ понятен в практическом контексте'],
+const WRITING: LessonActivity = {
+  kind: 'writing', id: 'l12-writing-near-exchange', title: 'Письмо: простой маршрут',
+  prompt: 'Напиши 70–90 слов с маршрутом от вымышленной начальной точки до нужного места. Укажи транспорт, остановку, где выйти, два пеших указания, ориентир и конечное местоположение.',
+  modelAnswer: ['A pályaudvartól a városi múzeumhoz a 7-es busszal lehet eljutni. A buszmegálló a pályaudvar előtt van. Szálljon fel a 7-es buszra, és az ötödik megállónál szálljon le. Ott lát egy nagy bankot. A banktól menjen egyenesen, majd az első utcánál forduljon jobbra. Menjen el egy pékség mellett. A múzeum a kis parknál, a posta mellett van. Ha a könyvtárhoz érkezik, túl messz ment. Az út körülbelül húsz perc, és átszállni nem kell.'],
+  rubric: ['70–90 слов', 'транспорт и остановка', 'место выхода', 'два пеших указания', 'ориентир и конечное местоположение'],
+};
+
+const SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори около 1.5 минуты о дороге от дома или станции до знакомого места. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Назови транспорт, остановку, место выхода, пешую часть и ориентир.',
+  rubric: ['транспорт', 'остановка', 'пешая часть', 'ориентир'],
 };
 
 const EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck', id: 'l12-exit-check', title: 'Проверка целей урока 12', checks: [
     { objectiveId: 'l12_distinguish-near-cases', activityId: 'l12-cp-near-meanings', evidenceKind: 'grammar' },
-    { objectiveId: 'l12_form-adessive', activityId: 'l12-cp-adessive-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l12_form-allative', activityId: 'l12-cp-allative-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l12_form-ablative', activityId: 'l12-cp-ablative-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l12_use-near-cases', activityId: 'l12-listening-near-locations', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l12-writing-near-exchange', evidenceKind: 'writing' }, { activityId: 'l12-recording-near-exchange', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l12_form-adessive', activityId: 'l12-cp-near-meanings', evidenceKind: 'grammar' },
+    { objectiveId: 'l12_form-allative', activityId: 'l12-cp-near-meanings', evidenceKind: 'grammar' },
+    { objectiveId: 'l12_form-ablative', activityId: 'l12-cp-near-meanings', evidenceKind: 'grammar' },
+    { objectiveId: 'l12_use-near-cases', activityId: 'l12-reading-library-route', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l12-listening-near-locations', evidenceKind: 'listening' }, { activityId: 'l12-roleplay-public-route', evidenceKind: 'interaction' }, { activityId: 'l12-writing-near-exchange', evidenceKind: 'writing' }] },
   ],
 };
 
 export const LESSON_12: Lesson = {
   id: 12, number: 12, level: 'A1', title: 'Урок 12 · Helyhatározók III',
   subtitle: 'Hol? Hová? Honnan? — формы у/к/от',
-  description: 'Формы -nál/-nél, -hoz/-hez/-höz и -tól/-től для местонахождения, направления и источника; короткие практические обмены и выбранные послелоги как дополнение.',
+  description: 'Интеграция форм -nál/-nél, -hoz/-hez/-höz и -tól/-től с транспортом, остановками, простыми маршрутами и восстановлением понимания.',
   slidesCount: 11,
   slides: [
-    { id: 1, eyebrow: 'УРОК 12 · 1/11 · БЛОК A · ЗНАЧЕНИЯ', title: 'Hol? Hová? Honnan?', subtitle: 'Местонахождение, цель и источник', body: `
-      <p><b>Hol?</b> — у кого/чего: <b>Annánál vagyok.</b> <b>Hová?</b> — к кому/чему: <b>Péterhez megyek.</b> <b>Honnan?</b> — от кого/чего: <b>Az orvostól jövök.</b></p>
-      <div class="note">Эти формы выражают конкретное отношение «у/к/от». Другие отношения с людьми, например «рядом с Петером» или «перед Петером», выражаются другими конструкциями.</div>`, activities: [NEAR_MEANINGS] },
-    { id: 2, eyebrow: 'УРОК 12 · 2/11 · БЛОК A · HOL?', title: '-nál / -nél', subtitle: 'Местонахождение у/около', body: `
-      <p><b>-nál:</b> orvosnál, asztalnál. <b>-nél:</b> Péternél, testvérnél.</p><p><b>Annánál vagyok.</b> — Я у Анны / вместе с Анной.</p>
-      <div class="note"><b>testvér</b> означает брат или сестра; <b>testvérnél</b> — у брата/сестры.</div>`, activities: [ADESSIVE] },
-    { id: 3, eyebrow: 'УРОК 12 · 3/11 · БЛОК A · HOVÁ?', title: '-hoz / -hez / -höz', subtitle: 'Направление к человеку или объекту', body: `
-      <p><b>-hoz:</b> orvoshoz, baráthoz. <b>-hez:</b> Péterhez, testvérhez. <b>-höz:</b> elnökhöz.</p><p><b>Annához megyek.</b> — Я иду к Анне.</p>
-      <div class="note">Учим формы вместе с частыми словами; полная форма зависит от гармонии гласных, а у некоторых основ встречаются словарные изменения.</div>`, activities: [ALLATIVE] },
-    { id: 4, eyebrow: 'УРОК 12 · 4/11 · БЛОК A · HONNAN?', title: '-tól / -től', subtitle: 'Движение или происхождение от источника', body: `
-      <p><b>-tól:</b> orvostól, baráttól. <b>-től:</b> Pétertől, testvértől.</p><p><b>Annától jövök.</b> — Я иду от Анны.</p>`, activities: [ABLATIVE] },
-    { id: 5, eyebrow: 'УРОК 12 · 5/11 · УЧЕБНАЯ МАТРИЦА', title: 'Három gyakori helycsalád', subtitle: 'Три частые пространственные семьи', body: `
-      <table class="conj"><tr><th>Отношение</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>внутри</td><td>-ban/-ben</td><td>-ba/-be</td><td>-ból/-ből</td></tr><tr><td>на поверхности</td><td>-n/-on/-en/-ön</td><td>-ra/-re</td><td>-ról/-ről</td></tr><tr><td>у / около / к / от</td><td>-nál/-nél</td><td>-hoz/-hez/-höz</td><td>-tól/-től</td></tr></table>
-      <div class="note">Таблица сравнивает три часто используемые пространственные группы по Hol? / Hová? / Honnan?. Это учебная модель, а не полное описание всех способов выражения пространства в венгерском.</div>` },
-    { id: 6, eyebrow: 'УРОК 12 · 6/11 · ДИАЛОГ', title: 'Párbeszéd', subtitle: 'К врачу и от врача', body: `<p><b>A:</b> Hová mész?</p><p><b>B:</b> Az orvoshoz megyek, mert beteg vagyok.</p><p><b>A:</b> Honnan jössz?</p><p><b>B:</b> Az orvostól jövök.</p><p><b>A:</b> És utána?</p><p><b>B:</b> Utána Péterhez megyek.</p><p>Отдельный статический пример: <b>Péternél vagyok.</b></p>` },
-    { id: 7, eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ', title: 'Kihez? Kinél? Kitől?', subtitle: 'Короткий обмен на слух', body: `<p>Прослушай короткий разговор и определи отношение, цель и источник.</p>`, activities: [LISTENING] },
-    { id: 8, eyebrow: 'УРОК 12 · 8/11 · ПРАКТИЧЕСКИЙ ОБМЕН', title: 'Írás és beszéd', subtitle: 'Письмо и говорение', body: `<p>Используй ядро урока в коротком обмене. Открытые ответы требуют проверки и не становятся автоматически правильными после отправки или записи.</p>`, activities: [WRITING, RECORDING] },
-    { id: 9, eyebrow: 'УРОК 12 · 9/11 · БЛОК B · ДОПОЛНИТЕЛЬНО', title: 'Kiválasztott névutók', subtitle: 'Выбранные послелоги — enrichment', body: `
-      <p><b>Дополнительно, вне целей и проходных заданий:</b> alatt — под; felett/fölött — над; mellett — рядом; előtt — перед; mögött — позади; között — между.</p><p><b>A macska az asztal alatt van.</b> — Кошка под столом.</p>
-      <p>В изучаемых здесь базовых конструкциях эти послелоги стоят после существительного без дополнительного пространственного падежного суффикса.</p>
-      <div class="note">У нескольких частых послелогов есть полезный контраст: alatt/alá/alól, előtt/elé/elől, mellett/mellé/mellől. Это дополнительное распознавание, не универсальное правило и не оцениваемая цель L12.</div>` },
-    { id: 10, eyebrow: 'УРОК 12 · 10/11 · БЛОК B · ДОПОЛНИТЕЛЬНО', title: 'Személyes alakok és idő', subtitle: 'Личные формы и временные chunks — enrichment', body: `
-      <p><b>Дополнительное распознавание:</b> nálam/nálad/nála; hozzám/<b>hozzád</b>/hozzá; tőlem/tőled/tőle. У этих падежных форм есть личные формы: nálam «у меня», hozzám «ко мне», tőlem «от меня».</p>
-      <p>Полезные временные chunks: <b>kilenctől</b> — с девяти часов; <b>ebéd előtt</b> — до обеда; <b>ebéd után</b> — после обеда; <b>két nap múlva</b> — через два дня.</p>
-      <div class="note">Эти формы даны для знакомства. В обязательных упражнениях урока они не проверяются.</div>` },
-    { id: 11, eyebrow: 'УРОК 12 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Три отношения в практическом контексте', body: `<ul class="tick"><li>Hol? — -nál/-nél</li><li>Hová? — -hoz/-hez/-höz</li><li>Honnan? — -tól/-től</li><li>Выбранные послелоги и личные формы остаются дополнительным материалом</li></ul><div class="note">Следующий урок вводит прошедшее время. В L12 остаёмся в настоящем времени и работаем с местом и направлением.</div>`, activities: [EXIT_CHECK] },
+    { id: 1, eyebrow: 'УРОК 12 · 1/11 · СИСТЕМА', title: 'Hol? Hová? Honnan?', subtitle: 'У, к и от человека или объекта', body: `<p><b>Hol?</b> — <b>Annánál vagyok.</b> <b>Hová?</b> — <b>Péterhez megyek.</b> <b>Honnan?</b> — <b>Az orvostól jövök.</b></p><div class="note">L12 сохраняет точную семью -nál/-nél, -hoz/-hez/-höz, -tól/-től и соединяет её с уже знакомыми формами места из L10–L11.</div>` },
+    { id: 2, eyebrow: 'УРОК 12 · 2/11 · ФОРМЫ', title: '-nál/-nél · -hoz/-hez/-höz · -tól/-től', subtitle: 'Три отношения как связанные модели', body: `<table class="conj"><tr><th></th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>orvos</td><td>orvosnál</td><td>orvoshoz</td><td>orvostól</td></tr><tr><td>Péter</td><td>Péternél</td><td>Péterhez</td><td>Pétertől</td></tr><tr><td>Anna</td><td>Annánál</td><td>Annához</td><td>Annától</td></tr></table><div class="note"><b>testvér</b> означает брат или сестра. Формы выбираются по гармонии гласных и учатся в частых сочетаниях.</div>` },
+    { id: 3, eyebrow: 'УРОК 12 · 3/11 · ИНТЕГРАЦИЯ', title: 'Három gyakori helycsalád', subtitle: 'Знакомые системы работают вместе', body: `<table class="conj"><tr><th>Отношение</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>внутри</td><td>-ban/-ben</td><td>-ba/-be</td><td>-ból/-ből</td></tr><tr><td>поверхность/место</td><td>-n/-on/-en/-ön</td><td>-ra/-re</td><td>-ról/-ről</td></tr><tr><td>у / к / от</td><td>-nál/-nél</td><td>-hoz/-hez/-höz</td><td>-tól/-től</td></tr></table><p>Дополнительное распознавание: <b>nálam, hozzám, tőlem</b>. Это учебная модель, а не полное описание пространства.</p>` },
+    { id: 4, eyebrow: 'УРОК 12 · 4/11 · ФУНКЦИОНАЛЬНЫЙ ЯЗЫК', title: 'Hogyan jutok el...?', subtitle: 'Транспорт, остановка и уточнение', body: `<div class="grid2"><div><p><b>Hol van a megálló?</b></p><p><b>Melyik busszal menjek?</b></p><p><b>Hol kell leszállnom?</b></p><p><b>Át kell szállni?</b></p></div><div><p><b>Menjen egyenesen.</b></p><p><b>Forduljon jobbra/balra.</b></p><p><b>Elnézést, még egyszer, kérem.</b></p><p><b>Jól értem, hogy...?</b></p></div></div><div class="note">Императивные формы здесь используются как готовые маршрутные chunks; систематическое образование императива относится к L22.</div>` },
+    { id: 5, eyebrow: 'УРОК 12 · 5/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА', title: 'Közlekedés és útvonal', subtitle: 'От формы к практическому маршруту', body: `<p>Четырнадцать ситуаций охватывают выбор транспорта, направление, местонахождение, посадку, выход, пересадку и восстановление понимания.</p>`, activities: [NEAR_MEANINGS] },
+    { id: 6, eyebrow: 'УРОК 12 · 6/11 · ЧТЕНИЕ', title: 'Hogyan jut el Anna a könyvtárba?', subtitle: 'Ошибка и исправленный маршрут', body: `<p>Следи за транспортом, остановками, ориентиром и тем, как Анна исправляет ошибку.</p>`, activities: [READING] },
+    { id: 7, eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ', title: 'Kihez? Kinél? Kitől?', subtitle: 'Существующая синхронизированная запись', body: `<p>Запись сохраняет короткую проверку базовой семьи у/к/от. Транскрипт и вопросы не изменены.</p>`, activities: [LISTENING] },
+    { id: 8, eyebrow: 'УРОК 12 · 8/11 · ВЗАИМОДЕЙСТВИЕ', title: 'Útbaigazítás', subtitle: 'Маршрут с одной ошибкой понимания', body: `<p>Спроси дорогу, транспорт и место выхода, попроси повторить и подтверди исправленный маршрут.</p>`, activities: [ROLEPLAY] },
+    { id: 9, eyebrow: 'УРОК 12 · 9/11 · ПИСЬМО', title: 'Írj egy útvonalat!', subtitle: 'Связные указания от старта до цели', body: `<p>Открытый маршрут остаётся PARTIAL до квалифицированной проверки.</p>`, activities: [WRITING] },
+    { id: 10, eyebrow: 'УРОК 12 · 10/11 · УСТНАЯ САМОПРАКТИКА', title: 'Ismerős útvonal', subtitle: 'Только текстовая инструкция', body: `<p>По желанию объясни знакомую дорогу. Упражнение не использует микрофон и не создаёт evidence.</p>`, optionalSpeaking: SPEAKING },
+    { id: 11, eyebrow: 'УРОК 12 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Формы работают внутри маршрута', body: `<ul class="tick"><li>Hol? — -nál/-nél</li><li>Hová? — -hoz/-hez/-höz</li><li>Honnan? — -tól/-től</li><li>Транспорт, остановка, ориентир и уточнение образуют практический маршрут</li><li>RolePlay и Writing остаются PARTIAL</li></ul>`, activities: [EXIT_CHECK] },
   ],
   vocabulary: [
     ['orvosnál', 'у врача'], ['orvoshoz', 'к врачу'], ['orvostól', 'от врача'], ['Péternél', 'у Петера'], ['Péterhez', 'к Петеру'], ['Pétertől', 'от Петера'],

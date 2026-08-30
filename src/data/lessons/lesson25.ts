@@ -3,22 +3,41 @@ import { createMigrationActivities } from './migrationActivityFactory';
 
 const L25_ACTIVITIES = createMigrationActivities({
   lessonId: 25,
+  activitySequence: 'communication',
   controlledTitle: 'Работа и собеседование: ключевые формулировки',
-  controlledPassCount: 4,
+  controlledPassCount: 10,
   controlledExercises: [
-    { kind: 'singleChoice', id: 'l25-cp-1', prompt: 'Как спросить о профессии?', options: ['Mivel foglalkozol?', 'Hol laksz?'], correctIndex: 0 },
-    { kind: 'fillGap', id: 'l25-cp-2', prompt: '«Я работаю учителем».', accept: ['Tanárként dolgozom', 'Tanárként dolgozom.'] },
-    { kind: 'singleChoice', id: 'l25-cp-3', prompt: 'Выбери навык для резюме.', options: ['Jól beszélek angolul.', 'Tegnap esett.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l25-cp-4', prompt: 'Как сказать «у меня три года опыта»?', options: ['Három év tapasztalatom van.', 'Három év vagyok.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l25-cp-5', prompt: 'Вежливо спроси о начале работы.', options: ['Mikor kezdhetek?', 'Mikor kezdesz?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-1', prompt: 'A · На собеседовании вежливо спрашивают о профессии.', options: ['Mivel foglalkozik?', 'Hol lakik?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-2', prompt: 'B · Сообщи о количестве опыта.', options: ['Három év tapasztalatom van.', 'Három évig tapasztalat vagyok.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-3', prompt: 'B · Сообщи, где и как долго работал(а).', options: ['Két évig egy szállodában dolgoztam.', 'Két éve egy szállodába dolgozom.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-4', prompt: 'C · Назови прежнюю обязанность.', options: ['A feladataim közé tartozott az ügyfelek segítése.', 'A feladataim három év tapasztalatom van.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l25-cp-5', prompt: 'C · Főleg az ügyfelek kérdéseivel ___.', accept: ['foglalkoztam'] },
+    { kind: 'singleChoice', id: 'l25-cp-6', prompt: 'D · Назови умение профессионально.', options: ['Jól tudok problémákat megoldani.', 'Jó vagyok egy problémát.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-7', prompt: 'D · Вырази сильную сторону.', options: ['Az egyik erősségem, hogy gyorsan tanulok.', 'Az egyik munkám gyorsan tanul.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-8', prompt: 'D · Подчеркни командную работу.', options: ['Szeretek csapatban dolgozni.', 'Szeretem csapatot dolgozom.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-9', prompt: 'D · Подчеркни самостоятельность.', options: ['Önállóan is tudok dolgozni.', 'Önállóan is munkát vagyok.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-10', prompt: 'E · Работодатель вежливо спрашивает о доступности.', options: ['Mikor tudna kezdeni?', 'Mikor tudsz kezdett?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-11', prompt: 'E · Кандидат просит больше информации.', options: ['Szeretnék többet megtudni a pozícióról.', 'Többet tudom a pozíciót.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-12', prompt: 'E · Кандидат спрашивает о графике.', options: ['Milyen a munkaidő?', 'Milyen dolgozik az idő?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l25-cp-13', prompt: 'E · Вежливо заверши собеседование.', options: ['Köszönöm a lehetőséget.', 'Köszönök a lehetőségben.'], correctIndex: 0 },
   ],
-  readingTitle: 'Чтение: короткое объявление о работе',
-  readingParagraphs: ['Budapesti iroda ügyfélszolgálati munkatársat keres. Fontos a jó kommunikáció és az angol nyelvtudás. Tapasztalat előny, de nem feltétel. Jelentkezés önéletrajzzal.'],
-  readingPassCount: 2,
+  readingTitle: 'Ügyfélszolgálati munkatársat keresünk',
+  readingParagraphs: [
+    'Egy budapesti szolgáltató cég ügyfélszolgálati munkatársat keres teljes munkaidőben. A munkatárs fő feladata, hogy telefonon és e-mailben segítsen az ügyfeleknek, válaszoljon a kérdéseikre, és egyszerűbb problémákat önállóan megoldjon.',
+    'Olyan jelentkezőt keresünk, aki jól kommunikál, türelmes, pontos és szívesen dolgozik emberekkel. Fontos a magabiztos angol nyelvtudás, a magyar nyelv ismerete pedig előnyt jelent. Korábbi ügyfélszolgálati vagy irodai tapasztalat előny, de nem feltétel, mert az új kollégák képzést kapnak.',
+    'A munka hétfőtől péntekig tart, általában 9 és 17 óra között. A betanulási időszak után heti két nap otthoni munkára is van lehetőség.',
+    'Jelentkezéshez rövid önéletrajzot és néhány mondatos bemutatkozást kérünk. A kiválasztott jelentkezőket személyes vagy online interjúra hívjuk.',
+  ],
+  readingPassCount: 6,
   readingQuestions: [
-    { id: 'l25-read-1', question: 'Milyen munkatársat keresnek?', options: ['Ügyfélszolgálatit', 'Orvost', 'Tanárt'], correctIndex: 0 },
-    { id: 'l25-read-2', question: 'Melyik nyelv fontos?', options: ['Angol', 'Francia', 'Olasz'], correctIndex: 0 },
-    { id: 'l25-read-3', question: 'Kötelező a tapasztalat?', options: ['Igen', 'Nem'], correctIndex: 1 },
+    { id: 'l25-read-1', question: 'Mi a munkatárs fő feladata?', options: ['Segíteni az ügyfeleknek és egyszerűbb problémákat megoldani', 'Új termékeket gyártani', 'Külföldre utazni'], correctIndex: 0 },
+    { id: 'l25-read-2', question: 'Milyen csatornákon kommunikál az ügyfelekkel?', options: ['Telefonon és e-mailben', 'Csak személyesen', 'Postai levélben'], correctIndex: 0 },
+    { id: 'l25-read-3', question: 'Milyen személyes tulajdonságokat keresnek?', options: ['Jó kommunikációt, türelmet és pontosságot', 'Gyors futást és fizikai erőt', 'Művészi tapasztalatot'], correctIndex: 0 },
+    { id: 'l25-read-4', question: 'Melyik nyelvtudás fontos feltétel?', options: ['Magabiztos angol', 'Magabiztos francia', 'Anyanyelvi német'], correctIndex: 0 },
+    { id: 'l25-read-5', question: 'Kötelező a korábbi ügyfélszolgálati tapasztalat?', options: ['Nem, előny, de nem feltétel', 'Igen, legalább öt év kell', 'Csak vezetői tapasztalat kell'], correctIndex: 0 },
+    { id: 'l25-read-6', question: 'Milyen a munkaidő?', options: ['Hétfőtől péntekig, általában 9–17 óráig', 'Csak hétvégén', 'Minden éjjel'], correctIndex: 0 },
+    { id: 'l25-read-7', question: 'Mikor lehet heti két napot otthonról dolgozni?', options: ['A betanulási időszak után', 'Az első naptól feltétel nélkül', 'Csak a próba előtt'], correctIndex: 0 },
+    { id: 'l25-read-8', question: 'Mit kell elküldeni a jelentkezéshez?', options: ['Rövid önéletrajzot és néhány mondatos bemutatkozást', 'Útlevelet és fényképet', 'Hosszú szakdolgozatot'], correctIndex: 0 },
   ],
   listeningTitle: 'Аудирование: фрагмент собеседования',
   listeningTranscript: 'Interjúztató: Mivel foglalkozott korábban?\nJelölt: Két évig egy szállodában dolgoztam. Jól beszélek angolul, és szeretek emberekkel dolgozni.',
@@ -28,21 +47,55 @@ const L25_ACTIVITIES = createMigrationActivities({
     { id: 'l25-listen-2', question: 'Mennyi ideig dolgozott ott?', options: ['Két hónapig', 'Két évig', 'Tíz évig'], correctIndex: 1 },
     { id: 'l25-listen-3', question: 'Mit szeret?', options: ['Egyedül dolgozni', 'Emberekkel dolgozni', 'Utazni'], correctIndex: 1 },
   ],
-  writingTitle: 'Письмо: краткое резюме',
-  writingPrompt: 'Составь краткое резюме: имя, город, образование или профессия, опыт, языки и два навыка. Используй 6–8 коротких строк.',
-  writingModel: ['Név: Anna Kovács', 'Lakóhely: Budapest', 'Tapasztalat: két év ügyfélszolgálaton', 'Nyelvek: magyar, angol', 'Készségek: jó kommunikáció, pontos munkavégzés'],
-  writingRubric: ['Есть личные данные и опыт', 'Указаны языки и навыки', 'Формат легко просмотреть'],
-  recordingTitle: 'Говорение: мини-собеседование',
-  recordingInstructions: 'Представься, назови профессию или опыт и два сильных навыка. Заверши вопросом работодателю.',
-  recordingTarget: 'Két év tapasztalatom van. Jól beszélek angolul, és szeretek emberekkel dolgozni. Mikor kezdhetek?',
+  rolePlay: {
+    title: 'RolePlay: собеседование на офисную должность',
+    partnerLabel: 'Интервьюер',
+    completionMessage: 'Собеседование завершено. Проверь, описал(а) ли ты опыт, обязанности, сильную сторону, мотивацию и задал(а) ли практический вопрос.',
+    startTurnId: 'l25-rp-1',
+    turns: [
+      { id: 'l25-rp-1', speaker: 'waiter', prompt: 'Jó napot kívánok! Kérem, röviden mutatkozzon be.', next: 'l25-rp-2' },
+      { id: 'l25-rp-2', speaker: 'learner', prompt: 'Поприветствуй и кратко представься без реальных персональных данных.', responseMode: 'selfPractice', model: 'Jó napot kívánok! Irodai és ügyfélszolgálati munka érdekel.', next: 'l25-rp-3' },
+      { id: 'l25-rp-3', speaker: 'waiter', prompt: 'Hol dolgozott korábban?', next: 'l25-rp-4' },
+      { id: 'l25-rp-4', speaker: 'learner', prompt: 'Расскажи о вымышленном предыдущем месте и продолжительности работы своими словами.', responseMode: 'selfPractice', model: 'Korábban két évig egy szállodában dolgoztam.', next: 'l25-rp-5' },
+      { id: 'l25-rp-5', speaker: 'waiter', prompt: 'Mik voltak a fő feladatai?', next: 'l25-rp-6' },
+      { id: 'l25-rp-6', speaker: 'learner', prompt: 'Назови две обязанности.', responseMode: 'selfPractice', model: 'A feladataim közé tartozott az ügyfelek segítése és az e-mailek megválaszolása.', next: 'l25-rp-7' },
+      { id: 'l25-rp-7', speaker: 'waiter', prompt: 'Mi az egyik erőssége, és miért szeretne nálunk dolgozni?', next: 'l25-rp-8' },
+      { id: 'l25-rp-8', speaker: 'learner', prompt: 'Назови сильную сторону и естественную причину интереса к работе.', responseMode: 'selfPractice', model: 'Az egyik erősségem, hogy gyorsan tanulok. Azért szeretnék itt dolgozni, mert érdekel az ügyfélszolgálat.', next: 'l25-rp-9' },
+      { id: 'l25-rp-9', speaker: 'waiter', prompt: 'Váratlan kérdés: Mit tenne, ha egy ügyfél nagyon mérges lenne?', next: 'l25-rp-10' },
+      { id: 'l25-rp-10', speaker: 'learner', prompt: 'Ответь своими словами: спокойно выслушай, уточни проблему и предложи помощь.', responseMode: 'selfPractice', model: 'Nyugodtan meghallgatnám, pontosítanám a problémát, és megpróbálnék segíteni.', next: 'l25-rp-11' },
+      { id: 'l25-rp-11', speaker: 'waiter', prompt: 'Mikor tudna kezdeni?', next: 'l25-rp-12' },
+      { id: 'l25-rp-12', speaker: 'learner', prompt: 'Назови вымышленную доступность.', responseMode: 'selfPractice', model: 'Két hét múlva tudnék kezdeni.', next: 'l25-rp-13' },
+      { id: 'l25-rp-13', speaker: 'waiter', prompt: 'Van kérdése a pozícióval kapcsolatban?', next: 'l25-rp-14' },
+      { id: 'l25-rp-14', speaker: 'learner', prompt: 'Задай минимум один вопрос о графике, условиях или возможности удалённой работы.', responseMode: 'selfPractice', model: 'Milyen a munkaidő, és van lehetőség otthoni munkára?', next: 'l25-rp-15' },
+      { id: 'l25-rp-15', speaker: 'waiter', prompt: 'A munkaidő 9-től 17 óráig tart, és a betanulás után heti két nap otthoni munka lehetséges.', next: 'l25-rp-16' },
+      { id: 'l25-rp-16', speaker: 'learner', prompt: 'Вежливо поблагодари и заверши.', responseMode: 'selfPractice', model: 'Köszönöm a lehetőséget és a tájékoztatást. Viszontlátásra!', next: 'l25-rp-17' },
+      { id: 'l25-rp-17', speaker: 'waiter', prompt: 'Köszönjük, hamarosan jelentkezünk. Viszontlátásra!' },
+    ],
+  },
+  writingTitle: 'Письмо: отклик на вакансию',
+  writingPrompt: 'Напиши 100–130 слов: профессиональное письмо-отклик на вакансию ügyfélszolgálati munkatárs. Используй вымышленные данные. Включи приветствие, название позиции, краткий опыт, релевантные навыки, языки, причину интереса, доступность и вежливое завершение.',
+  writingModel: ['Tisztelt Hölgyem/Uram!', 'Az ügyfélszolgálati munkatárs pozícióra szeretnék jelentkezni.', 'Köszönöm, hogy elolvasta a jelentkezésemet.'],
+  writingRubric: ['100–130 слов', 'Есть приветствие и точное название позиции', 'Кратко описаны опыт и релевантные навыки', 'Указаны языки и причина интереса', 'Указана доступность', 'Есть вежливое завершение', 'Не требуются реальные персональные данные'],
   objectiveChecks: [
     { objectiveId: 'l25_name-professions', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l25_ask-answer-job', activity: 'listening', evidenceKind: 'listening' },
-    { objectiveId: 'l25_describe-skills', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l25_describe-skills', activity: 'writing', evidenceKind: 'writing' },
     { objectiveId: 'l25_write-cv', activity: 'writing', evidenceKind: 'writing' },
-    { objectiveId: 'l25_interview-dialogue', activity: 'recording', evidenceKind: 'speaking' },
+    {
+      objectiveId: 'l25_interview-dialogue',
+      activity: 'roleplay',
+      evidenceKind: 'interaction',
+      evidenceComponents: [{ activity: 'reading', evidenceKind: 'reading' }],
+    },
   ],
 });
+
+const L25_OPTIONAL_SPEAKING = {
+  title: 'Говорение: профессиональный профиль',
+  instructions: 'Говори 2–3 минуты по теме: Beszéljen a munkatapasztalatáról, a feladatairól, két erősségéről, és arról, milyen munkát keres. Назови прежнюю роль/опыт, обязанности, две сильные стороны, желаемую работу, одну причину и доступность для начала.',
+  prompt: 'Korábban ügyfélszolgálaton dolgoztam. A feladataim közé tartozott az ügyfelek segítése. Két erősségem a türelem és a pontos munkavégzés. Irodai munkát keresek, és két hét múlva tudnék kezdeni.',
+  rubric: ['2–3 минуты', 'Есть прежняя роль или опыт', 'Названы обязанности', 'Названы две сильные стороны', 'Указаны желаемая работа и причина', 'Указана доступность для начала', 'Речь связная и понятная'],
+};
 
 export const LESSON_25: Lesson = {
   id: 25,
@@ -59,7 +112,8 @@ export const LESSON_25: Lesson = {
       title: "Munka és karrier",
       subtitle: "Разговоры о профессии и трудоустройстве",
       body: `
-   <p>Тема работы — одна из самых частых при знакомстве и на уровне B1. В этом уроке научимся говорить о своей специальности, обсуждать обязанностей на рабочем месте, проходить собеседование и писать резюме по-венгерски.</p>
+   <p>Тема работы — одна из самых частых при знакомстве и на уровне B1. В этом уроке научимся говорить о своей специальности, обсуждать обязанности на рабочем месте, проходить собеседование и писать профессиональный отклик по-венгерски.</p>
+   <div class="note"><b>Can-Do:</b> описать опыт и обязанности, назвать сильные стороны, понять реалистичную вакансию, ответить на обычный и неожиданный вопрос собеседования, задать работодателю практический вопрос и написать короткий профессиональный отклик.</div>
  `
     },
     {
@@ -142,6 +196,7 @@ export const LESSON_25: Lesson = {
       body: `
    <p><button class="speak-btn" data-speak-text="Szeretem a munkámat, mert nagyon érdekes." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretem a munkámat, mert nagyon érdekes.</button> <span style="color:#8a7a68">(Я люблю свою работу, потому что она очень интересная — союз mert из 24-го урока!)</span></p>
    <p><button class="speak-btn" data-speak-text="A kollégáim nagyon kedvesek és segítőkészek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A kollégáim nagyon kedvesek és segítőkészek.</button> <span style="color:#8a7a68">(Мои коллеги очень милые и отзывчивые)</span></p>
+   <div class="note"><b>Функциональные реплики:</b> Mivel foglalkozik? · Korábban … dolgoztam. · … év tapasztalatom van. · A feladataim közé tartozott… · Főleg … foglalkoztam. · Jól tudok… · Az egyik erősségem… · Szeretek csapatban dolgozni. · Önállóan is tudok dolgozni. · Gyorsan tanulok. · Miért szeretne nálunk dolgozni? · Mikor tudna kezdeni? · Milyen a munkaidő? · Van lehetőség otthoni munkára? · Szeretnék többet megtudni a pozícióról. · Köszönöm a lehetőséget.</div>
  `
     },
     {
@@ -163,6 +218,7 @@ export const LESSON_25: Lesson = {
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
       activities: L25_ACTIVITIES,
+      optionalSpeaking: L25_OPTIONAL_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Ответьте на вопрос „Mivel foglalkozol?“ двумя способами (через або через -ként)</li>

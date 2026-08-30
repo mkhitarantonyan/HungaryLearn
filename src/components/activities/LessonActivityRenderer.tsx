@@ -3,7 +3,6 @@ import type { LessonActivity, LearningObjective, ActivityEvidence, ActivityRunti
 import { ReadingTask } from './ReadingTask';
 import { ListeningTask } from './ListeningTask';
 import { ControlledPractice } from './ControlledPractice';
-import { RecordingTask } from './RecordingTask';
 import { RolePlay } from './RolePlay';
 import { WritingTask } from './WritingTask';
 import { ExitCheck } from './ExitCheck';
@@ -59,15 +58,6 @@ export const LessonActivityRenderer: React.FC<LessonActivityRendererProps> = ({
       case 'controlledPractice':
         return (
           <ControlledPractice
-            data={activity}
-            evidence={activityEvidence}
-            onEvidence={handleEvidence}
-            onResetEvidence={handleReset}
-          />
-        );
-      case 'recording':
-        return (
-          <RecordingTask
             data={activity}
             evidence={activityEvidence}
             onEvidence={handleEvidence}

@@ -1,4 +1,5 @@
 import type { AdminLesson, AdminUser, AdminUsersPage } from '../admin/types';
+import { apiFetch } from '../lib/apiClient';
 
 interface ApiErrorBody { message?: unknown }
 
@@ -12,7 +13,7 @@ export class AdminApiError extends Error {
 async function requestJson<T>(url: string, options?: RequestInit): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(url, { credentials: 'include', ...options });
+    response = await apiFetch(url, options);
   } catch {
     throw new AdminApiError('Не удалось соединиться с сервером.', 0);
   }

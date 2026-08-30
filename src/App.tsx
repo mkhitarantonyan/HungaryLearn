@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
-import { LESSONS_META, loadLesson } from './data/lessons';
+import { LESSONS_META, LessonLoadError, loadLesson } from './data/lessons';
 import { Lesson, ReviewCardState, ActivityEvidence, ActivityRuntimeState } from './types';
 import { LessonList } from './components/LessonList';
 import { Header } from './components/Header';
@@ -11,7 +11,7 @@ import { ReviewWarmup } from './components/ReviewWarmup';
 import { WordTrainerModal } from './components/WordTrainerModal';
 import { TranslationTrainerModal } from './components/TranslationTrainerModal';
 import { LessonQuizModal } from './components/LessonQuizModal';
-import { AdminLoginModal } from './components/AdminLoginModal';
+import { AdminAccessModal } from './components/AdminAccessModal';
 import { UserAuthModal } from './components/UserAuthModal';
 import { SlideAudioModal } from './components/SlideAudioModal';
 import { NarrationPlayer } from './components/NarrationPlayer';
@@ -19,7 +19,7 @@ import { PracticeMenu } from './components/PracticeMenu';
 import { useLessonNarration } from './hooks/useLessonNarration';
 import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
-import { isLessonAccessible, getCurrentUser } from './utils/userStore';
+import { isLessonAccessible, getCurrentUser, isUserAuthReady, logoutUserServer, subscribeUserAuthReady } from './utils/userStore';
 import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizResultToServer } from './utils/userStore';
@@ -45,7 +45,8 @@ export default function App() {
   const [selectedLessonId, setSelectedLessonId] = useState<number>(1);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [isLoadingLesson, setIsLoadingLesson] = useState(false);
-  const [lessonLoadError, setLessonLoadError] = useState<string | null>(null);
+  const [lessonLoadError, setLessonLoadError] = useState<{ message: string; status?: number } | null>(null);
+  const [lessonLoadAttempt, setLessonLoadAttempt] = useState(0);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState(0);
 
@@ -66,6 +67,7 @@ export default function App() {
   const [activityRuntime, setActivityRuntime] = useState<Record<string, ActivityRuntimeState>>({});
   const [showWarmup, setShowWarmup] = useState(false);
   const [isProgressHydrated, setIsProgressHydrated] = useState(() => !getCurrentUser());
+  const [authReady, setAuthReady] = useState(isUserAuthReady());
 
   const visitedLessonNumbers = useMemo(
     () => extractVisitedLessonNumbers(viewedSlideIds),
@@ -115,6 +117,8 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => subscribeUserAuthReady(setAuthReady), []);
+
 useEffect(() => {
   const unsubscribeUser = subscribeUserState((user) => {
     if (!user) {
@@ -155,7 +159,7 @@ useEffect(() => {
 
       if (!lesson) {
         setActiveLesson(null);
-        setLessonLoadError('Урок не найден.');
+        setLessonLoadError({ message: 'Урок не найден.', status: 404 });
         return;
       }
 
@@ -164,11 +168,11 @@ useEffect(() => {
       if (cancelled) return;
 
       setActiveLesson(null);
-      setLessonLoadError(
-        error instanceof Error
-          ? error.message
-          : 'Урок сейчас недоступен.'
-      );
+      const failure = error instanceof LessonLoadError
+        ? { message: error.message, status: error.status }
+        : { message: error instanceof Error ? error.message : 'Урок сейчас недоступен.' };
+      if (failure.status === 401) await logoutUserServer().catch(() => undefined);
+      setLessonLoadError(failure);
     } finally {
       if (!cancelled) {
         setIsLoadingLesson(false);
@@ -181,7 +185,7 @@ useEffect(() => {
   return () => {
     cancelled = true;
   };
-}, [selectedLessonId, viewMode, isAdmin]);
+}, [selectedLessonId, viewMode, isAdmin, lessonLoadAttempt]);
 
   const handleSelectLesson = (lessonId: number) => {
     // Guard: prevent opening a lesson the user hasn't unlocked yet.
@@ -416,6 +420,17 @@ useEffect(() => {
     })
   };
 
+  if (!authReady) {
+    return (
+      <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans" role="status">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 text-[#7A1E2B] animate-spin" />
+          <span className="font-mono text-sm font-semibold text-[#57121C]">Восстановление сессии…</span>
+        </div>
+      </div>
+    );
+  }
+
   if (viewMode === 'list') {
     return (
       <>
@@ -431,7 +446,7 @@ useEffect(() => {
         />
 
         {/* Modals on main list page as well */}
-        <AdminLoginModal
+        <AdminAccessModal
           isOpen={isAdminLoginOpen}
           onClose={() => setIsAdminLoginOpen(false)}
         />
@@ -444,20 +459,52 @@ useEffect(() => {
   }
 
   if (lessonLoadError) {
+    const status = lessonLoadError.status;
+    const title = status === 401
+      ? 'Сессия истекла'
+      : status === 403
+        ? 'Нужна подписка'
+        : status === 404
+          ? 'Урок недоступен'
+          : 'Не удалось открыть урок';
     return (
       <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans">
         <div className="max-w-md rounded-2xl border border-[#D9CBB0] bg-white p-7 text-center shadow-sm">
           <AlertCircle className="w-9 h-9 text-[#7A1E2B] mx-auto" />
-          <h1 className="mt-3 text-xl font-bold text-[#57121C]">Не удалось открыть урок</h1>
-          <p className="mt-2 text-sm text-[#6B5D52]">{lessonLoadError}</p>
-          <button
-            type="button"
-            onClick={handleBackToLessons}
-            className="mt-5 px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
-          >
-            Вернуться к урокам
-          </button>
+          <h1 className="mt-3 text-xl font-bold text-[#57121C]">{title}</h1>
+          <p className="mt-2 text-sm text-[#6B5D52]">{lessonLoadError.message}</p>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
+            {(status === 401 || status === 403) && (
+              <button
+                type="button"
+                onClick={() => setIsUserModalOpen(true)}
+                className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
+              >
+                {status === 401 ? 'Войти / Зарегистрироваться' : 'Открыть подписку'}
+              </button>
+            )}
+            {(status === undefined || status >= 500) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setLessonLoadError(null);
+                  setLessonLoadAttempt((attempt) => attempt + 1);
+                }}
+                className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
+              >
+                Повторить
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleBackToLessons}
+              className="px-5 py-2.5 rounded-xl border border-[#D9CBB0] bg-white text-[#57121C] text-sm font-semibold hover:bg-[#F6EFE4]"
+            >
+              К списку уроков
+            </button>
+          </div>
         </div>
+        <UserAuthModal isOpen={isUserModalOpen} onClose={() => setIsUserModalOpen(false)} />
       </div>
     );
   }
@@ -642,7 +689,7 @@ useEffect(() => {
       />
 
       {/* Admin Login Modal */}
-      <AdminLoginModal
+      <AdminAccessModal
         isOpen={isAdminLoginOpen}
         onClose={() => {
           setIsAdminLoginOpen(false);

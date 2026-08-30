@@ -1,214 +1,91 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
-import { LESSON_10 } from '../src/data/lessons/lesson10.ts';
 import { LESSON_11 } from '../src/data/lessons/lesson11.ts';
 import { LESSONS_META } from '../src/data/lessons/index.ts';
-import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
-import {
-  controlledEvidence,
-  describeExitCheckStatus,
-  recordingCompletionEvidence,
-  validateActivity,
-  validateExitCheckReferences,
-  validateLessonQuestionIds,
-} from '../src/utils/activityUtils.ts';
+import type { ActivityEvidence, LessonActivity, ProseReadingContent } from '../src/types.ts';
+import { controlledEvidence, describeExitCheckStatus, rolePlayCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
 
-const L11_ACTIVITIES = LESSON_11.slides.flatMap((slide) => slide.activities ?? []);
-
-function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
+const activities = LESSON_11.slides.flatMap((slide) => slide.activities ?? []);
+const source = readFileSync(new URL('../src/data/lessons/lesson11.ts', import.meta.url), 'utf8');
+function find<K extends LessonActivity['kind']>(id: string, kind: K): Extract<LessonActivity, { kind: K }> {
+  const activity = activities.find((candidate) => candidate.id === id); assert.ok(activity, `missing ${id}`); assert.equal(activity.kind, kind);
+  return activity as Extract<LessonActivity, { kind: K }>;
 }
-
-function findActivity<TKind extends LessonActivity['kind']>(
-  id: string,
-  kind: TKind,
-): Extract<LessonActivity, { kind: TKind }> {
-  const activity = L11_ACTIVITIES.find((candidate) => candidate.id === id);
-  assert.ok(activity, `missing L11 activity ${id}`);
-  assert.equal(activity.kind, kind);
-  return activity as Extract<LessonActivity, { kind: TKind }>;
+function proseContent(reading: Extract<LessonActivity, { kind: 'reading' }>): ProseReadingContent {
+  assert.ok(reading.content); assert.equal(reading.content.type, 'prose');
+  if (reading.content.type !== 'prose') assert.fail();
+  return reading.content;
 }
+const direct = (activityId: string): ActivityEvidence => ({ activityId, attempted: true, completed: true, passed: true, evidenceMode: 'direct' });
 
-function directEvidence(activityId: string): ActivityEvidence {
-  return { activityId, attempted: true, completed: true, evidenceMode: 'direct', passed: true };
-}
-
-test('L11 preserves identity, narration IDs, objective IDs, and quiz IDs', () => {
-  assert.equal(LESSON_11.id, 11);
-  assert.equal(LESSON_11.number, 11);
-  assert.equal(LESSON_11.level, 'A1');
-  assert.equal(LESSON_11.slidesCount, 11);
-  assert.deepEqual(LESSON_11.slides.map((slide) => slide.id), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-  assert.deepEqual(LESSON_11.objectives?.map((objective) => objective.id), [
-    'l11_distinguish-surface-cases',
-    'l11_form-superessive',
-    'l11_form-sublative',
-    'l11_form-delative',
-    'l11_use-surface-cases',
-  ]);
-  assert.deepEqual(LESSON_11.quiz?.map((question) => question.id), [1101, 1102, 1103, 1104, 1105, 1106]);
-  for (const slide of LESSON_11.slides) {
-    assert.equal(existsSync(new URL(`../public/audio/11.${slide.id}.mp3`, import.meta.url)), true);
-  }
+test('L11 preserves identity, objective IDs, quiz IDs, and eleven narration slots', () => {
+  assert.deepEqual([LESSON_11.id, LESSON_11.number, LESSON_11.level, LESSON_11.slidesCount], [11, 11, 'A1', 11]);
+  assert.deepEqual(LESSON_11.slides.map((slide) => slide.id), [1,2,3,4,5,6,7,8,9,10,11]);
+  assert.deepEqual(LESSON_11.objectives?.map((o) => o.id), ['l11_distinguish-surface-cases','l11_form-superessive','l11_form-sublative','l11_form-delative','l11_use-surface-cases']);
+  assert.deepEqual(LESSON_11.quiz?.map((q) => q.id), [1101,1102,1103,1104,1105,1106]);
+  for (let slide = 1; slide <= 11; slide += 1) assert.equal(existsSync(new URL(`../public/audio/11.${slide}.mp3`, import.meta.url)), true);
 });
 
-test('L11 uses nine unique generic activities and a complete ExitCheck', () => {
-  assert.equal(L11_ACTIVITIES.length, 9);
-  assert.deepEqual(
-    L11_ACTIVITIES.map((activity) => activity.kind).sort(),
-    [
-      'controlledPractice',
-      'controlledPractice',
-      'controlledPractice',
-      'controlledPractice',
-      'controlledPractice',
-      'controlledPractice',
-      'exitCheck',
-      'reading',
-      'recording',
-    ].sort(),
-  );
-  assert.equal(new Set(L11_ACTIVITIES.map((activity) => activity.id)).size, L11_ACTIVITIES.length);
-  for (const activity of L11_ACTIVITIES) assert.deepEqual(validateActivity(activity), []);
-  assert.deepEqual(validateLessonQuestionIds(L11_ACTIVITIES), []);
-
-  const exit = findActivity('l11-exit-check', 'exitCheck');
-  assert.deepEqual(exit.checks.map((check) => check.objectiveId), LESSON_11.objectives?.map((objective) => objective.id));
-  assert.deepEqual(validateExitCheckReferences(
-    exit,
-    LESSON_11.objectives?.map((objective) => objective.id) ?? [],
-    L11_ACTIVITIES.map((activity) => activity.id),
-  ), []);
+test('L11 exposes the communication sequence with valid unique activities and ExitCheck references', () => {
+  assert.deepEqual(activities.map((a) => a.kind), ['controlledPractice','reading','rolePlay','writing','exitCheck']);
+  assert.equal(new Set(activities.map((a) => a.id)).size, activities.length);
+  assert.deepEqual(activities.flatMap(validateActivity), []); assert.deepEqual(validateLessonQuestionIds(activities), []);
+  const exit = find('l11-exit-check', 'exitCheck'); const objectiveIds = LESSON_11.objectives?.map((o) => o.id) ?? [];
+  assert.deepEqual(exit.checks.map((c) => c.objectiveId), objectiveIds);
+  assert.deepEqual(validateExitCheckReferences(exit, objectiveIds, activities.map((a) => a.id)), []);
 });
 
-test('meaning and family contrast reuse the L10 interaction model with DIRECT evidence', () => {
-  const meaning = findActivity('l11-cp-meaning-family', 'controlledPractice');
-  assert.equal(meaning.exercises.length, 10);
-  assert.equal(meaning.passCount, 8);
-  const text = JSON.stringify(meaning.exercises);
-  assert.match(text, /Hol\?/);
-  assert.match(text, /Hová\?/);
-  assert.match(text, /Honnan\?/);
-  assert.match(text, /внутренняя/);
-  assert.match(text, /поверхностная\/конвенциональная/);
-  assert.deepEqual(controlledEvidence(true, 8, 10, 8), {
-    completed: true,
-    passed: true,
-    evidenceMode: 'direct',
-    score: 8,
-    total: 10,
-  });
+test('L11 controlled practice integrates surface forms with Hol Hová Honnan meaning at 11/14', () => {
+  const cp = find('l11-cp-meaning-family', 'controlledPractice');
+  assert.equal(cp.exercises.length, 14); assert.equal(cp.passCount, 11);
+  const text = JSON.stringify(cp.exercises);
+  for (const token of ['Hol?', 'Hová?', 'Honnan?', 'asztalon', 'székre', 'bőröndről', 'postán', 'postára', 'postáról']) assert.ok(text.includes(token));
+  assert.deepEqual(controlledEvidence(true, 11, 14, 11), { completed: true, passed: true, evidenceMode: 'direct', score: 11, total: 14 });
 });
 
-test('each surface form objective has six exact inputs and a 5/6 DIRECT threshold', () => {
-  const expected = {
-    'l11-cp-superessive': ['asztalon', 'széken', 'bőröndön', 'utcán', 'Budapesten', 'Magyarországon'],
-    'l11-cp-sublative': ['asztalra', 'székre', 'bőröndre', 'utcára', 'Budapestre', 'Magyarországra'],
-    'l11-cp-delative': ['asztalról', 'székről', 'bőröndről', 'utcáról', 'Budapestről', 'Magyarországról'],
-  };
-  for (const [id, answers] of Object.entries(expected)) {
-    const activity = findActivity(id, 'controlledPractice');
-    assert.equal(activity.exercises.length, 6);
-    assert.equal(activity.passCount, 5);
-    assert.ok(activity.exercises.every((exercise) => exercise.kind === 'textInput'));
-    assert.deepEqual(
-      activity.exercises.map((exercise) => 'accept' in exercise ? exercise.accept[0] : ''),
-      answers,
-    );
-    assert.equal(controlledEvidence(true, 5, 6, 5).passed, true);
-    assert.equal(controlledEvidence(true, 5, 6, 5).evidenceMode, 'direct');
-  }
+test('L11 reading is a 150–180 word practical city narrative with seven meaning questions', () => {
+  const reading = find('l11-reading-budapest-route', 'reading'); const content = proseContent(reading);
+  const words = content.paragraphs.join(' ').trim().split(/\s+/u).length;
+  assert.ok(words >= 150 && words <= 180, `words=${words}`); assert.equal(reading.questions.length, 7); assert.equal(reading.passCount, 6);
+  assert.match(content.title ?? '', /Egy délután a városban/); assert.match(content.paragraphs.join(' '), /munkahelyén.*postára.*piacra.*pályaudvaron.*könyvtárba/s);
 });
 
-test('context, geography, reading, and constrained writing test meaning rather than suffix spotting', () => {
-  const context = findActivity('l11-cp-context-selection', 'controlledPractice');
-  assert.equal(context.exercises.length, 8);
-  assert.equal(context.passCount, 7);
-  assert.match(context.exercises.map((exercise) => exercise.prompt).join(' '), /лежит|кладу|снимаю|живёт|едем|приезжает/);
-
-  const reading = findActivity('l11-reading-budapest-route', 'reading');
-  const readingContent = reading.content;
-  assert.ok(readingContent);
-  assert.equal(readingContent.type, 'prose');
-  if (readingContent.type !== 'prose') assert.fail('L11 reading content must be prose');
-  assert.equal(reading.questions.length, 5);
-  assert.equal(reading.passCount, 4);
-  assert.match(readingContent.paragraphs.join(' '), /Péter és Anna.*utaznak haza/);
-  assert.match(reading.questions.map((question) => question.question).join(' '), /Куда|Откуда|Где/);
-  assert.doesNotMatch(reading.instructions ?? '', /найди.*суффикс/i);
-
-  const writing = findActivity('l11-cp-context-writing', 'controlledPractice');
-  assert.equal(writing.exercises.length, 5);
-  assert.equal(writing.passCount, 4);
-  assert.ok(writing.exercises.every((exercise) => exercise.kind === 'textInput'));
+test('L11 RolePlay implements route clarification in eight text-only learner turns', () => {
+  const rolePlay = find('l11-roleplay-town-route', 'rolePlay');
+  assert.equal(rolePlay.turns.length, 17); assert.equal(rolePlay.turns.filter((t) => t.speaker === 'learner').length, 8);
+  assert.ok(rolePlay.turns.filter((t) => t.speaker === 'learner').every((t) => t.responseMode === 'selfPractice'));
+  assert.match(JSON.stringify(rolePlay), /hol van a posta.*Hogyan jutok el.*második utcánál.*Nem, az első.*Köszönöm/is);
+  assert.equal(rolePlayCompletionEvidence(rolePlay.id).evidenceMode, 'partial');
 });
 
-test('ExitCheck makes four objectives DIRECT and keeps use-surface-cases PARTIAL', () => {
-  const exit = findActivity('l11-exit-check', 'exitCheck');
+test('L11 Writing meets 70–90 words while optional Speaking is text-only and non-evidentiary', () => {
+  const writing = find('l11-writing-city-route', 'writing'); const words = writing.modelAnswer.join(' ').trim().split(/\s+/u).length;
+  assert.ok(words >= 70 && words <= 90, `words=${words}`); assert.match(writing.prompt, /70–90 слов/);
+  assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial');
+  const speaking = LESSON_11.slides.find((slide) => slide.optionalSpeaking)?.optionalSpeaking; assert.ok(speaking); assert.match(speaking.instructions, /1–1\.5 минуты.*без микрофона.*evidence/s);
+});
+
+test('L11 ExitCheck keeps auto-checkable grammar direct and open production partial', () => {
+  const exit = find('l11-exit-check', 'exitCheck');
   const evidence: Record<string, ActivityEvidence> = {
-    'l11-cp-meaning-family': directEvidence('l11-cp-meaning-family'),
-    'l11-cp-superessive': directEvidence('l11-cp-superessive'),
-    'l11-cp-sublative': directEvidence('l11-cp-sublative'),
-    'l11-cp-delative': directEvidence('l11-cp-delative'),
-    'l11-cp-context-writing': directEvidence('l11-cp-context-writing'),
-    'l11-record-surface-locations': recordingCompletionEvidence('l11-record-surface-locations'),
+    'l11-cp-meaning-family': direct('l11-cp-meaning-family'), 'l11-reading-budapest-route': direct('l11-reading-budapest-route'),
+    'l11-roleplay-town-route': rolePlayCompletionEvidence('l11-roleplay-town-route'),
+    'l11-writing-city-route': { activityId: 'l11-writing-city-route', attempted: true, selfReviewed: true, ...writingEvidence('A sufficiently developed route description for review.', true) },
   };
-  const statuses = Object.fromEntries(exit.checks.map((check) => [
-    check.objectiveId,
-    describeExitCheckStatus(check, evidence[check.activityId], evidence).kind,
-  ]));
-  assert.deepEqual(statuses, {
-    'l11_distinguish-surface-cases': 'direct-met',
-    'l11_form-superessive': 'direct-met',
-    'l11_form-sublative': 'direct-met',
-    'l11_form-delative': 'direct-met',
-    'l11_use-surface-cases': 'partial-review',
-  });
+  const statuses = Object.fromEntries(exit.checks.map((check) => [check.objectiveId, describeExitCheckStatus(check, evidence[check.activityId], evidence).kind]));
+  assert.deepEqual(statuses, { 'l11_distinguish-surface-cases':'direct-met','l11_form-superessive':'direct-met','l11_form-sublative':'direct-met','l11_form-delative':'direct-met','l11_use-surface-cases':'partial-review' });
 });
 
-test('L11 adds no listening assessment, synthesized fallback, IPA, or out-of-scope teaching', () => {
-  assert.equal(L11_ACTIVITIES.some((activity) => activity.kind === 'listening'), false);
-  const source = readFileSync(new URL('../src/data/lessons/lesson11.ts', import.meta.url), 'utf8');
-  assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
-  assert.doesNotMatch(source, /\bHova\?/);
-  assert.doesNotMatch(source, /ipa\s*:/);
-  assert.doesNotMatch(source, /Puszta|открыт(?:ая|ые).*поверх|исторически.*восприним/i);
-  assert.doesNotMatch(source, /на Венгрии|на Будапеште/);
-  assert.doesNotMatch(source, /hétfőre|Magyarországról beszélünk/);
-  assert.doesNotMatch(source, /-nál\/-nél|-hoz\/-hez\/-höz|-tól\/-től|postposition|послелог/i);
-  assert.ok((LESSON_11.vocabulary ?? []).every((item) => item.ipa === undefined && !/[А-Яа-яЁё]/.test(item.hu)));
-
-  const foterRule = source.split('\n').find((line) => line.includes('<b>-en</b>') && line.includes('főtéren'));
-  assert.ok(foterRule);
-  assert.doesNotMatch(foterRule, /<b>-n<\/b>/);
+test('L11 keeps the exact surface-case scope and documents the intentional Listening gap', () => {
+  assert.equal(activities.some((activity) => activity.kind === 'listening'), false);
+  assert.match(source, /поверхностн.*конвенциональн/s); assert.match(source, /В L11 нет отдельного опубликованного Listening/i);
+  assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask|MediaRecorder|getUserMedia|kind:\s*['"]recording/i);
+  assert.doesNotMatch(source, /полная система всех|Aproximatív|Puszta/);
 });
 
-test('Q1101–Q1106 are language retrieval with one intended answer and no false claims', () => {
-  const quiz = LESSON_11.quiz ?? [];
-  for (const question of quiz) {
-    assert.equal(new Set(question.options).size, question.options.length, `quiz ${question.id}`);
-    assert.ok(question.correctIndex >= 0 && question.correctIndex < question.options.length);
-  }
-  assert.equal(quiz.find((question) => question.id === 1101)?.options[0], 'asztalon');
-  assert.match(quiz.find((question) => question.id === 1102)?.explanation ?? '', /Hová\?/);
-  assert.doesNotMatch(quiz.find((question) => question.id === 1103)?.explanation ?? '', /не существует/i);
-  assert.equal(quiz.find((question) => question.id === 1104)?.options[0], 'Péter Budapestre utazik.');
-  assert.doesNotMatch(JSON.stringify(quiz.find((question) => question.id === 1104)), /истор|открыт|Puszta/i);
-  assert.match(quiz.find((question) => question.id === 1105)?.explanation ?? '', /грамматичен.*другую ситуацию/);
-  assert.doesNotMatch(quiz.find((question) => question.id === 1106)?.question ?? '', /урок|lesson/i);
-});
-
-test('L11 metadata matches while migrated L10 and frozen L15 remain unchanged', () => {
-  const meta = LESSONS_META.find((candidate) => candidate.id === 11);
-  assert.ok(meta);
-  assert.equal(meta.title, LESSON_11.title);
-  assert.equal(meta.subtitle, LESSON_11.subtitle);
-  assert.equal(meta.description, LESSON_11.description);
-  assert.equal(meta.level, LESSON_11.level);
-  assert.equal(meta.slidesCount, LESSON_11.slidesCount);
-  assert.equal(LESSON_10.id, 10);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), '1E3696171760626F2B89EB995CE14B95D0B381ECB338EE33F233248487065E34');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
+test('L11 quiz remains unambiguous, vocabulary IDs stay stable, and metadata matches', () => {
+  for (const question of LESSON_11.quiz ?? []) { assert.equal(new Set(question.options).size, question.options.length); assert.ok(question.correctIndex >= 0 && question.correctIndex < question.options.length); }
+  assert.deepEqual(LESSON_11.vocabulary?.map((v) => v.id), Array.from({ length: 16 }, (_, i) => `l11_v${i + 1}`));
+  const meta = LESSONS_META.find((item) => item.id === 11); assert.ok(meta); assert.equal(meta.description, LESSON_11.description); assert.equal(meta.slidesCount, 11);
 });

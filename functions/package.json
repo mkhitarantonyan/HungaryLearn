@@ -1,0 +1,23 @@
+{
+  "name": "hungarylearn-functions",
+  "private": true,
+  "main": "lib/index.cjs",
+  "engines": { "node": "22" },
+  "scripts": {
+    "build": "node ../scripts/build-functions.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test ../tests/firebase*.test.ts ../tests/lemon*.test.ts ../tests/paidLessonAccess.test.ts ../tests/subscriptionAccess.test.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "firebase-admin": "^13.4.0",
+    "firebase-functions": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2"
+  }
+}

@@ -12,6 +12,8 @@ export interface SlideData {
   targetText?: string;
   targetPhonetic?: string;
   targetTranslation?: string;
+  /** Optional text-only speaking practice. It has no state, score, or evidence. */
+  optionalSpeaking?: OptionalSpeakingPracticeData;
   // Optional interactive activities (pilot: lesson 15). Lessons 1–14 and 16–28
   // do not define activities and continue to render as before.
   activities?: LessonActivity[];
@@ -155,7 +157,13 @@ export interface ActivityEvidence {
   score?: number;
   total?: number;
   selfReviewed?: boolean;
-  recordingCompleted?: boolean;
+}
+
+export interface OptionalSpeakingPracticeData {
+  title: string;
+  instructions: string;
+  prompt: string;
+  rubric?: string[];
 }
 
 /**
@@ -296,20 +304,8 @@ export interface ControlledPracticeData {
   exercises: ControlledExercise[];
 }
 
-/** Generic unscored pronunciation/read-aloud recording activity. */
-export interface RecordingTaskData {
-  kind: 'recording';
-  id: string;
-  title?: string;
-  instructions?: string;
-  targetText: string;
-  targetPhonetic?: string;
-  targetTranslation?: string;
-  rubric?: string[];
-}
-
 export type RolePlaySpeaker = 'waiter' | 'learner' | 'stage';
-export type RolePlayResponseMode = 'choice' | 'recorded' | 'systemCategory';
+export type RolePlayResponseMode = 'choice' | 'selfPractice' | 'systemCategory';
 
 export interface RolePlayBranch {
   choice?: string;
@@ -378,7 +374,6 @@ export type LessonActivity =
   | ReadingTaskData
   | ListeningTaskData
   | ControlledPracticeData
-  | RecordingTaskData
   | RolePlayData
   | WritingTaskData
   | ExitCheckData;

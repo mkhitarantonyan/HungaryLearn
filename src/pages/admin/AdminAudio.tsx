@@ -5,7 +5,6 @@ import {
   Mic,
   Play,
   Trash2,
-  Pencil,
   Loader2,
   Search,
   FileAudio,

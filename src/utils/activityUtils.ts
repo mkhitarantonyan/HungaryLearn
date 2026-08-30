@@ -359,31 +359,6 @@ export function validateActivity(activity: LessonActivity): string[] {
       if (pc) errors.push(pc);
       break;
     }
-    case 'recording': {
-      if (!activity.targetText.trim()) errors.push(`${activity.id}: empty recording targetText`);
-      if (activity.title !== undefined && !activity.title.trim()) {
-        errors.push(`${activity.id}: empty recording title`);
-      }
-      if (activity.instructions !== undefined && !activity.instructions.trim()) {
-        errors.push(`${activity.id}: empty recording instructions`);
-      }
-      if (activity.targetPhonetic !== undefined && !activity.targetPhonetic.trim()) {
-        errors.push(`${activity.id}: empty recording targetPhonetic`);
-      }
-      if (activity.targetTranslation !== undefined && !activity.targetTranslation.trim()) {
-        errors.push(`${activity.id}: empty recording targetTranslation`);
-      }
-      if (activity.rubric !== undefined) {
-        if (activity.rubric.length === 0) errors.push(`${activity.id}: empty recording rubric`);
-        if (activity.rubric.some((item) => !item.trim())) {
-          errors.push(`${activity.id}: recording rubric contains an empty item`);
-        }
-        if (new Set(activity.rubric).size !== activity.rubric.length) {
-          errors.push(`${activity.id}: recording rubric contains duplicate items`);
-        }
-      }
-      break;
-    }
     case 'rolePlay': {
       if (activity.partnerLabel !== undefined && !activity.partnerLabel.trim()) {
         errors.push(`${activity.id}: empty partnerLabel`);
@@ -577,23 +552,6 @@ export function writingEvidence(
   };
 }
 
-/** A real recorder callback creates reviewable PARTIAL evidence, never an automatic pass. */
-export function recordingCompletionEvidence(activityId: string): ActivityEvidence {
-  return {
-    activityId,
-    attempted: true,
-    completed: true,
-    evidenceMode: 'partial',
-    passed: false,
-    recordingCompleted: true,
-  };
-}
-
-/** Recorded learner turns require an actual recording before advancing. */
-export function canAdvanceRecordedTurn(recordingDone: boolean): boolean {
-  return recordingDone;
-}
-
 export interface RolePlayChoiceResult {
   nextTurnId?: string;
   correct?: boolean;
@@ -656,41 +614,17 @@ export function restoreWritingRubric(runtime?: ActivityRuntimeState): Record<str
 // =====================================================================
 
 /**
- * Role-play completion evidence. There is NO automatic speech evaluation:
- * creating a recording does NOT prove the communicative objective, so the
- * result is PARTIAL and never auto-passes. selfReviewed is intentionally
- * omitted (no explicit self-review rubric exists in the frozen role-play).
- *
- * `recordingCompleted: true` is only set when the role-play actually has a
- * recording requirement AND that requirement was met — it must never be
- * fabricated for a choice-only role-play.
+ * Role-play completion is PARTIAL and never auto-passes. Learner responses are
+ * text-only/self-practice; no learner voice capture or automatic speech evaluation exists.
  */
-export function rolePlayCompletionEvidence(
-  activityId: string,
-  recordingCompleted?: boolean
-): ActivityEvidence {
-  const evidence: ActivityEvidence = {
+export function rolePlayCompletionEvidence(activityId: string): ActivityEvidence {
+  return {
     activityId,
     attempted: true,
     completed: true,
     evidenceMode: 'partial',
     passed: false,
   };
-  if (recordingCompleted === true) evidence.recordingCompleted = true;
-  return evidence;
-}
-
-/**
- * True only when the role-play has at least one recorded turn and every
- * recorded turn has actually been completed (choice-only role-plays have no
- * recording requirement → false).
- */
-export function rolePlayRecordingRequirementMet(
-  data: RolePlayData,
-  completedRecordings: ReadonlySet<string>
-): boolean {
-  const required = data.turns.filter((t) => t.responseMode === 'recorded').map((t) => t.id);
-  return required.length > 0 && required.every((id) => completedRecordings.has(id));
 }
 
 export type EvidenceStatusKind =

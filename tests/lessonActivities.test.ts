@@ -17,7 +17,6 @@ import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 import { LESSON_TRANSLATION_MAP } from '../src/data/lessonTranslations.ts';
 import { normalizeAnswer, isAnswerAccepted } from '../src/utils/answerNormalization.ts';
 import {
-  getVegetarianItemNames,
   canProduceDirectListeningEvidence,
   shouldShowTranscript,
   validateRolePlayGraph,
@@ -27,14 +26,10 @@ import {
   controlledEvidence,
   listeningEvidence,
   writingEvidence,
-  canAdvanceRecordedTurn,
-  rolePlayChoiceResult,
-  advancesRolePlay,
   clearActivityEvidence,
   isWritingLocked,
   restoreRolePlayTurnId,
   rolePlayCompletionEvidence,
-  rolePlayRecordingRequirementMet,
   describeEvidenceStatus,
   describeExitCheckStatus,
   resolveReadingContent,
@@ -122,46 +117,43 @@ test('migrated lesson 28 has interactive activities', () => {
 test('migrated L16 exposes its exact activity inventory', () => {
   const activities = LESSON_16.slides.flatMap((slide) => slide.activities ?? []);
   assert.deepEqual(activities.map((activity) => activity.id), [
-    'l16-cp-val-vel-forms', 'l16-cp-assimilation', 'l16-cp-means-companionship', 'l16-cp-prices',
-    'l16-listening-shopping', 'l16-roleplay-shopping', 'l16-recording-means-companionship', 'l16-exit-check',
+    'l16-cp-contextual-shopping', 'l16-reading-jacket-exchange', 'l16-listening-shopping',
+    'l16-roleplay-shopping', 'l16-writing-exchange-message', 'l16-exit-check',
   ]);
-  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 6);
 });
 
 test('migrated L17 exposes its exact activity inventory', () => {
   const activities = LESSON_17.slides.flatMap((slide) => slide.activities ?? []);
   assert.deepEqual(activities.map((activity) => activity.id), [
-    'l17-cp-seasonal-adverbials', 'l17-cp-seasons-months', 'l17-writing-current-weather',
-    'l17-recording-weather-seasons', 'l17-listening-weather', 'l17-writing-season-comparison',
-    'l17-recording-season-comparison', 'l17-exit-check',
+    'l17-cp-contextual-weather', 'l17-reading-weekend-weather', 'l17-listening-weather',
+    'l17-roleplay-weather-plan', 'l17-writing-weekend-plan', 'l17-exit-check',
   ]);
-  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 6);
 });
 
 test('migrated L18 exposes its exact activity inventory', () => {
   const activities = LESSON_18.slides.flatMap((slide) => slide.activities ?? []);
   assert.deepEqual(activities.map((activity) => activity.id), [
-    'l18-cp-infinitive-forms', 'l18-cp-personal-infinitive', 'l18-cp-desire-register',
-    'l18-cp-modal-functions', 'l18-listening-modals', 'l18-writing-modal-responses',
-    'l18-recording-modal-responses', 'l18-exit-check',
+    'l18-cp-contextual-modals', 'l18-reading-first-day', 'l18-listening-modals',
+    'l18-roleplay-course-rules', 'l18-writing-modal-responses', 'l18-exit-check',
   ]);
-  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 6);
 });
 
 test('migrated L19 exposes its exact activity inventory', () => {
   const activities = LESSON_19.slides.flatMap((slide) => slide.activities ?? []);
   assert.deepEqual(activities.map((activity) => activity.id), [
-    'l19-cp-future-forms', 'l19-cp-fog-conjugation', 'l19-cp-present-vs-fog',
-    'l19-cp-tense-reading-sort', 'l19-listening-future', 'l19-writing-plans-predictions',
-    'l19-recording-plans-predictions', 'l19-exit-check',
+    'l19-cp-contextual-future', 'l19-reading-busy-weekend', 'l19-listening-future',
+    'l19-roleplay-saturday-plan', 'l19-writing-plans-predictions', 'l19-exit-check',
   ]);
-  assert.equal(new Set(activities.map((activity) => activity.id)).size, 8);
+  assert.equal(new Set(activities.map((activity) => activity.id)).size, 6);
 });
 
-test('L15 keeps exactly slide IDs 1..12 in order', () => {
+test('L15 keeps exactly slide IDs 1..11 in order', () => {
   assert.deepEqual(
     LESSON_15.slides.map((s) => s.id),
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   );
 });
 
@@ -202,16 +194,19 @@ test('isAnswerAccepted treats diacritics as part of correctness', () => {
   assert.equal(isAnswerAccepted('  Nincs időm. ', ['Nincs időm.']), true);
 });
 
-test('reading menu answers match menu data', () => {
+test('L15 prose reading answers match the restaurant story', () => {
   const reading = findActivity('reading');
   const q1 = reading.questions.find((q) => q.id === 'l15-menu-q2');
   assert.ok(q1);
-  assert.equal(q1.options[q1.correctIndex], '1850 Ft');
+  assert.equal(q1.options[q1.correctIndex], 'Gulyáslevest és rántott sajtot.');
 });
 
-test('vegetarian answer is derived from 🌱 menu data', () => {
+test('L15 Reading is a substantial prose task', () => {
   const reading = findActivity('reading');
-  assert.deepEqual(getVegetarianItemNames(reading), ['Zöldségleves', 'Rántott sajt']);
+  const content = resolveReadingContent(reading);
+  assert.equal(content.type, 'prose');
+  assert.equal(reading.questions.length, 7);
+  assert.equal(reading.passCount, 6);
 });
 
 test('ListeningTask published-audio state can produce direct evidence', () => {
@@ -239,8 +234,8 @@ test('role-play contains post-meal transition before the bill request', () => {
   const rolePlay = findActivity('rolePlay');
   const turns = rolePlay.turns;
   const stage = turns.find((t) => t.speaker === 'stage');
-  const afterMealWaiter = turns.find((t) => t.speaker === 'waiter' && t.prompt === 'Kér még valamit?');
-  const billLearner = turns.find((t) => t.speaker === 'learner' && t.model?.includes('A számlát kérem'));
+  const afterMealWaiter = turns.find((t) => t.speaker === 'waiter' && t.prompt?.includes('Kérnek még valamit?'));
+  const billLearner = turns.find((t) => t.speaker === 'learner' && t.model?.includes('Kérhetnénk a számlát'));
   assert.ok(stage, 'stage transition missing');
   assert.ok(afterMealWaiter, 'waiter bill-prompt missing');
   assert.ok(billLearner, 'learner bill turn missing');
@@ -255,7 +250,7 @@ test('learner, not waiter, asks for the bill', () => {
   );
   assert.equal(waiterSaysBill, false);
   const learnerSaysBill = rolePlay.turns.some(
-    (t) => t.speaker === 'learner' && (t.model?.includes('A számlát kérem') ?? false)
+    (t) => t.speaker === 'learner' && (t.model?.includes('számlát') ?? false)
   );
   assert.equal(learnerSaysBill, true);
 });
@@ -313,32 +308,25 @@ test('writing empty cannot complete; requires self-review and minimum length', (
   assert.equal(writingEvidence('Szeretem a levest és a salátát.', true).completed, true);
 });
 
-test('recorded roleplay cannot advance before recording', () => {
-  assert.equal(canAdvanceRecordedTurn(false), false);
-  assert.equal(canAdvanceRecordedTurn(true), true);
+test('text-only RolePlay self-practice does not require a microphone gate', () => {
+  const rolePlay = findActivity('rolePlay');
+  assert.ok(rolePlay.turns.some((turn) => turn.responseMode === 'selfPractice'));
+  assert.equal(rolePlay.turns.some((turn) => (turn as { responseMode?: string }).responseMode === 'recorded'), false);
 });
 
-test('wrong substitution choice does not advance; correct advances', () => {
+test('P4 restaurant RolePlay uses open text-only learner turns', () => {
   const rolePlay = findActivity('rolePlay');
-  const g2 = rolePlay.turns.find((t) => t.id === 'l15-rp-g2');
-  assert.ok(g2);
-  const wrong = rolePlayChoiceResult(g2, 'Kérek egy saláta.');
-  assert.equal(advancesRolePlay(wrong), false);
-  assert.ok(wrong.feedback);
-  const right = rolePlayChoiceResult(g2, 'Kérek egy salátát.');
-  assert.equal(advancesRolePlay(right), true);
-  assert.equal(right.nextTurnId, 'l15-rp-g3');
+  const learnerTurns = rolePlay.turns.filter((turn) => turn.speaker === 'learner');
+  assert.equal(learnerTurns.length, 8);
+  assert.ok(learnerTurns.every((turn) => turn.responseMode === 'selfPractice'));
 });
 
-test('unavailable lemonade branch follows a lemonade choice', () => {
+test('unavailable lemonade problem follows the order for another guest', () => {
   const rolePlay = findActivity('rolePlay');
-  const drink = rolePlay.turns.find((t) => t.id === 'l15-rp-drink');
-  assert.ok(drink);
-  const lemonBranch = drink.branches?.find((b) => b.choice === 'Egy limonádét kérek.');
-  assert.ok(lemonBranch);
-  const target = rolePlay.turns.find((t) => t.id === lemonBranch.nextTurnId);
-  assert.ok(target);
-  assert.equal(target.prompt, 'Sajnos nincs limonádé, csak narancslé van.');
+  const order = rolePlay.turns.find((turn) => turn.id === 'l15-rp-l5');
+  const problem = rolePlay.turns.find((turn) => turn.id === 'l15-rp-w6');
+  assert.match(order?.model ?? '', /Neki.*limonádét/);
+  assert.match(problem?.prompt ?? '', /Sajnos limonádé nincs/);
 });
 
 test('missing listening audio = evidence NONE (not passed)', () => {
@@ -357,10 +345,10 @@ test('published listening + wrong answers != passed', () => {
   assert.equal(result.passed, false);
 });
 
-test('vegetarian item has accessible text (legend + marked items)', () => {
+test('L15 prose Reading exposes its title and all seven questions', () => {
   const reading = findActivity('reading');
-  assert.ok(reading.legend?.includes('vegetáriánus'));
-  assert.ok(getVegetarianItemNames(reading).length > 0);
+  assert.equal(reading.title, 'Egy vacsora, ami majdnem tökéletes volt');
+  assert.equal(reading.questions.length, 7);
 });
 
 // =====================================================================
@@ -417,8 +405,8 @@ test('roleplay unfinished turn restores after session restore', () => {
   const rolePlay = findActivity('rolePlay');
   assert.equal(restoreRolePlayTurnId(rolePlay), rolePlay.startTurnId);
   assert.equal(
-    restoreRolePlayTurnId(rolePlay, { rolePlayCurrentTurnId: 'l15-rp-drink' }),
-    'l15-rp-drink'
+    restoreRolePlayTurnId(rolePlay, { rolePlayCurrentTurnId: 'l15-rp-l6' }),
+    'l15-rp-l6'
   );
   // An unknown id falls back to the start turn instead of crashing.
   assert.equal(
@@ -427,19 +415,11 @@ test('roleplay unfinished turn restores after session restore', () => {
   );
 });
 
-test('express-likes speaking evidence requires a recorded learner turn', () => {
+test('all L15 RolePlay learner turns remain text-only self-practice', () => {
   const rolePlay = findActivity('rolePlay');
-  const g4 = rolePlay.turns.find((t) => t.id === 'l15-rp-g4');
-  assert.ok(g4);
-  assert.equal(g4.responseMode, 'choice');
-  const targets = new Set((g4.branches ?? []).map((b) => b.nextTurnId));
-  assert.ok(targets.size > 0);
-  for (const targetId of targets) {
-    const target = rolePlay.turns.find((t) => t.id === targetId);
-    assert.ok(target, `branch target ${targetId} missing`);
-    assert.equal(target.speaker, 'learner', `target ${targetId} must be a learner turn`);
-    assert.equal(target.responseMode, 'recorded', `target ${targetId} must be a recorded turn`);
-  }
+  const learnerTurns = rolePlay.turns.filter((turn) => turn.speaker === 'learner');
+  assert.ok(learnerTurns.length >= 8);
+  assert.ok(learnerTurns.every((turn) => turn.responseMode === 'selfPractice'));
 });
 
 test('order objective is separated from the listening objective', () => {
@@ -481,7 +461,7 @@ test('roleplay does not call the soup a main course', () => {
   const l1 = rolePlay.turns.find((t) => t.id === 'l15-rp-l1');
   assert.ok(l1);
   assert.equal(l1.prompt?.includes('основное блюдо'), false);
-  assert.equal(l1.model, 'Kérek egy gulyáslevest.');
+  assert.equal(l1.model, 'Jó estét! Asztalt szeretnék.');
   const anyMainCourse = rolePlay.turns.some((t) => t.prompt?.includes('основное блюдо'));
   assert.equal(anyMainCourse, false);
 });
@@ -560,35 +540,23 @@ test('RolePlay completion is PARTIAL, completed, not passed', () => {
   assert.equal(ev.passed, false);
 });
 
-test('L15 completed RolePlay sets recordingCompleted === true', () => {
+test('L15 RolePlay learner turns are text-only and completion stays PARTIAL', () => {
   const rolePlay = findActivity('rolePlay');
-  const recordedIds = rolePlay.turns
-    .filter((t) => t.responseMode === 'recorded')
-    .map((t) => t.id);
-  assert.ok(recordedIds.length > 0, 'L15 role-play must contain recorded turns');
-
-  const allDone = new Set(recordedIds);
-  assert.equal(rolePlayRecordingRequirementMet(rolePlay, allDone), true);
-  const ev = rolePlayCompletionEvidence(rolePlay.id, rolePlayRecordingRequirementMet(rolePlay, allDone));
-  assert.equal(ev.recordingCompleted, true);
+  const practiceIds = rolePlay.turns.filter((turn) => turn.responseMode === 'selfPractice').map((turn) => turn.id);
+  assert.ok(practiceIds.length > 0);
+  const ev = rolePlayCompletionEvidence(rolePlay.id);
   assert.equal(ev.passed, false);
   assert.equal(ev.evidenceMode, 'partial');
 });
 
-test('generic/choice-only RolePlay completion has no recordingCompleted', () => {
-  // No recording requirement → the flag must not be fabricated.
+test('generic RolePlay completion contains no learner-recording state', () => {
   const ev = rolePlayCompletionEvidence('choice-only-roleplay');
-  assert.equal(ev.recordingCompleted === true, false);
-  assert.equal('recordingCompleted' in ev, false);
+  assert.doesNotMatch(JSON.stringify(ev), /recording/i);
   assert.equal(ev.passed, false);
   assert.equal(ev.evidenceMode, 'partial');
 });
 
-test('recording requirement is false when no recorded turn was completed', () => {
-  const rolePlay = findActivity('rolePlay');
-  assert.equal(rolePlayRecordingRequirementMet(rolePlay, new Set()), false);
-
-  // A choice-only role-play has no recording requirement.
+test('choice-only RolePlay remains valid without learner recording', () => {
   const choiceOnly = {
     kind: 'rolePlay' as const,
     id: 'choice-only',
@@ -598,7 +566,7 @@ test('recording requirement is false when no recorded turn was completed', () =>
       { id: 'c2', speaker: 'waiter' as const, prompt: 'done' },
     ],
   };
-  assert.equal(rolePlayRecordingRequirementMet(choiceOnly, new Set()), false);
+  assert.deepEqual(validateActivity(choiceOnly), []);
 });
 
 test('RolePlay without explicit self-review does not fabricate selfReviewed', () => {
@@ -614,7 +582,6 @@ test('ExitCheck never shows PARTIAL completed as met', () => {
     completed: true,
     evidenceMode: 'partial',
     passed: false,
-    recordingCompleted: true,
   };
   const status = describeEvidenceStatus(partialCompleted);
   assert.equal(status.kind, 'partial-review');
@@ -715,7 +682,7 @@ test('whole curriculum has exactly 139 objectives', async () => {
 // PHASE 3A shared ReadingTask generalization regression tests
 // =====================================================================
 
-test('frozen L15 activity and menu-question identities remain exact', () => {
+test('upgraded L15 activity and reading-question identities remain exact', () => {
   assert.deepEqual(
     l15Activities().map((activity) => activity.id),
     [
@@ -731,7 +698,7 @@ test('frozen L15 activity and menu-question identities remain exact', () => {
   const reading = findActivity('reading');
   assert.deepEqual(
     reading.questions.map((question) => question.id),
-    ['l15-menu-q1', 'l15-menu-q2', 'l15-menu-q3', 'l15-menu-q4']
+    ['l15-menu-q1', 'l15-menu-q2', 'l15-menu-q3', 'l15-menu-q4', 'l15-menu-q5', 'l15-menu-q6', 'l15-menu-q7']
   );
 
   const exitCheck = findActivity('exitCheck');
@@ -745,19 +712,19 @@ test('frozen L15 activity and menu-question identities remain exact', () => {
   );
 });
 
-test('frozen L15 legacy menu remains structurally valid through the shared adapter', () => {
+test('upgraded L15 prose remains structurally valid through the shared adapter', () => {
   const reading = findActivity('reading');
   assert.deepEqual(validateActivity(reading), []);
 
   const content = resolveReadingContent(reading);
-  assert.equal(content.type, 'menu');
-  if (content.type === 'menu') {
-    assert.equal(content.sections.length, 3);
-    assert.equal(content.legend, '🌱 = vegetáriánus');
+  assert.equal(content.type, 'prose');
+  if (content.type === 'prose') {
+    assert.equal(content.paragraphs.length, 3);
+    assert.ok(content.paragraphs.join(' ').split(/\s+/u).length >= 170);
   }
 });
 
-test('menu rendering keeps vegetarian meaning available to assistive technology', () => {
+test('L15 prose rendering keeps its story and questions accessible', () => {
   const reading = findActivity('reading');
   const markup = renderToStaticMarkup(
     createElement(ReadingTask, {
@@ -767,10 +734,9 @@ test('menu rendering keeps vegetarian meaning available to assistive technology'
     })
   );
 
-  assert.match(markup, /aria-label="Étlap"/);
-  assert.match(markup, /aria-hidden="true"/);
-  assert.match(markup, /<span class="sr-only">vegetáriánus<\/span>/);
-  assert.match(markup, /l15-menu-q3-prompt/);
+  assert.match(markup, /<article/);
+  assert.match(markup, /Réka és Márk/);
+  assert.match(markup, /l15-menu-q7-prompt/);
 });
 
 test('generic prose fixture validates with non-empty paragraphs and questions', () => {
@@ -861,8 +827,8 @@ test('reading validator rejects empty prose and missing comprehension questions'
   );
 });
 
-test('menu and prose both render through the same generic ReadingTask entry point', () => {
-  const menuMarkup = renderToStaticMarkup(
+test('L15 prose and the generic prose fixture render through ReadingTask', () => {
+  const lessonMarkup = renderToStaticMarkup(
     createElement(ReadingTask, {
       data: findActivity('reading'),
       onEvidence: () => undefined,
@@ -875,7 +841,8 @@ test('menu and prose both render through the same generic ReadingTask entry poin
     })
   );
 
-  assert.match(menuMarkup, /role="region"/);
+  assert.match(lessonMarkup, /<article/);
+  assert.match(lessonMarkup, /Egy vacsora, ami majdnem tökéletes volt/);
   assert.match(proseMarkup, /<article/);
   assert.match(proseMarkup, /Library notice/);
   assert.match(proseMarkup, /The library opens at nine/);
@@ -1000,7 +967,7 @@ test('duplicate question IDs across reading and listening activities are rejecte
   ]);
 });
 
-test('frozen L15 question IDs remain exact and valid at lesson scope', () => {
+test('upgraded L15 question IDs remain exact and valid at lesson scope', () => {
   const questionBearingActivities = l15Activities().filter(
     (activity) => activity.kind === 'reading' || activity.kind === 'listening'
   );
@@ -1011,6 +978,9 @@ test('frozen L15 question IDs remain exact and valid at lesson scope', () => {
       'l15-menu-q2',
       'l15-menu-q3',
       'l15-menu-q4',
+      'l15-menu-q5',
+      'l15-menu-q6',
+      'l15-menu-q7',
       'l15-list-q1',
       'l15-list-q2',
       'l15-list-q3',
@@ -1367,15 +1337,11 @@ test('L4 preserves lesson identity, 12 physical slides, and all five objective I
   );
 });
 
-test('frozen L3 and L15 lesson files remain byte-for-byte unchanged', () => {
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)),
-    'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C'
-  );
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
-  );
+test('L3 and L15 keep lesson, objective, and quiz identity', () => {
+  assert.equal(LESSON_3.id, 3);
+  assert.equal(LESSON_15.id, 15);
+  assert.deepEqual(LESSON_3.quiz?.map((question) => question.id), [301, 302, 303, 304, 305, 306]);
+  assert.deepEqual(LESSON_15.quiz?.map((question) => question.id), [1501, 1502, 1503, 1504, 1505, 1506]);
 });
 
 test('L4 adds only the approved generic activity kinds and every activity validates', () => {
@@ -1561,7 +1527,7 @@ test('l4_ask-questions remains overall PARTIAL because speaking/intonation is pr
   assert.equal(describeExitCheckStatus(check, direct).kind, 'partial-components');
 });
 
-test('L4 short spoken recorder practice uses learner-facing self-check copy', () => {
+test('L4 short speaking practice is optional and text-only', () => {
   const slide = LESSON_4.slides.find((candidate) => candidate.id === 12);
   assert.ok(slide);
   assert.equal(slide.type, 'sentence-reading');
@@ -1570,17 +1536,10 @@ test('L4 short spoken recorder practice uses learner-facing self-check copy', ()
   assert.match(slide.targetText ?? '', /Tanulsz magyarul\?/);
   assert.match(slide.targetPhonetic ?? '', /танулок/);
   assert.doesNotMatch(slide.targetPhonetic ?? '', /будапэштэн/i);
-  assert.match(slide.task ?? '', /сравни свою запись с образцом/i);
+  assert.match(slide.task ?? '', /Устная практика \(необязательно\)/i);
   assert.doesNotMatch(slide.task ?? '', /mastery|evidence|автоматически/i);
 
-  const recorderSource = readFileSync(
-    new URL('../src/components/AudioRecorder.tsx', import.meta.url),
-    'utf8'
-  );
-  assert.match(
-    recorderSource,
-    /Не удалось получить доступ к микрофону\. Проверьте разрешения браузера\./
-  );
+  assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
 });
 
 test('L4 ListeningTask and required asset IDs are exact', () => {
@@ -1814,19 +1773,9 @@ test('L2 migration keeps the curriculum at exactly 139 objectives', async () => 
   assert.equal(objectiveCount, 139);
 });
 
-test('L3, L4, and L15 lesson files remain byte-for-byte frozen through L2 migration', () => {
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)),
-    'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C'
-  );
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)),
-    'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C'
-  );
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
-  );
+test('L3, L4, and L15 preserve stable IDs through the L2 migration', () => {
+  assert.deepEqual([LESSON_3.id, LESSON_4.id, LESSON_15.id], [3, 4, 15]);
+  assert.deepEqual([LESSON_3.number, LESSON_4.number, LESSON_15.number], [3, 4, 15]);
 });
 
 test('frozen planning documents remain byte-for-byte unchanged through L2 migration', () => {
@@ -2069,7 +2018,7 @@ test('l2_greet-introduce remains overall PARTIAL with receptive DIRECT plus inte
     activityId: 'l2-listening-introduction', attempted: true, completed: true,
     evidenceMode: 'direct', passed: true, score: 4, total: 5,
   };
-  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings');
   assert.equal(
     describeExitCheckStatus(check, listening, { [interaction.activityId]: interaction }).kind,
     'partial-review'
@@ -2084,7 +2033,7 @@ test('completed L2 interaction stays PARTIAL while required listening is missing
     activityId: 'l2-listening-introduction', attempted: true, completed: true,
     evidenceMode: 'none', passed: false, score: 5, total: 5,
   };
-  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings');
   const status = describeExitCheckStatus(check, missing, { [interaction.activityId]: interaction });
   assert.equal(status.kind, 'partial-review');
   assert.match(status.label, /обязательный DIRECT-компонент отсутствует/);
@@ -2131,68 +2080,67 @@ test('L2 RolePlay graph is deterministic and incorrect choices never advance', (
   }
 });
 
-test('L2 RolePlay recording completion never auto-promotes correctness', () => {
-  const result = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+test('L2 RolePlay completion never auto-promotes correctness', () => {
+  const result = rolePlayCompletionEvidence('l2-roleplay-greetings');
   assert.equal(result.completed, true);
-  assert.equal(result.recordingCompleted, true);
   assert.equal(result.evidenceMode, 'partial');
   assert.equal(result.passed, false);
 });
 
-test('L2 RolePlay records the informal Szia opening', () => {
+test('L2 RolePlay retains the informal Szia opening as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-informal-open-record');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'Szia!');
 });
 
-test('L2 RolePlay records the informal Szia closing', () => {
+test('L2 RolePlay retains the informal Szia closing as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-informal-close-record');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'Szia!');
 });
 
-test('L2 RolePlay records the formal Jó napot opening', () => {
+test('L2 RolePlay retains the formal Jó napot opening as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-formal-open-record');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'Jó napot!');
 });
 
-test('L2 RolePlay records the formal Viszlát closing', () => {
+test('L2 RolePlay retains the formal Viszlát closing as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-formal-close-record');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'Viszlát!');
 });
 
-test('L2 RolePlay retains the recorded Hogy vagy response', () => {
+test('L2 RolePlay retains the Hogy vagy response as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-how-are-you');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'Jól vagyok, köszönöm.');
 });
 
-test('L2 RolePlay retains the recorded self-introduction', () => {
+test('L2 RolePlay retains the self-introduction as self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const turn = rolePlay.turns.find((candidate) => candidate.id === 'l2-rp-self-intro');
   assert.ok(turn);
-  assert.equal(turn.responseMode, 'recorded');
+  assert.equal(turn.responseMode, 'selfPractice');
   assert.equal(turn.model, 'A nevem Anna. Magyar vagyok.');
 });
 
-test('all six L2 RolePlay recordings are required before recordingCompleted can be true', () => {
+test('all six L2 RolePlay learner samples are text-only self-practice', () => {
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
-  const recordedIds = rolePlay.turns
-    .filter((turn) => turn.responseMode === 'recorded')
+  const practiceIds = rolePlay.turns
+    .filter((turn) => turn.responseMode === 'selfPractice')
     .map((turn) => turn.id);
-  assert.deepEqual(recordedIds, [
+  assert.deepEqual(practiceIds, [
     'l2-rp-informal-open-record',
     'l2-rp-how-are-you',
     'l2-rp-self-intro',
@@ -2200,25 +2148,8 @@ test('all six L2 RolePlay recordings are required before recordingCompleted can 
     'l2-rp-formal-open-record',
     'l2-rp-formal-close-record',
   ]);
-  for (const missingId of recordedIds) {
-    const incomplete = new Set(recordedIds.filter((id) => id !== missingId));
-    assert.equal(rolePlayRecordingRequirementMet(rolePlay, incomplete), false, missingId);
-    assert.equal(
-      rolePlayCompletionEvidence(
-        rolePlay.id,
-        rolePlayRecordingRequirementMet(rolePlay, incomplete)
-      ).recordingCompleted,
-      undefined,
-      missingId
-    );
-  }
-  const completed = new Set(recordedIds);
-  assert.equal(rolePlayRecordingRequirementMet(rolePlay, completed), true);
-  const evidence = rolePlayCompletionEvidence(
-    rolePlay.id,
-    rolePlayRecordingRequirementMet(rolePlay, completed)
-  );
-  assert.equal(evidence.recordingCompleted, true);
+  assert.ok(rolePlay.turns.filter((turn) => turn.responseMode === 'selfPractice').every((turn) => Boolean(turn.model)));
+  const evidence = rolePlayCompletionEvidence(rolePlay.id);
   assert.equal(evidence.evidenceMode, 'partial');
   assert.equal(evidence.passed, false);
 });
@@ -2241,14 +2172,14 @@ test('l2_introduce-self combines PARTIAL writing and PARTIAL speaking honestly',
     activityId: 'l2-writing-self-introduction', attempted: true, completed: true,
     evidenceMode: 'partial', passed: false, selfReviewed: true,
   };
-  const speaking = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+  const speaking = rolePlayCompletionEvidence('l2-roleplay-greetings');
   assert.equal(
     describeExitCheckStatus(check, writing, { [speaking.activityId]: speaking }).kind,
     'partial-review'
   );
 });
 
-test('l2_ask-answer-questions stays PARTIAL after listening plus recorded responses', () => {
+test('l2_ask-answer-questions stays PARTIAL after listening plus text-only interaction', () => {
   const exitCheck = findL2Activity('l2-exit-check', 'exitCheck');
   const check = exitCheck.checks.find((candidate) => candidate.objectiveId === 'l2_ask-answer-questions');
   assert.ok(check);
@@ -2256,7 +2187,7 @@ test('l2_ask-answer-questions stays PARTIAL after listening plus recorded respon
     activityId: 'l2-listening-introduction', attempted: true, completed: true,
     evidenceMode: 'direct', passed: true, score: 4, total: 5,
   };
-  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings');
   assert.equal(
     describeExitCheckStatus(check, listening, { [interaction.activityId]: interaction }).kind,
     'partial-review'
@@ -2349,7 +2280,7 @@ test('RolePlay generic labels, wrapping, and keyboard focus hooks remain lesson-
   assert.match(source, /focus-visible:ring-2/);
 });
 
-test('L2 activity markup exposes textual states and usable writing/microphone fallbacks', () => {
+test('L2 activity markup exposes textual states without learner microphone UI', () => {
   const writing = findL2Activity('l2-writing-self-introduction', 'writing');
   const rolePlay = findL2Activity('l2-roleplay-greetings', 'rolePlay');
   const writingMarkup = renderToStaticMarkup(
@@ -2358,19 +2289,15 @@ test('L2 activity markup exposes textual states and usable writing/microphone fa
   const completedRolePlayMarkup = renderToStaticMarkup(
     createElement(LessonActivityRenderer, {
       activity: rolePlay,
-      evidence: { [rolePlay.id]: rolePlayCompletionEvidence(rolePlay.id, true) },
+      evidence: { [rolePlay.id]: rolePlayCompletionEvidence(rolePlay.id) },
       objectives: LESSON_2.objectives,
     })
-  );
-  const recorderSource = readFileSync(
-    new URL('../src/components/AudioRecorder.tsx', import.meta.url),
-    'utf8'
   );
   assert.match(writingMarkup, /<textarea/);
   assert.match(writingMarkup, /aria-label=/);
   assert.match(completedRolePlayMarkup, /completed · PARTIAL/);
-  assert.match(completedRolePlayMarkup, /Прослушай их и сравни с моделями/);
-  assert.match(recorderSource, /Не удалось получить доступ к микрофону\. Проверьте разрешения браузера\./);
+  assert.doesNotMatch(completedRolePlayMarkup, /<button[^>]*микрофон|MediaRecorder|getUserMedia/i);
+  assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
 });
 
 test('slide audio manifest remains unchanged by the L2 activity migration', () => {

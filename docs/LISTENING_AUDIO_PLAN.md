@@ -6,9 +6,9 @@ Generated from the lesson source. Do not edit the inventory by hand; run `npm ru
 
 - Lessons audited: 28
 - Lessons with Listening: 25
-- Listening activities: 28
-- Unique future MP3 assets: 27
-- Dialogue assets: 8
+- Listening activities: 32
+- Unique future MP3 assets: 31
+- Dialogue assets: 12
 - Monologue assets: 15
 - Token-sequence assets: 3
 - Dictation assets: 1
@@ -37,10 +37,10 @@ Generated from the lesson source. Do not edit the inventory by hand; run `npm ru
 | 18 | HAS_LISTENING | 1 | l18_understand-modals | Covered by lesson source. |
 | 19 | HAS_LISTENING | 1 | l19_distinguish-tenses | Covered by lesson source. |
 | 20 | HAS_LISTENING | 1 | l20_understand-past-texts | Covered by lesson source. |
-| 21 | HAS_LISTENING | 1 | l21_distinguish-conjugations | Covered by lesson source. |
-| 22 | HAS_LISTENING | 1 | l22_understand-commands | Covered by lesson source. |
-| 23 | HAS_LISTENING | 1 | l23_understand-conditional | Covered by lesson source. |
-| 24 | HAS_LISTENING | 1 | — | Covered by lesson source. |
+| 21 | HAS_LISTENING | 2 | l21_distinguish-conjugations | Covered by lesson source. |
+| 22 | HAS_LISTENING | 2 | l22_understand-commands | Covered by lesson source. |
+| 23 | HAS_LISTENING | 2 | l23_understand-conditional | Covered by lesson source. |
+| 24 | HAS_LISTENING | 2 | — | Covered by lesson source. |
 | 25 | HAS_LISTENING | 1 | l25_ask-answer-job, l25_interview-dialogue | Covered by lesson source. |
 | 26 | HAS_LISTENING | 1 | l26_doctor-dialogue, l26_pharmacy, l26_understand-advice | Covered by lesson source. |
 | 27 | HAS_LISTENING | 1 | l27_buy-tickets, l27_ask-directions, l27_travel-dialogue | Covered by lesson source. |
@@ -71,9 +71,13 @@ Generated from the lesson source. Do not edit the inventory by hand; run `npm ru
 | 19 | l19-listening-future | l19_listening_future | monologue | 5 | 4 | published |
 | 20 | l20-listening-context | l20_listening_context | monologue | 3 | 2 | published |
 | 21 | l21-listening-context | l21_listening_context | dialogue | 3 | 2 | published |
+| 21 | l21-listening-b-context | l21_listening_b_film_choice | dialogue | 6 | 5 | published |
 | 22 | l22-listening-context | l22_listening_context | monologue | 3 | 2 | published |
+| 22 | l22-listening-b-context | l22_listening_b_office_instructions | dialogue | 6 | 5 | published |
 | 23 | l23-listening-context | l23_listening_context | monologue | 3 | 2 | published |
+| 23 | l23-listening-b-context | l23_listening_b_free_week | dialogue | 7 | 6 | published |
 | 24 | l24-listening-context | l24_listening_context | monologue | 3 | 2 | published |
+| 24 | l24-listening-b-context | l24_listening_b_city_or_suburbs | dialogue | 7 | 6 | published |
 | 25 | l25-listening-context | l25_listening_context | dialogue | 3 | 2 | published |
 | 26 | l26-listening-context | l26_listening_context | monologue | 3 | 2 | published |
 | 27 | l27-listening-context | l27_listening_context | dialogue | 3 | 2 | published |
@@ -353,7 +357,7 @@ Questions and intended answers:
 
 ### Lesson 7 · l7-listening-accusative
 
-- Lesson location: slide 10, activity 1
+- Lesson location: slide 8, activity 1
 - Title: Аудирование: формы дополнения
 - Filename: `l7_listening_accusative.mp3`
 - Type: `monologue`
@@ -380,7 +384,7 @@ Questions and intended answers:
 
 ### Lesson 8 · l8-listening-possessives
 
-- Lesson location: slide 10, activity 1
+- Lesson location: slide 7, activity 1
 - Title: Аудирование: кто владелец?
 - Filename: `l8_listening_possessives.mp3`
 - Type: `monologue`
@@ -406,7 +410,7 @@ Questions and intended answers:
 
 ### Lesson 10 · l10-listening-inner-locations
 
-- Lesson location: slide 10, activity 1
+- Lesson location: slide 8, activity 1
 - Title: Аудирование: маршрут Марка
 - Filename: `l10_listening_inner_locations.mp3`
 - Type: `monologue`
@@ -460,7 +464,7 @@ Questions and intended answers:
 
 ### Lesson 13 · l13-listening-tense-contrast
 
-- Lesson location: slide 8, activity 1
+- Lesson location: slide 7, activity 1
 - Title: Аудирование: сейчас и вчера
 - Filename: `l13_listening_tense_contrast.mp3`
 - Type: `monologue`
@@ -487,7 +491,7 @@ Questions and intended answers:
 
 ### Lesson 14 · l14-listening-routine
 
-- Lesson location: slide 7, activity 1
+- Lesson location: slide 6, activity 1
 - Title: Аудирование: распорядок Анны
 - Filename: `l14_listening_routine.mp3`
 - Type: `monologue`
@@ -546,7 +550,7 @@ Questions and intended answers:
 
 ### Lesson 16 · l16-listening-shopping
 
-- Lesson location: slide 8, activity 1
+- Lesson location: slide 6, activity 1
 - Title: Аудирование: покупка
 - Filename: `l16_listening_shopping.mp3`
 - Type: `dialogue`
@@ -575,7 +579,7 @@ Questions and intended answers:
 
 ### Lesson 17 · l17-listening-weather
 
-- Lesson location: slide 7, activity 1
+- Lesson location: slide 6, activity 1
 - Title: Аудирование: короткий прогноз
 - Filename: `l17_listening_weather.mp3`
 - Type: `monologue`
@@ -602,7 +606,7 @@ Questions and intended answers:
 
 ### Lesson 18 · l18-listening-modals
 
-- Lesson location: slide 8, activity 1
+- Lesson location: slide 7, activity 1
 - Title: Аудирование: что люди могут, должны и хотят?
 - Filename: `l18_listening_modals.mp3`
 - Type: `dialogue`
@@ -631,7 +635,7 @@ Questions and intended answers:
 
 ### Lesson 19 · l19-listening-future
 
-- Lesson location: slide 9, activity 1
+- Lesson location: slide 8, activity 1
 - Title: Аудирование: три времени и планы
 - Filename: `l19_listening_future.mp3`
 - Type: `monologue`
@@ -658,7 +662,7 @@ Questions and intended answers:
 
 ### Lesson 20 · l20-listening-context
 
-- Lesson location: slide 10, activity 3
+- Lesson location: slide 8, activity 2
 - Title: Аудирование: короткий рассказ о прошлом
 - Filename: `l20_listening_context.mp3`
 - Type: `monologue`
@@ -709,6 +713,47 @@ Questions and intended answers:
 3. Melyik forma jelenti: «я вижу тебя»? — **látlak**
 
 
+### Lesson 21 · l21-listening-b-context
+
+- Lesson location: slide 9, activity 4
+- Title: Аудирование B: выбираем фильм
+- Filename: `l21_listening_b_film_choice.mp3`
+- Type: `dialogue`
+- Speakers: Dóra, Márk
+- Questions: 6
+- Pass requirement: 5/6
+- Current asset status: `published`
+- Objective/evidence: required_exit_check: l21_distinguish-conjugations
+
+Transcript (exact future recording stimulus):
+
+```text
+Dóra: Szia, hallasz engem?
+Márk: Igen, most már hallak. Mit csinálsz?
+Dóra: Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?
+Márk: A Késői vonatot? Igen, ismerem. Tegnap láttam.
+Dóra: És tetszett?
+Márk: Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már.
+Dóra: Én őt nem ismerem. Miről szól a film?
+Márk: Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát.
+Dóra: Jól hangzik. Akkor ezt nézem meg.
+Márk: Van egy másik jó film is. Küldjek róla egy linket?
+Dóra: Igen, küldd el! Megnézem az előzetest is.
+Márk: Rendben, mindjárt elküldöm.
+Dóra: Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam.
+Márk: Jó, várlak.
+```
+
+Questions and intended answers:
+
+1. Miért telefonál Dóra Márknak? — **Mert filmet keres estére.**
+2. Mikor látta Márk a magyar filmet? — **Tegnap.**
+3. Mi nem tetszett teljesen Márknak? — **Az eleje egy kicsit lassú volt.**
+4. Ismeri Dóra a főszereplőt? — **Nem, nem ismeri.**
+5. Mit küld Márk Dórának? — **Egy linket egy másik filmről.**
+6. Mit fog Dóra tenni másnap? — **Felhívja Márkot, és elmondja, melyik filmet választotta.**
+
+
 ### Lesson 22 · l22-listening-context
 
 - Lesson location: slide 9, activity 3
@@ -719,7 +764,7 @@ Questions and intended answers:
 - Questions: 3
 - Pass requirement: 2/3
 - Current asset status: `published`
-- Objective/evidence: required_exit_check: l22_understand-commands
+- Objective/evidence: practice_only: not used as an ExitCheck requirement
 
 Transcript (exact future recording stimulus):
 
@@ -734,6 +779,45 @@ Questions and intended answers:
 3. Hová ne tegye a táskát? — **Az asztalra**
 
 
+### Lesson 22 · l22-listening-b-context
+
+- Lesson location: slide 9, activity 4
+- Title: Аудирование B: первый день в офисе
+- Filename: `l22_listening_b_office_instructions.mp3`
+- Type: `dialogue`
+- Speakers: Recepciós, Dolgozó
+- Questions: 6
+- Pass requirement: 5/6
+- Current asset status: `published`
+- Objective/evidence: required_exit_check: l22_understand-commands
+
+Transcript (exact future recording stimulus):
+
+```text
+Recepciós: Jó reggelt! Ön az új kolléga?
+Dolgozó: Igen, ma van az első munkanapom.
+Recepciós: Rendben. Először kérem, mutassa meg a személyi igazolványát. Utána vegye át ezt a belépőkártyát, és írja alá ezt a papírt.
+Dolgozó: Rendben. Ezután hová menjek?
+Recepciós: Menjen fel a harmadik emeletre lifttel. Amikor kilép a liftből, forduljon jobbra, és keresse meg a 315-ös irodát.
+Dolgozó: Elnézést, nem értettem az iroda számát. Mondja még egyszer, kérem!
+Recepciós: Természetesen. Háromszáztizenöt. A folyosó végén találja.
+Dolgozó: Köszönöm. Van még valami, amit tudnom kell?
+Recepciós: Igen. Ne használja a hátsó bejáratot, mert ahhoz még nincs jogosultsága. Ha ebédelni megy, tegye a belépőkártyát a táskájába, ne hagyja az asztalon.
+Dolgozó: Értem.
+Recepciós: Ha bármilyen problémája van, hívja a recepciót, vagy kérdezze Annát a 315-ös irodában.
+Dolgozó: Rendben, köszönöm szépen a segítséget.
+```
+
+Questions and intended answers:
+
+1. Mit kell először megmutatnia a dolgozónak? — **A személyi igazolványát.**
+2. Melyik emeletre kell mennie? — **A harmadik emeletre.**
+3. Miért kér ismétlést? — **Mert nem értette az iroda számát.**
+4. Mi az iroda száma? — **315.**
+5. Melyik bejáratot nem használhatja? — **A hátsó bejáratot.**
+6. Kihez fordulhat segítségért? — **A recepcióhoz vagy Annához.**
+
+
 ### Lesson 23 · l23-listening-context
 
 - Lesson location: slide 9, activity 3
@@ -744,7 +828,7 @@ Questions and intended answers:
 - Questions: 3
 - Pass requirement: 2/3
 - Current asset status: `published`
-- Objective/evidence: required_exit_check: l23_understand-conditional
+- Objective/evidence: practice_only: not used as an ExitCheck requirement
 
 Transcript (exact future recording stimulus):
 
@@ -757,6 +841,47 @@ Questions and intended answers:
 1. Mit szeretne a beszélő? — **Többet utazni**
 2. Mire lenne szüksége? — **Több szabadságra**
 3. Mit csinálna nyáron? — **Sokat úszna**
+
+
+### Lesson 23 · l23-listening-b-context
+
+- Lesson location: slide 9, activity 4
+- Title: Аудирование B: свободная неделя
+- Filename: `l23_listening_b_free_week.mp3`
+- Type: `dialogue`
+- Speakers: Nóra, Ádám
+- Questions: 7
+- Pass requirement: 6/7
+- Current asset status: `published`
+- Objective/evidence: required_exit_check: l23_understand-conditional
+
+Transcript (exact future recording stimulus):
+
+```text
+Nóra: Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?
+Ádám: Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék.
+Nóra: Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni.
+Ádám: De ha egész héten otthon lennél, nem unatkoznál?
+Nóra: Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet.
+Ádám: Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága.
+Nóra: Ez igaz. Hová mennél pontosan?
+Ádám: Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett.
+Nóra: Én egy egész hetet nem szeretnék utazással tölteni.
+Ádám: Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni.
+Nóra: Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék.
+Ádám: Akkor este megnézhetnénk a lehetőségeket.
+Nóra: Rendben. Küldj néhány ajánlatot, és választunk.
+```
+
+Questions and intended answers:
+
+1. Mit tenne Ádám egy szabad héten? — **Elutazna, talán Horvátországba.**
+2. Miért maradna Nóra inkább otthon? — **Mert sokat dolgozik, és pihenni szeretne.**
+3. Mitől lehetne olcsóbb az utazás? — **Ha időben vennének jegyet.**
+4. Miért nem tetszik Nórának Ádám első terve? — **Nem akarja az egész hetet utazással tölteni.**
+5. Milyen kompromisszumot javasol Ádám? — **Négy nap utazást és három nap otthoni pihenést.**
+6. Mi kell ahhoz, hogy Nóra is elutazzon? — **Olcsó szállást kell találniuk.**
+7. A beszélgetés végén közelebb kerülnek-e a közös döntéshez? — **Igen, este együtt megnézik a lehetőségeket.**
 
 
 ### Lesson 24 · l24-listening-context
@@ -782,6 +907,44 @@ Questions and intended answers:
 1. Miért tetszik a lakás? — **Világos és közel van**
 2. Mi a lakás hátránya? — **Kicsi**
 3. Mikor dönt a beszélő? — **Egy újabb megtekintés után**
+
+
+### Lesson 24 · l24-listening-b-context
+
+- Lesson location: slide 9, activity 4
+- Title: Аудирование B: центр или окраина
+- Filename: `l24_listening_b_city_or_suburbs.mp3`
+- Type: `dialogue`
+- Speakers: Eszter, Gábor
+- Questions: 7
+- Pass requirement: 6/7
+- Current asset status: `published`
+- Objective/evidence: required_exit_check: l24_connect-ideas
+
+Transcript (exact future recording stimulus):
+
+```text
+Eszter: Én biztosan a belvárosban maradnék. Szeretem, hogy szinte minden közel van, és nem kell sok időt utazással töltenem.
+Gábor: Én viszont szívesebben költöznék a város szélére. A belváros kényelmes, de szerintem túl zajos, és a lakások is nagyon drágák.
+Eszter: Ez igaz, bár nekem fontosabb a jó közlekedés. Innen tíz perc alatt beérek a munkahelyemre, este pedig könnyen találkozom a barátaimmal.
+Gábor: Nekem most majdnem egy órába telik hazajutni, mégis szeretem, hogy nyugodtabb környéken lakom. Ráadásul nagyobb lakást tudtam bérelni ugyanannyi pénzért.
+Eszter: Viszont ha este programod van a központban, sokkal nehezebb hazamenned.
+Gábor: Igen, ez valóban hátrány. Másrészt nem járok minden este a belvárosba. Hétvégén pedig inkább otthon vagy a természetben vagyok.
+Eszter: Akkor valószínűleg mások az igényeink. Én most még nem szeretnék kiköltözni.
+Gábor: Én sem mondom, hogy mindenkinek jobb. Ha valaki minden nap bent dolgozik, és sok programra jár, a belváros praktikusabb lehet.
+Eszter: Ebben egyetértek. Szerintem végül az a fontos, hogy az ember tudja, mi fontos neki: a nyugalom, az ár vagy az, hogy minden közel legyen.
+Gábor: Pontosan. Nincs olyan megoldás, amely mindenkinek tökéletes.
+```
+
+Questions and intended answers:
+
+1. Miért szeret Eszter a belvárosban lakni? — **Mert szinte minden közel van, és keveset kell utaznia.**
+2. Mi Gábor két fő érve a külsőbb kerület mellett? — **Nyugodtabb, és ugyanannyi pénzért nagyobb lakást bérelhet.**
+3. Milyen hátrányt ismer el Gábor? — **Este nehezebb hazajutni a központból.**
+4. Miben különbözik Eszter és Gábor életmódja? — **Eszternek fontos a központ és a gyakori programok; Gábor inkább otthon vagy a természetben tölti a hétvégét.**
+5. Miben értenek egyet a végén? — **A jó választás az egyéni igényektől és fontossági sorrendtől függ.**
+6. Ki állítja azt, hogy a belváros mindenkinek jobb? — **Egyikük sem.**
+7. Mi a beszélgetés fő következtetése? — **Nincs mindenki számára tökéletes megoldás.**
 
 
 ### Lesson 25 · l25-listening-context
@@ -820,7 +983,7 @@ Questions and intended answers:
 - Questions: 3
 - Pass requirement: 2/3
 - Current asset status: `published`
-- Objective/evidence: required_exit_check: l26_understand-advice
+- Objective/evidence: required_exit_check: l26_doctor-dialogue, l26_understand-advice
 
 Transcript (exact future recording stimulus):
 

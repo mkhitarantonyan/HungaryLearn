@@ -1,55 +1,55 @@
 import { Lesson, LessonActivity } from '../../types';
 
-const cp = (
-  id: string,
-  title: string,
-  passCount: number,
-  exercises: Extract<LessonActivity, { kind: 'controlledPractice' }>['exercises'],
-): LessonActivity => ({ kind: 'controlledPractice', id, title, passCount, exercises });
+const L19_CONTROLLED: LessonActivity = {
+  kind: 'controlledPractice',
+  id: 'l19-cp-contextual-future',
+  title: 'Планы, прогнозы и изменение договорённости',
+  passCount: 11,
+  exercises: [
+    { kind: 'singleChoice', id: 'l19-p5-cp-1', prompt: 'A · У вас назначена встреча с Анной сегодня вечером.', options: ['Este találkozom Annával.', 'Este találkozni fogtam Annával.', 'Este találkoztam Annával.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-2', prompt: 'A · У тебя фиксированная поездка на следующей неделе.', options: ['Jövő héten Budapestre utazom.', 'Jövő héten Budapestre utaztam.', 'Jövő héten utazni fogott.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-3', prompt: 'A · Какое предложение грамматически в настоящем, но обозначает будущий график?', options: ['Holnap dolgozom.', 'Tegnap dolgoztam.', 'Most dolgozni fogok.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l19-p5-cp-4', prompt: 'B · Mit ___ csinálni hétvégén? (te)', accept: ['fogsz'] },
+    { kind: 'fillGap', id: 'l19-p5-cp-5', prompt: 'B · Este tanulni ___. (ti)', accept: ['fogtok'] },
+    { kind: 'singleChoice', id: 'l19-p5-cp-6', prompt: 'B · Ты обещаешь позвонить позже.', options: ['Majd felhívlak.', 'Majd felhívtalak.', 'Most felhívtalak.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-7', prompt: 'C · Явное будущее, отрицание.', options: ['Holnap nem fogok dolgozni.', 'Holnap fogok nem dolgozni.', 'Holnap nem dolgoztam.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l19-p5-cp-8', prompt: 'C · Vasárnap pihenni ___. (mi)', accept: ['fogunk'] },
+    { kind: 'singleChoice', id: 'l19-p5-cp-9', prompt: 'D · Прогноз погоды.', options: ['Szerintem esni fog.', 'Szerintem esik tegnap.', 'Szerintem esett fog.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-10', prompt: 'D · Какое предложение является прогнозом, а не фиксированной договорённостью?', options: ['Szerintem holnap sokat fogok dolgozni.', 'Holnap tízkor dolgozom.', 'Tegnap sokat dolgoztam.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-11', prompt: 'D · Простой прогноз о друзьях.', options: ['A barátaim is dolgozni fognak.', 'A barátaim is dolgozni fogok.', 'A barátaim is dolgoztak holnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-12', prompt: 'E · Друг отменил встречу в 10:00. Как естественно отреагировать?', options: ['Rendben. Mikor tudunk találkozni?', 'Tegnap találkozunk.', 'Nem tudtam holnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-13', prompt: 'E · Предложи новое время.', options: ['Találkozzunk inkább délután kettőkor!', 'Találkoztunk délután kettőkor!', 'Délután kettőkor esett.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l19-p5-cp-14', prompt: 'E · Подтверди новую договорённость.', options: ['Jó, akkor kettőkor találkozunk a pályaudvarnál.', 'Jó, akkor kettőkor találkoztunk.', 'Jó, akkor kettőkor fog esni.'], correctIndex: 0 },
+  ],
+};
 
-const L19_CP_FUTURE_FORMS = cp('l19-cp-future-forms', 'Будущее с fog + инфинитив', 8, [
-  { kind: 'textInput', id: 'l19-future-1', prompt: 'én + tanulni, holnap → «Завтра я буду учиться.»', accept: ['Holnap tanulni fogok', 'Holnap tanulni fogok.'] },
-  { kind: 'textInput', id: 'l19-future-2', prompt: 'te + dolgozni, holnap → «Завтра ты будешь работать.»', accept: ['Holnap dolgozni fogsz', 'Holnap dolgozni fogsz.'] },
-  { kind: 'textInput', id: 'l19-future-3', prompt: 'ő + utazni, jövő héten → «На следующей неделе он/она будет путешествовать.»', accept: ['Jövő héten utazni fog', 'Jövő héten utazni fog.'] },
-  { kind: 'textInput', id: 'l19-future-4', prompt: 'mi + főzni, holnap → «Завтра мы будем готовить.»', accept: ['Holnap főzni fogunk', 'Holnap főzni fogunk.'] },
-  { kind: 'textInput', id: 'l19-future-5', prompt: 'ti + tanulni, jövő héten → «На следующей неделе вы будете учиться.»', accept: ['Jövő héten tanulni fogtok', 'Jövő héten tanulni fogtok.'] },
-  { kind: 'textInput', id: 'l19-future-6', prompt: 'ők + dolgozni, holnapután → «Послезавтра они будут работать.»', accept: ['Holnapután dolgozni fognak', 'Holnapután dolgozni fognak.'] },
-  { kind: 'textInput', id: 'l19-future-7', prompt: 'én + nem + dolgozni, holnap → «Завтра я не буду работать.»', accept: ['Holnap nem fogok dolgozni', 'Holnap nem fogok dolgozni.'] },
-  { kind: 'textInput', id: 'l19-future-8', prompt: 'te + nem + tanulni, holnap → «Завтра ты не будешь учиться.»', accept: ['Holnap nem fogsz tanulni', 'Holnap nem fogsz tanulni.'] },
-  { kind: 'textInput', id: 'l19-future-9', prompt: 'én + olvasni, jövő héten → «На следующей неделе я буду читать.»', accept: ['Jövő héten olvasni fogok', 'Jövő héten olvasni fogok.'] },
-  { kind: 'textInput', id: 'l19-future-10', prompt: 'ők + utazni, jövő hónapban → «В следующем месяце они будут путешествовать.»', accept: ['Jövő hónapban utazni fognak', 'Jövő hónapban utazni fognak.'] },
-]);
-
-const L19_CP_FOG_CONJUGATION = cp('l19-cp-fog-conjugation', 'Неопределённая парадигма fog', 6, [
-  { kind: 'fillGap', id: 'l19-fog-1', prompt: 'én: Holnap tanulni ___.', accept: ['fogok'] },
-  { kind: 'fillGap', id: 'l19-fog-2', prompt: 'te: Holnap dolgozni ___.', accept: ['fogsz'] },
-  { kind: 'fillGap', id: 'l19-fog-3', prompt: 'ő: Holnap utazni ___.', accept: ['fog'] },
-  { kind: 'fillGap', id: 'l19-fog-4', prompt: 'mi: Holnap főzni ___.', accept: ['fogunk'] },
-  { kind: 'fillGap', id: 'l19-fog-5', prompt: 'ti: Holnap tanulni ___.', accept: ['fogtok'] },
-  { kind: 'fillGap', id: 'l19-fog-6', prompt: 'ők: Holnap dolgozni ___.', accept: ['fognak'] },
-]);
-
-const L19_CP_PRESENT_VS_FOG = cp('l19-cp-present-vs-fog', 'План: настоящее или fog-будущее?', 5, [
-  { kind: 'singleChoice', id: 'l19-plan-form-1', prompt: 'Holnap Budapestre megyek. Какая грамматическая форма выражает будущий план?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-plan-form-2', prompt: 'Holnap Budapestre fogok menni. Какая форма используется?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l19-plan-form-3', prompt: 'Jövő héten dolgozom. Какая грамматическая форма выражает будущий план?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-plan-form-4', prompt: 'Jövő héten dolgozni fogok. Какая форма используется?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l19-plan-form-5', prompt: 'Szombaton találkozunk. Какая грамматическая форма выражает договорённый будущий план?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-plan-form-6', prompt: 'Szombaton találkozni fogunk. Какая форма используется?', options: ['Настоящее время с будущим значением', 'Прошедшее время', 'fog + инфинитив'], correctIndex: 2 },
-]);
-
-const L19_CP_TENSE_READING = cp('l19-cp-tense-reading-sort', 'Чтение: настоящее, прошлое или fog-будущее?', 8, [
-  { kind: 'singleChoice', id: 'l19-tense-1', prompt: 'Most magyarul tanulok.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-tense-2', prompt: 'Ma otthon dolgozom.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-tense-3', prompt: 'Péter most a könyvtárban van.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l19-tense-4', prompt: 'Tegnap magyarul tanultam.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l19-tense-5', prompt: 'A múlt héten dolgoztam.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l19-tense-6', prompt: 'Tegnap Anna otthon volt.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l19-tense-7', prompt: 'Holnap tanulni fogok.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l19-tense-8', prompt: 'Jövő héten dolgozni fogunk.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l19-tense-9', prompt: 'Hamarosan találkozni fognak.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l19-tense-10', prompt: 'Holnap nem fogsz dolgozni.', options: ['jelen idő', 'múlt idő', 'fog-jövő'], correctIndex: 2 },
-]);
+const L19_READING: LessonActivity = {
+  kind: 'reading',
+  id: 'l19-reading-busy-weekend',
+  title: 'Egy sűrű hétvége',
+  instructions: 'Прочитай текст и восстанови планы, изменения и итоговые договорённости.',
+  content: {
+    type: 'prose',
+    title: 'Egy sűrű hétvége',
+    paragraphs: [
+      'Nóra és Márk már hétfőn megtervezik a hétvégét. Péntek este hétkor találkoznak egy kis étteremben, mert régóta nem beszélgettek nyugodtan. Utána moziba mennek, de még nem döntötték el, melyik filmet nézik meg. Nóra péntek délután asztalt foglal, Márk pedig megnézi a moziműsort, és üzenetet küld két lehetséges filmről.',
+      'Szombat reggel tízkor vonattal Szentendrére utaznak. Azt tervezik, hogy megnézik a múzeumot, sétálnak a Duna-parton, és délután egy kávézóban pihennek. Péntek délután azonban Márk üzenetet kap: szombaton délig dolgoznia kell. Ezért a tízórás vonatot lemondják, és kettőkor találkoznak a pályaudvaron.',
+      'Az időjárás-előrejelzés szerint délután esni fog. Nóra először azt javasolja, hogy maradjanak Budapesten, de Márk szerint az eső nem fog egész nap tartani. Végül úgy döntenek, hogy elutaznak, de a hosszú séta helyett először a múzeumba mennek. Ha később jó lesz az idő, a Duna-parton is sétálnak. Nóra esernyőt fog vinni, Márk pedig előre megveszi a vonatjegyeket, hogy délután ne kelljen sokáig várniuk.',
+      'Vasárnap Nóra a családjával ebédel, Márk pedig otthon fog pihenni és készülni a következő hétre. Este felhívják egymást, és megbeszélik, milyen volt a megváltozott program. Ha lesz idejük, a következő közös hétvégét is elkezdik tervezni.',
+    ],
+  },
+  passCount: 6,
+  questions: [
+    { id: 'l19-p5-read-1', question: 'Mit csinálnak péntek este?', options: ['Étteremben találkoznak, majd moziba mennek', 'Szentendrére utaznak', 'Otthon dolgoznak'], correctIndex: 0 },
+    { id: 'l19-p5-read-2', question: 'Mi volt az eredeti szombati utazási terv?', options: ['A tízórás vonattal mennek Szentendrére', 'Autóval mennek délben', 'Este repülővel utaznak'], correctIndex: 0 },
+    { id: 'l19-p5-read-3', question: 'Miért kell megváltoztatni a találkozó idejét?', options: ['Márknak délig dolgoznia kell', 'Nóra beteg', 'A múzeum bezárt'], correctIndex: 0 },
+    { id: 'l19-p5-read-4', question: 'Mikor és hol találkoznak végül szombaton?', options: ['Kettőkor a pályaudvaron', 'Tízkor az étteremben', 'Hétkor a múzeumban'], correctIndex: 0 },
+    { id: 'l19-p5-read-5', question: 'Milyen időt jósolnak szombat délutánra?', options: ['Esni fog', 'Havazni fog', 'Biztosan sütni fog a nap'], correctIndex: 0 },
+    { id: 'l19-p5-read-6', question: 'Mi az alternatív program rossz idő esetén?', options: ['Először a múzeumba mennek, a séta később lehetséges', 'Hazamennek és dolgoznak', 'Lemondják az egész hétvégét'], correctIndex: 0 },
+    { id: 'l19-p5-read-7', question: 'Mit csinál Nóra vasárnap?', options: ['A családjával ebédel', 'Egész nap dolgozik', 'Szentendrén marad'], correctIndex: 0 },
+    { id: 'l19-p5-read-8', question: 'Mi mutatja, hogy a program rugalmas?', options: ['A munka és az időjárás miatt új időt és sorrendet választanak', 'Minden pontosan az eredeti terv szerint történik', 'Nem beszélnek egymással'], correctIndex: 0 },
+  ],
+};
 
 const L19_LISTENING: LessonActivity = {
   kind: 'listening',
@@ -68,11 +68,37 @@ const L19_LISTENING: LessonActivity = {
   ],
 };
 
+const L19_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay',
+  id: 'l19-roleplay-saturday-plan',
+  title: 'RolePlay: меняем планы на субботу',
+  partnerLabel: 'Друг',
+  completionMessage: 'Новая договорённость достигнута. Проверь реакцию, предложение, погоду и финальное подтверждение времени и места.',
+  startTurnId: 'l19-rp-1',
+  turns: [
+    { id: 'l19-rp-1', speaker: 'waiter', prompt: 'Találkozzunk szombaton délelőtt tízkor a pályaudvarnál!', next: 'l19-rp-2' },
+    { id: 'l19-rp-2', speaker: 'learner', prompt: 'Согласись и спроси, что вы будете делать.', responseMode: 'selfPractice', model: 'Jó ötlet! Mit fogunk csinálni?', next: 'l19-rp-3' },
+    { id: 'l19-rp-3', speaker: 'waiter', prompt: 'Elutazunk Szentendrére, és sétálunk a Duna-parton. De most szóltak, hogy délig dolgoznom kell.', next: 'l19-rp-4' },
+    { id: 'l19-rp-4', speaker: 'learner', prompt: 'Отреагируй и спроси о новом времени.', responseMode: 'selfPractice', model: 'Értem, semmi baj. Mikor tudunk akkor találkozni?', next: 'l19-rp-5' },
+    { id: 'l19-rp-5', speaker: 'waiter', prompt: 'Talán délután kettőkor már jó lesz.', next: 'l19-rp-6' },
+    { id: 'l19-rp-6', speaker: 'learner', prompt: 'Предложи новое занятие или порядок программы.', responseMode: 'selfPractice', model: 'Találkozzunk kettőkor, és menjünk először a múzeumba!', next: 'l19-rp-7' },
+    { id: 'l19-rp-7', speaker: 'waiter', prompt: 'Rendben. Vonattal menjünk, vagy inkább autóval?', next: 'l19-rp-8' },
+    { id: 'l19-rp-8', speaker: 'learner', prompt: 'Обсуди транспорт и место встречи.', responseMode: 'selfPractice', model: 'Menjünk vonattal, és találkozzunk a főbejáratnál.', next: 'l19-rp-9' },
+    { id: 'l19-rp-9', speaker: 'waiter', prompt: 'Az előrejelzés szerint délután esni fog.', next: 'l19-rp-10' },
+    { id: 'l19-rp-10', speaker: 'learner', prompt: 'Отреагируй на прогноз и предложи запасной план.', responseMode: 'selfPractice', model: 'Ha esik, maradjunk tovább a múzeumban, és utána üljünk be egy kávézóba.', next: 'l19-rp-11' },
+    { id: 'l19-rp-11', speaker: 'waiter', prompt: 'Jó. Akkor a séta az időjárástól függ.', next: 'l19-rp-12' },
+    { id: 'l19-rp-12', speaker: 'learner', prompt: 'Подтверди итоговые время, место и программу.', responseMode: 'selfPractice', model: 'Tehát szombaton kettőkor találkozunk a pályaudvar főbejáratánál, és először a múzeumba megyünk.', next: 'l19-rp-13' },
+    { id: 'l19-rp-13', speaker: 'waiter', prompt: 'Pontosan. Majd írok, ha még változik valami.', next: 'l19-rp-14' },
+    { id: 'l19-rp-14', speaker: 'learner', prompt: 'Вежливо заверши разговор.', responseMode: 'selfPractice', model: 'Rendben, várom az üzenetedet. Szia!', next: 'l19-rp-15' },
+    { id: 'l19-rp-15', speaker: 'waiter', prompt: 'Szia, szombaton találkozunk!' },
+  ],
+};
+
 const L19_WRITING: LessonActivity = {
   kind: 'writing',
   id: 'l19-writing-plans-predictions',
-  title: 'Письмо: планы и прогнозы',
-  prompt: 'Напиши 6 коротких предложений: 3 реальных плана и 3 простых прогноза. В планах используй минимум два маркера времени; минимум два плана должны быть с fog + инфинитив, один можно выразить настоящим временем с будущим значением. Прогнозы начни с szerintem и используй конструкцию с fog и инфинитивом. Открытый текст требует проверки.',
+  title: 'Письмо другу: планы на следующие выходные',
+  prompt: 'Напиши другу 90–110 слов о планах на следующие выходные. Упомяни пятницу, субботу и воскресенье; одну фиксированную договорённость; одно намерение; один прогноз; одно возможное изменение и его причину. Заверши вопросом другу.',
   modelAnswer: [
     'Holnap dolgozni fogok.',
     'Jövő héten találkozni fogok a barátaimmal.',
@@ -81,17 +107,14 @@ const L19_WRITING: LessonActivity = {
     'Szerintem Anna tanulni fog.',
     'Szerintem Péter jövő hónapban utazni fog.',
   ],
-  rubric: ['6 предложений', '3 плана', 'минимум 2 плана с fog + инфинитив', 'минимум 2 маркера будущего времени', '3 прогноза с szerintem и конструкцией fog + инфинитив'],
+  rubric: ['90–110 слов', 'Упомянуты пятница, суббота и воскресенье', 'Есть фиксированная договорённость', 'Есть намерение и прогноз', 'Есть возможное изменение с причиной', 'Есть вопрос другу'],
 };
 
-const L19_RECORDING: LessonActivity = {
-  kind: 'recording',
-  id: 'l19-recording-plans-predictions',
+const L19_SPEAKING = {
   title: 'Говорение: планы и прогнозы',
-  instructions: 'Запиши 6 коротких фраз: 3 плана и 3 прогноза. В планах используй минимум два маркера времени и минимум две конструкции fog + инфинитив. В прогнозах используй szerintem и конструкцию с fog и инфинитивом. Запись требует проверки языковой точности.',
-  targetText: 'Holnap dolgozni fogok. Jövő héten találkozni fogok a barátaimmal. Szombaton Budapestre megyek. Szerintem holnap esni fog. Szerintem Anna tanulni fog. Szerintem Péter jövő hónapban utazni fog.',
-  targetTranslation: 'Завтра я буду работать. На следующей неделе я встречусь с друзьями. В субботу я еду в Будапешт. Думаю, завтра будет дождь. Думаю, Анна будет учиться. Думаю, в следующем месяце Петер будет путешествовать.',
-  rubric: ['3 плана', 'минимум 2 fog + инфинитив в планах', 'минимум 2 маркера времени', '3 прогноза', 'szerintem + конструкция с fog и инфинитивом'],
+  instructions: 'Говори около 2 минут о следующей неделе: работа или учёба, одна назначенная встреча, планы на выходные, одно ожидаемое событие и одно возможное изменение. Это текстовая self-practice без микрофона, score и evidence.',
+  prompt: 'Jövő héten... Kedden ... találkozom. A hétvégén ... fogok. Szerintem... Lehet, hogy a terv megváltozik, mert...',
+  rubric: ['Около 2 минут', 'Есть работа или учёба', 'Есть назначенная встреча', 'Есть план на выходные', 'Есть прогноз', 'Есть возможное изменение'],
 };
 
 const L19_EXIT: LessonActivity = {
@@ -99,11 +122,11 @@ const L19_EXIT: LessonActivity = {
   id: 'l19-exit-check',
   title: 'Проверка целей урока',
   checks: [
-    { objectiveId: 'l19_form-future', activityId: 'l19-cp-future-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l19_conjugate-fog', activityId: 'l19-cp-fog-conjugation', evidenceKind: 'grammar' },
-    { objectiveId: 'l19_use-future-plans', activityId: 'l19-writing-plans-predictions', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l19-recording-plans-predictions', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l19_distinguish-tenses', activityId: 'l19-cp-tense-reading-sort', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l19-listening-future', evidenceKind: 'listening' }] },
-    { objectiveId: 'l19_make-predictions', activityId: 'l19-writing-plans-predictions', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l19-recording-plans-predictions', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l19_form-future', activityId: 'l19-cp-contextual-future', evidenceKind: 'grammar' },
+    { objectiveId: 'l19_conjugate-fog', activityId: 'l19-cp-contextual-future', evidenceKind: 'grammar' },
+    { objectiveId: 'l19_use-future-plans', activityId: 'l19-writing-plans-predictions', evidenceKind: 'writing' },
+    { objectiveId: 'l19_distinguish-tenses', activityId: 'l19-reading-busy-weekend', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l19-listening-future', evidenceKind: 'listening' }] },
+    { objectiveId: 'l19_make-predictions', activityId: 'l19-cp-contextual-future', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l19-roleplay-saturday-plan', evidenceKind: 'interaction' }] },
   ],
 };
 
@@ -121,14 +144,13 @@ export const LESSON_19: Lesson = {
       eyebrow: 'УРОК 19 · 1/11 · ЛИНИЯ ВРЕМЕНИ',
       title: 'Tegnap — ma — holnap',
       subtitle: 'Связываем знакомое прошлое и настоящее с будущим',
-      body: `<p><b>Tegnap dolgoztam.</b> — Вчера я работал. Это знакомая модель прошлого из L13.</p><p><b>Ma dolgozom.</b> — Сегодня я работаю. Это настоящее время.</p><p><b>Holnap dolgozni fogok.</b> — Завтра я буду работать. В L19 добавляем продуктивную конструкцию будущего <b>fog + инфинитив</b>.</p><div class="note">L19 не переучивает прошедшее время полностью: здесь оно нужно для контраста трёх временных зон. Полная систематизация прошедшего будет в L20.</div>`,
+      body: `<p><b>Tegnap dolgoztam.</b> — вчера. <b>Ma dolgozom.</b> — сегодня. <b>Holnap dolgozom.</b> или <b>Holnap dolgozni fogok.</b> — завтра.</p><div class="note"><b>Can-Do:</b> рассказать о планах, договориться о времени, сделать простой прогноз, отреагировать на изменение и согласовать новый вариант. L19 не утверждает, что каждое будущее предложение требует fog.</div>`,
     },
     {
       id: 2,
       eyebrow: 'УРОК 19 · 2/11 · FOG + ИНФИНИТИВ',
       title: 'Dolgozni fogok',
       subtitle: 'Базовая конструкция будущего',
-      activities: [L19_CP_FUTURE_FORMS],
       body: `<p>Для явного будущего часто используется <b>инфинитив + спрягаемая форма fog</b>: <b>tanulni fogok</b>, <b>dolgozni fogsz</b>, <b>utazni fog</b>.</p><p>Удобная нейтральная модель для L19: <b>маркер времени + инфинитив + fog-форма</b>: <b>Holnap tanulni fogok.</b></p><div class="note">Венгерский порядок слов зависит от фокуса, поэтому не считай другой порядок автоматически ошибочным. В контролируемых упражнениях L19 используем одну нейтральную модель, чтобы сначала закрепить саму конструкцию.</div><div class="note">Инфинитивы опираются на L18: <b>tanulni, dolgozni, utazni, főzni, olvasni</b>. Из L17 уже знакомо <b>Holnap napos idő lesz.</b> Форма <b>lesz</b> — частотная будущая форма <b>van / lenni</b>; в L19 держим её как знакомую отдельную форму, а продуктивно тренируем <b>fog + инфинитив</b>.</div>`,
     },
     {
@@ -136,7 +158,6 @@ export const LESSON_19: Lesson = {
       eyebrow: 'УРОК 19 · 3/11 · СПРЯЖЕНИЕ FOG',
       title: 'fogok, fogsz, fog...',
       subtitle: 'Продуктивно: неопределённая парадигма',
-      activities: [L19_CP_FOG_CONJUGATION],
       body: `<table class="conj"><tr><th>Лицо</th><th>Форма</th><th>Пример</th></tr><tr><td>én</td><td><b>fogok</b></td><td>tanulni fogok</td></tr><tr><td>te</td><td><b>fogsz</b></td><td>dolgozni fogsz</td></tr><tr><td>ő</td><td><b>fog</b></td><td>utazni fog</td></tr><tr><td>mi</td><td><b>fogunk</b></td><td>főzni fogunk</td></tr><tr><td>ti</td><td><b>fogtok</b></td><td>tanulni fogtok</td></tr><tr><td>ők</td><td><b>fognak</b></td><td>dolgozni fognak</td></tr></table><div class="note"><b>Главное в L19:</b> эти шесть неопределённых форм нужно уметь образовать. С определёнными формами fog познакомимся на следующем слайде.</div>`,
     },
     {
@@ -158,39 +179,40 @@ export const LESSON_19: Lesson = {
       eyebrow: 'УРОК 19 · 6/11 · ПЛАНЫ',
       title: 'Holnap megyek / Holnap menni fogok',
       subtitle: 'Настоящая форма тоже может говорить о будущем',
-      activities: [L19_CP_PRESENT_VS_FOG],
-      body: `<p>С ясным будущим маркером венгерское настоящее время часто описывает запланированное будущее:</p><p><b>Holnap Budapestre megyek.</b> — Завтра я еду в Будапешт.</p><p>Можно явно использовать fog-будущее: <b>Holnap Budapestre fogok menni.</b> — Завтра я поеду / буду ехать в Будапешт.</p><div class="note">Обе конструкции могут обозначать реальное будущее. Не выводи из одной только формы жёсткое правило «fog = неуверенность» или «настоящее = полная уверенность»: выбор зависит от контекста, фокуса и речевой ситуации.</div>`,
+      activities: [L19_CONTROLLED],
+      body: `<p>С ясным будущим маркером настоящее время часто описывает запланированное будущее: <b>Holnap Budapestre megyek.</b> / <b>Este találkozom Annával.</b></p><p>Явное будущее тоже возможно: <b>Holnap Budapestre fogok menni.</b> <b>fog + инфинитив</b> естественно используется в прогнозе: <b>Szerintem esni fog.</b></p><p>Маркеры: <b>holnap, holnapután, jövő héten, jövő hónapban, jövőre, hamarosan</b>. Для обещания или отложенного действия полезно <b>Majd felhívlak.</b></p><div class="note"><b>Holnap dolgozom</b> — график/договорённость в настоящей форме. <b>Szerintem holnap sokat fogok dolgozni</b> — прогноз. Обе модели могут говорить о будущем; не выводи жёсткое правило только из формы.</div>`,
     },
     {
       id: 7,
-      eyebrow: 'УРОК 19 · 7/11 · МАРКЕРЫ И ПРОГНОЗ',
-      title: 'Holnapután, jövő héten, szerintem...',
-      subtitle: 'Когда? И что, по-моему, произойдёт?',
-      body: `<div class="grid2"><div><p><b>holnap</b> — завтра</p><p><b>holnapután</b> — послезавтра</p><p><b>jövő héten</b> — на следующей неделе</p></div><div><p><b>jövő hónapban</b> — в следующем месяце</p><p><b>jövőre</b> — в следующем году</p><p><b>hamarosan</b> — скоро (дополнительно)</p></div></div><p>Для простого прогноза используй готовый вводный блок <b>szerintem</b> — «по-моему / я думаю»:</p><p><b>Szerintem holnap esni fog.</b> — Думаю, завтра будет дождь.</p><p><b>Szerintem Anna tanulni fog.</b> — Думаю, Анна будет учиться.</p><div class="note">В L19 прогнозы строим через знакомый инфинитив и спрягаемую форму fog; дополнительных моделей будущего здесь не вводим.</div>`,
+      eyebrow: 'УРОК 19 · 7/11 · ЧТЕНИЕ',
+      title: 'Egy sűrű hétvége',
+      subtitle: 'План, отмена, прогноз и новая договорённость',
+      activities: [L19_READING],
+      body: `<p>Следи за хронологией и причинами: что было запланировано, почему время изменилось, как прогноз повлиял на программу и какая договорённость стала окончательной.</p>`,
     },
     {
       id: 8,
-      eyebrow: 'УРОК 19 · 8/11 · ЧТЕНИЕ И РАЗЛИЧЕНИЕ ВРЕМЁН',
-      title: 'Jelen, múlt vagy fog-jövő?',
-      subtitle: 'Определяем грамматическую форму по тексту',
-      activities: [L19_CP_TENSE_READING],
-      body: `<p>Смотри одновременно на форму глагола и на маркер времени:</p><ul class="tick"><li><b>Most tanulok.</b> → jelen idő</li><li><b>Tegnap tanultam.</b> → múlt idő</li><li><b>Holnap tanulni fogok.</b> → fog-jövő</li></ul><div class="note">Отдельный случай <b>Holnap tanulok</b> уже разобран на слайде 6: грамматически это настоящее время, хотя по смыслу речь идёт о будущем плане.</div>`,
+      eyebrow: 'УРОК 19 · 8/11 · АУДИРОВАНИЕ',
+      title: 'Mikor történik?',
+      subtitle: 'Существующий синхронизированный Listening',
+      activities: [L19_LISTENING],
+      body: `<p>Определи, что произошло вчера, что происходит сегодня, а что относится к планам и прогнозам.</p>`,
     },
     {
       id: 9,
-      eyebrow: 'УРОК 19 · 9/11 · АУДИРОВАНИЕ',
-      title: 'Mikor történik?',
-      subtitle: 'Прошлое, настоящее, планы и прогноз на слух',
-      activities: [L19_LISTENING],
-      body: `<p>Прослушай короткий рассказ: одно событие произошло вчера, одно происходит сегодня, остальные относятся к будущему.</p>`,
+      eyebrow: 'УРОК 19 · 9/11 · ИНТЕРАКЦИЯ',
+      title: 'Mit csináljunk szombaton?',
+      subtitle: 'Меняем время и согласовываем новый план',
+      activities: [L19_ROLEPLAY],
+      body: `<p>Отреагируй на неожиданную работу до полудня, предложи новое время и программу, обсуди транспорт и погоду, затем подтверди итог.</p><div class="note">RolePlay остаётся PARTIAL.</div>`,
     },
     {
       id: 10,
       eyebrow: 'УРОК 19 · 10/11 · ПИСЬМО И ГОВОРЕНИЕ',
-      title: 'Tervek és jóslatok',
-      subtitle: 'Три плана и три простых прогноза',
-      activities: [L19_WRITING, L19_RECORDING],
-      body: `<p>Теперь используем будущее не только в таблице. Сначала сформулируй реальные планы, затем простые предположения о будущем.</p><p>Опора для плана: <b>Jövő héten ... fogok.</b> / <b>Szombaton ... megyek.</b></p><p>Опора для прогноза: <b>Szerintem + инфинитив + fog.</b></p><div class="note">После выполнения перечитай и прослушай ответы: проверь маркеры времени и формы fog.</div>`,
+      title: 'A következő hétvége',
+      subtitle: 'Связное сообщение 90–110 слов и optional speaking',
+      activities: [L19_WRITING], optionalSpeaking: L19_SPEAKING,
+      body: `<p>В письме различай фиксированную договорённость, намерение, прогноз и возможное изменение. Optional speaking — только текстовая self-practice без evidence.</p><div class="note">Writing остаётся PARTIAL без квалифицированной проверки.</div>`,
     },
     {
       id: 11,
@@ -198,7 +220,7 @@ export const LESSON_19: Lesson = {
       title: 'Összefoglalás',
       subtitle: 'Что должно остаться после L19',
       activities: [L19_EXIT],
-      body: `<ul class="tick"><li>Явное будущее: <b>инфинитив + fog</b>.</li><li>Основная неопределённая парадигма: <b>fogok, fogsz, fog, fogunk, fogtok, fognak</b>.</li><li>Отрицание: <b>nem</b> перед fog-формой.</li><li>Настоящее время с будущим маркером тоже может выражать план.</li><li><b>szerintem</b> + конструкция с <b>fog</b> даёт простую модель прогноза.</li><li>Определённые формы <b>fogom...</b> пока достаточно узнавать.</li></ul><div class="note">L20 продолжит временную систему: там систематизируем прошедшее время и оба типа спряжения.</div>`,
+      body: `<ul class="tick"><li>Настоящее с будущим маркером естественно выражает график и договорённость.</li><li><b>fog + инфинитив</b> выражает явное будущее и прогноз.</li><li>Изменившийся план требует реакции, альтернативы и точного подтверждения.</li><li>Controlled Practice, Reading и Listening дают DIRECT только при пороге; RolePlay и Writing остаются PARTIAL.</li></ul><div class="note">Quiz — retrieval checkpoint, а не полное подтверждение коммуникативного владения. L20 интегрирует прошедшее время в A2 checkpoint.</div>`,
     },
   ],
   vocabulary: [

@@ -5,7 +5,7 @@ import { LESSONS_META } from '../src/data/lessons/index.ts';
 test('lesson metadata slidesCount matches declared values for lesson 8', () => {
   const lesson8 = LESSONS_META.find((lesson) => lesson.id === 8);
   assert.ok(lesson8);
-  assert.equal(lesson8!.slidesCount, 12);
+  assert.equal(lesson8!.slidesCount, 11);
 });
 
 test('all lesson ids are unique', () => {

@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function owns(uid) { return signedIn() && request.auth.uid == uid; }
+    function admin() { return signedIn() && request.auth.token.admin == true; }
+
+    match /users/{uid} {
+      allow read: if owns(uid) || admin();
+      allow create, update, delete: if false;
+    }
+    match /entitlements/{uid} {
+      allow read: if owns(uid) || admin();
+      allow write: if false;
+    }
+    match /progress/{uid} {
+      allow read: if owns(uid) || admin();
+      allow create, update: if owns(uid)
+        && request.resource.data.keys().hasOnly(['viewedSlides', 'passedQuizzes', 'reviewCards', 'customNotes', 'updatedAt'])
+        && request.resource.data.viewedSlides is list
+        && request.resource.data.passedQuizzes is list
+        && request.resource.data.reviewCards is map;
+      allow delete: if owns(uid);
+    }
+    match /billingSubscriptions/{document=**} { allow read, write: if false; }
+    match /billingWebhookEvents/{document=**} { allow read, write: if false; }
+    match /audioOverrides/{document=**} { allow read, write: if false; }
+    match /wordOverrides/{document=**} { allow read, write: if false; }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

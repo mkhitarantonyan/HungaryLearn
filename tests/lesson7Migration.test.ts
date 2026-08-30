@@ -4,176 +4,26 @@ import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import { LESSON_7 } from '../src/data/lessons/lesson7.ts';
 import { LESSONS_META } from '../src/data/lessons/index.ts';
-import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
-import {
-  describeExitCheckStatus,
-  listeningEvidence,
-  recordingCompletionEvidence,
-  validateActivity,
-  validateExitCheckReferences,
-  validateLessonQuestionIds,
-} from '../src/utils/activityUtils.ts';
+import type { ActivityEvidence, LessonActivity, ProseReadingContent } from '../src/types.ts';
+import { describeExitCheckStatus, listeningEvidence, rolePlayCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
 
-const L7_ACTIVITIES = LESSON_7.slides.flatMap((slide) => slide.activities ?? []);
+const activities=LESSON_7.slides.flatMap((slide)=>slide.activities??[]);const source=readFileSync(new URL('../src/data/lessons/lesson7.ts',import.meta.url),'utf8');
+function find<K extends LessonActivity['kind']>(id:string,kind:K):Extract<LessonActivity,{kind:K}>{const activity=activities.find((candidate)=>candidate.id===id);assert.ok(activity,`missing ${id}`);assert.equal(activity.kind,kind);return activity as Extract<LessonActivity,{kind:K}>;}
+function prose(reading:Extract<LessonActivity,{kind:'reading'}>):ProseReadingContent{assert.ok(reading.content);assert.equal(reading.content.type,'prose');if(reading.content.type!=='prose')assert.fail();return reading.content;}
+const direct=(activityId:string):ActivityEvidence=>({activityId,attempted:true,completed:true,passed:true,evidenceMode:'direct'});
 
-function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
-}
+test('L7 preserves identity, objective IDs, quiz IDs, vocabulary IDs, and eleven slides',()=>{assert.deepEqual([LESSON_7.id,LESSON_7.number,LESSON_7.level,LESSON_7.slidesCount,LESSON_7.slides.length],[7,7,'A1',11,11]);assert.deepEqual(LESSON_7.slides.map((slide)=>slide.id),[1,2,3,4,5,6,7,8,9,10,11]);assert.deepEqual(LESSON_7.objectives?.map((o)=>o.id),['l7_form-accusative','l7_use-accusative-object','l7_distinguish-nom-acc','l7_listen-accusative','l7_translate-acc']);assert.deepEqual(LESSON_7.quiz?.map((q)=>q.id),[701,702,703,704,705,706]);assert.deepEqual(LESSON_7.vocabulary?.map((v)=>v.id),Array.from({length:6},(_,i)=>`l7_v${i+1}`));for(let slide=1;slide<=11;slide+=1)assert.equal(existsSync(new URL(`../public/audio/7.${slide}.mp3`,import.meta.url)),true);});
 
-function findActivity<TKind extends LessonActivity['kind']>(
-  id: string,
-  kind: TKind
-): Extract<LessonActivity, { kind: TKind }> {
-  const activity = L7_ACTIVITIES.find((candidate) => candidate.id === id);
-  assert.ok(activity, `missing L7 activity ${id}`);
-  assert.equal(activity.kind, kind);
-  return activity as Extract<LessonActivity, { kind: TKind }>;
-}
+test('L7 exposes the complete valid communication sequence and resolvable ExitCheck',()=>{assert.deepEqual(activities.map((a)=>a.kind),['controlledPractice','reading','listening','rolePlay','writing','exitCheck']);assert.equal(new Set(activities.map((a)=>a.id)).size,activities.length);assert.deepEqual(activities.flatMap(validateActivity),[]);assert.deepEqual(validateLessonQuestionIds(activities),[]);const exit=find('l7-exit-check','exitCheck');const objectives=LESSON_7.objectives?.map((o)=>o.id)??[];assert.deepEqual(validateExitCheckReferences(exit,objectives,activities.map((a)=>a.id)),[]);});
 
-function directEvidence(activityId: string): ActivityEvidence {
-  return { activityId, attempted: true, completed: true, evidenceMode: 'direct', passed: true };
-}
+test('L7 contextual practice has fourteen items at 11/14 without teaching the full conjugation system',()=>{const cp=find('l7-cp-accusative-forms','controlledPractice');assert.deepEqual([cp.exercises.length,cp.passCount],[14,11]);const text=JSON.stringify(cp);for(const token of ['Mit kérsz','Kávét kérek','Kenyeret veszek','Látom a buszt','Szeretem ezt a filmet','Olvasok egy könyvet','almát','könyvet','asztalt','Annát','vizet'])assert.ok(text.includes(token),token);assert.match(source,/Полную систему спряжения изучим отдельно/);assert.doesNotMatch(source,/полная парадигма (алanyi|tárgyas)|все формы определённого спряжения/i);});
 
-test('L7 preserves identity, slide/narration IDs, objective IDs, and quiz IDs', () => {
-  assert.equal(LESSON_7.id, 7);
-  assert.equal(LESSON_7.number, 7);
-  assert.equal(LESSON_7.level, 'A1');
-  assert.equal(LESSON_7.slidesCount, 11);
-  assert.deepEqual(LESSON_7.slides.map((slide) => slide.id), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-  assert.deepEqual(LESSON_7.objectives?.map((objective) => objective.id), [
-    'l7_form-accusative',
-    'l7_use-accusative-object',
-    'l7_distinguish-nom-acc',
-    'l7_listen-accusative',
-    'l7_translate-acc',
-  ]);
-  assert.deepEqual(LESSON_7.quiz?.map((question) => question.id), [701, 702, 703, 704, 705, 706]);
-  for (const slide of LESSON_7.slides) {
-    assert.equal(existsSync(new URL(`../public/audio/7.${slide.id}.mp3`, import.meta.url)), true);
-  }
-});
+test('L7 Reading is a 130–160 word shopping story with seven meaning questions',()=>{const reading=find('l7-reading-bookshop','reading');const content=prose(reading);const words=content.paragraphs.join(' ').trim().split(/\s+/u).length;assert.ok(words>=130&&words<=160,`words=${words}`);assert.deepEqual([reading.questions.length,reading.passCount],[7,6]);assert.match(content.title??'',/Bevásárlás vacsorához/);assert.match(content.paragraphs.join(' '),/rizs.*paradicsomot.*csirkét.*eladót.*pulykát.*vacsorát/s);});
 
-test('L7 has seven unique, structurally valid generic activities and resolvable evidence references', () => {
-  assert.equal(L7_ACTIVITIES.length, 7);
-  assert.deepEqual(
-    L7_ACTIVITIES.map((activity) => activity.kind).sort(),
-    ['controlledPractice', 'controlledPractice', 'controlledPractice', 'exitCheck', 'listening', 'reading', 'recording'].sort()
-  );
-  assert.equal(new Set(L7_ACTIVITIES.map((activity) => activity.id)).size, L7_ACTIVITIES.length);
-  for (const activity of L7_ACTIVITIES) {
-    assert.deepEqual(validateActivity(activity), []);
-  }
-  assert.deepEqual(validateLessonQuestionIds(L7_ACTIVITIES), []);
+test('L7 shopping RolePlay has eight text-only learner turns and stays PARTIAL',()=>{const rolePlay=find('l7-roleplay-shop','rolePlay');assert.deepEqual([rolePlay.turns.length,rolePlay.turns.filter((t)=>t.speaker==='learner').length],[17,8]);assert.ok(rolePlay.turns.filter((t)=>t.speaker==='learner').every((t)=>t.responseMode==='selfPractice'));assert.match(JSON.stringify(rolePlay),/Mit kér.*kenyeret.*kávét.*Sajnos.*teát.*almát.*ezt kérem.*Viszontlátásra/s);assert.equal(rolePlayCompletionEvidence(rolePlay.id).evidenceMode,'partial');});
 
-  const exit = findActivity('l7-exit-check', 'exitCheck');
-  assert.deepEqual(exit.checks.map((check) => check.objectiveId), LESSON_7.objectives?.map((objective) => objective.id));
-  assert.deepEqual(validateExitCheckReferences(
-    exit,
-    LESSON_7.objectives?.map((objective) => objective.id) ?? [],
-    L7_ACTIVITIES.map((activity) => activity.id)
-  ), []);
-});
+test('L7 Writing is 60–80 words while optional Speaking is text-only and non-evidentiary',()=>{const writing=find('l7-writing-shopping-note','writing');const words=writing.modelAnswer.join(' ').trim().split(/\s+/u).length;assert.ok(words>=60&&words<=80,`words=${words}`);assert.match(writing.prompt,/60–80 слов/);assert.equal(writingEvidence(writing.modelAnswer.join(' '),true).evidenceMode,'partial');const speaking=LESSON_7.slides.find((slide)=>slide.optionalSpeaking)?.optionalSpeaking;assert.ok(speaking);assert.match(speaking.instructions,/1 минуты.*без микрофона.*score.*evidence/s);assert.doesNotMatch(source,/SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask|MediaRecorder|getUserMedia|kind:\s*['"]recording/i);});
 
-test('formation teaching is beginner-safe and the exact practice covers ten frequent forms', () => {
-  const lessonText = LESSON_7.slides.map((slide) => slide.body ?? '').join('\n');
-  assert.match(lessonText, /частично лексический/);
-  assert.doesNotMatch(lessonText, /мягк(?:ий|ого) согласн/i);
-  for (const pair of ['autó → autót', 'alma → almát', 'kert → kertet', 'könyv — könyvet', 'ház — házat']) {
-    assert.match(lessonText, new RegExp(pair));
-  }
+test('L7 preserves the exact published Listening contract and MP3 hash',()=>{const listening=find('l7-listening-accusative','listening');assert.deepEqual([listening.assetId,listening.audioStatus,listening.questions.length,listening.passCount],['l7_listening_accusative','published',5,4]);assert.equal(listening.transcript,'Egy magyar könyvet keresek. Az eladó ezt a könyvet ajánlja. Kérek egy kávét is. Az ablakból látom a házat. A barátomnak azt mondom: „Látlak.”');const file=new URL('../public/audio/l7_listening_accusative.mp3',import.meta.url);assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),'5439ed3367268f65c261f057bcf09b477744a10e076df7f5b483721779a7d6b2');assert.equal(listeningEvidence(listening,4,5,true).evidenceMode,'direct');assert.equal(listeningEvidence(listening,4,5,false).evidenceMode,'none');});
 
-  const forms = findActivity('l7-cp-accusative-forms', 'controlledPractice');
-  assert.equal(forms.exercises.length, 10);
-  assert.equal(forms.passCount, 8);
-  assert.ok(forms.exercises.every((exercise) => exercise.kind === 'textInput'));
-  assert.deepEqual(
-    forms.exercises.map((exercise) => 'accept' in exercise ? exercise.accept[0] : ''),
-    ['autót', 'almát', 'kertet', 'könyvet', 'házat', 'asztalt', 'széket', 'embert', 'táskát', 'kávét']
-  );
-});
-
-test('Q703 and all learner-facing “I see you” evidence use Látlak', () => {
-  const q703 = LESSON_7.quiz?.find((question) => question.id === 703);
-  assert.ok(q703);
-  assert.equal(q703.options[q703.correctIndex], 'Látlak.');
-  assert.match(q703.explanation, /Látlak téged/);
-  assert.doesNotMatch(JSON.stringify(LESSON_7), /Látom téged/);
-  for (const question of LESSON_7.quiz ?? []) {
-    assert.equal(new Set(question.options).size, question.options.length, `quiz ${question.id}`);
-  }
-});
-
-test('reading directly checks nominative/accusative contrast and translation has five constrained inputs', () => {
-  const reading = findActivity('l7-reading-bookshop', 'reading');
-  assert.ok(reading.content);
-  assert.equal(reading.content.type, 'prose');
-  assert.equal(reading.questions.length, 5);
-  assert.equal(reading.passCount, 4);
-  assert.match(JSON.stringify(reading.content), /Az új könyv az asztalon van/);
-  assert.match(reading.questions.map((question) => question.question).join(' '), /именительном|дополнением/);
-
-  const translation = findActivity('l7-cp-translation', 'controlledPractice');
-  assert.equal(translation.exercises.length, 5);
-  assert.equal(translation.passCount, 4);
-  assert.ok(translation.exercises.every((exercise) => exercise.kind === 'textInput'));
-  assert.match(JSON.stringify(translation), /Látlak/);
-});
-
-test('published L7 listening asset is DIRECT and lesson data contains no TTS fallback reference', () => {
-  const listening = findActivity('l7-listening-accusative', 'listening');
-  assert.equal(listening.assetId, 'l7_listening_accusative');
-  assert.equal(listening.audioStatus, 'published');
-  assert.equal(existsSync(new URL('../public/audio/l7_listening_accusative.mp3', import.meta.url)), true);
-  assert.deepEqual(listeningEvidence(listening, 5, 5), {
-    passed: true,
-    evidenceMode: 'direct',
-    score: 5,
-    total: 5,
-  });
-  const lessonSource = readFileSync(new URL('../src/data/lessons/lesson7.ts', import.meta.url), 'utf8');
-  assert.doesNotMatch(lessonSource, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
-});
-
-test('L7 ExitCheck reports published listening as DIRECT without overclaiming', () => {
-  const exit = findActivity('l7-exit-check', 'exitCheck');
-  const listening = findActivity('l7-listening-accusative', 'listening');
-  const listeningScore = listeningEvidence(listening, 5, 5);
-  const evidence: Record<string, ActivityEvidence> = {
-    'l7-cp-accusative-forms': directEvidence('l7-cp-accusative-forms'),
-    'l7-cp-object-sentences': directEvidence('l7-cp-object-sentences'),
-    'l7-record-object-sentences': recordingCompletionEvidence('l7-record-object-sentences'),
-    'l7-reading-bookshop': directEvidence('l7-reading-bookshop'),
-    'l7-listening-accusative': {
-      activityId: 'l7-listening-accusative',
-      attempted: true,
-      completed: true,
-      ...listeningScore,
-    },
-    'l7-cp-translation': directEvidence('l7-cp-translation'),
-  };
-  const statusByObjective = Object.fromEntries(exit.checks.map((check) => [
-    check.objectiveId,
-    describeExitCheckStatus(check, evidence[check.activityId], evidence).kind,
-  ]));
-  assert.deepEqual(statusByObjective, {
-    'l7_form-accusative': 'direct-met',
-    'l7_use-accusative-object': 'partial-review',
-    'l7_distinguish-nom-acc': 'direct-met',
-    'l7_listen-accusative': 'direct-met',
-    'l7_translate-acc': 'direct-met',
-  });
-});
-
-test('L7 catalog metadata matches the lesson and frozen L15 remains byte-for-byte unchanged', () => {
-  const meta = LESSONS_META.find((candidate) => candidate.id === 7);
-  assert.ok(meta);
-  assert.equal(meta.title, LESSON_7.title);
-  assert.equal(meta.subtitle, LESSON_7.subtitle);
-  assert.equal(meta.description, LESSON_7.description);
-  assert.equal(meta.level, LESSON_7.level);
-  assert.equal(meta.slidesCount, LESSON_7.slidesCount);
-  assert.equal(
-    sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)),
-    'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85'
-  );
-});
+test('L7 ExitCheck keeps auto-checks DIRECT, open production PARTIAL, and metadata aligned',()=>{const exit=find('l7-exit-check','exitCheck');const listening=find('l7-listening-accusative','listening');const evidence:Record<string,ActivityEvidence>={'l7-cp-accusative-forms':direct('l7-cp-accusative-forms'),'l7-reading-bookshop':direct('l7-reading-bookshop'),'l7-listening-accusative':{activityId:'l7-listening-accusative',attempted:true,completed:true,...listeningEvidence(listening,4,5,true)},'l7-roleplay-shop':rolePlayCompletionEvidence('l7-roleplay-shop'),'l7-writing-shopping-note':{activityId:'l7-writing-shopping-note',attempted:true,selfReviewed:true,...writingEvidence('A sufficiently developed shopping note for review.',true)}};assert.deepEqual(Object.fromEntries(exit.checks.map((c)=>[c.objectiveId,describeExitCheckStatus(c,evidence[c.activityId],evidence).kind])),{'l7_form-accusative':'direct-met','l7_use-accusative-object':'direct-met','l7_distinguish-nom-acc':'direct-met','l7_listen-accusative':'direct-met','l7_translate-acc':'partial-review'});const meta=LESSONS_META.find((item)=>item.id===7);assert.ok(meta);assert.equal(meta.description,LESSON_7.description);assert.equal(meta.slidesCount,11);});

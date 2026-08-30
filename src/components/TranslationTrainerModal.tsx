@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Lesson } from '../types';
 import { getLessonTranslations } from '../utils/lessonQuizAndVocab';
 import { SpeechButton } from './SpeechButton';

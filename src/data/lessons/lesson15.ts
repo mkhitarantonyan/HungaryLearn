@@ -3,48 +3,45 @@ import { Lesson, LessonActivity } from '../../types';
 const L15_CP_DATIVE: LessonActivity = {
   kind: 'controlledPractice',
   id: 'l15-cp-dative',
-  title: 'Отработка: дательный падеж и обладание',
-  passCount: 7,
+  title: 'Контекстная практика: ресторан и дательный падеж',
+  passCount: 11,
   exercises: [
-    { kind: 'singleChoice', id: 'l15-cp-dative-1', prompt: 'Выбери правильный суффикс дательного падежа: ház → ?', options: ['-nak', '-nek'], correctIndex: 0, explanation: 'ház — заднеязычное слово → -nak.' },
-    { kind: 'singleChoice', id: 'l15-cp-dative-2', prompt: 'Выбери правильный суффикс: kert → ?', options: ['-nak', '-nek'], correctIndex: 1, explanation: 'kert — переднеязычное слово → -nek.' },
-    { kind: 'singleChoice', id: 'l15-cp-dative-3', prompt: 'Выбери правильный суффикс: anya → ?', options: ['-nak', '-nek'], correctIndex: 0, explanation: 'anya — заднеязычное слово → anyának.' },
-    { kind: 'fillGap', id: 'l15-cp-dative-4', prompt: '«Nekem van egy ___» (könyv → притяжательная форма 1-го лица)', accept: ['könyvem'], explanation: 'könyv + -em → könyvem.' },
-    { kind: 'fillGap', id: 'l15-cp-dative-5', prompt: '«Neked van egy ___» (autó → притяжательная форма 2-го лица)', accept: ['autód'], explanation: 'autó + -d → autód (долгота ó сохраняется).' },
-    { kind: 'fillGap', id: 'l15-cp-dative-6', prompt: '«___ autóm» — «у меня нет машины»', accept: ['nincs', 'Nincs'], explanation: 'Отрицание van — особое слово nincs.' },
-    { kind: 'textInput', id: 'l15-cp-dative-7', prompt: 'Переведи: «У меня нет времени»', accept: ['Nincs időm.', 'Nincs időm', 'nincs időm'], explanation: 'nincs + idő + -m → Nincs időm.' },
-    { kind: 'textInput', id: 'l15-cp-dative-8', prompt: 'Переведи: «Я даю кофе маме»', accept: ['Adok egy kávét anyámnak.', 'Adok egy kávét az anyámnak.', 'adok egy kávét anyámnak', 'adok egy kávét az anyámnak'], explanation: 'Косвенное дополнение → anyámnak (нейтрально: «Adok egy kávét anyámnak.»).' },
+    { kind: 'singleChoice', id: 'l15-cp-dative-1', prompt: 'Ты хочешь столик на двоих. Что скажешь?', options: ['Asztalt szeretnék két személyre.', 'Két számlát kérek.', 'Nincs asztalom.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-2', prompt: 'Ты просишь рекомендацию официанта.', options: ['Mit ajánl?', 'Mit fizet?', 'Kinek adja?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-3', prompt: 'Ты хочешь узнать состав блюда.', options: ['Mit tartalmaz ez az étel?', 'Mennyibe kerül a szék?', 'Hol van a kabát?'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l15-cp-dative-4', prompt: 'A ___ egy limonádét kérünk. (gyerek)', accept: ['gyereknek'], explanation: 'gyerek → gyereknek: получатель выражен дательным падежом.' },
+    { kind: 'fillGap', id: 'l15-cp-dative-5', prompt: 'Ezt a levest a ___ rendeltem. (barátom)', accept: ['barátomnak'], explanation: 'barátom → barátomnak.' },
+    { kind: 'singleChoice', id: 'l15-cp-dative-6', prompt: 'Nekem egy kávét, ...', options: ['neki pedig egy teát kérek.', 'őt pedig egy tea.', 'neki pedig teának.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-7', prompt: 'Как вежливо попросить ещё воды?', options: ['Kérhetek még egy pohár vizet?', 'Vizet adok neked.', 'Van vízem?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-8', prompt: 'Попроси две вилки для вашей компании.', options: ['Hozna nekünk két villát?', 'Hozok neked villának.', 'Két villa van nekem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-9', prompt: 'Ты заказываешь суп.', options: ['Egy levest kérek.', 'Egy levesnek kérek.', 'Egy leves van.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-10', prompt: 'Принесли чужой заказ. Как отреагировать?', options: ['Elnézést, ezt nem én rendeltem.', 'Nagyon finom volt.', 'Mit ajánl?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-11', prompt: 'Как попросить счёт?', options: ['Kérhetnénk a számlát?', 'A számlának kérek.', 'Kinek a számla?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-12', prompt: 'Каждый платит за себя.', options: ['Külön fizetünk.', 'Együtt fizetünk.', 'Nem fizetünk.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-13', prompt: 'Один человек платит за весь стол.', options: ['Együtt fizetünk.', 'Külön fizetünk.', 'Nincs számla.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l15-cp-dative-14', prompt: 'Официант спрашивает, кому принести кофе. Ответ:', options: ['Nekem, köszönöm.', 'Engem kávé.', 'Énnek.'], correctIndex: 0 },
   ],
 };
 
 const L15_READING_MENU: LessonActivity = {
   kind: 'reading',
   id: 'l15-reading-menu',
-  title: 'Чтение: меню (étlap)',
-  instructions: 'Изучи меню и ответь на вопросы. Меню — это чтение, а не аудирование.',
-  legend: '🌱 = vegetáriánus',
-  passCount: 3,
-  sections: [
-    { id: 'levesek', title: 'Levesek', items: [
-      { id: 'gulyasleves', name: 'Gulyásleves', price: 1850 },
-      { id: 'zoldsegleves', name: 'Zöldségleves', price: 1250, vegetarian: true },
-    ]},
-    { id: 'foetelek', title: 'Főételek', items: [
-      { id: 'rantottsajt', name: 'Rántott sajt', price: 2200, vegetarian: true },
-      { id: 'sultcsirke', name: 'Sült csirke', price: 2600 },
-      { id: 'grillezetthal', name: 'Grillezett hal', price: 2900 },
-    ]},
-    { id: 'italok', title: 'Italok', items: [
-      { id: 'asvanyviz', name: 'Ásványvíz', price: 550 },
-      { id: 'kave', name: 'Kávé', price: 700 },
-      { id: 'narancsle', name: 'Narancslé', price: 800 },
-    ]},
-  ],
+  title: 'Egy vacsora, ami majdnem tökéletes volt',
+  instructions: 'Прочитай связную историю о визите в ресторан и ответь на вопросы по смыслу.',
+  content: { type: 'prose', paragraphs: [
+    'Réka és Márk péntek este egy kis belvárosi étterembe mentek, mert Réka születésnapját ünnepelték. Márk előre asztalt foglalt két személyre, ezért a pincér rögtön az ablak melletti asztalhoz vezette őket. Az étterem hangulatos volt, az asztalon friss virág és két pohár víz várta őket. Először megnézték az étlapot. Réka zöldséglevest és sült halat választott. Megkérdezte a pincért, hogy a halétel tartalmaz-e tejet, mert azt nem ehet. A pincér elmondta, hogy nincs benne tej, csak hal, zöldség és citrom.',
+    'Márk gulyáslevest és rántott sajtot rendelt, inni pedig ásványvizet kért. Réka egy limonádét választott. Néhány perc múlva a pincér véletlenül narancslevet hozott Rékának. Réka udvariasan szólt: „Elnézést, ezt nem én rendeltem. Limonádét kértem.” A pincér bocsánatot kért, és gyorsan kicserélte az italt.',
+    'A főételek finomak voltak, ezért a kis hiba után is jó hangulatban vacsoráztak. Desszertet már nem kértek, mert mindketten jóllaktak, de Márk ivott egy kávét. Végül kérték a számlát, és Márk bankkártyával fizetett. Távozáskor Réka azt mondta, hogy szívesen visszajönne: az étel ízletes volt, a pincér pedig gyorsan és kedvesen megoldotta a problémát.',
+  ]},
+  passCount: 6,
   questions: [
-    { id: 'l15-menu-q1', question: 'Melyik kategóriában van az ásványvíz?', options: ['Levesek', 'Főételek', 'Italok'], correctIndex: 2, explanation: 'Ásványvíz — в разделе Italok.' },
-    { id: 'l15-menu-q2', question: 'Mennyibe kerül a gulyásleves?', options: ['1250 Ft', '1850 Ft', '2200 Ft'], correctIndex: 1, explanation: 'Gulyásleves стоит 1850 Ft.' },
-    { id: 'l15-menu-q3', question: 'Mit rendelhet egy vegetáriánus vendég?', options: ['Sült csirke', 'Rántott sajt és zöldségleves', 'Grillezett hal'], correctIndex: 1, explanation: 'Позиции с 🌱 — вегетарианские: rántott sajt и zöldségleves.' },
-    { id: 'l15-menu-q4', question: 'Melyik olcsóbb: a kávé vagy a narancslé?', options: ['A kávé', 'A narancslé', 'Ugyanannyi'], correctIndex: 0, explanation: 'Kávé — 700 Ft, narancslé — 800 Ft.' },
+    { id: 'l15-menu-q1', question: 'Miért ment Réka és Márk étterembe, és volt-e foglalásuk?', options: ['Születésnapot ünnepeltek, és Márk foglalt asztalt.', 'Üzleti ebédjük volt foglalás nélkül.', 'Csak kávézni mentek.'], correctIndex: 0 },
+    { id: 'l15-menu-q2', question: 'Mit rendelt Márk enni?', options: ['Gulyáslevest és rántott sajtot.', 'Zöldséglevest és sült halat.', 'Csak desszertet.'], correctIndex: 0 },
+    { id: 'l15-menu-q3', question: 'Mit kérdezett Réka a halételről?', options: ['Tartalmaz-e tejet.', 'Mennyibe kerül.', 'Kinek készítették.'], correctIndex: 0 },
+    { id: 'l15-menu-q4', question: 'Milyen hiba történt?', options: ['Réka limonádé helyett narancslevet kapott.', 'Márk nem kapott főételt.', 'Elveszett a foglalás.'], correctIndex: 0 },
+    { id: 'l15-menu-q5', question: 'Hogyan oldotta meg a pincér a problémát?', options: ['Bocsánatot kért és kicserélte az italt.', 'Nem tett semmit.', 'Ingyen desszertet hozott.'], correctIndex: 0 },
+    { id: 'l15-menu-q6', question: 'Hogyan fizettek?', options: ['Márk bankkártyával fizetett.', 'Külön, készpénzzel fizettek.', 'Réka nem fizetett.'], correctIndex: 0 },
+    { id: 'l15-menu-q7', question: 'Miért menne vissza Réka az étterembe?', options: ['Finom volt az étel, és jól kezelték a hibát.', 'Olcsó volt a szállás.', 'Nem kellett rendelni.'], correctIndex: 0 },
   ],
 };
 
@@ -67,61 +64,48 @@ const L15_LISTENING: LessonActivity = {
 const L15_ROLEPLAY: LessonActivity = {
   kind: 'rolePlay',
   id: 'l15-roleplay-restaurant',
-  title: 'Ролевая игра: заказ в ресторане',
-  startTurnId: 'l15-rp-g1',
+  title: 'Ролевая игра: полный визит в ресторан',
+  partnerLabel: 'Pincér',
+  completionMessage: 'Sikeresen lezártad az éttermi helyzetet.',
+  startTurnId: 'l15-rp-w1',
   turns: [
-    { id: 'l15-rp-g1', speaker: 'learner', responseMode: 'recorded', prompt: 'Шаг 1 (model): повтори модель.', model: 'Kérek egy levest.', next: 'l15-rp-g2' },
-    { id: 'l15-rp-g2', speaker: 'learner', responseMode: 'choice', prompt: 'Шаг 2 (substitution): «Kérek egy ______.» Выбери правильную форму.', options: ['Kérek egy salátát.', 'Kérek egy saláta.', 'Kérek egy kávé.'], branches: [
-      { choice: 'Kérek egy salátát.', correct: true, nextTurnId: 'l15-rp-g3' },
-      { choice: 'Kérek egy saláta.', correct: false, feedback: 'Нужен винительный падеж: saláta → salátát.', nextTurnId: 'l15-rp-g2' },
-      { choice: 'Kérek egy kávé.', correct: false, feedback: 'Нужен винительный падеж: kávé → kávét.', nextTurnId: 'l15-rp-g2' },
-    ]},
-    { id: 'l15-rp-g3', speaker: 'learner', responseMode: 'recorded', prompt: 'Шаг 3 (guided): «Mit kér inni?» — ответь по образцу.', model: 'Egy ásványvizet kérek.', next: 'l15-rp-g4' },
-    { id: 'l15-rp-g4', speaker: 'learner', responseMode: 'choice', prompt: 'Шаг 4 (preference): выбери, что сказать о еде.', options: ['Szeretem a gulyáslevest.', 'Ízlik nekem a leves.', 'Nem ízlik nekem a hal.'], branches: [
-      { choice: 'Szeretem a gulyáslevest.', correct: true, nextTurnId: 'l15-rp-g5' },
-      { choice: 'Ízlik nekem a leves.', correct: true, nextTurnId: 'l15-rp-g5' },
-      { choice: 'Nem ízlik nekem a hal.', correct: true, nextTurnId: 'l15-rp-g5' },
-    ]},
-    { id: 'l15-rp-g5', speaker: 'learner', responseMode: 'recorded', prompt: 'Mondd el, mit szeretsz vagy mi ízlik neked.', model: 'Szeretem a gulyáslevest. (vagy: Nekem ízlik a leves.)', next: 'l15-rp-w1' },
-    { id: 'l15-rp-w1', speaker: 'waiter', prompt: 'Ügyes! Most próbáld egyedül. Jó estét! Mit kér?', next: 'l15-rp-l1' },
-    { id: 'l15-rp-l1', speaker: 'learner', responseMode: 'recorded', prompt: 'Закажи блюдо (запиши свой ответ).', model: 'Kérek egy gulyáslevest.', next: 'l15-rp-w2' },
-    { id: 'l15-rp-w2', speaker: 'waiter', prompt: 'És mit kér inni?', next: 'l15-rp-drink' },
-    { id: 'l15-rp-drink', speaker: 'learner', responseMode: 'choice', prompt: 'Что будешь пить? (structured choice)', options: ['Egy limonádét kérek.', 'Egy narancslevet kérek.', 'Egy ásványvizet kérek.'], branches: [
-      { choice: 'Egy limonádét kérek.', correct: true, nextTurnId: 'l15-rp-w3' },
-      { choice: 'Egy narancslevet kérek.', correct: true, nextTurnId: 'l15-rp-w4' },
-      { choice: 'Egy ásványvizet kérek.', correct: true, nextTurnId: 'l15-rp-w4' },
-    ]},
-    { id: 'l15-rp-w3', speaker: 'waiter', prompt: 'Sajnos nincs limonádé, csak narancslé van.', next: 'l15-rp-l3' },
-    { id: 'l15-rp-l3', speaker: 'learner', responseMode: 'choice', prompt: 'Как отреагируешь?', options: ['Rendben, akkor narancslevet kérek.', 'Nem kérek semmit.'], branches: [
-      { choice: 'Rendben, akkor narancslevet kérek.', correct: true, nextTurnId: 'l15-rp-w4' },
-      { choice: 'Nem kérek semmit.', correct: true, nextTurnId: 'l15-rp-w4' },
-    ]},
-    { id: 'l15-rp-w4', speaker: 'waiter', prompt: 'Rendben, hozom rögtön.', next: 'l15-rp-stage' },
-    { id: 'l15-rp-stage', speaker: 'stage', stageLabel: 'Később, az étkezés után…', prompt: 'ПОЗЖЕ · ПОСЛЕ ЕДЫ', next: 'l15-rp-w5' },
-    { id: 'l15-rp-w5', speaker: 'waiter', prompt: 'Kér még valamit?', next: 'l15-rp-l5' },
-    { id: 'l15-rp-l5', speaker: 'learner', responseMode: 'recorded', prompt: 'Попроси счёт (запиши свой ответ).', model: 'Nem, köszönöm. A számlát kérem.', next: 'l15-rp-w6' },
-    { id: 'l15-rp-w6', speaker: 'waiter', prompt: 'Természetesen, azonnal hozom.' },
+    { id: 'l15-rp-w1', speaker: 'waiter', prompt: 'Jó estét! Segíthetek?', next: 'l15-rp-l1' },
+    { id: 'l15-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Попроси столик.', model: 'Jó estét! Asztalt szeretnék.', next: 'l15-rp-w2' },
+    { id: 'l15-rp-w2', speaker: 'waiter', prompt: 'Hány személyre?', next: 'l15-rp-l2' },
+    { id: 'l15-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови количество гостей.', model: 'Két személyre, kérem.', next: 'l15-rp-w3' },
+    { id: 'l15-rp-w3', speaker: 'waiter', prompt: 'Tessék, itt az étlap. A sült halat ajánlom.', next: 'l15-rp-l3' },
+    { id: 'l15-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси, что содержит блюдо.', model: 'Köszönöm. Mit tartalmaz a sült hal?', next: 'l15-rp-w4' },
+    { id: 'l15-rp-w4', speaker: 'waiter', prompt: 'Halat, zöldséget és citromot. Mit hozhatok önnek?', next: 'l15-rp-l4' },
+    { id: 'l15-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Закажи еду и напиток для себя.', model: 'Nekem egy sült halat és egy ásványvizet kérek.', next: 'l15-rp-w5' },
+    { id: 'l15-rp-w5', speaker: 'waiter', prompt: 'És a másik vendégnek?', next: 'l15-rp-l5' },
+    { id: 'l15-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Закажи один предмет для другого человека.', model: 'Neki egy zöldséglevest és egy limonádét kérek.', next: 'l15-rp-w6' },
+    { id: 'l15-rp-w6', speaker: 'waiter', prompt: 'Sajnos limonádé nincs. Van narancslé vagy ásványvíz.', next: 'l15-rp-l6' },
+    { id: 'l15-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Вежливо отреагируй и выбери решение.', model: 'Rendben, akkor neki egy narancslevet kérek.', next: 'l15-rp-stage' },
+    { id: 'l15-rp-stage', speaker: 'stage', stageLabel: 'Később…', prompt: 'ПОЗЖЕ · ПОСЛЕ ЕДЫ', next: 'l15-rp-w7' },
+    { id: 'l15-rp-w7', speaker: 'waiter', prompt: 'Ízlett a vacsora? Kérnek még valamit?', next: 'l15-rp-l7' },
+    { id: 'l15-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Кратко оцени еду и попроси счёт.', model: 'Igen, nagyon finom volt. Kérhetnénk a számlát?', next: 'l15-rp-w8' },
+    { id: 'l15-rp-w8', speaker: 'waiter', prompt: 'Természetesen. Külön vagy együtt fizetnek?', next: 'l15-rp-l8' },
+    { id: 'l15-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови предпочтение оплаты и вежливо заверши.', model: 'Együtt fizetünk, bankkártyával. Köszönjük szépen!', next: 'l15-rp-w9' },
+    { id: 'l15-rp-w9', speaker: 'waiter', prompt: 'Köszönöm. Viszontlátásra!' },
   ],
 };
 
 const L15_WRITING: LessonActivity = {
   kind: 'writing',
   id: 'l15-writing-preferences',
-  title: 'Письмо: сообщение другу',
-  prompt: 'Напиши короткое сообщение другу перед походом в ресторан (3–4 фразы): что ты любишь/не любишь и что хотел бы заказать.',
-  modelAnswer: [
-    'Szeretem a gulyáslevest.',
-    'A halat nem szeretem.',
-    'Szeretnék egy salátát.',
-    'Egy ásványvizet kérek.',
-  ],
+  title: 'Письмо: отзыв о посещении ресторана',
+  prompt: 'Напиши 80–100 слов о посещении ресторана. Укажи где и когда это было, с кем ты ходил, что заказал ты и другой человек, одну хорошую деталь, небольшую проблему, её решение и итоговое мнение.',
+  modelAnswer: ['Szombat este a barátommal egy kis étteremben vacsoráztunk. Én zöldséglevest és sült halat rendeltem, a barátomnak pedig gulyáslevest és rántott sajtot kértünk. Az ételek frissek és nagyon finomak voltak. Sajnos először rossz italt hoztak nekem: limonádé helyett narancslevet kaptam. Udvariasan szóltam a pincérnek, ő pedig gyorsan kicserélte. A hely csendes volt, a pincér pedig figyelmesen válaszolt minden kérdésünkre az étlapról. A vacsora végén együtt kértük a számlát, és bankkártyával fizettünk. A kis hiba ellenére jól éreztük magunkat, ezért szívesen visszamennék.'],
   rubric: [
-    'task completion — все требуемые элементы есть (люблю/не люблю + заказ)',
-    'clarity — текст понятен другу',
-    'target grammar — Szeretem + винительный, Szeretnék + винительный, вежливые chunks',
-    'vocabulary — еда и напитки из урока',
-    'communicative adequacy — сообщение достигает цели',
+    '80–100 слов', 'где/когда и с кем', 'оба заказа', 'положительная деталь', 'проблема и решение', 'итоговое мнение',
   ],
+};
+
+const L15_SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори 1.5–2 минуты о вымышленном посещении ресторана. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Расскажи, с кем ты ходил, что заказал, что понравилось, какая возникла проблема и чем всё закончилось.',
+  rubric: ['спутник и место', 'заказ', 'положительная деталь', 'проблема и решение'],
 };
 
 const L15_EXIT_CHECK: LessonActivity = {
@@ -130,12 +114,10 @@ const L15_EXIT_CHECK: LessonActivity = {
   title: 'Exit check — достижение целей урока',
   checks: [
     { objectiveId: 'l15_name-food', activityId: 'l15-reading-menu', evidenceKind: 'reading' },
-    { objectiveId: 'l15_name-food', activityId: 'l15-roleplay-restaurant', evidenceKind: 'speaking' },
     { objectiveId: 'l15_form-dative', activityId: 'l15-cp-dative', evidenceKind: 'grammar' },
     { objectiveId: 'l15_use-have-construction', activityId: 'l15-cp-dative', evidenceKind: 'grammar' },
-    { objectiveId: 'l15_express-likes', activityId: 'l15-writing-preferences', evidenceKind: 'writing' },
-    { objectiveId: 'l15_express-likes', activityId: 'l15-roleplay-restaurant', evidenceKind: 'speaking' },
-    { objectiveId: 'l15_order-food', activityId: 'l15-roleplay-restaurant', evidenceKind: 'interaction' },
+    { objectiveId: 'l15_express-likes', activityId: 'l15-writing-preferences', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l15-reading-menu', evidenceKind: 'reading' }] },
+    { objectiveId: 'l15_order-food', activityId: 'l15-roleplay-restaurant', evidenceKind: 'interaction', evidenceComponents: [{ activityId: 'l15-cp-dative', evidenceKind: 'grammar' }, { activityId: 'l15-writing-preferences', evidenceKind: 'writing' }] },
     { objectiveId: 'l15_understand-restaurant-dialogue', activityId: 'l15-listening-restaurant', evidenceKind: 'listening' },
   ],
 };
@@ -145,13 +127,13 @@ export const LESSON_15: Lesson = {
   number: 15,
   level: 'A2',
   title: 'Урок 15 · Ételek és étterem',
-  subtitle: 'Еда и дательный падеж (-nak / -nek)',
-  description: 'Дательный падеж (-nak/-nek), конструкция «у меня есть» (nekem van), отрицание обладания (nincs), словарь блюд и заказ в ресторане.',
-  slidesCount: 12,
+  subtitle: 'Ресторан, заказ и дательный падеж (-nak / -nek)',
+  description: 'Полный базовый визит в ресторан: столик, заказ для себя и другого человека, состав блюда, небольшая проблема, счёт и полезные контексты -nak/-nek.',
+  slidesCount: 11,
   slides: [
     {
       id: 1,
-      eyebrow: "УРОК 15 · 1/12 · ДАТЕЛЬНЫЙ ПАДЕЖ",
+      eyebrow: "УРОК 15 · 1/11 · ДАТЕЛЬНЫЙ ПАДЕЖ",
       title: "A részes eset",
       subtitle: "-nak/-nek — «кому», «для кого»",
       body: `
@@ -166,7 +148,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 2,
-      eyebrow: "УРОК 15 · 2/12 · МЕСТОИМЕНИЯ",
+      eyebrow: "УРОК 15 · 2/11 · МЕСТОИМЕНИЯ",
       title: "Névmások részes esete",
       subtitle: "«Мне», «тебе», «ему»...",
       body: `
@@ -183,7 +165,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 3,
-      eyebrow: "УРОК 15 · 3/12 · ГЛАВНОЕ ПРИМЕНЕНИЕ",
+      eyebrow: "УРОК 15 · 3/11 · ГЛАВНОЕ ПРИМЕНЕНИЕ",
       title: "„Nekem van...”",
       subtitle: "Как сказать «у меня есть» — вспоминаем 8-й урок",
       body: `
@@ -196,7 +178,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 4,
-      eyebrow: "УРОК 15 · 4/12 · ОТРИЦАНИЕ",
+      eyebrow: "УРОК 15 · 4/11 · ОТРИЦАНИЕ",
       title: "„Nincs”",
       subtitle: "«У меня нет...»",
       body: `
@@ -207,7 +189,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 5,
-      eyebrow: "УРОК 15 · 5/12 · КОСВЕННОЕ ДОПОЛНЕНИЕ",
+      eyebrow: "УРОК 15 · 5/11 · КОСВЕННОЕ ДОПОЛНЕНИЕ",
       title: "Adok valamit valakinek",
       subtitle: "«Даю кому-то что-то»",
       activities: [L15_CP_DATIVE],
@@ -220,7 +202,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 6,
-      eyebrow: "УРОК 15 · 6/12 · СЛОВАРЬ",
+      eyebrow: "УРОК 15 · 6/11 · ЧТЕНИЕ",
       title: "Ételek",
       subtitle: "Еда — базовый словарь",
       activities: [L15_READING_MENU],
@@ -244,7 +226,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 7,
-      eyebrow: "УРОК 15 · 7/12 · В РЕСТОРАНЕ",
+      eyebrow: "УРОК 15 · 7/11 · В РЕСТОРАНЕ",
       title: "Az étteremben",
       subtitle: "Полезные фразы для заказа",
       activities: [L15_LISTENING],
@@ -257,7 +239,7 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 8,
-      eyebrow: "УРОК 15 · 8/12 · ДИАЛОГ",
+      eyebrow: "УРОК 15 · 8/11 · ДИАЛОГ",
       title: "Párbeszéd",
       subtitle: "Заказ в ресторане",
       activities: [L15_ROLEPLAY],
@@ -271,43 +253,23 @@ export const LESSON_15: Lesson = {
     },
     {
       id: 9,
-      eyebrow: "УРОК 15 · 9/12 · ПРАКТИКА",
-      title: "Gyakorló mondatok",
-      subtitle: "Собираем всё вместе",
-      body: `
-   <p><button class="speak-btn" data-speak-text="Van egy barátom Budapesten." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Van egy barátom Budapesten.</button> <span style="color:#8a7a68">(У меня есть друг в Будапеште)</span></p>
-   <p><button class="speak-btn" data-speak-text="Ajándékot adok anyámnak." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ajándékot adok anyámnak.</button> <span style="color:#8a7a68">(Я даю подарок маме)</span></p>
-   <p><button class="speak-btn" data-speak-text="Nincs időnk." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nincs időnk.</button> <span style="color:#8a7a68">(У нас нет времени)</span></p>
- `
+      eyebrow: "УРОК 15 · 9/11 · ПИСЬМО",
+      title: "Éttermi élmény",
+      subtitle: "Связный отзыв о визите",
+      activities: [L15_WRITING],
+      body: `<p>Напиши 80–100 слов: место и время, спутник, оба заказа, положительная деталь, небольшая проблема, её решение и итоговое мнение.</p>`
     },
     {
       id: 10,
-      eyebrow: "УРОК 15 · 10/12 · ЗАДАНИЯ",
-      title: "Gyakorlatok",
-      subtitle: "Проверьте себя",
-      activities: [L15_WRITING],
-      body: `
-   <ol class="tasklist">
-     <li>Переведите: «У меня есть книга» и «У меня нет книги»</li>
-     <li>Поставьте „barát“ (друг) в дательный падеж</li>
-     <li>Составьте предложение «Я даю яблоко другу», используя винительный и дательный падежи вместе</li>
-     <li>Закажите в ресторане 2 блюда и напиток, используя фразы из этого урока</li>
-     <li>Объясните разницу между „nem van“ и „nincs“</li>
-   </ol>
- `
+      eyebrow: "УРОК 15 · 10/11 · SPEAKING PRACTICE",
+      title: "Egy éttermi látogatás",
+      subtitle: "Необязательная практика без записи",
+      optionalSpeaking: L15_SPEAKING,
+      body: `<p>Свяжи заказ, впечатление, небольшую проблему и её решение в короткий устный рассказ.</p><div class="note">Дательный падеж позже вернётся в конструкции nekem kell в L18.</div>`
     },
     {
       id: 11,
-      eyebrow: "УРОК 15 · 11/12 · СВЯЗЬ С ДРУГИМИ ТЕМАМИ",
-      title: "Előretekintés",
-      subtitle: "Что дальше",
-      body: `
-   <p>Дательный падеж ещё не раз встретится — особенно в конструкциях с „kell“ (нужно) в 18-м уроке: „nekem kell“ (мне нужно). В следующем уроке — покупки и творительный падеж -val/-vel, у которого есть очень необычная фонетическая особенность.</p>
- `
-    },
-    {
-      id: 12,
-      eyebrow: "УРОК 15 · 12/12 · ИТОГИ",
+      eyebrow: "УРОК 15 · 11/11 · ИТОГИ",
       title: "Összefoglalás",
       subtitle: "Итоги 15-го урока",
       activities: [L15_EXIT_CHECK],
@@ -316,9 +278,10 @@ export const LESSON_15: Lesson = {
      <li>-nak/-nek — дательный падеж, «кому/для кого», присоединяется напрямую</li>
      <li>Обладание: [дательный] + van/vannak + [существительное с притяжательным суффиксом]</li>
      <li>Отрицание обладания — особое слово nincs/nincsenek, а не „nem van“</li>
-     <li>Косвенное дополнение при глаголах передачи (давать, показывать)</li>
+     <li>Косвенное дополнение и ресторанные просьбы: кому принести или заказать</li>
+     <li>Столик, рекомендация, состав блюда, проблема, счёт и способ оплаты</li>
    </ul>
-   <div class="note"><b>Домашнее задание.</b> Составьте список из 5 вещей, которые у вас есть, и 3, которых у вас нет, используя конструкцию с дательным падежом. В следующем уроке — покупки и творительный падеж.</div>
+   <div class="note">Controlled Practice, Reading и Listening могут дать DIRECT после порога. RolePlay и Writing остаются PARTIAL; speaking practice не создаёт evidence.</div>
  `
     }
   ],

@@ -443,7 +443,6 @@ export default function AdminContent() {
     }
   };
 
-  const items = activeTab === 'vocab' ? filteredVocab : filteredTrans;
   const totalCount = activeTab === 'vocab' ? currentVocab.length : currentTrans.length;
   const hasOverrides =
     activeTab === 'vocab'

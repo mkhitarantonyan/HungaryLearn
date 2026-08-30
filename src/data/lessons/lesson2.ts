@@ -66,7 +66,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
   id: 'l2-roleplay-greetings',
   title: 'Ролевая игра: неофициально и вежливо',
   partnerLabel: 'Beszélgetőpartner · Партнёр',
-  completionMessage: 'Готово: ты выбрал(а) подходящие приветствия и прощания и записал(а) короткие ответы. Прослушай их и сравни с моделями.',
+  completionMessage: 'Готово: ты выбрал(а) подходящие приветствия и прощания и отработал(а) короткие ответы по моделям.',
   startTurnId: 'l2-rp-informal-stage',
   turns: [
     { id: 'l2-rp-informal-stage', speaker: 'stage', stageLabel: 'Ситуация 1 · знакомый ровесник', next: 'l2-rp-informal-open' },
@@ -79,11 +79,11 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Viszlát!', correct: false, feedback: 'Это прощание. Здесь сначала поздоровайся.', nextTurnId: 'l2-rp-informal-open' },
       ],
     },
-    { id: 'l2-rp-informal-open-record', speaker: 'learner', responseMode: 'recorded', prompt: 'Запиши неофициальное приветствие и сравни с моделью.', model: 'Szia!', next: 'l2-rp-informal-partner' },
+    { id: 'l2-rp-informal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши неофициальное приветствие и сравни с моделью.', model: 'Szia!', next: 'l2-rp-informal-partner' },
     { id: 'l2-rp-informal-partner', speaker: 'waiter', prompt: 'Szia! Hogy vagy?', next: 'l2-rp-how-are-you' },
-    { id: 'l2-rp-how-are-you', speaker: 'learner', responseMode: 'recorded', prompt: 'Ответь, запиши реплику и сравни с моделью.', model: 'Jól vagyok, köszönöm.', next: 'l2-rp-partner-question' },
+    { id: 'l2-rp-how-are-you', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Ответь, запиши реплику и сравни с моделью.', model: 'Jól vagyok, köszönöm.', next: 'l2-rp-partner-question' },
     { id: 'l2-rp-partner-question', speaker: 'waiter', prompt: 'Ki vagy te?', next: 'l2-rp-self-intro' },
-    { id: 'l2-rp-self-intro', speaker: 'learner', responseMode: 'recorded', prompt: 'Назови своё имя и национальность, подставив свои данные.', model: 'A nevem Anna. Magyar vagyok.', next: 'l2-rp-informal-close' },
+    { id: 'l2-rp-self-intro', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови своё имя и национальность, подставив свои данные.', model: 'A nevem Anna. Magyar vagyok.', next: 'l2-rp-informal-close' },
     {
       id: 'l2-rp-informal-close', speaker: 'learner', responseMode: 'choice', prompt: 'Выбери короткое неофициальное прощание.',
       options: ['Szia!', 'Jó napot!', 'Hogy vagy?'],
@@ -93,7 +93,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Hogy vagy?', correct: false, feedback: 'Это вопрос «Как ты?». Выбери прощание.', nextTurnId: 'l2-rp-informal-close' },
       ],
     },
-    { id: 'l2-rp-informal-close-record', speaker: 'learner', responseMode: 'recorded', prompt: 'Запиши выбранное неофициальное прощание и сравни с моделью.', model: 'Szia!', next: 'l2-rp-formal-stage' },
+    { id: 'l2-rp-informal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши выбранное неофициальное прощание и сравни с моделью.', model: 'Szia!', next: 'l2-rp-formal-stage' },
     { id: 'l2-rp-formal-stage', speaker: 'stage', stageLabel: 'Ситуация 2 · незнакомый взрослый', next: 'l2-rp-formal-open' },
     {
       id: 'l2-rp-formal-open', speaker: 'learner', responseMode: 'choice', prompt: 'Выбери вежливое приветствие.',
@@ -104,7 +104,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Viszlát!', correct: false, feedback: 'Это прощание. Сначала выбери приветствие.', nextTurnId: 'l2-rp-formal-open' },
       ],
     },
-    { id: 'l2-rp-formal-open-record', speaker: 'learner', responseMode: 'recorded', prompt: 'Запиши вежливое приветствие и сравни с моделью.', model: 'Jó napot!', next: 'l2-rp-formal-partner' },
+    { id: 'l2-rp-formal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши вежливое приветствие и сравни с моделью.', model: 'Jó napot!', next: 'l2-rp-formal-partner' },
     { id: 'l2-rp-formal-partner', speaker: 'waiter', prompt: 'Jó napot!', next: 'l2-rp-formal-close' },
     {
       id: 'l2-rp-formal-close', speaker: 'learner', responseMode: 'choice', prompt: 'Заверши короткий разговор вежливым прощанием.',
@@ -115,7 +115,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Hogy vagy?', correct: false, feedback: 'Это вопрос. Для прощания выбери Viszlát!', nextTurnId: 'l2-rp-formal-close' },
       ],
     },
-    { id: 'l2-rp-formal-close-record', speaker: 'learner', responseMode: 'recorded', prompt: 'Запиши вежливое прощание и сравни с моделью.', model: 'Viszlát!', next: 'l2-rp-end' },
+    { id: 'l2-rp-formal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши вежливое прощание и сравни с моделью.', model: 'Viszlát!', next: 'l2-rp-end' },
     { id: 'l2-rp-end', speaker: 'stage', stageLabel: 'Диалог завершён' },
   ],
 };

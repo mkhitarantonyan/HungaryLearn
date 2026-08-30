@@ -1,6 +1,9 @@
 // Utility for Admin Mode (Editor Permissions) and Custom Word/Sound Overrides
 
-const ADMIN_TOKEN_KEY = 'magyar_admin_session';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User as FirebaseUser } from 'firebase/auth';
+import { ApiRequestError, apiJson } from '../lib/apiClient';
+import { getFirebaseAuth } from '../lib/firebase';
+
 const CUSTOM_WORDS_KEY = 'magyar_custom_words_overrides';
 
 export interface WordOverride {
@@ -11,71 +14,126 @@ export interface WordOverride {
 
 type AdminListener = (isAdmin: boolean) => void;
 const listeners: Set<AdminListener> = new Set();
+export type AdminAuthStatus = 'initializing' | 'checking' | 'authorized' | 'anonymous' | 'error';
+export interface AdminAuthSnapshot {
+  status: AdminAuthStatus;
+  email: string | null;
+  message?: string;
+}
+type AdminAuthListener = (snapshot: AdminAuthSnapshot) => void;
+const authListeners = new Set<AdminAuthListener>();
 
 let currentAdminState = false;
+let currentAdminSnapshot: AdminAuthSnapshot = { status: 'initializing', email: null };
+let verificationVersion = 0;
 
 export function isAdminLoggedIn(): boolean {
   return currentAdminState;
 }
 
-export function setAdminMode(enabled: boolean): void {
-  currentAdminState = enabled;
-  notifyListeners(enabled);
+export function getAdminAuthSnapshot(): AdminAuthSnapshot {
+  return currentAdminSnapshot;
 }
 
-export async function checkAdminSessionServer(): Promise<boolean> {
-  if (typeof window === 'undefined') return false;
+function publishAdminSnapshot(snapshot: AdminAuthSnapshot): void {
+  currentAdminSnapshot = snapshot;
+  const nextIsAdmin = snapshot.status === 'authorized';
+  if (currentAdminState !== nextIsAdmin) {
+    currentAdminState = nextIsAdmin;
+    notifyListeners(nextIsAdmin);
+  }
+  for (const callback of authListeners) callback(snapshot);
+}
+
+interface AdminVerificationOptions {
+  forceRefresh: boolean;
+  signOutNonAdmin: boolean;
+}
+
+interface AdminVerificationResult {
+  success: boolean;
+  message: string;
+}
+
+async function verifyAdminUser(user: FirebaseUser, options: AdminVerificationOptions): Promise<AdminVerificationResult> {
+  const version = ++verificationVersion;
+  publishAdminSnapshot({ status: 'checking', email: user.email });
   try {
-    const res = await fetch('/api/admin/verify', {
-      method: 'GET',
-      credentials: 'include',
-    });
-    const data = await res.json();
-    const isValid = res.ok && data.success && data.isAdmin;
-    setAdminMode(isValid);
-    return isValid;
-  } catch (err) {
-    console.warn('Failed to verify admin session with server:', err);
-    // Keep local state if server is offline/unreachable in client mode
-    return currentAdminState;
+    const tokenResult = await user.getIdTokenResult(options.forceRefresh);
+    if (tokenResult.claims.admin !== true) {
+      if (options.signOutNonAdmin) await signOut(getFirebaseAuth());
+      if (version === verificationVersion) publishAdminSnapshot({ status: 'anonymous', email: null });
+      return { success: false, message: 'У этого аккаунта нет прав администратора' };
+    }
+    const data = await apiJson<{ success: boolean; isAdmin: boolean }>('/api/admin/verify');
+    if (!data.success || !data.isAdmin) {
+      if (options.signOutNonAdmin) await signOut(getFirebaseAuth());
+      if (version === verificationVersion) publishAdminSnapshot({ status: 'anonymous', email: null });
+      return { success: false, message: 'У этого аккаунта нет прав администратора' };
+    }
+    if (version === verificationVersion) publishAdminSnapshot({ status: 'authorized', email: user.email });
+    return { success: true, message: 'Успешный вход' };
+  } catch (error) {
+    const unauthorized = error instanceof ApiRequestError && (error.status === 401 || error.status === 403);
+    if (unauthorized && options.signOutNonAdmin) await signOut(getFirebaseAuth());
+    const message = unauthorized
+      ? 'У этого аккаунта нет прав администратора'
+      : error instanceof ApiRequestError && error.status === 0
+        ? 'Не удалось подключиться к серверу. Проверьте сеть и повторите попытку.'
+        : 'Не удалось проверить права администратора. Повторите попытку.';
+    if (version === verificationVersion) {
+      publishAdminSnapshot(unauthorized
+        ? { status: 'anonymous', email: null }
+        : { status: 'error', email: user.email, message });
+    }
+    return { success: false, message };
   }
 }
 
-export async function loginAdminServer(user: string, pass: string): Promise<{ success: boolean; message: string }> {
-  try {
-    const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ username: user, password: pass }),
-    });
+export async function checkAdminSessionServer(options: { signOutNonAdmin?: boolean } = {}): Promise<boolean> {
+  if (typeof window === 'undefined') return false;
+  await getFirebaseAuth().authStateReady();
+  const user = getFirebaseAuth().currentUser;
+  if (!user) {
+    ++verificationVersion;
+    publishAdminSnapshot({ status: 'anonymous', email: null });
+    return false;
+  }
+  const result = await verifyAdminUser(user, {
+    forceRefresh: true,
+    signOutNonAdmin: options.signOutNonAdmin === true,
+  });
+  return result.success;
+}
 
-    const data = await res.json();
-    if (res.ok && data.success) {
-      setAdminMode(true);
-      return { success: true, message: data.message || 'Успешный вход' };
-    } else {
-      setAdminMode(false);
-      return { success: false, message: data.message || 'Неверный логин или пароль' };
-    }
-  } catch (err) {
-    console.error('Login request failed', err);
-    return { success: false, message: 'Ошибка связи с сервером проверки авторизации' };
+export function adminLoginMessage(error: unknown): string {
+  const code = typeof error === 'object' && error && 'code' in error ? String(error.code) : '';
+  if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found')) {
+    return 'Неверный e-mail или пароль.';
+  }
+  if (code.includes('too-many-requests')) return 'Слишком много попыток. Подождите и попробуйте снова.';
+  if (code.includes('network-request-failed')) return 'Ошибка сети. Проверьте подключение и повторите попытку.';
+  if (code.includes('invalid-email')) return 'Проверьте правильность e-mail.';
+  return 'Не удалось войти. Повторите попытку.';
+}
+
+export async function loginAdminServer(email: string, pass: string): Promise<AdminVerificationResult> {
+  try {
+    const credential = await signInWithEmailAndPassword(getFirebaseAuth(), email.trim(), pass);
+    return await verifyAdminUser(credential.user, { forceRefresh: true, signOutNonAdmin: true });
+  } catch (error) {
+    ++verificationVersion;
+    publishAdminSnapshot({ status: 'anonymous', email: null });
+    return { success: false, message: adminLoginMessage(error) };
   }
 }
 
 export async function logoutAdmin(): Promise<void> {
+  ++verificationVersion;
   try {
-    await fetch('/api/admin/logout', {
-      method: 'POST',
-      credentials: 'include',
-    });
-  } catch (e) {
-    console.warn('Logout request failed:', e);
+    await signOut(getFirebaseAuth());
   } finally {
-    setAdminMode(false);
+    publishAdminSnapshot({ status: 'anonymous', email: null });
   }
 }
 
@@ -86,13 +144,25 @@ export function subscribeAdminState(callback: AdminListener): () => void {
   };
 }
 
+export function subscribeAdminAuthState(callback: AdminAuthListener): () => void {
+  authListeners.add(callback);
+  callback(currentAdminSnapshot);
+  return () => authListeners.delete(callback);
+}
+
 function notifyListeners(isAdmin: boolean): void {
   listeners.forEach(cb => cb(isAdmin));
 }
 
-// Check session on load
 if (typeof window !== 'undefined') {
-  checkAdminSessionServer();
+  onAuthStateChanged(getFirebaseAuth(), (user) => {
+    if (!user) {
+      ++verificationVersion;
+      publishAdminSnapshot({ status: 'anonymous', email: null });
+      return;
+    }
+    void verifyAdminUser(user, { forceRefresh: false, signOutNonAdmin: false });
+  });
 }
 
 // Memory cache for custom word overrides

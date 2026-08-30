@@ -1,54 +1,43 @@
 import { Lesson, LessonActivity } from '../../types';
 
-const cp = (id: string, title: string, passCount: number, exercises: Extract<LessonActivity, { kind: 'controlledPractice' }>['exercises']): LessonActivity => ({ kind: 'controlledPractice', id, title, passCount, exercises });
+const L16_CP: LessonActivity = {
+  kind: 'controlledPractice', id: 'l16-cp-contextual-shopping', title: 'Контекстная практика: -val/-vel и покупки', passCount: 11,
+  exercises: [
+    { kind: 'fillGap', id: 'l16-context-1', prompt: 'Ezzel a ___ szeretnék fizetni. (kártya)', accept: ['kártyával'], explanation: 'kártya → kártyával: конечная a удлиняется.' },
+    { kind: 'fillGap', id: 'l16-context-2', prompt: 'Ma ___ fizetek. (készpénz)', accept: ['készpénzzel'], explanation: 'készpénz → készpénzzel: v уподобляется z.' },
+    { kind: 'fillGap', id: 'l16-context-3', prompt: 'A ___ jöttem vásárolni. (barát)', accept: ['baráttal'], explanation: 'barát → baráttal: v уподобляется t.' },
+    { kind: 'fillGap', id: 'l16-context-4', prompt: 'Reggel ___ megyünk a boltba. (busz)', accept: ['busszal'], explanation: 'busz → busszal: долгий sz пишется ssz.' },
+    { kind: 'fillGap', id: 'l16-context-5', prompt: 'A kenyeret ___ vágom. (kés)', accept: ['késsel'], explanation: 'kés → késsel: долгий s пишется ss.' },
+    { kind: 'fillGap', id: 'l16-context-6', prompt: 'A kávét ___ kérem. (cukor)', accept: ['cukorral'], explanation: 'cukor → cukorral: v уподобляется r.' },
+    { kind: 'singleChoice', id: 'l16-context-7', prompt: 'Ты ищешь другой размер. Что спросишь?', options: ['Milyen méretben van?', 'Milyen idő van?', 'Mikor indul?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-8', prompt: 'Куртка мала. Как попросить больший вариант?', options: ['Van ebből nagyobb?', 'Van ebből olcsó?', 'Van blokkja?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-9', prompt: 'Ты хочешь примерить вещь. Что скажешь?', options: ['Felpróbálhatom?', 'Megkóstolhatom?', 'Elolvashatom?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-10', prompt: 'Sajnos ez túl kicsi. Что логично сказать дальше?', options: ['Inkább egy nagyobbat szeretnék.', 'Készpénzzel jöttem.', 'Tíz fok van.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-11', prompt: 'Ты хочешь обменять товар. Какая фраза подходит?', options: ['Ki szeretném cserélni.', 'Külön fizetünk.', 'Forduljon balra.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-12', prompt: 'Продавец спрашивает о чеке. Что он скажет?', options: ['Van blokkja?', 'Van asztala?', 'Van esernyője?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-13', prompt: 'A kabát 18 000 forint, a pulóver 12 000. Melyik olcsóbb?', options: ['A pulóver.', 'A kabát.', 'Ugyanannyiba kerülnek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l16-context-14', prompt: 'A kék méret nincs, de van fekete. Что спросить об альтернативе?', options: ['Van másik színben?', 'Mennyit esik?', 'Kinek adja?'], correctIndex: 0 },
+  ],
+};
 
-const L16_CP_FORMS = cp('l16-cp-val-vel-forms', 'Формы с -val/-vel', 8, [
-  { kind: 'textInput', id: 'l16-forms-1', prompt: 'autó → ?', accept: ['autóval'], explanation: 'После долгой ó присоединяем -val: autóval.' },
-  { kind: 'textInput', id: 'l16-forms-2', prompt: 'kutya → ?', accept: ['kutyával'], explanation: 'Краткая конечная a удлиняется: kutyával.' },
-  { kind: 'textInput', id: 'l16-forms-3', prompt: 'kávé → ?', accept: ['kávéval'], explanation: 'Конечная é уже долгая: kávéval.' },
-  { kind: 'textInput', id: 'l16-forms-4', prompt: 'vonat → ?', accept: ['vonattal'], explanation: 'v уподобляется t: vonattal.' },
-  { kind: 'textInput', id: 'l16-forms-5', prompt: 'kés → ?', accept: ['késsel'], explanation: 'v уподобляется s: késsel.' },
-  { kind: 'textInput', id: 'l16-forms-6', prompt: 'toll → ?', accept: ['tollal'], explanation: 'Уже долгий l не утраивается: tollal.' },
-  { kind: 'textInput', id: 'l16-forms-7', prompt: 'kanál → ?', accept: ['kanállal'], explanation: 'v уподобляется l: kanállal.' },
-  { kind: 'textInput', id: 'l16-forms-8', prompt: 'busz → ?', accept: ['busszal'], explanation: 'Долгий диграф sz пишется ssz: busszal.' },
-  { kind: 'textInput', id: 'l16-forms-9', prompt: 'barát → ?', accept: ['baráttal'], explanation: 'barát + val → baráttal.' },
-  { kind: 'textInput', id: 'l16-forms-10', prompt: 'készpénz → ?', accept: ['készpénzzel'], explanation: 'v уподобляется z: készpénzzel.' },
-]);
-
-const L16_CP_ASSIMILATION = cp('l16-cp-assimilation', 'Ассимиляция и написание', 8, [
-  { kind: 'singleChoice', id: 'l16-assim-1', prompt: 'vonat + -val', options: ['vonattal', 'vonatval', 'vonatal'], correctIndex: 0, explanation: 'v уподобляется t; долгий t пишется tt.' },
-  { kind: 'singleChoice', id: 'l16-assim-2', prompt: 'kés + -vel', options: ['késvel', 'késsel', 'késssel'], correctIndex: 1, explanation: 'v уподобляется s: késsel.' },
-  { kind: 'singleChoice', id: 'l16-assim-3', prompt: 'toll + -val', options: ['tollval', 'tolllal', 'tollal'], correctIndex: 2, explanation: 'Долгий l уже написан как ll; третья l не добавляется.' },
-  { kind: 'singleChoice', id: 'l16-assim-4', prompt: 'kanál + -val', options: ['kanállal', 'kanálval', 'kanálllal'], correctIndex: 0, explanation: 'v уподобляется l: kanállal.' },
-  { kind: 'singleChoice', id: 'l16-assim-5', prompt: 'busz + -val', options: ['buszszal', 'busszal', 'buszval'], correctIndex: 1, explanation: 'sz — диграф; его долгая запись здесь ssz.' },
-  { kind: 'textInput', id: 'l16-assim-6', prompt: 'barátom + val → ?', accept: ['barátommal'], explanation: 'Форма заканчивается на m: v → m, поэтому barátommal.' },
-  { kind: 'textInput', id: 'l16-assim-7', prompt: 'pénz + vel → ?', accept: ['pénzzel'] },
-  { kind: 'textInput', id: 'l16-assim-8', prompt: 'kéz + vel → ?', accept: ['kézzel'] },
-  { kind: 'textInput', id: 'l16-assim-9', prompt: 'barát + val → ?', accept: ['baráttal'] },
-  { kind: 'textInput', id: 'l16-assim-10', prompt: 'asztal + val → ?', accept: ['asztallal'] },
-]);
-
-const L16_CP_USE = cp('l16-cp-means-companionship', 'Средство или сопровождение?', 6, [
-  { kind: 'singleChoice', id: 'l16-use-1', prompt: 'Tollal írok.', options: ['средство', 'сопровождение'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l16-use-2', prompt: 'A barátommal megyek.', options: ['средство', 'сопровождение'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l16-use-3', prompt: 'Vonattal megyek Budapestre.', options: ['средство передвижения', 'сопровождение'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l16-use-4', prompt: 'Velem jössz?', options: ['средство', 'сопровождение'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l16-use-5', prompt: 'Kártyával fizetek.', options: ['средство оплаты', 'сопровождение'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l16-use-6', prompt: 'A testvéremmel vásárolok.', options: ['средство', 'сопровождение'], correctIndex: 1 },
-  { kind: 'textInput', id: 'l16-use-7', prompt: '«Я пишу ручкой».', accept: ['Tollal írok.', 'Tollal írok', 'tollal írok'] },
-  { kind: 'textInput', id: 'l16-use-8', prompt: '«Я иду с другом».', accept: ['A barátommal megyek.', 'A barátommal megyek', 'Barátommal megyek.', 'Barátommal megyek'] },
-]);
-
-const L16_CP_PRICES = cp('l16-cp-prices', 'Практические цены', 6, [
-  { kind: 'singleChoice', id: 'l16-price-1', prompt: 'Ez 500 forint.', options: ['500 Ft', '1000 Ft', '1500 Ft'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l16-price-2', prompt: 'Ez 1000 forint.', options: ['500 Ft', '1000 Ft', '2000 Ft'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l16-price-3', prompt: '1500 forintba kerül.', options: ['1500 Ft', '2000 Ft', '2500 Ft'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l16-price-4', prompt: 'Ez 2000 forint.', options: ['1000 Ft', '1500 Ft', '2000 Ft'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l16-price-5', prompt: '2500 forintba kerül.', options: ['500 Ft', '2000 Ft', '2500 Ft'], correctIndex: 2 },
-  { kind: 'textInput', id: 'l16-price-6', prompt: 'Ez ezerötszáz forint. Введи цифрами.', accept: ['1500', '1500 Ft', '1500 forint'] },
-  { kind: 'textInput', id: 'l16-price-7', prompt: 'Ez kétezer forint. Введи цифрами.', accept: ['2000', '2000 Ft', '2000 forint'] },
-  { kind: 'textInput', id: 'l16-price-8', prompt: 'Ez kétezer-ötszáz forint. Введи цифрами.', accept: ['2500', '2500 Ft', '2500 forint'] },
-]);
+const L16_READING: LessonActivity = {
+  kind: 'reading', id: 'l16-reading-jacket-exchange', title: 'Egy kabát, amit ki kellett cserélni', instructions: 'Прочитай практическую историю и ответь на вопросы по смыслу.',
+  content: { type: 'prose', paragraphs: [
+    'Dóra péntek délután egy bevásárlóközpontban meglátott egy ruhaboltot, ahol minden téli kabátra harminc százalék kedvezményt adtak. Régóta keresett egy meleg kabátot, ezért bement. Az eladó megmutatta neki az akciós modelleket, és segített megtalálni a megfelelő polcot. Egy sötétkék modellt választott közepes méretben. A próbafülkében kényelmesnek tűnt, és a színe is tetszett neki. A kabátot bankkártyával fizette ki, a blokkot pedig betette a táskájába.',
+    'Otthon azonban vastag pulóverrel is felpróbálta a kabátot. Így már túl szűk volt a vállánál, és nehezen tudta bezárni. Mozgás közben az ujja is rövidnek bizonyult. Másnap visszament a boltba a kabáttal és a blokkal. Az eladó megkérdezte, mi a probléma. Dóra elmondta, hogy ugyanebből a sötétkék modellből nagyobb méretet szeretne.',
+    'Sajnos a kért méret sötétkékben már elfogyott. Az eladó két lehetőséget ajánlott: ugyanazt a kabátot fekete színben, nagyobb méretben, vagy egy másik, valamivel drágább modellt. Azt is mondta, hogy Dóra visszakaphatja a pénzt. Dóra felpróbálta a fekete kabátot. Ez kényelmes volt, jól állt neki, és nem kellett árkülönbözetet fizetnie. Az eladó új blokkot adott a cseréről, és megköszönte a türelmét. Végül ezt választotta, és elégedetten ment haza.',
+  ]}, passCount: 6,
+  questions: [
+    { id: 'l16-read-1', question: 'Miért figyelt fel Dóra a kabátra?', options: ['Harminc százalék kedvezmény volt rá.', 'Ajándékba kapta.', 'Csak ez az egy kabát volt.'], correctIndex: 0 },
+    { id: 'l16-read-2', question: 'Milyen kabátot választott először?', options: ['Sötétkék, közepes méretűt.', 'Fekete, nagy méretűt.', 'Piros, kis méretűt.'], correctIndex: 0 },
+    { id: 'l16-read-3', question: 'Hogyan fizetett?', options: ['Bankkártyával.', 'Készpénzzel.', 'Ajándékkártyával.'], correctIndex: 0 },
+    { id: 'l16-read-4', question: 'Mi derült ki otthon?', options: ['Pulóverrel túl szűk volt a kabát.', 'A kabát színe megváltozott.', 'Hiányzott egy gomb.'], correctIndex: 0 },
+    { id: 'l16-read-5', question: 'Mit vitt vissza Dóra a boltba?', options: ['A kabátot és a blokkot.', 'Csak a bankkártyát.', 'Egy másik pulóvert.'], correctIndex: 0 },
+    { id: 'l16-read-6', question: 'Miért nem kapott pontosan ugyanolyan cserét?', options: ['A nagyobb méret sötétkékben elfogyott.', 'Nem volt nála blokk.', 'Az akció már véget ért.'], correctIndex: 0 },
+    { id: 'l16-read-7', question: 'Milyen lehetőségeket ajánlott az eladó?', options: ['Fekete kabátot, másik modellt vagy pénzvisszatérítést.', 'Csak javítást.', 'Csak kisebb méretet.'], correctIndex: 0 },
+    { id: 'l16-read-8', question: 'Mit választott végül Dóra?', options: ['A nagyobb fekete kabátot.', 'A drágább modellt.', 'A pénzvisszatérítést.'], correctIndex: 0 },
+  ],
+};
 
 const L16_LISTENING: LessonActivity = {
   kind: 'listening', id: 'l16-listening-shopping', title: 'Аудирование: покупка', assetId: 'l16_listening_shopping', audioStatus: 'published', passCount: 3,
@@ -62,43 +51,59 @@ const L16_LISTENING: LessonActivity = {
 };
 
 const L16_ROLEPLAY: LessonActivity = {
-  kind: 'rolePlay', id: 'l16-roleplay-shopping', title: 'Ролевая игра: покупка', partnerLabel: 'Eladó', completionMessage: 'A vásárlás kész.', startTurnId: 'l16-rp-s1',
+  kind: 'rolePlay', id: 'l16-roleplay-shopping', title: 'Ролевая игра: обмен товара', partnerLabel: 'Eladó', completionMessage: 'Sikerült megoldani a cserét.', startTurnId: 'l16-rp-s1',
   turns: [
     { id: 'l16-rp-s1', speaker: 'waiter', prompt: 'Jó napot! Segíthetek?', next: 'l16-rp-l1' },
-    { id: 'l16-rp-l1', speaker: 'learner', responseMode: 'recorded', prompt: 'Поприветствуй продавца и спроси цену.', model: 'Jó napot! Egy pulóvert kérek. Mennyibe kerül?', next: 'l16-rp-s2' },
-    { id: 'l16-rp-s2', speaker: 'waiter', prompt: 'Ezerötszáz forint.', next: 'l16-rp-l2' },
-    { id: 'l16-rp-l2', speaker: 'learner', responseMode: 'recorded', prompt: 'Подтверди цену вслух и попроси две штуки.', model: 'Ezerötszáz forint? Rendben. Kérek két darabot.', next: 'l16-rp-s3' },
-    { id: 'l16-rp-s3', speaker: 'waiter', prompt: 'Rendben. Hogyan fizet?', next: 'l16-rp-l3' },
-    { id: 'l16-rp-l3', speaker: 'learner', responseMode: 'recorded', prompt: 'Назови способ оплаты.', model: 'Kártyával fizetek.', next: 'l16-rp-s4' },
-    { id: 'l16-rp-s4', speaker: 'waiter', prompt: 'Köszönöm. Viszontlátásra!' },
+    { id: 'l16-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Поприветствуй продавца и скажи, что хочешь обменять куртку.', model: 'Jó napot! Ezt a kabátot szeretném kicserélni.', next: 'l16-rp-s2' },
+    { id: 'l16-rp-s2', speaker: 'waiter', prompt: 'Mi a probléma a kabáttal?', next: 'l16-rp-l2' },
+    { id: 'l16-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Объясни проблему с размером.', model: 'Sajnos túl kicsi. Egy nagyobbat szeretnék.', next: 'l16-rp-s3' },
+    { id: 'l16-rp-s3', speaker: 'waiter', prompt: 'Van blokkja?', next: 'l16-rp-l3' },
+    { id: 'l16-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Скажи, что чек у тебя и ты платил картой.', model: 'Igen, itt van. Kártyával fizettem.', next: 'l16-rp-s4' },
+    { id: 'l16-rp-s4', speaker: 'waiter', prompt: 'Ebben a méretben sajnos nincs kék. Van fekete, vagy választhat egy másik modellt.', next: 'l16-rp-l4' },
+    { id: 'l16-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Задай вопрос о размере или другом цвете.', model: 'A fekete milyen méretben van? Van esetleg másik színben?', next: 'l16-rp-s5' },
+    { id: 'l16-rp-s5', speaker: 'waiter', prompt: 'A fekete jó méretű és ugyanannyiba kerül. A másik modell ötezer forinttal drágább.', next: 'l16-rp-l5' },
+    { id: 'l16-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Сравни варианты и задай практический вопрос.', model: 'A másik túl drága. Felpróbálhatom a fekete kabátot?', next: 'l16-rp-s6' },
+    { id: 'l16-rp-s6', speaker: 'waiter', prompt: 'Természetesen. A próbafülke jobbra van.', next: 'l16-rp-l6' },
+    { id: 'l16-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'После примерки выбери решение.', model: 'Ez kényelmes és jó a mérete. A fekete kabátot választom.', next: 'l16-rp-s7' },
+    { id: 'l16-rp-s7', speaker: 'waiter', prompt: 'Rendben. Nincs árkülönbözet, azonnal kicserélem.', next: 'l16-rp-l7' },
+    { id: 'l16-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Уточни документ об обмене.', model: 'Köszönöm. Kapok új blokkot a cseréről?', next: 'l16-rp-s8' },
+    { id: 'l16-rp-s8', speaker: 'waiter', prompt: 'Igen, itt az új blokk.', next: 'l16-rp-l8' },
+    { id: 'l16-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Вежливо заверши разговор.', model: 'Nagyon köszönöm a segítséget. Viszontlátásra!', next: 'l16-rp-s9' },
+    { id: 'l16-rp-s9', speaker: 'waiter', prompt: 'Szívesen. Viszontlátásra!' },
   ],
 };
 
-const L16_RECORDING: LessonActivity = { kind: 'recording', id: 'l16-recording-means-companionship', title: 'Говорение: средство и сопровождение', instructions: 'Запиши одну фразу со средством и одну с сопровождением. Запись требует проверки.', targetText: 'Tollal írok. A barátommal megyek a boltba.', targetTranslation: 'Я пишу ручкой. Я иду с другом в магазин.', rubric: ['пример средства/способа', 'пример сопровождения', 'понятные формы -val/-vel'] };
+const L16_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l16-writing-exchange-message', title: 'Письмо: просьба об обмене',
+  prompt: 'Напиши 80–100 слов магазину или службе поддержки. Укажи, что и когда ты купил, как заплатил, в чём проблема, какую замену хочешь, есть ли чек, задай один практический вопрос и закончи сообщение вежливо.',
+  modelAnswer: ['Jó napot kívánok! Szombaton vettem önöknél egy kék kabátot, és bankkártyával fizettem. Otthon vettem észre, hogy a kabát túl kicsi, ezért szeretném kicserélni. Egy nagyobb méretet szeretnék, lehetőleg ugyanebben a színben. A blokk megvan, és a kabátot még nem használtam. Van ebből a modellből nagyobb méret? Ha nincs kék, fekete szín is megfelel. Szeretném gyorsan megoldani a cserét, mert a kabátra a jövő héten szükségem lesz. Kérem, írják meg, mikor vihetem vissza a kabátot. Köszönöm szépen a segítséget. Üdvözlettel: Anna'],
+  rubric: ['80–100 слов', 'покупка, дата и способ оплаты', 'проблема и желаемая замена', 'информация о чеке', 'практический вопрос', 'вежливое завершение'],
+};
+
+const L16_SPEAKING = { title: 'Необязательная устная самопрактика', instructions: 'Говори 1.5–2 минуты о вымышленной покупке. Это текстовая инструкция без микрофона, score и evidence.', prompt: 'Расскажи, что хотел купить, с кем пришёл, сколько это стоило, как заплатил, какая возникла проблема или развилка и чем всё закончилось.', rubric: ['цель покупки и спутник', 'цена и способ оплаты', 'проблема или решение', 'итог истории'] };
 
 const L16_EXIT: LessonActivity = { kind: 'exitCheck', id: 'l16-exit-check', title: 'Проверка целей урока', checks: [
-  { objectiveId: 'l16_form-instrumental', activityId: 'l16-cp-val-vel-forms', evidenceKind: 'grammar' },
-  { objectiveId: 'l16_apply-assimilation', activityId: 'l16-cp-assimilation', evidenceKind: 'grammar' },
-  { objectiveId: 'l16_use-instrumental', activityId: 'l16-cp-means-companionship', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l16-recording-means-companionship', evidenceKind: 'speaking' }] },
-  { objectiveId: 'l16_shop-dialogue', activityId: 'l16-listening-shopping', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l16-roleplay-shopping', evidenceKind: 'interaction' }] },
-  { objectiveId: 'l16_count-money', activityId: 'l16-cp-prices', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l16-listening-shopping', evidenceKind: 'listening' }, { activityId: 'l16-roleplay-shopping', evidenceKind: 'speaking' }] },
+  { objectiveId: 'l16_form-instrumental', activityId: 'l16-cp-contextual-shopping', evidenceKind: 'grammar' },
+  { objectiveId: 'l16_apply-assimilation', activityId: 'l16-cp-contextual-shopping', evidenceKind: 'grammar' },
+  { objectiveId: 'l16_use-instrumental', activityId: 'l16-cp-contextual-shopping', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l16-writing-exchange-message', evidenceKind: 'writing' }] },
+  { objectiveId: 'l16_shop-dialogue', activityId: 'l16-roleplay-shopping', evidenceKind: 'interaction', evidenceComponents: [{ activityId: 'l16-listening-shopping', evidenceKind: 'listening' }, { activityId: 'l16-writing-exchange-message', evidenceKind: 'writing' }] },
+  { objectiveId: 'l16_count-money', activityId: 'l16-reading-jacket-exchange', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l16-listening-shopping', evidenceKind: 'listening' }] },
 ] };
 
 export const LESSON_16: Lesson = {
-  id: 16, number: 16, level: 'A2', title: 'Урок 16 · Vásárlás és eszközhatározó', subtitle: 'Покупки и -val/-vel: средство и сопровождение', description: 'Изученные формы -val/-vel, ассимиляция v в письме, средство и сопровождение, базовая покупка, оплата и ограниченный набор практических цен.', slidesCount: 12,
+  id: 16, number: 16, level: 'A2', title: 'Урок 16 · Vásárlás és eszközhatározó', subtitle: 'Покупки и -val/-vel: цена, выбор и обмен', description: 'Практическое употребление -val/-vel, цены и способы оплаты, выбор размера/цвета и решение простой проблемы с обменом.', slidesCount: 11,
   slides: [
-    { id: 1, eyebrow: 'УРОК 16 · 1/12 · -VAL/-VEL', title: 'Средство и сопровождение', subtitle: 'Две практические функции', activities: [L16_CP_FORMS], body: `<p><b>-val/-vel</b> выражает средство/способ («чем, на чём») и сопровождение («с кем»). По функциям он шире русского творительного падежа и не всегда переводится одинаково.</p><p><b>Средство:</b> Tollal írok. Vonattal megyek. Kártyával fizetek.</p><p><b>Сопровождение:</b> A barátommal megyek. Velem jössz?</p>` },
-    { id: 2, eyebrow: 'УРОК 16 · 2/12 · ГЛАСНАЯ', title: 'Слова на гласную', subtitle: 'Сохраняем долготу', body: `<table class="conj"><tr><th>Слово</th><th>Форма</th><th>Значение</th></tr><tr><td>autó</td><td>autóval</td><td>на машине / автомобилем</td></tr><tr><td>kutya</td><td>kutyával</td><td>с собакой</td></tr><tr><td>kávé</td><td>kávéval</td><td>с кофе</td></tr></table><div class="note">Только <b>краткие конечные a/e</b> удлиняются: a→á, e→é. В kávé гласная é уже долгая.</div>` },
-    { id: 3, eyebrow: 'УРОК 16 · 3/12 · АССИМИЛЯЦИЯ', title: 'Слова на согласную', subtitle: 'Звук и написание', activities: [L16_CP_ASSIMILATION], body: `<p>У основ на согласную <b>v</b> суффикса полностью уподобляется последнему согласному звуку. На письме долгий согласный оформляется по обычным правилам венгерской орфографии.</p><p>vonat → <b>vonattal</b>; kés → <b>késsel</b>; toll → <b>tollal</b>; kanál → <b>kanállal</b>; busz → <b>busszal</b>.</p><div class="note">В tollal нет третьей l. В busszal диграф sz получает долгую запись ssz: это не механическое копирование последней буквы.</div>` },
-    { id: 4, eyebrow: 'УРОК 16 · 4/12 · ЛИЧНЫЕ ФОРМЫ', title: 'Velem, veled, vele', subtitle: 'Полезные формы', body: `<p>У -val/-vel есть личные формы: <b>velem</b> «со мной», <b>veled</b> «с тобой», <b>vele</b> «с ним/ней» — ядро для узнавания.</p><p><b>Для расширения:</b> velünk «с нами», veletek «с вами», velük «с ними». Весь ряд не является отдельной целью.</p><p><b>Gyere velem!</b> — готовый полезный блок. Повелительное наклонение здесь не изучается и не проверяется.</p>` },
-    { id: 5, eyebrow: 'УРОК 16 · 5/12 · УПОТРЕБЛЕНИЕ', title: 'Средство или сопровождение?', subtitle: 'Значение в контексте', activities: [L16_CP_USE], body: `<p>Tollal írok — инструмент; Vonattal megyek Budapestre — транспорт; Kártyával fizetek — средство оплаты.</p><p>A barátommal megyek a boltba и Velem jössz? — сопровождение.</p><div class="note">Краткое повторение L8: barát → barátom; затем <b>barátom + val → barátommal</b>. Готовая форма заканчивается на m: v→m, получается mm.</div>` },
-    { id: 6, eyebrow: 'УРОК 16 · 6/12 · МАГАЗИН', title: 'Базовый словарь', subtitle: 'Ядро и расширение', body: `<p><b>Ядро:</b> pénz — деньги; ár — цена; bankkártya — банковская карта; nyugta — чек; méret — размер; szín — цвет.</p><p><b>Для расширения:</b> kedvezmény — скидка; próbafülke — примерочная; olcsó — дешёвый; kirakat — витрина; eladó — продавец; vásárló — покупатель.</p>` },
-    { id: 7, eyebrow: 'УРОК 16 · 7/12 · ЦЕНЫ', title: 'Практические цены', subtitle: 'Ограниченный набор', activities: [L16_CP_PRICES], body: `<p>Работаем только с ценами <b>500, 1000, 1500, 2000 и 2500 Ft</b>. Это не полная система больших чисел.</p><table class="conj"><tr><th>Цена</th><th>Как сказать</th></tr><tr><td>500 Ft</td><td>ötszáz forint</td></tr><tr><td>1000 Ft</td><td>ezer forint</td></tr><tr><td>1500 Ft</td><td>ezerötszáz forint</td></tr><tr><td>2000 Ft</td><td>kétezer forint</td></tr><tr><td>2500 Ft</td><td>kétezer-ötszáz forint</td></tr></table><p>Mennyibe kerül? Ez 1500 forint. 1500 forintba kerül.</p><div class="note">После числительного forint остаётся в единственном числе. Здесь нужно узнавать и произносить только эти изученные суммы; свободное образование любых больших чисел не проверяется.</div>` },
-    { id: 8, eyebrow: 'УРОК 16 · 8/12 · ФРАЗЫ', title: 'Количество и оплата', subtitle: 'Готовые транзакционные блоки', activities: [L16_LISTENING], body: `<p>Egy pulóvert kérek. — Свитер, пожалуйста. Kérek egyet. — Один, пожалуйста. Kérek két darabot. — Две штуки, пожалуйста.</p><p>Mennyibe kerül ez? Ez túl drága.</p><p>Kártyával fizetek. — Я плачу картой. Készpénzzel fizetek. — Я плачу наличными.</p><div class="note">Fizethetek kártyával? — готовый транзакционный блок. Продуктивное образование -hat/-het здесь не изучается и не проверяется.</div>` },
-    { id: 9, eyebrow: 'УРОК 16 · 9/12 · ДИАЛОГ', title: 'Покупка', subtitle: 'Цена → количество → оплата', activities: [L16_ROLEPLAY], body: `<p><b>Eladó:</b> Jó napot! Segíthetek?</p><p><b>Vásárló:</b> Jó napot! Egy pulóvert kérek. Mennyibe kerül?</p><p><b>Eladó:</b> Ezerötszáz forint.</p><p><b>Vásárló:</b> Ezerötszáz forint? Rendben. Kérek két darabot.</p><p><b>Eladó:</b> Rendben. Hogyan fizet?</p><p><b>Vásárló:</b> Kártyával fizetek.</p><div class="note">В ролевой игре ученик сам произносит цену, количество и способ оплаты. Открытая речь требует проверки; условное наклонение и продуктивное -hat/-het не являются целями.</div>` },
-    { id: 10, eyebrow: 'УРОК 16 · 10/12 · ГОВОРЕНИЕ', title: 'Два значения -val/-vel', subtitle: 'Запись для проверки', activities: [L16_RECORDING], body: `<p>Скажи одну фразу о средстве/способе и одну о сопровождении. Например: Tollal írok. A barátommal megyek a boltba.</p><div class="note">Сам факт записи не подтверждает правильность: открытый ответ требует проверки.</div>` },
-    { id: 11, eyebrow: 'УРОК 16 · 11/12 · ПОВТОРЕНИЕ', title: 'Что важно удержать', subtitle: 'Границы урока', body: `<ul class="tick"><li>-val/-vel: средство/способ или сопровождение</li><li>краткие конечные a/e → á/é</li><li>v уподобляется конечному согласному звуку; написание следует орфографии</li><li>покупка: цена, небольшое количество, оплата</li><li>только изученный набор цен 500–2500 Ft</li></ul>` },
-    { id: 12, eyebrow: 'УРОК 16 · 12/12 · ИТОГ', title: 'Összefoglalás', subtitle: 'Проверка целей', activities: [L16_EXIT], body: `<p>Ты потренировал формы -val/-vel, письменную ассимиляцию, средство и сопровождение, а также короткую покупку с ценой, количеством и оплатой.</p><p>В следующем уроке — погода и времена года.</p>` },
+    { id: 1, eyebrow: 'УРОК 16 · 1/11 · CAN-DO', title: 'Vásárlás magyarul', subtitle: 'Покупка как практическая задача', body: `<p>После урока ты сможешь спросить о товаре, цене, размере и цвете, назвать способ оплаты и решить простую проблему с обменом.</p><p><b>Mennyibe kerül? Milyen méretben van? Van ebből nagyobb? Van másik színben? Felpróbálhatom?</b></p><div class="note">Суффикс <b>-val/-vel</b> нужен здесь в реальных фразах: Kártyával fizetek. A barátommal jöttem.</div>` },
+    { id: 2, eyebrow: 'УРОК 16 · 2/11 · -VAL/-VEL', title: 'Средство и сопровождение', subtitle: 'Две практические функции', body: `<p><b>-val/-vel</b> выражает средство или способ: Tollal írok. Vonattal megyek. Kártyával fizetek. Он также выражает сопровождение: A barátommal jöttem. Velem jössz?</p><p>После кратких конечных a/e они удлиняются: kutya → kutyával, kefe → kefével. Уже долгие гласные сохраняются: kávé → kávéval.</p>` },
+    { id: 3, eyebrow: 'УРОК 16 · 3/11 · АССИМИЛЯЦИЯ', title: 'Слова на согласную', subtitle: 'Звук и написание', body: `<p>После согласной <b>v</b> полностью уподобляется последнему согласному звуку: vonat → <b>vonattal</b>, kés → <b>késsel</b>, cukor → <b>cukorral</b>, pénz → <b>pénzzel</b>.</p><p>В <b>busszal</b> долгий диграф sz пишется ssz. В <b>tollal</b> третья l не появляется.</p>` },
+    { id: 4, eyebrow: 'УРОК 16 · 4/11 · КОНТЕКСТ', title: 'Форма и решение задачи', subtitle: '14 ситуаций покупки', activities: [L16_CP], body: `<p>Сначала выбери правильную форму -val/-vel, затем решай практические задачи: размер, цвет, цена, примерка и обмен.</p><p><b>Ki szeretném cserélni. Van blokkja? Sajnos ez túl kicsi. Inkább egy nagyobbat szeretnék.</b></p>` },
+    { id: 5, eyebrow: 'УРОК 16 · 5/11 · ЧТЕНИЕ', title: 'Egy kabát, amit ki kellett cserélni', subtitle: 'Скидка → проблема → решение', activities: [L16_READING], body: `<p>Следи за последовательностью: выбор товара, способ оплаты, обнаруженная дома проблема, варианты продавца и окончательное решение покупателя.</p>` },
+    { id: 6, eyebrow: 'УРОК 16 · 6/11 · АУДИРОВАНИЕ', title: 'Rövid vásárlás', subtitle: 'Цена, количество и оплата', activities: [L16_LISTENING], body: `<p>Существующая короткая запись проверяет базовую транзакцию: товар, количество, цену и оплату картой.</p>` },
+    { id: 7, eyebrow: 'УРОК 16 · 7/11 · ROLEPLAY', title: 'Termékcsere', subtitle: 'Обмен товара в магазине', activities: [L16_ROLEPLAY], body: `<p>Объясни проблему, покажи чек, спроси о размере или цвете, сравни две альтернативы и выбери решение.</p><div class="note">RolePlay даёт только PARTIAL evidence.</div>` },
+    { id: 8, eyebrow: 'УРОК 16 · 8/11 · ПИСЬМО', title: 'Üzenet az üzletnek', subtitle: 'Просьба об обмене', activities: [L16_WRITING], body: `<p>Напиши связное сообщение на 80–100 слов: покупка, оплата, проблема, желаемая замена, чек, вопрос и вежливое завершение.</p>` },
+    { id: 9, eyebrow: 'УРОК 16 · 9/11 · SPEAKING PRACTICE', title: 'Egy vásárlás története', subtitle: 'Необязательная практика без записи', optionalSpeaking: L16_SPEAKING, body: `<p>Свяжи цель покупки, спутника, цену, способ оплаты, проблему и результат в короткую историю.</p>` },
+    { id: 10, eyebrow: 'УРОК 16 · 10/11 · ПОВТОРЕНИЕ', title: 'Hasznos mondatok', subtitle: 'Фразы для реального магазина', body: `<ul class="tick"><li>Kártyával / készpénzzel fizetek.</li><li>Milyen méretben van? Van ebből nagyobb?</li><li>Van másik színben? Felpróbálhatom?</li><li>Ki szeretném cserélni. Van blokkja?</li></ul>` },
+    { id: 11, eyebrow: 'УРОК 16 · 11/11 · ИТОГ', title: 'Összefoglalás', subtitle: 'Честная проверка целей', activities: [L16_EXIT], body: `<p>Автоматические задания могут дать DIRECT после порога. RolePlay и Writing остаются PARTIAL; speaking practice не создаёт evidence.</p>` },
   ],
   vocabulary: [
     { id: 'l16_v1', hu: 'pénz', ru: 'деньги', category: 'Ядро', exampleSentence: 'Van elég pénzem.' }, { id: 'l16_v2', hu: 'ár', ru: 'цена', category: 'Ядро', exampleSentence: 'Mi az ára?' }, { id: 'l16_v3', hu: 'bankkártya', ru: 'банковская карта', category: 'Ядро', exampleSentence: 'Kártyával fizetek.' }, { id: 'l16_v4', hu: 'nyugta', ru: 'чек', category: 'Ядро', exampleSentence: 'Kérem a nyugtát.' }, { id: 'l16_v5', hu: 'méret', ru: 'размер', category: 'Ядро', exampleSentence: 'Milyen méret?' }, { id: 'l16_v6', hu: 'szín', ru: 'цвет', category: 'Ядро', exampleSentence: 'Szép szín.' }, { id: 'l16_v7', hu: 'kedvezmény', ru: 'скидка', category: 'Расширение', exampleSentence: 'Van kedvezmény?' }, { id: 'l16_v8', hu: 'próbafülke', ru: 'примерочная', category: 'Расширение', exampleSentence: 'Hol van a próbafülke?' },
@@ -114,8 +119,8 @@ export const LESSON_16: Lesson = {
   objectives: [
     { id: 'l16_form-instrumental', text: 'Образовывать изученные формы с суффиксом -val/-vel.', skills: ['grammar', 'writing'] },
     { id: 'l16_apply-assimilation', text: 'Применять ассимиляцию v в изученных письменных формах с -val/-vel.', skills: ['grammar', 'writing'] },
-    { id: 'l16_use-instrumental', text: 'Различать и использовать -val/-vel для средства/способа и сопровождения.', skills: ['grammar', 'speaking'] },
-    { id: 'l16_shop-dialogue', text: 'Выполнять базовую покупку: спросить цену, назвать количество и выбрать способ оплаты.', skills: ['speaking', 'listening', 'interaction'] },
-    { id: 'l16_count-money', text: 'Понимать и называть изученные практические суммы в форинтах.', skills: ['speaking', 'reading', 'listening'] },
+    { id: 'l16_use-instrumental', text: 'Использовать -val/-vel для способа оплаты, средства и сопровождения.', skills: ['grammar', 'speaking', 'writing'] },
+    { id: 'l16_shop-dialogue', text: 'Совершать покупку и решать простую проблему с обменом товара.', skills: ['speaking', 'listening', 'interaction', 'writing'] },
+    { id: 'l16_count-money', text: 'Понимать цены и сравнивать простые варианты в магазине.', skills: ['speaking', 'reading', 'listening'] },
   ],
 };

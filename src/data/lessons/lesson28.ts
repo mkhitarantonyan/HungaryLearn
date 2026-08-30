@@ -32,17 +32,21 @@ const L28_ACTIVITIES = createMigrationActivities({
   writingPrompt: 'Напиши 10–12 связанных фраз: коротко расскажи о прошлом опыте, опиши настоящее, объясни мнение и назови будущий план с условием.',
   writingModel: ['Két éve kezdtem magyarul tanulni.', 'Most már sok mindent megértek, de még szeretnék folyékonyabban beszélni.', 'Ha lesz időm, jövőre nyelvvizsgát teszek.'],
   writingRubric: ['Есть прошлое, настоящее и будущее', 'Мнение подкреплено причиной', 'Есть условие и связный переход между мыслями'],
-  recordingTitle: 'Итоговое говорение: связный рассказ',
-  recordingInstructions: 'Запиши 1–2 минуты связной речи: прошлый опыт, нынешняя ситуация, мнение с причиной и будущий план.',
-  recordingTarget: 'Két éve kezdtem tanulni. Most rendszeresen gyakorlok, mert szeretnék folyékonyabban beszélni. Ha lesz időm, jövőre vizsgát teszek.',
   objectiveChecks: [
     { objectiveId: 'l28_review-agglutination', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l28_review-cases', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l28_review-moods', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l28_integrate-skills', activity: 'writing', evidenceKind: 'writing' },
-    { objectiveId: 'l28_self-assess', activity: 'recording', evidenceKind: 'speaking' },
+    { objectiveId: 'l28_self-assess', activity: 'writing', evidenceKind: 'writing' },
   ],
 });
+
+const L28_OPTIONAL_SPEAKING = {
+  title: 'Итоговое говорение: связный рассказ',
+  instructions: 'Скажи 1–2 минуты связной речи: прошлый опыт, нынешняя ситуация, мнение с причиной и будущий план.',
+  prompt: 'Két éve kezdtem tanulni. Most rendszeresen gyakorlok, mert szeretnék folyékonyabban beszélni. Ha lesz időm, jövőre vizsgát teszek.',
+  rubric: ['Задача выполнена', 'Фразы связаны по смыслу', 'Целевые формы использованы уместно'],
+};
 
 export const LESSON_28: Lesson = {
   id: 28,
@@ -168,6 +172,7 @@ export const LESSON_28: Lesson = {
       title: "Záróteszt",
       subtitle: "Финальный самоконтроль B1",
       activities: L28_ACTIVITIES,
+      optionalSpeaking: L28_OPTIONAL_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Напишите 3 формы глагола tanul: прошедшее (ő), повелительное (ő), условное (ő)</li>

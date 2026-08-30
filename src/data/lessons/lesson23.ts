@@ -4,21 +4,35 @@ import { createMigrationActivities } from './migrationActivityFactory';
 const L23_ACTIVITIES = createMigrationActivities({
   lessonId: 23,
   controlledTitle: 'Условное наклонение: формы и функции',
-  controlledPassCount: 4,
+  controlledPassCount: 9,
   controlledExercises: [
-    { kind: 'fillGap', id: 'l23-cp-1', prompt: 'én + vár → условная форма', accept: ['várnék'] },
-    { kind: 'fillGap', id: 'l23-cp-2', prompt: 'ő + lenni → условная форма', accept: ['lenne'] },
-    { kind: 'fillGap', id: 'l23-cp-3', prompt: 'mi + menni → условная форма', accept: ['mennénk'] },
-    { kind: 'singleChoice', id: 'l23-cp-4', prompt: 'Выбери вежливый заказ.', options: ['Kérek egy kávét.', 'Szeretnék egy kávét.'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l23-cp-5', prompt: 'Закончи: Ha lenne időm, ...', options: ['utaznék', 'utaztam'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l23-cp-1', prompt: 'A · én + vár → условная форма', accept: ['várnék'] },
+    { kind: 'fillGap', id: 'l23-cp-2', prompt: 'A · ő + lenni → условная форма', accept: ['lenne'] },
+    { kind: 'fillGap', id: 'l23-cp-3', prompt: 'A · mi + menni → условная форма', accept: ['mennénk'] },
+    { kind: 'fillGap', id: 'l23-cp-4', prompt: 'A · én + szeretni + конкретный объект → условная определённая форма', accept: ['szeretném'] },
+    { kind: 'singleChoice', id: 'l23-cp-5', prompt: 'B · Ha lenne időm, ...', options: ['utaznék', 'utaztam'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-6', prompt: 'B · Выбери согласованную гипотезу.', options: ['Ha több pénzem lenne, gyakrabban utaznék.', 'Ha több pénzem volt, gyakrabban utaznék.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-7', prompt: 'B · Mit csinálnál, ha egy hónapig nem kellene dolgoznod?', options: ['Sokat utaznék.', 'Sokat utaztam.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-8', prompt: 'B · В каком варианте ha-clause выражает условие, а вторая часть — результат?', options: ['Ha találnék távmunkát, hétköznap dolgoznék.', 'Hétköznap, ha, dolgoznék távmunkát.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-9', prompt: 'C · Выбери вежливый заказ.', options: ['Kérnék egy kávét.', 'Kérek volna egy kávét.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-10', prompt: 'C · Вежливо попроси помощь.', options: ['Tudna segíteni?', 'Segíts!'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-11', prompt: 'C · Вежливо попроси повторить.', options: ['Megismételné, kérem?', 'Megismétled!'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l23-cp-12', prompt: 'C · Вежливо спроси информацию.', options: ['Meg tudná mondani, hol van a recepció?', 'Mondd meg, hol a recepció!'], correctIndex: 0 },
   ],
-  readingTitle: 'Чтение: планы на свободный день',
-  readingParagraphs: ['Ha szabad lenne a hétvégém, kirándulnék a hegyekben. Jó időben sokat sétálnék, este pedig egy kis étteremben vacsoráznék.'],
-  readingPassCount: 2,
+  readingTitle: 'Egy év külföldön',
+  readingParagraphs: [
+    'Ha egy évig bárhol élhetnék, valószínűleg egy kisebb európai várost választanék. Nem szeretnék nagyon drága helyre költözni, mert akkor túl sok pénzt kellene lakásra költenem. Fontos lenne számomra, hogy jó legyen a tömegközlekedés, és sok zöld terület legyen a városban.',
+    'Ha találnék távmunkát, hétköznap dolgoznék, hétvégén pedig bejárnám a környéket. Megtanulnék valamennyit a helyi nyelvből is, mert szerintem könnyebb kapcsolatot teremteni az emberekkel, ha az ember beszéli a nyelvüket.',
+    'Természetesen hiányozna a családom és a barátaim. Ha lehetne, néhány havonta hazautaznék. Egy év után eldönteném, hogy szeretnék-e tovább maradni, vagy inkább hazaköltöznék.',
+  ],
+  readingPassCount: 5,
   readingQuestions: [
-    { id: 'l23-read-1', question: 'Hová menne a beszélő?', options: ['A hegyekbe', 'Az irodába', 'Az orvoshoz'], correctIndex: 0 },
-    { id: 'l23-read-2', question: 'Mit csinálna jó időben?', options: ['Sokat sétálna', 'Dolgozna', 'Aludna'], correctIndex: 0 },
-    { id: 'l23-read-3', question: 'Hol vacsorázna?', options: ['Otthon', 'Egy étteremben', 'A vonaton'], correctIndex: 1 },
+    { id: 'l23-read-1', question: 'Mi a szöveg fő témája?', options: ['Egy elképzelt külföldi év', 'Egy hétvégi kirándulás', 'Egy új munka első napja'], correctIndex: 0 },
+    { id: 'l23-read-2', question: 'Milyen várost választana a beszélő?', options: ['Nagyon drága nagyvárost', 'Kisebb európai várost jó közlekedéssel és zöld területekkel', 'Csak tengerparti várost'], correctIndex: 1 },
+    { id: 'l23-read-3', question: 'Miért tanulna a helyi nyelvből?', options: ['Mert könnyebb kapcsolatot teremteni', 'Mert nem dolgozna', 'Mert kötelező lenne'], correctIndex: 0 },
+    { id: 'l23-read-4', question: 'Mi lenne a külföldi élet egyik hátránya?', options: ['Hiányozna a család és a barátok', 'Túl sok lenne a zöld terület', 'Nem lenne hétvége'], correctIndex: 0 },
+    { id: 'l23-read-5', question: 'Miről döntene a beszélő egy év után?', options: ['Maradjon-e tovább vagy költözzön haza', 'Vegyen-e autót', 'Melyik nyelvet felejtse el'], correctIndex: 0 },
+    { id: 'l23-read-6', question: 'Mire következtethetünk a szövegből?', options: ['A beszélőnek fontos az önállóság és a kapcsolattartás is', 'A beszélő nem szeretne dolgozni', 'A beszélő biztosan végleg külföldre költözik'], correctIndex: 0 },
   ],
   listeningTitle: 'Аудирование: желания и условия',
   listeningTranscript: 'Szeretnék többet utazni. Ha több szabadságom lenne, nyáron elmennék Horvátországba, és sokat úsznék.',
@@ -28,26 +42,66 @@ const L23_ACTIVITIES = createMigrationActivities({
     { id: 'l23-listen-2', question: 'Mire lenne szüksége?', options: ['Több pénzre', 'Több szabadságra', 'Új autóra'], correctIndex: 1 },
     { id: 'l23-listen-3', question: 'Mit csinálna nyáron?', options: ['Sokat úszna', 'Síelne', 'Tanulna'], correctIndex: 0 },
   ],
-  writingTitle: 'Письмо: если бы у меня был свободный день',
-  writingPrompt: 'Напиши 5 связанных фраз о том, что ты сделал бы в свободный день. Используй ha, lenne и минимум три условные формы.',
-  writingModel: ['Ha lenne egy szabad napom, sokáig aludnék.', 'Délután találkoznék a barátaimmal.', 'Este moziba mennénk.'],
-  writingRubric: ['Есть условие с ha', 'Использовано lenne', 'Есть минимум три условные формы'],
-  recordingTitle: 'Говорение: желание и гипотеза',
-  recordingInstructions: 'Скажи, чего ты хотел бы, и объясни, что сделал бы при одном условии.',
-  recordingTarget: 'Szeretnék többet utazni. Ha lenne időm, gyakrabban mennék Budapestre.',
+  listeningB: {
+    title: 'Аудирование B: свободная неделя',
+    assetId: 'l23_listening_b_free_week',
+    audioStatus: 'published',
+    transcript: 'Nóra: Képzeld, ha jövő hónapban kapnál egy teljes szabad hetet, mit csinálnál?\nÁdám: Ha lenne egy szabad hetem, biztosan elutaznék valahová. Talán Horvátországba mennék.\nNóra: Én inkább itthon maradnék. Mostanában sokat dolgozom, ezért szeretnék pihenni.\nÁdám: De ha egész héten otthon lennél, nem unatkoznál?\nNóra: Talán egy kicsit. Ha jó idő lenne, kirándulnék, találkoznék a barátaimmal, és végre elolvasnék néhány könyvet.\nÁdám: Én akkor is utaznék. Ha időben vennénk jegyet, talán nem lenne olyan drága.\nNóra: Ez igaz. Hová mennél pontosan?\nÁdám: Splitbe. Két-három napot a városban töltenék, aztán elmennék egy csendesebb helyre a tenger mellett.\nNóra: Én egy egész hetet nem szeretnék utazással tölteni.\nÁdám: Akkor mit szólnál négy naphoz? Utána még lenne három napod otthon pihenni.\nNóra: Ez már jobban tetszik. Ha találnánk olcsó szállást, lehet, hogy én is elmennék.\nÁdám: Akkor este megnézhetnénk a lehetőségeket.\nNóra: Rendben. Küldj néhány ajánlatot, és választunk.',
+    passCount: 6,
+    questions: [
+      { id: 'l23-listen-b-1', question: 'Mit tenne Ádám egy szabad héten?', options: ['Elutazna, talán Horvátországba.', 'Végig otthon dolgozna.', 'Új lakást keresne.'], correctIndex: 0 },
+      { id: 'l23-listen-b-2', question: 'Miért maradna Nóra inkább otthon?', options: ['Mert fél repülni.', 'Mert sokat dolgozik, és pihenni szeretne.', 'Mert nincs útlevele.'], correctIndex: 1 },
+      { id: 'l23-listen-b-3', question: 'Mitől lehetne olcsóbb az utazás?', options: ['Ha időben vennének jegyet.', 'Ha egész héten utaznának.', 'Ha nem foglalnának szállást.'], correctIndex: 0 },
+      { id: 'l23-listen-b-4', question: 'Miért nem tetszik Nórának Ádám első terve?', options: ['Nem akarja az egész hetet utazással tölteni.', 'Nem szereti a tengert.', 'Nem akar a barátaival találkozni.'], correctIndex: 0 },
+      { id: 'l23-listen-b-5', question: 'Milyen kompromisszumot javasol Ádám?', options: ['Négy nap utazást és három nap otthoni pihenést.', 'Három hét utazást.', 'Egyetlen napos kirándulást.'], correctIndex: 0 },
+      { id: 'l23-listen-b-6', question: 'Mi kell ahhoz, hogy Nóra is elutazzon?', options: ['Olcsó szállást kell találniuk.', 'Új autót kell venniük.', 'Ádámnak otthon kell maradnia.'], correctIndex: 0 },
+      { id: 'l23-listen-b-7', question: 'A beszélgetés végén közelebb kerülnek-e a közös döntéshez?', options: ['Igen, este együtt megnézik a lehetőségeket.', 'Nem, befejezik a tervezést.', 'Nem, Nóra biztosan otthon marad.'], correctIndex: 0 },
+    ],
+  },
+  rolePlay: {
+    title: 'RolePlay: изменение бронирования в отеле',
+    partnerLabel: 'Администратор отеля',
+    completionMessage: 'Запрос обработан. Прослушай, насколько вежливо и ясно ты уточнял(а) условия.',
+    startTurnId: 'l23-rp-1',
+    turns: [
+      { id: 'l23-rp-1', speaker: 'learner', prompt: 'Попроси изменить бронирование.', responseMode: 'selfPractice', model: 'Szeretném megváltoztatni a foglalásomat.', next: 'l23-rp-2' },
+      { id: 'l23-rp-2', speaker: 'waiter', prompt: 'Sajnos azon a napon nincs szabad szobánk.', next: 'l23-rp-3' },
+      { id: 'l23-rp-3', speaker: 'learner', prompt: 'Вежливо спроси об альтернативе.', responseMode: 'selfPractice', model: 'Ha lehetne, kérnék egy másik időpontot. Mit tudna ajánlani?', next: 'l23-rp-4' },
+      { id: 'l23-rp-4', speaker: 'waiter', prompt: 'A következő napon lenne egy szabad szobánk.', next: 'l23-rp-5' },
+      { id: 'l23-rp-5', speaker: 'learner', prompt: 'Уточни одну деталь.', responseMode: 'selfPractice', model: 'Meg tudná mondani, hogy reggelivel együtt mennyibe kerülne?', next: 'l23-rp-6' },
+      { id: 'l23-rp-6', speaker: 'waiter', prompt: 'Igen, az ár tartalmazná a reggelit.', next: 'l23-rp-7' },
+      { id: 'l23-rp-7', speaker: 'learner', prompt: 'Вежливо прими или отклони вариант и заверши разговор.', responseMode: 'selfPractice', model: 'Köszönöm, ezt az időpontot szeretném. Viszontlátásra!', next: 'l23-rp-8' },
+      { id: 'l23-rp-8', speaker: 'waiter', prompt: 'Rendben, módosítottam a foglalást. Viszontlátásra!' },
+    ],
+  },
+  writingTitle: 'Письмо: одно изменение в повседневной жизни',
+  writingPrompt: 'Напиши 100–120 слов: если бы ты мог(ла) изменить одну вещь в своей повседневной жизни, что бы ты изменил(а) и почему?',
+  writingModel: ['Ha megváltoztathatnék egy dolgot, több szabadidőt szeretnék.', 'Ha több időm lenne, gyakrabban találkoznék a barátaimmal.'],
+  writingRubric: ['100–120 слов', 'Изменение сформулировано ясно', 'Есть ha-clause', 'Условные формы используются уместно', 'Причины связаны с выбором'],
   objectiveChecks: [
     { objectiveId: 'l23_form-conditional', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l23_use-lenne', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l23_build-if-clauses', activity: 'writing', evidenceKind: 'writing' },
-    { objectiveId: 'l23_express-wishes', activity: 'recording', evidenceKind: 'speaking' },
+    {
+      objectiveId: 'l23_express-wishes',
+      activity: 'roleplay',
+      evidenceKind: 'interaction',
+    },
     {
       objectiveId: 'l23_understand-conditional',
       activity: 'reading',
       evidenceKind: 'reading',
-      evidenceComponents: [{ activity: 'listening', evidenceKind: 'listening' }],
+      evidenceComponents: [{ activity: 'listeningB', evidenceKind: 'listening' }],
     },
   ],
 });
+
+const L23_OPTIONAL_SPEAKING = {
+  title: 'Говорение: месяц без работы',
+  instructions: 'Говори около 2 минут на тему: Mit csinálnál, ha egy hónapig nem kellene dolgoznod? Используй минимум 4 условные формы, 2 причины и 1 ha-clause.',
+  prompt: 'Ha egy hónapig nem kellene dolgoznom, utaznék és több időt töltenék a családommal. Azért választanám ezt, mert pihennék és új dolgokat tanulnék.',
+  rubric: ['Около 2 минут', 'Есть минимум 4 условные формы', 'Есть минимум 2 причины', 'Есть минимум 1 ha-clause', 'Ответ связный и понятный'],
+};
 
 export const LESSON_23: Lesson = {
   id: 23,
@@ -67,6 +121,7 @@ export const LESSON_23: Lesson = {
    <p>Условное наклонение выражает гипотетическое действие, желание, возможность или мечту («я сделал бы», «если бы...»). Его маркер — суффикс <span class="hu-word">-na / -ne</span> (или <span class="hu-word">-ná / -né</span> перед окончаниями), подчиняющийся гармонии гласных:</p>
    <p><button class="speak-btn" data-speak-text="tanulna" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanulna</button> <span style="color:#8a7a68">(он учился бы — задние гласные)</span></p>
    <p><button class="speak-btn" data-speak-text="kérne" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kérne</button> <span style="color:#8a7a68">(он просил бы — передние гласные)</span></p>
+   <div class="note"><b>Can-Do:</b> выражать желания и гипотетические ситуации и формулировать вежливые просьбы.</div>
  `
     },
     {
@@ -147,6 +202,7 @@ export const LESSON_23: Lesson = {
       body: `
    <p><button class="speak-btn" data-speak-text="Ha gazdag lennék, sokat utaznék." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ha gazdag lennék, sokat utaznék.</button> <span style="color:#8a7a68">(Если бы я был богат, я бы много путешествовал)</span></p>
    <p><button class="speak-btn" data-speak-text="Mit csinálnál, ha nem kellene dolgoznod?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mit csinálnál, ha nem kellene dolgoznod?</button> <span style="color:#8a7a68">(Что бы ты делал, если бы тебе не нужно было работать?)</span></p>
+   <div class="note"><b>Функциональные реплики:</b> Szeretnék… · Kérnék… · Szeretném… · Kérném… · Ha lehetne… · Ha lenne időm… · Ha több pénzem lenne… · Én inkább… · A helyedben… · Mit csinálnál, ha…? · Tudna segíteni? · Meg tudná mondani…? · Megismételné, kérem?</div>
  `
     },
     {
@@ -168,6 +224,7 @@ export const LESSON_23: Lesson = {
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
       activities: L23_ACTIVITIES,
+      optionalSpeaking: L23_OPTIONAL_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Образуйте условную форму (1-е л. ед.ч., неопределённая) от: tanul, dolgozik, utazik, van</li>

@@ -27,7 +27,7 @@ export default function AdminDashboard() {
       value: users.filter((u) => u.subscriptionStatus === 'active').length,
       icon: CreditCard,
       accent: 'bg-emerald-50 text-emerald-600',
-      delta: 'оплачено через Stripe',
+      delta: 'синхронизировано с Lemon Squeezy',
     },
     {
       label: 'Всего уроков',
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
       />
 
       {error && <div role="alert" className="mb-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
-      {loading && <div className="mb-5 text-sm text-gray-500">Загрузка данных PostgreSQL…</div>}
+      {loading && <div className="mb-5 text-sm text-gray-500">Загрузка данных Firebase…</div>}
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-8">

@@ -305,6 +305,7 @@ export const LessonList: React.FC<LessonListProps> = ({
   };
 
   const hasLockedLessons = lessons.some((l) => !isAccessibleFn(l.number));
+  const showAuthBanner = !user && !isAdmin && hasLockedLessons;
   const showPayBanner = user && !isAdmin && !isAccessibleFn(FREE_LESSON_COUNT + 1);
 
   const currentCtaLabel =
@@ -439,6 +440,21 @@ export const LessonList: React.FC<LessonListProps> = ({
           )}
         </div>
 
+        {showAuthBanner && (
+          <div className="rounded-2xl border border-[#7A1E2B]/25 bg-white px-5 py-4 mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <User className="w-5 h-5 text-[#7A1E2B] shrink-0" />
+            <span className="text-sm text-[#57121C] flex-1">
+              Уроки 1–2 доступны бесплатно. Войдите или зарегистрируйтесь, чтобы сохранять прогресс и оформить доступ к урокам 3–28.
+            </span>
+            <button
+              onClick={onOpenUserModal}
+              className="shrink-0 px-4 py-2 rounded-xl bg-[#7A1E2B] text-white hover:bg-[#57121C] transition-colors cursor-pointer text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B]"
+            >
+              Войти / Зарегистрироваться
+            </button>
+          </div>
+        )}
+
         {/* Subscription banner */}
         {showPayBanner && (
           <div className="rounded-2xl border border-[#B98A2B]/30 bg-[#B98A2B]/12 px-5 py-4 mb-4 flex items-center gap-3">
@@ -450,7 +466,7 @@ export const LessonList: React.FC<LessonListProps> = ({
               onClick={onOpenUserModal}
               className="shrink-0 px-4 py-2 rounded-xl bg-[#7A1E2B] text-white hover:bg-[#57121C] transition-colors cursor-pointer text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B]"
             >
-              Оплатить подписку
+              Оформить подписку
             </button>
           </div>
         )}

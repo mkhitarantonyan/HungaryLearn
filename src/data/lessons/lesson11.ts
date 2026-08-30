@@ -3,134 +3,87 @@ import type { Lesson, LessonActivity } from '../../types';
 const L11_CP_MEANING: LessonActivity = {
   kind: 'controlledPractice',
   id: 'l11-cp-meaning-family',
-  title: 'Hol? Hová? Honnan? — выбери отношение и семью',
-  passCount: 8,
+  title: 'Контекстная практика: где, куда и откуда?',
+  passCount: 11,
   exercises: [
-    { kind: 'singleChoice', id: 'l11-meaning-1', prompt: 'A könyv az asztalon van. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-meaning-2', prompt: 'A könyvet az asztalra teszem. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l11-meaning-3', prompt: 'Leveszem a könyvet az asztalról. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l11-meaning-4', prompt: 'Anna Budapesten lakik. Это…', options: ['место', 'цель', 'источник'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-meaning-5', prompt: 'Péter Budapestre utazik. Это…', options: ['место', 'цель', 'источник'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l11-meaning-6', prompt: 'Márk Budapestről jön. Это…', options: ['место', 'цель', 'источник'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l11-meaning-7', prompt: 'A könyv az asztalon van. Какая семья используется?', options: ['внутренняя: -ban/-ben', 'поверхностная/конвенциональная: -n/-on/-en/-ön'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l11-meaning-8', prompt: 'Anna a szobában van. Какая семья используется?', options: ['внутренняя: -ban/-ben', 'поверхностная/конвенциональная: -n/-on/-en/-ön'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-meaning-9', prompt: 'Magyarországra utazunk. Какое отношение выражено?', options: ['место', 'цель', 'источник'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l11-meaning-10', prompt: 'Magyarországról jövünk. Какое отношение выражено?', options: ['место', 'цель', 'источник'], correctIndex: 2 },
-  ],
-};
-
-const L11_CP_SUPERESSIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l11-cp-superessive',
-  title: 'Hol? — точные формы -n/-on/-en/-ön',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l11-superessive-1', prompt: 'asztal → Hol?', accept: ['asztalon'] },
-    { kind: 'textInput', id: 'l11-superessive-2', prompt: 'szék → Hol?', accept: ['széken'] },
-    { kind: 'textInput', id: 'l11-superessive-3', prompt: 'bőrönd → Hol?', accept: ['bőröndön'] },
-    { kind: 'textInput', id: 'l11-superessive-4', prompt: 'utca → Hol?', accept: ['utcán'] },
-    { kind: 'textInput', id: 'l11-superessive-5', prompt: 'Budapest → Hol?', accept: ['Budapesten'] },
-    { kind: 'textInput', id: 'l11-superessive-6', prompt: 'Magyarország → Hol?', accept: ['Magyarországon'] },
-  ],
-};
-
-const L11_CP_SUBLATIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l11-cp-sublative',
-  title: 'Hová? — точные формы -ra/-re',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l11-sublative-1', prompt: 'asztal → Hová?', accept: ['asztalra'] },
-    { kind: 'textInput', id: 'l11-sublative-2', prompt: 'szék → Hová?', accept: ['székre'] },
-    { kind: 'textInput', id: 'l11-sublative-3', prompt: 'bőrönd → Hová?', accept: ['bőröndre'] },
-    { kind: 'textInput', id: 'l11-sublative-4', prompt: 'utca → Hová?', accept: ['utcára'] },
-    { kind: 'textInput', id: 'l11-sublative-5', prompt: 'Budapest → Hová?', accept: ['Budapestre'] },
-    { kind: 'textInput', id: 'l11-sublative-6', prompt: 'Magyarország → Hová?', accept: ['Magyarországra'] },
-  ],
-};
-
-const L11_CP_DELATIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l11-cp-delative',
-  title: 'Honnan? — точные формы -ról/-ről',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l11-delative-1', prompt: 'asztal → Honnan?', accept: ['asztalról'] },
-    { kind: 'textInput', id: 'l11-delative-2', prompt: 'szék → Honnan?', accept: ['székről'] },
-    { kind: 'textInput', id: 'l11-delative-3', prompt: 'bőrönd → Honnan?', accept: ['bőröndről'] },
-    { kind: 'textInput', id: 'l11-delative-4', prompt: 'utca → Honnan?', accept: ['utcáról'] },
-    { kind: 'textInput', id: 'l11-delative-5', prompt: 'Budapest → Honnan?', accept: ['Budapestről'] },
-    { kind: 'textInput', id: 'l11-delative-6', prompt: 'Magyarország → Honnan?', accept: ['Magyarországról'] },
-  ],
-};
-
-const L11_CP_CONTEXT: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l11-cp-context-selection',
-  title: 'Выбери форму по реальной ситуации',
-  passCount: 7,
-  exercises: [
-    { kind: 'singleChoice', id: 'l11-context-1', prompt: 'Книга уже лежит на столе: A könyv az __ van.', options: ['asztalra', 'asztalon', 'asztalról'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l11-context-2', prompt: 'Я кладу сумку на стул: A táskát a __ teszem.', options: ['széken', 'székről', 'székre'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l11-context-3', prompt: 'Я снимаю пальто с чемодана: Leveszem a kabátot a __.', options: ['bőröndről', 'bőröndön', 'bőröndre'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-context-4', prompt: 'Анна живёт в Будапеште: Anna __ lakik.', options: ['Budapestre', 'Budapestről', 'Budapesten'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l11-context-5', prompt: 'Мы едем в Венгрию: __ utazunk.', options: ['Magyarországra', 'Magyarországon', 'Magyarországról'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-context-6', prompt: 'Петер приезжает из Будапешта: Péter __ jön.', options: ['Budapesten', 'Budapestre', 'Budapestről'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l11-context-7', prompt: 'Я нахожусь на почте: A __ vagyok.', options: ['postán', 'postára', 'postáról'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l11-context-8', prompt: 'Анна находится внутри комнаты: Anna a __ van.', options: ['szobán', 'szobában', 'szobára'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l11-meaning-1', prompt: 'Ты уже находишься на почте. Что скажешь?', options: ['A postán vagyok.', 'A postára megyek.', 'A postáról jövök.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l11-meaning-2', prompt: 'Ты направляешься на почту.', options: ['A postán vagyok.', 'A postára megyek.', 'A postáról jövök.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l11-meaning-3', prompt: 'Ты возвращаешься с почты.', options: ['A postán vagyok.', 'A postára megyek.', 'A postáról jövök.'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l11-meaning-4', prompt: 'A bankban vagyok. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l11-meaning-5', prompt: 'A bankba megyek. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l11-meaning-6', prompt: 'A bankból jövök. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 2 },
+    { kind: 'fillGap', id: 'l11-meaning-7', prompt: 'A könyv az ___ van. (asztal)', accept: ['asztalon'], explanation: 'Местонахождение на поверхности: asztalon.' },
+    { kind: 'fillGap', id: 'l11-meaning-8', prompt: 'A táskát a ___ teszem. (szék)', accept: ['székre'], explanation: 'Цель движения: székre.' },
+    { kind: 'fillGap', id: 'l11-meaning-9', prompt: 'Leveszem a kabátot a ___. (bőrönd)', accept: ['bőröndről'], explanation: 'Источник движения: bőröndről.' },
+    { kind: 'singleChoice', id: 'l11-meaning-10', prompt: 'Где встречаемся?', options: ['A főtéren találkozunk.', 'A főtérre találkozunk.', 'A főtérről találkozunk.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l11-meaning-11', prompt: 'Куда ты идёшь после работы?', options: ['A piacra megyek.', 'A piacon megyek.', 'A piacról megyek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l11-meaning-12', prompt: 'Откуда приезжает Петер?', options: ['Péter Budapesten jön.', 'Péter Budapestre jön.', 'Péter Budapestről jön.'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l11-meaning-13', prompt: 'Ты спрашиваешь местного жителя, где находится почта.', options: ['Hol van a posta?', 'Hová van a posta?', 'Honnan van a posta?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l11-meaning-14', prompt: 'Собеседник уточняет конечную цель. Как подтвердить?', options: ['Igen, a főtérre megyek.', 'Igen, a főtéren jövök.', 'Igen, a főtérről vagyok.'], correctIndex: 0 },
   ],
 };
 
 const L11_READING: LessonActivity = {
   kind: 'reading',
   id: 'l11-reading-budapest-route',
-  title: 'Чтение: встреча в Будапеште',
-  instructions: 'Прочитай маршрут и ответь по смыслу: где, куда и откуда движутся участники.',
-  passCount: 4,
+  title: 'Чтение: дела в городе',
+  instructions: 'Прочитай связный рассказ и ответь по смыслу: куда идёт Дора, где находятся места и откуда приезжает Петер.',
+  passCount: 6,
   content: {
     type: 'prose',
-    title: 'Találkozás Budapesten',
+    title: 'Egy délután a városban',
     paragraphs: [
-      'Délután Péter Budapestre utazik. A pályaudvarról a főtérre megy.',
-      'A főtéren Anna a padon ül. A könyve a széken van.',
-      'Péter és Anna este Budapestről utaznak haza.',
+      'Dóra péntek délután a munkahelyén van. Három órakor elindul, mert több dolga van a városban. Először a postára megy, mert levelet szeretne küldeni a testvérének. A posta a főtéren van, a városháza közelében. Dóra busszal érkezik a térre, de először nem látja a postát. Egy járókelőt kérdez. A férfi megmutatja, hogy a posta a tér másik oldalán van. Azt is mondja: a szökőkút után balra kell menni. Dóra megköszöni a segítséget, és két perc múlva megtalálja a bejáratot.',
+      'A postáról Dóra a piacra megy. A piac közel van, ezért gyalog megy. Ott almát, kenyeret és sajtot vásárol. Ezután bemegy egy kis könyvesboltba, mert ajándékot keres. A boltban talál egy magyar mesekönyvet, és azt is megveszi.',
+      'Öt órakor Dóra a pályaudvaron találkozik a barátjával, Péterrel. Péter Budapestről jön, és a pályaudvarról egyenesen a találkozóhelyre sétál. Csak egy órát marad a városban. Együtt isznak egy kávét. A találkozó után Dóra végül a könyvtárba megy, mert este ott tanul.',
     ],
   },
   questions: [
-    { id: 'l11-reading-q1', question: 'Куда Петер едет днём?', options: ['Budapesten', 'Budapestre', 'Budapestről'], correctIndex: 1 },
-    { id: 'l11-reading-q2', question: 'Откуда Петер идёт на главную площадь?', options: ['a pályaudvarról', 'a főtérről', 'a székről'], correctIndex: 0 },
-    { id: 'l11-reading-q3', question: 'Где сидит Анна?', options: ['a pályaudvaron', 'a főtéren', 'Budapestre'], correctIndex: 1 },
-    { id: 'l11-reading-q4', question: 'Где находится книга Анны?', options: ['a széken', 'a székre', 'a székről'], correctIndex: 0 },
-    { id: 'l11-reading-q5', question: 'Откуда Петер и Анна едут домой?', options: ['Budapestre', 'Budapesten', 'Budapestről'], correctIndex: 2 },
+    { id: 'l11-reading-q1', question: 'Где Дора находится в начале рассказа?', options: ['на работе', 'на рынке', 'на вокзале'], correctIndex: 0 },
+    { id: 'l11-reading-q2', question: 'Куда она идёт сначала?', options: ['в библиотеку', 'на почту', 'на вокзал'], correctIndex: 1 },
+    { id: 'l11-reading-q3', question: 'Зачем Дора идёт туда?', options: ['отправить письмо', 'купить кофе', 'встретить Петера'], correctIndex: 0 },
+    { id: 'l11-reading-q4', question: 'Где находится почта?', options: ['на главной площади', 'в библиотеке', 'на рынке'], correctIndex: 0 },
+    { id: 'l11-reading-q5', question: 'Откуда Дора идёт на рынок?', options: ['с почты', 'с вокзала', 'из Будапешта'], correctIndex: 0 },
+    { id: 'l11-reading-q6', question: 'Где Дора встречается с Петером?', options: ['на почте', 'на вокзале', 'в книжном магазине'], correctIndex: 1 },
+    { id: 'l11-reading-q7', question: 'Какова последняя цель Доры?', options: ['библиотека', 'рынок', 'главная площадь'], correctIndex: 0 },
   ],
 };
 
-const L11_CP_WRITING: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l11-cp-context-writing',
-  title: 'Короткие предложения: место, цель, источник',
-  passCount: 4,
-  exercises: [
-    { kind: 'textInput', id: 'l11-writing-1', prompt: 'Книга находится на столе.', accept: ['A könyv az asztalon van.', 'Az asztalon van a könyv.'] },
-    { kind: 'textInput', id: 'l11-writing-2', prompt: 'Я кладу книгу на стул.', accept: ['A könyvet a székre teszem.', 'A székre teszem a könyvet.'] },
-    { kind: 'textInput', id: 'l11-writing-3', prompt: 'Я снимаю книгу со стола.', accept: ['Leveszem a könyvet az asztalról.', 'A könyvet leveszem az asztalról.'] },
-    { kind: 'textInput', id: 'l11-writing-4', prompt: 'Я живу в Будапеште.', accept: ['Budapesten lakom.'] },
-    { kind: 'textInput', id: 'l11-writing-5', prompt: 'Я еду в Венгрию, затем возвращаюсь домой из Венгрии.', accept: ['Magyarországra utazom, majd Magyarországról jövök haza.'] },
+const L11_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l11-roleplay-town-route', title: 'Ролевая игра: найти почту', partnerLabel: 'Helyi lakos', completionMessage: 'Megtaláltad az utat a postához.', startTurnId: 'l11-rp-s1',
+  turns: [
+    { id: 'l11-rp-s1', speaker: 'waiter', prompt: 'Jó napot kívánok!', next: 'l11-rp-l1' },
+    { id: 'l11-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Поприветствуй и спроси, где находится почта.', model: 'Jó napot! Elnézést, hol van a posta?', next: 'l11-rp-s2' },
+    { id: 'l11-rp-s2', speaker: 'waiter', prompt: 'A posta a főtéren van.', next: 'l11-rp-l2' },
+    { id: 'l11-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси, как пройти на главную площадь.', model: 'Hogyan jutok el a főtérre?', next: 'l11-rp-s3' },
+    { id: 'l11-rp-s3', speaker: 'waiter', prompt: 'Menjen egyenesen, azután forduljon jobbra.', next: 'l11-rp-l3' },
+    { id: 'l11-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Проверь одну деталь маршрута.', model: 'A második utcánál forduljak jobbra?', next: 'l11-rp-s4' },
+    { id: 'l11-rp-s4', speaker: 'waiter', prompt: 'Nem, az első utcánál. Ott lát egy bankot.', next: 'l11-rp-l4' },
+    { id: 'l11-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Уточни, находится ли почта около банка.', model: 'A posta a bank közelében van?', next: 'l11-rp-s5' },
+    { id: 'l11-rp-s5', speaker: 'waiter', prompt: 'Nem. A bank a sarkon van, a posta pedig a főtéren.', next: 'l11-rp-l5' },
+    { id: 'l11-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди направление к площади.', model: 'Értem. Tehát a sarokról a főtérre megyek.', next: 'l11-rp-s6' },
+    { id: 'l11-rp-s6', speaker: 'waiter', prompt: 'Igen. A téren a posta balra van.', next: 'l11-rp-l6' },
+    { id: 'l11-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Уточни, далеко ли это.', model: 'Messze van innen?', next: 'l11-rp-s7' },
+    { id: 'l11-rp-s7', speaker: 'waiter', prompt: 'Nem, körülbelül öt perc gyalog.', next: 'l11-rp-l7' },
+    { id: 'l11-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Кратко повтори конечную цель.', model: 'Rendben, a főtérre megyek, és ott balra keresem a postát.', next: 'l11-rp-s8' },
+    { id: 'l11-rp-s8', speaker: 'waiter', prompt: 'Pontosan.', next: 'l11-rp-l8' },
+    { id: 'l11-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Поблагодари и попрощайся.', model: 'Köszönöm szépen a segítséget. Viszontlátásra!', next: 'l11-rp-s9' },
+    { id: 'l11-rp-s9', speaker: 'waiter', prompt: 'Szívesen. Viszontlátásra!' },
   ],
 };
 
-const L11_RECORDING: LessonActivity = {
-  kind: 'recording',
-  id: 'l11-record-surface-locations',
-  title: 'Говорение: где, куда, откуда',
-  instructions: 'Ответь тремя короткими фразами на Hol? Hová? Honnan? Затем прослушай запись и проверь окончания по таблице.',
-  targetText: 'Budapesten vagyok. Budapestre utazom. Budapestről jövök.',
-  targetTranslation: 'Я нахожусь в Будапеште. Я еду в Будапешт. Я приезжаю из Будапешта.',
-  rubric: [
-    'Произнесены все три пространственные формы',
-    'Различимы место, цель и источник',
-    'Сохранены долгие ó/ő в -ról/-ről',
-  ],
+const L11_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l11-writing-city-route', title: 'Письмо: мои дела в городе',
+  prompt: 'Напиши 70–90 слов. Объясни, где ты находишься, куда тебе нужно пойти, какие два или три места ты посетишь, где они находятся, откуда ты идёшь дальше и куда направишься в конце. Используй несколько осмысленных форм Hol? / Hová? / Honnan?.',
+  modelAnswer: ['Délután a munkahelyemen vagyok, de három órakor elindulok. Először a postára megyek, mert levelet küldök. A posta a főtéren van. A postáról a piacra megyek, és ott gyümölcsöt veszek. Ezután a pályaudvarra sétálok. A pályaudvaron találkozom egy barátommal, aki Budapestről jön. Együtt kávézunk a téren. Végül a könyvtárba megyek, mert este magyarul tanulok. A könyvtár a parkban, az egyetem közelében van. Ott két órát maradok. A könyvtárból busszal megyek haza.'],
+  rubric: ['70–90 слов', 'начальная и конечная точки', 'два или три места', 'несколько корректных Hol? / Hová? / Honnan? форм', 'понятная последовательность'],
+};
+
+const L11_SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори 1–1.5 минуты о простом маршруте по городу. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Назови начальную точку, две цели, где находятся места и куда ты пойдёшь после них.',
+  rubric: ['начальная точка', 'две цели', 'местонахождение', 'следующий пункт'],
 };
 
 const L11_EXIT_CHECK: LessonActivity = {
@@ -139,15 +92,16 @@ const L11_EXIT_CHECK: LessonActivity = {
   title: 'Проверка целей урока 11',
   checks: [
     { objectiveId: 'l11_distinguish-surface-cases', activityId: 'l11-cp-meaning-family', evidenceKind: 'grammar' },
-    { objectiveId: 'l11_form-superessive', activityId: 'l11-cp-superessive', evidenceKind: 'grammar' },
-    { objectiveId: 'l11_form-sublative', activityId: 'l11-cp-sublative', evidenceKind: 'grammar' },
-    { objectiveId: 'l11_form-delative', activityId: 'l11-cp-delative', evidenceKind: 'grammar' },
+    { objectiveId: 'l11_form-superessive', activityId: 'l11-cp-meaning-family', evidenceKind: 'grammar' },
+    { objectiveId: 'l11_form-sublative', activityId: 'l11-cp-meaning-family', evidenceKind: 'grammar' },
+    { objectiveId: 'l11_form-delative', activityId: 'l11-cp-meaning-family', evidenceKind: 'grammar' },
     {
       objectiveId: 'l11_use-surface-cases',
-      activityId: 'l11-cp-context-writing',
-      evidenceKind: 'writing',
+      activityId: 'l11-reading-budapest-route',
+      evidenceKind: 'reading',
       evidenceComponents: [
-        { activityId: 'l11-record-surface-locations', evidenceKind: 'speaking' },
+        { activityId: 'l11-roleplay-town-route', evidenceKind: 'interaction' },
+        { activityId: 'l11-writing-city-route', evidenceKind: 'writing' },
       ],
     },
   ],
@@ -159,7 +113,7 @@ export const LESSON_11: Lesson = {
   level: 'A1',
   title: 'Урок 11 · Helyhatározók II',
   subtitle: 'Поверхностная и конвенциональная местная семья: где, куда, откуда',
-  description: 'Продолжение модели Hol? / Hová? / Honnan?: формы -n/-on/-en/-ön, -ra/-re и -ról/-ről для предметов, мест и частых географических названий.',
+  description: 'Модель Hol? / Hová? / Honnan? для поверхностной и конвенциональной семьи, городских дел, простого маршрута и уточнения местоположения.',
   slidesCount: 11,
   slides: [
     {
@@ -191,7 +145,6 @@ export const LESSON_11: Lesson = {
           <tr><td>источник</td><td>Honnan?</td><td>-ról/-ről</td><td>asztalról</td><td>székről</td></tr>
         </table>
       `,
-      activities: [L11_CP_MEANING],
     },
     {
       id: 3,
@@ -202,103 +155,84 @@ export const LESSON_11: Lesson = {
         <p><b>-on</b>: <span class="hu-word">asztalon</span>. <b>-en</b>: <span class="hu-word">széken</span>, <span class="hu-word">főtéren</span>. <b>-ön</b>: <span class="hu-word">bőröndön</span>.</p>
         <p>После конечной гласной часто виден вариант <b>-n</b>: <span class="hu-word">utca → utcán</span>, <span class="hu-word">posta → postán</span>. Конечные <b>a/e</b> перед суффиксом удлиняются.</p>
       `,
-      activities: [L11_CP_SUPERESSIVE],
     },
     {
       id: 4,
-      eyebrow: 'УРОК 11 · 4/11 · HOVÁ?',
-      title: '-ra / -re',
-      subtitle: 'Цель: куда?',
+      eyebrow: 'УРОК 11 · 4/11 · HOVÁ? ÉS HONNAN?',
+      title: '-ra/-re és -ról/-ről',
+      subtitle: 'Цель и источник',
       body: `
         <p><span class="hu-word">A könyvet az asztalra teszem.</span> — Я кладу книгу на стол.</p>
         <p><span class="hu-word">A táskát a székre teszem.</span> — Я кладу сумку на стул. <span class="hu-word">Budapestre utazom.</span> — Я еду в Будапешт.</p>
-        <div class="note">В географических и институциональных названиях учи стандартное употребление как готовый паттерн; русский перевод не обязан повторять венгерскую морфологию.</div>
+        <p><span class="hu-word">Leveszem a könyvet az asztalról.</span> — Я снимаю книгу со стола.</p>
+        <p><span class="hu-word">Leveszem a táskát a székről.</span> — Я снимаю сумку со стула. <span class="hu-word">Budapestről jövök.</span> — Я приезжаю из Будапешта.</p>
+        <div class="note">В географических и институциональных названиях учи стандартное употребление как готовый паттерн. В <b>-ról/-ről</b> гласные ó/ő долгие.</div>
       `,
-      activities: [L11_CP_SUBLATIVE],
     },
     {
       id: 5,
-      eyebrow: 'УРОК 11 · 5/11 · HONNAN?',
-      title: '-ról / -ről',
-      subtitle: 'Источник: откуда?',
-      body: `
-        <p><span class="hu-word">Leveszem a könyvet az asztalról.</span> — Я снимаю книгу со стола.</p>
-        <p><span class="hu-word">Leveszem a táskát a székről.</span> — Я снимаю сумку со стула. <span class="hu-word">Budapestről jövök.</span> — Я приезжаю из Будапешта.</p>
-        <div class="note">В суффиксах <b>-ról/-ről</b> гласные ó/ő долгие.</div>
-      `,
-      activities: [L11_CP_DELATIVE],
-    },
-    {
-      id: 6,
-      eyebrow: 'УРОК 11 · 6/11 · КОНТЕКСТ',
+      eyebrow: 'УРОК 11 · 5/11 · КОНТЕКСТ',
       title: 'Не поверхность буквально, а стандартное употребление',
-      subtitle: 'Предметы, учреждения и контраст с внутренней семьёй',
+      subtitle: 'Места, цели и источники в городе',
       body: `
         <p><span class="hu-word">A könyv az asztalon van.</span> — книга на столе. <span class="hu-word">A postán vagyok.</span> — я на почте.</p>
         <p><span class="hu-word">Anna a szobában van.</span> — Анна находится внутри комнаты: это корректная внутренняя семья из урока 10.</p>
+        <p><b>A főtéren találkozunk. A főtérre megyek. A főtérről jövök.</b></p>
         <div class="note">Обе семьи грамматичны. Контекст и принятое употребление конкретного места определяют выбор.</div>
       `,
-      activities: [L11_CP_CONTEXT],
+    },
+    {
+      id: 6,
+      eyebrow: 'УРОК 11 · 6/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА',
+      title: 'Hely és mozgás a városban',
+      subtitle: 'Значение важнее механического суффикса',
+      body: `<p>Выбирай форму по ситуации: местонахождение, цель или источник. В заданиях соединены знакомая внутренняя семья L10 и основная поверхностная семья L11.</p>`,
+      activities: [L11_CP_MEANING],
     },
     {
       id: 7,
-      eyebrow: 'УРОК 11 · 7/11 · ГЕОГРАФИЯ',
-      title: 'Budapest és Magyarország',
-      subtitle: 'Частые стандартные формы',
-      body: `
-        <table class="conj">
-          <tr><th>Место</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
-          <tr><td>Budapest</td><td>Budapesten</td><td>Budapestre</td><td>Budapestről</td></tr>
-          <tr><td>Magyarország</td><td>Magyarországon</td><td>Magyarországra</td><td>Magyarországról</td></tr>
-        </table>
-        <p><span class="hu-word">Magyarországon élek.</span> — Я живу в Венгрии. <span class="hu-word">Magyarországra utazom.</span> — Я еду в Венгрию. <span class="hu-word">Magyarországról jövök.</span> — Я приезжаю из Венгрии.</p>
-        <p><span class="hu-word">Budapesten lakom.</span> — Я живу в Будапеште. <span class="hu-word">Budapestre utazom.</span> — Я еду в Будапешт. <span class="hu-word">Budapestről jövök.</span> — Я приезжаю из Будапешта.</p>
-        <div class="note">Для обычного пространственного значения «в Будапеште» стандартный венгерский использует <b>Budapesten</b>, а не <b>*Budapestben</b>. Это современный паттерн употребления, который лучше учить целиком.</div>
-      `,
-    },
-    {
-      id: 8,
-      eyebrow: 'УРОК 11 · 8/11 · ЧТЕНИЕ',
-      title: 'Találkozás Budapesten',
-      subtitle: 'Понимание места, цели, источника и деталей',
-      body: `
-        <p>Прочитай короткий маршрут. Вопросы проверяют содержание, а не поиск окончаний.</p>
-      `,
+      eyebrow: 'УРОК 11 · 7/11 · ЧТЕНИЕ',
+      title: 'Egy délután a városban',
+      subtitle: 'Несколько дел и одна проблема с маршрутом',
+      body: `<p>Вопросы проверяют цели, последовательность, место встречи и финальный пункт, а не поиск окончаний.</p>`,
       activities: [L11_READING],
     },
     {
+      id: 8,
+      eyebrow: 'УРОК 11 · 8/11 · ВЗАИМОДЕЙСТВИЕ',
+      title: 'Hol van a posta?',
+      subtitle: 'Спросить дорогу и проверить деталь',
+      body: `<p>Ты ищешь почту. Местный житель объясняет маршрут и исправляет одно неверно понятое указание.</p>`,
+      activities: [L11_ROLEPLAY],
+    },
+    {
       id: 9,
-      eyebrow: 'УРОК 11 · 9/11 · ПРОДУКЦИЯ',
-      title: 'Írás és beszéd',
-      subtitle: 'Точные предложения и запись для проверки',
-      body: `
-        <p>Пять коротких письменных ситуаций проверяются в уроке. После записи трёх ответов прослушай их и сверь окончания с моделями.</p>
-      `,
-      activities: [L11_CP_WRITING, L11_RECORDING],
+      eyebrow: 'УРОК 11 · 9/11 · ПИСЬМО',
+      title: 'Merre megyek délután?',
+      subtitle: 'Связный план дел в городе',
+      body: `<p>Открытый текст оценивается по рубрике и остаётся PARTIAL до квалифицированной проверки.</p>`,
+      activities: [L11_WRITING],
     },
     {
       id: 10,
-      eyebrow: 'УРОК 11 · 10/11 · ЦЕПОЧКИ',
-      title: 'Три отношения — одна семья',
-      subtitle: 'Повтори формы как связанные тройки',
-      body: `
-        <div class="grid2">
-          <div><p><b>asztal</b><br><span class="hu-word">asztalon → asztalra → asztalról</span></p><p><b>szék</b><br><span class="hu-word">széken → székre → székről</span></p></div>
-          <div><p><b>Budapest</b><br><span class="hu-word">Budapesten → Budapestre → Budapestről</span></p><p><b>Magyarország</b><br><span class="hu-word">Magyarországon → Magyarországra → Magyarországról</span></p></div>
-        </div>
-      `,
+      eyebrow: 'УРОК 11 · 10/11 · УСТНАЯ САМОПРАКТИКА',
+      title: 'Egy rövid útvonal',
+      subtitle: 'Только текстовая инструкция',
+      body: `<p>Опиши короткий маршрут по желанию. В L11 нет отдельного опубликованного Listening: это намеренный текущий пробел, а не повод использовать narration или TTS.</p>`,
+      optionalSpeaking: L11_SPEAKING,
     },
     {
       id: 11,
       eyebrow: 'УРОК 11 · 11/11 · ИТОГИ',
       title: 'Összefoglalás',
-      subtitle: 'Проверь пять целей',
+      subtitle: 'Пять целей без автоматического вывода о mastery',
       body: `
         <ul class="tick">
           <li><b>Hol?</b> — место: <b>-n/-on/-en/-ön</b>.</li>
           <li><b>Hová?</b> — цель: <b>-ra/-re</b>.</li>
           <li><b>Honnan?</b> — источник: <b>-ról/-ről</b>.</li>
           <li>Сначала выбирай отношение и пространственную семью, затем формируй слово.</li>
+          <li>Reading может дать DIRECT после порога; RolePlay и Writing остаются PARTIAL.</li>
         </ul>
       `,
       activities: [L11_EXIT_CHECK],

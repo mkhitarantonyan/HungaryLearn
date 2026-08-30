@@ -1,40 +1,42 @@
 import type { Lesson, LessonActivity } from '../../types';
 
 const PAST_FORMS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l13-cp-past-forms', title: 'Частотные формы прошедшего времени', passCount: 8,
+  kind: 'controlledPractice', id: 'l13-cp-past-forms', title: 'Контекстная практика: что было вчера?', passCount: 11,
   exercises: [
-    ['vár', 'vártam'], ['mond', 'mondtam'], ['nyit', 'nyitottam'], ['fut', 'futottam'], ['tanul → én', 'tanultam'],
-    ['tanul → te', 'tanultál'], ['tanul → ő', 'tanult'], ['dolgozik → én', 'dolgoztam'], ['dolgozik → ő', 'dolgozott'], ['sétál', 'sétáltam'],
-  ].map(([prompt, answer], index) => ({ kind: 'textInput' as const, id: `l13-past-${index + 1}`, prompt: `${prompt} (прошедшее время)`, accept: [answer] })),
-};
-
-const VOLT_CONTEXTS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l13-cp-volt-contexts', title: 'Формы volt в контексте', passCount: 5,
-  exercises: [
-    { kind: 'singleChoice', id: 'l13-volt-1', prompt: 'Tegnap én otthon ___.', options: ['voltam', 'voltál', 'volt'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l13-volt-2', prompt: 'Tegnap te fáradt ___.', options: ['voltak', 'voltál', 'voltunk'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l13-volt-3', prompt: 'Péter orvos ___.', options: ['voltam', 'voltatok', 'volt'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l13-volt-4', prompt: 'Mi Budapesten ___.', options: ['voltunk', 'voltak', 'voltál'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l13-volt-5', prompt: 'Ti a moziban ___.', options: ['voltam', 'voltatok', 'volt'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l13-volt-6', prompt: 'A barátaim otthon ___.', options: ['voltunk', 'voltak', 'voltál'], correctIndex: 1 },
+    { kind: 'fillGap', id: 'l13-past-1', prompt: 'Tegnap otthon ___. (én, lenni)', accept: ['voltam'] },
+    { kind: 'fillGap', id: 'l13-past-2', prompt: 'Szombaton egész nap ___. (én, dolgozik)', accept: ['dolgoztam'] },
+    { kind: 'fillGap', id: 'l13-past-3', prompt: 'Délután a parkban ___. (én, sétál)', accept: ['sétáltam'] },
+    { kind: 'singleChoice', id: 'l13-past-4', prompt: 'Как спросить друга, что он делал вчера?', options: ['Mit csináltál tegnap?', 'Mit csinálsz holnap?', 'Hol vagy most?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-5', prompt: 'Ответ на вопрос Hol voltál?', options: ['Otthon voltam.', 'Otthon vagyok.', 'Otthon leszek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-6', prompt: 'Выбери отрицательное событие прошлого.', options: ['Nem dolgoztam.', 'Nem dolgozom.', 'Nem fogok dolgozni.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-7', prompt: 'Куда ты ходил вчера?', options: ['Tegnap boltba mentem.', 'Ma boltba megyek.', 'Holnap boltba megyek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-8', prompt: 'С кем ты встретился?', options: ['Annával találkoztam.', 'Annánál voltam.', 'Annához megyek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-9', prompt: 'Поставь события в естественном порядке.', options: ['Reggel dolgoztam, délután sétáltam, este filmet néztem.', 'Este reggeliztem, reggel lefeküdtem.', 'Végül először boltba mentem.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-10', prompt: 'План не состоялся.', options: ['Nem mentem sehova.', 'Nem megyek sehova.', 'Sehova megyek tegnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-11', prompt: 'Что делал Петер вечером?', options: ['Péter este filmet nézett.', 'Péter este filmet néz.', 'Péter holnap filmet nézett.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-12', prompt: 'Какой маркер продолжает последовательность?', options: ['Utána találkoztam Annával.', 'Holnap találkoztam Annával.', 'Most találkoztam tegnap.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-13', prompt: 'Выбери вопрос о спутнике в прошлом.', options: ['Kivel találkoztál?', 'Kivel találkozol most?', 'Hová mész holnap?'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l13-past-14', prompt: 'Финальная оценка прошедшего дня.', options: ['Végül hazamentem. Jó nap volt.', 'Végül hazamegyek tegnap.', 'Jó nap van múlt héten.'], correctIndex: 0 },
   ],
 };
 
 const TENSE_READING: LessonActivity = {
-  kind: 'reading', id: 'l13-reading-tense-contrast', title: 'Чтение: сейчас или вчера?', passCount: 5,
-  instructions: 'Определи по форме, времени и смыслу, какие события происходят сейчас, а какие произошли вчера.',
-  content: { type: 'prose', title: 'Ma és tegnap', paragraphs: [
-    'Ma Anna otthon van és magyarul tanul. A barátja most a parkban sétál.',
-    'Tegnap Anna a könyvtárban volt, és két órát tanult. A barátja tegnap dolgozott.',
-    'Este együtt voltak a moziban. Most a filmről beszélnek.',
+  kind: 'reading', id: 'l13-reading-tense-contrast', title: 'Чтение: насыщенная суббота', passCount: 6,
+  instructions: 'Прочитай простой рассказ о завершённых событиях и восстанови последовательность дня.',
+  content: { type: 'prose', title: 'Egy mozgalmas szombat', paragraphs: [
+    'Múlt szombaton korán keltem fel, mert sok dolgom volt. Reggel nyolckor reggeliztem, azután a piacra mentem. Gyümölcsöt, kenyeret és sajtot vettem. A piacon sok ember volt, ezért lassan haladtam. Találkoztam a szomszédommal, Évával. Röviden beszélgettünk, és megmutatta, hol van egy olcsó zöldséges. Ezután a postára mentem, mert egy levelet küldtem a testvéremnek.',
+    'Délben a városközpontban találkoztam a barátommal, Gáborral. Régen nem láttuk egymást, ezért sok témáról beszéltünk. Egy kis étteremben ebédeltünk. Én levest kértem, Gábor pedig tésztát evett. Az étel finom volt, de sokat vártunk rá. Ebéd után a folyóhoz sétáltunk, majd fényképeket készítettünk a főtéren. Délután még egy régi könyvesboltba is bementünk néhány percre együtt.',
+    'Délután moziba akartunk menni, de nem kaptunk jegyet, mert minden hely foglalt volt. Ezért nem néztük meg a filmet. Helyette beültünk egy kávézóba, ahol én teát ittam, Gábor pedig kávét kért. Este hétkor hazamentem. Otthon még magyarul tanultam egy órát, azután vacsorát készítettem és zenét hallgattam. Tíz óra után már fáradt voltam, ezért korán lefeküdtem. A nap hosszú volt, de nagyon jól éreztem magam.',
   ] },
   questions: [
-    { id: 'l13-reading-q1', question: 'Когда Анна находится дома?', options: ['сегодня', 'вчера', 'в прошлом году'], correctIndex: 0 },
-    { id: 'l13-reading-q2', question: 'Какое событие относится к прошлому?', options: ['Anna magyarul tanul.', 'A barátja sétál.', 'Anna a könyvtárban volt.'], correctIndex: 2 },
-    { id: 'l13-reading-q3', question: 'Что друг Анны делал вчера?', options: ['dolgozott', 'sétál', 'beszél'], correctIndex: 0 },
-    { id: 'l13-reading-q4', question: '„Most a filmről beszélnek” описывает…', options: ['настоящее', 'прошлое', 'будущее'], correctIndex: 0 },
-    { id: 'l13-reading-q5', question: 'Где они были вечером?', options: ['otthon', 'a moziban', 'a könyvtárban'], correctIndex: 1 },
-    { id: 'l13-reading-q6', question: 'Какая пара показывает настоящее и прошлое?', options: ['tanul — tanult', 'volt — van', 'dolgozott — tegnap'], correctIndex: 0 },
+    { id: 'l13-reading-q1', question: 'Что рассказчик сделал утром после завтрака?', options: ['пошёл на рынок', 'пошёл в кино', 'лёг спать'], correctIndex: 0 },
+    { id: 'l13-reading-q2', question: 'Куда он пошёл после рынка?', options: ['на почту', 'домой', 'в библиотеку'], correctIndex: 0 },
+    { id: 'l13-reading-q3', question: 'С кем он встретился в центре?', options: ['с Евой', 'с Габором', 'с братом'], correctIndex: 1 },
+    { id: 'l13-reading-q4', question: 'Что друзья делали после обеда?', options: ['работали', 'гуляли и фотографировали', 'покупали продукты'], correctIndex: 1 },
+    { id: 'l13-reading-q5', question: 'Какой план не состоялся?', options: ['поход в кино', 'обед', 'поход на рынок'], correctIndex: 0 },
+    { id: 'l13-reading-q6', question: 'Почему они не посмотрели фильм?', options: ['не было билетов', 'шёл дождь', 'они устали'], correctIndex: 0 },
+    { id: 'l13-reading-q7', question: 'Что рассказчик делал дома вечером?', options: ['готовил обед', 'учил венгерский и слушал музыку', 'смотрел фильм'], correctIndex: 1 },
+    { id: 'l13-reading-q8', question: 'Как он оценивает день?', options: ['долгий, но приятный', 'короткий и скучный', 'трудный и неудачный'], correctIndex: 0 },
   ],
 };
 
@@ -51,58 +53,76 @@ const TENSE_LISTENING: LessonActivity = {
   ],
 };
 
-const PAST_WRITING: LessonActivity = {
-  kind: 'writing', id: 'l13-writing-past-story', title: 'Письмо: короткая история о прошлом',
-  prompt: 'Напиши 4–5 связанных простых предложений о вчерашнем или недавнем событии. Назови события в понятном порядке и используй минимум один маркер прошлого времени.',
-  modelAnswer: ['Tegnap otthon voltam.', 'Reggel dolgoztam.', 'Délután a parkban sétáltam.', 'Este a barátaimmal filmet néztem.'],
-  rubric: ['Есть 4–5 связанных простых предложений', 'События даны в понятном порядке', 'Есть минимум один маркер прошлого времени'],
+const PAST_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l13-roleplay-weekend', title: 'Ролевая игра: разговор о выходных', partnerLabel: 'Barát', completionMessage: 'Elmeséltétek a hétvégét.', startTurnId: 'l13-rp-s1',
+  turns: [
+    { id: 'l13-rp-s1', speaker: 'waiter', prompt: 'Szia! Mit csináltál szombaton?', next: 'l13-rp-l1' },
+    { id: 'l13-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови два утренних события.', model: 'Reggel otthon voltam, azután a piacra mentem.', next: 'l13-rp-s2' },
+    { id: 'l13-rp-s2', speaker: 'waiter', prompt: 'Hol voltál délután?', next: 'l13-rp-l2' },
+    { id: 'l13-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови место и действие.', model: 'Délután a parkban sétáltam.', next: 'l13-rp-s3' },
+    { id: 'l13-rp-s3', speaker: 'waiter', prompt: 'Kivel találkoztál?', next: 'l13-rp-l3' },
+    { id: 'l13-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови человека.', model: 'A barátommal, Annával találkoztam.', next: 'l13-rp-s4' },
+    { id: 'l13-rp-s4', speaker: 'waiter', prompt: 'Mit csináltatok együtt?', next: 'l13-rp-l4' },
+    { id: 'l13-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови совместное действие.', model: 'Egy kávézóban beszélgettünk, majd filmet néztünk.', next: 'l13-rp-s5' },
+    { id: 'l13-rp-s5', speaker: 'waiter', prompt: 'Volt valami probléma?', next: 'l13-rp-l5' },
+    { id: 'l13-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Скажи, что один план не состоялся, и почему.', model: 'Igen, nem mentünk kirándulni, mert esett az eső.', next: 'l13-rp-s6' },
+    { id: 'l13-rp-s6', speaker: 'waiter', prompt: 'Mit csináltál este?', next: 'l13-rp-l6' },
+    { id: 'l13-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Заверши рассказ вечерним событием и мнением.', model: 'Este otthon vacsoráztam és zenét hallgattam. Jó nap volt.', next: 'l13-rp-s7' },
+    { id: 'l13-rp-s7', speaker: 'waiter', prompt: 'Érdekes hétvége volt!', next: 'l13-rp-l7' },
+    { id: 'l13-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Задай собеседнику вопрос о его выходных.', model: 'És te? Mit csináltál vasárnap?', next: 'l13-rp-s8' },
+    { id: 'l13-rp-s8', speaker: 'waiter', prompt: 'A családommal voltam. Köszönöm a beszélgetést!' },
+  ],
 };
 
-const PAST_RECORDING: LessonActivity = {
-  kind: 'recording', id: 'l13-recording-past-story', title: 'Говорение: что было вчера?',
-  instructions: 'Запиши 4–5 простых связанных фраз о прошлом событии, затем проверь маркеры времени и формы глаголов.',
-  targetText: 'Tegnap otthon voltam. Reggel dolgoztam. Délután a parkban sétáltam. Este filmet néztem.',
-  targetTranslation: 'Вчера я был дома. Утром работал. Днём гулял в парке. Вечером смотрел фильм.',
-  rubric: ['Есть 4–5 связанных фраз', 'Использован маркер прошлого', 'Использованы изученные формы прошлого'],
+const PAST_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l13-writing-past-story', title: 'Письмо: короткая история о прошлом',
+  prompt: 'Напиши 80–100 слов о вымышленном вчерашнем дне или выходном. Укажи когда и где всё происходило, 3–4 действия, одного человека, одно отрицательное предложение в прошлом, понятную хронологию и итоговое мнение.',
+  modelAnswer: ['Tegnap szabadnapom volt. Reggel nyolckor felkeltem és otthon nyugodtan reggeliztem. Azután a piacra mentem, ahol friss gyümölcsöt és kenyeret vettem. Délben találkoztam a barátommal, Péterrel. Egy kis étteremben ebédeltünk, majd a parkban sétáltunk. Sok ember volt a parkban, de találtunk egy csendes helyet. Délután moziba akartunk menni, de nem kaptunk jegyet, ezért nem néztünk filmet. Helyette egy közeli kávézóban sokáig beszélgettünk, és én teát ittam. Este hétkor hazamentem, vacsorát készítettem és zenét hallgattam. Fáradt voltam, de nagyon jól éreztem magam.'],
+  rubric: ['80–100 слов', '3–4 завершённых действия', 'одно отрицательное предложение', 'человек и место', 'хронологический порядок', 'финальное мнение'],
+};
+
+const PAST_SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори 1.5–2 минуты о вчерашнем дне: утро → день → вечер. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Расскажи, где ты был, что делал, с кем встречался, чего не делал и как оцениваешь день.',
+  rubric: ['утро, день и вечер', 'несколько форм прошлого', 'одно отрицание', 'финальное мнение'],
 };
 
 const EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck', id: 'l13-exit-check', title: 'Проверка целей урока 13', checks: [
     { objectiveId: 'l13_form-past', activityId: 'l13-cp-past-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l13_use-volt', activityId: 'l13-cp-volt-contexts', evidenceKind: 'grammar' },
+    { objectiveId: 'l13_use-volt', activityId: 'l13-cp-past-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l13_distinguish-present-past', activityId: 'l13-reading-tense-contrast', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l13-listening-tense-contrast', evidenceKind: 'listening' }] },
-    { objectiveId: 'l13_tell-past', activityId: 'l13-writing-past-story', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l13-recording-past-story', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l13_tell-past', activityId: 'l13-writing-past-story', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l13-roleplay-weekend', evidenceKind: 'interaction' }] },
   ],
 };
 
 export const LESSON_13: Lesson = {
   id: 13, number: 13, level: 'A1', title: 'Урок 13 · A múlt idő',
   subtitle: 'Введение в прошедшее время: частотные формы и volt',
-  description: 'Введение в венгерское прошедшее время: частотные базовые формы, volt, распознавание настоящего и прошлого и короткий рассказ о прошедшем событии.',
-  slidesCount: 12,
+  description: 'Коммуникативное введение в прошедшее время: частотные формы, volt, вопросы, отрицание и простой связный рассказ о завершённых событиях.',
+  slidesCount: 11,
   slides: [
-    { id: 1, eyebrow: 'УРОК 13 · 1/12 · ВВЕДЕНИЕ', title: 'A múlt idő', subtitle: 'Прошедшее время и контекст', body: `
+    { id: 1, eyebrow: 'УРОК 13 · 1/11 · ВВЕДЕНИЕ', title: 'A múlt idő', subtitle: 'Прошедшее время и контекст', body: `
       <p><b>Это ограниченное введение.</b> В современном стандартном венгерском есть одно продуктивное морфологическое прошедшее время.</p>
       <p>Видовые оттенки не исчезают: значение уточняют сам глагол, глагольные приставки и контекст.</p>
       <div class="note">В L13 учим частотные базовые формы. Полные правила и систематическое противопоставление спряжений относятся к уроку 20.</div>` },
-    { id: 2, eyebrow: 'УРОК 13 · 2/12 · ЧАСТОТНЫЕ ФОРМЫ', title: 'Gyakori alakok', subtitle: 'Изученные модели', body: `
+    { id: 2, eyebrow: 'УРОК 13 · 2/11 · ЧАСТОТНЫЕ ФОРМЫ', title: 'Gyakori alakok', subtitle: 'Изученные модели', body: `
       <p>Прошедшее время содержит показатель <b>-t/-tt</b>, иногда с соединительной гласной. Запоминаем частые формы:</p>
       <ul class="tick"><li>vár → <b>vártam</b>; mond → <b>mondtam</b></li><li>nyit → <b>nyitottam</b>; fut → <b>futottam</b></li><li>tanul → <b>tanultam</b>; dolgozik → <b>dolgoztam / dolgozott</b></li></ul>
-      <div class="note">Это изученные модели, а не правило для механического образования формы любого глагола. Полная система будет в уроке 20.</div>`, activities: [PAST_FORMS] },
-    { id: 3, eyebrow: 'УРОК 13 · 3/12 · ОПОРНАЯ МОДЕЛЬ', title: 'Tanul — múlt idő', subtitle: 'Частотная базовая парадигма', body: `
+      <div class="note">Это изученные модели, а не правило для механического образования формы любого глагола. Полная система будет в уроке 20.</div>` },
+    { id: 3, eyebrow: 'УРОК 13 · 3/11 · ОПОРНАЯ МОДЕЛЬ', title: 'Tanul és lenni', subtitle: 'Частотные базовые формы', body: `
       <table class="conj"><tr><th>Лицо</th><th>Форма</th></tr><tr><td>én</td><td>tanultam</td></tr><tr><td>te</td><td>tanultál</td></tr><tr><td>ő</td><td>tanult</td></tr><tr><td>mi</td><td>tanultunk</td></tr><tr><td>ti</td><td>tanultatok</td></tr><tr><td>ők</td><td>tanultak</td></tr></table>
-      <p>Это первая опорная модель, а не замена полных правил урока 20.</p>` },
-    { id: 4, eyebrow: 'УРОК 13 · 4/12 · LENNI', title: 'A „lenni” múlt ideje', subtitle: 'voltam, voltál, volt, voltunk, voltatok, voltak', body: `
       <table class="conj"><tr><td>én</td><td>voltam</td><td>te</td><td>voltál</td></tr><tr><td>ő</td><td>volt</td><td>mi</td><td>voltunk</td></tr><tr><td>ti</td><td>voltatok</td><td>ők</td><td>voltak</td></tr></table>
-      <p>В настоящем именном предложении третьего лица <b>van</b> обычно опускается: <b>Péter orvos.</b> В соответствующем прошедшем предложении: <b>Péter orvos volt.</b></p>`, activities: [VOLT_CONTEXTS] },
-    { id: 5, eyebrow: 'УРОК 13 · 5/12 · ОТРИЦАНИЕ', title: 'Tagadás', subtitle: 'nem + прошедшая форма', body: `<p><b>Nem voltam otthon.</b> — Я не был дома.</p><p><b>Péter nem dolgozott tegnap.</b> — Петер вчера не работал.</p><p><b>Nem láttam semmit.</b> — Я ничего не видел.</p><p><b>Nem volt időm.</b> — У меня не было времени.</p>` },
-    { id: 6, eyebrow: 'УРОК 13 · 6/12 · ВРЕМЯ', title: 'Időhatározók', subtitle: 'Маркеры прошлого', body: `<div class="grid2"><div><p><b>tegnap</b> — вчера</p><p><b>tegnapelőtt</b> — позавчера</p><p><b>a múlt héten</b> — на прошлой неделе</p></div><div><p><b>a múlt hónapban</b> — в прошлом месяце</p><p><b>tavaly</b> — в прошлом году</p><p><b>régebben</b> — раньше (дополнительно)</p></div></div><p><b>Tavaly Budapestre utaztam.</b></p>` },
-    { id: 7, eyebrow: 'УРОК 13 · 7/12 · ДИАЛОГ', title: 'Mit csináltál tegnap?', subtitle: 'Вчерашний день', body: `<p><b>A:</b> Szia! Mit csináltál tegnap?</p><p><b>B:</b> Tegnap reggel dolgoztam, délután pedig a parkban sétáltam. És te?</p><p><b>A:</b> A moziban voltam a barátaimmal. Egy jó filmet néztünk.</p><p><b>B:</b> Jó volt a film?</p><p><b>A:</b> Igen, nagyon tetszett!</p><div class="note"><b>tetszett</b> — готовая частотная фраза, не новая продуктивная модель.</div>`, activities: [TENSE_READING] },
-    { id: 8, eyebrow: 'УРОК 13 · 8/12 · АУДИРОВАНИЕ', title: 'Ma vagy tegnap?', subtitle: 'Настоящее и прошлое на слух', body: `<p>Прослушай запись, отличи сегодняшнее действие от вчерашнего и услышь маркер времени.</p>`, activities: [TENSE_LISTENING] },
-    { id: 9, eyebrow: 'УРОК 13 · 9/12 · ЗНАКОМСТВО С ТЕМОЙ', title: 'Kitekintés: tárgyas ragozás', subtitle: 'Короткий взгляд вперёд', body: `<p><b>На будущее:</b> определённость дополнения может влиять на спряжение.</p><p>В некоторых лицах формы совпадают: <b>Olvastam egy könyvet / Olvastam a könyvet</b> не показывает различие парадигм.</p><div class="note">Пока достаточно заметить этот контраст. Полная система относится к уроку 20.</div>` },
-    { id: 10, eyebrow: 'УРОК 13 · 10/12 · ПИСЬМО', title: 'Mi történt tegnap?', subtitle: 'Мини-история', body: `<p>Соедини формы и маркер времени. Открытый ответ требует проверки.</p>`, activities: [PAST_WRITING] },
-    { id: 11, eyebrow: 'УРОК 13 · 11/12 · ГОВОРЕНИЕ', title: 'Mesélj a tegnapról!', subtitle: 'Устный рассказ', body: `<p>Расскажи о прошлом событии. Сам факт записи не доказывает языковую правильность.</p>`, activities: [PAST_RECORDING] },
-    { id: 12, eyebrow: 'УРОК 13 · 12/12 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Впереди урок 14', body: `<ul class="tick"><li>Частотные формы прошлого</li><li>Формы volt в контексте</li><li>Настоящее и прошлое в тексте</li><li>Короткий рассказ о прошлом</li></ul><div class="note">Урок 14 завершит уровень A1. Полная система прошедшего времени будет в уроке 20.</div>`, activities: [EXIT_CHECK] },
+      <p>Это первая опорная модель, а не замена полных правил урока 20. В настоящем <b>Péter orvos.</b>, в прошлом — <b>Péter orvos volt.</b></p>` },
+    { id: 4, eyebrow: 'УРОК 13 · 4/11 · ОТРИЦАНИЕ И ПОСЛЕДОВАТЕЛЬНОСТЬ', title: 'Nem… · reggel → végül', subtitle: 'Простая история вместо изолированных форм', body: `<p><b>Nem voltam otthon. Nem dolgoztam. Nem mentem sehova.</b></p><p><b>reggel, délelőtt, délután, este, azután, utána, végül</b></p><p><b>Mit csináltál tegnap? Hol voltál? Kivel találkoztál?</b></p>` },
+    { id: 5, eyebrow: 'УРОК 13 · 5/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА', title: 'Mi történt tegnap?', subtitle: 'Формы, вопросы, отрицание и порядок', body: `<p>Четырнадцать ситуаций проверяют частые формы в контексте, а не полную морфологическую систему.</p>`, activities: [PAST_FORMS] },
+    { id: 6, eyebrow: 'УРОК 13 · 6/11 · ЧТЕНИЕ', title: 'Egy mozgalmas szombat', subtitle: 'Завершённые события в последовательности', body: `<p>Проследи утро, встречу, несостоявшийся план, вечер и итоговое мнение.</p>`, activities: [TENSE_READING] },
+    { id: 7, eyebrow: 'УРОК 13 · 7/11 · АУДИРОВАНИЕ', title: 'Ma vagy tegnap?', subtitle: 'Существующая синхронизированная запись', body: `<p>Прослушай запись, отличи сегодняшнее действие от вчерашнего и услышь маркер времени. Транскрипт и вопросы не изменены.</p>`, activities: [TENSE_LISTENING] },
+    { id: 8, eyebrow: 'УРОК 13 · 8/11 · ВЗАИМОДЕЙСТВИЕ', title: 'Mit csináltál hétvégén?', subtitle: 'Разговор друзей в понедельник', body: `<p>Ответь на вопросы о выходных, назови проблему и задай собеседнику хотя бы один вопрос.</p>`, activities: [PAST_ROLEPLAY] },
+    { id: 9, eyebrow: 'УРОК 13 · 9/11 · ПИСЬМО', title: 'Mi történt tegnap?', subtitle: 'Связный рассказ о прошлом', body: `<p>Открытый текст остаётся PARTIAL до квалифицированной проверки.</p>`, activities: [PAST_WRITING] },
+    { id: 10, eyebrow: 'УРОК 13 · 10/11 · УСТНАЯ САМОПРАКТИКА', title: 'Mesélj a tegnapról!', subtitle: 'Утро → день → вечер', body: `<p>Самопрактика не использует микрофон, не оценивается и не создаёт evidence.</p>`, optionalSpeaking: PAST_SPEAKING },
+    { id: 11, eyebrow: 'УРОК 13 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Впереди A1 checkpoint', body: `<ul class="tick"><li>Частотные формы прошлого и volt</li><li>Простое отрицание</li><li>Вопросы о завершённых событиях</li><li>Хронологический рассказ</li><li>Writing и RolePlay остаются PARTIAL</li></ul><div class="note">L14 станет интегрированным checkpoint конца A1. Полная система прошедшего времени остаётся в L20.</div>`, activities: [EXIT_CHECK] },
   ],
   vocabulary: [
     ['múlt idő', 'прошедшее время', 'Грамматика'], ['tanultam', 'я учился', 'Прошедшее время'], ['tanultál', 'ты учился', 'Прошедшее время'], ['tanult', 'он/она учился(-ась)', 'Прошедшее время'],

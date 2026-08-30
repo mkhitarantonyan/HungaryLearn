@@ -351,7 +351,7 @@ export const LESSON_4: Lesson = {
       targetText: 'Magyarul tanulok. Nem olvasok. Tanulsz magyarul?',
       targetPhonetic: '[мадьярул танулок. нэм олвашок. танулс мадьярул?]',
       targetTranslation: 'Я учу венгерский. Я не читаю. Ты учишь венгерский?',
-      task: 'Устная практика: произнеси утверждение, отрицание и вопрос. Затем сравни свою запись с образцом.',
+      task: 'Устная практика (необязательно): произнеси утверждение, отрицание и вопрос, затем сравни формулировки с образцом.',
       activities: [L4_EXIT_CHECK],
       body: `
    <ul class="tick">

@@ -1,62 +1,46 @@
 import { Lesson, LessonActivity } from '../../types';
 
-const cp = (
-  id: string,
-  title: string,
-  passCount: number,
-  exercises: Extract<LessonActivity, { kind: 'controlledPractice' }>['exercises'],
-): LessonActivity => ({ kind: 'controlledPractice', id, title, passCount, exercises });
-
-const L17_CP_SEASONS_MONTHS = cp('l17-cp-seasons-months', 'Времена года и месяцы', 10, [
-  { kind: 'singleChoice', id: 'l17-month-1', prompt: 'január', options: ['tél', 'tavasz', 'nyár', 'ősz'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l17-month-2', prompt: 'február', options: ['tavasz', 'tél', 'ősz', 'nyár'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l17-month-3', prompt: 'március', options: ['nyár', 'ősz', 'tavasz', 'tél'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l17-month-4', prompt: 'április', options: ['tavasz', 'nyár', 'tél', 'ősz'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l17-month-5', prompt: 'május', options: ['ősz', 'tavasz', 'nyár', 'tél'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l17-month-6', prompt: 'június', options: ['tél', 'tavasz', 'nyár', 'ősz'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l17-month-7', prompt: 'július', options: ['nyár', 'ősz', 'tél', 'tavasz'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l17-month-8', prompt: 'augusztus', options: ['tavasz', 'nyár', 'ősz', 'tél'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l17-month-9', prompt: 'szeptember', options: ['tél', 'nyár', 'ősz', 'tavasz'], correctIndex: 2 },
-  { kind: 'singleChoice', id: 'l17-month-10', prompt: 'október', options: ['ősz', 'tavasz', 'nyár', 'tél'], correctIndex: 0 },
-  { kind: 'singleChoice', id: 'l17-month-11', prompt: 'november', options: ['nyár', 'ősz', 'tél', 'tavasz'], correctIndex: 1 },
-  { kind: 'singleChoice', id: 'l17-month-12', prompt: 'december', options: ['tavasz', 'ősz', 'tél', 'nyár'], correctIndex: 2 },
-]);
-
-const L17_CP_ADVERBIALS = cp('l17-cp-seasonal-adverbials', 'Когда? Сезонные формы', 5, [
-  { kind: 'textInput', id: 'l17-adv-1', prompt: 'tavasz → «весной»', accept: ['tavasszal'], explanation: 'tavasz + -val → tavasszal: v уподобляется sz, долгий sz пишется ssz.' },
-  { kind: 'textInput', id: 'l17-adv-2', prompt: 'nyár → «летом»', accept: ['nyáron'], explanation: 'nyár + -on → nyáron.' },
-  { kind: 'textInput', id: 'l17-adv-3', prompt: 'ősz → «осенью»', accept: ['ősszel'], explanation: 'ősz + -vel → ősszel: v уподобляется sz.' },
-  { kind: 'textInput', id: 'l17-adv-4', prompt: 'tél → «зимой»', accept: ['télen'], explanation: 'tél + -en → télen.' },
-  { kind: 'fillGap', id: 'l17-adv-5', prompt: '___ gyakran esik az eső. (tavasz)', accept: ['Tavasszal', 'tavasszal'] },
-  { kind: 'fillGap', id: 'l17-adv-6', prompt: '___ meleg van. (nyár)', accept: ['Nyáron', 'nyáron'] },
-]);
-
-const L17_WRITING_WEATHER: LessonActivity = {
-  kind: 'writing',
-  id: 'l17-writing-current-weather',
-  title: 'Письмо: погода сегодня',
-  prompt: 'Напиши 4 коротких предложения о погоде сегодня или о вымышленной погоде. Укажи минимум одно погодное явление, температуру и ещё две детали. Открытый текст требует проверки.',
-  modelAnswer: ['Ma süt a nap.', 'Húsz fok van.', 'Fúj a szél.', 'Nem esik az eső.'],
-  rubric: ['4 предложения', 'есть погодное явление', 'есть температура', 'есть ещё две погодные детали'],
+const L17_CP: LessonActivity = {
+  kind: 'controlledPractice', id: 'l17-cp-contextual-weather', title: 'Контекстная практика: погода и планы', passCount: 11,
+  exercises: [
+    { kind: 'singleChoice', id: 'l17-context-1', prompt: 'Az égen nincsenek felhők, és világos van.', options: ['Süt a nap.', 'Esik az eső.', 'Esik a hó.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-2', prompt: 'A fák erősen mozognak.', options: ['Erősen fúj a szél.', 'Meleg van.', 'Felhős az ég.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-3', prompt: 'Télen fehér lesz az utca.', options: ['Esik a hó.', 'Süt a nap.', 'Köd van.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-4', prompt: 'Mit jelent: „Tizenkét fok van”?', options: ['Температура +12 °C.', 'Сейчас 12 часов.', 'Идёт дождь 12 минут.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-5', prompt: 'Reggel mínusz két fok van. Milyen az idő?', options: ['Hideg van.', 'Meleg van.', 'Harminc fok van.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l17-context-6', prompt: '___ gyakran virágoznak a fák. (tavasz)', accept: ['Tavasszal', 'tavasszal'], explanation: 'tavasz → tavasszal.' },
+    { kind: 'fillGap', id: 'l17-context-7', prompt: '___ gyakran nagyon meleg van. (nyár)', accept: ['Nyáron', 'nyáron'], explanation: 'nyár → nyáron.' },
+    { kind: 'singleChoice', id: 'l17-context-8', prompt: 'Hideg van és fúj a szél. Mit veszel fel?', options: ['Kabátot és sapkát.', 'Fürdőruhát.', 'Szandált.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-9', prompt: 'Délután eső várható. Mit vigyél magaddal?', options: ['Esernyőt.', 'Napszemüveget.', 'Fürdőruhát.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-10', prompt: 'Mit jelent: „Holnap eső várható”?', options: ['Завтра ожидается дождь.', 'Вчера шёл дождь.', 'Сейчас снег.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-11', prompt: 'Délután erős szél várható. Melyik program praktikusabb?', options: ['Bent maradni.', 'Piknikezni a parkban.', 'Csónakázni.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-12', prompt: 'Fejezd be: Ha esik, ...', options: ['nem megyünk kirándulni.', 'süt a nap.', 'nyár van.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-13', prompt: 'Hideg van, ezért ...', options: ['kabátot veszek fel.', 'otthon hagyom a kabátot.', 'fagyit viszek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l17-context-14', prompt: 'Szombaton esik, vasárnap napos és 18 fok lesz. Melyik nap jobb a kirándulásra?', options: ['Vasárnap.', 'Szombat.', 'Mindegy.'], correctIndex: 0 },
+  ],
 };
 
-const L17_RECORDING_WEATHER_SEASONS: LessonActivity = {
-  kind: 'recording',
-  id: 'l17-recording-weather-seasons',
-  title: 'Говорение: сезоны и погода',
-  instructions: 'Назови четыре времени года, затем запиши 2–3 фразы о погоде. Запись требует проверки.',
-  targetText: 'Tavasz, nyár, ősz, tél. Ma süt a nap. Húsz fok van.',
-  targetTranslation: 'Весна, лето, осень, зима. Сегодня светит солнце. Двадцать градусов.',
-  rubric: ['названы 4 сезона', 'есть описание погоды', 'есть температура или дополнительная погодная деталь'],
+const L17_READING: LessonActivity = {
+  kind: 'reading', id: 'l17-reading-weekend-weather', title: 'Hétvégi program az időjárás szerint', instructions: 'Прочитай прогноз и план семьи, затем ответь по смыслу.',
+  content: { type: 'prose', paragraphs: [
+    'Kata és a családja péntek este vidékre utazik a nagyszülőkhöz. Pénteken enyhe idő lesz: délután tizennyolc fok várható, és csak kevés felhő lesz az égen. Este már hűvösebb lesz, ezért Kata könnyű kabátot is visz magával. A gyerekek örülnek, hogy az utazás alatt nem várható eső. A család pénteken csak sétál egy rövidet a faluban, utána együtt vacsoráznak.',
+    'Szombatra eredetileg hosszú kirándulást és pikniket terveztek az erdőben. A reggeli előrejelzés azonban egész napos esőt és délután erős szelet ígér. Reggel még tizenkét fok lesz, délután pedig csak kilenc. A nagypapa szerint ilyen időben az erdei út csúszós lehet. A szél miatt a piknik sem lenne kellemes vagy biztonságos. Ezért megváltoztatják a programot: délelőtt elmennek egy közeli múzeumba, délután pedig otthon társasjátékoznak. Kata azt tanácsolja mindenkinek, hogy vigyen esernyőt és vegyen fel vízálló cipőt.',
+    'Vasárnapra szerencsére jelentősen javul az idő. Reggel még felhős lesz az ég, de délután kisüt a nap, és tizenhét fokig emelkedik a hőmérséklet. A család úgy dönt, hogy ebéd után egy rövidebb tóparti sétát tesz. Ha az utak addigra megszáradnak, biciklit is bérelnek. Végül mindenki örül, mert a rossz szombati idő ellenére lesz közös szabadtéri programjuk is.',
+  ]}, passCount: 6,
+  questions: [
+    { id: 'l17-read-1', question: 'Milyen idő várható péntek délután?', options: ['Enyhe, körülbelül 18 fokos.', 'Esős és 9 fokos.', 'Havas és hideg.'], correctIndex: 0 },
+    { id: 'l17-read-2', question: 'Mi volt az eredeti szombati terv?', options: ['Erdei kirándulás és piknik.', 'Múzeum és társasjáték.', 'Tóparti biciklizés.'], correctIndex: 0 },
+    { id: 'l17-read-3', question: 'Mit mond a szombati előrejelzés?', options: ['Egész napos esőt és erős szelet.', 'Napos időt és 20 fokot.', 'Havazást.'], correctIndex: 0 },
+    { id: 'l17-read-4', question: 'Miért változtatják meg a szombati programot?', options: ['Az erdei út csúszós lehet.', 'A múzeum zárva lesz.', 'Nem érkeznek meg a nagyszülők.'], correctIndex: 0 },
+    { id: 'l17-read-5', question: 'Mi lesz a szombati helyettesítő program?', options: ['Múzeum, majd társasjáték.', 'Bevásárlás, majd mozi.', 'Egész napos biciklizés.'], correctIndex: 0 },
+    { id: 'l17-read-6', question: 'Hogyan változik az idő vasárnap?', options: ['Délután kisüt a nap, és 17 fok lesz.', 'Délután erősebb lesz a vihar.', 'Egész nap havazni fog.'], correctIndex: 0 },
+    { id: 'l17-read-7', question: 'Mit ajánl Kata a szombati időre?', options: ['Esernyőt és vízálló cipőt.', 'Fürdőruhát és szandált.', 'Csak napszemüveget.'], correctIndex: 0 },
+    { id: 'l17-read-8', question: 'Melyik nap a legjobb hosszabb szabadtéri programra?', options: ['Vasárnap délután.', 'Szombat délután.', 'Szombat reggel.'], correctIndex: 0 },
+  ],
 };
 
 const L17_LISTENING: LessonActivity = {
-  kind: 'listening',
-  id: 'l17-listening-weather',
-  title: 'Аудирование: короткий прогноз',
-  assetId: 'l17_listening_weather',
-  audioStatus: 'published',
-  passCount: 4,
+  kind: 'listening', id: 'l17-listening-weather', title: 'Аудирование: короткий прогноз', assetId: 'l17_listening_weather', audioStatus: 'published', passCount: 4,
   transcript: 'Időjárás-jelentés. Ma Budapesten felhős az ég, tizenöt fok van. Délután esik az eső, este fúj a szél. Holnap napos idő lesz, húsz fok lesz.',
   questions: [
     { id: 'l17-list-1', question: 'Melyik városról szól az előrejelzés?', options: ['Budapestről', 'Bécsről', 'Szegedről'], correctIndex: 0 },
@@ -67,145 +51,62 @@ const L17_LISTENING: LessonActivity = {
   ],
 };
 
-const L17_WRITING_COMPARE: LessonActivity = {
-  kind: 'writing',
-  id: 'l17-writing-season-comparison',
-  title: 'Письмо: сравниваем сезоны',
-  prompt: 'Напиши 3–5 предложений и сравни минимум два времени года по трём признакам погоды. Используй знакомую модель из L9: -bb + mint, минимум два раза. Открытый текст требует проверки.',
-  modelAnswer: [
-    'Nyáron melegebb az idő, mint télen.',
-    'Télen hidegebb az idő, mint tavasszal.',
-    'Tavasszal gyakran esik az eső, nyáron pedig gyakran süt a nap.',
-    'Ősszel hidegebb az idő, mint nyáron.',
-  ],
-  rubric: ['минимум 2 сезона', 'минимум 3 погодных признака', 'минимум 2 сравнения с -bb и mint'],
-};
-
-const L17_RECORDING_COMPARE: LessonActivity = {
-  kind: 'recording',
-  id: 'l17-recording-season-comparison',
-  title: 'Говорение: сравнение сезонов',
-  instructions: 'Запиши 3–4 фразы, сравнивая минимум два сезона. Используй минимум два сравнения с -bb и mint. Запись требует проверки.',
-  targetText: 'Nyáron melegebb az idő, mint télen. Télen hidegebb az idő, mint tavasszal. Tavasszal gyakran esik az eső.',
-  targetTranslation: 'Летом погода теплее, чем зимой. Зимой холоднее, чем весной. Весной часто идёт дождь.',
-  rubric: ['минимум 2 сезона', 'минимум 2 сравнения', 'погодная лексика урока'],
-};
-
-const L17_EXIT: LessonActivity = {
-  kind: 'exitCheck',
-  id: 'l17-exit-check',
-  title: 'Проверка целей урока',
-  checks: [
-    { objectiveId: 'l17_describe-weather', activityId: 'l17-writing-current-weather', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l17-recording-weather-seasons', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l17_name-seasons', activityId: 'l17-cp-seasons-months', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l17-recording-weather-seasons', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l17_use-seasonal-adverbials', activityId: 'l17-cp-seasonal-adverbials', evidenceKind: 'grammar' },
-    { objectiveId: 'l17_compare-seasons', activityId: 'l17-writing-season-comparison', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l17-recording-season-comparison', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l17_understand-forecast', activityId: 'l17-listening-weather', evidenceKind: 'listening' },
+const L17_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l17-roleplay-weather-plan', title: 'Ролевая игра: меняем субботний план', partnerLabel: 'Barát', completionMessage: 'Megbeszéltétek a hétvégi programot.', startTurnId: 'l17-rp-f1',
+  turns: [
+    { id: 'l17-rp-f1', speaker: 'waiter', prompt: 'Szombaton piknikezzünk a parkban!', next: 'l17-rp-l1' },
+    { id: 'l17-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Согласись с исходной идеей и уточни время.', model: 'Jó ötlet! Mikor találkozzunk?', next: 'l17-rp-f2' },
+    { id: 'l17-rp-f2', speaker: 'waiter', prompt: 'Tizenegykor. De most azt olvasom, hogy délután eső és erős szél várható.', next: 'l17-rp-l2' },
+    { id: 'l17-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Отреагируй и спроси о температуре.', model: 'Akkor a piknik nem jó ötlet. Hány fok lesz?', next: 'l17-rp-f3' },
+    { id: 'l17-rp-f3', speaker: 'waiter', prompt: 'Csak tíz fok, és már délelőtt is felhős lesz.', next: 'l17-rp-l3' },
+    { id: 'l17-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Предложи indoor-альтернативу.', model: 'Ha esik, inkább menjünk moziba vagy egy kávézóba.', next: 'l17-rp-f4' },
+    { id: 'l17-rp-f4', speaker: 'waiter', prompt: 'A mozi jó, de vasárnap napos és tizennyolc fok lesz. Áttehetjük a sétát vasárnapra is.', next: 'l17-rp-l4' },
+    { id: 'l17-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Сравни субботу и воскресенье.', model: 'Vasárnap jobb lesz a szabadtéri programhoz, mert melegebb és naposabb lesz.', next: 'l17-rp-f5' },
+    { id: 'l17-rp-f5', speaker: 'waiter', prompt: 'Akkor szombaton mozi, vasárnap pedig séta?', next: 'l17-rp-l5' },
+    { id: 'l17-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Согласуй окончательный план.', model: 'Igen, ez jó megoldás.', next: 'l17-rp-f6' },
+    { id: 'l17-rp-f6', speaker: 'waiter', prompt: 'Hol és mikor találkozzunk szombaton?', next: 'l17-rp-l6' },
+    { id: 'l17-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди место и время.', model: 'Találkozzunk fél háromkor a mozi előtt.', next: 'l17-rp-f7' },
+    { id: 'l17-rp-f7', speaker: 'waiter', prompt: 'Rendben, ott találkozunk!', next: 'l17-rp-l7' },
+    { id: 'l17-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Заверши разговор.', model: 'Szuper, akkor szombaton találkozunk. Szia!', next: 'l17-rp-f8' },
+    { id: 'l17-rp-f8', speaker: 'waiter', prompt: 'Szia!' },
   ],
 };
+
+const L17_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l17-writing-weekend-plan', title: 'Письмо: погода и планы на выходные',
+  prompt: 'Напиши другу 90–110 слов. Укажи прогноз, температуру, исходный план, возможное изменение и его причину, альтернативу, рекомендацию по одежде или нужной вещи и закончи конкретным предложением или вопросом.',
+  modelAnswer: ['Szia, Bence! Szombaton eredetileg kirándulni szeretnénk, de az előrejelzés szerint délután esni fog, és erős szél várható. Csak tíz fok lesz, ezért lehet, hogy meg kell változtatnunk a programot. Ha rossz idő lesz, menjünk inkább a városi múzeumba, utána pedig igyunk egy kávét. Hozz magaddal esernyőt, és vegyél fel meleg, vízálló kabátot. Vasárnap már naposabb és melegebb időt mondanak, ezért akkor sétálhatnánk a parkban. Ha valóban kisüt a nap, délután együtt sétálhatnánk egy kellemes órát a közeli tó körül. Mit gondolsz? Találkozzunk szombaton tízkor az állomásnál? Írj, hogy neked jó-e!'],
+  rubric: ['90–110 слов', 'прогноз и температура', 'исходный план и причина изменения', 'альтернатива', 'практическая рекомендация', 'финальное предложение или вопрос'],
+};
+
+const L17_SPEAKING = { title: 'Необязательная устная самопрактика', instructions: 'Говори около 2 минут. Это текстовая инструкция без микрофона, score и evidence.', prompt: 'Расскажи о любимом сезоне, типичной погоде, одежде и занятиях. Добавь один случай, когда погода меняет твои планы.', rubric: ['любимый сезон', 'погода и одежда', 'занятия', 'изменение плана из-за погоды'] };
+
+const L17_EXIT: LessonActivity = { kind: 'exitCheck', id: 'l17-exit-check', title: 'Проверка целей урока', checks: [
+  { objectiveId: 'l17_describe-weather', activityId: 'l17-cp-contextual-weather', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l17-roleplay-weather-plan', evidenceKind: 'interaction' }] },
+  { objectiveId: 'l17_name-seasons', activityId: 'l17-cp-contextual-weather', evidenceKind: 'reading' },
+  { objectiveId: 'l17_use-seasonal-adverbials', activityId: 'l17-cp-contextual-weather', evidenceKind: 'grammar' },
+  { objectiveId: 'l17_compare-seasons', activityId: 'l17-writing-weekend-plan', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l17-roleplay-weather-plan', evidenceKind: 'interaction' }] },
+  { objectiveId: 'l17_understand-forecast', activityId: 'l17-listening-weather', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l17-reading-weekend-weather', evidenceKind: 'reading' }] },
+] };
 
 export const LESSON_17: Lesson = {
-  id: 17,
-  number: 17,
-  level: 'A2',
-  title: 'Урок 17 · Időjárás és évszakok',
-  subtitle: 'Погода, времена года и месяцы',
-  description: 'Базовое описание погоды и температуры, четыре времени года, месяцы, формы tavasszal/nyáron/ősszel/télen, сравнение сезонов и короткий прогноз на слух.',
-  slidesCount: 11,
+  id: 17, number: 17, level: 'A2', title: 'Урок 17 · Időjárás és évszakok', subtitle: 'Погода, сезоны и практические планы', description: 'Описание погоды и температуры, сезоны, понимание прогноза и изменение практического плана из-за погодных условий.', slidesCount: 11,
   slides: [
-    {
-      id: 1,
-      eyebrow: 'УРОК 17 · 1/11 · ПОГОДА',
-      title: 'Milyen az idő?',
-      subtitle: 'Как описать погоду',
-      body: `<p>Слово <span class="hu-word">idő</span> может означать «время» или «погода» — значение определяется контекстом. В погодных фразах используются разные модели: иногда есть обычное подлежащее, а иногда достаточно одного глагола.</p><table class="conj"><tr><th>Венгерский</th><th>Значение</th></tr><tr><td>Süt a nap.</td><td>Светит солнце</td></tr><tr><td>Esik az eső.</td><td>Идёт дождь</td></tr><tr><td>Fúj a szél.</td><td>Дует ветер</td></tr><tr><td>Havazik.</td><td>Идёт снег</td></tr><tr><td>Felhős az ég.</td><td>Небо облачное / облачно</td></tr></table><div class="note">В Süt a nap, Esik az eső и Fúj a szél есть подлежащее: nap, eső, szél. Havazik употребляется без отдельного подлежащего.</div>`,
-    },
-    {
-      id: 2,
-      eyebrow: 'УРОК 17 · 2/11 · ТЕМПЕРАТУРА',
-      title: 'Hány fok van?',
-      subtitle: 'Спрашиваем и называем температуру',
-      body: `<p><b>Hány fok van?</b> — Сколько градусов?</p><p><b>Húsz fok van.</b> — Двадцать градусов.</p><p><b>Meleg van.</b> — Тепло. <b>Hideg van.</b> — Холодно.</p><div class="note">В погодных выражениях Meleg van / Hideg van слово <b>van</b> нужно. Сравни с L9: <b>Az idő meleg.</b> — «Погода тёплая», где в 3-м лице настоящего времени отдельная связка не ставится.</div>`,
-    },
-    {
-      id: 3,
-      eyebrow: 'УРОК 17 · 3/11 · ВРЕМЕНА ГОДА',
-      title: 'Évszakok',
-      subtitle: 'Времена года',
-      body: `<div class="grid2"><div><p><b>tavasz</b> — весна</p><p><b>nyár</b> — лето</p></div><div><p><b>ősz</b> — осень</p><p><b>tél</b> — зима</p></div></div>`,
-    },
-    {
-      id: 4,
-      eyebrow: 'УРОК 17 · 4/11 · «ВЕСНОЙ, ЛЕТОМ...»',
-      title: 'Tavasszal, nyáron, ősszel, télen',
-      subtitle: 'Четыре частотные формы времени',
-      activities: [L17_CP_ADVERBIALS],
-      body: `<p>Чтобы сказать «весной / летом / осенью / зимой», запомни четыре частотные формы целиком. При этом их строение связано с уже знакомыми суффиксами.</p><table class="conj"><tr><th>Сезон</th><th>Когда?</th><th>Связь с прошлой темой</th></tr><tr><td>tavasz</td><td><b>tavasszal</b></td><td>-val; v уподобляется sz, долгий sz пишется ssz</td></tr><tr><td>nyár</td><td><b>nyáron</b></td><td>-on</td></tr><tr><td>ősz</td><td><b>ősszel</b></td><td>-vel; v уподобляется sz</td></tr><tr><td>tél</td><td><b>télen</b></td><td>-en</td></tr></table><div class="note">Это не четыре «случайных исключения»: tavasszal/ősszel повторяют модель -val/-vel из L16, а nyáron/télen используют знакомые -on/-en. Для свободной речи сами четыре сезонные формы всё равно полезно запомнить как готовый набор.</div>`,
-    },
-    {
-      id: 5,
-      eyebrow: 'УРОК 17 · 5/11 · МЕСЯЦЫ',
-      title: 'Hónapok és évszakok',
-      subtitle: '12 месяцев по сезонам',
-      activities: [L17_CP_SEASONS_MONTHS],
-      body: `<table class="conj"><tr><th>Сезон</th><th>Месяцы</th></tr><tr><td><b>tél</b></td><td>december, január, február</td></tr><tr><td><b>tavasz</b></td><td>március, április, május</td></tr><tr><td><b>nyár</b></td><td>június, július, augusztus</td></tr><tr><td><b>ősz</b></td><td>szeptember, október, november</td></tr></table><div class="note">Это повторение названий месяцев из L5: теперь нужно быстро соотносить их с четырьмя сезонами. Формы дат и порядковые числительные сюда не входят.</div>`,
-    },
-    {
-      id: 6,
-      eyebrow: 'УРОК 17 · 6/11 · ОПИСАНИЕ ПОГОДЫ',
-      title: 'Milyen ma az idő?',
-      subtitle: 'Собираем короткое описание',
-      activities: [L17_WRITING_WEATHER, L17_RECORDING_WEATHER_SEASONS],
-      body: `<p><b>Ma süt a nap.</b> — Сегодня светит солнце.</p><p><b>Húsz fok van.</b> — Двадцать градусов.</p><p><b>Fúj a szél.</b> — Дует ветер.</p><p><b>Nem esik az eső.</b> — Дождь не идёт.</p><div class="note">Для короткого A2-описания достаточно 3–4 простых погодных деталей. Письменный и устный открытые ответы сохраняются как PARTIAL evidence и требуют проверки.</div>`,
-    },
-    {
-      id: 7,
-      eyebrow: 'УРОК 17 · 7/11 · ПРОГНОЗ ПОГОДЫ',
-      title: 'Időjárás-jelentés',
-      subtitle: 'Понимаем короткий прогноз на слух',
-      activities: [L17_LISTENING],
-      body: `<p>В коротком прогнозе ищи пять вещей: <b>место, день, облачность/осадки, температуру и ещё одну погодную деталь</b>.</p><p>Полезные опоры: <b>ma</b> — сегодня, <b>holnap</b> — завтра, <b>délután</b> — после полудня, <b>este</b> — вечером, <b>napos</b> — солнечный.</p><div class="note"><b>Holnap ... lesz</b> встречается здесь как готовая форма для понимания прогноза. Будущее время с fog + инфинитив будет в L19.</div>`,
-    },
-    {
-      id: 8,
-      eyebrow: 'УРОК 17 · 8/11 · СРАВНЕНИЕ',
-      title: 'Évszakok összehasonlítása',
-      subtitle: 'Повторяем сравнительную степень из L9',
-      activities: [L17_WRITING_COMPARE, L17_RECORDING_COMPARE],
-      body: `<p><b>Nyáron melegebb az idő, mint télen.</b> — Летом погода теплее, чем зимой.</p><p><b>Télen hidegebb az idő, mint tavasszal.</b> — Зимой холоднее, чем весной.</p><p><b>Tavasszal gyakran esik az eső, nyáron pedig gyakran süt a nap.</b> — Весной часто идёт дождь, а летом часто светит солнце.</p><div class="note">Здесь нет новой модели сравнения: используется уже знакомая из L9 схема сравнительной степени <b>-bb + mint</b>, теперь с погодой и сезонами.</div>`,
-    },
-    {
-      id: 9,
-      eyebrow: 'УРОК 17 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ',
-      title: 'Kiegészítő szókincs',
-      subtitle: 'Ещё погодные слова для узнавания',
-      body: `<div class="grid2"><div><p><b>vihar</b> — буря / шторм</p><p><b>köd</b> — туман</p></div><div><p><b>szivárvány</b> — радуга</p><p><b>hőség</b> — жара</p></div></div><div class="note">Это расширение словаря. Эти четыре слова не являются отдельной обязательной целью L17.</div>`,
-    },
-    {
-      id: 10,
-      eyebrow: 'УРОК 17 · 10/11 · ГРАНИЦЫ УРОКА',
-      title: 'Mit nem tanulunk még?',
-      subtitle: 'Что пока только узнаём',
-      body: `<p>L17 учит говорить о текущей погоде, сезонах и простом сравнении. В прогнозе можно встретить готовое <b>holnap ... lesz</b>, но продуктивное будущее время здесь не является целью.</p><p>Следующий урок L18 посвящён инфинитиву и модальным конструкциям; системное будущее с <b>fog + инфинитив</b> будет позже, в L19.</p>`,
-    },
-    {
-      id: 11,
-      eyebrow: 'УРОК 17 · 11/11 · ИТОГИ',
-      title: 'Összefoglalás',
-      subtitle: 'Проверка целей 17-го урока',
-      activities: [L17_EXIT],
-      body: `<ul class="tick"><li>Базовые погодные модели: Süt a nap, Esik az eső, Fúj a szél, Havazik</li><li>Температура: Hány fok van? / Húsz fok van; Meleg van / Hideg van</li><li>Сезоны и 12 месяцев</li><li>tavasszal, nyáron, ősszel, télen</li><li>Сравнение сезонов через знакомую модель -bb + mint</li><li>Короткий прогноз на слух станет доступен после публикации отдельной записи</li></ul><div class="note"><b>Домашнее задание.</b> Напиши и запиши 3–5 предложений, сравнивая погоду минимум в двух сезонах.</div>`,
-    },
+    { id: 1, eyebrow: 'УРОК 17 · 1/11 · CAN-DO', title: 'Milyen az idő?', subtitle: 'Погода как часть реального плана', body: `<p>После урока ты сможешь понять простой прогноз, описать погоду, подобрать одежду или занятие и изменить план с понятной причиной.</p><p><b>Süt a nap. Fúj a szél. Esik az eső. Esik a hó. Felhős az ég.</b></p>` },
+    { id: 2, eyebrow: 'УРОК 17 · 2/11 · ТЕМПЕРАТУРА', title: 'Hány fok van?', subtitle: 'Текущая температура', body: `<p><b>Tíz fok van. Mínusz két fok van. Meleg van. Hideg van.</b></p><div class="note">В Meleg van / Hideg van слово van нужно. Сравни: Az idő meleg — здесь отдельной связки в настоящем времени нет.</div>` },
+    { id: 3, eyebrow: 'УРОК 17 · 3/11 · СЕЗОНЫ', title: 'Évszakok', subtitle: 'Когда и какая погода', body: `<p><b>tavasz, nyár, ősz, tél</b></p><p>Частотные формы времени: <b>tavasszal, nyáron, ősszel, télen</b>. Tavasszal и ősszel повторяют ассимиляцию -val/-vel из L16.</p><p>Nyáron melegebb az idő, mint télen. Télen gyakran havazik.</p>` },
+    { id: 4, eyebrow: 'УРОК 17 · 4/11 · ПРОГНОЗ', title: 'Időjárás és praktikus reakció', subtitle: '14 контекстных ситуаций', activities: [L17_CP], body: `<p><b>Holnap eső várható. Délután erős szél várható. Vigyél esernyőt! Vegyél fel kabátot!</b></p><p><b>Ha esik, nem megyünk kirándulni. Hideg van, ezért kabátot veszek fel.</b></p><div class="note">Будущее здесь служит пониманию прогноза; системно оно изучается в L19.</div>` },
+    { id: 5, eyebrow: 'УРОК 17 · 5/11 · ЧТЕНИЕ', title: 'Hétvégi program az időjárás szerint', subtitle: 'Прогноз меняет планы', activities: [L17_READING], body: `<p>Сравни погоду в пятницу, субботу и воскресенье. Следи за температурой, причиной изменения и окончательным решением семьи.</p>` },
+    { id: 6, eyebrow: 'УРОК 17 · 6/11 · АУДИРОВАНИЕ', title: 'Rövid időjárás-jelentés', subtitle: 'Место, время и детали прогноза', activities: [L17_LISTENING], body: `<p>Существующая запись проверяет место, облачность, температуру, дождь, ветер и погоду следующего дня.</p>` },
+    { id: 7, eyebrow: 'УРОК 17 · 7/11 · ROLEPLAY', title: 'Mit csináljunk szombaton?', subtitle: 'Меняем план из-за прогноза', activities: [L17_ROLEPLAY], body: `<p>Уточни температуру и время, предложи indoor-вариант, сравни дни и согласуй окончательное место и время.</p><div class="note">RolePlay остаётся PARTIAL.</div>` },
+    { id: 8, eyebrow: 'УРОК 17 · 8/11 · ПИСЬМО', title: 'Hétvégi terv egy barátnak', subtitle: 'Прогноз → причина → альтернатива', activities: [L17_WRITING], body: `<p>Напиши 90–110 слов о погоде, исходном плане, возможном изменении, альтернативе и практической рекомендации.</p>` },
+    { id: 9, eyebrow: 'УРОК 17 · 9/11 · SPEAKING PRACTICE', title: 'A kedvenc évszakom', subtitle: 'Необязательная практика без записи', optionalSpeaking: L17_SPEAKING, body: `<p>Свяжи сезон, типичную погоду, одежду, занятия и один случай изменения планов.</p>` },
+    { id: 10, eyebrow: 'УРОК 17 · 10/11 · ФУНКЦИОНАЛЬНЫЕ ФРАЗЫ', title: 'Időjárás → döntés', subtitle: 'От погоды к решению', body: `<ul class="tick"><li>Milyen idő van? Hány fok van?</li><li>Holnap eső várható.</li><li>Vigyél esernyőt! Vegyél fel kabátot!</li><li>Ha esik, inkább bent maradunk.</li><li>Rossz idő lesz, ezért megváltoztatjuk a programot.</li></ul>` },
+    { id: 11, eyebrow: 'УРОК 17 · 11/11 · ИТОГ', title: 'Összefoglalás', subtitle: 'Честная проверка целей', activities: [L17_EXIT], body: `<p>Контекстная практика, Reading и опубликованный Listening могут дать DIRECT после порога. Writing и RolePlay остаются PARTIAL; speaking practice не создаёт evidence.</p>` },
   ],
   vocabulary: [
-    { id: 'l17_v1', hu: 'tavasz', ru: 'весна', category: 'Времена года', exampleSentence: 'Tavasszal gyakran esik az eső.' },
-    { id: 'l17_v2', hu: 'nyár', ru: 'лето', category: 'Времена года', exampleSentence: 'Nyáron meleg van.' },
-    { id: 'l17_v3', hu: 'ősz', ru: 'осень', category: 'Времена года', exampleSentence: 'Ősszel hidegebb az idő, mint nyáron.' },
-    { id: 'l17_v4', hu: 'tél', ru: 'зима', category: 'Времена года', exampleSentence: 'Télen hideg van.' },
-    { id: 'l17_v5', hu: 'eső', ru: 'дождь', category: 'Погода', exampleSentence: 'Esik az eső.' },
-    { id: 'l17_v6', hu: 'szél', ru: 'ветер', category: 'Погода', exampleSentence: 'Fúj a szél.' },
-    { id: 'l17_v7', hu: 'havazik', ru: 'идёт снег', category: 'Погода', exampleSentence: 'Télen gyakran havazik.' },
-    { id: 'l17_v8', hu: 'fok', ru: 'градус', category: 'Температура', exampleSentence: 'Húsz fok van.' },
+    { id: 'l17_v1', hu: 'tavasz', ru: 'весна', category: 'Времена года', exampleSentence: 'Tavasszal gyakran esik az eső.' }, { id: 'l17_v2', hu: 'nyár', ru: 'лето', category: 'Времена года', exampleSentence: 'Nyáron meleg van.' }, { id: 'l17_v3', hu: 'ősz', ru: 'осень', category: 'Времена года', exampleSentence: 'Ősszel hidegebb az idő, mint nyáron.' }, { id: 'l17_v4', hu: 'tél', ru: 'зима', category: 'Времена года', exampleSentence: 'Télen hideg van.' },
+    { id: 'l17_v5', hu: 'eső', ru: 'дождь', category: 'Погода', exampleSentence: 'Esik az eső.' }, { id: 'l17_v6', hu: 'szél', ru: 'ветер', category: 'Погода', exampleSentence: 'Fúj a szél.' }, { id: 'l17_v7', hu: 'havazik', ru: 'идёт снег', category: 'Погода', exampleSentence: 'Télen gyakran havazik.' }, { id: 'l17_v8', hu: 'fok', ru: 'градус', category: 'Температура', exampleSentence: 'Húsz fok van.' },
   ],
   quiz: [
     { id: 1701, question: 'Как по-венгерски сказать «Светит солнце»?', options: ['Süt a nap', 'Esik az eső', 'Fúj a szél', 'Havazik'], correctIndex: 0, explanation: 'Süt a nap — «Светит солнце»; a nap здесь является подлежащим.' },
@@ -216,10 +117,10 @@ export const LESSON_17: Lesson = {
     { id: 1706, question: 'Какой месяц относится к осени (ősz)?', options: ['április', 'július', 'október', 'január'], correctIndex: 2, explanation: 'Сентябрь, октябрь и ноябрь относятся к осени: szeptember, október, november.' },
   ],
   objectives: [
-    { id: 'l17_describe-weather', text: 'Описывать текущую погоду в 3–4 простых фразах.', skills: ['speaking', 'writing'] },
-    { id: 'l17_name-seasons', text: 'Называть четыре времени года и соотносить 12 месяцев с сезонами.', skills: ['speaking', 'reading'] },
-    { id: 'l17_use-seasonal-adverbials', text: 'Употреблять формы tavasszal, nyáron, ősszel, télen в изученных контекстах.', skills: ['grammar', 'writing'] },
-    { id: 'l17_compare-seasons', text: 'Сравнивать погоду минимум в двух сезонах, используя знакомую модель -bb + mint.', skills: ['speaking', 'writing'] },
-    { id: 'l17_understand-forecast', text: 'Понимать ключевые детали короткого прогноза погоды на слух.', skills: ['listening'] },
+    { id: 'l17_describe-weather', text: 'Описывать текущую погоду, температуру и практическую реакцию.', skills: ['speaking', 'writing', 'grammar'] },
+    { id: 'l17_name-seasons', text: 'Называть времена года и понимать типичную сезонную погоду.', skills: ['speaking', 'reading'] },
+    { id: 'l17_use-seasonal-adverbials', text: 'Употреблять tavasszal, nyáron, ősszel, télen в контексте.', skills: ['grammar', 'writing'] },
+    { id: 'l17_compare-seasons', text: 'Сравнивать погодные условия и менять план по понятной причине.', skills: ['speaking', 'writing', 'interaction'] },
+    { id: 'l17_understand-forecast', text: 'Понимать ключевые детали простого прогноза погоды.', skills: ['listening', 'reading'] },
   ],
 };

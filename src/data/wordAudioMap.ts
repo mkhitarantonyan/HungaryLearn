@@ -1,7 +1,7 @@
 // Auto-generated: word audio file mappings for /public/audio/*.mp3
 // Each key is the normalized Hungarian word (lowercase, spaces instead of underscores).
 // Paths are resolved through audioUrl() so the same map works both locally
-// (/audio/...) and from a CDN/cloud bucket (VITE_AUDIO_BASE_URL).
+// (/audio/...) from the same-origin Firebase Hosting CDN.
 
 import { audioUrl } from '../utils/audioConfig';
 
@@ -560,7 +560,7 @@ const rawWordAudioMap: Record<string, string> = {
   'orvoshoz': audioUrl('orvoshoz.mp3'),
   'orvosnál': audioUrl('orvosnál.mp3'),
   'orvostól': audioUrl('orvostól.mp3'),
-  'ovasok egy könyvet.': audioUrl('Ovasok_egy_könyvet.mp3'),
+  'olvasok egy könyvet.': audioUrl('Olvasok_egy_könyvet.mp3'),
   'ő': audioUrl('ő.mp3'),
   'ő nincs itt.': audioUrl('Ő_nincs_itt.mp3'),
   'ők': audioUrl('ők.mp3'),

@@ -1,151 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { mapStudentProgressRow, mapStudentUserRow } from '../src/server/db.ts';
-import { validateAudioDataUrl } from '../src/server/audioStorage.ts';
-import { resolveAudioUrl } from '../src/utils/audioConfig.ts';
+import { validateAudioDataUrl } from '../functions/src/audio/validation.ts';
 
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-
-test('PostgreSQL rows map back to the existing camelCase user API shape', () => {
-  const user = mapStudentUserRow({
-    id: '2c13f58d-0e4f-4d44-8b7b-a8f4fc446a92',
-    email: 'learner@example.com',
-    password_hash: 'hash',
-    created_at: '2026-08-22T10:00:00.000Z',
-    subscription_status: 'unpaid',
-    subscription_end: '2026-08-29T10:00:00.000Z',
-    stripe_customer_id: null,
-    stripe_subscription_id: null,
-    is_privileged: false,
-  });
-
-  assert.equal(user.passwordHash, 'hash');
-  assert.equal(user.subscriptionStatus, 'unpaid');
-  assert.equal(user.subscriptionEnd, '2026-08-29T10:00:00.000Z');
-  assert.equal(user.stripeCustomerId, undefined);
-  assert.equal(user.isPrivileged, false);
+const root = path.resolve('.');
+test('Firebase deployment configuration preserves API rewrite order and strict Storage rules', () => {
+  const config = JSON.parse(readFileSync(path.join(root, 'firebase.json'), 'utf8'));
+  assert.equal(config.hosting.public, 'dist');
+  assert.equal(config.hosting.rewrites[0].source, '/api/**');
+  assert.equal(config.hosting.rewrites[1].source, '**');
+  assert.match(readFileSync(path.join(root, 'storage.rules'), 'utf8'), /allow read, write: if false/);
 });
-
-test('PostgreSQL progress rows preserve slides, quizzes, SRS cards, and notes', () => {
-  const progress = mapStudentProgressRow({
-    user_id: '2c13f58d-0e4f-4d44-8b7b-a8f4fc446a92',
-    viewed_slides: ['l1_s1'],
-    passed_quizzes: [1],
-    review_cards: {},
-    custom_notes: 'note',
-    updated_at: '2026-08-22T10:00:00.000Z',
-  });
-
-  assert.deepEqual(progress.viewedSlides, ['l1_s1']);
-  assert.deepEqual(progress.passedQuizzes, [1]);
-  assert.deepEqual(progress.reviewCards, {});
-  assert.equal(progress.customNotes, 'note');
-});
-
-test('private audio validation preserves supported MIME handling', () => {
+test('private audio validation keeps MIME and size protections', () => {
   const dataUrl = `data:audio/mpeg;base64,${Buffer.from('ID3').toString('base64')}`;
-  const upload = validateAudioDataUrl(dataUrl);
-
-  assert.equal(upload.mimeType, 'audio/mpeg');
-  assert.equal(upload.extension, '.mp3');
-  assert.deepEqual(upload.buffer, Buffer.from('ID3'));
-  assert.throws(
-    () => validateAudioDataUrl(`data:text/plain;base64,${Buffer.from('no').toString('base64')}`),
-    /MP3, WAV, WebM, OGG и M4A/
-  );
+  assert.equal(validateAudioDataUrl(dataUrl).extension, '.mp3');
+  assert.throws(() => validateAudioDataUrl(`data:text/plain;base64,${Buffer.from('no').toString('base64')}`), /MP3/);
 });
-
-test('Supabase course-audio base does not produce duplicate audio path segments', () => {
-  const base = 'https://qkinyuxousscqgvjvrin.supabase.co/storage/v1/object/public/hungarylearn-course-audio/audio/';
-  const expected = 'https://qkinyuxousscqgvjvrin.supabase.co/storage/v1/object/public/hungarylearn-course-audio/audio/1.1.mp3';
-
-  assert.equal(resolveAudioUrl(base, '1.1.mp3'), expected);
-  assert.equal(resolveAudioUrl(base, '/audio/1.1.mp3'), expected);
+test('Firebase profile bootstrap creates a server-owned default unpaid entitlement', () => {
+  const source = readFileSync(path.join(root, 'functions', 'src', 'firestore', 'repositories.ts'), 'utf8');
+  assert.match(source, /transaction\.create\(entitlementRef/);
+  assert.match(source, /subscriptionStatus: 'unpaid'/);
+  assert.match(source, /isPrivileged: false/);
+  assert.match(source, /provider: null/);
+  assert.match(source, /accessUntil: null/);
 });
-
-test('server source has no filesystem persistence fallback', () => {
-  const serverSource = readFileSync(path.join(projectRoot, 'server.ts'), 'utf8');
-  const databaseSource = readFileSync(path.join(projectRoot, 'src', 'server', 'db.ts'), 'utf8');
-  assert.doesNotMatch(serverSource, /db\.json|DB_FILE|AUDIO_DIR|saveDatabase/);
-  assert.match(serverSource, /getDatabasePool|\/api\/health/);
-  assert.match(databaseSource, /process\.env\.DATABASE_URL/);
-  assert.match(databaseSource, /processed_stripe_events/);
-});
-
-test('course audio uploader is explicit, scoped, recursive, and verified', () => {
-  const script = readFileSync(
-    path.join(projectRoot, 'scripts', 'upload-course-audio-to-supabase.ts'),
-    'utf8'
-  );
-  const packageJson = JSON.parse(readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
-
-  assert.equal(packageJson.scripts['audio:migrate'], 'tsx scripts/upload-course-audio-to-supabase.ts');
-  assert.doesNotMatch(packageJson.scripts.prebuild, /audio:migrate/);
-  assert.match(script, /qkinyuxousscqgvjvrin/);
-  assert.match(script, /hungarylearn-course-audio/);
-  assert.match(script, /discoverAudioFiles/);
-  assert.match(script, /sha256\(verifiedBuffer\)/);
-});
-
-test('all local static course audio remains present and published Listening assets are non-empty', () => {
-  const audioDirectory = path.join(projectRoot, 'public', 'audio');
-  const audioFiles = readdirSync(audioDirectory).filter((name) => /\.(mp3|wav|webm|ogg|m4a|mp4)$/i.test(name));
-  assert.ok(
-  audioFiles.length >= 538,
-  `Expected at least the original 538 course audio files, found ${audioFiles.length}`,
-);
-
-  const publishedListening = [
-    'l1_listening_s_sz.mp3',
-    'l1_listening_soft_consonants.mp3',
-    'l1_listening_vowel_length.mp3',
-    'l2_listening_introduction.mp3',
-    'l4_listening_present_forms.mp3',
-    'l5_listening_time.mp3',
-    'l6_listening_a0_review.mp3',
-  ];
-  for (const fileName of publishedListening) {
-    const filePath = path.join(audioDirectory, fileName);
-    assert.equal(existsSync(filePath), true, fileName);
-    assert.ok(readFileSync(filePath).byteLength > 0, fileName);
-  }
-});
-
-test('normalized e-mail uniqueness is represented by a local idempotent migration', () => {
-  const migration = readFileSync(
-    path.join(projectRoot, 'supabase', 'migrations', '20260822134454_app_users_email_unique.sql'),
-    'utf8'
-  );
-  assert.match(migration, /create unique index if not exists/i);
-  assert.match(migration, /lower\(email\)/i);
-});
-
-test('fresh PostgreSQL migration defines every server-side persistence table and protects it with RLS', () => {
-  const migration = readFileSync(
-    path.join(projectRoot, 'supabase', 'migrations', '20260822134454_app_users_email_unique.sql'),
-    'utf8'
-  );
-  const requiredTables = [
-    'app_users',
-    'user_sessions',
-    'admin_sessions',
-    'user_progress',
-    'processed_stripe_events',
-    'word_overrides',
-    'audio_overrides',
-  ];
-  for (const table of requiredTables) {
-    assert.match(migration, new RegExp(`create table if not exists public\\.${table}\\b`, 'i'), table);
-    assert.match(migration, new RegExp(`alter table public\\.${table} enable row level security`, 'i'), table);
-  }
-  assert.match(migration, /review_cards jsonb not null default '\{\}'::jsonb/i);
-});
-
-test('browser subscription access is restored only from a server-verified session', () => {
-  const userStore = readFileSync(path.join(projectRoot, 'src', 'utils', 'userStore.ts'), 'utf8');
-  assert.doesNotMatch(userStore, /localStorage\.getItem\([^)]*student_profile/i);
-  assert.match(userStore, /catch \(err\)[\s\S]*?setCurrentUser\(null\)[\s\S]*?return null;/);
+test('Firebase and Lemon production files exist', () => {
+  for (const name of ['firestore.rules', 'storage.rules', 'firebase.json', 'functions/src/index.ts']) assert.equal(existsSync(path.join(root, name)), true, name);
 });

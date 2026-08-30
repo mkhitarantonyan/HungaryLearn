@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { X, Pencil, Upload, Trash2, Volume2, Save, Check, Mic, Square, Loader2 } from 'lucide-react';
-import { getWordOverride, setWordOverride, removeWordOverride, WordOverride } from '../utils/adminStore';
+import { getWordOverride, setWordOverride, removeWordOverride } from '../utils/adminStore';
 import { playRecordedAudio, stopRecordedAudio } from '../utils/speech';
 import { ConfirmDialog } from './ConfirmDialog';
 
@@ -68,7 +68,7 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
-    } catch (err) {
+    } catch {
       alert("Не удалось получить доступ к микрофону. Проверьте разрешения браузера.");
     }
   };

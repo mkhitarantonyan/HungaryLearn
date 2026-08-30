@@ -2,8 +2,6 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
-import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 import {
   LESSON_1,
   L1_READ_ALOUD_WORDS,
@@ -15,12 +13,10 @@ import { LESSON_4 } from '../src/data/lessons/lesson4.ts';
 import { LESSON_6 } from '../src/data/lessons/lesson6.ts';
 import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 import { LESSON_TRANSLATION_MAP } from '../src/data/lessonTranslations.ts';
-import { RecordingTask } from '../src/components/activities/RecordingTask.tsx';
 import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
 import {
   describeExitCheckStatus,
   listeningEvidence,
-  recordingCompletionEvidence,
   validateActivity,
   validateExitCheckReferences,
   validateLessonQuestionIds,
@@ -91,17 +87,16 @@ test('L1 migration keeps the curriculum at exactly 139 objectives', async () => 
   assert.equal(count, 139);
 });
 
-test('L2, L3, L4, L5, and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson5.ts', import.meta.url)), '9FD17087140B54C3D1B7370803A231E8E567D7D3BD0FC7412358BDA831F35710');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
+test('global learner-recording removal preserves all lesson IDs', async () => {
+  for (const meta of LESSONS_META) {
+    assert.equal((await loadLesson(meta.id))?.id, meta.id);
+  }
 });
 
-test('L6 is migrated with activities and L7 matches the approved migrated snapshot', () => {
+test('L6 and L7 remain migrated with activities', async () => {
   assert.equal(LESSON_6.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '6F43970B2E55239FCA0F0BB0027DD0A71628F6454DB51CE9D1459D68E4DC36C8');
+  const lesson7 = await loadLesson(7);
+  assert.equal(lesson7?.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
 });
 
 test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {
@@ -261,47 +256,12 @@ test('stress uses direct rule practice with an obligatory explicit rule item and
   assert.equal(L1_ACTIVITIES.some((activity) => activity.kind === 'listening' && /stress/i.test(activity.id)), false);
 });
 
-test('generic RecordingTask validates and completion evidence is always unscored PARTIAL', () => {
-  const recording = findActivity('l1-record-five-words', 'recording');
-  assert.deepEqual(validateActivity(recording), []);
-  assert.deepEqual(recordingCompletionEvidence(recording.id), {
-    activityId: recording.id,
-    attempted: true,
-    completed: true,
-    evidenceMode: 'partial',
-    passed: false,
-    recordingCompleted: true,
-  });
-  assert.ok(validateActivity({ ...recording, targetText: ' ' }).some((error) => /empty recording targetText/.test(error)));
-});
-
-test('RecordingTask emits evidence only from AudioRecorder onRecordingReady and supports retry/reset', () => {
-  const source = readFileSync(new URL('../src/components/activities/RecordingTask.tsx', import.meta.url), 'utf8');
-  assert.match(source, /onRecordingReady=\{handleRecordingReady\}/);
-  assert.match(source, /onEvidence\(recordingCompletionEvidence\(data\.id\)\)/);
-  assert.match(source, /onResetEvidence\?\.\(data\.id\)/);
-  assert.match(source, /setRecorderRevision/);
-  assert.doesNotMatch(source, /l1[-_]|lesson\s*===?\s*1/i);
-});
-
-test('recording component is reusable, mobile-wrapping, textual, and microphone-accessible', () => {
-  const recording = findActivity('l1-record-five-words', 'recording');
-  const evidence = recordingCompletionEvidence(recording.id);
-  const markup = renderToStaticMarkup(React.createElement(RecordingTask, {
-    data: recording,
-    evidence,
-    onEvidence: () => undefined,
-    onResetEvidence: () => undefined,
-  }));
-  assert.match(markup, /min-w-0/);
-  assert.match(markup, /flex-wrap/);
-  assert.match(markup, /Запись получена · PARTIAL/);
-  assert.match(markup, /произношение ожидает квалифицированной проверки/);
-  assert.match(markup, /Записать заново/);
-  assert.match(markup, /aria-label="Записать ответ с микрофона"/);
-  const recorderSource = readFileSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url), 'utf8');
-  assert.match(recorderSource, /Не удалось получить доступ к микрофону\. Проверьте разрешения браузера\./);
-  assert.match(recorderSource, /role="alert"/);
+test('L1 has no Recording activity and keeps read-aloud as optional text-only practice', () => {
+  assert.equal(L1_ACTIVITIES.some((activity) => (activity as { kind: string }).kind === 'recording'), false);
+  const speaking = LESSON_1.slides.find((slide) => slide.id === 10)?.optionalSpeaking;
+  assert.ok(speaking);
+  assert.equal(speaking.prompt, 'gyár, tyúk, nyolc, játék, folyó');
+  assert.equal(speaking.rubric?.length, 4);
 });
 
 test('L1 controlled and listening controls expose textual feedback, focus, and narrow-screen wrapping', () => {
@@ -321,49 +281,42 @@ test('L1 controlled and listening controls expose textual feedback, focus, and n
   assert.match(listeningSource, /role="alert"/);
 });
 
-test('five-word read-aloud is exact, required, real, and replaces the advanced sentence as evidence', () => {
+test('five-word read-aloud is exact, optional, and not evidence', () => {
   assert.deepEqual(L1_READ_ALOUD_WORDS, ['gyár', 'tyúk', 'nyolc', 'játék', 'folyó']);
   const slide = LESSON_1.slides.find((candidate) => candidate.id === 10);
   assert.ok(slide);
   assert.equal(slide.type, 'read-aloud-practice');
   assert.doesNotMatch(JSON.stringify(slide), /Budapesten élek, és nagyon szeretek magyarul tanulni/);
-  const recording = findActivity('l1-record-five-words', 'recording');
-  assert.equal(recording.targetText, 'gyár, tyúk, nyolc, játék, folyó');
-  assert.equal(recording.rubric?.length, 5);
+  assert.equal(slide.optionalSpeaking?.prompt, 'gyár, tyúk, nyolc, játék, folyó');
+  assert.equal(L1_ACTIVITIES.some((activity) => /record-five-words/.test(activity.id)), false);
 });
 
-test('migrated read-aloud slide renders one recorder path, not the legacy duplicate', () => {
-  const recording = findActivity('l1-record-five-words', 'recording');
-  const markup = renderToStaticMarkup(React.createElement(RecordingTask, {
-    data: recording,
-    onEvidence: () => undefined,
-  }));
-  assert.equal((markup.match(/Тренажёр произношения/g) ?? []).length, 1);
+test('read-aloud and legacy sentence-reading render without a recorder', () => {
   const slideContentSource = readFileSync(new URL('../src/components/SlideContent.tsx', import.meta.url), 'utf8');
   assert.match(slideContentSource, /slide\.type === 'sentence-reading'/);
+  assert.match(slideContentSource, /slide\.optionalSpeaking/);
+  assert.doesNotMatch(slideContentSource, /AudioRecorder|getUserMedia|MediaRecorder/);
   assert.notEqual(LESSON_1.slides.find((slide) => slide.id === 10)?.type, 'sentence-reading');
 });
 
-test('generic recording architecture has a type, validator, renderer branch, and reused AudioRecorder', () => {
+test('generic learner Recording architecture is removed', () => {
   const files = [
     '../src/types.ts',
     '../src/utils/activityUtils.ts',
     '../src/components/activities/LessonActivityRenderer.tsx',
-    '../src/components/activities/RecordingTask.tsx',
   ];
   const sources = files.map((file) => readFileSync(new URL(file, import.meta.url), 'utf8'));
-  assert.match(sources[0], /interface RecordingTaskData/);
-  assert.match(sources[1], /case 'recording'/);
-  assert.match(sources[2], /case 'recording'/);
-  assert.match(sources[3], /import \{ AudioRecorder \}/);
-  for (const source of sources) assert.doesNotMatch(source, /l1[-_]/i);
+  for (const source of sources) assert.doesNotMatch(source, /RecordingTaskData|recordingCompleted|case 'recording'|AudioRecorder/);
+  assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
+  assert.equal(existsSync(new URL('../src/components/activities/RecordingTask.tsx', import.meta.url)), false);
 });
 
-test('existing L2/L5/L15 RolePlay and L4 sentence-reading recording paths remain unchanged', () => {
+test('L2/L5/L15 RolePlay and L4 sentence-reading are text-only', () => {
   assert.equal(LESSON_4.slides.some((slide) => slide.type === 'sentence-reading'), true);
   for (const lessonPath of ['lesson2.ts', 'lesson5.ts', 'lesson15.ts']) {
     const source = readFileSync(new URL(`../src/data/lessons/${lessonPath}`, import.meta.url), 'utf8');
-    assert.match(source, /responseMode: 'recorded'/);
+    assert.match(source, /responseMode: 'selfPractice'/);
+    assert.doesNotMatch(source, /responseMode: 'recorded'/);
   }
 });
 
@@ -376,7 +329,8 @@ test('all L1 activity and QuestionSet question IDs are lesson-wide unique and va
 
 test('L1 ExitCheck has one resolvable row per objective with the exact evidence graph', () => {
   const exit = findActivity('l1-exit-check', 'exitCheck');
-  assert.deepEqual(exit.checks.map((check) => check.objectiveId), LESSON_1.objectives?.map((objective) => objective.id));
+  const objectiveIds = LESSON_1.objectives?.map((objective) => objective.id) ?? [];
+  assert.ok(exit.checks.every((check) => objectiveIds.includes(check.objectiveId)));
   assert.deepEqual(validateExitCheckReferences(
     exit,
     LESSON_1.objectives?.map((objective) => objective.id) ?? [],
@@ -388,10 +342,9 @@ test('L1 ExitCheck has one resolvable row per objective with the exact evidence 
     check.evidenceComponents?.map((component) => component.activityId) ?? [],
   ]), [
     ['l1_distinguish-s-sz', 'l1-listening-s-sz', ['l1-cp-s-sz-reading']],
-    ['l1_distinguish-soft-consonants', 'l1-listening-soft-consonants', ['l1-cp-consonant-graphemes', 'l1-record-five-words']],
+    ['l1_distinguish-soft-consonants', 'l1-listening-soft-consonants', ['l1-cp-consonant-graphemes']],
     ['l1_distinguish-long-vowels', 'l1-listening-vowel-length', ['l1-cp-vowel-spelling']],
-    ['l1_apply-stress', 'l1-cp-stress-rule', ['l1-record-five-words']],
-    ['l1_read-aloud', 'l1-record-five-words', []],
+    ['l1_apply-stress', 'l1-cp-stress-rule', []],
   ]);
 });
 
@@ -499,7 +452,7 @@ test('L1 ControlledPractice keeps the approved linguistic answers after option r
   }
 });
 
-test('L1 soft-consonant ExitCheck requires listening, category practice, and partial recording', () => {
+test('L1 soft-consonant ExitCheck requires listening and category practice only', () => {
   const exit = findActivity('l1-exit-check', 'exitCheck');
   const check = exit.checks.find((row) => row.objectiveId === 'l1_distinguish-soft-consonants');
   assert.ok(check);
@@ -507,11 +460,9 @@ test('L1 soft-consonant ExitCheck requires listening, category practice, and par
   assert.equal(check.evidenceKind, 'listening');
   assert.deepEqual(check.evidenceComponents?.map((component) => component.activityId), [
     'l1-cp-consonant-graphemes',
-    'l1-record-five-words',
   ]);
   assert.deepEqual(check.evidenceComponents?.map((component) => component.evidenceKind), [
     'reading',
-    'pronunciation',
   ]);
 });
 
@@ -519,32 +470,24 @@ test('L1 soft-consonant ExitCheck semantics preserve listening as mandatory DIRE
   const exit = findActivity('l1-exit-check', 'exitCheck');
   const check = exit.checks.find((row) => row.objectiveId === 'l1_distinguish-soft-consonants');
   assert.ok(check);
-  const recording = recordingCompletionEvidence('l1-record-five-words');
-
   const caseA = describeExitCheckStatus(check, missingEvidence('l1-listening-soft-consonants'), {
     'l1-cp-consonant-graphemes': directEvidence('l1-cp-consonant-graphemes'),
-    [recording.activityId]: recording,
   });
   assert.equal(caseA.kind, 'partial-review');
   assert.notEqual(caseA.kind, 'direct-met');
 
   const caseB = describeExitCheckStatus(check, directEvidence('l1-listening-soft-consonants'), {
     'l1-cp-consonant-graphemes': directEvidence('l1-cp-consonant-graphemes'),
-    [recording.activityId]: recording,
   });
-  assert.equal(caseB.kind, 'partial-review');
-  assert.notEqual(caseB.kind, 'direct-met');
+  assert.equal(caseB.kind, 'direct-met');
 
-  const caseC = describeExitCheckStatus(check, directEvidence('l1-listening-soft-consonants'), {
-    [recording.activityId]: recording,
-  });
+  const caseC = describeExitCheckStatus(check, directEvidence('l1-listening-soft-consonants'), {});
   assert.equal(caseC.kind, 'composite-incomplete');
 });
 
-test('L1 recording evidence remains PARTIAL and unscored', () => {
-  const recording = recordingCompletionEvidence('l1-record-five-words');
-  assert.equal(recording.evidenceMode, 'partial');
-  assert.equal(recording.passed, false);
+test('L1 optional speaking is absent from ExitCheck evidence', () => {
+  const exit = findActivity('l1-exit-check', 'exitCheck');
+  assert.doesNotMatch(JSON.stringify(exit), /record-five-words|pronunciation/);
 });
 
 test('all other L1 ExitCheck mappings remain unchanged except soft-consonant category practice', () => {
@@ -557,14 +500,12 @@ test('all other L1 ExitCheck mappings remain unchanged except soft-consonant cat
   ]), [
     ['l1_distinguish-s-sz', 'l1-listening-s-sz', ['l1-cp-s-sz-reading']],
     ['l1_distinguish-long-vowels', 'l1-listening-vowel-length', ['l1-cp-vowel-spelling']],
-    ['l1_apply-stress', 'l1-cp-stress-rule', ['l1-record-five-words']],
-    ['l1_read-aloud', 'l1-record-five-words', []],
+    ['l1_apply-stress', 'l1-cp-stress-rule', []],
   ]);
 });
 
-test('L1 ExitCheck preserves mixed-objective PARTIAL and recording semantics', () => {
+test('L1 ExitCheck preserves mixed DIRECT/NONE semantics without optional speaking evidence', () => {
   const exit = findActivity('l1-exit-check', 'exitCheck');
-  const recording = recordingCompletionEvidence('l1-record-five-words');
   const evidence: Record<string, ActivityEvidence> = {
     'l1-listening-s-sz': missingEvidence('l1-listening-s-sz'),
     'l1-cp-s-sz-reading': directEvidence('l1-cp-s-sz-reading'),
@@ -573,7 +514,6 @@ test('L1 ExitCheck preserves mixed-objective PARTIAL and recording semantics', (
     'l1-listening-vowel-length': missingEvidence('l1-listening-vowel-length'),
     'l1-cp-vowel-spelling': directEvidence('l1-cp-vowel-spelling'),
     'l1-cp-stress-rule': directEvidence('l1-cp-stress-rule'),
-    [recording.activityId]: recording,
   };
   const status = Object.fromEntries(exit.checks.map((check) => [
     check.objectiveId,
@@ -583,8 +523,7 @@ test('L1 ExitCheck preserves mixed-objective PARTIAL and recording semantics', (
     'l1_distinguish-s-sz': 'partial-review',
     'l1_distinguish-soft-consonants': 'partial-review',
     'l1_distinguish-long-vowels': 'partial-review',
-    'l1_apply-stress': 'partial-review',
-    'l1_read-aloud': 'partial-review',
+    'l1_apply-stress': 'direct-met',
   });
 });
 

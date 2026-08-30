@@ -7,8 +7,17 @@ import { PageHeader, Pill, SecondaryButton } from '../../components/admin/AdminU
 function subscriptionLabel(user: AdminUser): string {
   if (user.isPrivileged) return 'Полный доступ';
   if (user.subscriptionStatus === 'active') return 'Премиум';
+  if (user.subscriptionStatus === 'cancelled') return 'Отменена';
   if (user.subscriptionStatus === 'past_due') return 'Просрочено';
+  if (user.subscriptionStatus === 'paused') return 'Приостановлена';
+  if (user.subscriptionStatus === 'expired') return 'Закончилась';
   return 'Без подписки';
+}
+
+function accessDate(value: string | undefined): string {
+  if (!value) return '—';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleDateString('ru-RU');
 }
 
 export default function AdminUsers() {
@@ -33,7 +42,7 @@ export default function AdminUsers() {
     <div>
       <PageHeader
         title="Пользователи"
-        subtitle={`${users.length} реальных учётных записей PostgreSQL`}
+        subtitle={`${users.length} учётных записей Firebase`}
         action={
           <SecondaryButton onClick={() => void refresh()} disabled={loading}>
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -43,7 +52,7 @@ export default function AdminUsers() {
       />
 
       <div className="mb-5 rounded-xl border border-indigo-100 bg-indigo-50 p-3.5 text-xs leading-relaxed text-indigo-900/80">
-        Подписками управляет Stripe. Здесь можно только выдать или отозвать локальную привилегию полного доступа; изменение подтверждается PostgreSQL до обновления таблицы.
+        Подписками управляет Lemon Squeezy. Здесь можно выдать или отозвать привилегию полного доступа; изменение подтверждается Cloud Function и сохраняется в Firestore.
       </div>
 
       {(error || actionError) && (
@@ -73,9 +82,9 @@ export default function AdminUsers() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] text-left">
+            <table className="w-full min-w-[1100px] text-left">
               <thead className="border-b border-gray-200 bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
-                <tr><th className="px-5 py-3">E-mail</th><th className="px-5 py-3">Регистрация</th><th className="px-5 py-3">Доступ</th><th className="px-5 py-3 text-right">Привилегия</th></tr>
+                <tr><th className="px-5 py-3">E-mail</th><th className="px-5 py-3">Регистрация</th><th className="px-5 py-3">Доступ</th><th className="px-5 py-3">До</th><th className="px-5 py-3">Lemon Squeezy</th><th className="px-5 py-3 text-right">Привилегия</th></tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map((user) => {
@@ -87,6 +96,16 @@ export default function AdminUsers() {
                       </td>
                       <td className="px-5 py-3.5 text-sm text-gray-600">{new Date(user.createdAt).toLocaleDateString('ru-RU')}</td>
                       <td className="px-5 py-3.5"><Pill tone={user.isPrivileged ? 'green' : user.subscriptionStatus === 'past_due' ? 'red' : 'gray'}>{subscriptionLabel(user)}</Pill></td>
+                      <td className="px-5 py-3.5 text-sm text-gray-600">{accessDate(user.accessUntil)}</td>
+                      <td className="px-5 py-3.5 text-xs text-gray-500">
+                        {user.provider === 'lemonsqueezy' ? (
+                          <div className="space-y-0.5 font-mono">
+                            <div title={user.lemonSubscriptionId || ''}>sub: {user.lemonSubscriptionId || '—'}</div>
+                            <div title={user.lemonCustomerId || ''}>customer: {user.lemonCustomerId || '—'}</div>
+                            <div>variant: {user.lemonVariantId || '—'}{user.testMode ? ' · TEST' : ''}</div>
+                          </div>
+                        ) : '—'}
+                      </td>
                       <td className="px-5 py-3.5 text-right">
                         <button
                           type="button"

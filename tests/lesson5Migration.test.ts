@@ -75,11 +75,12 @@ test('curriculum remains exactly 139 objectives', async () => {
   assert.equal(objectiveCount, 139);
 });
 
-test('L2, L3, L4, and L15 approved lesson modules remain byte-for-byte frozen', () => {
-  assert.equal(sha256(new URL('../src/data/lessons/lesson2.ts', import.meta.url)), '67DA2EB242DA8ABFC63513CF5F55D2DFEE15332D38BC842F9B38C070F95AB6F0');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson3.ts', import.meta.url)), 'D49F879B23FD7DF22E51340AB98ABF35E9BB658C881DFCFD429C184DBFC6124C');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson4.ts', import.meta.url)), 'A1B0A9AB5CD01BA2AB7253B29FB42D7FA5E9490349170EB7CC5A5FF315A3009C');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
+test('L2, L3, L4, and L15 keep their identities while learner Recording is removed', async () => {
+  for (const id of [2, 3, 4, 15]) {
+    const lesson = await loadLesson(id);
+    assert.equal(lesson?.id, id);
+    assert.equal(lesson?.slides.flatMap((slide) => slide.activities ?? []).some((activity) => (activity as { kind: string }).kind === 'recording'), false);
+  }
 });
 
 test('L1 migration is present while frozen planning/translation files stay unchanged', async () => {
@@ -237,7 +238,7 @@ test('name-days ExitCheck requires weekdays, months, and partial speech together
   const evidence = {
     'l5-cp-weekday-order': directEvidence('l5-cp-weekday-order'),
     'l5-cp-month-order': directEvidence('l5-cp-month-order'),
-    'l5-roleplay-schedule': rolePlayCompletionEvidence('l5-roleplay-schedule', true),
+    'l5-roleplay-schedule': rolePlayCompletionEvidence('l5-roleplay-schedule'),
   };
   assert.equal(describeExitCheckStatus(check, evidence[check.activityId], evidence).kind, 'partial-review');
 });
@@ -253,7 +254,7 @@ test('L5 count and name-days remain incomplete until every required producer sta
   const weekdays = directEvidence('l5-cp-weekday-order');
   const recognition = directEvidence('l5-cp-number-recognition');
   const months = directEvidence('l5-cp-month-order');
-  const speaking = rolePlayCompletionEvidence('l5-roleplay-schedule', true);
+  const speaking = rolePlayCompletionEvidence('l5-roleplay-schedule');
 
   const countIncomplete = describeExitCheckStatus(countCheck, listening, {
     [speaking.activityId]: speaking,
@@ -306,7 +307,7 @@ test('L2 not-started interaction is incomplete while missing audio plus complete
     evidenceMode: 'none',
     passed: false,
   };
-  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings', true);
+  const interaction = rolePlayCompletionEvidence('l2-roleplay-greetings');
   const partial = describeExitCheckStatus(check, missingListening, {
     [interaction.activityId]: interaction,
   });
@@ -358,28 +359,27 @@ test('open schedule writing remains PARTIAL and uses only L4-compatible producti
   assert.doesNotMatch(JSON.stringify(writing), /-tól|-től|jó lenne|találkozzunk/i);
 });
 
-test('RolePlay records bounded samples including two time answers and two exchanges', () => {
+test('RolePlay keeps bounded text-only self-practice turns', () => {
   const rolePlay = findActivity('l5-roleplay-schedule', 'rolePlay');
-  const recordedTurns = rolePlay.turns.filter((turn) => turn.responseMode === 'recorded');
-  assert.equal(recordedTurns.length, 6);
-  assert.equal(recordedTurns.filter((turn) => turn.id.startsWith('l5-record-time-')).length, 2);
-  assert.equal(recordedTurns.filter((turn) => turn.id.startsWith('l5-record-schedule-')).length, 2);
-  assert.equal(recordedTurns.filter((turn) => turn.id === 'l5-record-number-sample').length, 1);
-  assert.equal(recordedTurns.filter((turn) => turn.id === 'l5-record-calendar-sample').length, 1);
-  assert.deepEqual(rolePlayCompletionEvidence(rolePlay.id, true), {
+  const practiceTurns = rolePlay.turns.filter((turn) => turn.responseMode === 'selfPractice');
+  assert.equal(practiceTurns.length, 6);
+  assert.equal(practiceTurns.filter((turn) => turn.id.startsWith('l5-record-time-')).length, 2);
+  assert.equal(practiceTurns.filter((turn) => turn.id.startsWith('l5-record-schedule-')).length, 2);
+  assert.equal(practiceTurns.filter((turn) => turn.id === 'l5-record-number-sample').length, 1);
+  assert.equal(practiceTurns.filter((turn) => turn.id === 'l5-record-calendar-sample').length, 1);
+  assert.deepEqual(rolePlayCompletionEvidence(rolePlay.id), {
     activityId: rolePlay.id,
     attempted: true,
     completed: true,
     evidenceMode: 'partial',
     passed: false,
-    recordingCompleted: true,
   });
 });
 
 test('all five ExitCheck rows preserve honest DIRECT/PARTIAL/NONE semantics', () => {
   const exit = findActivity('l5-exit-check', 'exitCheck');
   assert.deepEqual(exit.checks.map((check) => check.objectiveId), LESSON_5.objectives?.map((objective) => objective.id));
-  const partial = rolePlayCompletionEvidence('l5-roleplay-schedule', true);
+  const partial = rolePlayCompletionEvidence('l5-roleplay-schedule');
   const missingListening = (activityId: string): ActivityEvidence => ({
     activityId,
     attempted: true,

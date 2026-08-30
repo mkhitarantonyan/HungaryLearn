@@ -5,205 +5,28 @@ import test from 'node:test';
 import { LESSON_TRANSLATION_MAP } from '../src/data/lessonTranslations.ts';
 import { LESSONS_META } from '../src/data/lessons/index.ts';
 import { LESSON_8 } from '../src/data/lessons/lesson8.ts';
-import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
-import {
-  describeExitCheckStatus,
-  listeningEvidence,
-  recordingCompletionEvidence,
-  validateActivity,
-  validateExitCheckReferences,
-  validateLessonQuestionIds,
-  writingEvidence,
-} from '../src/utils/activityUtils.ts';
+import type { ActivityEvidence, LessonActivity, ProseReadingContent } from '../src/types.ts';
+import { describeExitCheckStatus, listeningEvidence, rolePlayCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
 
-const ACTIVITIES = LESSON_8.slides.flatMap((slide) => slide.activities ?? []);
+const activities=LESSON_8.slides.flatMap((slide)=>slide.activities??[]);const source=readFileSync(new URL('../src/data/lessons/lesson8.ts',import.meta.url),'utf8');
+function find<K extends LessonActivity['kind']>(id:string,kind:K):Extract<LessonActivity,{kind:K}>{const activity=activities.find((candidate)=>candidate.id===id);assert.ok(activity,`missing ${id}`);assert.equal(activity.kind,kind);return activity as Extract<LessonActivity,{kind:K}>;}
+function prose(reading:Extract<LessonActivity,{kind:'reading'}>):ProseReadingContent{assert.ok(reading.content);assert.equal(reading.content.type,'prose');if(reading.content.type!=='prose')assert.fail();return reading.content;}
+const direct=(activityId:string):ActivityEvidence=>({activityId,attempted:true,completed:true,passed:true,evidenceMode:'direct'});
 
-function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
-}
+test('L8 preserves identity, objective IDs, quiz IDs, vocabulary IDs, and eleven slides',()=>{assert.deepEqual([LESSON_8.id,LESSON_8.number,LESSON_8.level,LESSON_8.slidesCount,LESSON_8.slides.length],[8,8,'A1',11,11]);assert.deepEqual(LESSON_8.slides.map((slide)=>slide.id),[1,2,3,4,5,6,7,8,9,10,11]);assert.deepEqual(LESSON_8.objectives?.map((o)=>o.id),['l8_name-family','l8_form-possessive','l8_use-possessive','l8_distinguish-possessors','l8_describe-family']);assert.deepEqual(LESSON_8.quiz?.map((q)=>q.id),[801,802,803,804,805,806]);assert.deepEqual(LESSON_8.vocabulary?.map((v)=>v.id),Array.from({length:10},(_,i)=>`l8_v${i+1}`));for(let slide=1;slide<=11;slide+=1)assert.equal(existsSync(new URL(`../public/audio/8.${slide}.mp3`,import.meta.url)),true);});
 
-function findActivity<TKind extends LessonActivity['kind']>(
-  id: string,
-  kind: TKind
-): Extract<LessonActivity, { kind: TKind }> {
-  const activity = ACTIVITIES.find((candidate) => candidate.id === id);
-  assert.ok(activity, `missing L8 activity ${id}`);
-  assert.equal(activity.kind, kind);
-  return activity as Extract<LessonActivity, { kind: TKind }>;
-}
+test('L8 exposes the complete valid communication sequence and resolvable ExitCheck',()=>{assert.deepEqual(activities.map((a)=>a.kind),['controlledPractice','reading','listening','rolePlay','writing','exitCheck']);assert.deepEqual(activities.flatMap(validateActivity),[]);assert.deepEqual(validateLessonQuestionIds(activities),[]);const exit=find('l8-exit-check','exitCheck');assert.deepEqual(validateExitCheckReferences(exit,LESSON_8.objectives?.map((o)=>o.id)??[],activities.map((a)=>a.id)),[]);});
 
-function directEvidence(activityId: string): ActivityEvidence {
-  return { activityId, attempted: true, completed: true, evidenceMode: 'direct', passed: true };
-}
+test('L8 practice has fourteen contextual family and singular-possession items at 11/14',()=>{const cp=find('l8-cp-singular-possessives','controlledPractice');assert.deepEqual([cp.exercises.length,cp.passCount],[14,11]);const text=JSON.stringify(cp);for(const token of ['testvér','Ez az anyukám','házam','házad','háza','Van egy testvérem','Nincs testvérem','Anyám tanár','Hol laknak a szüleid','Hány éves a fiad','Ez Anna könyve'])assert.ok(text.includes(token),token);});
 
-test('L8 preserves identity, narration slots, objective IDs, and quiz IDs', () => {
-  assert.equal(LESSON_8.id, 8);
-  assert.equal(LESSON_8.number, 8);
-  assert.equal(LESSON_8.level, 'A1');
-  assert.equal(LESSON_8.slidesCount, 12);
-  assert.deepEqual(LESSON_8.slides.map((slide) => slide.id), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-  assert.deepEqual(LESSON_8.objectives?.map((objective) => objective.id), [
-    'l8_name-family',
-    'l8_form-possessive',
-    'l8_use-possessive',
-    'l8_distinguish-possessors',
-    'l8_describe-family',
-  ]);
-  assert.deepEqual(LESSON_8.quiz?.map((question) => question.id), [801, 802, 803, 804, 805, 806]);
-  for (const slide of LESSON_8.slides) {
-    assert.equal(existsSync(new URL(`../public/audio/8.${slide.id}.mp3`, import.meta.url)), true);
-  }
-});
+test('L8 Reading is a 140–170 word family profile with seven meaning questions',()=>{const reading=find('l8-reading-family-profile','reading');const content=prose(reading);const words=content.paragraphs.join(' ').trim().split(/\s+/u).length;assert.ok(words>=140&&words<=170,`words=${words}`);assert.deepEqual([reading.questions.length,reading.passCount],[7,6]);assert.match(content.title??'',/Két család egy házban/);assert.match(content.paragraphs.join(' '),/Kovács család.*Anna.*szüleik.*szombaton.*együtt/s);});
 
-test('L8 has nine unique valid generic activities and a resolvable ExitCheck', () => {
-  assert.equal(ACTIVITIES.length, 9);
-  assert.deepEqual(ACTIVITIES.map((activity) => activity.kind).sort(), [
-    'controlledPractice', 'controlledPractice', 'controlledPractice', 'controlledPractice',
-    'exitCheck', 'listening', 'reading', 'recording', 'writing',
-  ].sort());
-  assert.equal(new Set(ACTIVITIES.map((activity) => activity.id)).size, ACTIVITIES.length);
-  for (const activity of ACTIVITIES) assert.deepEqual(validateActivity(activity), []);
-  assert.deepEqual(validateLessonQuestionIds(ACTIVITIES), []);
+test('L8 family RolePlay has eight learner turns, asks back, and remains PARTIAL',()=>{const rolePlay=find('l8-roleplay-family-talk','rolePlay');assert.deepEqual([rolePlay.turns.length,rolePlay.turns.filter((t)=>t.speaker==='learner').length],[17,8]);assert.ok(rolePlay.turns.filter((t)=>t.speaker==='learner').every((t)=>t.responseMode==='selfPractice'));assert.match(JSON.stringify(rolePlay),/Van testvéred.*Mi a testvéred neve.*Hol lakik.*szüleid.*És neked van testvéred/s);assert.equal(rolePlayCompletionEvidence(rolePlay.id).evidenceMode,'partial');});
 
-  const exit = findActivity('l8-exit-check', 'exitCheck');
-  assert.deepEqual(exit.checks.map((check) => check.objectiveId), LESSON_8.objectives?.map((objective) => objective.id));
-  assert.deepEqual(validateExitCheckReferences(
-    exit,
-    LESSON_8.objectives?.map((objective) => objective.id) ?? [],
-    ACTIVITIES.map((activity) => activity.id)
-  ), []);
-});
+test('L8 Writing is 60–80 words while optional Speaking is text-only and non-evidentiary',()=>{const writing=find('l8-writing-family-description','writing');const words=writing.modelAnswer.join(' ').trim().split(/\s+/u).length;assert.ok(words>=60&&words<=80,`words=${words}`);assert.match(writing.prompt,/60–80 слов/);assert.equal(writingEvidence(writing.modelAnswer.join(' '),true).evidenceMode,'partial');const speaking=LESSON_8.slides.find((slide)=>slide.optionalSpeaking)?.optionalSpeaking;assert.ok(speaking);assert.match(speaking.instructions,/1–1\.5 минуты.*без микрофона.*score.*evidence/s);assert.doesNotMatch(source,/SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask|MediaRecorder|getUserMedia|kind:\s*['"]recording/i);});
 
-test('formation is 8/10 DIRECT and written owner identification exists', () => {
-  const formation = findActivity('l8-cp-singular-possessives', 'controlledPractice');
-  assert.equal(formation.exercises.length, 10);
-  assert.equal(formation.passCount, 8);
-  assert.deepEqual(formation.exercises.map((exercise) => 'accept' in exercise ? exercise.accept[0] : ''), [
-    'házam', 'házad', 'háza', 'anyám', 'anyád', 'anyja', 'apám', 'apád', 'apja', 'testvérem',
-  ]);
+test('L8 preserves the exact published Listening contract and MP3 hash',()=>{const listening=find('l8-listening-possessives','listening');assert.deepEqual([listening.assetId,listening.audioStatus,listening.questions.length,listening.passCount],['l8_listening_possessives','published',4,4]);assert.equal(listening.transcript,'Az én nevem Anna. Anyám tanár, apám orvos. Péter a testvérem. Péter háza nagy, az én házam kicsi. A te családod nagy?');assert.equal(createHash('sha256').update(readFileSync(new URL('../public/audio/l8_listening_possessives.mp3',import.meta.url))).digest('hex'),'77aaf4a84d20e4ef61419eb0535d6c31b2ab3c0079440ed6508c29451f70879e');assert.equal(listeningEvidence(listening,4,4,true).evidenceMode,'direct');assert.equal(listeningEvidence(listening,4,4,false).evidenceMode,'none');});
 
-  const ownerText = findActivity('l8-cp-owner-text', 'controlledPractice');
-  assert.ok(ownerText.exercises.length >= 6);
-  assert.ok(ownerText.exercises.every((exercise) => exercise.kind === 'singleChoice'));
-  assert.match(ownerText.exercises.map((exercise) => exercise.prompt).join(' '), /házam.*házad.*háza/);
-});
+test('L8 ExitCheck keeps constrained work DIRECT and family production PARTIAL',()=>{const exit=find('l8-exit-check','exitCheck');const listening=find('l8-listening-possessives','listening');const evidence:Record<string,ActivityEvidence>={'l8-cp-singular-possessives':direct('l8-cp-singular-possessives'),'l8-listening-possessives':{activityId:'l8-listening-possessives',attempted:true,completed:true,...listeningEvidence(listening,4,4,true)},'l8-roleplay-family-talk':rolePlayCompletionEvidence('l8-roleplay-family-talk'),'l8-writing-family-description':{activityId:'l8-writing-family-description',attempted:true,selfReviewed:true,...writingEvidence('A sufficiently developed family description for review.',true)}};assert.deepEqual(Object.fromEntries(exit.checks.map((c)=>[c.objectiveId,describeExitCheckStatus(c,evidence[c.activityId],evidence).kind])),{'l8_name-family':'direct-met','l8_form-possessive':'direct-met','l8_use-possessive':'direct-met','l8_distinguish-possessors':'direct-met','l8_describe-family':'partial-review'});});
 
-test('ReadingTask checks relationships and ownership rather than suffix spotting', () => {
-  const reading = findActivity('l8-reading-family-profile', 'reading');
-  const readingContent = reading.content;
-  assert.ok(readingContent);
-  assert.equal(readingContent.type, 'prose');
-  assert.equal(reading.questions.length, 5);
-  assert.equal(reading.passCount, 4);
-  assert.match(reading.questions.map((question) => question.question).join(' '), /Кем|Кто|Чей/);
-  assert.doesNotMatch(reading.instructions ?? '', /найди.*суффикс/i);
-});
-
-test('published dedicated MP3 is DIRECT and has no TTS or narration fallback', () => {
-  const listening = findActivity('l8-listening-possessives', 'listening');
-  assert.equal(listening.assetId, 'l8_listening_possessives');
-  assert.equal(listening.audioStatus, 'published');
-  assert.equal(existsSync(new URL('../public/audio/l8_listening_possessives.mp3', import.meta.url)), true);
-  assert.deepEqual(listeningEvidence(listening, 4, 4), { passed: true, evidenceMode: 'direct', score: 4, total: 4 });
-  const source = readFileSync(new URL('../src/data/lessons/lesson8.ts', import.meta.url), 'utf8');
-  assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|SpeechSynthesisUtterance|getVoices|voiceschanged|browser TTS/i);
-  assert.doesNotMatch(listening.assetId, /^8\./);
-});
-
-test('ExitCheck resolves the approved PARTIAL/DIRECT/PARTIAL/PARTIAL/PARTIAL vector', () => {
-  const exit = findActivity('l8-exit-check', 'exitCheck');
-  const listening = findActivity('l8-listening-possessives', 'listening');
-  const writing = writingEvidence('Anna vagyok. Van egy testvérem. Anyám tanár. Apám orvos.', true);
-  const evidence: Record<string, ActivityEvidence> = {
-    'l8-cp-family-vocabulary': directEvidence('l8-cp-family-vocabulary'),
-    'l8-cp-singular-possessives': directEvidence('l8-cp-singular-possessives'),
-    'l8-cp-family-captions': directEvidence('l8-cp-family-captions'),
-    'l8-cp-owner-text': directEvidence('l8-cp-owner-text'),
-    'l8-writing-family-description': { activityId: 'l8-writing-family-description', attempted: true, selfReviewed: true, ...writing },
-    'l8-record-family-description': recordingCompletionEvidence('l8-record-family-description'),
-    'l8-listening-possessives': {
-      activityId: 'l8-listening-possessives', attempted: true, completed: true,
-      ...listeningEvidence(listening, 4, 4),
-    },
-  };
-  const statuses = Object.fromEntries(exit.checks.map((check) => [
-    check.objectiveId,
-    describeExitCheckStatus(check, evidence[check.activityId], evidence).kind,
-  ]));
-  assert.deepEqual(statuses, {
-    'l8_name-family': 'partial-review',
-    'l8_form-possessive': 'direct-met',
-    'l8_use-possessive': 'partial-review',
-    'l8_distinguish-possessors': 'direct-met',
-    'l8_describe-family': 'partial-review',
-  });
-
-  const possessorCheck = exit.checks.find((check) => check.objectiveId === 'l8_distinguish-possessors');
-  assert.ok(possessorCheck);
-  assert.deepEqual(possessorCheck.evidenceComponents, [
-    { activityId: 'l8-listening-possessives', evidenceKind: 'listening' },
-  ]);
-  assert.equal(
-    describeExitCheckStatus(possessorCheck, evidence[possessorCheck.activityId], {
-      'l8-listening-possessives': evidence['l8-listening-possessives'],
-    }).kind,
-    'direct-met'
-  );
-  assert.equal(
-    possessorCheck.evidenceComponents.some((component) => component.activityId === 'l8-writing-family-description'),
-    false
-  );
-  assert.deepEqual(
-    exit.checks
-      .filter((check) => check.activityId === 'l8-writing-family-description' ||
-        check.evidenceComponents?.some((component) => component.activityId === 'l8-writing-family-description'))
-      .map((check) => check.objectiveId),
-    ['l8_use-possessive', 'l8_describe-family']
-  );
-});
-
-test('plural possession is optional only and absent from scored or passing content', () => {
-  const quiz = JSON.stringify(LESSON_8.quiz);
-  const activities = JSON.stringify(ACTIVITIES);
-  const summary = LESSON_8.slides.find((slide) => slide.id === 12)?.body ?? '';
-  const source = readFileSync(new URL('../src/data/lessons/lesson8.ts', import.meta.url), 'utf8');
-  assert.doesNotMatch(quiz, /házaim|házaid|házai|házunk|házatok|házuk/);
-  assert.doesNotMatch(activities, /házaim|házaid|házai|házunk|házatok|házuk/);
-  assert.doesNotMatch(summary, /házaim|házaid|házai|házunk|házatok|házuk/);
-  assert.doesNotMatch(source, /házunk|házatok|házuk|házaid|házai(?!m)/);
-  assert.match(LESSON_8.slides.find((slide) => slide.id === 11)?.body ?? '', /Необязательно.*házaim/);
-});
-
-test('language and quiz cleanup enforce bounded morphology and natural family meaning', () => {
-  const q802 = LESSON_8.quiz?.find((question) => question.id === 802);
-  const q803 = LESSON_8.quiz?.find((question) => question.id === 803);
-  const q806 = LESSON_8.quiz?.find((question) => question.id === 806);
-  assert.ok(q802 && q803 && q806);
-  assert.equal(q802.options[q802.correctIndex], 'apád');
-  assert.match(q802.explanation ?? '', /apa → apád.*a → á/);
-  assert.doesNotMatch(q802.explanation ?? '', /a \+ pád|исчез/);
-  assert.match(q803.question, /его\/её мать/);
-  assert.doesNotMatch(q806.question, /урок|lesson/i);
-  assert.equal(q806.options[q806.correctIndex], 'testvér');
-
-  const source = readFileSync(new URL('../src/data/lessons/lesson8.ts', import.meta.url), 'utf8');
-  assert.match(source, /прежде всего суффиксом на существительном/);
-  assert.match(source, /Явные местоимения служат главным образом контрасту/);
-  assert.doesNotMatch(source, /суффиксы регулярны и предсказуемы|Van egy anyám|nekem van|neked van|neki van/i);
-  assert.match(source, /Van egy testvérem.*готовая фраза/s);
-  assert.match(source, /testvér<\/b> — брат \/ сестра; sibling/);
-});
-
-test('L8 metadata and translation cards align while frozen lessons remain unchanged', () => {
-  const meta = LESSONS_META.find((candidate) => candidate.id === 8);
-  assert.ok(meta);
-  assert.equal(meta.title, LESSON_8.title);
-  assert.equal(meta.subtitle, LESSON_8.subtitle);
-  assert.equal(meta.description, LESSON_8.description);
-  assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.sourceText, 'У меня есть брат или сестра.');
-  assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.targetText, 'Van egy testvérem.');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson7.ts', import.meta.url)), '6F43970B2E55239FCA0F0BB0027DD0A71628F6454DB51CE9D1459D68E4DC36C8');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson10.ts', import.meta.url)), '1E3696171760626F2B89EB995CE14B95D0B381ECB338EE33F233248487065E34');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson11.ts', import.meta.url)), '6CD30773439EFEDCABDE47DE30316711BC6908BEDFEFA615359D9A3AD619ADF9');
-  assert.equal(sha256(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
-});
+test('L8 remains bounded to singular ownership and metadata/translations stay aligned',()=>{assert.doesNotMatch(JSON.stringify(activities),/házaim|házaid|házai|házunk|házatok|házuk/);assert.match(LESSON_8.slides.find((slide)=>slide.id===11)?.body??'',/házaim.*необязательным распознаванием/s);const meta=LESSONS_META.find((item)=>item.id===8);assert.ok(meta);assert.equal(meta.description,LESSON_8.description);assert.equal(meta.slidesCount,11);assert.equal(LESSON_TRANSLATION_MAP[8]?.[1]?.targetText,'Van egy testvérem.');});

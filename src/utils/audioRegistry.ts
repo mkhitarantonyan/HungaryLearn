@@ -215,14 +215,16 @@ export async function removeSavedAudioFile(key: string): Promise<void> {
 
   try {
     localStorage.removeItem(`magyar_audio_${normalizedKey}`);
-  } catch (e) {}
+  } catch {
+    // localStorage may be unavailable in privacy-restricted contexts.
+  }
 
   try {
     const db = await openDb();
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
     store.delete(normalizedKey);
-  } catch (err) {
+  } catch {
     console.warn('Could not remove audio file from IndexedDB');
   }
 

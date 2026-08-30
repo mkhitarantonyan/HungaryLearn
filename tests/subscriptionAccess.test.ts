@@ -1,70 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isSubscriptionValid } from '../src/utils/subscriptionValidity.ts';
+import { hasPaidAccess, normalizeLemonStatus } from '../functions/src/domain/entitlements.ts';
 
-test('privileged user always has access regardless of subscription state', () => {
-  assert.equal(isSubscriptionValid({
-    isPrivileged: true,
-    subscriptionStatus: 'canceled',
-    subscriptionEnd: undefined,
-  }), true);
+const now = new Date('2026-08-26T12:00:00.000Z');
+const future = '2026-09-26T12:00:00.000Z';
+const past = '2026-07-26T12:00:00.000Z';
+
+test('privileged access wins', () => assert.equal(hasPaidAccess({ subscriptionStatus: 'expired', isPrivileged: true }, now), true));
+test('active future access is allowed', () => assert.equal(hasPaidAccess({ subscriptionStatus: 'active', accessUntil: future }, now), true));
+test('active expired access is denied', () => assert.equal(hasPaidAccess({ subscriptionStatus: 'active', accessUntil: past }, now), false));
+test('cancelled access lasts through paid endsAt', () => assert.equal(hasPaidAccess({ subscriptionStatus: 'cancelled', accessUntil: future }, now), true));
+test('cancelled after endsAt is denied', () => assert.equal(hasPaidAccess({ subscriptionStatus: 'cancelled', accessUntil: past }, now), false));
+test('expired, past_due, unpaid and paused are denied', () => {
+  for (const subscriptionStatus of ['expired', 'past_due', 'unpaid', 'paused'] as const) {
+    assert.equal(hasPaidAccess({ subscriptionStatus, accessUntil: future }, now), false);
+  }
 });
-
-test('active subscription within period grants access', () => {
-  const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'active',
-    subscriptionEnd: future,
-  }), true);
-});
-
-test('active subscription past period denies access', () => {
-  const past = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'active',
-    subscriptionEnd: past,
-  }), false);
-});
-
-test('past_due subscription denies access even with future end date', () => {
-  const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'past_due',
-    subscriptionEnd: future,
-  }), false);
-});
-
-test('canceled subscription denies access even with future end date', () => {
-  const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'canceled',
-    subscriptionEnd: future,
-  }), false);
-});
-
-test('incomplete subscription denies access', () => {
-  const future = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'incomplete',
-    subscriptionEnd: future,
-  }), false);
-});
-
-test('unpaid subscription denies access', () => {
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'unpaid',
-    subscriptionEnd: undefined,
-  }), false);
-});
-
-test('active subscription without subscriptionEnd denies access', () => {
-  assert.equal(isSubscriptionValid({
-    subscriptionStatus: 'active',
-    subscriptionEnd: undefined,
-  }), false);
+test('on_trial is normalized to unpaid and never grants access', () => {
+  assert.equal(normalizeLemonStatus('on_trial'), 'unpaid');
+  assert.equal(hasPaidAccess({ subscriptionStatus: normalizeLemonStatus('on_trial'), accessUntil: future }, now), false);
 });

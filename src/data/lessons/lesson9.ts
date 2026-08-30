@@ -1,78 +1,88 @@
 import type { Lesson, LessonActivity } from '../../types';
 
-const ATTRIBUTIVE_ADJECTIVES: LessonActivity = {
-  kind: 'controlledPractice', id: 'l9-cp-attributive-adjectives', title: 'Прилагательное перед существительным', passCount: 5,
-  exercises: [
-    { kind: 'singleChoice', id: 'l9-attributive-1', prompt: 'большие дома', options: ['nagy házak', 'nagyabb házak', 'nagy ház'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l9-attributive-2', prompt: 'большой дом (винительный падеж)', options: ['nagy ház', 'nagy házat', 'nagyot ház'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l9-attributive-3', prompt: 'новая книга', options: ['újabb könyv', 'új könyv', 'újak könyv'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l9-attributive-4', prompt: 'красные машины', options: ['piros autó', 'pirosabb autók', 'piros autók'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l9-attributive-5', prompt: 'дорогой кофе (винительный падеж)', options: ['drága kávét', 'drágát kávé', 'drágább kávét'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l9-attributive-6', prompt: 'красивые города', options: ['szépek város', 'szép városok', 'szebb városok'], correctIndex: 1 },
-  ],
-};
-
 const COMPARATIVE_FORMS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l9-cp-comparative-forms', title: 'Частые сравнительные формы', passCount: 8,
+  kind: 'controlledPractice', id: 'l9-cp-comparative-forms', title: 'Контекстная практика: описание, сравнение и выбор', passCount: 11,
   exercises: [
-    { kind: 'textInput', id: 'l9-comparative-1', prompt: 'nagy → больше', accept: ['nagyobb'] },
-    { kind: 'textInput', id: 'l9-comparative-2', prompt: 'kicsi → меньше', accept: ['kisebb'] },
-    { kind: 'textInput', id: 'l9-comparative-3', prompt: 'szép → красивее', accept: ['szebb'] },
-    { kind: 'textInput', id: 'l9-comparative-4', prompt: 'jó → лучше', accept: ['jobb'] },
-    { kind: 'textInput', id: 'l9-comparative-5', prompt: 'drága → дороже', accept: ['drágább'] },
-    { kind: 'textInput', id: 'l9-comparative-6', prompt: 'olcsó → дешевле', accept: ['olcsóbb'] },
-    { kind: 'textInput', id: 'l9-comparative-7', prompt: 'új → новее', accept: ['újabb'] },
-    { kind: 'textInput', id: 'l9-comparative-8', prompt: 'gyors → быстрее', accept: ['gyorsabb'] },
-    { kind: 'textInput', id: 'l9-comparative-9', prompt: 'lassú → медленнее', accept: ['lassabb'] },
-    { kind: 'textInput', id: 'l9-comparative-10', prompt: 'nehéz → труднее / тяжелее', accept: ['nehezebb'] },
+    { kind: 'singleChoice', id: 'l9-comparative-1', prompt: 'Квартира A просторная, квартира B маленькая.', options: ['Az A lakás nagy, a B lakás kicsi.', 'Az A lakás olcsó, a B gyors.', 'Az A lakás nehéz, a B szép.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-2', prompt: 'Выбери естественную пару противоположностей.', options: ['olcsó ↔ drága', 'gyors ↔ szép', 'nagy ↔ kényelmes'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-3', prompt: 'Новая квартира больше.', options: ['Az új lakás nagyobb.', 'Az új lakás nagybb.', 'Az új lakás legnagy.'], correctIndex: 0 },
+    { kind: 'textInput', id: 'l9-comparative-4', prompt: 'kicsi → меньше', accept: ['kisebb'] },
+    { kind: 'textInput', id: 'l9-comparative-5', prompt: 'jó → лучше', accept: ['jobb'] },
+    { kind: 'textInput', id: 'l9-comparative-6', prompt: 'szép → красивее', accept: ['szebb'] },
+    { kind: 'singleChoice', id: 'l9-comparative-7', prompt: 'Квартира B дешевле квартиры A.', options: ['A B lakás olcsóbb, mint az A lakás.', 'Az A lakás olcsóbb, mint a B lakás.', 'A B lakás a legolcsóbb A.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-8', prompt: 'Автобус медленный, метро быстрее.', options: ['A busz lassú, a metró gyorsabb.', 'A busz gyorsabb, a metró lassúbb.', 'A metró leggyors busz.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-9', prompt: 'Как выразить предпочтение меньшему варианту?', options: ['Nekem a kisebb tetszik.', 'Nekem kisebb mint.', 'Én legkisebb jobb.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-10', prompt: 'Выбери вариант с простой причиной.', options: ['Ezt választom, mert olcsóbb.', 'Ezt választom, mint olcsó.', 'Ezt olcsóbb választás mert.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-11', prompt: 'Как сказать «это лучший вариант»?', options: ['Ez a jobb választás.', 'Ez a legjobb választás.', 'Ez jóbb választás.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l9-comparative-12', prompt: 'Телефон A дешевле, но телефон B лучше.', options: ['Az A telefon olcsóbb, de a B jobb.', 'Az A telefon drágább, és a B rosszabb.', 'Az A telefon olcsó mint legjobb.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-13', prompt: 'В каком варианте прилагательное перед существительным не согласуется?', options: ['nagy házak', 'nagyok házak', 'nagyot házak'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l9-comparative-14', prompt: 'Ты узнал, что квартира B очень шумная. Как отреагировать?', options: ['Ez hátrány, de még mindig olcsóbb.', 'Ez gyorsabb, mert zaj.', 'Ez a legzajos mint.'], correctIndex: 0 },
   ],
 };
 
-const SUPERLATIVE_FORMS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l9-cp-superlative-forms', title: 'Сравнительная → превосходная', passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l9-superlative-1', prompt: 'nagyobb → самый большой', accept: ['legnagyobb'] },
-    { kind: 'textInput', id: 'l9-superlative-2', prompt: 'kisebb → самый маленький', accept: ['legkisebb'] },
-    { kind: 'textInput', id: 'l9-superlative-3', prompt: 'szebb → самый красивый', accept: ['legszebb'] },
-    { kind: 'textInput', id: 'l9-superlative-4', prompt: 'jobb → лучший', accept: ['legjobb'] },
-    { kind: 'textInput', id: 'l9-superlative-5', prompt: 'drágább → самый дорогой', accept: ['legdrágább'] },
-    { kind: 'textInput', id: 'l9-superlative-6', prompt: 'olcsóbb → самый дешёвый', accept: ['legolcsóbb'] },
+const APARTMENT_READING: LessonActivity = {
+  kind: 'reading', id: 'l9-reading-apartments', title: 'Чтение: выбор квартиры', instructions: 'Сравни две квартиры по размеру, цене, месту, транспорту, шуму и состоянию.', passCount: 6,
+  content: { type: 'prose', title: 'Melyik lakás jobb?', paragraphs: [
+    'Dávid új lakást keres, és szombaton két lakást néz meg. Az A lakás a város központjában van. Hatvan négyzetméteres, világos és szép. Két nagy szobája van, és a bútorok újak. A metró csak három perc gyalog, ezért Dávid gyorsan beér a munkahelyére. A lakás azonban drága, és az utca este nagyon zajos.',
+    'A B lakás kisebb: negyvenöt négyzetméteres. A város szélén van, ezért messzebb van Dávid munkahelyétől. Nincs metró a közelben, de két busz is jár arra. A ház és a bútorok régebbiek, viszont a lakás csendesebb és sokkal olcsóbb. Van egy kis erkélye is, ahol Dávid reggel kávézhat.',
+    'Dávid sokáig gondolkodik, és minden fontos részletet pontosan leír. Szerinte az A lakás kényelmesebb a közlekedés miatt, de túl drága és zajos. A B lakás nem olyan nagy és nem olyan modern, de nyugodtabb. Végül a B lakást választja, mert az alacsonyabb ár fontosabb neki. A régi bútorokat később lassan kicseréli.',
+  ] },
+  questions: [
+    { id: 'l9-reading-q1', question: 'Какая квартира больше?', options: ['A', 'B', 'они одинаковые'], correctIndex: 0 },
+    { id: 'l9-reading-q2', question: 'Какая квартира дешевле?', options: ['A', 'B', 'не сказано'], correctIndex: 1 },
+    { id: 'l9-reading-q3', question: 'Где находится квартира A?', options: ['в центре', 'на окраине', 'рядом с деревней'], correctIndex: 0 },
+    { id: 'l9-reading-q4', question: 'Какое транспортное различие названо?', options: ['у A метро, у B автобусы', 'у обеих метро', 'у B только поезд'], correctIndex: 0 },
+    { id: 'l9-reading-q5', question: 'Какой недостаток квартиры A?', options: ['она маленькая', 'она дорогая и шумная', 'в ней нет мебели'], correctIndex: 1 },
+    { id: 'l9-reading-q6', question: 'Какой недостаток квартиры B?', options: ['она меньше и дальше от работы', 'она самая дорогая', 'она шумнее'], correctIndex: 0 },
+    { id: 'l9-reading-q7', question: 'Что выбирает Давид?', options: ['квартиру A', 'квартиру B', 'ни одну'], correctIndex: 1 },
+    { id: 'l9-reading-q8', question: 'Почему он делает такой выбор?', options: ['для него важнее низкая цена и спокойствие', 'ему нужен новый диван', 'он не пользуется транспортом'], correctIndex: 0 },
   ],
 };
 
-const MINT_COMPARISONS: LessonActivity = {
-  kind: 'controlledPractice', id: 'l9-cp-mint-comparisons', title: 'Сравнения с mint', passCount: 4,
-  exercises: [
-    { kind: 'singleChoice', id: 'l9-mint-1', prompt: 'Этот дом больше, чем тот дом.', options: ['Ez a ház nagyobb, mint az a ház.', 'Ez a ház nagy, az a ház.', 'Az a ház nagyobb, mint ez a ház.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l9-mint-2', prompt: 'Кофе лучше, чем чай.', options: ['A tea jobb, mint a kávé.', 'A kávé jobb, mint a tea.', 'A kávé a legjobb tea.'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l9-mint-3', prompt: 'Поезд быстрее, чем автобус.', options: ['A busz gyorsabb, mint a vonat.', 'A vonat a leggyorsabb busz.', 'A vonat gyorsabb, mint a busz.'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l9-mint-4', prompt: 'Это пальто дешевле, чем чёрное пальто.', options: ['Ez a kabát olcsóbb, mint a fekete kabát.', 'A fekete kabát olcsóbb, mint ez a kabát.', 'Ez a kabát a legolcsóbb fekete kabát.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l9-mint-5', prompt: 'Венгерский язык труднее, чем английский.', options: ['Az angol nehezebb, mint a magyar nyelv.', 'A magyar nyelv nehezebb, mint az angol.', 'A magyar nyelv a legnehezebb angol.'], correctIndex: 1 },
+const COMPARISON_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l9-roleplay-apartment-choice', title: 'Ролевая игра: выбор квартиры', partnerLabel: 'Ingatlanos', completionMessage: 'Kiválasztottad a megfelelő lakást.', startTurnId: 'l9-rp-s1',
+  turns: [
+    { id: 'l9-rp-s1', speaker: 'waiter', prompt: 'Két lakást tudok mutatni. Mit szeretne tudni?', next: 'l9-rp-l1' },
+    { id: 'l9-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси о цене.', model: 'Melyik lakás olcsóbb?', next: 'l9-rp-s2' },
+    { id: 'l9-rp-s2', speaker: 'waiter', prompt: 'A B lakás olcsóbb, de kisebb.', next: 'l9-rp-l2' },
+    { id: 'l9-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Спроси о транспорте.', model: 'Melyik lakásnál jobb a közlekedés?', next: 'l9-rp-s3' },
+    { id: 'l9-rp-s3', speaker: 'waiter', prompt: 'Az A lakás közelebb van a metróhoz.', next: 'l9-rp-l3' },
+    { id: 'l9-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Сравни размер.', model: 'Az A lakás nagyobb, mint a B lakás.', next: 'l9-rp-s4' },
+    { id: 'l9-rp-s4', speaker: 'waiter', prompt: 'Igen, viszont az A lakás utcája zajosabb.', next: 'l9-rp-l4' },
+    { id: 'l9-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови один недостаток.', model: 'A zajos utca nekem nagy hátrány.', next: 'l9-rp-s5' },
+    { id: 'l9-rp-s5', speaker: 'waiter', prompt: 'A B lakás csendesebb, és van erkélye.', next: 'l9-rp-l5' },
+    { id: 'l9-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Вырази предпочтение и причину.', model: 'Nekem a B lakás tetszik, mert olcsóbb és csendesebb.', next: 'l9-rp-s6' },
+    { id: 'l9-rp-s6', speaker: 'waiter', prompt: 'Új információ: a B lakás bútorai régiek.', next: 'l9-rp-l6' },
+    { id: 'l9-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Отреагируй на новую деталь.', model: 'Értem. Ez hátrány, de az ár fontosabb nekem.', next: 'l9-rp-s7' },
+    { id: 'l9-rp-s7', speaker: 'waiter', prompt: 'Akkor melyiket választja?', next: 'l9-rp-l7' },
+    { id: 'l9-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди окончательный выбор.', model: 'A B lakást választom. Szerintem ez jobb nekem.', next: 'l9-rp-s8' },
+    { id: 'l9-rp-s8', speaker: 'waiter', prompt: 'Rendben. Megnézzük még egyszer?', next: 'l9-rp-l8' },
+    { id: 'l9-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Вежливо согласись и заверши.', model: 'Igen, köszönöm. Nézzük meg!', next: 'l9-rp-s9' },
+    { id: 'l9-rp-s9', speaker: 'waiter', prompt: 'Menjünk!' },
   ],
 };
 
 const WRITING_COMPARISON: LessonActivity = {
   kind: 'writing', id: 'l9-writing-comparison', title: 'Письмо: сравни два объекта',
-  prompt: 'Напиши 3–5 связанных предложений о двух людях, местах или предметах. Используй минимум две сравнительные формы и минимум одно сравнение с mint. Превосходную форму можно добавить, если она уместна.',
-  modelAnswer: ['A piros kabát szép.', 'A kék kabát szebb, mint a piros kabát.', 'A kék kabát olcsóbb is.', 'Szerintem a kék kabát a legjobb választás.'],
-  rubric: ['Написано 3–5 связанных предложений', 'Есть минимум две сравнительные формы', 'Есть минимум одно осмысленное сравнение с mint'],
+  prompt: 'Напиши 70–90 слов и сравни два вымышленных варианта. Укажи минимум три характеристики, три сравнительные формы, преимущество каждого варианта, один недостаток, окончательный выбор и простую причину.',
+  modelAnswer: ['Két telefont hasonlítok össze. Az A telefon nagyobb és újabb, mint a B telefon. A képernyője szebb, ezért könnyebb rajta filmet nézni. Viszont az A telefon sokkal drágább, és nehezebb is. A B telefon kisebb és olcsóbb. Nem olyan gyors, de kényelmesebb a kezemben, és az akkumulátora jobb. Az A telefon előnye a nagy képernyő, a B telefon előnye az alacsonyabb ár. Én a B telefont választom, mert nekem az ár fontosabb.'],
+  rubric: ['70–90 слов', 'минимум три характеристики', 'минимум три сравнительные формы', 'преимущества и недостаток', 'выбор и причина'],
 };
 
-const RECORD_COMPARISON: LessonActivity = {
-  kind: 'recording', id: 'l9-record-comparison', title: 'Говорение: короткое сравнение',
-  instructions: 'Запиши короткое сравнение двух людей, мест или предметов, затем проверь формы -bb и конструкцию с mint.',
-  targetText: 'A kék kabát szebb, mint a piros kabát. A kék kabát olcsóbb is. Szerintem ez a legjobb választás.',
-  targetTranslation: 'Синее пальто красивее красного. Синее пальто также дешевле. По-моему, это лучший выбор.',
-  rubric: ['Есть минимум две сравнительные формы', 'Есть осмысленная конструкция с mint', 'Сравнение состоит из нескольких связанных фраз'],
+const SPEAKING_COMPARISON = {
+  title: 'Говорение: короткое сравнение',
+  instructions: 'Говори 1–1.5 минуты и сравни два места или продукта. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Назови характеристики, преимущества, один недостаток и объясни предпочтение.',
+  rubric: ['характеристики', 'сравнительные формы', 'предпочтение', 'простая причина'],
 };
 
 const EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck', id: 'l9-exit-check', title: 'Проверка целей урока 9', checks: [
-    { objectiveId: 'l9_use-adjectives', activityId: 'l9-cp-attributive-adjectives', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_use-adjectives', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
     { objectiveId: 'l9_form-comparative', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l9_form-superlative', activityId: 'l9-cp-superlative-forms', evidenceKind: 'grammar' },
-    { objectiveId: 'l9_use-mint', activityId: 'l9-cp-mint-comparisons', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l9-record-comparison', evidenceKind: 'speaking' }] },
-    { objectiveId: 'l9_compare-people', activityId: 'l9-writing-comparison', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l9-record-comparison', evidenceKind: 'speaking' }] },
+    { objectiveId: 'l9_form-superlative', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_use-mint', activityId: 'l9-cp-comparative-forms', evidenceKind: 'grammar' },
+    { objectiveId: 'l9_compare-people', activityId: 'l9-writing-comparison', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l9-roleplay-apartment-choice', evidenceKind: 'interaction' }] },
   ],
 };
 
@@ -82,7 +92,7 @@ export const LESSON_9: Lesson = {
   level: 'A1',
   title: 'Урок 9 · Melléknevek & Összehasonlítás',
   subtitle: 'Прилагательные и степени сравнения',
-  description: 'Прилагательные перед существительным, частые сравнительные формы, конструкции с mint, превосходная степень и короткие практические сравнения.',
+  description: 'Прилагательные и сравнение в раннем A1: понятные характеристики, выбор между двумя вариантами, причина предпочтения и открытая текстовая практика.',
   slidesCount: 11,
   slides: [
     {
@@ -97,7 +107,6 @@ export const LESSON_9: Lesson = {
    <p><button class="speak-btn" data-speak-text="nagy házat" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nagy házat</button> <span style="color:#8a7a68">(большой дом - винительный)</span> — <i>«nagy» не получило суффикс -t!</i></p>
    <div class="note">Модель урока: <b>nagy ház — nagy házak — nagy házat</b>. Перед существительным форма прилагательного обычно остаётся той же.</div>
  `,
-      activities: [ATTRIBUTIVE_ADJECTIVES]
     },
     {
       id: 2,
@@ -158,7 +167,6 @@ export const LESSON_9: Lesson = {
    <p><button class="speak-btn" data-speak-text="drága" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> drága</button> → <button class="speak-btn" data-speak-text="drágább" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> drágább</button> <span style="color:#8a7a68">(дороже)</span></p>
    <div class="note">Запомни частые модели: <b>nagy → nagyobb, szép → szebb, jó → jobb, drága → drágább, olcsó → olcsóbb, új → újabb, kicsi → kisebb</b>. У <b>régi</b> возможны формы <b>régibb</b> и <b>régebbi</b>, поэтому здесь она не проверяется как единственный точный ответ.</div>
  `,
-      activities: [COMPARATIVE_FORMS]
     },
     {
       id: 5,
@@ -171,7 +179,6 @@ export const LESSON_9: Lesson = {
    <p><button class="speak-btn" data-speak-text="A kávé jobb, mint a tea." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A kávé jobb, mint a tea.</button> <span style="color:#8a7a68">(Кофе лучше, чем чай)</span></p>
    <p><button class="speak-btn" data-speak-text="A magyar nyelv nehezebb, mint az angol." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A magyar nyelv nehezebb, mint az angol.</button> <span style="color:#8a7a68">(Венгерский язык труднее, чем английский)</span></p>
  `,
-      activities: [MINT_COMPARISONS]
     },
     {
       id: 6,
@@ -185,13 +192,13 @@ export const LESSON_9: Lesson = {
    <p><button class="speak-btn" data-speak-text="legjobb" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> legjobb</button> <span style="color:#8a7a68">(лучший)</span></p>
    <div class="note"><b>jobb = лучше; legjobb = лучший.</b> Сначала вспомни сравнительную форму, затем добавь <b>leg-</b>.</div>
  `,
-      activities: [SUPERLATIVE_FORMS]
+      activities: [COMPARATIVE_FORMS]
     },
     {
       id: 7,
-      eyebrow: "УРОК 9 · 7/11 · ДИАЛОГ",
-      title: "Párbeszéd",
-      subtitle: "В магазине одежды",
+      eyebrow: "УРОК 9 · 7/11 · ЧТЕНИЕ",
+      title: "Melyik lakás jobb?",
+      subtitle: "Сравнение двух квартир",
       body: `
    <p><b>A:</b> <button class="speak-btn" data-speak-text="Tetszik ez a piros kabát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tetszik ez a piros kabát?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Szép, de a kék kabát szebb és olcsóbb." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szép, de a kék kabát szebb és olcsóbb.</button></p>
@@ -199,24 +206,24 @@ export const LESSON_9: Lesson = {
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Az a legdrágább. A kék a legjobb választás." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Az a legdrágább. A kék a legjobb választás.</button></p>
    <div class="note">Диалог даёт контекст, но само чтение вслух не считается доказательством владения материалом.</div>
  `,
-      activities: [RECORD_COMPARISON]
+      activities: [APARTMENT_READING]
     },
     {
       id: 8,
-      eyebrow: "УРОК 9 · 8/11 · ЗАДАНИЯ",
-      title: "Gyakorlatok",
-      subtitle: "Проверьте себя",
+      eyebrow: "УРОК 9 · 8/11 · ВЗАИМОДЕЙСТВИЕ",
+      title: "Melyiket választja?",
+      subtitle: "Выбор между двумя квартирами",
       body: `
-   <p>Теперь свяжи изученные формы в короткий текст: выбери двух людей, два места или два предмета и сравни их.</p>
-   <div class="note">Нужны 3–5 предложений, минимум две сравнительные формы и минимум одна конструкция с <b>mint</b>.</div>
+   <p>Спроси о цене и характеристиках, назови недостаток, отреагируй на новую деталь и объясни окончательный выбор.</p>
+   <div class="note">RolePlay остаётся PARTIAL.</div>
  `,
-      activities: [WRITING_COMPARISON]
+      activities: [COMPARISON_ROLEPLAY]
     },
     {
       id: 9,
-      eyebrow: "УРОК 9 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ",
-      title: "Kiegészítő szókincs",
-      subtitle: "Дополнительные прилагательные",
+      eyebrow: "УРОК 9 · 9/11 · ПИСЬМО",
+      title: "Két lehetőség összehasonlítása",
+      subtitle: "Связное сравнение 70–90 слов",
       body: `
    <div class="grid2">
      <div>
@@ -228,20 +235,23 @@ export const LESSON_9: Lesson = {
        <p><button class="speak-btn" data-speak-text="okos" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> okos</button> (умный) ↔ <button class="speak-btn" data-speak-text="buta" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> buta</button> (глупый)</p>
      </div>
    </div>
-   <div class="note">Для людей вместо „öreg“ вежливее использовать слово <button class="speak-btn" data-speak-text="idős" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> idős</button> (в преклонном возрасте).</div>
- `
+   <div class="note">Для людей вместо „öreg“ вежливее использовать <b>idős</b>. В письменном задании сравни характеристики, преимущества и недостатки двух вариантов.</div>
+ `,
+      activities: [WRITING_COMPARISON]
     },
     {
       id: 10,
-      eyebrow: "УРОК 9 · 10/11 · ДОПОЛНИТЕЛЬНОЕ РАСПОЗНАВАНИЕ",
+      eyebrow: "УРОК 9 · 10/11 · САМОПРАКТИКА И AUDIO GAP",
       title: "Melléknév mint állítmány",
       subtitle: "Необязательное расширение",
       body: `
    <p><b>Дополнительно, только для распознавания:</b> прилагательное-сказуемое во множественном числе имеет форму множественного числа.</p>
    <p><button class="speak-btn" data-speak-text="A ház nagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A ház nagy.</button> <span style="color:#8a7a68">(Дом большой — ед.ч.)</span></p>
    <p><button class="speak-btn" data-speak-text="A házak nagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A házak nagyok.</button> <span style="color:#8a7a68">(Дома большие — мн.ч.: nagy + ok!)</span></p>
-   <div class="warn">Сравни: <b>a nagy házak</b> (прилагательное перед существительным) и <b>A házak nagyok.</b> (прилагательное-сказуемое). Эта тема не входит в тест, практику или ExitCheck урока 9.</div>
- `
+   <div class="warn">Сравни: <b>a nagy házak</b> и <b>A házak nagyok.</b>. Эта тема не входит в scoring L9.</div>
+   <div class="note">В L9 намеренно нет learner-facing Listening и отдельного MP3. Narration, word audio и browser TTS не используются как замена.</div>
+ `,
+      optionalSpeaking: SPEAKING_COMPARISON
     },
     {
       id: 11,

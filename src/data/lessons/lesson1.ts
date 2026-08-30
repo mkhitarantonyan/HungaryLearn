@@ -49,7 +49,7 @@ export const L1_VOWEL_LISTENING_TOKENS = [
 
 export const L1_READ_ALOUD_WORDS = ['gyár', 'tyúk', 'nyolc', 'játék', 'folyó'] as const;
 
-// Recording briefs: one speaker, one token at a time, with a short pause.
+// Listening briefs: one speaker, one token at a time, with a short pause.
 // S/sz and consonant-category assets target 15–25 s; vowel asset targets 20–30 s.
 export const L1_S_SZ_LISTENING_TRANSCRIPT =
   L1_S_SZ_LISTENING_TOKENS.map((token) => token.word).join('. ') + '.';
@@ -80,7 +80,7 @@ export const LESSON_1: Lesson = {
         <div class="grid3 my-4">
           <div class="p-4 bg-[#7A1E2B]/5 border-l-4 border-[#7A1E2B] rounded-r-xl"><div class="font-bold text-[#57121C] text-sm font-mono mb-1">1. Модель</div><div class="text-xs text-[#2A2320]/80">Короткое и точное объяснение букв и звуков.</div></div>
           <div class="p-4 bg-[#2C5F58]/5 border-l-4 border-[#2C5F58] rounded-r-xl"><div class="font-bold text-[#2C5F58] text-sm font-mono mb-1">2. Слушание</div><div class="text-xs text-[#2A2320]/80">Реальные задания на различение категорий; TTS остаётся только практикой.</div></div>
-          <div class="p-4 bg-[#B98A2B]/10 border-l-4 border-[#B98A2B] rounded-r-xl"><div class="font-bold text-[#B98A2B] text-sm font-mono mb-1">3. Практика</div><div class="text-xs text-[#2A2320]/80">Орфографический выбор и запись пяти слов для последующей проверки.</div></div>
+          <div class="p-4 bg-[#B98A2B]/10 border-l-4 border-[#B98A2B] rounded-r-xl"><div class="font-bold text-[#B98A2B] text-sm font-mono mb-1">3. Практика</div><div class="text-xs text-[#2A2320]/80">Орфографический выбор и необязательное чтение пяти слов вслух.</div></div>
         </div>
       `,
     },
@@ -288,20 +288,16 @@ export const LESSON_1: Lesson = {
       id: 10,
       eyebrow: 'УРОК 1 · 10/11 · ЧТЕНИЕ ВСЛУХ',
       title: 'Öt szó hangosan',
-      subtitle: 'Запишите пять декодируемых слов',
+      subtitle: 'Необязательная устная самопрактика',
       type: 'read-aloud-practice',
-      task: 'Прочитайте все пять слов одним заданием и остановите запись. Наличие записи подтверждает попытку, но не правильность произношения.',
+      task: 'По желанию прочитайте все пять слов вслух. Микрофон и автоматическая оценка не используются.',
       body: `<div class="p-5 rounded-xl bg-white border border-[#D9CBB0] space-y-3"><div class="text-xs font-mono text-[#8A7A68] font-semibold uppercase">Пять обязательных слов</div><div class="text-lg md:text-xl font-mono font-bold text-[#57121C] leading-relaxed [overflow-wrap:anywhere]">gyár · tyúk · nyolc · játék · folyó</div><div class="text-sm text-[#2C5F58]">завод · курица · восемь · игра · река</div></div>`,
-      activities: [
-        {
-          kind: 'recording', id: 'l1-record-five-words', title: 'Запись пяти слов для самопроверки',
-          instructions: 'Произнесите по порядку gyár, tyúk, nyolc, játék, folyó. После остановки прослушайте запись и при необходимости запишите заново.',
-          targetText: L1_READ_ALOUD_WORDS.join(', '),
-          targetPhonetic: '/ɟaːr/ · /cuːk/ · /ɲolt͡s/ · /jaːteːk/ · /fojoː/',
-          targetTranslation: 'завод · курица · восемь · игра · река',
-          rubric: ['Все пять слов произнесены.', 'gy /ɟ/, ty /c/ и ny /ɲ/ различимы там, где встречаются.', 'j и ly реализованы как /j/.', 'Краткие и долгие гласные не смешаны.', 'Основное словесное ударение начинается на первом слоге.'],
-        },
-      ],
+      optionalSpeaking: {
+        title: 'Устная практика пяти слов (необязательно)',
+        instructions: 'Произнесите по порядку пять слов и самостоятельно сравните их со звуковыми моделями урока.',
+        prompt: L1_READ_ALOUD_WORDS.join(', '),
+        rubric: ['Все пять слов произнесены', 'gy, ty и ny различаются', 'j и ly звучат как /j/', 'Ударение начинается на первом слоге'],
+      },
     },
     {
       id: 11,
@@ -309,7 +305,7 @@ export const LESSON_1: Lesson = {
       title: 'Összefoglalás',
       subtitle: 'Что подтверждено в уроке',
       type: 'summary',
-      note: 'После урока пройдите короткую проверку. Выполните три задания на слух по опубликованным записям; произношение по вашей записи требует отдельной проверки.',
+      note: 'После урока пройдите короткую проверку. Выполните три задания на слух по опубликованным аудио; необязательная устная практика не создаёт evidence.',
       body: `
         <ul class="tick">
           <li>Венгерский алфавит традиционно содержит <b>44 буквы/буквенные единицы</b>, включая диграфы и триграф dzs; это не подсчёт звуков.</li>
@@ -325,10 +321,9 @@ export const LESSON_1: Lesson = {
           kind: 'exitCheck', id: 'l1-exit-check', title: 'Проверка целей урока',
           checks: [
             { objectiveId: 'l1_distinguish-s-sz', activityId: 'l1-listening-s-sz', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-s-sz-reading', evidenceKind: 'reading' }] },
-            { objectiveId: 'l1_distinguish-soft-consonants', activityId: 'l1-listening-soft-consonants', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-consonant-graphemes', evidenceKind: 'reading' }, { activityId: 'l1-record-five-words', evidenceKind: 'pronunciation' }] },
+            { objectiveId: 'l1_distinguish-soft-consonants', activityId: 'l1-listening-soft-consonants', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-consonant-graphemes', evidenceKind: 'reading' }] },
             { objectiveId: 'l1_distinguish-long-vowels', activityId: 'l1-listening-vowel-length', evidenceKind: 'listening', evidenceComponents: [{ activityId: 'l1-cp-vowel-spelling', evidenceKind: 'reading' }] },
-            { objectiveId: 'l1_apply-stress', activityId: 'l1-cp-stress-rule', evidenceKind: 'grammar', evidenceComponents: [{ activityId: 'l1-record-five-words', evidenceKind: 'pronunciation' }] },
-            { objectiveId: 'l1_read-aloud', activityId: 'l1-record-five-words', evidenceKind: 'pronunciation' },
+            { objectiveId: 'l1_apply-stress', activityId: 'l1-cp-stress-rule', evidenceKind: 'grammar' },
           ],
         },
       ],
@@ -352,7 +347,7 @@ export const LESSON_1: Lesson = {
   ],
   objectives: [
     { id: 'l1_distinguish-s-sz', text: 'Различать на слух и при чтении s [ʃ] и sz [s].', skills: ['listening', 'reading'] },
-    { id: 'l1_distinguish-soft-consonants', text: 'Различать на слух gy /ɟ/, ty /c/, ny /ɲ/ и категорию /j/ (j/ly), а также записать попытку их произношения.', skills: ['pronunciation', 'listening'] },
+    { id: 'l1_distinguish-soft-consonants', text: 'Различать на слух gy /ɟ/, ty /c/, ny /ɲ/ и категорию /j/ (j/ly), а также практиковать их произношение вслух.', skills: ['pronunciation', 'listening'] },
     { id: 'l1_distinguish-long-vowels', text: 'Различать a/á, e/é, o/ó, ö/ő, u/ú и ü/ű на слух и в написании.', skills: ['listening', 'reading'] },
     { id: 'l1_apply-stress', text: 'Распознавать правило начального словесного ударения и пытаться применять его в речи.', skills: ['grammar', 'pronunciation'] },
     { id: 'l1_read-aloud', text: 'Читать вслух простые венгерские слова по изученным буквенно-звуковым соответствиям.', skills: ['reading', 'pronunciation', 'speaking'] },

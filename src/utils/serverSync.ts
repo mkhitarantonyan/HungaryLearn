@@ -3,10 +3,11 @@
 // not just the browser/device where the admin edited it.
 
 import { isAdminLoggedIn } from './adminStore';
+import { apiFetch } from '../lib/apiClient';
 
 async function request(url: string, options?: RequestInit): Promise<Response | null> {
   try {
-    return await fetch(url, { credentials: 'include', ...options });
+    return await apiFetch(url, options);
   } catch (err) {
     console.warn('[ServerSync] Network request failed:', url, err);
     return null;

@@ -4,21 +4,35 @@ import { createMigrationActivities } from './migrationActivityFactory';
 const L21_ACTIVITIES = createMigrationActivities({
   lessonId: 21,
   controlledTitle: 'Два спряжения в реальных фразах',
-  controlledPassCount: 4,
+  controlledPassCount: 9,
   controlledExercises: [
     { kind: 'singleChoice', id: 'l21-cp-1', prompt: '«Я читаю одну книгу».', options: ['Olvasok egy könyvet.', 'Olvasom egy könyvet.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l21-cp-2', prompt: '«Я читаю эту книгу».', options: ['Olvasok a könyvet.', 'Olvasom a könyvet.'], correctIndex: 1 },
-    { kind: 'fillGap', id: 'l21-cp-3', prompt: '«Я вижу тебя».', accept: ['Látlak', 'Látlak.'] },
-    { kind: 'singleChoice', id: 'l21-cp-4', prompt: 'Выбери фразу с engem.', options: ['Ő lát engem.', 'Ő látja engem.'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l21-cp-5', prompt: 'Выбери фразу о конкретном фильме.', options: ['Nézek egy filmet.', 'Nézem a filmet.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l21-cp-2', prompt: '«Я читаю эту книгу».', options: ['Olvasok ezt a könyvet.', 'Olvasom ezt a könyvet.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l21-cp-3', prompt: '«Я что-то слышу».', options: ['Hallok valamit.', 'Hallom valamit.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l21-cp-4', prompt: 'Ezt szeretem, de ___ nem szeretem.', accept: ['azt'] },
+    { kind: 'singleChoice', id: 'l21-cp-5', prompt: '«Я знаю Петера».', options: ['Ismerek Pétert.', 'Ismerem Pétert.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l21-cp-6', prompt: 'Выбери правильную форму с engem.', options: ['Ő lát engem.', 'Ő látja engem.'], correctIndex: 0 },
+    { kind: 'fillGap', id: 'l21-cp-7', prompt: 'én + lát + téged → «Я вижу тебя».', accept: ['Látlak', 'Látlak.'] },
+    { kind: 'singleChoice', id: 'l21-cp-8', prompt: '«Я видел(а) его/её в другом фильме».', options: ['Láttam őt egy másik filmben.', 'Láttak őt egy másik filmben.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l21-cp-9', prompt: '«Я смотрю один фильм».', options: ['Nézek egy filmet.', 'Nézem egy filmet.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l21-cp-10', prompt: '«Я смотрю этот фильм».', options: ['Nézek a filmet.', 'Nézem a filmet.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l21-cp-11', prompt: 'Друг спрашивает: Ismered ezt a filmet? Выбери ответ.', options: ['Igen, ismerem.', 'Igen, ismerek.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l21-cp-12', prompt: 'Телефонная связь плохая: «Я тебя слышу».', options: ['Hallom.', 'Hallak.'], correctIndex: 1 },
   ],
-  readingTitle: 'Чтение: разговор о книге и фильме',
-  readingParagraphs: ['Anna egy új könyvet olvas, Péter pedig a tegnapi filmet nézi. Anna szereti a történetet, de Péter nem szereti a filmet.'],
-  readingPassCount: 2,
+  readingTitle: 'Mit nézzünk este?',
+  readingParagraphs: [
+    'Anna péntek este találkozik Bencével. Anna egy új magyar filmet szeretne megnézni, mert már sok jót hallott róla. Bence nem ismeri ezt a filmet, de látta a rendező előző filmjét, és azt nagyon szerette. Anna megmutatja neki az előzetest a telefonján.',
+    '– Tetszik neked? – kérdezi Anna.\n– Igen, érdekesnek tűnik. Ismered a főszereplőt?\n– Igen, ismerem. Tavaly láttam őt egy másik filmben.\n– Akkor nézzük meg ezt a filmet!',
+    'Bence azonban előbb vacsorázni szeretne. Anna is éhes, ezért keresnek egy éttermet. Bence egy olasz éttermet talál, Anna viszont azt az éttermet már ismeri. Azt mondja, hogy jó, de péntek este általában sokan vannak ott. Végül egy kisebb éttermet választanak, majd elmennek a moziba.',
+  ],
+  readingPassCount: 5,
   readingQuestions: [
-    { id: 'l21-read-1', question: 'Mit olvas Anna?', options: ['Egy új könyvet', 'A tegnapi újságot', 'Egy levelet'], correctIndex: 0 },
-    { id: 'l21-read-2', question: 'Melyik tárgy meghatározott?', options: ['egy új könyvet', 'a tegnapi filmet', 'egy történetet'], correctIndex: 1 },
-    { id: 'l21-read-3', question: 'Szereti Péter a filmet?', options: ['Igen', 'Nem'], correctIndex: 1 },
+    { id: 'l21-read-1', question: 'Mit szeretne Anna péntek este csinálni?', options: ['Egy új magyar filmet megnézni', 'Otthon maradni', 'Egy könyvet venni'], correctIndex: 0 },
+    { id: 'l21-read-2', question: 'Mit tud Bence az új filmről?', options: ['Már látta', 'Nem ismeri, de látta a rendező előző filmjét', 'Ő rendezte'], correctIndex: 1 },
+    { id: 'l21-read-3', question: 'Honnan ismeri Anna a főszereplőt?', options: ['Tavaly látta egy másik filmben', 'Az étteremből', 'Nem ismeri'], correctIndex: 0 },
+    { id: 'l21-read-4', question: 'Mi a probléma az olasz étteremmel péntek este?', options: ['Zárva van', 'Általában sokan vannak ott', 'Anna nem szereti az olasz ételt'], correctIndex: 1 },
+    { id: 'l21-read-5', question: 'Mi történik végül, és milyen sorrendben?', options: ['Mozi, aztán vacsora', 'Kisebb étterem, aztán mozi', 'Csak étterem'], correctIndex: 1 },
+    { id: 'l21-read-6', question: 'Melyik pár mutat előbb határozatlan, majd határozott tárgyat?', options: ['egy éttermet → azt az éttermet', 'a telefonján → péntek este', 'Bencével → a moziba'], correctIndex: 0 },
   ],
   listeningTitle: 'Аудирование: что и кого видят друзья',
   listeningTranscript: 'A: Látod azt a házat?\nB: Igen, látom.\nA: És engem látsz a képen?\nB: Igen, téged is látlak.',
@@ -28,21 +42,66 @@ const L21_ACTIVITIES = createMigrationActivities({
     { id: 'l21-listen-2', question: 'Melyik forma hangzik el a házzal?', options: ['látok', 'látom', 'látlak'], correctIndex: 1 },
     { id: 'l21-listen-3', question: 'Melyik forma jelenti: «я вижу тебя»?', options: ['látom', 'látsz', 'látlak'], correctIndex: 2 },
   ],
-  writingTitle: 'Письмо: неопределённое и конкретное',
-  writingPrompt: 'Напиши пять пар коротких фраз: сначала о любом предмете, затем о конкретном. В одной паре используй -lak/-lek.',
+  listeningB: {
+    title: 'Аудирование B: выбираем фильм',
+    assetId: 'l21_listening_b_film_choice',
+    audioStatus: 'published',
+    transcript: 'Dóra: Szia, hallasz engem?\nMárk: Igen, most már hallak. Mit csinálsz?\nDóra: Filmet keresek estére. Ismered azt az új magyar filmet, amit múlt héten mutattak be?\nMárk: A Késői vonatot? Igen, ismerem. Tegnap láttam.\nDóra: És tetszett?\nMárk: Igen, bár az eleje egy kicsit lassú volt. A főszereplőt viszont nagyon szeretem. Több filmjét is láttam már.\nDóra: Én őt nem ismerem. Miről szól a film?\nMárk: Egy fiatal nőről, aki új munkát kap egy kisvárosban. Ott megismer egy idős férfit, és együtt próbálnak megoldani egy régi családi problémát.\nDóra: Jól hangzik. Akkor ezt nézem meg.\nMárk: Van egy másik jó film is. Küldjek róla egy linket?\nDóra: Igen, küldd el! Megnézem az előzetest is.\nMárk: Rendben, mindjárt elküldöm.\nDóra: Köszönöm. Holnap felhívlak, és elmondom, melyiket választottam.\nMárk: Jó, várlak.',
+    passCount: 5,
+    questions: [
+      { id: 'l21-listen-b-1', question: 'Miért telefonál Dóra Márknak?', options: ['Mert filmet keres estére.', 'Mert munkát keres.', 'Mert éttermet keres.'], correctIndex: 0 },
+      { id: 'l21-listen-b-2', question: 'Mikor látta Márk a magyar filmet?', options: ['Tegnap.', 'Múlt héten.', 'Ma.'], correctIndex: 0 },
+      { id: 'l21-listen-b-3', question: 'Mi nem tetszett teljesen Márknak?', options: ['Az eleje egy kicsit lassú volt.', 'A főszereplő játéka.', 'A film túl rövid volt.'], correctIndex: 0 },
+      { id: 'l21-listen-b-4', question: 'Ismeri Dóra a főszereplőt?', options: ['Igen, több filmjét látta.', 'Nem, nem ismeri.', 'Igen, személyesen ismeri.'], correctIndex: 1 },
+      { id: 'l21-listen-b-5', question: 'Mit küld Márk Dórának?', options: ['Egy linket egy másik filmről.', 'Egy mozijegyet.', 'Egy könyvet.'], correctIndex: 0 },
+      { id: 'l21-listen-b-6', question: 'Mit fog Dóra tenni másnap?', options: ['Felhívja Márkot, és elmondja, melyik filmet választotta.', 'Moziba megy Márkkal.', 'Visszaküldi a linket.'], correctIndex: 0 },
+    ],
+  },
+  rolePlay: {
+    title: 'RolePlay: выбираем фильм на вечер',
+    partnerLabel: 'Друг',
+    completionMessage: 'Диалог завершён. Прослушай свои реплики и проверь, были ли контексты естественными.',
+    startTurnId: 'l21-rp-1',
+    turns: [
+      { id: 'l21-rp-1', speaker: 'waiter', prompt: 'Mit nézzünk este?', next: 'l21-rp-2' },
+      { id: 'l21-rp-2', speaker: 'learner', prompt: 'Предложи один фильм в неопределённом контексте.', responseMode: 'selfPractice', model: 'Nézzünk meg egy magyar filmet!', next: 'l21-rp-3' },
+      { id: 'l21-rp-3', speaker: 'waiter', prompt: 'Jó ötlet. Ismered ezt a filmet?', next: 'l21-rp-4' },
+      { id: 'l21-rp-4', speaker: 'learner', prompt: 'Ответь о конкретном фильме и назови ещё один неопределённый вариант.', responseMode: 'selfPractice', model: 'Nem ismerem, de ismerek egy másik filmet.', next: 'l21-rp-5' },
+      { id: 'l21-rp-5', speaker: 'waiter', prompt: 'Ismered a főszereplőt?', next: 'l21-rp-6' },
+      { id: 'l21-rp-6', speaker: 'learner', prompt: 'Используй объектное местоимение őt и определённую форму.', responseMode: 'selfPractice', model: 'Igen, ismerem. Láttam őt egy másik filmben.', next: 'l21-rp-7' },
+      { id: 'l21-rp-7', speaker: 'waiter', prompt: 'Rendben. A mozi előtt találkozunk?', next: 'l21-rp-8' },
+      { id: 'l21-rp-8', speaker: 'learner', prompt: 'Заверши естественно. Если подходит контекст, можно использовать -lak/-lek, но это не обязательно.', responseMode: 'selfPractice', model: 'Igen. Várlak a mozi előtt.' },
+    ],
+  },
+  writingTitle: 'Письмо: что я обычно и сейчас читаю или смотрю',
+  writingPrompt: 'Напиши 80–100 слов: что ты обычно читаешь или смотришь и что конкретно читаешь или смотришь сейчас. Используй минимум 3 неопределённых и 3 определённых объектных контекста.',
   writingModel: ['Olvasok egy könyvet. Olvasom a könyvet.', 'Nézek egy filmet. Nézem a filmet.', 'Látlak téged.'],
-  writingRubric: ['Контраст дополнений понятен', 'Формы спряжения согласованы с дополнением', 'Есть пример -lak/-lek'],
-  recordingTitle: 'Говорение: выбери спряжение в контексте',
-  recordingInstructions: 'Расскажи, что ты обычно читаешь или смотришь и что читаешь или смотришь сейчас.',
-  recordingTarget: 'Gyakran olvasok könyveket. Most ezt a könyvet olvasom.',
+  writingRubric: ['80–100 слов', 'Есть минимум 3 неопределённых объектных контекста', 'Есть минимум 3 определённых объектных контекста', 'Формы спряжения согласованы с дополнениями', 'Текст связный и понятный'],
   objectiveChecks: [
     { objectiveId: 'l21_choose-conjugation', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l21_use-object-pronouns', activity: 'controlled', evidenceKind: 'grammar' },
     { objectiveId: 'l21_form-lak-lek', activity: 'controlled', evidenceKind: 'grammar' },
-    { objectiveId: 'l21_distinguish-conjugations', activity: 'listening', evidenceKind: 'listening' },
-    { objectiveId: 'l21_apply-conjugation', activity: 'writing', evidenceKind: 'writing' },
+    {
+      objectiveId: 'l21_distinguish-conjugations',
+      activity: 'listeningB',
+      evidenceKind: 'listening',
+      evidenceComponents: [{ activity: 'listening', evidenceKind: 'listening' }],
+    },
+    {
+      objectiveId: 'l21_apply-conjugation',
+      activity: 'writing',
+      evidenceKind: 'writing',
+      evidenceComponents: [{ activity: 'roleplay', evidenceKind: 'interaction' }],
+    },
   ],
 });
+
+const L21_OPTIONAL_SPEAKING = {
+  title: 'Говорение: мои привычки и конкретный выбор',
+  instructions: 'Говори 90–120 секунд на ту же коммуникативную тему, но не повторяй письменный текст дословно. Сравни обычные привычки с конкретной книгой, фильмом или программой сейчас.',
+  prompt: 'Gyakran olvasok könyveket és nézek filmeket. Most ezt a könyvet olvasom, és azt a filmet nézem.',
+  rubric: ['90–120 секунд', 'Есть обычные и конкретные контексты', 'Определённое и неопределённое спряжение используется осмысленно', 'Речь связная и понятная'],
+};
 
 export const LESSON_21: Lesson = {
   id: 21,
@@ -59,7 +118,8 @@ export const LESSON_21: Lesson = {
       title: "Bevezetés",
       subtitle: "Зачем нам глубокий разговор об этом",
       body: `
-   <p>Вы уже встречали два спряжения в 4-м уроке (настоящее неопределённое), 13-м уроке (настоящее определённое), 19-м уроке (будущее с fog) и 20-м уроке (прошедшее). На уровне B1 пора систематизировать всю эту систему целиком и закрыть точечные сложные случаи, которые вызывают ошибки даже на среднем уровне.</p>
+   <p>Прогрессия курса здесь последовательна: в L7 был предварительный контакт с выбором формы, в L13 — контраст настоящих форм, в L20 — полная система прошедшего времени, а L21 закрепляет выбор спряжения в контекстной коммуникации.</p>
+   <div class="note"><b>Can-Do:</b> выбирать определённое или неопределённое спряжение в контексте и уместно использовать <span class="hu-word">engem, téged, őt, ezt/azt</span> и <span class="hu-word">-lak/-lek</span>.</div>
  `
     },
     {
@@ -70,7 +130,7 @@ export const LESSON_21: Lesson = {
       body: `
    <ul class="tick">
      <li>Нет прямого дополнения во винительном падеже (непереходный глагол): <button class="speak-btn" data-speak-text="Megyek a parkba." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Megyek a parkba.</button></li>
-     <li>Дополнение с неопределённым артиклем <span class="hu-word">egy</span>: <button class="speak-btn" data-speak-text="Ovasok egy könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ovasok egy könyvet.</button></li>
+     <li>Дополнение с неопределённым артиклем <span class="hu-word">egy</span>: <button class="speak-btn" data-speak-text="Olvasok egy könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Olvasok egy könyvet.</button></li>
      <li>Дополнение без артикля во множественном числе или во множественной массе: <button class="speak-btn" data-speak-text="Könyveket olvasok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Könyveket olvasok.</button>, <button class="speak-btn" data-speak-text="Vizet iszom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Vizet iszom.</button></li>
      <li>Неопределённые местоимения: <span class="hu-word">valami</span> (что-то), <span class="hu-word">semmi</span> (ничего), <span class="hu-word">bármi</span> (что угодно): <button class="speak-btn" data-speak-text="Semmit nem látok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Semmit nem látok.</button></li>
      <li><b>Важное исключение:</b> местоимения 1-го и 2-го лица (engem — меня, téged — тебя) <b>требуют неопределённой формы глагола</b>, несмотря на то что они личные! Подробнее на слайде 4.</li>
@@ -143,6 +203,7 @@ export const LESSON_21: Lesson = {
    <p><button class="speak-btn" data-speak-text="Szeretem a zenét." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretem a zenét.</button> <span style="color:#8a7a68">(Люблю музыку — a zenét = определённое)</span></p>
    <p><button class="speak-btn" data-speak-text="Szeretek zenét hallgatni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretek zenét hallgatni.</button> <span style="color:#8a7a68">(szeretek — неопределённая форма; hallgatni — инфинитивное дополнение, а zenét — неопределённый прямой объект глагола hallgatni)</span></p>
    <p><button class="speak-btn" data-speak-text="Nem hallom, mit mondasz." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem hallom, mit mondasz.</button> <span style="color:#8a7a68">(Встроенный вопрос mit mondasz здесь передаёт содержание объекта глагола hallom; это не означает, что любое придаточное автоматически требует определённой формы)</span></p>
+   <div class="note"><b>Функциональные реплики:</b> Mit olvasol? · Mit nézel? · Ismered ezt…? · Igen, ismerem. · Nem ismerem. · Ezt szeretem. · Azt nem szeretem. · Látsz engem? · Igen, látlak. · Várlak. · Hallak. · Nem hallom. · Azt hiszem, hogy…</div>
  `
     },
     {
@@ -164,6 +225,7 @@ export const LESSON_21: Lesson = {
       title: "Gyakorlatok",
       subtitle: "Проверьте себя",
       activities: L21_ACTIVITIES,
+      optionalSpeaking: L21_OPTIONAL_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Выберите правильную форму: „Látom / látok engem?“</li>

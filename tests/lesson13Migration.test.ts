@@ -1,92 +1,57 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import { LESSON_13 } from '../src/data/lessons/lesson13.ts';
 import { LESSONS_META } from '../src/data/lessons/index.ts';
-import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
-import { describeExitCheckStatus, listeningEvidence, recordingCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
+import type { ActivityEvidence, LessonActivity, ProseReadingContent } from '../src/types.ts';
+import { describeExitCheckStatus, listeningEvidence, rolePlayCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
 
-const activities = LESSON_13.slides.flatMap((slide) => slide.activities ?? []);
-const source = readFileSync(new URL('../src/data/lessons/lesson13.ts', import.meta.url), 'utf8');
-const hash = (url: URL) => createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
-function find<T extends LessonActivity['kind']>(id: string, kind: T): Extract<LessonActivity, { kind: T }> {
-  const item = activities.find((activity) => activity.id === id); assert.ok(item); assert.equal(item.kind, kind);
-  return item as Extract<LessonActivity, { kind: T }>;
-}
-const direct = (activityId: string): ActivityEvidence => ({ activityId, attempted: true, completed: true, passed: true, evidenceMode: 'direct' });
+const activities=LESSON_13.slides.flatMap((slide)=>slide.activities??[]); const source=readFileSync(new URL('../src/data/lessons/lesson13.ts',import.meta.url),'utf8');
+function find<K extends LessonActivity['kind']>(id:string,kind:K):Extract<LessonActivity,{kind:K}>{const a=activities.find((x)=>x.id===id);assert.ok(a,`missing ${id}`);assert.equal(a.kind,kind);return a as Extract<LessonActivity,{kind:K}>;}
+function proseContent(reading:Extract<LessonActivity,{kind:'reading'}>):ProseReadingContent{assert.ok(reading.content);assert.equal(reading.content.type,'prose');if(reading.content.type!=='prose')assert.fail();return reading.content;}
+const direct=(activityId:string):ActivityEvidence=>({activityId,attempted:true,completed:true,passed:true,evidenceMode:'direct'});
 
-test('L13 identity and exact objective IDs stay stable', () => {
-  assert.deepEqual([LESSON_13.id, LESSON_13.number, LESSON_13.level, LESSON_13.slidesCount], [13, 13, 'A1', 12]);
-  assert.deepEqual(LESSON_13.objectives?.map((objective) => objective.id), ['l13_form-past', 'l13_use-volt', 'l13_distinguish-present-past', 'l13_tell-past']);
-  assert.deepEqual(LESSON_13.quiz?.map((question) => question.id), [1301, 1302, 1303, 1304, 1305, 1306]);
-  for (let slide = 1; slide <= 12; slide += 1) assert.equal(existsSync(new URL(`../public/audio/13.${slide}.mp3`, import.meta.url)), true);
+test('L13 preserves identity, exact objective and quiz IDs, and adopts eleven-slide identity',()=>{
+  assert.deepEqual([LESSON_13.id,LESSON_13.number,LESSON_13.level,LESSON_13.slidesCount],[13,13,'A1',11]); assert.deepEqual(LESSON_13.slides.map((s)=>s.id),[1,2,3,4,5,6,7,8,9,10,11]);
+  assert.deepEqual(LESSON_13.objectives?.map((o)=>o.id),['l13_form-past','l13_use-volt','l13_distinguish-present-past','l13_tell-past']); assert.deepEqual(LESSON_13.quiz?.map((q)=>q.id),[1301,1302,1303,1304,1305,1306]);
+  for(let slide=1;slide<=11;slide+=1)assert.equal(existsSync(new URL(`../public/audio/13.${slide}.mp3`,import.meta.url)),true);
 });
 
-test('L13 has exactly seven valid unique activities and four ExitCheck rows', () => {
-  assert.deepEqual(activities.map((activity) => activity.id), ['l13-cp-past-forms', 'l13-cp-volt-contexts', 'l13-reading-tense-contrast', 'l13-listening-tense-contrast', 'l13-writing-past-story', 'l13-recording-past-story', 'l13-exit-check']);
-  assert.deepEqual(Object.fromEntries(['controlledPractice', 'reading', 'listening', 'writing', 'recording', 'exitCheck'].map((kind) => [kind, activities.filter((activity) => activity.kind === kind).length])), { controlledPractice: 2, reading: 1, listening: 1, writing: 1, recording: 1, exitCheck: 1 });
-  assert.equal(new Set(activities.map((activity) => activity.id)).size, 7);
-  assert.deepEqual(activities.flatMap(validateActivity), []); assert.deepEqual(validateLessonQuestionIds(activities), []);
-  const exit = find('l13-exit-check', 'exitCheck'); const objectives = LESSON_13.objectives?.map((objective) => objective.id) ?? [];
-  assert.deepEqual(exit.checks.map((check) => check.objectiveId), objectives);
-  assert.deepEqual(validateExitCheckReferences(exit, objectives, activities.map((activity) => activity.id)), []);
+test('L13 has the complete valid communicative activity sequence',()=>{
+  assert.deepEqual(activities.map((a)=>a.kind),['controlledPractice','reading','listening','rolePlay','writing','exitCheck']); assert.equal(new Set(activities.map((a)=>a.id)).size,activities.length);
+  assert.deepEqual(activities.flatMap(validateActivity),[]);assert.deepEqual(validateLessonQuestionIds(activities),[]);const exit=find('l13-exit-check','exitCheck');const objectives=LESSON_13.objectives?.map((o)=>o.id)??[];assert.deepEqual(validateExitCheckReferences(exit,objectives,activities.map((a)=>a.id)),[]);
 });
 
-test('bounded forms, volt contexts, and reading use approved thresholds', () => {
-  const forms = find('l13-cp-past-forms', 'controlledPractice'); assert.equal(forms.exercises.length, 10); assert.equal(forms.passCount, 8);
-  assert.deepEqual(forms.exercises.map((exercise) => exercise.kind === 'textInput' ? exercise.accept[0] : ''), ['vártam', 'mondtam', 'nyitottam', 'futottam', 'tanultam', 'tanultál', 'tanult', 'dolgoztam', 'dolgozott', 'sétáltam']);
-  const volt = find('l13-cp-volt-contexts', 'controlledPractice'); assert.equal(volt.exercises.length, 6); assert.equal(volt.passCount, 5);
-  assert.deepEqual(volt.exercises.map((exercise) => exercise.kind === 'singleChoice' ? exercise.options[exercise.correctIndex] : ''), ['voltam', 'voltál', 'volt', 'voltunk', 'voltatok', 'voltak']);
-  const reading = find('l13-reading-tense-contrast', 'reading'); assert.equal(reading.questions.length, 6); assert.equal(reading.passCount, 5);
-  const readingText = JSON.stringify(reading);
-  for (const marker of ['Ma', 'most', 'Tegnap', 'volt', 'dolgozott']) assert.match(readingText, new RegExp(marker));
-  assert.doesNotMatch(reading.instructions ?? '', /вслух|суффикс/i);
+test('L13 contextual practice has 14 bounded introductory past-tense items at 11/14',()=>{
+  const cp=find('l13-cp-past-forms','controlledPractice');assert.equal(cp.exercises.length,14);assert.equal(cp.passCount,11);const text=JSON.stringify(cp);
+  for(const token of ['voltam','dolgoztam','sétáltam','Mit csináltál tegnap','Nem dolgoztam','boltba mentem','találkoztam','Utána','Végül'])assert.ok(text.includes(token),token);
+  assert.doesNotMatch(text,/határozott|tárgyas ragozás|teljes paradigma/i);
 });
 
-test('published dedicated audio produces DIRECT without narration or TTS fallback', () => {
-  const listening = find('l13-listening-tense-contrast', 'listening');
-  assert.equal(listening.assetId, 'l13_listening_tense_contrast'); assert.equal(listening.audioStatus, 'published');
-  assert.equal(existsSync(new URL('../public/audio/l13_listening_tense_contrast.mp3', import.meta.url)), true);
-  assert.equal(listeningEvidence(listening, 5, 5).evidenceMode, 'direct'); assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|browser TTS/i); assert.doesNotMatch(listening.assetId, /^13\./);
+test('L13 Reading is a 170–200 word A1 narrative with eight meaning questions',()=>{
+  const reading=find('l13-reading-tense-contrast','reading');const content=proseContent(reading);const words=content.paragraphs.join(' ').trim().split(/\s+/u).length;
+  assert.ok(words>=170&&words<=200,`words=${words}`);assert.equal(reading.questions.length,8);assert.equal(reading.passCount,6);assert.match(content.title??'',/Egy mozgalmas szombat/);assert.match(content.paragraphs.join(' '),/Reggel.*piacra.*Gáborral.*nem kaptunk jegyet.*Este/s);
 });
 
-test('production is connected and review-only', () => {
-  const writing = find('l13-writing-past-story', 'writing'); const recording = find('l13-recording-past-story', 'recording');
-  assert.match(writing.prompt, /4–5.*связан.*маркер/s); assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial');
-  assert.match(recording.instructions ?? '', /проверь маркеры времени и формы глаголов/); assert.equal(recordingCompletionEvidence(recording.id).evidenceMode, 'partial'); assert.equal(recordingCompletionEvidence(recording.id).passed, false);
+test('L13 published Listening remains exact and load-aware DIRECT',()=>{
+  const listening=find('l13-listening-tense-contrast','listening');assert.equal(listening.assetId,'l13_listening_tense_contrast');assert.equal(listening.audioStatus,'published');assert.equal(listening.passCount,4);assert.equal(listening.questions.length,5);
+  assert.equal(listening.transcript,'Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek.');assert.equal(existsSync(new URL('../public/audio/l13_listening_tense_contrast.mp3',import.meta.url)),true);assert.equal(listeningEvidence(listening,4,5,true).evidenceMode,'direct');assert.equal(listeningEvidence(listening,4,5,false).evidenceMode,'none');
 });
 
-test('ExitCheck resolves DIRECT DIRECT PARTIAL PARTIAL', () => {
-  const exit = find('l13-exit-check', 'exitCheck'); const listening = find('l13-listening-tense-contrast', 'listening');
-  const written = writingEvidence('Tegnap otthon voltam. Reggel dolgoztam. Délután sétáltam. Este filmet néztem.', true);
-  const evidence: Record<string, ActivityEvidence> = {
-    'l13-cp-past-forms': direct('l13-cp-past-forms'), 'l13-cp-volt-contexts': direct('l13-cp-volt-contexts'), 'l13-reading-tense-contrast': direct('l13-reading-tense-contrast'),
-    'l13-listening-tense-contrast': { activityId: 'l13-listening-tense-contrast', attempted: true, completed: true, ...listeningEvidence(listening, 5, 5) },
-    'l13-writing-past-story': { activityId: 'l13-writing-past-story', attempted: true, selfReviewed: true, ...written }, 'l13-recording-past-story': recordingCompletionEvidence('l13-recording-past-story'),
-  };
-  assert.deepEqual(Object.fromEntries(exit.checks.map((check) => [check.objectiveId, describeExitCheckStatus(check, evidence[check.activityId], evidence).kind])), { 'l13_form-past': 'direct-met', 'l13_use-volt': 'direct-met', 'l13_distinguish-present-past': 'direct-met', 'l13_tell-past': 'partial-review' });
+test('L13 RolePlay and Writing provide connected but PARTIAL production, Speaking provides none',()=>{
+  const rolePlay=find('l13-roleplay-weekend','rolePlay');assert.equal(rolePlay.turns.filter((t)=>t.speaker==='learner').length,7);assert.match(JSON.stringify(rolePlay),/Mit csináltál.*Hol voltál.*Kivel találkoztál.*Volt valami probléma.*És te/s);assert.equal(rolePlayCompletionEvidence(rolePlay.id).evidenceMode,'partial');
+  const writing=find('l13-writing-past-story','writing');const words=writing.modelAnswer.join(' ').trim().split(/\s+/u).length;assert.ok(words>=80&&words<=100,`words=${words}`);assert.equal(writingEvidence(writing.modelAnswer.join(' '),true).evidenceMode,'partial');
+  const speaking=LESSON_13.slides.find((s)=>s.optionalSpeaking)?.optionalSpeaking;assert.ok(speaking);assert.match(speaking.instructions,/1\.5–2 минуты.*без микрофона.*evidence/s);
 });
 
-test('copy is bounded, qualified, preview-only, and linguistically corrected', () => {
-  assert.match(LESSON_13.objectives?.find((objective) => objective.id === 'l13_form-past')?.text ?? '', /частотные базовые формы.*изученным моделям -t\/-tt/);
-  assert.match(source, /одно продуктивное морфологическое прошедшее время/); assert.match(source, /сам глагол, глагольные приставки и контекст/);
-  assert.match(source, /не правило.*любого глагола/s); assert.match(source, /Полная система.*урок(?:е|у) 20/i);
-  assert.doesNotMatch(source, /ТРИ ТИПА|всего ОДНО|покрывает все оттенки|ОБЯЗАТЕЛЬНО присутствует всегда/);
-  assert.match(source, /На будущее/); assert.match(source, /Пока достаточно заметить этот контраст/); assert.doesNotMatch(JSON.stringify({ activities, quiz: LESSON_13.quiz }), /Olvastam egy könyvet|Olvastam a könyvet|határozott/i);
-  assert.match(source, /A moziban voltam a barátaimmal/); assert.doesNotMatch(source, /mozinál/);
-  assert.doesNotMatch(source, /финальный урок уровня A1|Вы завершили уровень A1|15 предложений|будущем|21-м уроке/); assert.match(source, /Урок 14 завершит уровень A1/);
-  assert.ok((LESSON_13.vocabulary ?? []).every((item) => item.ipa === undefined));
+test('L13 ExitCheck keeps auto-checkable comprehension direct and connected production partial',()=>{
+  const exit=find('l13-exit-check','exitCheck');const listening=find('l13-listening-tense-contrast','listening');const evidence:Record<string,ActivityEvidence>={
+    'l13-cp-past-forms':direct('l13-cp-past-forms'),'l13-reading-tense-contrast':direct('l13-reading-tense-contrast'),'l13-listening-tense-contrast':{activityId:'l13-listening-tense-contrast',attempted:true,completed:true,...listeningEvidence(listening,4,5,true)},
+    'l13-roleplay-weekend':rolePlayCompletionEvidence('l13-roleplay-weekend'),'l13-writing-past-story':{activityId:'l13-writing-past-story',attempted:true,selfReviewed:true,...writingEvidence('A developed past narrative for review.',true)},};
+  assert.deepEqual(Object.fromEntries(exit.checks.map((c)=>[c.objectiveId,describeExitCheckStatus(c,evidence[c.activityId],evidence).kind])),{'l13_form-past':'direct-met','l13_use-volt':'direct-met','l13_distinguish-present-past':'direct-met','l13_tell-past':'partial-review'});
 });
 
-test('quiz options are unique and L13 metadata is aligned', () => {
-  for (const question of LESSON_13.quiz ?? []) { assert.equal(new Set(question.options).size, question.options.length, `quiz ${question.id}`); assert.ok(question.correctIndex >= 0 && question.correctIndex < question.options.length); assert.doesNotMatch(question.question, /В каком уроке|-ban\/-ben/i); }
-  assert.equal(LESSON_13.quiz?.find((q) => q.id === 1301)?.options[0], 'vártam'); assert.equal(LESSON_13.quiz?.find((q) => q.id === 1302)?.options[2], 'dolgozott'); assert.equal(LESSON_13.quiz?.find((q) => q.id === 1304)?.options[0], 'Nem voltam otthon.');
-  const meta = LESSONS_META.find((candidate) => candidate.id === 13); assert.ok(meta); assert.equal(meta.title, LESSON_13.title); assert.equal(meta.subtitle, LESSON_13.subtitle); assert.equal(meta.description, LESSON_13.description);
-});
-
-test('frozen L14, frozen L15, and later L20 remain byte-identical', () => {
-  assert.equal(hash(new URL('../src/data/lessons/lesson14.ts', import.meta.url)), 'B7D78CBE218F2D3E378C5653FE32B300CEF93EB5C003D7E3857FA9D4C2A8558F');
-  assert.equal(hash(new URL('../src/data/lessons/lesson15.ts', import.meta.url)), 'A7A143F7E0D5B029D3F1788868A839516D2C1C373BF7EE31C36C91DCCA15ED85');
-  assert.equal(hash(new URL('../src/data/lessons/lesson20.ts', import.meta.url)), '0C925C224C0B8B0DD30D9C6D30ECF98E9CDC819D0C83BC84BD46FA7B53791DEB');
+test('L13 remains an introduction rather than importing L20, while quiz and metadata stay stable',()=>{
+  assert.match(source,/ограниченное введение/);assert.match(source,/Полная система.*L20|полная система.*уроке 20/i);assert.doesNotMatch(source,/покрывает все оттенки|полная система всех|SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask/);
+  for(const q of LESSON_13.quiz??[])assert.equal(new Set(q.options).size,q.options.length);assert.deepEqual(LESSON_13.vocabulary?.map((v)=>v.id),Array.from({length:16},(_,i)=>`l13_v${i+1}`));const meta=LESSONS_META.find((x)=>x.id===13);assert.ok(meta);assert.equal(meta.slidesCount,11);assert.equal(meta.description,LESSON_13.description);
 });

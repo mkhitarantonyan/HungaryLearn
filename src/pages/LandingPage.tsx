@@ -15,10 +15,11 @@ import {
   MousePointerClick,
   Check,
   Star,
+  Loader2,
 } from 'lucide-react';
-import { getCurrentUser, subscribeUserState } from '../utils/userStore';
+import { getCurrentUser, isUserAuthReady, subscribeUserAuthReady, subscribeUserState } from '../utils/userStore';
 import { UserAuthModal } from '../components/UserAuthModal';
-import { AdminLoginModal } from '../components/AdminLoginModal';
+import { AdminAccessModal } from '../components/AdminAccessModal';
 
 /* ------------------------------------------------------------------ */
 /*  Scroll-reveal helper — fade-in + slide-up when a section appears   */
@@ -305,7 +306,7 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
             {!user && (
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#8A7A68]">
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#2C5F58]" /> Бесплатный пробный доступ
+                  <Check className="w-4 h-4 text-[#2C5F58]" /> Уроки 1–2 бесплатно
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Check className="w-4 h-4 text-[#2C5F58]" /> Без карты
@@ -532,8 +533,8 @@ const STEPS = [
   {
     icon: UserPlus,
     step: 'Шаг 1',
-    title: 'Создайте аккаунт',
-    text: 'Регистрация занимает 30 секунд — нужен только e-mail и пароль. Сразу получаете бесплатный пробный доступ.',
+    title: 'Начните бесплатно',
+    text: 'Уроки 1–2 доступны без оплаты. Создайте аккаунт, чтобы сохранять прогресс и повторения.',
   },
   {
     icon: MousePointerClick,
@@ -727,7 +728,7 @@ function BottomCta({
               <p className="mt-4 text-base md:text-lg text-[#EAD0C3] max-w-xl mx-auto leading-relaxed">
                 {user
                   ? 'Ваш прогресс сохранён. Вернитесь к урокам и продолжайте там, где остановились.'
-                  : 'Создайте аккаунт и получите бесплатный доступ к урокам. Первые слова — уже сегодня.'}
+                  : 'Откройте бесплатные уроки 1–2 или создайте аккаунт, чтобы сохранять прогресс.'}
               </p>
 
               <div className="mt-8">
@@ -735,7 +736,7 @@ function BottomCta({
                   onClick={user ? onStart : onSignup}
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#57121C] text-base font-bold hover:bg-[#F6EFE4] hover:scale-105 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  {user ? 'Продолжить обучение' : 'Создать аккаунт бесплатно'}
+                  {user ? 'Продолжить обучение' : 'Создать аккаунт'}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -760,7 +761,7 @@ function BottomCta({
 /*  Footer                                                            */
 /* ------------------------------------------------------------------ */
 
-function Footer({ user }: { user: { email: string } | null }) {
+function Footer() {
   return (
     <footer className="border-t border-[#E7D9C5] bg-[#FBF7EF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -795,12 +796,6 @@ function Footer({ user }: { user: { email: string } | null }) {
                 <a
                   href="/lessons"
                   className="hover:text-[#7A1E2B] transition-colors"
-                  onClick={(e) => {
-                    if (!user) {
-                      e.preventDefault();
-                      window.location.href = '/';
-                    }
-                  }}
                 >
                   Уроки
                 </a>
@@ -845,6 +840,7 @@ export default function LandingPage() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [authReady, setAuthReady] = useState(isUserAuthReady());
   const redirectAfterAuthRef = useRef(false);
 
   // Keep the auth state in sync and close the modal after a successful sign-in.
@@ -860,8 +856,9 @@ export default function LandingPage() {
     return unsubscribe;
   }, []);
 
-  // Handle URL intent: ?admin=1, ?auth=login|register, ?payment=success,
-  // and router state.auth passed by the ProtectedRoute.
+  useEffect(() => subscribeUserAuthReady(setAuthReady), []);
+
+  // Handle URL intent: ?admin=1, ?auth=login|register and ?payment=success.
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const state = location.state as { auth?: 'login' | 'register' } | null;
@@ -901,12 +898,19 @@ export default function LandingPage() {
   };
 
   const handleStart = () => {
-    if (getCurrentUser()) {
-      navigate('/lessons');
-      return;
-    }
-    openAuth('register');
+    navigate('/lessons');
   };
+
+  if (!authReady) {
+    return (
+      <div className="min-h-screen bg-[#FAF6EE] text-[#57121C] flex items-center justify-center p-4" role="status">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 animate-spin" />
+          <span className="font-mono text-sm font-semibold">Восстановление сессии…</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF6EE] text-[#2A2320] font-sans scroll-smooth antialiased selection:bg-[#7A1E2B] selection:text-white">
@@ -930,7 +934,7 @@ export default function LandingPage() {
         />
       </main>
 
-      <Footer user={user} />
+      <Footer />
 
       {/* Auth + admin modals (reuse existing components) */}
       <UserAuthModal
@@ -941,7 +945,7 @@ export default function LandingPage() {
         }}
         initialMode={authMode}
       />
-      <AdminLoginModal
+      <AdminAccessModal
         isOpen={adminModalOpen}
         onClose={() => setAdminModalOpen(false)}
         onSuccess={() => navigate('/admin')}

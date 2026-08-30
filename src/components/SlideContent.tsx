@@ -3,7 +3,6 @@ import { motion } from 'motion/react';
 import DOMPurify from 'dompurify';
 import { SlideData, LearningObjective, ActivityEvidence, ActivityRuntimeState } from '../types';
 import { SpeechButton } from './SpeechButton';
-import { AudioRecorder } from './AudioRecorder';
 import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
 import { playRecordedAudio } from '../utils/speech';
@@ -113,15 +112,29 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         </div>
       )}
 
-      {/* Interactive Widget: Sentence Reading & Recording */}
+      {/* Legacy read-aloud slide: optional text-only self-practice, never evidence. */}
       {slide.type === 'sentence-reading' && (
-        <div className="pt-2">
-          <AudioRecorder
-            targetText={slide.targetText || "Budapesten élek, és nagyon szeretek magyarul tanulni."}
-            targetPhonetic={slide.targetPhonetic || "[будапэштэн э̄лэк, э̄ш надьон сэрэтэк мадьарул танули]"}
-            targetTranslation={slide.targetTranslation || "Я живу в Будапеште, и мне очень нравится учить венгерский."}
-          />
+        <div className="rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 space-y-2">
+          <p className="font-mono text-sm font-bold text-[#57121C]">Устная практика (необязательно)</p>
+          <p className="text-xs text-[#4A403A]">Прочитай фразу вслух. Микрофон, оценка и evidence не используются.</p>
+          <p className="font-mono text-sm text-[#57121C]">{slide.targetText || "Budapesten élek, és nagyon szeretek magyarul tanulni."}</p>
+          {slide.targetPhonetic && <p className="text-xs text-[#8A7A68]">{slide.targetPhonetic}</p>}
+          {slide.targetTranslation && <p className="text-xs text-[#2C5F58]">{slide.targetTranslation}</p>}
         </div>
+      )}
+
+      {slide.optionalSpeaking && (
+        <section className="rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 space-y-2">
+          <h3 className="font-mono text-sm font-bold text-[#57121C]">{slide.optionalSpeaking.title}</h3>
+          <p className="text-xs leading-relaxed text-[#4A403A]">{slide.optionalSpeaking.instructions}</p>
+          <p className="font-mono text-sm text-[#57121C]">{slide.optionalSpeaking.prompt}</p>
+          {slide.optionalSpeaking.rubric && (
+            <ul className="list-disc space-y-1 pl-5 text-xs text-[#4A403A]">
+              {slide.optionalSpeaking.rubric.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          )}
+          <p className="text-xs text-[#8A7A68]">Необязательная самопрактика: без микрофона, score и evidence.</p>
+        </section>
       )}
 
       {/* Reusable Context Boxes: Note, Warning, Task */}

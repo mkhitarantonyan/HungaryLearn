@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
-    ignores: ['dist/**', '**/dist/**', 'node_modules/**', '.eslint-report.json'],
+    ignores: ['dist/**', '**/dist/**', 'functions/lib/**', 'node_modules/**', '.eslint-report.json'],
   },
   {
     linterOptions: {

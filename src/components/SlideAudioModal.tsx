@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { X, Mic, Square, Play, Upload, Trash2, Volume2, Save, Check, Music, Lock, ShieldCheck, Loader2, RotateCcw } from 'lucide-react';
+import { X, Mic, Square, Upload, Trash2, Volume2, Save, Check, Music, Lock, ShieldCheck, Loader2 } from 'lucide-react';
 import { saveAudioForSlide, removeAudioForSlide, hasAudioForSlide, getAudioFileUrl, getSlideCandidateKeys, subscribeAudioChanges } from '../utils/audioRegistry';
 import { stopRecordedAudio } from '../utils/speech';
 import { isAdminLoggedIn, subscribeAdminState } from '../utils/adminStore';
@@ -90,7 +90,7 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
 
       mediaRecorderRef.current.start();
       setIsRecording(true);
-    } catch (err) {
+    } catch {
       setErrorMessage("Не удалось получить доступ к микрофону. Проверьте разрешения браузера.");
     }
   };

@@ -7,7 +7,7 @@
 - идентификаторы уроков, номера и физические слайды сохранены;
 - objectives, vocabulary и quiz не удалялись и не переименовывались;
 - L15 не изменён;
-- Supabase, server и существующие audio-файлы не изменялись;
+- backend-инфраструктура и существующие audio-файлы не изменялись;
 - для нового аудирования зарезервирован отдельный asset со статусом `missing`; narration и TTS не подменяют comprehension audio;
 - каждый урок получил проверяемую практику, смысловое чтение, отдельное аудирование, письмо, запись речи и Exit Check.
 
@@ -106,4 +106,4 @@
 - `npm test`: 463/463 PASS.
 - `npm run validate:lessons`: 28 lessons — OK.
 - `npm run build`: PASS; восстановлен отсутствовавший в исходном архиве стандартный `index.html`.
-- TypeScript: известная исходная ошибка находится в `tests/stripeWebhook.test.ts` и не относится к урокам; production build проверяет приложение отдельно.
+- TypeScript и production build проходят в текущей Firebase/Lemon Squeezy архитектуре.

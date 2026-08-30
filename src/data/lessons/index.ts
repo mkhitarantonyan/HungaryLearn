@@ -1,6 +1,7 @@
 import { Lesson, LessonMeta } from '../../types';
 import { LESSON_1 } from './lesson1';
 import { LESSON_2 } from './lesson2';
+import { apiFetch } from '../../lib/apiClient';
 
 export const LESSONS_META: LessonMeta[] = [
   {
@@ -63,7 +64,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 7 · A tárgyeset',
     subtitle: 'Винительный падеж — суффикс -t',
-    description: 'Прямое дополнение с -t: надёжные модели образования, частые словарные формы, личные местоимения и узкая модель 1-го лица с объектом «ты».',
+    description: 'Прямое дополнение с -t в бытовых ситуациях: предметы, покупки, просьбы, доступное чтение и текстовая практика без преждевременной полной системы спряжения.',
     slidesCount: 11
   },
   {
@@ -72,8 +73,8 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 8 · A család & Birtokos ragozás',
     subtitle: 'Семья и притяжательные формы: én, te, ő',
-    description: 'Базовая лексика семьи, формы одного обладаемого предмета при владельцах én/te/ő и короткое связное описание семьи.',
-    slidesCount: 12
+    description: 'Семья и принадлежность в раннем A1: формы одного обладаемого предмета для én/te/ő, понятное чтение, разговор и связное описание.',
+    slidesCount: 11
   },
   {
     id: 9,
@@ -81,7 +82,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 9 · Melléknevek & Összehasonlítás',
     subtitle: 'Прилагательные и степени сравнения',
-    description: 'Прилагательные перед существительным, частые сравнительные формы, конструкции с mint, превосходная степень и короткие практические сравнения.',
+    description: 'Прилагательные и сравнение в раннем A1: понятные характеристики, выбор между двумя вариантами, причина предпочтения и открытая текстовая практика.',
     slidesCount: 11
   },
   {
@@ -99,7 +100,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 11 · Helyhatározók II',
     subtitle: 'Поверхностная и конвенциональная местная семья: где, куда, откуда',
-    description: 'Продолжение модели Hol? / Hová? / Honnan?: формы -n/-on/-en/-ön, -ra/-re и -ról/-ről для предметов, мест и частых географических названий.',
+    description: 'Модель Hol? / Hová? / Honnan? для поверхностной и конвенциональной семьи, городских дел, простого маршрута и уточнения местоположения.',
     slidesCount: 11
   },
   {
@@ -108,7 +109,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 12 · Helyhatározók III',
     subtitle: 'Hol? Hová? Honnan? — формы у/к/от',
-    description: 'Формы -nál/-nél, -hoz/-hez/-höz и -tól/-től для местонахождения, направления и источника; короткие практические обмены и выбранные послелоги как дополнение.',
+    description: 'Интеграция форм -nál/-nél, -hoz/-hez/-höz и -tól/-től с транспортом, остановками, простыми маршрутами и восстановлением понимания.',
     slidesCount: 11
   },
   {
@@ -117,8 +118,8 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 13 · A múlt idő',
     subtitle: 'Введение в прошедшее время: частотные формы и volt',
-    description: 'Введение в венгерское прошедшее время: частотные базовые формы, volt, распознавание настоящего и прошлого и короткий рассказ о прошедшем событии.',
-    slidesCount: 12
+    description: 'Коммуникативное введение в прошедшее время: частотные формы, volt, вопросы, отрицание и простой связный рассказ о завершённых событиях.',
+    slidesCount: 11
   },
   {
     id: 14,
@@ -126,7 +127,7 @@ export const LESSONS_META: LessonMeta[] = [
     level: 'A1',
     title: 'Урок 14 · Napi rutin',
     subtitle: 'Распорядок дня, частые -ik-глаголы и время',
-    description: 'Распорядок дня, частые формы настоящего времени routine/-ik-глаголов, выражения времени и короткий связный рассказ о своём дне.',
+    description: 'Интегрированный checkpoint конца A1: распорядок дня, время, частота, знакомая грамматика, Reading, Listening и открытая продукция без автоматической сертификации.',
     slidesCount: 11
   },
   {
@@ -134,26 +135,26 @@ export const LESSONS_META: LessonMeta[] = [
     number: 15,
     level: 'A2',
     title: 'Урок 15 · Ételek és étterem',
-    subtitle: 'Еда и дательный падеж (-nak / -nek)',
-    description: 'Дательный падеж (-nak/-nek), конструкция «у меня есть» (nekem van), отрицание обладания (nincs), словарь блюд и заказ в ресторане.',
-    slidesCount: 12
+    subtitle: 'Ресторан, заказ и дательный падеж (-nak / -nek)',
+    description: 'Полный базовый визит в ресторан: столик, заказ для себя и другого человека, состав блюда, небольшая проблема, счёт и полезные контексты -nak/-nek.',
+    slidesCount: 11
   },
   {
     id: 16,
     number: 16,
     level: 'A2',
     title: 'Урок 16 · Vásárlás és eszközhatározó',
-    subtitle: 'Покупки и -val/-vel: средство и сопровождение',
-    description: 'Изученные формы -val/-vel, ассимиляция v в письме, средство и сопровождение, базовая покупка, оплата и ограниченный набор практических цен.',
-    slidesCount: 12
+    subtitle: 'Покупки и -val/-vel: цена, выбор и обмен',
+    description: 'Практическое употребление -val/-vel, цены и способы оплаты, выбор размера/цвета и решение простой проблемы с обменом.',
+    slidesCount: 11
   },
   {
     id: 17,
     number: 17,
     level: 'A2',
     title: 'Урок 17 · Időjárás és évszakok',
-    subtitle: 'Погода, времена года и месяцы',
-    description: 'Базовое описание погоды и температуры, четыре времени года, месяцы, формы tavasszal/nyáron/ősszel/télen, сравнение сезонов и короткий прогноз на слух.',
+    subtitle: 'Погода, сезоны и практические планы',
+    description: 'Описание погоды и температуры, сезоны, понимание прогноза и изменение практического плана из-за погодных условий.',
     slidesCount: 11
   },
   {
@@ -315,8 +316,7 @@ export async function loadLesson(id: number, options: LessonLoadOptions = {}): P
   const endpoint = options.admin ? `/api/admin/lessons/${id}` : `/api/lessons/${id}`;
   let response: Response;
   try {
-    response = await fetch(endpoint, {
-      credentials: 'same-origin',
+    response = await apiFetch(endpoint, {
       headers: { Accept: 'application/json' },
     });
   } catch {

@@ -3,15 +3,19 @@ import type {
   EvidenceKind,
   LessonActivity,
   ListeningQuestion,
+  ListeningTaskData,
   ReadingQuestion,
+  RolePlayData,
 } from '../../types';
+
+type MigrationActivityKey = 'controlled' | 'reading' | 'listening' | 'listeningB' | 'roleplay' | 'roleplayB' | 'writing';
 
 interface ObjectiveCheckConfig {
   objectiveId: string;
-  activity: 'controlled' | 'reading' | 'listening' | 'writing' | 'recording';
+  activity: MigrationActivityKey;
   evidenceKind: EvidenceKind;
   evidenceComponents?: Array<{
-    activity: 'controlled' | 'reading' | 'listening' | 'writing' | 'recording';
+    activity: MigrationActivityKey;
     evidenceKind: EvidenceKind;
   }>;
 }
@@ -29,20 +33,21 @@ interface MigrationActivityConfig {
   listeningTranscript: string;
   listeningQuestions: ListeningQuestion[];
   listeningPassCount: number;
+  listeningB?: Omit<ListeningTaskData, 'kind' | 'id'>;
   writingTitle: string;
   writingPrompt: string;
   writingModel: string[];
   writingRubric: string[];
-  recordingTitle: string;
-  recordingInstructions: string;
-  recordingTarget: string;
+  rolePlay?: Omit<RolePlayData, 'kind' | 'id'>;
+  rolePlayB?: Omit<RolePlayData, 'kind' | 'id'>;
+  activitySequence?: 'communication';
   objectiveChecks: ObjectiveCheckConfig[];
 }
 
 /**
  * Builds the shared migration sequence used after the frozen L15 pilot.
  * Dedicated comprehension audio intentionally remains unavailable until a
- * human recording is published; slide narration is never used as a substitute.
+ * a human-produced MP3 is published; slide narration is never used as a substitute.
  */
 export function createMigrationActivities(config: MigrationActivityConfig): LessonActivity[] {
   const prefix = `l${config.lessonId}`;
@@ -50,19 +55,20 @@ export function createMigrationActivities(config: MigrationActivityConfig): Less
     controlled: `${prefix}-cp-core`,
     reading: `${prefix}-reading-context`,
     listening: `${prefix}-listening-context`,
+    listeningB: `${prefix}-listening-b-context`,
+    roleplay: `${prefix}-roleplay-interaction`,
+    roleplayB: `${prefix}-roleplay-interaction-2`,
     writing: `${prefix}-writing-production`,
-    recording: `${prefix}-recording-production`,
   } as const;
 
-  const activities: LessonActivity[] = [
-    {
+  const controlledActivity: LessonActivity = {
       kind: 'controlledPractice',
       id: activityIds.controlled,
       title: config.controlledTitle,
       passCount: config.controlledPassCount,
       exercises: config.controlledExercises,
-    },
-    {
+    };
+  const readingActivity: LessonActivity = {
       kind: 'reading',
       id: activityIds.reading,
       title: config.readingTitle,
@@ -70,8 +76,8 @@ export function createMigrationActivities(config: MigrationActivityConfig): Less
       content: { type: 'prose', paragraphs: config.readingParagraphs },
       questions: config.readingQuestions,
       passCount: config.readingPassCount,
-    },
-    {
+    };
+  const listeningActivity: LessonActivity = {
       kind: 'listening',
       id: activityIds.listening,
       title: config.listeningTitle,
@@ -80,24 +86,33 @@ export function createMigrationActivities(config: MigrationActivityConfig): Less
       transcript: config.listeningTranscript,
       questions: config.listeningQuestions,
       passCount: config.listeningPassCount,
-    },
-    {
+    };
+  const rolePlayActivities: LessonActivity[] = [
+    ...(config.listeningB ? [{
+      ...config.listeningB,
+      kind: 'listening' as const,
+      id: activityIds.listeningB,
+    }] : []),
+    ...(config.rolePlay ? [{
+      kind: 'rolePlay' as const,
+      id: activityIds.roleplay,
+      ...config.rolePlay,
+    }] : []),
+    ...(config.rolePlayB ? [{
+      kind: 'rolePlay' as const,
+      id: activityIds.roleplayB,
+      ...config.rolePlayB,
+    }] : []),
+  ];
+  const writingActivity: LessonActivity = {
       kind: 'writing',
       id: activityIds.writing,
       title: config.writingTitle,
       prompt: config.writingPrompt,
       modelAnswer: config.writingModel,
       rubric: config.writingRubric,
-    },
-    {
-      kind: 'recording',
-      id: activityIds.recording,
-      title: config.recordingTitle,
-      instructions: config.recordingInstructions,
-      targetText: config.recordingTarget,
-      rubric: ['Задача выполнена', 'Фразы связаны по смыслу', 'Целевые формы использованы уместно'],
-    },
-    {
+    };
+  const exitActivity: LessonActivity = {
       kind: 'exitCheck',
       id: `${prefix}-exit-check`,
       title: 'Проверка целей урока',
@@ -110,8 +125,11 @@ export function createMigrationActivities(config: MigrationActivityConfig): Less
           evidenceKind: component.evidenceKind,
         })),
       })),
-    },
-  ];
+    };
+
+  const activities: LessonActivity[] = config.activitySequence === 'communication'
+    ? [readingActivity, controlledActivity, listeningActivity, ...rolePlayActivities, writingActivity, exitActivity]
+    : [controlledActivity, readingActivity, listeningActivity, ...rolePlayActivities, writingActivity, exitActivity];
 
   return activities;
 }

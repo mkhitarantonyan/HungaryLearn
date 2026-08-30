@@ -3,105 +3,49 @@ import type { Lesson, LessonActivity } from '../../types';
 const L10_CP_MEANING: LessonActivity = {
   kind: 'controlledPractice',
   id: 'l10-cp-meaning',
-  title: 'Hol? Hová? Honnan?',
-  passCount: 8,
+  title: 'Контекстная практика: Hol? Hová? Honnan?',
+  passCount: 11,
   exercises: [
     { kind: 'singleChoice', id: 'l10-meaning-1', prompt: 'Péter a házban van. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
     { kind: 'singleChoice', id: 'l10-meaning-2', prompt: 'Anna bemegy az iskolába. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 1 },
     { kind: 'singleChoice', id: 'l10-meaning-3', prompt: 'Márk kijön a boltból. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l10-meaning-4', prompt: 'Bemegyek a szobába. Это…', options: ['место внутри', 'цель движения внутрь', 'источник движения наружу'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l10-meaning-5', prompt: 'A kertben olvasok. Это…', options: ['место внутри', 'цель движения внутрь', 'источник движения наружу'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l10-meaning-6', prompt: 'Kijövök az épületből. Это…', options: ['место внутри', 'цель движения внутрь', 'источник движения наружу'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l10-meaning-7', prompt: 'Az irodában dolgozom. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l10-meaning-8', prompt: 'A kertbe megyünk. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l10-meaning-9', prompt: 'Az iskolából jövök. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l10-meaning-10', prompt: 'A boltban vagyunk. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
-  ],
-};
-
-const L10_CP_INESSIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l10-cp-inessive',
-  title: 'Hol? — точные формы -ban/-ben',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l10-inessive-1', prompt: 'ház → Hol?', accept: ['házban'] },
-    { kind: 'textInput', id: 'l10-inessive-2', prompt: 'szoba → Hol?', accept: ['szobában'] },
-    { kind: 'textInput', id: 'l10-inessive-3', prompt: 'kert → Hol?', accept: ['kertben'] },
-    { kind: 'textInput', id: 'l10-inessive-4', prompt: 'épület → Hol?', accept: ['épületben'] },
-    { kind: 'textInput', id: 'l10-inessive-5', prompt: 'bolt → Hol?', accept: ['boltban'] },
-    { kind: 'textInput', id: 'l10-inessive-6', prompt: 'iskola → Hol?', accept: ['iskolában'] },
-  ],
-};
-
-const L10_CP_ILLATIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l10-cp-illative',
-  title: 'Hová? — точные формы -ba/-be',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l10-illative-1', prompt: 'ház → Hová?', accept: ['házba'] },
-    { kind: 'textInput', id: 'l10-illative-2', prompt: 'szoba → Hová?', accept: ['szobába'] },
-    { kind: 'textInput', id: 'l10-illative-3', prompt: 'kert → Hová?', accept: ['kertbe'] },
-    { kind: 'textInput', id: 'l10-illative-4', prompt: 'épület → Hová?', accept: ['épületbe'] },
-    { kind: 'textInput', id: 'l10-illative-5', prompt: 'bolt → Hová?', accept: ['boltba'] },
-    { kind: 'textInput', id: 'l10-illative-6', prompt: 'iskola → Hová?', accept: ['iskolába'] },
-  ],
-};
-
-const L10_CP_ELATIVE: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l10-cp-elative',
-  title: 'Honnan? — точные формы -ból/-ből',
-  passCount: 5,
-  exercises: [
-    { kind: 'textInput', id: 'l10-elative-1', prompt: 'ház → Honnan?', accept: ['házból'] },
-    { kind: 'textInput', id: 'l10-elative-2', prompt: 'szoba → Honnan?', accept: ['szobából'] },
-    { kind: 'textInput', id: 'l10-elative-3', prompt: 'kert → Honnan?', accept: ['kertből'] },
-    { kind: 'textInput', id: 'l10-elative-4', prompt: 'épület → Honnan?', accept: ['épületből'] },
-    { kind: 'textInput', id: 'l10-elative-5', prompt: 'bolt → Honnan?', accept: ['boltból'] },
-    { kind: 'textInput', id: 'l10-elative-6', prompt: 'iskola → Honnan?', accept: ['iskolából'] },
-  ],
-};
-
-const L10_CP_CONTEXT: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l10-cp-context',
-  title: 'Выбери форму по ситуации',
-  passCount: 5,
-  exercises: [
-    { kind: 'singleChoice', id: 'l10-context-1', prompt: 'Анна уже внутри дома: Anna a __ van.', options: ['házba', 'házban', 'házból'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l10-context-2', prompt: 'Петер входит в школу: Péter bemegy az __.', options: ['iskolából', 'iskolába', 'iskolában'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l10-context-3', prompt: 'Марк выходит из магазина: Márk kijön a __.', options: ['boltban', 'boltba', 'boltból'], correctIndex: 2 },
-    { kind: 'singleChoice', id: 'l10-context-4', prompt: 'Эва работает внутри офиса: Éva az __ dolgozik.', options: ['irodából', 'irodában', 'irodába'], correctIndex: 1 },
-    { kind: 'singleChoice', id: 'l10-context-5', prompt: 'Мы входим в комнату: Bemegyünk a __.', options: ['szobába', 'szobából', 'szobában'], correctIndex: 0 },
-    { kind: 'singleChoice', id: 'l10-context-6', prompt: 'Они выходят из здания: Kijönnek az __.', options: ['épületben', 'épületből', 'épületbe'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l10-meaning-4', prompt: 'Ты работаешь внутри офиса.', options: ['Az irodában dolgozom.', 'Az irodába dolgozom.', 'Az irodából dolgozom.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l10-meaning-5', prompt: 'Ты идёшь внутрь кафе.', options: ['A kávézóban megyek.', 'A kávézóba megyek.', 'A kávézóból megyek.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l10-meaning-6', prompt: 'Ты выходишь из библиотеки.', options: ['Kijövök a könyvtárban.', 'Kijövök a könyvtárba.', 'Kijövök a könyvtárból.'], correctIndex: 2 },
+    { kind: 'textInput', id: 'l10-meaning-7', prompt: 'ház → Hol?', accept: ['házban'] },
+    { kind: 'textInput', id: 'l10-meaning-8', prompt: 'iskola → Hová?', accept: ['iskolába'] },
+    { kind: 'textInput', id: 'l10-meaning-9', prompt: 'bolt → Honnan?', accept: ['boltból'] },
+    { kind: 'singleChoice', id: 'l10-meaning-10', prompt: 'Мини-диалог: — Hol vagy? — ___', options: ['A könyvtárban vagyok.', 'A könyvtárba megyek.', 'A könyvtárból jövök.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l10-meaning-11', prompt: 'Мини-диалог: — Hová mész? — ___', options: ['Az étteremben vagyok.', 'Az étterembe megyek.', 'Az étteremből jövök.'], correctIndex: 1 },
+    { kind: 'singleChoice', id: 'l10-meaning-12', prompt: 'Мини-диалог: — Honnan jössz? — ___', options: ['Az iskolában vagyok.', 'Az iskolába megyek.', 'Az iskolából jövök.'], correctIndex: 2 },
+    { kind: 'singleChoice', id: 'l10-meaning-13', prompt: 'Сначала человек внутри магазина, затем выходит.', options: ['A boltban van, majd kijön a boltból.', 'A boltba van, majd a boltban jön.', 'A boltból van, majd a boltba kijön.'], correctIndex: 0 },
+    { kind: 'singleChoice', id: 'l10-meaning-14', prompt: 'Мы меняем место встречи и идём внутрь кафе.', options: ['A kávézóban találkozunk, oda bemegyünk.', 'A kávézóba találkozunk, ott kijövünk.', 'A kávézóból találkozunk.'], correctIndex: 0 },
   ],
 };
 
 const L10_READING: LessonActivity = {
   kind: 'reading',
   id: 'l10-reading-dialogue',
-  title: 'Чтение: где, куда и откуда',
-  instructions: 'Прочитай диалог и ответь по смыслу пространственных отношений.',
-  passCount: 4,
+  title: 'Чтение: несколько мест за одно утро',
+  instructions: 'Проследи путь Анны: где она находится, куда входит, что делает внутри и откуда выходит.',
+  passCount: 6,
   content: {
     type: 'prose',
-    title: 'Hol vagy most?',
+    title: 'Egy délelőtt több helyen',
     paragraphs: [
-      'A: Szia! Hol vagy most?',
-      'B: A házban vagyok, a szobámban.',
-      'A: Én most a boltba megyek. Kérsz valamit?',
-      'B: Egy kávét, kérlek! Utána kijössz a kertbe?',
-      'A: Igen. Fél óra múlva kijövök a boltból, és bemegyek a kertbe.',
+      'Anna szerda reggel otthon van. Fél nyolckor a konyhában reggelizik, majd bemegy a szobába a táskájáért. Nyolc órakor kijön a házból, és először egy kis kávézóba megy. A kávézóban kér egy teát és egy szendvicset. Ott találkozik a barátjával, Dórával, aki egy könyvet ad neki. A kávézóban sok ember van, de van egy szabad hely is.',
+      'Fél kilenckor Anna kijön a kávézóból, és bemegy egy boltba. A boltban almát és vizet vesz. Ezután az iskolába megy, mert tíz órakor magyarórája van. Az iskolában a második teremben tanul. Anna új szavakat ír és rövid magyar mondatokat olvas. Az óra után beszél a tanárával, majd délben kijön az épületből.',
+      'Anna ezután a könyvtárba megy. A könyvtárban visszaad két régi könyvet, és keres egy könnyű magyar történetet. A barátja már ott várja. Együtt olvasnak és tanulnak. A könyvtár csendes, ezért ott könnyű együtt tanulni. Anna délután kettőkor jön ki a könyvtárból. Végül hazamegy, és a szobájában pihen.',
     ],
   },
   questions: [
-    { id: 'l10-reading-q1', question: 'Где находится B в начале?', options: ['a házban, a szobájában', 'a boltba', 'a kertből'], correctIndex: 0 },
-    { id: 'l10-reading-q2', question: 'Куда идёт A?', options: ['a boltból', 'a boltban', 'a boltba'], correctIndex: 2 },
-    { id: 'l10-reading-q3', question: 'Что просит B?', options: ['egy könyvet', 'egy kávét', 'egy almát'], correctIndex: 1 },
-    { id: 'l10-reading-q4', question: 'Откуда позже выходит A?', options: ['a boltból', 'a kertből', 'a házból'], correctIndex: 0 },
-    { id: 'l10-reading-q5', question: 'Куда A идёт после магазина?', options: ['a kertben', 'a kertbe', 'a kertből'], correctIndex: 1 },
+    { id: 'l10-reading-q1', question: 'Где Анна завтракает?', options: ['на кухне', 'в кафе', 'в школе'], correctIndex: 0 },
+    { id: 'l10-reading-q2', question: 'Куда она идёт после дома сначала?', options: ['в библиотеку', 'в кафе', 'в школу'], correctIndex: 1 },
+    { id: 'l10-reading-q3', question: 'Что Анна делает в кафе?', options: ['просит чай и бутерброд', 'покупает яблоки', 'возвращает книги'], correctIndex: 0 },
+    { id: 'l10-reading-q4', question: 'Откуда она выходит в половине девятого?', options: ['из кафе', 'из школы', 'из библиотеки'], correctIndex: 0 },
+    { id: 'l10-reading-q5', question: 'Зачем Анна идёт в школу?', options: ['у неё урок венгерского', 'она встречает Дору', 'она покупает воду'], correctIndex: 0 },
+    { id: 'l10-reading-q6', question: 'С кем Анна встречается в библиотеке?', options: ['с учителем', 'с другом', 'с продавцом'], correctIndex: 1 },
+    { id: 'l10-reading-q7', question: 'Где заканчивается её путь?', options: ['дома, в комнате', 'в магазине', 'в кафе'], correctIndex: 0 },
   ],
 };
 
@@ -122,32 +66,41 @@ const L10_LISTENING: LessonActivity = {
   ],
 };
 
-const L10_CP_WRITING: LessonActivity = {
-  kind: 'controlledPractice',
-  id: 'l10-cp-context-writing',
-  title: 'Короткие предложения по ситуации',
-  passCount: 4,
-  exercises: [
-    { kind: 'textInput', id: 'l10-writing-1', prompt: 'Петер находится в доме.', accept: ['Péter a házban van.', 'A házban van Péter.'] },
-    { kind: 'textInput', id: 'l10-writing-2', prompt: 'Анна входит в школу.', accept: ['Anna bemegy az iskolába.', 'Az iskolába megy be Anna.'] },
-    { kind: 'textInput', id: 'l10-writing-3', prompt: 'Марк выходит из магазина.', accept: ['Márk kijön a boltból.', 'A boltból jön ki Márk.'] },
-    { kind: 'textInput', id: 'l10-writing-4', prompt: 'Я читаю в саду.', accept: ['A kertben olvasok.', 'Olvasok a kertben.'] },
-    { kind: 'textInput', id: 'l10-writing-5', prompt: 'Я вхожу в комнату, затем выхожу из комнаты.', accept: ['Bemegyek a szobába, majd kijövök a szobából.'] },
+const L10_ROLEPLAY: LessonActivity = {
+  kind: 'rolePlay', id: 'l10-roleplay-meeting-place', title: 'Ролевая игра: где встретимся?', partnerLabel: 'Barát', completionMessage: 'Egyeztettétek a találkozó helyét.', startTurnId: 'l10-rp-s1',
+  turns: [
+    { id: 'l10-rp-s1', speaker: 'waiter', prompt: 'Szia! Hol vagy most?', next: 'l10-rp-l1' },
+    { id: 'l10-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови текущее место внутри здания.', model: 'Szia! A könyvtárban vagyok.', next: 'l10-rp-s2' },
+    { id: 'l10-rp-s2', speaker: 'waiter', prompt: 'Hová mész innen?', next: 'l10-rp-l2' },
+    { id: 'l10-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови следующую цель.', model: 'Innen egy kávézóba megyek.', next: 'l10-rp-s3' },
+    { id: 'l10-rp-s3', speaker: 'waiter', prompt: 'Honnan jössz a kávézóba?', next: 'l10-rp-l3' },
+    { id: 'l10-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови исходную точку.', model: 'A könyvtárból jövök.', next: 'l10-rp-s4' },
+    { id: 'l10-rp-s4', speaker: 'waiter', prompt: 'Találkozzunk a kávézóban háromkor!', next: 'l10-rp-l4' },
+    { id: 'l10-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди место и время.', model: 'Rendben, háromkor a kávézóban találkozunk.', next: 'l10-rp-s5' },
+    { id: 'l10-rp-s5', speaker: 'waiter', prompt: 'Változás: a kávézó zárva van. Menjünk inkább az étterembe.', next: 'l10-rp-l5' },
+    { id: 'l10-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Отреагируй на изменение места.', model: 'Jó, akkor bemegyek az étterembe.', next: 'l10-rp-s6' },
+    { id: 'l10-rp-s6', speaker: 'waiter', prompt: 'Mikor érsz oda?', next: 'l10-rp-l6' },
+    { id: 'l10-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови время прибытия.', model: 'Három óra előtt odaérek.', next: 'l10-rp-s7' },
+    { id: 'l10-rp-s7', speaker: 'waiter', prompt: 'Hol találkozunk pontosan?', next: 'l10-rp-l7' },
+    { id: 'l10-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Окончательно подтверди место.', model: 'Az étteremben találkozunk háromkor.', next: 'l10-rp-s8' },
+    { id: 'l10-rp-s8', speaker: 'waiter', prompt: 'Rendben, várlak!', next: 'l10-rp-l8' },
+    { id: 'l10-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Заверши разговор.', model: 'Köszönöm, hamarosan találkozunk!', next: 'l10-rp-s9' },
+    { id: 'l10-rp-s9', speaker: 'waiter', prompt: 'Szia!' },
   ],
 };
 
-const L10_RECORDING: LessonActivity = {
-  kind: 'recording',
-  id: 'l10-record-inner-locations',
-  title: 'Говорение: где, куда, откуда',
-  instructions: 'Запиши три коротких ответа, затем проверь, различаются ли в них где, куда и откуда.',
-  targetText: 'A házban vagyok. Bemegyek a boltba. Kijövök a boltból.',
-  targetTranslation: 'Я нахожусь в доме. Я вхожу в магазин. Я выхожу из магазина.',
-  rubric: [
-    'Произнесены все три предложения',
-    'Различимы отношения Hol, Hová и Honnan',
-    'Сохранены долгие гласные в -ból/-ből',
-  ],
+const L10_WRITING: LessonActivity = {
+  kind: 'writing', id: 'l10-writing-morning-route', title: 'Письмо: вымышленное утро',
+  prompt: 'Напиши 70–90 слов о вымышленном утре. Объясни, где начинаешь день, куда идёшь, что делаешь внутри, откуда выходишь, какова следующая цель и где заканчиваешь. Используй только внутреннее семейство L10.',
+  modelAnswer: ['Reggel hétkor otthon, a konyhában reggelizem. Utána bemegyek a szobába a táskámért. Nyolckor kijövök a házból, és egy kávézóba megyek. A kávézóban teát iszom és találkozom Annával. Fél kilenckor kijövök a kávézóból, majd bemegyek az iskolába. Az iskolában magyarul tanulok. Délben kijövök az épületből, és a könyvtárba megyek. Ott könyvet olvasok. Délután a könyvtárból egyenesen hazamegyek, és végül a szobámban pihenek. A nap végén már nagyon fáradt vagyok, de elégedett.'],
+  rubric: ['70–90 слов', 'начальная и конечная точки', 'несколько внутренних мест', 'корректные Hol? / Hová? / Honnan? формы', 'понятная последовательность'],
+};
+
+const L10_SPEAKING = {
+  title: 'Необязательная устная самопрактика',
+  instructions: 'Говори 1–1.5 минуты о местах дня: где находишься, куда входишь и откуда выходишь. Это текстовая инструкция без микрофона, score и evidence.',
+  prompt: 'Назови несколько знакомых внутренних мест и свяжи их в короткий маршрут.',
+  rubric: ['место', 'цель', 'исходная точка', 'понятная последовательность'],
 };
 
 const L10_EXIT_CHECK: LessonActivity = {
@@ -156,16 +109,17 @@ const L10_EXIT_CHECK: LessonActivity = {
   title: 'Проверка целей урока 10',
   checks: [
     { objectiveId: 'l10_distinguish-inner-cases', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
-    { objectiveId: 'l10_form-inessive', activityId: 'l10-cp-inessive', evidenceKind: 'grammar' },
-    { objectiveId: 'l10_form-illative', activityId: 'l10-cp-illative', evidenceKind: 'grammar' },
-    { objectiveId: 'l10_form-elative', activityId: 'l10-cp-elative', evidenceKind: 'grammar' },
+    { objectiveId: 'l10_form-inessive', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
+    { objectiveId: 'l10_form-illative', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
+    { objectiveId: 'l10_form-elative', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
     {
       objectiveId: 'l10_use-inner-cases',
-      activityId: 'l10-cp-context-writing',
-      evidenceKind: 'writing',
+      activityId: 'l10-reading-dialogue',
+      evidenceKind: 'reading',
       evidenceComponents: [
         { activityId: 'l10-listening-inner-locations', evidenceKind: 'listening' },
-        { activityId: 'l10-record-inner-locations', evidenceKind: 'speaking' },
+        { activityId: 'l10-roleplay-meeting-place', evidenceKind: 'interaction' },
+        { activityId: 'l10-writing-morning-route', evidenceKind: 'writing' },
       ],
     },
   ],
@@ -219,7 +173,6 @@ export const LESSON_10: Lesson = {
         <p><span class="hu-word">Péter a szobában van.</span> — Петер находится в комнате. <span class="hu-word">A kertben olvasok.</span> — Я читаю в саду.</p>
         <p>Частые пары: <span class="hu-word">házban, szobában, kertben, épületben, boltban, iskolában</span>.</p>
       `,
-      activities: [L10_CP_INESSIVE],
     },
     {
       id: 4,
@@ -230,7 +183,6 @@ export const LESSON_10: Lesson = {
         <p><span class="hu-word">Péter bemegy a szobába.</span> — Петер входит в комнату. <span class="hu-word">Anna bemegy az épületbe.</span> — Анна входит в здание.</p>
         <p>Частые пары: <span class="hu-word">házba, szobába, kertbe, épületbe, boltba, iskolába</span>.</p>
       `,
-      activities: [L10_CP_ILLATIVE],
     },
     {
       id: 5,
@@ -241,7 +193,6 @@ export const LESSON_10: Lesson = {
         <p><span class="hu-word">Péter kijön a szobából.</span> — Петер выходит из комнаты. <span class="hu-word">Anna kijön az épületből.</span> — Анна выходит из здания.</p>
         <p>Частые пары: <span class="hu-word">házból, szobából, kertből, épületből, boltból, iskolából</span>.</p>
       `,
-      activities: [L10_CP_ELATIVE],
     },
     {
       id: 6,
@@ -256,46 +207,44 @@ export const LESSON_10: Lesson = {
     },
     {
       id: 7,
-      eyebrow: 'УРОК 10 · 7/11 · КОНТЕКСТ',
-      title: 'A térbeli kapcsolat számít',
-      subtitle: 'Важно пространственное отношение',
+      eyebrow: 'УРОК 10 · 7/11 · ЧТЕНИЕ',
+      title: 'Egy délelőtt több helyen',
+      subtitle: 'Несколько внутренних мест за одно утро',
       body: `
-        <p><span class="hu-word">A boltba megyek.</span> означает, что магазин — цель: я иду в магазин.</p>
-        <p><span class="hu-word">A boltban megyek.</span> тоже может быть грамматически правильно: движение происходит внутри магазина.</p>
-        <div class="note">Некоторые венгерские географические названия используют другую модель местных форм; её изучим в уроке 11. В этом уроке продуктивно используем только внутреннюю семью.</div>
-        <p><span class="hu-word">Németországban élek.</span> — Я живу в Германии. <span class="hu-word">Örményországból jöttem.</span> — Я приехал из Армении. <span class="hu-word">Berlinbe utazom.</span> — Я еду в Берлин.</p>
-      `,
-      activities: [L10_CP_CONTEXT],
-    },
-    {
-      id: 8,
-      eyebrow: 'УРОК 10 · 8/11 · ЧТЕНИЕ',
-      title: 'Hol vagy most?',
-      subtitle: 'Понимаем пространственные отношения в диалоге',
-      body: `
-        <p>Прочитай диалог и проследи три отношения: место внутри, цель внутрь и источник изнутри.</p>
+        <p>Прочитай связный маршрут Анны и следи за смыслом: где она находится, куда входит и откуда выходит.</p>
+        <div class="note">Все продуктивные формы здесь относятся только к внутренней семье L10. Другие модели местных форм начинаются в следующих уроках.</div>
       `,
       activities: [L10_READING],
     },
     {
-      id: 9,
-      eyebrow: 'УРОК 10 · 9/11 · ПРОДУКЦИЯ',
-      title: 'Írás és beszéd',
-      subtitle: 'Точные предложения и короткая запись',
+      id: 8,
+      eyebrow: 'УРОК 10 · 8/11 · АУДИРОВАНИЕ',
+      title: 'Márk útvonala',
+      subtitle: 'Существующая синхронизированная запись',
       body: `
-        <p>Письменная часть проверяет пять коротких ситуаций. После записи трёх ответов прослушай их и сверь падежные формы с моделями.</p>
+        <p>Прослушай существующую запись о маршруте Марка, ответь на вопросы и только после отправки проверь транскрипт.</p>
       `,
-      activities: [L10_CP_WRITING, L10_RECORDING],
+      activities: [L10_LISTENING],
+    },
+    {
+      id: 9,
+      eyebrow: 'УРОК 10 · 9/11 · ВЗАИМОДЕЙСТВИЕ',
+      title: 'Hol találkozunk?',
+      subtitle: 'Координация и смена места встречи',
+      body: `
+        <p>Договорись с другом о встрече, отреагируй на закрытое кафе и подтверди новое место. Ответы остаются самопрактикой с частичным свидетельством.</p>
+      `,
+      activities: [L10_ROLEPLAY],
     },
     {
       id: 10,
-      eyebrow: 'УРОК 10 · 10/11 · АУДИРОВАНИЕ',
-      title: 'Hallásértés',
-      subtitle: 'Только по реальной записи',
+      eyebrow: 'УРОК 10 · 10/11 · ПИСЬМО И САМОПРАКТИКА',
+      title: 'Egy kitalált délelőtt',
+      subtitle: 'Связный маршрут 70–90 слов',
       body: `
-        <p>Прослушайте запись и выполните задание на понимание.</p>
+        <p>Свяжи несколько внутренних мест в маршрут на 70–90 слов. После письма можно устно повторить похожий маршрут без микрофона, баллов и evidence.</p>
       `,
-      activities: [L10_LISTENING],
+      activities: [L10_WRITING], optionalSpeaking: L10_SPEAKING,
     },
     {
       id: 11,

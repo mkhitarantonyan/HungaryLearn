@@ -1,6 +1,8 @@
 node_modules/
 build/
 dist/
+functions/lib/
+.firebase/
 coverage/
 .DS_Store
 *.log
@@ -13,3 +15,7 @@ gcs-service-account.json
 *.pem
 
 .ds_agent_sessions/
+
+# Local Firebase Functions config/secrets
+functions/.secret.local
+functions/.env.local

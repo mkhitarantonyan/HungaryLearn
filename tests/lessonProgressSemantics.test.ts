@@ -7,7 +7,6 @@ import {
 } from '../src/utils/lessonProgress.ts';
 import {
   listeningEvidence,
-  recordingCompletionEvidence,
   writingEvidence,
 } from '../src/utils/activityUtils.ts';
 import type { ActivityEvidence, ExitCheckItem, ListeningTaskData } from '../src/types.ts';
@@ -97,17 +96,11 @@ test('F: completed writing PARTIAL cannot satisfy a DIRECT objective requirement
   );
 });
 
-test('G: completed recording PARTIAL cannot automatically produce mastery evidence', () => {
-  const evidence = recordingCompletionEvidence('record-1');
-  assert.equal(evidence.evidenceMode, 'partial');
-  assert.equal(
-    hasCompleteDirectObjectiveEvidence({
-      objectiveIds: ['obj-speaking'],
-      checks: [check('obj-speaking', evidence.activityId, 'speaking')],
-      evidence: { [evidence.activityId]: evidence },
-    }),
-    false
-  );
+test('G: optional speaking self-practice is not an evidence source', () => {
+  const typesSource = readFileSync(new URL('../src/types.ts', import.meta.url), 'utf8');
+  const utilitySource = readFileSync(new URL('../src/utils/activityUtils.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(typesSource, /RecordingTaskData|recordingCompleted/);
+  assert.doesNotMatch(utilitySource, /recordingCompletionEvidence|case 'recording'/);
 });
 
 test('H: missing listening audio produces NONE and cannot satisfy required direct evidence', () => {

@@ -1,6 +1,6 @@
-import type { SubscriptionCheckInput } from '../utils/subscriptionValidity';
-import { isSubscriptionValid } from '../utils/subscriptionValidity';
 import type { Lesson } from '../types';
+
+export interface TrustedLessonAccess { paidAccess: boolean }
 
 export type LessonAccessDecision =
   | { status: 400; message: string }
@@ -16,7 +16,7 @@ export function parseLessonNumber(value: string): number | null {
 
 export function resolveLessonAccess(
   rawLessonNumber: string,
-  user: SubscriptionCheckInput | null
+  user: TrustedLessonAccess | null
 ): LessonAccessDecision {
   const lessonNumber = parseLessonNumber(rawLessonNumber);
   if (lessonNumber === null) {
@@ -25,7 +25,7 @@ export function resolveLessonAccess(
 
   if (lessonNumber <= 2) return { status: 200, lessonNumber };
   if (!user) return { status: 401, message: 'Требуется авторизация' };
-  if (!isSubscriptionValid(user)) {
+  if (user.paidAccess !== true) {
     return { status: 403, message: 'Для этого урока требуется действующая подписка' };
   }
 
@@ -43,7 +43,7 @@ export interface LessonRequestResult {
 
 export async function resolveLessonRequest(
   rawLessonNumber: string,
-  user: SubscriptionCheckInput | null,
+  user: TrustedLessonAccess | null,
   loadLesson: (lessonNumber: number) => Promise<Lesson | null>
 ): Promise<LessonRequestResult> {
   const access = resolveLessonAccess(rawLessonNumber, user);
