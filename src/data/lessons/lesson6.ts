@@ -1,4 +1,5 @@
 import { Lesson, LessonActivity } from '../../types';
+import { P1_L6_CHECKPOINT, P1_L6_READING, P1_L6_ROLEPLAY, P1_L6_SPEAKING, P1_L6_WRITING } from './p1FoundationActivities';
 
 const L6_READING_A0_PROFILE: LessonActivity = {
   kind: 'reading',
@@ -116,7 +117,7 @@ const L6_LISTENING_A0_REVIEW: LessonActivity = {
 
 const L6_RECORD_PRONUNCIATION_REVIEW = {
   title: 'Устная практика: повторение произношения',
-  instructions: 'Прочитай шесть слов, повторяя изученные звуки, затем сравни ответ с моделями.',
+  instructions: 'Прочитай шесть слов, повторяя изученные звуки, затем сравни ответ с моделями. Без микрофона, score и evidence.',
   prompt: 'szép, sok, magyar, kutya, nyár, hely',
   rubric: ['Задача выполнена', 'Фразы связаны по смыслу'],
 };
@@ -153,13 +154,6 @@ const L6_WRITING_PROFILE: LessonActivity = {
   ],
 };
 
-const L6_RECORD_PROFILE = {
-  title: 'Устная практика: рассказ о себе',
-  instructions: 'Сначала заполни письменный профиль, затем расскажи те же сведения о себе короткими фразами и проверь ответ по опорам.',
-  prompt: 'A nevem … … vagyok. Magyarul tanulok / dolgozom. …-n … órakor …',
-  rubric: ['Задача выполнена', 'Фразы связаны по смыслу'],
-};
-
 const L6_EXIT_CHECK: LessonActivity = {
   kind: 'exitCheck',
   id: 'l6-exit-check',
@@ -191,7 +185,7 @@ export const LESSON_6: Lesson = {
         <p>Это итоговое повторение уровня A0: объединяем чтение, произношение, формы, числа и представление о себе.</p>
         <div class="note">Это низкострессовое повторение, а не экзамен и не сертификация. Новой грамматики A1 здесь нет — только материал уроков 1–5.</div>
       `,
-      activities: [L6_READING_A0_PROFILE],
+      activities: [P1_L6_READING, L6_READING_A0_PROFILE],
     },
     {
       id: 2,
@@ -240,9 +234,9 @@ export const LESSON_6: Lesson = {
       subtitle: 'Короткое знакомство и расписание',
       body: `
         <p>Прослушай мини-диалог и ответь на пять вопросов, затем выполни ролевой диалог о расписании.</p>
-        <div class="note">Аудирование станет доступно после публикации отдельной записи. Текст диалога можно использовать для подготовки.</div>
+        <div class="note">Используй опубликованную запись: transcript откроется только после отправки ответов.</div>
       `,
-      activities: [L6_LISTENING_A0_REVIEW, L6_ROLEPLAY_SCHEDULE],
+      activities: [L6_LISTENING_A0_REVIEW, P1_L6_ROLEPLAY, L6_ROLEPLAY_SCHEDULE],
     },
     {
       id: 7,
@@ -250,9 +244,9 @@ export const LESSON_6: Lesson = {
       title: 'Az én profilom',
       subtitle: 'Письменный и устный рассказ о себе',
       body: `
-        <p>Сначала напиши короткий профиль, затем запиши те же данные устно. Используй только структуры уроков 1–5.</p>
+        <p>Сначала напиши короткий профиль, затем по желанию проговори те же данные без микрофона. Используй только структуры уроков 1–5.</p>
       `,
-      activities: [L6_WRITING_PROFILE], optionalSpeaking: L6_RECORD_PROFILE,
+      activities: [P1_L6_WRITING, L6_WRITING_PROFILE], optionalSpeaking: P1_L6_SPEAKING,
     },
     {
       id: 8,
@@ -264,11 +258,12 @@ export const LESSON_6: Lesson = {
         <ul class="tick">
           <li><b>Проверено в уроке</b> — спряжение, множественное число, артикли и чтение слов.</li>
           <li><b>Для самопроверки</b> — произношение, письмо и говорение; их полезно переслушать или показать преподавателю.</li>
-          <li><b>MISSING</b> — например, ещё не опубликованное аудио для аудирования.</li>
+          <li><b>Аудирование</b> — DIRECT только после достаточного результата и успешной загрузки опубликованного MP3.</li>
         </ul>
         <p>Ответь себе на три вопроса: какие две области ощущаются сильными? какую одну область повторить? какое одно следующее действие выбрать?</p>
         <div class="note">Эта рефлексия — не оценка мастерства: галочки и самооценка никогда не повышают уровень владения языком.</div>
       `,
+      activities: [P1_L6_CHECKPOINT],
     },
     {
       id: 9,
@@ -289,7 +284,7 @@ export const LESSON_6: Lesson = {
         <ul class="tick">
           <li><b>Автоматически проверяется</b>: чтение слов, спряжение, множественное число и артикли.</li>
           <li><b>Проверь самостоятельно</b>: произношение, письмо и говорение.</li>
-          <li><b>MISSING</b>: аудирование остаётся открытым до публикации MP3.</li>
+          <li><b>Аудирование</b>: опубликованный MP3 даёт DIRECT evidence только после успешной загрузки и проходного результата.</li>
         </ul>
       `,
       activities: [L6_EXIT_CHECK],

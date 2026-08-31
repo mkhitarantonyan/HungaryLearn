@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Headphones } from 'lucide-react';
-import type { ActivityEvidence, ListeningTaskData } from '../../types';
+import type { ActivityAttempt, ActivityEvidence, ListeningTaskData } from '../../types';
 import { QuestionSet } from './QuestionSet';
 import { audioUrl } from '../../utils/audioConfig';
 import { canProduceDirectListeningEvidence, listeningEvidence } from '../../utils/activityUtils';
@@ -8,7 +8,7 @@ import { canProduceDirectListeningEvidence, listeningEvidence } from '../../util
 interface ListeningTaskProps {
   data: ListeningTaskData;
   evidence?: ActivityEvidence;
-  onEvidence: (evidence: ActivityEvidence) => void;
+  onEvidence: (evidence: ActivityEvidence, attempt?: ActivityAttempt) => void;
   onResetEvidence?: (activityId: string) => void;
 }
 
@@ -39,10 +39,13 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
     setAudioReady(false);
   }, [data.id, data.assetId, data.audioStatus]);
 
-  const handleSubmit = (score: number, total: number) => {
+  const handleSubmit = (score: number, total: number, answers: Record<string, number | string>) => {
     setSubmitted(true);
     const result = listeningEvidence(data, score, total, audioReady && !audioError);
-    onEvidence({ activityId: data.id, attempted: true, completed: true, ...result });
+    onEvidence(
+      { activityId: data.id, attempted: true, completed: true, ...result },
+      { activityId: data.id, answers, audioPlayable: audioReady && !audioError }
+    );
   };
 
   const handleAudioError = () => {
@@ -52,10 +55,10 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
   };
 
   return (
-    <div className="rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 md:p-5 space-y-4">
+    <div className="rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 md:p-5 space-y-4">
       <div className="flex items-center gap-2">
-        <Headphones className="w-4 h-4 text-[#7A1E2B]" />
-        <h3 className="font-mono font-bold text-[#57121C] text-sm md:text-base">
+        <Headphones className="w-4 h-4 text-[#116EEE]" />
+        <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
           {data.title ?? 'Аудирование'}
         </h3>
         {evidence?.passed ? (
@@ -63,11 +66,11 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
             {evidence.score}/{evidence.total} · DIRECT · met
           </span>
         ) : evidence?.completed && evidence.evidenceMode === 'direct' ? (
-          <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#8A7A68]">
+          <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
             {evidence.score}/{evidence.total} · DIRECT · не met
           </span>
         ) : evidence?.completed ? (
-          <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#8A7A68]">
+          <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
             {evidence.score}/{evidence.total} · NONE · audio недоступно
           </span>
         ) : null}
@@ -76,7 +79,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
       {/* Audio stimulus */}
       {canDirect && audioSrc ? (
         <div
-          className="min-w-0 overflow-hidden rounded-xl border border-[#D9CBB0] bg-white p-3"
+          className="min-w-0 overflow-hidden rounded-xl border border-[#D6DEE6] bg-white p-3"
           role="region"
           aria-label={`Аудиозапись: ${data.title ?? 'аудирование'}`}
         >
@@ -95,14 +98,14 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
               Аудиозапись недоступна или не может быть воспроизведена.
             </p>
           )}
-          <p className="text-[11px] text-[#8A7A68] mt-1">
+          <p className="text-[11px] text-[#666E7E] mt-1">
             Прослушайте запись. Повтор разрешён: первый раз — общий смысл, второй раз — детали.
           </p>
         </div>
       ) : (
-        <div className="rounded-xl border border-[#B98A2B]/40 bg-[#B98A2B]/10 p-3 text-xs md:text-sm text-[#57121C]">
+        <div className="rounded-xl border border-[#C77B00]/40 bg-[#C77B00]/10 p-3 text-xs md:text-sm text-[#252B2F]">
           <p className="font-semibold">Аудиозапись для этого задания ещё не опубликована.</p>
-          <p className="text-[#8A7A68] mt-1">
+          <p className="text-[#666E7E] mt-1">
             Это ожидаемый пилотный asset. До публикации записанного MP3 аудио недоступно.
           </p>
         </div>
@@ -123,13 +126,13 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
       {/* Transcript: hidden until submission */}
       {submitted && (
         <div
-          className="rounded-xl border border-[#2C5F58]/30 bg-[#2C5F58]/5 p-4"
+          className="rounded-xl border border-[#3B1E90]/30 bg-[#3B1E90]/5 p-4"
           aria-live="polite"
         >
-          <p className="text-[10px] font-mono uppercase tracking-wider text-[#2C5F58] font-bold mb-2">
+          <p className="text-[10px] font-mono uppercase tracking-wider text-[#3B1E90] font-bold mb-2">
             Transcript (после ответа)
           </p>
-          <pre className="whitespace-pre-wrap text-xs md:text-sm text-[#2A2320] font-sans leading-relaxed">
+          <pre className="whitespace-pre-wrap text-xs md:text-sm text-[#252B2F] font-sans leading-relaxed">
             {data.transcript}
           </pre>
         </div>

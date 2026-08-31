@@ -174,19 +174,19 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           : 'bg-gray-100 text-gray-700 border-gray-300';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-[#FAF6EE] text-[#2C2421] w-full max-w-md rounded-2xl shadow-2xl border border-[#D9CBB0] overflow-hidden relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#182230]/45 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white text-[#252B2F] w-full max-w-md rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] overflow-hidden relative">
         {/* Modal Header */}
-        <div className="bg-[#7A1E2B] text-white px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#116EEE] text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
               <User className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-lg leading-tight">
+              <h3 className="font-bold text-lg leading-tight">
                 {user ? 'Личный кабинет ученика' : mode === 'login' ? 'Вход в аккаунт' : 'Регистрация ученика'}
               </h3>
-              <p className="text-xs text-[#EAD0C3]">
+              <p className="text-xs text-[#D9E6FF]">
                 {user ? user.email : 'Сохранение прогресса и доступ к урокам'}
               </p>
             </div>
@@ -217,16 +217,16 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           )}
 
           {!authReady ? (
-            <div className="flex min-h-56 flex-col items-center justify-center gap-3 text-[#57121C]" role="status">
+            <div className="flex min-h-56 flex-col items-center justify-center gap-3 text-[#252B2F]" role="status">
               <Loader2 className="w-7 animate-spin" />
               <span className="text-sm font-semibold">Проверка аккаунта…</span>
             </div>
           ) : user ? (
             <div className="space-y-5">
-              <div className="bg-white p-4 rounded-xl border border-[#E5D7C3] shadow-xs space-y-3">
+              <div className="bg-white p-4 rounded-xl border border-[#E4EBF3] shadow-xs space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-gray-100">
                   <span className="text-xs text-gray-500">Учётная запись</span>
-                  <span className="text-sm font-semibold text-[#7A1E2B] font-mono">{user.email}</span>
+                  <span className="text-sm font-semibold text-[#116EEE] font-mono">{user.email}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
@@ -250,12 +250,12 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
               </div>
 
               {/* SUBSCRIPTION / PAYMENT CARD */}
-              <div className="bg-gradient-to-br from-[#7A1E2B] to-[#57121C] text-white p-5 rounded-xl shadow-md space-y-3">
+              <div className="bg-[#3B1E90] text-white p-5 rounded-xl shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-[#EAD0C3]" />
+                  <CreditCard className="w-5 h-5 text-[#D9E6FF]" />
                   <h4 className="font-semibold text-sm">Полный доступ ко всем урокам</h4>
                 </div>
-                <p className="text-xs text-[#EAD0C3] leading-relaxed">
+                <p className="text-xs text-[#D9E6FF] leading-relaxed">
                   Подписка включает неограниченный доступ ко всем интерактивным урокам венгерского языка, озвучке слов и аудио-тренажерам.
                 </p>
 
@@ -282,7 +282,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                     <button
                       onClick={handlePaymentCheckout}
                       disabled={isUpgrading}
-                      className="px-3.5 py-1.5 bg-[#B98A2B] hover:bg-[#a37923] text-white rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                      className="px-3.5 py-1.5 bg-[#C77B00] hover:bg-[#a37923] text-white rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs disabled:opacity-50"
                     >
                       {isUpgrading ? (
                         <>
@@ -325,7 +325,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   }}
                   className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
                     mode === 'login'
-                      ? 'bg-white text-[#7A1E2B] shadow-xs font-semibold'
+                      ? 'bg-white text-[#116EEE] shadow-xs font-semibold'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -339,7 +339,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   }}
                   className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer ${
                     mode === 'register'
-                      ? 'bg-white text-[#7A1E2B] shadow-xs font-semibold'
+                      ? 'bg-white text-[#116EEE] shadow-xs font-semibold'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -365,7 +365,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="student@example.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D9CBB0] rounded-xl text-xs focus:outline-none focus:border-[#7A1E2B]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -384,7 +384,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D9CBB0] rounded-xl text-xs focus:outline-none focus:border-[#7A1E2B]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -392,7 +392,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-2.5 bg-[#7A1E2B] hover:bg-[#57121C] text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 mt-2"
+                    className="w-full py-2.5 bg-[#116EEE] hover:bg-[#0D5ED0] text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 mt-2"
                   >
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -419,7 +419,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="student@example.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D9CBB0] rounded-xl text-xs focus:outline-none focus:border-[#7A1E2B]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -439,7 +439,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D9CBB0] rounded-xl text-xs focus:outline-none focus:border-[#7A1E2B]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -459,7 +459,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D9CBB0] rounded-xl text-xs focus:outline-none focus:border-[#7A1E2B]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -467,7 +467,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-2.5 bg-[#7A1E2B] hover:bg-[#57121C] text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 mt-2"
+                    className="w-full py-2.5 bg-[#116EEE] hover:bg-[#0D5ED0] text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 mt-2"
                   >
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />

@@ -1,4 +1,5 @@
 import { Lesson, LessonActivity } from '../../types';
+import { P1_L3_PRACTICE, P1_L3_READING, P1_L3_ROLEPLAY, P1_L3_SPEAKING, P1_L3_WRITING } from './p1FoundationActivities';
 
 const L3_CP_ARTICLES: LessonActivity = {
   kind: 'controlledPractice',
@@ -274,7 +275,7 @@ export const LESSON_3: Lesson = {
       eyebrow: "УРОК 3 · 9/11 · ДИАЛОГ",
       title: "Párbeszéd",
       subtitle: "В квартире",
-      activities: [L3_READING_ROOM],
+      activities: [P1_L3_READING, P1_L3_ROLEPLAY, L3_READING_ROOM],
       body: `
    <p><b>A:</b> <button class="speak-btn" data-speak-text="Szia! Milyen szép a lakásod! Hány szoba van?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Milyen szép a lakásod! Hány szoba van?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Köszönöm! Két szoba van, egy konyha és egy fürdőszoba." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Köszönöm! Két szoba van, egy konyha és egy fürdőszoba.</button></p>
@@ -288,7 +289,8 @@ export const LESSON_3: Lesson = {
       eyebrow: "УРОК 3 · 10/11 · УПРАЖНЕНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверь себя",
-      activities: [L3_CP_WRITTEN_PHRASES, L3_WRITING_ROOM],
+      activities: [P1_L3_PRACTICE, P1_L3_WRITING, L3_CP_WRITTEN_PHRASES, L3_WRITING_ROOM],
+      optionalSpeaking: P1_L3_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Поставьте правильный артикль (a/az): ___ ablak (окно), ___ szék (стул)</li>

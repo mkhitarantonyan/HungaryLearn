@@ -53,30 +53,30 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
       case 'partial-review':
         return {
           label: status.label,
-          tone: 'text-[#B98A2B]',
-          icon: <AlertCircle className="w-4 h-4 text-[#B98A2B]" />,
+          tone: 'text-[#C77B00]',
+          icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'partial-incomplete':
       case 'not-started':
       default:
         return {
           label: status.label,
-          tone: 'text-[#8A7A68]',
-          icon: <Circle className="w-4 h-4 text-[#D9CBB0]" />,
+          tone: 'text-[#666E7E]',
+          icon: <Circle className="w-4 h-4 text-[#D6DEE6]" />,
         };
     }
   };
 
   return (
-    <div className="rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 md:p-5 space-y-4">
+    <div className="rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 md:p-5 space-y-4">
       <div className="flex items-center gap-2">
-        <ClipboardCheck className="w-4 h-4 text-[#7A1E2B]" />
-        <h3 className="font-mono font-bold text-[#57121C] text-sm md:text-base">
+        <ClipboardCheck className="w-4 h-4 text-[#116EEE]" />
+        <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
           {data.title ?? 'Exit check'}
         </h3>
       </div>
 
-      <p className="text-xs text-[#8A7A68]">
+      <p className="text-xs text-[#666E7E]">
         Проверка достижения целей урока по собранным activity-evidence. Пройденный quiz — это
         Retrieval Checkpoint, а не доказательство полного владения уроком. Открытые задания
         Speaking/Writing остаются PARTIAL и требуют проверки; компоненты PRACTICE не считаются
@@ -96,20 +96,20 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
             <li
               key={`${check.objectiveId}-${check.activityId}-${check.evidenceKind}`}
               data-objective-id={check.objectiveId}
-              className="rounded-xl border border-[#D9CBB0] bg-white p-3 flex items-start gap-2.5"
+              className="rounded-xl border border-[#D6DEE6] bg-white p-3 flex items-start gap-2.5"
             >
               <span className="shrink-0 mt-0.5">{overallStatus.icon}</span>
               <div className="min-w-0">
-                <p className="text-xs md:text-sm font-semibold text-[#2A2320] leading-snug">
+                <p className="text-xs md:text-sm font-semibold text-[#252B2F] leading-snug">
                   {objective ? objective.text : check.objectiveId}
                 </p>
-                <p className="text-[11px] text-[#8A7A68] mt-0.5">
+                <p className="text-[11px] text-[#666E7E] mt-0.5">
                   <span className="font-mono">{EVIDENCE_LABELS[check.evidenceKind]}</span>
                   {' · '}
                   <span className="font-mono">{check.activityId}</span>
                 </p>
                 {hasComponentBreakdown && (
-                  <div className="mt-2 space-y-1 text-[11px] text-[#4A403A]">
+                  <div className="mt-2 space-y-1 text-[11px] text-[#435064]">
                     <p>
                       <span className="font-mono font-semibold">
                         {EVIDENCE_LABELS[check.evidenceKind]}
@@ -127,7 +127,7 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                             {EVIDENCE_LABELS[component.evidenceKind]}
                           </span>
                           {' · '}
-                          <span className="font-mono text-[#8A7A68]">{component.activityId}</span>
+                          <span className="font-mono text-[#666E7E]">{component.activityId}</span>
                           {' · '}
                           <span className={componentStatus.tone}>{componentStatus.label}</span>
                         </p>
@@ -137,7 +137,7 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                       <p key={component}>
                         <span className="font-mono font-semibold">{EVIDENCE_LABELS[component]}</span>
                         {' · '}
-                        <span className="text-[#B98A2B]">PRACTICE · not qualified</span>
+                        <span className="text-[#C77B00]">PRACTICE · not qualified</span>
                       </p>
                     ))}
                   </div>

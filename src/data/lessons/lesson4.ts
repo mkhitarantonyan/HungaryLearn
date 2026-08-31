@@ -1,4 +1,5 @@
 import { Lesson, LessonActivity } from '../../types';
+import { P1_L4_PRACTICE, P1_L4_READING, P1_L4_ROLEPLAY, P1_L4_SPEAKING, P1_L4_WRITING } from './p1FoundationActivities';
 
 const L4_CP_RECOGNIZE_TEXT: LessonActivity = {
   kind: 'controlledPractice',
@@ -317,7 +318,7 @@ export const LESSON_4: Lesson = {
       eyebrow: "УРОК 4 · 10/12 · ДИАЛОГ",
       title: "Párbeszéd",
       subtitle: "Что ты делаешь?",
-      activities: [L4_LISTENING_PRESENT_FORMS, L4_CP_QUESTIONS],
+      activities: [P1_L4_READING, L4_LISTENING_PRESENT_FORMS, L4_CP_QUESTIONS],
       body: `
    <p><b>A:</b> <button class="speak-btn" data-speak-text="Szia! Mit csinálsz most?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Mit csinálsz most?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Szia! Magyarul tanulok és olvasok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Magyarul tanulok és olvasok.</button></p>
@@ -331,7 +332,8 @@ export const LESSON_4: Lesson = {
       eyebrow: "УРОК 4 · 11/12 · УПРАЖНЕНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверь себя",
-      activities: [L4_CP_CONTEXT, L4_WRITING_ACTIONS],
+      activities: [P1_L4_PRACTICE, P1_L4_ROLEPLAY, P1_L4_WRITING, L4_CP_CONTEXT, L4_WRITING_ACTIONS],
+      optionalSpeaking: P1_L4_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Проспрягайте глагол «szeret» (любить) во всех 6 лицах</li>

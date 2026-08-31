@@ -12,6 +12,20 @@ test('Firebase deployment configuration preserves API rewrite order and strict S
   assert.equal(config.hosting.rewrites[1].source, '**');
   assert.match(readFileSync(path.join(root, 'storage.rules'), 'utf8'), /allow read, write: if false/);
 });
+test('local site build provides a discoverable API function before Hosting starts', () => {
+  const manifestPath = path.join(root, 'functions', 'functions.yaml');
+  assert.equal(existsSync(manifestPath), true, 'functions/functions.yaml');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  assert.equal(manifest.specVersion, 'v1alpha1');
+  assert.equal(manifest.endpoints?.api?.entryPoint, 'api');
+  assert.deepEqual(manifest.endpoints?.api?.region, ['europe-west1']);
+
+  const buildScript = readFileSync(path.join(root, 'scripts', 'build-functions.mjs'), 'utf8');
+  assert.match(buildScript, /FUNCTIONS_MANIFEST_OUTPUT_PATH/);
+  const siteScript = readFileSync(path.join(root, 'scripts', 'start-local-site.ps1'), 'utf8');
+  assert.match(siteScript, /emulators:start --only functions,hosting/);
+  assert.match(siteScript, /FUNCTIONS_DISCOVERY_TIMEOUT/);
+});
 test('private audio validation keeps MIME and size protections', () => {
   const dataUrl = `data:audio/mpeg;base64,${Buffer.from('ID3').toString('base64')}`;
   assert.equal(validateAudioDataUrl(dataUrl).extension, '.mp3');

@@ -193,7 +193,7 @@ Questions and intended answers:
 
 ### Lesson 2 · l2-listening-introduction
 
-- Lesson location: slide 7, activity 1
+- Lesson location: slide 7, activity 2
 - Title: Аудирование: первое знакомство
 - Filename: `l2_listening_introduction.mp3`
 - Type: `dialogue`
@@ -229,7 +229,7 @@ Questions and intended answers:
 
 ### Lesson 4 · l4-listening-present-forms
 
-- Lesson location: slide 10, activity 1
+- Lesson location: slide 10, activity 2
 - Title: Аудирование: кто что делает?
 - Filename: `l4_listening_present_forms.mp3`
 - Type: `monologue`

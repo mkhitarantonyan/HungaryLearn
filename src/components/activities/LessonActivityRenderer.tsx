@@ -1,5 +1,5 @@
 import React from 'react';
-import type { LessonActivity, LearningObjective, ActivityEvidence, ActivityRuntimeState } from '../../types';
+import type { LessonActivity, LearningObjective, ActivityAttempt, ActivityEvidence, ActivityRuntimeState } from '../../types';
 import { ReadingTask } from './ReadingTask';
 import { ListeningTask } from './ListeningTask';
 import { ControlledPractice } from './ControlledPractice';
@@ -11,7 +11,7 @@ interface LessonActivityRendererProps {
   activity: LessonActivity;
   evidence?: Record<string, ActivityEvidence>;
   objectives?: LearningObjective[];
-  onEvidence?: (evidence: ActivityEvidence) => void;
+  onEvidence?: (evidence: ActivityEvidence, attempt?: ActivityAttempt) => void;
   onResetEvidence?: (activityId: string) => void;
   runtime?: ActivityRuntimeState;
   onRuntimeChange?: (patch: Partial<ActivityRuntimeState>) => void;
@@ -32,7 +32,7 @@ export const LessonActivityRenderer: React.FC<LessonActivityRendererProps> = ({
   onRuntimeChange,
 }) => {
   const activityEvidence = evidence?.[activity.id];
-  const handleEvidence = (e: ActivityEvidence) => onEvidence?.(e);
+  const handleEvidence = (e: ActivityEvidence, attempt?: ActivityAttempt) => onEvidence?.(e, attempt);
   const handleReset = () => onResetEvidence?.(activity.id);
 
   const renderActivity = (): React.ReactNode => {

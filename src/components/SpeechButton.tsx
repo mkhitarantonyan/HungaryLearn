@@ -69,16 +69,16 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
             onClick={handlePlay}
             disabled={!hasAudio}
             aria-label={`Воспроизвести произношение: ${displayText}`}
-            className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#7A1E2B]/10 hover:bg-[#7A1E2B] text-[#7A1E2B] hover:text-white transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
+            className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
             title={hasAudio ? `Послушать произношение: ${displayText}` : 'Записанное аудио недоступно'}
           >
-            <Volume2 className={`w-4 h-4 ${isPlaying ? 'animate-pulse text-[#B98A2B]' : ''}`} />
+            <Volume2 className={`w-4 h-4 ${isPlaying ? 'animate-pulse text-[#C77B00]' : ''}`} />
           </motion.button>
           {isAdmin && (
             <button
               onClick={handleEditClick}
               aria-label="Редактировать слово или озвучку"
-              className="p-1 rounded-full bg-[#B98A2B]/15 hover:bg-[#B98A2B] text-[#8A6715] hover:text-white transition-colors cursor-pointer"
+              className="p-1 rounded-full bg-[#C77B00]/15 hover:bg-[#C77B00] text-[#8A6715] hover:text-white transition-colors cursor-pointer"
               title="Админ: изменить слово/звук"
             >
               <Pencil className="w-3 h-3" />
@@ -106,15 +106,15 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
             onClick={handlePlay}
             disabled={!hasAudio}
             aria-label={`Воспроизвести произношение: ${displayText}`}
-            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7A1E2B] text-[#FBF7EF] font-semibold hover:bg-[#57121C] shadow-sm transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#116EEE] text-[#FFFFFF] font-semibold hover:bg-[#0D5ED0] shadow-sm transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
           >
-            <Volume2 className={`w-5 h-5 ${isPlaying ? 'animate-bounce text-[#B98A2B]' : ''}`} />
+            <Volume2 className={`w-5 h-5 ${isPlaying ? 'animate-bounce text-[#C77B00]' : ''}`} />
             <span>{displayText}</span>
             {isPlaying && (
               <span className="flex gap-0.5 items-center ml-1">
-                <span className="w-1 h-3 bg-[#B98A2B] animate-pulse rounded-full"></span>
-                <span className="w-1 h-4 bg-[#B98A2B] animate-pulse delay-75 rounded-full"></span>
-                <span className="w-1 h-2 bg-[#B98A2B] animate-pulse delay-150 rounded-full"></span>
+                <span className="w-1 h-3 bg-[#C77B00] animate-pulse rounded-full"></span>
+                <span className="w-1 h-4 bg-[#C77B00] animate-pulse delay-75 rounded-full"></span>
+                <span className="w-1 h-2 bg-[#C77B00] animate-pulse delay-150 rounded-full"></span>
               </span>
             )}
           </motion.button>
@@ -122,7 +122,7 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
             <button
               onClick={handleEditClick}
               aria-label="Редактировать слово или озвучку"
-              className="p-1.5 rounded-full bg-[#B98A2B]/20 hover:bg-[#B98A2B] text-[#57121C] hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 rounded-full bg-[#C77B00]/20 hover:bg-[#C77B00] text-[#252B2F] hover:text-white transition-colors cursor-pointer"
               title="Админ: изменить слово/звук"
             >
               <Pencil className="w-3.5 h-3.5" />
@@ -150,16 +150,16 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
           onClick={handlePlay}
           disabled={!hasAudio}
           aria-label={`Воспроизвести произношение: ${displayText}`}
-          className={`inline-flex items-center gap-1.5 bg-[#7A1E2B] hover:bg-[#57121C] text-[#FBF7EF] font-mono font-medium text-xs md:text-sm px-3 py-1.5 rounded-full transition-all shadow-sm cursor-pointer border border-[#7A1E2B]/20 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
+          className={`inline-flex items-center gap-1.5 bg-[#116EEE] hover:bg-[#0D5ED0] text-[#FFFFFF] font-mono font-medium text-xs md:text-sm px-3 py-1.5 rounded-full transition-all shadow-sm cursor-pointer border border-[#116EEE]/20 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
         >
-          <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'text-[#B98A2B] animate-spin' : ''}`} />
+          <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'text-[#C77B00] animate-spin' : ''}`} />
           <span className="font-semibold">{displayText}</span>
         </motion.button>
         {isAdmin && (
           <button
             onClick={handleEditClick}
             aria-label="Редактировать слово или озвучку"
-            className="p-1.5 rounded-full bg-[#B98A2B]/20 hover:bg-[#B98A2B] text-[#57121C] hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 rounded-full bg-[#C77B00]/20 hover:bg-[#C77B00] text-[#252B2F] hover:text-white transition-colors cursor-pointer"
             title="Админ: изменить слово/звук"
           >
             <Pencil className="w-3 h-3" />

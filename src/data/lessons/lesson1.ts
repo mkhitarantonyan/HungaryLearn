@@ -1,4 +1,5 @@
 import { Lesson } from '../../types';
+import { P1_L1_DECODING, P1_L1_PRACTICE, P1_L1_WRITING } from './p1FoundationActivities';
 
 export const L1_S_SZ_LISTENING_TOKENS = [
   { word: 'sál', correctIndex: 0, explanation: 'sál начинается с s, то есть /ʃ/.' },
@@ -283,6 +284,7 @@ export const LESSON_1: Lesson = {
       subtitle: 'Первые 10 слов для практики чтения',
       type: 'words-practice',
       task: 'Прослушайте каждое слово, затем скройте переводы и проверьте узнавание. Карточки помогают тренироваться, но не оценивают произношение.',
+      activities: [P1_L1_PRACTICE, P1_L1_DECODING],
     },
     {
       id: 10,
@@ -292,9 +294,10 @@ export const LESSON_1: Lesson = {
       type: 'read-aloud-practice',
       task: 'По желанию прочитайте все пять слов вслух. Микрофон и автоматическая оценка не используются.',
       body: `<div class="p-5 rounded-xl bg-white border border-[#D9CBB0] space-y-3"><div class="text-xs font-mono text-[#8A7A68] font-semibold uppercase">Пять обязательных слов</div><div class="text-lg md:text-xl font-mono font-bold text-[#57121C] leading-relaxed [overflow-wrap:anywhere]">gyár · tyúk · nyolc · játék · folyó</div><div class="text-sm text-[#2C5F58]">завод · курица · восемь · игра · река</div></div>`,
+      activities: [P1_L1_WRITING],
       optionalSpeaking: {
         title: 'Устная практика пяти слов (необязательно)',
-        instructions: 'Произнесите по порядку пять слов и самостоятельно сравните их со звуковыми моделями урока.',
+        instructions: 'Произнесите по порядку пять слов и самостоятельно сравните их со звуковыми моделями урока. Без микрофона, score и evidence.',
         prompt: L1_READ_ALOUD_WORDS.join(', '),
         rubric: ['Все пять слов произнесены', 'gy, ty и ny различаются', 'j и ly звучат как /j/', 'Ударение начинается на первом слоге'],
       },

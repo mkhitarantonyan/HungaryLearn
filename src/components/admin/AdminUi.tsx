@@ -6,7 +6,7 @@ import { AlertTriangle, X } from 'lucide-react';
 /* ------------------------------------------------------------------ */
 
 const inputBase =
-  'w-full px-3.5 py-2.5 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-colors disabled:bg-gray-50 disabled:text-gray-500';
+  'w-full px-3.5 py-2.5 rounded-[10px] border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-colors disabled:bg-gray-50 disabled:text-gray-500';
 
 export function TextInput({ className = '', ...props }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={`${inputBase} ${className}`} {...props} />;
@@ -95,7 +95,7 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="admin-modal-title"
-        className={`bg-white rounded-2xl shadow-2xl w-full ${size === 'lg' ? 'max-w-2xl' : 'max-w-lg'} my-8`}
+        className={`bg-white border border-gray-200 rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.16)] w-full ${size === 'lg' ? 'max-w-2xl' : 'max-w-lg'} my-8`}
       >
         <div className="flex items-start justify-between px-6 py-4 border-b border-gray-200">
           <div>
@@ -141,7 +141,7 @@ export function ConfirmDialog({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm">
-      <div role="alertdialog" aria-modal="true" className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
+      <div role="alertdialog" aria-modal="true" className="bg-white border border-gray-200 rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.16)] w-full max-w-md p-6">
         <div className="flex items-start gap-4">
           <div className="w-10 h-10 rounded-full bg-red-50 text-red-600 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-5 h-5" />
@@ -154,13 +154,13 @@ export function ConfirmDialog({
         <div className="mt-6 flex justify-end gap-3">
           <button
             onClick={onCancel}
-            className="px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-[10px] border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
           >
             Отмена
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2.5 rounded-xl bg-red-600 text-sm font-semibold text-white hover:bg-red-700 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-[10px] bg-red-600 text-sm font-semibold text-white hover:bg-red-700 transition-colors cursor-pointer"
           >
             {confirmLabel}
           </button>
@@ -199,7 +199,7 @@ export function PrimaryButton({
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-sm cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-[10px] bg-indigo-600 text-sm font-semibold text-white hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-sm cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
     >
       {children}
     </button>
@@ -214,7 +214,7 @@ export function SecondaryButton({
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
+      className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-[10px] border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${className}`}
     >
       {children}
     </button>

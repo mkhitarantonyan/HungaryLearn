@@ -77,15 +77,15 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-2xl mx-auto text-center mb-10 md:mb-14">
-      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#7A1E2B]/10 border border-[#7A1E2B]/15 text-[#7A1E2B] text-xs font-bold uppercase tracking-widest mb-5">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#116EEE]/10 border border-[#116EEE]/15 text-[#116EEE] text-xs font-bold uppercase tracking-widest mb-5">
         <Sparkles className="w-3.5 h-3.5" />
         {eyebrow}
       </div>
-      <h2 className="text-3xl md:text-5xl font-black text-[#231816] tracking-tight leading-tight">
+      <h2 className="text-3xl md:text-5xl font-extrabold text-[#252B2F] tracking-tight leading-tight">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-5 text-base md:text-lg text-[#6B5D52] leading-relaxed">{subtitle}</p>
+        <p className="mt-5 text-base md:text-lg text-[#666E7E] leading-relaxed">{subtitle}</p>
       )}
     </div>
   );
@@ -122,22 +122,22 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#FAF6EE]/90 backdrop-blur-md border-b border-[#E7D9C5]/70 shadow-sm'
+          ? 'bg-[#F2F7FD]/90 backdrop-blur-md border-b border-[#D6DEE6]/70 shadow-sm'
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 group shrink-0">
-            <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#7A1E2B] to-[#57121C] text-white flex items-center justify-center shadow-md shadow-[#7A1E2B]/25 group-hover:scale-105 transition-transform">
+            <span className="w-9 h-9 rounded-[10px] bg-[#116EEE] text-white flex items-center justify-center shadow-sm transition-colors group-hover:bg-[#0D5ED0]">
               <GraduationCap className="w-5 h-5" />
             </span>
             <span className="flex flex-col leading-none">
-              <span className="font-black text-[#231816] tracking-tight text-lg">
-                Magyar<span className="text-[#7A1E2B]">Kurzus</span>
+              <span className="font-extrabold text-[#252B2F] tracking-tight text-lg">
+                Magyar<span className="text-[#116EEE]">o</span>
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8A7A68] mt-0.5">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#666E7E] mt-0.5">
                 венгерский с нуля
               </span>
             </span>
@@ -149,7 +149,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-[#4A403A] hover:text-[#7A1E2B] transition-colors"
+                className="text-sm font-medium text-[#435064] hover:text-[#116EEE] transition-colors"
               >
                 {link.label}
               </a>
@@ -161,7 +161,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
             {user ? (
               <button
                 onClick={onStart}
-                className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] hover:scale-105 transition-all shadow-md shadow-[#7A1E2B]/25 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-all shadow-sm cursor-pointer"
               >
                 Продолжить обучение
               </button>
@@ -169,13 +169,13 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
               <>
                 <button
                   onClick={onLogin}
-                  className="px-5 py-2.5 rounded-xl border border-[#E7D9C5] bg-white text-[#231816] text-sm font-semibold hover:border-[#7A1E2B]/40 hover:text-[#7A1E2B] hover:scale-105 transition-all cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold hover:border-[#116EEE]/40 hover:text-[#116EEE] transition-all cursor-pointer"
                 >
                   Войти
                 </button>
                 <button
                   onClick={onSignup}
-                  className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] hover:scale-105 transition-all shadow-md shadow-[#7A1E2B]/25 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-all shadow-sm cursor-pointer"
                 >
                   Регистрация
                 </button>
@@ -187,7 +187,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
-            className="md:hidden p-2 rounded-lg text-[#231816] hover:bg-[#7A1E2B]/10 transition-colors cursor-pointer"
+            className="md:hidden p-2 rounded-lg text-[#252B2F] hover:bg-[#116EEE]/10 transition-colors cursor-pointer"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -201,7 +201,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#4A403A] hover:bg-[#7A1E2B]/5 hover:text-[#7A1E2B] transition-colors"
+                className="block px-3 py-2.5 rounded-lg text-sm font-medium text-[#435064] hover:bg-[#116EEE]/5 hover:text-[#116EEE] transition-colors"
               >
                 {link.label}
               </a>
@@ -213,7 +213,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                     setMenuOpen(false);
                     onStart();
                   }}
-                  className="w-full px-5 py-3 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] transition-colors cursor-pointer"
+                  className="w-full px-5 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
                 >
                   Продолжить обучение
                 </button>
@@ -224,7 +224,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                       setMenuOpen(false);
                       onLogin();
                     }}
-                    className="w-full px-5 py-3 rounded-xl border border-[#E7D9C5] bg-white text-[#231816] text-sm font-semibold transition-colors cursor-pointer"
+                    className="w-full px-5 py-3 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold transition-colors cursor-pointer"
                   >
                     Войти
                   </button>
@@ -233,7 +233,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                       setMenuOpen(false);
                       onSignup();
                     }}
-                    className="w-full px-5 py-3 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] transition-colors cursor-pointer"
+                    className="w-full px-5 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
                   >
                     Регистрация
                   </button>
@@ -256,29 +256,29 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
     <section className="relative overflow-hidden">
       {/* Decorative background */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 -right-32 w-[34rem] h-[34rem] rounded-full bg-[#7A1E2B]/8 blur-3xl" />
-        <div className="absolute top-40 -left-40 w-[30rem] h-[30rem] rounded-full bg-[#B98A2B]/10 blur-3xl" />
-        <div className="absolute bottom-0 right-1/3 w-[26rem] h-[26rem] rounded-full bg-[#2C5F58]/8 blur-3xl" />
+        <div className="absolute -top-32 -right-32 w-[34rem] h-[34rem] rounded-full bg-[#116EEE]/8 blur-3xl" />
+        <div className="absolute top-40 -left-40 w-[30rem] h-[30rem] rounded-full bg-[#C77B00]/10 blur-3xl" />
+        <div className="absolute bottom-0 right-1/3 w-[26rem] h-[26rem] rounded-full bg-[#3B1E90]/8 blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-14 md:pb-20">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-14 md:pb-20">
         <div className="grid lg:grid-cols-2 gap-14 lg:gap-10 items-center">
           {/* Left: copy */}
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#E7D9C5] shadow-xs text-xs font-semibold text-[#57121C] mb-7">
-              <Star className="w-3.5 h-3.5 text-[#B98A2B] fill-[#B98A2B]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#D6DEE6] shadow-xs text-xs font-semibold text-[#252B2F] mb-7">
+              <Star className="w-3.5 h-3.5 text-[#C77B00] fill-[#C77B00]" />
               28 уроков · уровни A0–B1 · для начинающих
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#231816] tracking-tight leading-[1.05]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#252B2F] tracking-tight leading-[1.05]">
               Заговорите по-венгерски{' '}
               <span className="relative inline-block">
                 <span className="relative z-10">с первых уроков</span>
-                <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 bg-[#B98A2B]/30 rounded-sm" />
+                <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 bg-[#C77B00]/30 rounded-sm" />
               </span>
             </h1>
 
-            <p className="mt-6 text-base md:text-lg text-[#6B5D52] leading-relaxed max-w-xl">
+            <p className="mt-6 text-base md:text-lg text-[#666E7E] leading-relaxed max-w-xl">
               Интерактивные уроки с живой озвучкой носителя, встроенными
               тренажёрами слов и умной системой повторения. Изучайте
               грамматику, слушайте произношение и закрепляйте слова — в своём
@@ -288,7 +288,7 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
             <div className="mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={onStart}
-                className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#7A1E2B] text-white text-base font-bold hover:bg-[#57121C] hover:scale-105 hover:shadow-xl hover:shadow-[#7A1E2B]/30 transition-all cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#116EEE] text-white text-base font-bold hover:bg-[#0D5ED0] hover:shadow-md transition-all cursor-pointer"
               >
                 <Play className="w-5 h-5 fill-current" />
                 {user ? 'Продолжить обучение' : 'Начать учиться'}
@@ -297,22 +297,22 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
 
               <a
                 href="#how"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[#E7D9C5] bg-white text-[#231816] text-base font-semibold hover:border-[#7A1E2B]/40 hover:text-[#7A1E2B] hover:scale-105 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[#D6DEE6] bg-white text-[#252B2F] text-base font-semibold hover:border-[#116EEE]/40 hover:text-[#116EEE] transition-all cursor-pointer"
               >
                 Как это работает
               </a>
             </div>
 
             {!user && (
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#8A7A68]">
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#666E7E]">
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#2C5F58]" /> Уроки 1–2 бесплатно
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> Уроки 1–2 бесплатно
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#2C5F58]" /> Без карты
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> Без карты
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#2C5F58]" /> Отмена в любой момент
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> Отмена в любой момент
                 </span>
               </div>
             )}
@@ -332,42 +332,42 @@ function HeroMockup() {
   return (
     <div className="relative mx-auto max-w-lg lg:max-w-none">
       {/* soft glow behind the card */}
-      <div aria-hidden className="absolute -inset-5 bg-gradient-to-tr from-[#7A1E2B]/10 via-[#B98A2B]/8 to-[#2C5F58]/10 blur-2xl rounded-[3rem]" />
+      <div aria-hidden className="absolute -inset-5 bg-[#116EEE]/7 blur-2xl rounded-2xl" />
 
       {/* Floating chips */}
       <div className="absolute -left-2 sm:-left-8 top-1/3 z-10">
-        <div className="animate-float flex items-center gap-3 bg-white rounded-2xl shadow-xl shadow-[#231816]/10 border border-[#E7D9C5] px-4 py-3">
-          <span className="w-9 h-9 rounded-xl bg-[#2C5F58]/10 text-[#2C5F58] flex items-center justify-center">
+        <div className="animate-float flex items-center gap-3 bg-white rounded-2xl shadow-sm border border-[#D6DEE6] px-4 py-3">
+          <span className="w-9 h-9 rounded-xl bg-[#3B1E90]/10 text-[#3B1E90] flex items-center justify-center">
             <Headphones className="w-4.5 h-4.5" />
           </span>
           <div>
-            <div className="text-xs font-bold text-[#231816] leading-none">Озвучка носителя</div>
-            <div className="text-[10px] text-[#8A7A68] mt-1">в каждом слайде</div>
+            <div className="text-xs font-bold text-[#252B2F] leading-none">Озвучка носителя</div>
+            <div className="text-[10px] text-[#666E7E] mt-1">в каждом слайде</div>
           </div>
         </div>
       </div>
 
       <div className="absolute -right-2 sm:-right-6 bottom-16 z-10">
-        <div className="animate-float [animation-delay:1.5s] flex items-center gap-3 bg-white rounded-2xl shadow-xl shadow-[#231816]/10 border border-[#E7D9C5] px-4 py-3">
-          <span className="w-9 h-9 rounded-xl bg-[#7A1E2B]/10 text-[#7A1E2B] flex items-center justify-center">
+        <div className="animate-float [animation-delay:1.5s] flex items-center gap-3 bg-white rounded-2xl shadow-sm border border-[#D6DEE6] px-4 py-3">
+          <span className="w-9 h-9 rounded-xl bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
             <BookOpen className="w-4.5 h-4.5" />
           </span>
           <div>
-            <div className="text-xs font-bold text-[#231816] leading-none">28 уроков</div>
-            <div className="text-[10px] text-[#8A7A68] mt-1">780+ слов и фраз</div>
+            <div className="text-xs font-bold text-[#252B2F] leading-none">28 уроков</div>
+            <div className="text-[10px] text-[#666E7E] mt-1">780+ слов и фраз</div>
           </div>
         </div>
       </div>
 
       {/* Main lesson-preview card */}
-      <div className="relative bg-white rounded-3xl border border-[#E7D9C5] shadow-2xl shadow-[#231816]/10 overflow-hidden">
+      <div className="relative bg-white rounded-2xl border border-[#D6DEE6] shadow-sm overflow-hidden">
         {/* Compact lesson header */}
         <div className="px-5 pt-5 flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
               A0 · Урок 2
             </div>
-            <div className="text-base font-bold text-[#231816] truncate mt-0.5">
+            <div className="text-base font-bold text-[#252B2F] truncate mt-0.5">
               Приветствия и глагол «быть»
             </div>
           </div>
@@ -376,7 +376,7 @@ function HeroMockup() {
               <span
                 key={i}
                 className={`h-1.5 rounded-full ${
-                  i < 3 ? 'w-4 bg-[#7A1E2B]' : 'w-1.5 bg-[#E7D9C5]'
+                  i < 3 ? 'w-4 bg-[#116EEE]' : 'w-1.5 bg-[#D6DEE6]'
                 }`}
               />
             ))}
@@ -385,32 +385,32 @@ function HeroMockup() {
 
         {/* Progress */}
         <div className="px-5 mt-3 flex items-center gap-2.5">
-          <div className="h-1.5 flex-1 rounded-full bg-[#E7D9C5] overflow-hidden" aria-hidden>
-            <div className="h-full w-2/3 rounded-full bg-[#7A1E2B]" />
+          <div className="h-1.5 flex-1 rounded-full bg-[#D6DEE6] overflow-hidden" aria-hidden>
+            <div className="h-full w-2/3 rounded-full bg-[#116EEE]" />
           </div>
-          <span className="font-mono text-[10px] font-bold text-[#8A7A68]">6 / 9</span>
+          <span className="font-mono text-[10px] font-bold text-[#666E7E]">6 / 9</span>
         </div>
 
         {/* Narration player concept */}
-        <div className="mx-5 mt-4 rounded-2xl border border-[#E7D9C5] bg-[#FBF7EF] p-4 flex items-center gap-4">
+        <div className="mx-5 mt-4 rounded-2xl border border-[#D6DEE6] bg-[#FFFFFF] p-4 flex items-center gap-4">
           <button
             aria-label="Прослушать фразу"
-            className="w-11 h-11 shrink-0 rounded-full bg-[#7A1E2B] text-white flex items-center justify-center shadow-lg shadow-[#7A1E2B]/30 hover:scale-105 transition-transform cursor-pointer"
+            className="w-11 h-11 shrink-0 rounded-full bg-[#116EEE] text-white flex items-center justify-center shadow-lg shadow-[#116EEE]/30 transition-transform cursor-pointer"
           >
             <Play className="w-5 h-5 fill-current ml-0.5" />
           </button>
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
               Озвучка
             </div>
-            <div className="text-sm font-bold text-[#231816] mt-0.5 truncate">
+            <div className="text-sm font-bold text-[#252B2F] mt-0.5 truncate">
               Jó napot! — Добрый день
             </div>
             <div className="flex items-end gap-0.5 h-5 mt-1.5" aria-hidden>
               {[10, 18, 14, 24, 16, 22, 12, 20].map((h, i) => (
                 <span
                   key={i}
-                  className="w-1 rounded-full bg-[#2C5F58]"
+                  className="w-1 rounded-full bg-[#3B1E90]"
                   style={{ height: `${h}px`, opacity: 0.9 - (i % 2) * 0.3 }}
                 />
               ))}
@@ -419,8 +419,8 @@ function HeroMockup() {
         </div>
 
         {/* One educational activity */}
-        <div className="mx-5 mt-4 rounded-2xl border border-[#E7D9C5] p-4 mb-5">
-          <div className="text-xs font-bold text-[#57121C] mb-3">
+        <div className="mx-5 mt-4 rounded-2xl border border-[#D6DEE6] p-4 mb-5">
+          <div className="text-xs font-bold text-[#252B2F] mb-3">
             Выберите перевод «Szia»
           </div>
           <div className="flex flex-wrap gap-2">
@@ -433,8 +433,8 @@ function HeroMockup() {
                 key={opt.label}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold border cursor-default transition-colors ${
                   opt.correct
-                    ? 'bg-[#2C5F58]/10 border-[#2C5F58]/40 text-[#1B4540]'
-                    : 'bg-white border-[#E7D9C5] text-[#8A7A68]'
+                    ? 'bg-[#3B1E90]/10 border-[#3B1E90]/40 text-[#2F236B]'
+                    : 'bg-white border-[#D6DEE6] text-[#666E7E]'
                 }`}
               >
                 {opt.label}
@@ -443,9 +443,9 @@ function HeroMockup() {
             ))}
           </div>
           {/* Subtle evidence/progress cue */}
-          <div className="mt-3 pt-3 border-t border-[#E7D9C5]/70 flex items-center justify-between text-[10px] text-[#8A7A68]">
+          <div className="mt-3 pt-3 border-t border-[#D6DEE6]/70 flex items-center justify-between text-[10px] text-[#666E7E]">
             <span>Ответ засчитан</span>
-            <span className="inline-flex items-center gap-1 text-[#2C5F58] font-semibold">
+            <span className="inline-flex items-center gap-1 text-[#3B1E90] font-semibold">
               <Check className="w-3 h-3" /> прогресс сохранён
             </span>
           </div>
@@ -464,39 +464,39 @@ const FEATURES = [
     icon: BookOpen,
     title: 'Интерактивные уроки',
     text: 'Теория, живые примеры и тренажёры — в одном слайде. Читайте, слушайте и сразу проверяйте себя.',
-    accent: 'text-[#7A1E2B] bg-[#7A1E2B]/10 border-[#7A1E2B]/15',
+    accent: 'text-[#116EEE] bg-[#116EEE]/10 border-[#116EEE]/15',
   },
   {
     icon: Headphones,
     title: 'Живая озвучка носителя',
     text: 'Произношение воспроизводится только из заранее записанных аудиофайлов диктора.',
-    accent: 'text-[#2C5F58] bg-[#2C5F58]/10 border-[#2C5F58]/15',
+    accent: 'text-[#3B1E90] bg-[#3B1E90]/10 border-[#3B1E90]/15',
   },
   {
     icon: Brain,
     title: 'Умное повторение',
     text: 'Интервальное повторение подскажет, какие слова пора освежить, — лексика закрепляется надолго.',
-    accent: 'text-[#B98A2B] bg-[#B98A2B]/10 border-[#B98A2B]/15',
+    accent: 'text-[#C77B00] bg-[#C77B00]/10 border-[#C77B00]/15',
   },
   {
     icon: Cloud,
     title: 'Прогресс в облаке',
     text: 'Уроки и карточки сохраняются на сервере. Продолжайте с любого устройства.',
-    accent: 'text-[#6B5D52] bg-[#6B5D52]/10 border-[#6B5D52]/15',
+    accent: 'text-[#666E7E] bg-[#666E7E]/10 border-[#666E7E]/15',
   },
 ];
 
 function Features() {
   return (
     <section id="features" className="scroll-mt-24 py-16 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
             eyebrow="Возможности"
             title={
               <>
                 Всё, что нужно, чтобы{' '}
-                <span className="text-[#7A1E2B]">заговорить</span>
+                <span className="text-[#116EEE]">заговорить</span>
               </>
             }
             subtitle="Платформа построена вокруг практики: минимум скучной теории, максимум озвучки, заданий и повторения."
@@ -506,16 +506,16 @@ function Features() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {FEATURES.map((feature, idx) => (
             <Reveal key={feature.title} delay={idx * 100}>
-              <div className="group h-full p-7 rounded-3xl bg-[#FBF7EF] border border-[#E7D9C5] hover:bg-white hover:border-[#7A1E2B]/25 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[#231816]/8 transition-all duration-300">
+              <div className="group h-full p-7 rounded-2xl bg-[#FFFFFF] border border-[#D6DEE6] hover:bg-white hover:border-[#116EEE]/25 hover:-translate-y-1.5 hover:shadow-md transition-all duration-300">
                 <div
-                  className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-5 group-hover:scale-110 transition-transform ${feature.accent}`}
+                  className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-5 transition-transform ${feature.accent}`}
                 >
                   <feature.icon className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-bold text-[#231816] tracking-tight">
+                <h3 className="text-lg font-bold text-[#252B2F] tracking-tight">
                   {feature.title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#4A403A] leading-relaxed">{feature.text}</p>
+                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{feature.text}</p>
               </div>
             </Reveal>
           ))}
@@ -553,14 +553,14 @@ const STEPS = [
 function HowItWorks() {
   return (
     <section id="how" className="scroll-mt-24 py-16 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
             eyebrow="Как это работает"
             title={
               <>
                 Три шага до первого{' '}
-                <span className="text-[#2C5F58]">разговора</span>
+                <span className="text-[#3B1E90]">разговора</span>
               </>
             }
             subtitle="Никакой сложной настройки. От первого визита до интерактивного урока — меньше минуты."
@@ -570,19 +570,19 @@ function HowItWorks() {
         <div className="grid md:grid-cols-3 gap-5 md:gap-6">
           {STEPS.map((step, idx) => (
             <Reveal key={step.title} delay={idx * 120}>
-              <div className="relative h-full p-7 md:p-8 rounded-3xl bg-white border border-[#E7D9C5] hover:border-[#7A1E2B]/30 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[#231816]/8 transition-all duration-300">
+              <div className="relative h-full p-7 md:p-8 rounded-2xl bg-white border border-[#D6DEE6] hover:border-[#116EEE]/30 hover:-translate-y-1.5 hover:shadow-md transition-all duration-300">
                 <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-[#7A1E2B]/10 text-[#7A1E2B] flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
                     <step.icon className="w-6 h-6" />
                   </div>
-                  <span className="font-mono text-sm font-bold text-[#B98A2B]">
+                  <span className="font-mono text-sm font-bold text-[#C77B00]">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#231816] tracking-tight">
+                <h3 className="text-lg font-bold text-[#252B2F] tracking-tight">
                   {step.title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#4A403A] leading-relaxed">{step.text}</p>
+                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{step.text}</p>
               </div>
             </Reveal>
           ))}
@@ -612,22 +612,22 @@ const NEXT_LEVELS = [
 ];
 
 const NEXT_LEVEL_CHIP: Record<string, string> = {
-  A1: 'bg-[#2C5F58]/10 text-[#2C5F58]',
-  A2: 'bg-[#B98A2B]/10 text-[#B98A2B]',
-  B1: 'bg-[#7A1E2B]/10 text-[#7A1E2B]',
+  A1: 'bg-[#3B1E90]/10 text-[#3B1E90]',
+  A2: 'bg-[#C77B00]/10 text-[#C77B00]',
+  B1: 'bg-[#116EEE]/10 text-[#116EEE]',
 };
 
 function SneakPeek({ onStart }: { onStart: () => void }) {
   return (
     <section id="preview" className="scroll-mt-24 py-16 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
             eyebrow="Программа курса"
             title={
               <>
                 Один учебный путь —{' '}
-                <span className="text-[#7A1E2B]">28 уроков</span>
+                <span className="text-[#116EEE]">28 уроков</span>
               </>
             }
             subtitle="От звуков и алфавита до разговорного уровня B1. Вот как начинается ваш путь."
@@ -635,30 +635,30 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
         </Reveal>
 
         <Reveal>
-          <div className="max-w-4xl mx-auto rounded-3xl bg-[#FBF7EF] border border-[#E7D9C5] overflow-hidden">
+          <div className="max-w-4xl mx-auto rounded-2xl bg-[#FFFFFF] border border-[#D6DEE6] overflow-hidden">
             {/* Path header */}
-            <div className="flex items-center justify-between gap-3 px-6 md:px-8 py-5 border-b border-[#E7D9C5] bg-white/60">
+            <div className="flex items-center justify-between gap-3 px-6 md:px-8 py-5 border-b border-[#D6DEE6] bg-white/60">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded-lg bg-[#7A1E2B] text-white text-[11px] font-bold">
+                <span className="px-2.5 py-1 rounded-lg bg-[#116EEE] text-white text-[11px] font-bold">
                   A0 · Основы
                 </span>
-                <span className="text-sm text-[#8A7A68]">Старт курса · 6 уроков</span>
+                <span className="text-sm text-[#666E7E]">Старт курса · 6 уроков</span>
               </div>
-              <span className="font-mono text-xs text-[#8A7A68] hidden sm:block">01–06</span>
+              <span className="font-mono text-xs text-[#666E7E] hidden sm:block">01–06</span>
             </div>
 
             {/* Lesson path rows */}
-            <ol className="divide-y divide-[#E7D9C5]/70">
+            <ol className="divide-y divide-[#D6DEE6]/70">
               {PREVIEW_PATH.map((row) => (
                 <li
                   key={row.number}
                   className="flex items-center gap-4 px-6 md:px-8 py-3.5 hover:bg-white/70 transition-colors"
                 >
-                  <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-[#E7D9C5] font-mono text-xs font-bold text-[#7A1E2B] flex items-center justify-center">
+                  <span className="w-8 h-8 shrink-0 rounded-lg bg-white border border-[#D6DEE6] font-mono text-xs font-bold text-[#116EEE] flex items-center justify-center">
                     {String(row.number).padStart(2, '0')}
                   </span>
-                  <span className="font-bold text-[#231816]">{row.hu}</span>
-                  <span className="ml-auto text-right text-xs text-[#8A7A68] hidden sm:block">
+                  <span className="font-bold text-[#252B2F]">{row.hu}</span>
+                  <span className="ml-auto text-right text-xs text-[#666E7E] hidden sm:block">
                     {row.ru}
                   </span>
                 </li>
@@ -666,9 +666,9 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
             </ol>
 
             {/* Footer / CTA */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 md:px-8 py-5 border-t border-[#E7D9C5] bg-white/60">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 md:px-8 py-5 border-t border-[#D6DEE6] bg-white/60">
               <div>
-                <div className="text-sm font-semibold text-[#231816]">Дальше по программе</div>
+                <div className="text-sm font-semibold text-[#252B2F]">Дальше по программе</div>
                 <div className="mt-1.5 flex gap-2 flex-wrap">
                   {NEXT_LEVELS.map((l) => (
                     <span
@@ -682,7 +682,7 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
               </div>
               <button
                 onClick={onStart}
-                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-bold hover:bg-[#57121C] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B]"
+                className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#116EEE] text-white text-sm font-bold hover:bg-[#0D5ED0] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE]"
               >
                 Посмотреть все 28 уроков
                 <ArrowRight className="w-4 h-4" />
@@ -712,20 +712,20 @@ function BottomCta({
 }) {
   return (
     <section id="cta" className="scroll-mt-24 py-14 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#57121C] via-[#7A1E2B] to-[#57121C] text-white px-6 py-12 md:px-16 md:py-16 text-center shadow-2xl shadow-[#7A1E2B]/30">
+          <div className="relative overflow-hidden rounded-2xl border border-[#3B1E90] bg-[#3B1E90] text-white px-6 py-12 md:px-16 md:py-16 text-center shadow-sm">
             <div aria-hidden className="pointer-events-none absolute inset-0">
               <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-white/8 blur-3xl" />
-              <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-[#B98A2B]/15 blur-3xl" />
+              <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-[#C77B00]/15 blur-3xl" />
             </div>
 
             <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight leading-tight max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight max-w-2xl mx-auto">
                 {user ? 'Продолжите обучение прямо сейчас' : 'Готовы заговорить по-венгерски?'}
               </h2>
 
-              <p className="mt-4 text-base md:text-lg text-[#EAD0C3] max-w-xl mx-auto leading-relaxed">
+              <p className="mt-4 text-base md:text-lg text-[#D9E6FF] max-w-xl mx-auto leading-relaxed">
                 {user
                   ? 'Ваш прогресс сохранён. Вернитесь к урокам и продолжайте там, где остановились.'
                   : 'Откройте бесплатные уроки 1–2 или создайте аккаунт, чтобы сохранять прогресс.'}
@@ -734,7 +734,7 @@ function BottomCta({
               <div className="mt-8">
                 <button
                   onClick={user ? onStart : onSignup}
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#57121C] text-base font-bold hover:bg-[#F6EFE4] hover:scale-105 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#252B2F] text-base font-bold hover:bg-[#EDF4FB] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {user ? 'Продолжить обучение' : 'Создать аккаунт'}
                   <ArrowRight className="w-4 h-4" />
@@ -744,7 +744,7 @@ function BottomCta({
               {!user && (
                 <button
                   onClick={onLogin}
-                  className="mt-4 text-sm text-[#EAD0C3] underline underline-offset-4 hover:text-white transition-colors cursor-pointer"
+                  className="mt-4 text-sm text-[#D9E6FF] underline underline-offset-4 hover:text-white transition-colors cursor-pointer"
                 >
                   Уже есть аккаунт — войти
                 </button>
@@ -763,20 +763,20 @@ function BottomCta({
 
 function Footer() {
   return (
-    <footer className="border-t border-[#E7D9C5] bg-[#FBF7EF]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <footer className="border-t border-[#D6DEE6] bg-[#FFFFFF]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#7A1E2B] to-[#57121C] text-white flex items-center justify-center shadow-md shadow-[#7A1E2B]/25">
+              <span className="w-9 h-9 rounded-[10px] bg-[#116EEE] text-white flex items-center justify-center shadow-sm">
                 <GraduationCap className="w-5 h-5" />
               </span>
-              <span className="font-black text-[#231816] tracking-tight text-lg">
-                Magyar<span className="text-[#7A1E2B]">Kurzus</span>
+              <span className="font-extrabold text-[#252B2F] tracking-tight text-lg">
+                Magyar<span className="text-[#116EEE]">o</span>
               </span>
             </div>
-            <p className="mt-4 text-sm text-[#6B5D52] leading-relaxed max-w-sm">
+            <p className="mt-4 text-sm text-[#666E7E] leading-relaxed max-w-sm">
               Интерактивный курс венгерского языка для русскоязычных учащихся:
               фонетика, грамматика, живая озвучка и тренажёры в 28 уроках
               от A0 до B1.
@@ -785,17 +785,17 @@ function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#231816] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#252B2F] mb-4">
               Навигация
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#6B5D52]">
-              <li><a href="#features" className="hover:text-[#7A1E2B] transition-colors">Возможности</a></li>
-              <li><a href="#how" className="hover:text-[#7A1E2B] transition-colors">Как это работает</a></li>
-              <li><a href="#preview" className="hover:text-[#7A1E2B] transition-colors">Программа курса</a></li>
+            <ul className="space-y-2.5 text-sm text-[#666E7E]">
+              <li><a href="#features" className="hover:text-[#116EEE] transition-colors">Возможности</a></li>
+              <li><a href="#how" className="hover:text-[#116EEE] transition-colors">Как это работает</a></li>
+              <li><a href="#preview" className="hover:text-[#116EEE] transition-colors">Программа курса</a></li>
               <li>
                 <a
                   href="/lessons"
-                  className="hover:text-[#7A1E2B] transition-colors"
+                  className="hover:text-[#116EEE] transition-colors"
                 >
                   Уроки
                 </a>
@@ -805,23 +805,23 @@ function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#231816] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#252B2F] mb-4">
               Документы
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#6B5D52]">
-              <li><a href="#terms" className="hover:text-[#7A1E2B] transition-colors">Пользовательское соглашение</a></li>
-              <li><a href="#privacy" className="hover:text-[#7A1E2B] transition-colors">Политика конфиденциальности</a></li>
-              <li><a href="#refunds" className="hover:text-[#7A1E2B] transition-colors">Возврат средств</a></li>
+            <ul className="space-y-2.5 text-sm text-[#666E7E]">
+              <li><a href="#terms" className="hover:text-[#116EEE] transition-colors">Пользовательское соглашение</a></li>
+              <li><a href="#privacy" className="hover:text-[#116EEE] transition-colors">Политика конфиденциальности</a></li>
+              <li><a href="#refunds" className="hover:text-[#116EEE] transition-colors">Возврат средств</a></li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-[#E7D9C5] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[#8A7A68]">
-            © {new Date().getFullYear()} MagyarKurzus. Все права защищены.
+        <div className="mt-12 pt-6 border-t border-[#D6DEE6] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-[#666E7E]">
+            © {new Date().getFullYear()} Magyaro. Все права защищены.
           </p>
-          <p className="text-xs text-[#8A7A68]">
-            Сделано с <span className="text-[#7A1E2B]">♥</span> для изучающих венгерский
+          <p className="text-xs text-[#666E7E]">
+            Сделано с <span className="text-[#116EEE]">♥</span> для изучающих венгерский
           </p>
         </div>
       </div>
@@ -884,7 +884,7 @@ export default function LandingPage() {
 
   // Page title
   useEffect(() => {
-    document.title = 'MagyarKurzus — венгерский язык с нуля';
+    document.title = 'Magyaro — венгерский язык с нуля';
   }, []);
 
   const openAuth = (mode: 'login' | 'register') => {
@@ -903,7 +903,7 @@ export default function LandingPage() {
 
   if (!authReady) {
     return (
-      <div className="min-h-screen bg-[#FAF6EE] text-[#57121C] flex items-center justify-center p-4" role="status">
+      <div className="min-h-screen bg-[#F2F7FD] text-[#252B2F] flex items-center justify-center p-4" role="status">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="w-8 animate-spin" />
           <span className="font-mono text-sm font-semibold">Восстановление сессии…</span>
@@ -913,7 +913,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF6EE] text-[#2A2320] font-sans scroll-smooth antialiased selection:bg-[#7A1E2B] selection:text-white">
+    <div className="min-h-screen bg-[#F2F7FD] text-[#252B2F] font-sans scroll-smooth antialiased selection:bg-[#116EEE] selection:text-white">
       <LandingHeader
         user={user}
         onLogin={() => openAuth('login')}

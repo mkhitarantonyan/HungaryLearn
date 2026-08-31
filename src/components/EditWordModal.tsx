@@ -151,7 +151,7 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A2320]/60 backdrop-blur-xs">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252B2F]/60 backdrop-blur-xs">
       <motion.div
         role="dialog"
         aria-modal="true"
@@ -159,19 +159,19 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative space-y-4"
+        className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative space-y-4"
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#D9CBB0]">
+        <div className="flex items-center justify-between pb-3 border-b border-[#D6DEE6]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#7A1E2B]/10 text-[#7A1E2B] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
               <Pencil className="w-4 h-4" />
             </div>
             <div>
-              <h3 id="edit-word-modal-title" className="font-mono font-bold text-[#57121C] text-base">
+              <h3 id="edit-word-modal-title" className="font-mono font-bold text-[#252B2F] text-base">
                 Редактирование слова / произношения
               </h3>
-              <div className="text-xs text-[#8A7A68]">Только для Администратора</div>
+              <div className="text-xs text-[#666E7E]">Только для Администратора</div>
             </div>
           </div>
           {audioError && <p className="text-xs text-red-700" role="alert">{audioError}</p>}
@@ -179,7 +179,7 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
           <button
             onClick={onClose}
             aria-label="Закрыть"
-            className="p-1.5 rounded-full hover:bg-[#7A1E2B]/10 text-[#7A1E2B] transition-colors cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -187,44 +187,44 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
 
         <form onSubmit={handleSave} className="space-y-4">
           {/* Original Word Display */}
-          <div className="p-3 bg-[#F6EFE4] border border-[#D9CBB0] rounded-xl flex items-center justify-between">
+          <div className="p-3 bg-[#EDF4FB] border border-[#D6DEE6] rounded-xl flex items-center justify-between">
             <div>
-              <div className="text-[10px] font-mono font-bold text-[#8A7A68] uppercase">Оригинальная фраза</div>
-              <div className="font-mono font-bold text-[#57121C] text-sm">{originalText}</div>
+              <div className="text-[10px] font-mono font-bold text-[#666E7E] uppercase">Оригинальная фраза</div>
+              <div className="font-mono font-bold text-[#252B2F] text-sm">{originalText}</div>
             </div>
             <button
               type="button"
               onClick={handleTestAudio}
-              className="px-3 py-1.5 rounded-lg bg-[#7A1E2B] text-white hover:bg-[#57121C] transition-colors text-xs font-mono font-medium flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-[#116EEE] text-white hover:bg-[#0D5ED0] transition-colors text-xs font-mono font-medium flex items-center gap-1.5 cursor-pointer"
             >
-              <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'animate-bounce text-[#B98A2B]' : ''}`} />
+              <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'animate-bounce text-[#C77B00]' : ''}`} />
               <span>Прослушать</span>
             </button>
           </div>
 
           {/* Edit Display Word */}
           <div className="space-y-1">
-            <label className="text-xs font-mono font-semibold text-[#57121C] flex items-center justify-between">
+            <label className="text-xs font-mono font-semibold text-[#252B2F] flex items-center justify-between">
               <span>Измененный текст / произносимое слово</span>
-              <span className="text-[10px] text-[#8A7A68] font-normal">(венгерский)</span>
+              <span className="text-[10px] text-[#666E7E] font-normal">(венгерский)</span>
             </label>
             <input
               type="text"
               value={customText}
               onChange={(e) => setCustomText(e.target.value)}
               placeholder={originalText}
-              className="w-full p-2.5 rounded-xl border border-[#D9CBB0] bg-white font-mono text-sm text-[#2A2320] outline-none focus:border-[#7A1E2B]"
+              className="w-full p-2.5 rounded-xl border border-[#D6DEE6] bg-white font-mono text-sm text-[#252B2F] outline-none focus:border-[#116EEE]"
             />
           </div>
 
           {/* Audio recording & file upload */}
-          <div className="p-4 rounded-xl border border-[#D9CBB0] bg-white space-y-3">
+          <div className="p-4 rounded-xl border border-[#D6DEE6] bg-white space-y-3">
             <div className="flex items-center justify-between">
-              <div className="text-xs font-mono font-bold text-[#57121C]">
+              <div className="text-xs font-mono font-bold text-[#252B2F]">
                 Озвучка для этого слова
               </div>
               {hasExistingAudio && (
-                <span className="text-[11px] font-mono text-[#2C5F58] bg-[#2C5F58]/10 px-2 py-0.5 rounded border border-[#2C5F58]/20">
+                <span className="text-[11px] font-mono text-[#3B1E90] bg-[#3B1E90]/10 px-2 py-0.5 rounded border border-[#3B1E90]/20">
                   ✓ MP3/Запись прикреплена
                 </span>
               )}
@@ -251,11 +251,11 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
               </button>
             )}
 
-            <div className="text-[11px] text-[#8A7A68] text-center font-mono">или</div>
+            <div className="text-[11px] text-[#666E7E] text-center font-mono">или</div>
 
             {/* File upload option */}
             <div className="flex items-center gap-2">
-              <label className="flex-1 px-3 py-2 rounded-xl border border-dashed border-[#7A1E2B]/40 bg-[#7A1E2B]/5 hover:bg-[#7A1E2B]/10 text-[#7A1E2B] font-mono text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors">
+              <label className="flex-1 px-3 py-2 rounded-xl border border-dashed border-[#116EEE]/40 bg-[#116EEE]/5 hover:bg-[#116EEE]/10 text-[#116EEE] font-mono text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors">
                 <Upload className="w-4 h-4" />
                 <span className="truncate">
                   {selectedFile ? selectedFile.name : 'Выбрать MP3 файл с диска...'}
@@ -286,14 +286,14 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
           </div>
 
           {savedSuccess && (
-            <div className="p-2.5 rounded-xl bg-[#2C5F58]/10 border border-[#2C5F58]/30 text-[#2C5F58] font-mono text-xs font-bold flex items-center justify-center gap-2">
+            <div className="p-2.5 rounded-xl bg-[#3B1E90]/10 border border-[#3B1E90]/30 text-[#3B1E90] font-mono text-xs font-bold flex items-center justify-center gap-2">
               <Check className="w-4 h-4" />
               <span>Изменения сохранены!</span>
             </div>
           )}
 
           {/* Action buttons */}
-          <div className="pt-2 flex items-center justify-between gap-2 border-t border-[#D9CBB0]">
+          <div className="pt-2 flex items-center justify-between gap-2 border-t border-[#D6DEE6]">
             <button
               type="button"
               onClick={handleReset}
@@ -306,14 +306,14 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl border border-[#D9CBB0] text-[#57121C] font-semibold text-xs hover:bg-[#F6EFE4] transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-[#D6DEE6] text-[#252B2F] font-semibold text-xs hover:bg-[#EDF4FB] transition-colors cursor-pointer"
               >
                 Отмена
               </button>
               <button
                 type="submit"
                 disabled={isSaving}
-                className="px-5 py-2 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs hover:bg-[#57121C] disabled:bg-[#D9CBB0] disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center gap-1.5"
+                className="px-5 py-2 rounded-xl bg-[#116EEE] text-white font-semibold text-xs hover:bg-[#0D5ED0] disabled:bg-[#D6DEE6] disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center gap-1.5"
               >
                 {isSaving ? (
                   <>

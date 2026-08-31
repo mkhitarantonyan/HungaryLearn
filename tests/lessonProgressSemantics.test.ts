@@ -2,22 +2,51 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+  getCourseProgressPercentage,
   getLessonProgressState,
+  getRequiredLessonProgressUnits,
   hasCompleteDirectObjectiveEvidence,
+  type LessonProgressDefinition,
 } from '../src/utils/lessonProgress.ts';
-import {
-  listeningEvidence,
-  writingEvidence,
-} from '../src/utils/activityUtils.ts';
-import type { ActivityEvidence, ExitCheckItem, ListeningTaskData } from '../src/types.ts';
+import { mergeActivityEvidence } from '../src/utils/progressMerge.ts';
+import { readCachedProgress, writeCachedProgress } from '../src/utils/userStore.ts';
+import { LESSON_PROGRESS_DEFINITIONS } from '../src/data/lessonProgressCatalog.ts';
+import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
+import type { ActivityEvidence, ExitCheckItem, Lesson } from '../src/types.ts';
 
-const progress = (viewedSlideIds: string[], quizPassed = false) =>
-  getLessonProgressState({
-    lessonNumber: 4,
-    requiredSlideIds: [1, 2, 3],
-    viewedSlideIds,
-    quizPassed,
-  });
+const definition: LessonProgressDefinition = {
+  lessonNumber: 4,
+  quizRequired: true,
+  units: [
+    { activityId: 'l4-cp', kind: 'controlledPractice', requirement: 'pass', passCount: 4, total: 5 },
+    { activityId: 'l4-reading', kind: 'reading', requirement: 'pass', passCount: 4, total: 5 },
+    { activityId: 'l4-listening', kind: 'listening', requirement: 'pass', passCount: 4, total: 5 },
+    { activityId: 'l4-writing', kind: 'writing', requirement: 'complete' },
+    { activityId: 'l4-roleplay', kind: 'rolePlay', requirement: 'complete' },
+  ],
+};
+
+const direct = (activityId: string, passed = true, score = passed ? 4 : 2): ActivityEvidence => ({
+  activityId,
+  attempted: true,
+  completed: true,
+  evidenceMode: 'direct',
+  passed,
+  score,
+  total: 5,
+});
+
+const partial = (activityId: string, writing = false): ActivityEvidence => ({
+  activityId,
+  attempted: true,
+  completed: true,
+  evidenceMode: 'partial',
+  passed: false,
+  ...(writing ? { selfReviewed: true } : {}),
+});
+
+const progress = (evidence: Record<string, ActivityEvidence> = {}, quizPassed = false) =>
+  getLessonProgressState({ definition, evidence, quizPassed });
 
 const check = (objectiveId: string, activityId: string, evidenceKind: ExitCheckItem['evidenceKind']): ExitCheckItem => ({
   objectiveId,
@@ -25,151 +54,165 @@ const check = (objectiveId: string, activityId: string, evidenceKind: ExitCheckI
   evidenceKind,
 });
 
-const directEvidence = (activityId: string): ActivityEvidence => ({
-  activityId,
-  attempted: true,
-  completed: true,
-  evidenceMode: 'direct',
-  passed: true,
-});
-
-test('A: no viewed slides and no passed quiz means not_started', () => {
-  assert.deepEqual(progress([]), {
-    state: 'not_started',
-    started: false,
-    contentCompleted: false,
-    quizPassed: false,
-    viewedSlideCount: 0,
-    totalSlideCount: 3,
+test('new learner starts at exactly 0 percent', () => {
+  assert.deepEqual(progress(), {
+    state: 'not_started', started: false, completed: false, quizPassed: false,
+    completedUnitCount: 0, totalUnitCount: 6, percentage: 0,
   });
 });
 
-test('B: some required slides viewed means in_progress', () => {
-  const result = progress(['l4_s1', 'l4_s2', 'l40_s3', 'l4_s99']);
-  assert.equal(result.state, 'in_progress');
-  assert.equal(result.viewedSlideCount, 2);
-  assert.equal(result.contentCompleted, false);
+test('opening a lesson or its last slide cannot change progress because slides are not an input', () => {
+  assert.equal(progress().percentage, 0);
+  assert.equal('viewedSlideIds' in progress(), false);
 });
 
-test('C: all required slides viewed without a passed quiz means content_completed', () => {
-  const result = progress(['l4_s3', 'l4_s1', 'l4_s2', 'l4_s2']);
-  assert.equal(result.state, 'content_completed');
-  assert.equal(result.contentCompleted, true);
-  assert.equal(result.quizPassed, false);
+test('narration is not represented by any required progress unit', () => {
+  assert.equal(definition.units.some((unit) => /narrat|slide/i.test(unit.activityId)), false);
 });
 
-test('D: a passed quiz means quiz_passed, never an automatic mastered state', () => {
-  const result = progress([], true);
-  assert.equal(result.state, 'quiz_passed');
-  assert.equal(result.contentCompleted, false);
-  assert.equal('mastered' in result, false);
+test('an unfinished or failed Controlled Practice does not close its unit', () => {
+  assert.equal(progress({ 'l4-cp': direct('l4-cp', false) }).percentage, 0);
 });
 
-test('E: a passed quiz with missing required objective evidence does not qualify direct coverage', () => {
-  assert.equal(progress([], true).state, 'quiz_passed');
-  assert.equal(
-    hasCompleteDirectObjectiveEvidence({
-      objectiveIds: ['obj-listening'],
-      checks: [check('obj-listening', 'listen-1', 'listening')],
-      evidence: {},
-    }),
-    false
-  );
+test('Controlled Practice counts only after its pass threshold', () => {
+  const result = progress({ 'l4-cp': direct('l4-cp') });
+  assert.equal(result.completedUnitCount, 1);
+  assert.equal(result.percentage, 17);
 });
 
-test('F: completed writing PARTIAL cannot satisfy a DIRECT objective requirement', () => {
-  const result = writingEvidence('Ez egy elegendően hosszú válasz.', true);
-  const evidence: ActivityEvidence = {
-    activityId: 'write-1',
-    attempted: true,
-    ...result,
-  };
-
-  assert.equal(evidence.evidenceMode, 'partial');
-  assert.equal(
-    hasCompleteDirectObjectiveEvidence({
-      objectiveIds: ['obj-writing'],
-      checks: [check('obj-writing', evidence.activityId, 'writing')],
-      evidence: { [evidence.activityId]: evidence },
-    }),
-    false
-  );
+test('Reading counts only when its scored evidence passed', () => {
+  assert.equal(progress({ 'l4-reading': direct('l4-reading', false) }).completedUnitCount, 0);
+  assert.equal(progress({ 'l4-reading': direct('l4-reading') }).completedUnitCount, 1);
 });
 
-test('G: optional speaking self-practice is not an evidence source', () => {
-  const typesSource = readFileSync(new URL('../src/types.ts', import.meta.url), 'utf8');
-  const utilitySource = readFileSync(new URL('../src/utils/activityUtils.ts', import.meta.url), 'utf8');
-  assert.doesNotMatch(typesSource, /RecordingTaskData|recordingCompleted/);
-  assert.doesNotMatch(utilitySource, /recordingCompletionEvidence|case 'recording'/);
+test('published Listening counts only after a passing comprehension result', () => {
+  assert.equal(progress({ 'l4-listening': direct('l4-listening', false) }).completedUnitCount, 0);
+  assert.equal(progress({ 'l4-listening': direct('l4-listening') }).completedUnitCount, 1);
 });
 
-test('H: missing listening audio produces NONE and cannot satisfy required direct evidence', () => {
-  const listening: ListeningTaskData = {
-    kind: 'listening',
-    id: 'listen-1',
-    assetId: 'missing-audio',
-    audioStatus: 'missing',
-    transcript: 'Nem helyettesíti a hanganyagot.',
-    passCount: 1,
-    questions: [],
-  };
-  const result = listeningEvidence(listening, 1, 1);
-  const evidence: ActivityEvidence = {
-    activityId: listening.id,
-    attempted: true,
-    completed: true,
-    ...result,
-  };
-
-  assert.equal(evidence.evidenceMode, 'none');
-  assert.equal(evidence.passed, false);
-  assert.equal(
-    hasCompleteDirectObjectiveEvidence({
-      objectiveIds: ['obj-listening'],
-      checks: [check('obj-listening', evidence.activityId, 'listening')],
-      evidence: { [evidence.activityId]: evidence },
-    }),
-    false
-  );
-});
-
-test('I: every required objective needs its own complete DIRECT evidence chain', () => {
-  const grammar = directEvidence('grammar-1');
-  const reading = directEvidence('reading-1');
-  assert.equal(
-    hasCompleteDirectObjectiveEvidence({
-      objectiveIds: ['obj-grammar', 'obj-reading'],
-      checks: [
-        check('obj-grammar', grammar.activityId, 'grammar'),
-        check('obj-reading', reading.activityId, 'reading'),
+test('missing Listening is excluded instead of manufacturing a completion requirement', () => {
+  const lesson = {
+    id: 99, number: 99, level: 'A0', title: '', subtitle: '', description: '', slidesCount: 1,
+    slides: [{
+      id: 1, eyebrow: '', title: '', subtitle: '', activities: [
+        { kind: 'listening', id: 'missing', assetId: 'missing', audioStatus: 'missing', transcript: '', questions: [], passCount: 1 },
       ],
-      evidence: {
-        [grammar.activityId]: grammar,
-        [reading.activityId]: reading,
-      },
+    }],
+  } as Lesson;
+  assert.deepEqual(getRequiredLessonProgressUnits(lesson), []);
+});
+
+test('intentional Listening gaps in L9 and L11 do not add phantom units', async () => {
+  for (const lessonNumber of [9, 11]) {
+    const lesson = await loadLesson(lessonNumber, { admin: true });
+    assert.ok(lesson);
+    assert.equal(getRequiredLessonProgressUnits(lesson).some((unit) => unit.kind === 'listening'), false);
+  }
+});
+
+test('completed Writing contributes progress while remaining PARTIAL and not passed', () => {
+  const evidence = partial('l4-writing', true);
+  assert.equal(progress({ [evidence.activityId]: evidence }).completedUnitCount, 1);
+  assert.deepEqual([evidence.evidenceMode, evidence.passed], ['partial', false]);
+});
+
+test('completed RolePlay contributes progress while remaining PARTIAL and not passed', () => {
+  const evidence = partial('l4-roleplay');
+  assert.equal(progress({ [evidence.activityId]: evidence }).completedUnitCount, 1);
+  assert.deepEqual([evidence.evidenceMode, evidence.passed], ['partial', false]);
+});
+
+test('optional speaking is absent from generated requirements for all lessons', async () => {
+  for (const meta of LESSONS_META) {
+    const lesson = await loadLesson(meta.number, { admin: true });
+    assert.ok(lesson);
+    assert.equal(getRequiredLessonProgressUnits(lesson).some((unit) => unit.kind === ('recording' as never)), false);
+  }
+});
+
+test('passing only the quiz is partial lesson progress, never completion', () => {
+  const result = progress({}, true);
+  assert.equal(result.percentage, 17);
+  assert.equal(result.completed, false);
+});
+
+test('all required activities and quiz produce exactly 100 percent', () => {
+  const result = progress({
+    'l4-cp': direct('l4-cp'),
+    'l4-reading': direct('l4-reading'),
+    'l4-listening': direct('l4-listening'),
+    'l4-writing': partial('l4-writing', true),
+    'l4-roleplay': partial('l4-roleplay'),
+  }, true);
+  assert.deepEqual([result.percentage, result.completed, result.state], [100, true, 'completed']);
+});
+
+test('100 percent progress does not manufacture DIRECT objective mastery', () => {
+  const evidence = partial('l4-writing', true);
+  assert.equal(
+    hasCompleteDirectObjectiveEvidence({
+      objectiveIds: ['writing-objective'],
+      checks: [check('writing-objective', evidence.activityId, 'writing')],
+      evidence: { [evidence.activityId]: evidence },
     }),
-    true
+    false
   );
 });
 
-test('lesson-list wording describes quiz and content signals without claiming verification or mastery', () => {
-  const source = readFileSync(new URL('../src/components/LessonList.tsx', import.meta.url), 'utf8');
-  assert.match(source, /Квиз пройден/);
-  assert.match(source, /Материал пройден/);
-  assert.match(source, /квизов пройдено/);
-  assert.doesNotMatch(source, /Проверено|Освоено|Mastered/);
-  assert.match(source, /статус: \$\{statusLabel\}/);
+test('course progress gives every lesson equal weight', () => {
+  const definitions: LessonProgressDefinition[] = [
+    { lessonNumber: 1, quizRequired: false, units: [{ activityId: 'small', kind: 'reading', requirement: 'pass', passCount: 4, total: 5 }] },
+    { lessonNumber: 2, quizRequired: false, units: [
+      { activityId: 'large-1', kind: 'reading', requirement: 'pass', passCount: 4, total: 5 },
+      { activityId: 'large-2', kind: 'reading', requirement: 'pass', passCount: 4, total: 5 },
+      { activityId: 'large-3', kind: 'reading', requirement: 'pass', passCount: 4, total: 5 },
+    ] },
+  ];
+  assert.equal(getCourseProgressPercentage(definitions, { small: direct('small') }, []), 50);
 });
 
-test('lesson navigation percentage is explicitly labelled as material progress', () => {
-  const source = readFileSync(new URL('../src/components/LessonProgress.tsx', import.meta.url), 'utf8');
-  assert.match(source, /Материал: \{step\} из \{total\}/);
-  assert.match(source, /Прогресс материала: шаг/);
+test('local canonical cache survives refresh-shaped read/write', () => {
+  const map = new Map<string, string>();
+  const storage = { getItem: (key: string) => map.get(key) ?? null, setItem: (key: string, value: string) => void map.set(key, value) };
+  const saved = {
+    viewedSlides: ['l4_s11'],
+    passedQuizzes: [4],
+    activityEvidence: { 'l4-cp-recognize-text': direct('l4-cp-recognize-text') },
+    reviewCards: {},
+    activityAttempts: {},
+    quizAttempts: {},
+  };
+  writeCachedProgress('user-1', saved, storage);
+  assert.deepEqual(readCachedProgress('user-1', storage), saved);
 });
 
-test('quiz completion copy reports a pass only at the 80 percent threshold', () => {
-  const source = readFileSync(new URL('../src/components/LessonQuizModal.tsx', import.meta.url), 'utf8');
-  assert.match(source, /const passed = percentage >= 80/);
-  assert.match(source, /passed \? 'Тест пройден!' : 'Тест завершён'/);
-  assert.doesNotMatch(source, /усвоили тему/);
+test('activity merge never regresses a stronger passed result', () => {
+  const merged = mergeActivityEvidence({ 'l4-cp': direct('l4-cp', true, 4) }, { 'l4-cp': direct('l4-cp', false, 2) });
+  assert.deepEqual([merged['l4-cp'].passed, merged['l4-cp'].score], [true, 4]);
+});
+
+test('a repeated attempt upgrades failed evidence to passed evidence', () => {
+  const merged = mergeActivityEvidence({ 'l4-cp': direct('l4-cp', false, 2) }, { 'l4-cp': direct('l4-cp', true, 4) });
+  assert.deepEqual([merged['l4-cp'].passed, merged['l4-cp'].score], [true, 4]);
+});
+
+test('generated catalog matches all current lesson definitions', async () => {
+  assert.equal(LESSON_PROGRESS_DEFINITIONS.length, 28);
+  for (const meta of LESSONS_META) {
+    const lesson = await loadLesson(meta.number, { admin: true });
+    assert.ok(lesson);
+    const generated = LESSON_PROGRESS_DEFINITIONS.find((item) => item.lessonNumber === meta.number);
+    assert.ok(generated);
+    assert.deepEqual(generated.units, getRequiredLessonProgressUnits(lesson));
+    assert.equal(generated.quizRequired, (lesson.quiz?.length ?? 0) > 0);
+  }
+});
+
+test('UI uses one activity-based percentage and no viewed-slide completion copy', () => {
+  const listSource = readFileSync(new URL('../src/components/LessonList.tsx', import.meta.url), 'utf8');
+  const barSource = readFileSync(new URL('../src/components/LessonProgress.tsx', import.meta.url), 'utf8');
+  assert.match(listSource, /Общий прогресс курса/);
+  assert.match(barSource, /Учебный прогресс урока/);
+  assert.doesNotMatch(listSource, /Материал пройден|квизов пройдено/);
+  assert.doesNotMatch(barSource, /Прогресс материала/);
 });

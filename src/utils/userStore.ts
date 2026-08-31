@@ -1,7 +1,10 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import type { ReviewCardState } from '../types';
+import type { ActivityAttempt, ActivityEvidence, QuizAttempt, ReviewCardState } from '../types';
 import { ApiRequestError, apiFetch, apiJson } from '../lib/apiClient';
 import { getFirebaseAuth } from '../lib/firebase';
+import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
+import { sanitizeActivityEvidence } from './lessonProgress';
+import { mergeActivityEvidence } from './progressMerge';
 
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'past_due' | 'paused' | 'unpaid';
 export type BillingProvider = 'lemonsqueezy' | null;
@@ -21,8 +24,96 @@ export interface UserProfile {
 export interface UserProgressData {
   viewedSlides: string[];
   passedQuizzes?: number[];
+  activityEvidence?: Record<string, ActivityEvidence>;
   reviewCards?: Record<string, ReviewCardState>;
+  /** Local retry material; the server always recomputes DIRECT results. */
+  activityAttempts?: Record<string, ActivityAttempt>;
+  quizAttempts?: Record<string, QuizAttempt>;
   updatedAt?: string;
+}
+
+const PROGRESS_CACHE_PREFIX = 'hungarylearn:progress:v2:';
+
+export function emptyProgressData(): UserProgressData {
+  return {
+    viewedSlides: [],
+    passedQuizzes: [],
+    activityEvidence: {},
+    reviewCards: {},
+    activityAttempts: {},
+    quizAttempts: {},
+  };
+}
+
+function progressCacheKey(ownerId: string | null): string {
+  return `${PROGRESS_CACHE_PREFIX}${ownerId ?? 'anonymous'}`;
+}
+
+/** Local cache of the canonical progress shape; Firestore remains authoritative for signed-in users. */
+export function readCachedProgress(
+  ownerId: string | null,
+  storage: Pick<Storage, 'getItem'> | null = typeof window !== 'undefined' ? window.localStorage : null
+): UserProgressData {
+  if (!storage) return emptyProgressData();
+  try {
+    const parsed = JSON.parse(storage.getItem(progressCacheKey(ownerId)) ?? '{}') as UserProgressData;
+    return {
+      viewedSlides: Array.isArray(parsed.viewedSlides) ? parsed.viewedSlides : [],
+      passedQuizzes: Array.isArray(parsed.passedQuizzes)
+        ? [...new Set(parsed.passedQuizzes.filter((item) => Number.isInteger(item) && item >= 1 && item <= 28))]
+        : [],
+      activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, parsed.activityEvidence),
+      reviewCards: parsed.reviewCards && typeof parsed.reviewCards === 'object' ? parsed.reviewCards : {},
+      activityAttempts: parsed.activityAttempts && typeof parsed.activityAttempts === 'object' ? parsed.activityAttempts : {},
+      quizAttempts: parsed.quizAttempts && typeof parsed.quizAttempts === 'object' ? parsed.quizAttempts : {},
+    };
+  } catch {
+    return emptyProgressData();
+  }
+}
+
+/** Monotonic canonical merge used for anonymous migration, refresh and server hydration. */
+export function mergeProgressData(...sources: UserProgressData[]): UserProgressData {
+  const viewedSlides = new Set<string>();
+  const passedQuizzes = new Set<number>();
+  let activityEvidence: Record<string, ActivityEvidence> = {};
+  let reviewCards: Record<string, ReviewCardState> = {};
+  let activityAttempts: Record<string, ActivityAttempt> = {};
+  let quizAttempts: Record<string, QuizAttempt> = {};
+  for (const source of sources) {
+    for (const slide of source.viewedSlides ?? []) if (typeof slide === 'string') viewedSlides.add(slide);
+    for (const lesson of source.passedQuizzes ?? []) {
+      if (Number.isInteger(lesson) && lesson >= 1 && lesson <= 28) passedQuizzes.add(lesson);
+    }
+    activityEvidence = mergeActivityEvidence(
+      activityEvidence,
+      sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, source.activityEvidence)
+    );
+    reviewCards = { ...reviewCards, ...(source.reviewCards ?? {}) };
+    activityAttempts = { ...activityAttempts, ...(source.activityAttempts ?? {}) };
+    quizAttempts = { ...quizAttempts, ...(source.quizAttempts ?? {}) };
+  }
+  return {
+    viewedSlides: [...viewedSlides],
+    passedQuizzes: [...passedQuizzes],
+    activityEvidence,
+    reviewCards,
+    activityAttempts,
+    quizAttempts,
+  };
+}
+
+export function writeCachedProgress(
+  ownerId: string | null,
+  progress: UserProgressData,
+  storage: Pick<Storage, 'setItem'> | null = typeof window !== 'undefined' ? window.localStorage : null
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(progressCacheKey(ownerId), JSON.stringify(progress));
+  } catch {
+    // A cache failure must never block the learning UI or server sync.
+  }
 }
 
 type UserListener = (user: UserProfile | null) => void;
@@ -150,7 +241,13 @@ export async function getSubscriptionPortal(): Promise<{ success: boolean; url?:
 
 export async function syncProgressToServer(viewedSlides: string[]): Promise<boolean> {
   if (!currentUser) return false;
-  try { return (await apiFetch('/api/user/progress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ viewedSlides }) })).ok; }
+  try {
+    return (await apiFetch('/api/user/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ viewedSlides }),
+    })).ok;
+  }
   catch { return false; }
 }
 export async function syncReviewCardToServer(cardId: string, grade: 'again' | 'hard' | 'good' | 'easy'): Promise<boolean> {
@@ -158,10 +255,37 @@ export async function syncReviewCardToServer(cardId: string, grade: 'again' | 'h
   try { return (await apiFetch('/api/user/review/grade', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cardId, grade }) })).ok; }
   catch { return false; }
 }
-export async function syncQuizResultToServer(lessonNumber: number, score: number, total: number): Promise<boolean> {
+export async function syncQuizAttemptToServer(quizAttempt: QuizAttempt): Promise<boolean> {
   if (!currentUser) return false;
-  try { return (await apiFetch('/api/user/progress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quiz: { lessonNumber, score, total } }) })).ok; }
+  try { return (await apiFetch('/api/user/progress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quizAttempt }) })).ok; }
   catch { return false; }
+}
+export async function syncActivityAttemptToServer(activityAttempt: ActivityAttempt): Promise<ActivityEvidence | null> {
+  if (!currentUser) return null;
+  try {
+    const response = await apiJson<{ success: boolean; evidence?: ActivityEvidence }>('/api/user/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ activityAttempt }),
+    });
+    return response.evidence ?? null;
+  } catch {
+    return null;
+  }
+}
+export async function syncActivityEvidenceToServer(
+  activityEvidence: Record<string, ActivityEvidence>
+): Promise<boolean> {
+  if (!currentUser) return false;
+  try {
+    return (await apiFetch('/api/user/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ activityEvidence }),
+    })).ok;
+  } catch {
+    return false;
+  }
 }
 export async function fetchUserProgress(): Promise<UserProgressData | null> {
   if (!currentUser) return null;

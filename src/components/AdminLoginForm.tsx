@@ -49,11 +49,11 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
   return (
     <form onSubmit={submit} className="space-y-5" noValidate>
       <div className="space-y-1.5">
-        <label htmlFor={emailId} className="block text-sm font-semibold text-[#57121C]">
+        <label htmlFor={emailId} className="block text-sm font-semibold text-[#252B2F]">
           Email
         </label>
         <div className="relative">
-          <Mail aria-hidden className="absolute left-3.5 top-1/2 w-4 -translate-y-1/2 text-[#8A7A68]" />
+          <Mail aria-hidden className="absolute left-3.5 top-1/2 w-4 -translate-y-1/2 text-[#666E7E]" />
           <input
             id={emailId}
             type="email"
@@ -65,17 +65,17 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
             autoFocus
             required
             disabled={loading || retrying}
-            className="w-full rounded-xl border border-[#D9CBB0] bg-white py-3 pl-10 pr-3 text-sm text-[#2A2320] outline-none transition focus:border-[#7A1E2B] focus:ring-2 focus:ring-[#7A1E2B]/20 disabled:opacity-60"
+            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-3 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]/20 disabled:opacity-60"
           />
         </div>
       </div>
 
       <div className="space-y-1.5">
-        <label htmlFor={passwordId} className="block text-sm font-semibold text-[#57121C]">
+        <label htmlFor={passwordId} className="block text-sm font-semibold text-[#252B2F]">
           Password
         </label>
         <div className="relative">
-          <LockKeyhole aria-hidden className="absolute left-3.5 top-1/2 w-4 -translate-y-1/2 text-[#8A7A68]" />
+          <LockKeyhole aria-hidden className="absolute left-3.5 top-1/2 w-4 -translate-y-1/2 text-[#666E7E]" />
           <input
             id={passwordId}
             type={showPassword ? 'text' : 'password'}
@@ -84,14 +84,14 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
             autoComplete="current-password"
             required
             disabled={loading || retrying}
-            className="w-full rounded-xl border border-[#D9CBB0] bg-white py-3 pl-10 pr-11 text-sm text-[#2A2320] outline-none transition focus:border-[#7A1E2B] focus:ring-2 focus:ring-[#7A1E2B]/20 disabled:opacity-60"
+            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-11 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]/20 disabled:opacity-60"
           />
           <button
             type="button"
             onClick={() => setShowPassword((visible) => !visible)}
             aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
             aria-pressed={showPassword}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-2 text-[#8A7A68] hover:bg-[#F6EFE4] hover:text-[#57121C] focus-visible:outline-2 focus-visible:outline-[#7A1E2B]"
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-2 text-[#666E7E] hover:bg-[#EDF4FB] hover:text-[#252B2F] focus-visible:outline-2 focus-visible:outline-[#116EEE]"
           >
             {showPassword ? <EyeOff className="w-4" /> : <Eye className="w-4" />}
           </button>
@@ -109,7 +109,7 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
           type="button"
           onClick={() => void retrySession()}
           disabled={loading || retrying}
-          className="w-full rounded-xl border border-[#D9CBB0] bg-white py-2.5 text-sm font-semibold text-[#57121C] hover:bg-[#F6EFE4] disabled:opacity-60"
+          className="w-full rounded-xl border border-[#D6DEE6] bg-white py-2.5 text-sm font-semibold text-[#252B2F] hover:bg-[#EDF4FB] disabled:opacity-60"
         >
           {retrying ? 'Повторная проверка…' : 'Повторить проверку сессии'}
         </button>
@@ -118,7 +118,7 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
       <button
         type="submit"
         disabled={loading || retrying}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#7A1E2B] py-3 text-sm font-bold text-white shadow-md shadow-[#7A1E2B]/20 transition hover:bg-[#57121C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A1E2B] disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#116EEE] py-3 text-sm font-bold text-white shadow-md shadow-[#116EEE]/20 transition hover:bg-[#0D5ED0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading && <Loader2 aria-hidden className="w-4 animate-spin" />}
         {loading ? 'Проверка доступа…' : 'Войти'}

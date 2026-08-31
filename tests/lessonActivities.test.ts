@@ -1036,14 +1036,18 @@ test('L3 removes the false plural article rule and keeps bounded safe examples',
   assert.match(slide.body, /Szeretem a könyveket\./);
 });
 
-test('L3 adds only the approved activity sequence and every activity validates', () => {
+test('L3 P1 extends the approved activity sequence and every activity validates', () => {
   assert.deepEqual(
     l3Activities().map((activity) => activity.id),
     [
       'l3-cp-articles',
       'l3-cp-egy',
       'l3-cp-plurals',
+      'l3-reading-classroom',
+      'l3-roleplay-classroom-objects',
       'l3-reading-room',
+      'l3-cp-contextual-foundation',
+      'l3-writing-fictional-room',
       'l3-cp-written-phrases',
       'l3-writing-room',
       'l3-exit-check',
@@ -1285,10 +1289,12 @@ test('all L3 retrieval questions have unique options and the intended in-scope a
   assert.doesNotMatch(quiz.find((question) => question.id === 306)?.question ?? '', /урок[ае]?\s+\d/i);
 });
 
-test('L3 introduces neither ListeningTask nor RolePlay', () => {
+test('L3 keeps the intentional Listening gap while P1 adds text-only RolePlay', () => {
   const kinds = l3Activities().map((activity) => activity.kind);
   assert.equal(kinds.includes('listening'), false);
-  assert.equal(kinds.includes('rolePlay'), false);
+  assert.equal(kinds.includes('rolePlay'), true);
+  const rolePlay = findL3Activity('l3-roleplay-classroom-objects', 'rolePlay');
+  assert.ok(rolePlay.turns.filter((turn) => turn.speaker === 'learner').every((turn) => turn.responseMode === 'selfPractice'));
 });
 
 test('L3 vocabulary keeps articles and base lexemes instead of counting plural forms as lexemes', () => {
@@ -1344,15 +1350,19 @@ test('L3 and L15 keep lesson, objective, and quiz identity', () => {
   assert.deepEqual(LESSON_15.quiz?.map((question) => question.id), [1501, 1502, 1503, 1504, 1505, 1506]);
 });
 
-test('L4 adds only the approved generic activity kinds and every activity validates', () => {
+test('L4 P1 extends the approved generic activity kinds and every activity validates', () => {
   assert.deepEqual(
     l4Activities().map((activity) => activity.id),
     [
       'l4-cp-recognize-text',
       'l4-cp-conjugation',
       'l4-cp-negation',
+      'l4-reading-simple-day',
       'l4-listening-present-forms',
       'l4-cp-questions',
+      'l4-cp-contextual-foundation',
+      'l4-roleplay-simple-day',
+      'l4-writing-fictional-day',
       'l4-cp-context',
       'l4-writing-actions',
       'l4-exit-check',
@@ -1361,8 +1371,8 @@ test('L4 adds only the approved generic activity kinds and every activity valida
   for (const activity of l4Activities()) {
     assert.deepEqual(validateActivity(activity), [], `L4 activity ${activity.id} has errors`);
   }
-  assert.equal(l4Activities().some((activity) => activity.kind === 'rolePlay'), false);
-  assert.equal(l4Activities().some((activity) => activity.kind === 'reading'), false);
+  assert.equal(l4Activities().some((activity) => activity.kind === 'rolePlay'), true);
+  assert.equal(l4Activities().some((activity) => activity.kind === 'reading'), true);
 });
 
 test('l4_conjugate-present has 8/10 DIRECT exact-form evidence', () => {
@@ -1793,27 +1803,33 @@ test('frozen planning documents remain byte-for-byte unchanged through L2 migrat
   );
 });
 
-test('L2 adds the approved activity sequence and every activity validates generically', () => {
+test('L2 P1 extends the approved activity sequence and every activity validates generically', () => {
   assert.deepEqual(
     l2Activities().map((activity) => activity.id),
     [
       'l2-cp-pronoun-referents',
       'l2-cp-pronoun-context',
       'l2-cp-lenni',
+      'l2-cp-contextual-foundation',
       'l2-listening-introduction',
+      'l2-reading-first-meeting',
+      'l2-roleplay-first-meeting',
       'l2-roleplay-greetings',
+      'l2-writing-fictional-introduction',
       'l2-writing-self-introduction',
       'l2-exit-check',
     ]
   );
-  assert.equal(new Set(l2Activities().map((activity) => activity.id)).size, 7);
+  assert.equal(new Set(l2Activities().map((activity) => activity.id)).size, 11);
   for (const activity of l2Activities()) {
     assert.deepEqual(validateActivity(activity), [], `L2 activity ${activity.id} has errors`);
   }
 });
 
-test('L2 adds no optional ReadingTask merely to increase component count', () => {
-  assert.equal(l2Activities().some((activity) => activity.kind === 'reading'), false);
+test('L2 P1 adds the beginner ReadingTask for factual comprehension', () => {
+  const reading = findL2Activity('l2-reading-first-meeting', 'reading');
+  assert.deepEqual([reading.questions.length, reading.passCount], [6, 5]);
+  assert.equal(l2Activities().some((activity) => activity.kind === 'reading'), true);
 });
 
 test('shared activity logic contains no L2-specific branch', () => {
@@ -2300,10 +2316,10 @@ test('L2 activity markup exposes textual states without learner microphone UI', 
   assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
 });
 
-test('slide audio manifest remains unchanged by the L2 activity migration', () => {
+test('slide audio manifest matches the approved regenerated narration inventory', () => {
   assert.equal(
     sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)),
-    'A4F3ADA4D52550A18953813011EEC1AB0FF2BDF87C2BB12B8C5535E198F0F2EC'
+    '9C416EA8F19B4CF803C684A4A2A823C245C07741E30A0AD61E62171EA4E6BDFB'
   );
 });
 

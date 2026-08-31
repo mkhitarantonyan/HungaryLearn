@@ -15,12 +15,9 @@ service cloud.firestore {
     }
     match /progress/{uid} {
       allow read: if owns(uid) || admin();
-      allow create, update: if owns(uid)
-        && request.resource.data.keys().hasOnly(['viewedSlides', 'passedQuizzes', 'reviewCards', 'customNotes', 'updatedAt'])
-        && request.resource.data.viewedSlides is list
-        && request.resource.data.passedQuizzes is list
-        && request.resource.data.reviewCards is map;
-      allow delete: if owns(uid);
+      // Progress integrity is enforced by authenticated Functions transactions.
+      // Browser SDK writes (including writes to one's own document) are forbidden.
+      allow write: if false;
     }
     match /billingSubscriptions/{document=**} { allow read, write: if false; }
     match /billingWebhookEvents/{document=**} { allow read, write: if false; }

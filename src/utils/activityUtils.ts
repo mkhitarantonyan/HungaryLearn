@@ -256,6 +256,36 @@ export function validateRolePlayGraph(rolePlay: RolePlayData): string[] {
       errors.push(`rolePlay ${rolePlay.id}: unresolved nextTurnId ${ref}`);
     }
   }
+
+  if (ids.has(rolePlay.startTurnId)) {
+    const queue: Array<{ turnId: string; learnerAction: boolean }> = [
+      { turnId: rolePlay.startTurnId, learnerAction: false },
+    ];
+    const visited = new Set<string>();
+    let terminalCount = 0;
+    let terminalWithoutLearnerAction = false;
+    while (queue.length > 0) {
+      const state = queue.shift()!;
+      const stateKey = `${state.turnId}\u0000${state.learnerAction}`;
+      if (visited.has(stateKey)) continue;
+      visited.add(stateKey);
+      const turn = rolePlay.turns.find((item) => item.id === state.turnId);
+      if (!turn) continue;
+      const learnerAction = state.learnerAction || turn.speaker === 'learner';
+      const nextIds = turn.responseMode === 'choice'
+        ? (turn.branches ?? []).filter((branch) => branch.correct !== false).map((branch) => branch.nextTurnId)
+        : turn.next ? [turn.next] : [];
+      if (nextIds.length === 0) {
+        terminalCount += 1;
+        if (!learnerAction) terminalWithoutLearnerAction = true;
+      }
+      for (const nextId of nextIds) queue.push({ turnId: nextId, learnerAction });
+    }
+    if (terminalCount === 0) errors.push(`rolePlay ${rolePlay.id}: no reachable completion`);
+    if (terminalWithoutLearnerAction) {
+      errors.push(`rolePlay ${rolePlay.id}: completion path has no learner action`);
+    }
+  }
   return errors;
 }
 

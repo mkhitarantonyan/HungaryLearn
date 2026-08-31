@@ -164,7 +164,7 @@ export const LESSONS_META: LessonMeta[] = [
     title: 'Урок 18 · Módbeli segédigék',
     subtitle: 'Инфинитив и частотные модальные конструкции',
     description: 'Базовый инфинитив, ограниченная модель личного инфинитива с kell и различие kell, lehet, tud, szeretnék и akarok в практических ситуациях.',
-    slidesCount: 12
+    slidesCount: 11
   },
   {
     id: 19,
@@ -182,7 +182,7 @@ export const LESSONS_META: LessonMeta[] = [
     title: 'Урок 20 · A múlt idő',
     subtitle: 'Прошедшее время полностью',
     description: 'Показатели прошедшего времени (-t- / -ott / -ett / -ött), неопределённое и определённое спряжение, неправильные глаголы (volt, ment, evett...) и завершение уровня A2.',
-    slidesCount: 12
+    slidesCount: 11
   },
   {
     id: 21,

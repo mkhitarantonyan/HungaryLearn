@@ -1,6 +1,7 @@
 import React from 'react';
 import { BookOpen } from 'lucide-react';
 import type {
+  ActivityAttempt,
   ActivityEvidence,
   MenuReadingContent,
   ProseReadingContent,
@@ -12,7 +13,7 @@ import { QuestionSet } from './QuestionSet';
 interface ReadingTaskProps {
   data: ReadingTaskData;
   evidence?: ActivityEvidence;
-  onEvidence: (evidence: ActivityEvidence) => void;
+  onEvidence: (evidence: ActivityEvidence, attempt?: ActivityAttempt) => void;
   onResetEvidence?: (activityId: string) => void;
 }
 
@@ -23,12 +24,12 @@ interface MenuContentViewProps {
 
 const MenuContentView: React.FC<MenuContentViewProps> = ({ activityId, content }) => (
   <div
-    className="rounded-xl border border-[#D9CBB0] bg-white p-4 md:p-5"
+    className="rounded-xl border border-[#D6DEE6] bg-white p-4 md:p-5"
     role="region"
     aria-label="Étlap"
   >
     {content.legend && (
-      <p className="text-xs font-mono text-[#8A7A68] mb-3" aria-label={content.legend}>
+      <p className="text-xs font-mono text-[#666E7E] mb-3" aria-label={content.legend}>
         {content.legend}
       </p>
     )}
@@ -37,7 +38,7 @@ const MenuContentView: React.FC<MenuContentViewProps> = ({ activityId, content }
         <section key={section.id} aria-labelledby={activityId + '-' + section.id}>
           <h4
             id={activityId + '-' + section.id}
-            className="font-mono font-bold text-[#7A1E2B] text-xs uppercase tracking-wider border-b border-[#D9CBB0]/60 pb-1 mb-2"
+            className="font-mono font-bold text-[#116EEE] text-xs uppercase tracking-wider border-b border-[#D6DEE6]/60 pb-1 mb-2"
           >
             {section.title}
           </h4>
@@ -55,7 +56,7 @@ const MenuContentView: React.FC<MenuContentViewProps> = ({ activityId, content }
                     </>
                   )}
                 </span>
-                <span className="shrink-0 font-mono text-[#8A7A68] tabular-nums">
+                <span className="shrink-0 font-mono text-[#666E7E] tabular-nums">
                   {item.price} Ft
                 </span>
               </li>
@@ -76,16 +77,16 @@ const ProseContentView: React.FC<ProseContentViewProps> = ({ activityId, content
   const headingId = activityId + '-prose-title';
   return (
     <article
-      className="min-w-0 rounded-xl border border-[#D9CBB0] bg-white p-4 md:p-5"
+      className="min-w-0 rounded-xl border border-[#D6DEE6] bg-white p-4 md:p-5"
       aria-labelledby={content.title ? headingId : undefined}
       aria-label={content.title ? undefined : 'Текст для чтения'}
     >
       {content.title && (
-        <h4 id={headingId} className="font-mono font-bold text-[#7A1E2B] text-sm md:text-base mb-3">
+        <h4 id={headingId} className="font-mono font-bold text-[#116EEE] text-sm md:text-base mb-3">
           {content.title}
         </h4>
       )}
-      <div className="mx-auto max-w-[70ch] min-w-0 space-y-3 text-sm md:text-base leading-7 text-[#2A2320]">
+      <div className="mx-auto max-w-[70ch] min-w-0 space-y-3 text-sm md:text-base leading-7 text-[#252B2F]">
         {content.paragraphs.map((paragraph, index) => (
           <p
             key={index}
@@ -109,16 +110,19 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
   const passCount = data.passCount ?? 3;
   const defaultTitle = content.type === 'menu' ? 'Чтение: меню' : 'Чтение: текст';
 
-  const handleAllAnswered = (score: number, total: number) => {
+  const handleAllAnswered = (score: number, total: number, answers: Record<string, number | string>) => {
     const result = readingEvidence(score, total, passCount);
-    onEvidence({ activityId: data.id, attempted: true, completed: true, ...result });
+    onEvidence(
+      { activityId: data.id, attempted: true, completed: true, ...result },
+      { activityId: data.id, answers }
+    );
   };
 
   return (
-    <div className="min-w-0 rounded-2xl border border-[#D9CBB0] bg-[#F6EFE4]/70 p-4 md:p-5 space-y-4">
+    <div className="min-w-0 rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 md:p-5 space-y-4">
       <div className="flex min-w-0 flex-wrap items-center gap-2">
-        <BookOpen className="w-4 h-4 text-[#7A1E2B]" />
-        <h3 className="min-w-0 flex-1 font-mono font-bold text-[#57121C] text-sm md:text-base [overflow-wrap:anywhere]">
+        <BookOpen className="w-4 h-4 text-[#116EEE]" />
+        <h3 className="min-w-0 flex-1 font-mono font-bold text-[#252B2F] text-sm md:text-base [overflow-wrap:anywhere]">
           {data.title ?? defaultTitle}
         </h3>
         {evidence?.completed && (
@@ -129,7 +133,7 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
       </div>
 
       {data.instructions && (
-        <p className="min-w-0 text-xs md:text-sm text-[#8A7A68] [overflow-wrap:anywhere]">
+        <p className="min-w-0 text-xs md:text-sm text-[#666E7E] [overflow-wrap:anywhere]">
           {data.instructions}
         </p>
       )}

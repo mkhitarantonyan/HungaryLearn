@@ -54,25 +54,25 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
   };
 
   return (
-    <div className="sticky top-0 z-30 bg-[#FBF7EF]/95 backdrop-blur border-b border-[#D9CBB0]">
-      <div className="max-w-4xl mx-auto px-4 md:px-8 py-2 flex items-center gap-2 md:gap-3">
+    <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#D6DEE6]">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-3 flex items-center gap-3 md:gap-4">
         {/* Play / Pause */}
         <button
           type="button"
           onClick={onPlayPause}
           aria-label={isPlaying ? 'Остановить пересказ слайда' : 'Пересказать слайд'}
-          className={`shrink-0 h-10 w-10 rounded-full flex items-center justify-center text-white transition-colors cursor-pointer ${
-            isPlaying ? 'bg-[#7A1E2B]' : 'bg-[#2C5F58] hover:bg-[#2C5F58]/90'
+          className={`shrink-0 h-11 w-11 rounded-full flex items-center justify-center text-white shadow-sm transition-all cursor-pointer ${
+            isPlaying ? 'bg-[#3B1E90]' : 'bg-[#116EEE] hover:bg-[#0D5ED0] hover:shadow-md'
           }`}
         >
           {isPlaying ? <Square className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current translate-x-px" />}
         </button>
 
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-[#57121C] truncate">
+          <div className="text-sm font-semibold text-[#252B2F] truncate">
             {isPlaying ? 'Пересказ слайда…' : 'Пересказ слайда'}
           </div>
-          <div className="text-[11px] text-[#8A7A68] truncate">{slideLabel}</div>
+          <div className="text-[11px] text-[#666E7E] truncate">{slideLabel}</div>
         </div>
 
         {/* Speed cycle */}
@@ -80,7 +80,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           type="button"
           onClick={cycleRate}
           aria-label={`Скорость воспроизведения: ${playbackRate}×`}
-          className="shrink-0 h-8 px-2 rounded-lg border border-[#D9CBB0] text-[#57121C] text-xs font-semibold hover:bg-[#F6EFE4] transition-colors cursor-pointer font-mono"
+          className="shrink-0 h-9 px-3 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] text-xs font-semibold hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] transition-colors cursor-pointer font-mono"
         >
           {playbackRate}×
         </button>
@@ -91,17 +91,17 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           onClick={onToggleAutoplay}
           aria-pressed={autoplayEnabled}
           aria-label="Автопересказ слайдов"
-          className={`shrink-0 h-8 px-2.5 rounded-lg border text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
+          className={`shrink-0 h-9 px-3 rounded-[10px] border text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
             autoplayEnabled
-              ? 'bg-[#7A1E2B] text-white border-[#7A1E2B]'
-              : 'border-[#D9CBB0] text-[#57121C] hover:bg-[#F6EFE4]'
+              ? 'bg-[#116EEE] text-white border-[#116EEE]'
+              : 'border-[#D6DEE6] text-[#252B2F] hover:bg-[#EDF4FB]'
           }`}
         >
           <RotateCw className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Авто</span>
           <span
             aria-hidden="true"
-            className={`w-1.5 h-1.5 rounded-full ${autoplayEnabled ? 'bg-white' : 'bg-[#D9CBB0]'}`}
+            className={`w-1.5 h-1.5 rounded-full ${autoplayEnabled ? 'bg-white' : 'bg-[#D6DEE6]'}`}
           />
         </button>
 
@@ -113,7 +113,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
             aria-haspopup="menu"
             aria-expanded={menuOpen}
             aria-label="Дополнительные настройки пересказа"
-            className="h-8 w-8 rounded-lg border border-[#D9CBB0] text-[#57121C] hover:bg-[#F6EFE4] transition-colors cursor-pointer flex items-center justify-center"
+            className="h-9 w-9 rounded-[10px] border border-[#D6DEE6] text-[#252B2F] hover:bg-[#EDF4FB] transition-colors cursor-pointer flex items-center justify-center"
           >
             <Settings2 className="w-4 h-4" />
           </button>
@@ -121,7 +121,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           {menuOpen && (
             <div
               role="menu"
-              className="absolute right-0 mt-1 w-56 rounded-xl border border-[#D9CBB0] bg-white shadow-lg py-1 z-40"
+              className="absolute right-0 mt-1 w-56 rounded-xl border border-[#D6DEE6] bg-white shadow-lg py-1 z-40"
             >
               <button
                   type="button"
@@ -130,9 +130,9 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
                     setMenuOpen(false);
                     onOpenAudioEditor();
                   }}
-                  className="w-full text-left px-3 py-2 text-sm text-[#2A2320] hover:bg-[#F6EFE4] cursor-pointer flex items-center gap-2"
+                  className="w-full text-left px-3 py-2 text-sm text-[#252B2F] hover:bg-[#EDF4FB] cursor-pointer flex items-center gap-2"
                 >
-                  <Mic className="w-4 h-4 text-[#2C5F58]" />
+                  <Mic className="w-4 h-4 text-[#3B1E90]" />
                   Изменить аудио слайда
               </button>
             </div>
@@ -141,14 +141,14 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
       </div>
 
       {needsUserGesture && (
-        <div className="max-w-4xl mx-auto px-4 md:px-8 pb-2">
-          <p className="text-[11px] text-[#B98A2B] font-medium" role="status">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
+          <p className="text-[11px] text-[#C77B00] font-medium" role="status">
             Нажмите ▶ один раз, чтобы разрешить автопересказ.
           </p>
         </div>
       )}
       {audioUnavailable && (
-        <div className="max-w-4xl mx-auto px-4 md:px-8 pb-2">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
           <p className="text-[11px] text-red-700 font-medium" role="alert">
             Записанное аудио для этого слайда недоступно.
           </p>

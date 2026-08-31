@@ -1,4 +1,5 @@
 import { Lesson, LessonActivity } from '../../types';
+import { P1_L5_PRACTICE, P1_L5_READING, P1_L5_ROLEPLAY, P1_L5_SPEAKING, P1_L5_WRITING } from './p1FoundationActivities';
 
 export const L5_LISTENING_TRANSCRIPT = `Négy. Tizenhárom. Húsz. Huszonkettő. Harmincnyolc. Negyvenhét. Ötvenhat. Hatvankilenc. Nyolcvannégy. Száz.
 
@@ -293,7 +294,7 @@ export const LESSON_5: Lesson = {
         <p>Венгерская письменная дата следует порядку <b>год → месяц → день</b>: <span class="hu-word">2026. augusztus 3.</span></p>
         <p>При произнесении день месяца обычно получает порядковую форму. Здесь запомни один опорный chunk: <span class="hu-word">kétezer-huszonhat augusztus harmadika</span>. В этом уроке полную систему порядковых числительных не изучаем. Для даты пока используй этот готовый образец.</p>
       `,
-      activities: [L5_READING_SCHEDULE],
+      activities: [P1_L5_READING, L5_READING_SCHEDULE],
     },
     {
       id: 7,
@@ -312,7 +313,7 @@ export const LESSON_5: Lesson = {
       eyebrow: 'УРОК 5 · 8/12 · АУДИРОВАНИЕ A',
       title: 'Hallás utáni számok',
       subtitle: 'Десять услышанных чисел',
-      body: '<p>Прослушай блок A и введи каждое число по-венгерски. Задание станет доступно после публикации отдельной записи.</p>',
+      body: '<p>Прослушай опубликованный блок A и введи каждое услышанное число по-венгерски.</p>',
       activities: [L5_LISTENING_NUMBER_DICTATION],
     },
     {
@@ -328,8 +329,8 @@ export const LESSON_5: Lesson = {
       eyebrow: 'УРОК 5 · 10/12 · ГОВОРЕНИЕ',
       title: 'Rövid időpont-egyeztetés',
       subtitle: 'Числа, время и два обмена о встрече',
-      body: '<p>Запиши короткие образцы, затем прослушай их и сравни с моделями урока.</p>',
-      activities: [L5_ROLEPLAY_SCHEDULE],
+      body: '<p>Сформулируй короткие текстовые реплики и сравни их с моделями урока. Микрофон и запись не используются.</p>',
+      activities: [P1_L5_ROLEPLAY, L5_ROLEPLAY_SCHEDULE],
     },
     {
       id: 11,
@@ -339,7 +340,8 @@ export const LESSON_5: Lesson = {
       body: `
         <p><span class="hu-word">perc</span> — минута; <span class="hu-word">másodperc</span> — секунда. Фраза <span class="hu-word">egy perc</span> может значить «одну минуту / один момент», но <span class="hu-word">perc</span> не означает «секунда».</p>
       `,
-      activities: [L5_WRITING_SCHEDULE],
+      activities: [P1_L5_PRACTICE, P1_L5_WRITING, L5_WRITING_SCHEDULE],
+      optionalSpeaking: P1_L5_SPEAKING,
     },
     {
       id: 12,

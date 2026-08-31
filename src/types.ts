@@ -159,6 +159,18 @@ export interface ActivityEvidence {
   selfReviewed?: boolean;
 }
 
+/** Raw learner responses sent to the authenticated server for canonical rescoring. */
+export interface ActivityAttempt {
+  activityId: string;
+  answers: Record<string, number | string>;
+  audioPlayable?: boolean;
+}
+
+export interface QuizAttempt {
+  lessonNumber: number;
+  answers: number[];
+}
+
 export interface OptionalSpeakingPracticeData {
   title: string;
   instructions: string;

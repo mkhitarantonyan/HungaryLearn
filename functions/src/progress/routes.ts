@@ -3,8 +3,19 @@ import { FieldValue } from 'firebase-admin/firestore';
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js';
 import { firestore } from '../firebase/admin.js';
 import { getProgress } from '../firestore/repositories.js';
-import { mergeProgressState, replaceReviewCard, type ProgressState } from './model.js';
+import {
+  mergeProgressState,
+  replaceReviewCard,
+  sanitizePassedQuizzes,
+  type ProgressState,
+} from './model.js';
 import { asyncHandler } from '../http/asyncHandler.js';
+import { LESSON_PROGRESS_DEFINITIONS } from '../../../src/data/lessonProgressCatalog.ts';
+import {
+  sanitizeActivityEvidence,
+} from '../../../src/utils/lessonProgress.ts';
+import { validActivityEvidence } from './validation.js';
+import { gradeActivityAttempt, gradeQuizAttempt } from './grading.js';
 
 type Grade = 'again' | 'hard' | 'good' | 'easy';
 
@@ -31,7 +42,14 @@ function gradeCard(cardId: string, lessonNumber: number, previous: Record<string
 export const progressRouter = Router();
 
 progressRouter.get('/api/user/progress', requireAuth, asyncHandler<AuthenticatedRequest>(async (req, res) => {
-  res.json({ success: true, progress: await getProgress(req.auth!.uid) });
+  const progress = await getProgress(req.auth!.uid);
+  res.json({
+    success: true,
+    progress: {
+      ...progress,
+      activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, progress.activityEvidence),
+    },
+  });
 }));
 
 progressRouter.post('/api/user/progress', requireAuth, asyncHandler<AuthenticatedRequest>(async (req, res) => {
@@ -40,11 +58,31 @@ progressRouter.post('/api/user/progress', requireAuth, asyncHandler<Authenticate
     res.status(400).json({ success: false, message: 'Некорректный список слайдов' });
     return;
   }
-  const quiz = req.body?.quiz as { lessonNumber?: unknown; score?: unknown; total?: unknown } | undefined;
-  if (quiz && (!Number.isInteger(quiz.lessonNumber) || !Number.isInteger(quiz.score) || !Number.isInteger(quiz.total)
-    || Number(quiz.lessonNumber) < 1 || Number(quiz.lessonNumber) > 28 || Number(quiz.total) < 1
-    || Number(quiz.score) < 0 || Number(quiz.score) > Number(quiz.total))) {
+  if (req.body?.passedQuizzes !== undefined) {
+    res.status(400).json({ success: false, message: 'Пройденные тесты принимаются только как проверенный quiz attempt' });
+    return;
+  }
+  if (req.body?.quiz !== undefined) {
+    res.status(400).json({ success: false, message: 'Quiz score не принимается без ответов' });
+    return;
+  }
+  const activityEvidence = req.body?.activityEvidence === undefined
+    ? undefined
+    : validActivityEvidence(req.body.activityEvidence);
+  if (req.body?.activityEvidence !== undefined && !activityEvidence) {
+    res.status(400).json({ success: false, message: 'Некорректные результаты активностей' });
+    return;
+  }
+  const quiz = req.body?.quizAttempt === undefined ? undefined : await gradeQuizAttempt(req.body.quizAttempt);
+  if (req.body?.quizAttempt !== undefined && !quiz) {
     res.status(400).json({ success: false, message: 'Некорректный результат теста' });
+    return;
+  }
+  const directEvidence = req.body?.activityAttempt === undefined
+    ? undefined
+    : await gradeActivityAttempt(req.body.activityAttempt);
+  if (req.body?.activityAttempt !== undefined && !directEvidence) {
+    res.status(400).json({ success: false, message: 'Некорректная попытка activity' });
     return;
   }
   const ref = firestore.collection('progress').doc(req.auth!.uid);
@@ -53,20 +91,27 @@ progressRouter.post('/api/user/progress', requireAuth, asyncHandler<Authenticate
     const existing = snapshot.data() || {};
     const current: ProgressState = {
       viewedSlides: Array.isArray(existing.viewedSlides) ? existing.viewedSlides : [],
-      passedQuizzes: Array.isArray(existing.passedQuizzes) ? existing.passedQuizzes : [],
+      passedQuizzes: sanitizePassedQuizzes(existing.passedQuizzes),
+      activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, existing.activityEvidence),
       reviewCards: existing.reviewCards && typeof existing.reviewCards === 'object' ? existing.reviewCards : {},
       ...(typeof existing.customNotes === 'string' ? { customNotes: existing.customNotes } : {}),
     };
     const merged = mergeProgressState(current, {
       ...(viewedSlides ? { viewedSlides } : {}),
-      ...(quiz ? { quiz: { lessonNumber: Number(quiz.lessonNumber), score: Number(quiz.score), total: Number(quiz.total) } } : {}),
+      ...(quiz ? { quiz } : {}),
+      ...((activityEvidence || directEvidence) ? {
+        activityEvidence: {
+          ...(activityEvidence ?? {}),
+          ...(directEvidence ? { [directEvidence.activityId]: directEvidence } : {}),
+        },
+      } : {}),
     });
     transaction.set(ref, {
       ...merged,
       updatedAt: FieldValue.serverTimestamp(),
     }, { merge: true });
   });
-  res.json({ success: true });
+  res.json({ success: true, ...(directEvidence ? { evidence: directEvidence } : {}) });
 }));
 
 progressRouter.post('/api/user/review/grade', requireAuth, asyncHandler<AuthenticatedRequest>(async (req, res) => {
@@ -84,7 +129,8 @@ progressRouter.post('/api/user/review/grade', requireAuth, asyncHandler<Authenti
     const data = snapshot.data() || {};
     const current: ProgressState = {
       viewedSlides: Array.isArray(data.viewedSlides) ? data.viewedSlides : [],
-      passedQuizzes: Array.isArray(data.passedQuizzes) ? data.passedQuizzes : [],
+      passedQuizzes: sanitizePassedQuizzes(data.passedQuizzes),
+      activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, data.activityEvidence),
       reviewCards: data.reviewCards && typeof data.reviewCards === 'object' ? data.reviewCards : {},
       ...(typeof data.customNotes === 'string' ? { customNotes: data.customNotes } : {}),
     };

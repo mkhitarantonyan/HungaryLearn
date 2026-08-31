@@ -15,9 +15,9 @@ interface QuestionSetProps {
   submitLabel?: string;
   allowRetry?: boolean;
   /** Fired each time all questions are answered, with the current score. */
-  onAllAnswered?: (score: number, total: number) => void;
+  onAllAnswered?: (score: number, total: number, answers: Record<string, number | string>) => void;
   /** Fired when the optional submit button is pressed. */
-  onSubmit?: (score: number, total: number) => void;
+  onSubmit?: (score: number, total: number, answers: Record<string, number | string>) => void;
   /** Fired when the user starts a retry (parent should reset activity evidence). */
   onRetry?: () => void;
 }
@@ -48,7 +48,7 @@ export const QuestionFeedback: React.FC<QuestionFeedbackProps> = ({
   return (
     <div
       id={feedbackId}
-      className="pl-8 text-xs text-[#2A2320]"
+      className="pl-8 text-xs text-[#252B2F]"
       role="status"
       aria-live="polite"
     >
@@ -60,7 +60,7 @@ export const QuestionFeedback: React.FC<QuestionFeedbackProps> = ({
         </span>
       )}
       {question.explanation && (
-        <span className="text-[#8A7A68]"> {question.explanation}</span>
+        <span className="text-[#666E7E]"> {question.explanation}</span>
       )}
     </div>
   );
@@ -80,7 +80,7 @@ export const TextInputQuestionFeedback: React.FC<TextInputQuestionFeedbackProps>
 }) => {
   const isCorrect = isListeningQuestionAnswerCorrect(question, answer);
   return (
-    <div id={feedbackId} className="text-xs text-[#2A2320]" role="status" aria-live="polite">
+    <div id={feedbackId} className="text-xs text-[#252B2F]" role="status" aria-live="polite">
       {isCorrect ? (
         <span className="text-emerald-700 font-semibold">Верно.</span>
       ) : (
@@ -89,7 +89,7 @@ export const TextInputQuestionFeedback: React.FC<TextInputQuestionFeedbackProps>
         </span>
       )}
       {question.explanation && (
-        <span className="text-[#8A7A68]"> {question.explanation}</span>
+        <span className="text-[#666E7E]"> {question.explanation}</span>
       )}
     </div>
   );
@@ -133,7 +133,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
 
   React.useEffect(() => {
     if (allAnswered && !submitted && onAllAnswered) {
-      onAllAnswered(score, questions.length);
+      onAllAnswered(score, questions.length, selected);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allAnswered, submitted]);
@@ -141,7 +141,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
   const handleSubmit = () => {
     if (!allAnswered) return;
     setSubmitted(true);
-    onSubmit?.(score, questions.length);
+    onSubmit?.(score, questions.length, selected);
   };
 
   const handleRetry = () => {
@@ -162,14 +162,14 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
         return (
           <div
             key={q.id}
-            className="rounded-xl border border-[#D9CBB0] bg-white p-4 space-y-3"
+            className="rounded-xl border border-[#D6DEE6] bg-white p-4 space-y-3"
             aria-labelledby={promptId}
           >
             <div className="flex items-start gap-2">
-              <span className="shrink-0 w-6 h-6 rounded-full bg-[#7A1E2B]/10 text-[#7A1E2B] font-mono text-xs font-bold flex items-center justify-center">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-[#116EEE]/10 text-[#116EEE] font-mono text-xs font-bold flex items-center justify-center">
                 {qi + 1}
               </span>
-              <p id={promptId} className="min-w-0 text-sm md:text-base font-semibold text-[#2A2320] leading-snug [overflow-wrap:anywhere]">
+              <p id={promptId} className="min-w-0 text-sm md:text-base font-semibold text-[#252B2F] leading-snug [overflow-wrap:anywhere]">
                 {q.question}
               </p>
             </div>
@@ -194,14 +194,14 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
                     aria-describedby={isAnswered ? feedbackId : undefined}
                     autoComplete="off"
                     spellCheck={false}
-                    className="w-full min-w-0 flex-1 rounded-lg border border-[#D9CBB0] bg-white px-3 py-2 text-sm text-[#2A2320] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 disabled:opacity-70"
+                    className="w-full min-w-0 flex-1 rounded-lg border border-[#D6DEE6] bg-white px-3 py-2 text-sm text-[#252B2F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:opacity-70"
                   />
                   <button
                     type="button"
                     onClick={() => handleTextCheck(q)}
                     disabled={isAnswered}
                     aria-describedby={promptId}
-                    className="w-full shrink-0 rounded-lg bg-[#7A1E2B] px-4 py-2 text-xs font-semibold text-white hover:bg-[#57121C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+                    className="w-full shrink-0 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
                   >
                     Проверить
                   </button>
@@ -214,7 +214,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
               <div className="space-y-2 pl-8">
               {q.options.map((option, idx) => {
                 const chosen = typeof answer === 'number' ? answer : undefined;
-                let style = 'bg-white border-[#D9CBB0] text-[#2A2320] hover:border-[#7A1E2B]/50';
+                let style = 'bg-white border-[#D6DEE6] text-[#252B2F] hover:border-[#116EEE]/50';
                 if (isAnswered) {
                   if (idx === q.correctIndex) style = 'bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold';
                   else if (idx === chosen) style = 'bg-red-50 border-red-400 text-red-800';
@@ -228,7 +228,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
                     disabled={isAnswered}
                     aria-label={option}
                     aria-describedby={getQuestionOptionFeedbackId(chosen, idx, feedbackId)}
-                    className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2 ${style}`}
+                    className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 ${style}`}
                   >
                     <span className="min-w-0 break-words">{option}</span>
                     {isAnswered && idx === q.correctIndex && (
@@ -252,14 +252,14 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
 
       {allAnswered && !submitted && (
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          <span className="text-xs font-mono font-bold text-[#57121C]">
+          <span className="text-xs font-mono font-bold text-[#252B2F]">
             {score} / {questions.length}
           </span>
           {allowRetry && (
             <button
               type="button"
               onClick={handleRetry}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#7A1E2B] text-[#7A1E2B] text-xs font-semibold hover:bg-[#7A1E2B]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
               <span>Пройти заново</span>
@@ -269,7 +269,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
             <button
               type="button"
               onClick={handleSubmit}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#7A1E2B] text-white text-xs font-semibold hover:bg-[#57121C] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
               <span>{submitLabel ?? 'Завершить'}</span>
               <ArrowRight aria-hidden="true" className="w-4 h-4" />
@@ -287,7 +287,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
             <button
               type="button"
               onClick={handleRetry}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#7A1E2B] text-[#7A1E2B] text-xs font-semibold hover:bg-[#7A1E2B]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A1E2B]/50 focus-visible:ring-offset-2"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
               <span>Пройти заново</span>

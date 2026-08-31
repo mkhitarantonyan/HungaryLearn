@@ -47,7 +47,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </span>
         <div className="leading-none">
           <div className="font-bold text-gray-900 tracking-tight text-sm">
-            Magyar<span className="text-indigo-600">Kurzus</span>
+            Magyar<span className="text-indigo-600">o</span>
           </div>
           <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mt-1">
             Admin Panel
@@ -105,7 +105,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       {/* Admin badge */}
-      <div className="m-3 p-3.5 rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white">
+      <div className="m-3 p-3.5 rounded-xl bg-indigo-800 text-white">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4" />
           <span className="text-xs font-bold">Полные права</span>
@@ -145,7 +145,7 @@ export default function AdminLayout() {
               className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm"
               onClick={() => setSidebarOpen(false)}
             />
-            <aside className="absolute left-0 top-0 h-full w-72 bg-white shadow-2xl">
+            <aside className="absolute left-0 top-0 h-full w-72 bg-white shadow-[0_18px_48px_rgba(29,45,65,0.18)]">
               <SidebarContent onNavigate={() => setSidebarOpen(false)} />
             </aside>
           </div>

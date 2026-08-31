@@ -1,5 +1,146 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", "Avenir Next", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --color-canvas-mist: #f2f7fd;
+  --color-paper-white: #ffffff;
+  --color-steel-border: #d6dee6;
+  --color-charcoal: #252b2f;
+  --color-slate-caption: #666e7e;
+  --color-signal-blue: #116eee;
+  --color-deep-indigo: #3b1e90;
+
+  --color-gray-50: #f6f9fd;
+  --color-gray-100: #edf2f7;
+  --color-gray-200: #dce4ed;
+  --color-gray-300: #c8d2de;
+  --color-gray-400: #8d99a8;
+  --color-gray-500: #667386;
+  --color-gray-600: #4d5a6d;
+  --color-gray-700: #354256;
+  --color-gray-800: #252f3d;
+  --color-gray-900: #182230;
+
+  --color-indigo-50: #edf4ff;
+  --color-indigo-100: #dceaff;
+  --color-indigo-200: #bdd6ff;
+  --color-indigo-300: #91bbff;
+  --color-indigo-400: #5b96fa;
+  --color-indigo-500: #2f7ff2;
+  --color-indigo-600: #116eee;
+  --color-indigo-700: #0d5ed0;
+  --color-indigo-800: #29418f;
+  --color-indigo-900: #252b5e;
+}
+
+:root {
+  color-scheme: light;
+  font-family: var(--font-sans);
+  color: #252b2f;
+  background: #f2f7fd;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --ui-canvas: #f2f7fd;
+  --ui-surface: #ffffff;
+  --ui-surface-soft: #edf4fb;
+  --ui-surface-selected: #edf4ff;
+  --ui-text: #252b2f;
+  --ui-text-muted: #666e7e;
+  --ui-border: #d6dee6;
+  --ui-border-strong: #bdc9d6;
+  --ui-primary: #116eee;
+  --ui-primary-hover: #0d5ed0;
+  --ui-primary-soft: #edf4ff;
+  --ui-secondary: #3b1e90;
+  --ui-success: #13795b;
+  --ui-warning: #a86400;
+  --ui-danger: #c23b4a;
+  --ui-shadow-subtle: 0 1px 2px rgba(18, 38, 63, 0.1);
+  --ui-shadow-overlay: 0 18px 48px rgba(18, 38, 63, 0.16);
+  --ui-radius-control: 10px;
+  --ui-radius-card: 16px;
+  --ui-radius-pill: 9999px;
+  --ui-page-width: 1200px;
+}
+
+html {
+  min-width: 320px;
+  background: var(--ui-canvas);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--ui-canvas);
+  color: var(--ui-text);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(17, 110, 238, 0.34);
+  outline-offset: 2px;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8d99a8;
+  opacity: 1;
+}
+
+audio {
+  width: 100%;
+  accent-color: var(--ui-primary);
+}
+
+::selection {
+  background: rgba(17, 110, 238, 0.2);
+  color: #182230;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Floating badge animation for the landing hero mockup */
 @keyframes float {
   0%, 100% {
@@ -21,10 +162,10 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.2rem 0.6rem;
-    background-color: rgba(122, 30, 43, 0.08);
-    border: 1px solid rgba(122, 30, 43, 0.25);
-    color: #7A1E2B;
-    border-radius: 0.375rem;
+    background-color: rgba(17, 110, 238, 0.08);
+    border: 1px solid rgba(17, 110, 238, 0.24);
+    color: #116EEE;
+    border-radius: 0.625rem;
     font-weight: 700;
     font-family: monospace;
     font-size: 0.875rem;
@@ -33,7 +174,7 @@
   }
 
   .speak-btn:hover {
-    background-color: #7A1E2B;
+    background-color: #116EEE;
     color: #ffffff;
   }
 
@@ -47,7 +188,7 @@
   .hu-word {
     font-family: monospace;
     font-weight: 700;
-    color: #7A1E2B;
+    color: #116EEE;
   }
 
   /* Conjugation Tables */
@@ -57,26 +198,26 @@
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
     background-color: #ffffff;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     overflow: hidden;
-    border: 1px solid #D9CBB0;
+    border: 1px solid #D6DEE6;
     font-size: 0.85rem;
   }
 
   table.conj th {
-    background-color: #F6EFE4;
-    color: #57121C;
+    background-color: #EDF4FB;
+    color: #252B2F;
     font-weight: 700;
     text-align: left;
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid #D9CBB0;
+    border-bottom: 1px solid #D6DEE6;
     font-family: monospace;
   }
 
   table.conj td {
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid rgba(217, 203, 176, 0.5);
-    color: #2A2320;
+    border-bottom: 1px solid rgba(214, 222, 230, 0.72);
+    color: #252B2F;
   }
 
   table.conj tr:last-child td {
@@ -105,7 +246,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    color: #2C5F58;
+    color: #13795b;
     font-weight: 900;
   }
 
@@ -138,32 +279,32 @@
 
   /* Notes & Tasks */
   .note {
-    background-color: rgba(44, 95, 88, 0.1);
-    border-left: 4px solid #2C5F58;
+    background-color: rgba(17, 110, 238, 0.08);
+    border-left: 4px solid #116eee;
     padding: 0.75rem 1rem;
     border-radius: 0 0.5rem 0.5rem 0;
     font-size: 0.85rem;
-    color: #1B4540;
+    color: #294d7d;
     margin-top: 0.75rem;
   }
 
   .warn {
-    background-color: rgba(194, 75, 58, 0.1);
-    border-left: 4px solid #C24B3A;
+    background-color: rgba(194, 59, 74, 0.08);
+    border-left: 4px solid #C23B4A;
     padding: 0.75rem 1rem;
     border-radius: 0 0.5rem 0.5rem 0;
     font-size: 0.85rem;
-    color: #8C291B;
+    color: #9F2638;
     margin-top: 0.75rem;
   }
 
   .task {
-    background-color: rgba(185, 138, 43, 0.15);
-    border-left: 4px solid #B98A2B;
+    background-color: rgba(199, 123, 0, 0.09);
+    border-left: 4px solid #C77B00;
     padding: 0.75rem 1rem;
     border-radius: 0 0.5rem 0.5rem 0;
     font-size: 0.85rem;
-    color: #57121C;
+    color: #252B2F;
     font-weight: 600;
     margin-top: 0.75rem;
   }

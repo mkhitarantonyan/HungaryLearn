@@ -10,6 +10,7 @@ interface HeaderProps {
   lessonTitle: string;
   currentSlide: number;
   totalSlides: number;
+  lessonProgress: { percentage: number; completedUnitCount: number; totalUnitCount: number };
   onOpenDrawer: () => void;
   onOpenAdmin: () => void;
   onOpenUserModal?: () => void;
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   lessonTitle,
   currentSlide,
   totalSlides,
+  lessonProgress,
   onOpenDrawer,
   onOpenAdmin,
   onOpenUserModal,
@@ -46,23 +48,23 @@ export const Header: React.FC<HeaderProps> = ({
   const conceptTitle = lessonTitle.replace(/^Урок\s+\d+\s*·\s*/i, '').trim() || lessonTitle;
 
   return (
-    <header className="border-b border-[#D9CBB0] bg-[#FBF7EF] px-4 md:px-8 py-3">
-      <div className="max-w-4xl mx-auto">
+    <header className="border-b border-[#D6DEE6] bg-white px-4 md:px-8 py-3.5">
+      <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToLessons}
             aria-label="Вернуться ко всем урокам"
-            className="shrink-0 h-9 w-9 rounded-lg border border-[#D9CBB0] bg-white text-[#7A1E2B] hover:bg-[#7A1E2B] hover:text-white transition-colors cursor-pointer flex items-center justify-center"
+            className="shrink-0 h-10 w-10 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/40 hover:bg-[#EDF4FB] hover:text-[#116EEE] transition-colors cursor-pointer flex items-center justify-center"
             title="Все уроки"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
 
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#8A7A68]">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
               {lessonLevel} · Урок {lessonNumber}
             </div>
-            <h1 className="text-sm md:text-base font-bold text-[#57121C] truncate leading-snug">
+            <h1 className="text-sm md:text-base font-bold text-[#252B2F] truncate leading-snug">
               {conceptTitle}
             </h1>
           </div>
@@ -72,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={onOpenAdmin}
                 aria-label="Администратор"
-                className="h-9 w-9 rounded-lg bg-[#2C5F58] text-white cursor-pointer flex items-center justify-center"
+                className="h-10 w-10 rounded-[10px] bg-[#3B1E90] text-white cursor-pointer flex items-center justify-center shadow-sm"
                 title="Администратор"
               >
                 <ShieldCheck className="w-4 h-4" />
@@ -82,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenDrawer}
               aria-label="Содержание урока"
-              className="h-9 px-2.5 rounded-lg border border-[#D9CBB0] text-[#57121C] hover:bg-[#F6EFE4] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+              className="h-10 px-3 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
               title="Этапы урока"
             >
               <ListOrdered className="w-4 h-4" />
@@ -93,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={onOpenUserModal}
                 aria-label={user ? 'Личный кабинет' : 'Вход или регистрация'}
-                className="h-9 w-9 rounded-lg border border-[#D9CBB0] text-[#7A1E2B] hover:bg-[#F6EFE4] transition-colors cursor-pointer flex items-center justify-center"
+                className="h-10 w-10 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] hover:text-[#116EEE] transition-colors cursor-pointer flex items-center justify-center"
                 title={user ? `Личный кабинет: ${user.email}` : 'Войти или зарегистрироваться'}
               >
                 <User className="w-4 h-4" />
@@ -103,7 +105,13 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="mt-2.5">
-          <LessonProgress current={currentSlide} total={totalSlides} />
+          <LessonProgress
+            current={currentSlide}
+            total={totalSlides}
+            percentage={lessonProgress.percentage}
+            completedUnits={lessonProgress.completedUnitCount}
+            totalUnits={lessonProgress.totalUnitCount}
+          />
         </div>
       </div>
     </header>

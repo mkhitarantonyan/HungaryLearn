@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, type Variants } from 'motion/react';
 import { LESSONS_META, LessonLoadError, loadLesson } from './data/lessons';
-import { Lesson, ReviewCardState, ActivityEvidence, ActivityRuntimeState } from './types';
+import { LESSON_PROGRESS_DEFINITIONS } from './data/lessonProgressCatalog';
+import { Lesson, ReviewCardState, ActivityAttempt, ActivityEvidence, ActivityRuntimeState } from './types';
 import { LessonList } from './components/LessonList';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
@@ -19,10 +20,12 @@ import { PracticeMenu } from './components/PracticeMenu';
 import { useLessonNarration } from './hooks/useLessonNarration';
 import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
-import { isLessonAccessible, getCurrentUser, isUserAuthReady, logoutUserServer, subscribeUserAuthReady } from './utils/userStore';
+import { emptyProgressData, isLessonAccessible, getCurrentUser, isUserAuthReady, logoutUserServer, mergeProgressData, readCachedProgress, writeCachedProgress, subscribeUserAuthReady } from './utils/userStore';
 import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
-import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizResultToServer } from './utils/userStore';
+import { getLessonProgressState } from './utils/lessonProgress';
+import { beginProgressHydration, isCurrentProgressHydration, mergeActivityEvidence } from './utils/progressMerge';
+import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizAttemptToServer, syncActivityAttemptToServer, syncActivityEvidenceToServer } from './utils/userStore';
 import { AlertCircle, Loader2 } from 'lucide-react';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
@@ -41,6 +44,7 @@ function buildViewedSlideId(lessonNumber: number, slideId: number): string {
 }
 
 export default function App() {
+  const initialProgress = useMemo(() => readCachedProgress(getCurrentUser()?.id ?? null), []);
   const [viewMode, setViewMode] = useState<'list' | 'lesson'>('list');
   const [selectedLessonId, setSelectedLessonId] = useState<number>(1);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
@@ -60,14 +64,18 @@ export default function App() {
 
   const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
 
-  const [viewedSlideIds, setViewedSlideIds] = useState<string[]>([]);
-  const [passedQuizzes, setPassedQuizzes] = useState<number[]>([]);
-  const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>({});
-  const [activityEvidence, setActivityEvidence] = useState<Record<string, ActivityEvidence>>({});
+  const [viewedSlideIds, setViewedSlideIds] = useState<string[]>(initialProgress.viewedSlides);
+  const [passedQuizzes, setPassedQuizzes] = useState<number[]>(initialProgress.passedQuizzes ?? []);
+  const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>(initialProgress.reviewCards ?? {});
+  const [activityEvidence, setActivityEvidence] = useState<Record<string, ActivityEvidence>>(initialProgress.activityEvidence ?? {});
+  const [activityAttempts, setActivityAttempts] = useState<Record<string, ActivityAttempt>>(initialProgress.activityAttempts ?? {});
+  const [quizAttempts, setQuizAttempts] = useState(initialProgress.quizAttempts ?? {});
   const [activityRuntime, setActivityRuntime] = useState<Record<string, ActivityRuntimeState>>({});
   const [showWarmup, setShowWarmup] = useState(false);
   const [isProgressHydrated, setIsProgressHydrated] = useState(() => !getCurrentUser());
+  const [progressOwnerId, setProgressOwnerId] = useState<string | null>(() => getCurrentUser()?.id ?? null);
   const [authReady, setAuthReady] = useState(isUserAuthReady());
+  const progressHydrationRevision = useRef(0);
 
   const visitedLessonNumbers = useMemo(
     () => extractVisitedLessonNumbers(viewedSlideIds),
@@ -80,6 +88,15 @@ export default function App() {
 
   const slides = useMemo(() => activeLesson?.slides ?? [], [activeLesson]);
   const currentSlide = slides[currentSlideIndex] ?? slides[0];
+  const activeLessonProgress = useMemo(() => {
+    const definition = LESSON_PROGRESS_DEFINITIONS.find((item) => item.lessonNumber === activeLesson?.number)
+      ?? { lessonNumber: activeLesson?.number ?? 0, quizRequired: true, units: [] };
+    return getLessonProgressState({
+      definition,
+      evidence: activityEvidence,
+      quizPassed: activeLesson ? passedQuizzes.includes(activeLesson.number) : false,
+    });
+  }, [activeLesson, activityEvidence, passedQuizzes]);
   const narration = useLessonNarration(activeLesson?.number, currentSlide);
   const { play: playSlide, stop: stopNarration, autoplayEnabled } = narration;
 
@@ -121,25 +138,71 @@ export default function App() {
 
 useEffect(() => {
   const unsubscribeUser = subscribeUserState((user) => {
+    const hydrationRevision = beginProgressHydration(progressHydrationRevision);
+    setIsProgressHydrated(false);
+    setProgressOwnerId(user?.id ?? null);
     if (!user) {
+      const cached = readCachedProgress(null);
+      setViewedSlideIds(cached.viewedSlides);
+      setPassedQuizzes(cached.passedQuizzes ?? []);
+      setActivityEvidence(cached.activityEvidence ?? {});
+      setActivityAttempts(cached.activityAttempts ?? {});
+      setQuizAttempts(cached.quizAttempts ?? {});
+      setReviewCardStates(cached.reviewCards ?? {});
       setIsProgressHydrated(true);
       return;
     }
     fetchUserProgress().then((data) => {
-      if (!data) {
-        setIsProgressHydrated(true);
-        return;
+      if (!isCurrentProgressHydration(progressHydrationRevision, hydrationRevision)) return;
+      const anonymous = readCachedProgress(null);
+      const cached = readCachedProgress(user.id);
+      const server = data ?? emptyProgressData();
+      const merged = mergeProgressData(anonymous, cached, server);
+      const mergedViewed = merged.viewedSlides;
+      const mergedPassed = merged.passedQuizzes ?? [];
+      const mergedEvidence = merged.activityEvidence ?? {};
+      const mergedReviewCards = merged.reviewCards ?? {};
+      const mergedActivityAttempts = merged.activityAttempts ?? {};
+      const mergedQuizAttempts = merged.quizAttempts ?? {};
+      writeCachedProgress(user.id, merged);
+      writeCachedProgress(null, emptyProgressData());
+      setViewedSlideIds(mergedViewed);
+      setPassedQuizzes(mergedPassed);
+      setActivityEvidence(mergedEvidence);
+      setReviewCardStates(mergedReviewCards);
+      setActivityAttempts(mergedActivityAttempts);
+      setQuizAttempts(mergedQuizAttempts);
+      void syncProgressToServer(mergedViewed);
+      const partialEvidence = Object.fromEntries(
+        Object.entries(mergedEvidence).filter(([, item]) => item.evidenceMode === 'partial')
+      );
+      if (Object.keys(partialEvidence).length > 0) void syncActivityEvidenceToServer(partialEvidence);
+      for (const attempt of Object.values(mergedActivityAttempts)) {
+        void syncActivityAttemptToServer(attempt).then((canonical) => {
+          if (canonical) setActivityEvidence((current) => mergeActivityEvidence(current, { [canonical.activityId]: canonical }));
+        });
       }
-      setViewedSlideIds(Array.isArray(data.viewedSlides) ? data.viewedSlides : []);
-      setPassedQuizzes(Array.isArray(data.passedQuizzes) ? data.passedQuizzes : []);
-      if (data.reviewCards) {
-        setReviewCardStates(data.reviewCards);
-      }
+      for (const attempt of Object.values(mergedQuizAttempts)) void syncQuizAttemptToServer(attempt);
       setIsProgressHydrated(true);
     });
   });
-  return () => unsubscribeUser();
+  return () => {
+    progressHydrationRevision.current += 1;
+    unsubscribeUser();
+  };
 }, []);
+
+useEffect(() => {
+  if (!isProgressHydrated) return;
+  writeCachedProgress(progressOwnerId, {
+    viewedSlides: viewedSlideIds,
+    passedQuizzes,
+    activityEvidence,
+    reviewCards: reviewCardStates,
+    activityAttempts,
+    quizAttempts,
+  });
+}, [progressOwnerId, viewedSlideIds, passedQuizzes, activityEvidence, reviewCardStates, activityAttempts, quizAttempts, isProgressHydrated]);
 
 useEffect(() => {
   if (viewMode !== 'lesson') {
@@ -197,7 +260,6 @@ useEffect(() => {
     setSelectedLessonId(lessonId);
     setCurrentSlideIndex(0);
     setIsQuizActive(false);
-    setActivityEvidence({});
     setActivityRuntime({});
     setLessonLoadError(null);
     setViewMode('lesson');
@@ -209,7 +271,26 @@ const handleCardGraded = (cardId: string, grade: 'again' | 'hard' | 'good' | 'ea
 };
 
   const handleResetActivityEvidence = (activityId: string) => {
-    setActivityEvidence((prev) => clearActivityEvidence(prev, activityId));
+    setActivityEvidence((prev) => {
+      const current = prev[activityId];
+      if (current?.passed || (current?.completed && current.evidenceMode === 'partial')) return prev;
+      return clearActivityEvidence(prev, activityId);
+    });
+  };
+
+  const handleActivityEvidence = (evidence: ActivityEvidence, attempt?: ActivityAttempt) => {
+    if (isAdmin) return;
+    setActivityEvidence((prev) => mergeActivityEvidence(prev, { [evidence.activityId]: evidence }));
+    if (attempt) {
+      setActivityAttempts((current) => ({ ...current, [attempt.activityId]: attempt }));
+      void syncActivityAttemptToServer(attempt).then((canonical) => {
+        if (canonical) {
+          setActivityEvidence((current) => mergeActivityEvidence(current, { [canonical.activityId]: canonical }));
+        }
+      });
+    } else if (evidence.evidenceMode === 'partial') {
+      void syncActivityEvidenceToServer({ [evidence.activityId]: evidence });
+    }
   };
 
   const handleActivityRuntimeChange = (activityId: string, patch: Partial<ActivityRuntimeState>) => {
@@ -422,10 +503,10 @@ useEffect(() => {
 
   if (!authReady) {
     return (
-      <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans" role="status">
+      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans" role="status">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#7A1E2B] animate-spin" />
-          <span className="font-mono text-sm font-semibold text-[#57121C]">Восстановление сессии…</span>
+          <Loader2 className="w-8 h-8 text-[#116EEE] animate-spin" />
+          <span className="font-mono text-sm font-semibold text-[#252B2F]">Восстановление сессии…</span>
         </div>
       </div>
     );
@@ -440,8 +521,8 @@ useEffect(() => {
           onOpenAdmin={handleOpenAdmin}
           isAdmin={isAdmin}
           onOpenUserModal={handleOpenUserModal}
-          viewedSlideIds={viewedSlideIds}
           passedQuizzes={passedQuizzes}
+          activityEvidence={activityEvidence}
           dueReviewCount={countDueCards(reviewCardStates, visitedLessonNumbers)}
         />
 
@@ -468,17 +549,17 @@ useEffect(() => {
           ? 'Урок недоступен'
           : 'Не удалось открыть урок';
     return (
-      <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans">
-        <div className="max-w-md rounded-2xl border border-[#D9CBB0] bg-white p-7 text-center shadow-sm">
-          <AlertCircle className="w-9 h-9 text-[#7A1E2B] mx-auto" />
-          <h1 className="mt-3 text-xl font-bold text-[#57121C]">{title}</h1>
-          <p className="mt-2 text-sm text-[#6B5D52]">{lessonLoadError.message}</p>
+      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
+        <div className="max-w-md rounded-2xl border border-[#D6DEE6] bg-white p-7 text-center shadow-sm">
+          <AlertCircle className="w-9 h-9 text-[#116EEE] mx-auto" />
+          <h1 className="mt-3 text-xl font-bold text-[#252B2F]">{title}</h1>
+          <p className="mt-2 text-sm text-[#666E7E]">{lessonLoadError.message}</p>
           <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
             {(status === 401 || status === 403) && (
               <button
                 type="button"
                 onClick={() => setIsUserModalOpen(true)}
-                className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
+                className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0]"
               >
                 {status === 401 ? 'Войти / Зарегистрироваться' : 'Открыть подписку'}
               </button>
@@ -490,7 +571,7 @@ useEffect(() => {
                   setLessonLoadError(null);
                   setLessonLoadAttempt((attempt) => attempt + 1);
                 }}
-                className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C]"
+                className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0]"
               >
                 Повторить
               </button>
@@ -498,7 +579,7 @@ useEffect(() => {
             <button
               type="button"
               onClick={handleBackToLessons}
-              className="px-5 py-2.5 rounded-xl border border-[#D9CBB0] bg-white text-[#57121C] text-sm font-semibold hover:bg-[#F6EFE4]"
+              className="px-5 py-2.5 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold hover:bg-[#EDF4FB]"
             >
               К списку уроков
             </button>
@@ -511,10 +592,10 @@ useEffect(() => {
 
   if (isLoadingLesson || !activeLesson) {
     return (
-      <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex items-center justify-center p-4 font-sans">
+      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#7A1E2B] animate-spin" />
-          <span className="font-mono text-sm font-semibold text-[#57121C]">Загрузка урока...</span>
+          <Loader2 className="w-8 h-8 text-[#116EEE] animate-spin" />
+          <span className="font-mono text-sm font-semibold text-[#252B2F]">Загрузка урока...</span>
         </div>
       </div>
     );
@@ -532,13 +613,14 @@ useEffect(() => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F6EFE4] text-[#2A2320] flex flex-col font-sans selection:bg-[#7A1E2B] selection:text-white">
+    <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex flex-col font-sans selection:bg-[#116EEE] selection:text-white">
       <Header
         lessonNumber={activeLesson.number}
         lessonLevel={activeLesson.level}
         lessonTitle={activeLesson.title}
         currentSlide={currentSlideIndex}
         totalSlides={slides.length}
+        lessonProgress={activeLessonProgress}
         onOpenDrawer={handleOpenDrawer}
         onOpenAdmin={handleOpenAdmin}
         onOpenUserModal={handleOpenUserModal}
@@ -563,7 +645,7 @@ useEffect(() => {
 
       {/* Main learning canvas */}
       <main className="flex-1 p-4 md:p-8">
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full max-w-6xl mx-auto">
           {isQuizActive ? (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -573,15 +655,19 @@ useEffect(() => {
               <LessonQuizModal
                 onClose={() => setIsQuizActive(false)}
                 lesson={activeLesson}
-                onQuizComplete={(lessonNumber, score, total) => {
+                onQuizComplete={(lessonNumber, score, total, answers) => {
                   if (isAdmin) return;
                   const percentage = Math.round((score / total) * 100);
                   const PASS_THRESHOLD = 80;
                   if (percentage >= PASS_THRESHOLD) {
+                    setQuizAttempts((current) => ({
+                      ...current,
+                      [String(lessonNumber)]: { lessonNumber, answers },
+                    }));
                     setPassedQuizzes((prev) =>
                       prev.includes(lessonNumber) ? prev : [...prev, lessonNumber]
                     );
-                    void syncQuizResultToServer(lessonNumber, score, total);
+                    void syncQuizAttemptToServer({ lessonNumber, answers });
                   }
                 }}
               />
@@ -595,35 +681,33 @@ useEffect(() => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="bg-white border border-[#D9CBB0] rounded-2xl p-6 md:p-10 shadow-sm min-h-105 flex flex-col"
+                className="relative overflow-hidden bg-white border border-[#D6DEE6] border-t-4 border-t-[#116EEE] rounded-2xl p-6 md:p-10 shadow-[0_1px_2px_rgba(18,38,63,0.1)] min-h-105 flex flex-col"
               >
                 <div className="flex-1">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-[#8A7A68] mb-2">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-[#666E7E] mb-2">
                     {currentSlide.eyebrow}
                   </div>
-                  <h1 className="text-xl md:text-3xl font-bold text-[#57121C] leading-tight">
+                  <h1 className="text-2xl md:text-4xl font-extrabold text-[#252B2F] tracking-tight leading-[1.15]">
                     {currentSlide.title}
                   </h1>
                   {currentSlide.subtitle && (
-                    <p className="text-sm md:text-base text-[#8A7A68] mt-1.5 mb-5">{currentSlide.subtitle}</p>
+                    <p className="text-sm md:text-base text-[#666E7E] mt-2 mb-6">{currentSlide.subtitle}</p>
                   )}
 
                   <SlideContent
                     slide={currentSlide}
                     activityEvidence={activityEvidence}
                     objectives={activeLesson.objectives}
-                    onActivityEvidence={(evidence) =>
-                      setActivityEvidence((prev) => ({ ...prev, [evidence.activityId]: evidence }))
-                    }
+                    onActivityEvidence={handleActivityEvidence}
                     onActivityEvidenceReset={handleResetActivityEvidence}
                     activityRuntime={activityRuntime}
                     onActivityRuntimeChange={handleActivityRuntimeChange}
                   />
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-[#D9CBB0]/40 flex items-center justify-between gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 text-xs text-[#8A7A68]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2C5F58]"></span>
+                <div className="pt-6 mt-6 border-t border-[#D6DEE6]/40 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 text-xs text-[#666E7E]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#3B1E90]"></span>
                     <span>Клавиши ← и → для переключения</span>
                   </div>
 

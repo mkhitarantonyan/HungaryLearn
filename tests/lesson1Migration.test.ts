@@ -20,6 +20,7 @@ import {
   validateActivity,
   validateExitCheckReferences,
   validateLessonQuestionIds,
+  writingEvidence,
 } from '../src/utils/activityUtils.ts';
 import { isAnswerAccepted } from '../src/utils/answerNormalization.ts';
 import { getLessonVocabulary } from '../src/utils/lessonQuizAndVocab.ts';
@@ -99,12 +100,12 @@ test('L6 and L7 remain migrated with activities', async () => {
   assert.equal(lesson7?.slides.some((slide) => (slide.activities?.length ?? 0) > 0), true);
 });
 
-test('frozen planning, translation, and slide-audio manifest files remain unchanged', () => {
+test('frozen planning and translation files plus the approved narration manifest remain unchanged', () => {
   assert.equal(sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)), '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE');
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), 'A4F3ADA4D52550A18953813011EEC1AB0FF2BDF87C2BB12B8C5535E198F0F2EC');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '9C416EA8F19B4CF803C684A4A2A823C245C07741E30A0AD61E62171EA4E6BDFB');
 });
 
 test('L1 translations and effective six-card vocabulary remain exact', () => {
@@ -527,8 +528,10 @@ test('L1 ExitCheck preserves mixed DIRECT/NONE semantics without optional speaki
   });
 });
 
-test('L1 has no WritingTask or RolePlay and does not turn narration into listening evidence', () => {
-  assert.equal(L1_ACTIVITIES.some((activity) => activity.kind === 'writing'), false);
+test('L1 P1 adds bounded open Writing but no artificial RolePlay or fake listening evidence', () => {
+  const writing = findActivity('l1-writing-first-forms', 'writing');
+  assert.match(writing.prompt, /5–8.*3 очень короткие/);
+  assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial');
   assert.equal(L1_ACTIVITIES.some((activity) => activity.kind === 'rolePlay'), false);
   const exit = findActivity('l1-exit-check', 'exitCheck');
   assert.ok(exit.checks.every((check) => !/^1\./.test(check.activityId)));

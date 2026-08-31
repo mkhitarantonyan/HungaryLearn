@@ -1,4 +1,5 @@
 import { Lesson, LessonActivity } from '../../types';
+import { P1_L2_PRACTICE, P1_L2_READING, P1_L2_ROLEPLAY, P1_L2_SPEAKING, P1_L2_WRITING } from './p1FoundationActivities';
 
 const L2_CP_PRONOUN_REFERENTS: LessonActivity = {
   kind: 'controlledPractice',
@@ -79,9 +80,9 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Viszlát!', correct: false, feedback: 'Это прощание. Здесь сначала поздоровайся.', nextTurnId: 'l2-rp-informal-open' },
       ],
     },
-    { id: 'l2-rp-informal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши неофициальное приветствие и сравни с моделью.', model: 'Szia!', next: 'l2-rp-informal-partner' },
+    { id: 'l2-rp-informal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Введи неофициальное приветствие и сравни с моделью.', model: 'Szia!', next: 'l2-rp-informal-partner' },
     { id: 'l2-rp-informal-partner', speaker: 'waiter', prompt: 'Szia! Hogy vagy?', next: 'l2-rp-how-are-you' },
-    { id: 'l2-rp-how-are-you', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Ответь, запиши реплику и сравни с моделью.', model: 'Jól vagyok, köszönöm.', next: 'l2-rp-partner-question' },
+    { id: 'l2-rp-how-are-you', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Введи ответ и сравни реплику с моделью.', model: 'Jól vagyok, köszönöm.', next: 'l2-rp-partner-question' },
     { id: 'l2-rp-partner-question', speaker: 'waiter', prompt: 'Ki vagy te?', next: 'l2-rp-self-intro' },
     { id: 'l2-rp-self-intro', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови своё имя и национальность, подставив свои данные.', model: 'A nevem Anna. Magyar vagyok.', next: 'l2-rp-informal-close' },
     {
@@ -93,7 +94,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Hogy vagy?', correct: false, feedback: 'Это вопрос «Как ты?». Выбери прощание.', nextTurnId: 'l2-rp-informal-close' },
       ],
     },
-    { id: 'l2-rp-informal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши выбранное неофициальное прощание и сравни с моделью.', model: 'Szia!', next: 'l2-rp-formal-stage' },
+    { id: 'l2-rp-informal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Введи выбранное неофициальное прощание и сравни с моделью.', model: 'Szia!', next: 'l2-rp-formal-stage' },
     { id: 'l2-rp-formal-stage', speaker: 'stage', stageLabel: 'Ситуация 2 · незнакомый взрослый', next: 'l2-rp-formal-open' },
     {
       id: 'l2-rp-formal-open', speaker: 'learner', responseMode: 'choice', prompt: 'Выбери вежливое приветствие.',
@@ -104,7 +105,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Viszlát!', correct: false, feedback: 'Это прощание. Сначала выбери приветствие.', nextTurnId: 'l2-rp-formal-open' },
       ],
     },
-    { id: 'l2-rp-formal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши вежливое приветствие и сравни с моделью.', model: 'Jó napot!', next: 'l2-rp-formal-partner' },
+    { id: 'l2-rp-formal-open-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Введи вежливое приветствие и сравни с моделью.', model: 'Jó napot!', next: 'l2-rp-formal-partner' },
     { id: 'l2-rp-formal-partner', speaker: 'waiter', prompt: 'Jó napot!', next: 'l2-rp-formal-close' },
     {
       id: 'l2-rp-formal-close', speaker: 'learner', responseMode: 'choice', prompt: 'Заверши короткий разговор вежливым прощанием.',
@@ -115,7 +116,7 @@ const L2_ROLEPLAY_GREETINGS: LessonActivity = {
         { choice: 'Hogy vagy?', correct: false, feedback: 'Это вопрос. Для прощания выбери Viszlát!', nextTurnId: 'l2-rp-formal-close' },
       ],
     },
-    { id: 'l2-rp-formal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Запиши вежливое прощание и сравни с моделью.', model: 'Viszlát!', next: 'l2-rp-end' },
+    { id: 'l2-rp-formal-close-record', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Введи вежливое прощание и сравни с моделью.', model: 'Viszlát!', next: 'l2-rp-end' },
     { id: 'l2-rp-end', speaker: 'stage', stageLabel: 'Диалог завершён' },
   ],
 };
@@ -280,7 +281,7 @@ export const LESSON_2: Lesson = {
       eyebrow: "УРОК 2 · 7/10 · ВОПРОС И ОТРИЦАНИЕ",
       title: "Kérdés és tagadás",
       subtitle: "Вопросы «да/нет» и отрицание",
-      activities: [L2_LISTENING_INTRODUCTION],
+      activities: [P1_L2_PRACTICE, L2_LISTENING_INTRODUCTION],
       body: `
    <p>В венгерском языке вопрос «да/нет» образуется <b>без</b> специального вопросительного слова, только с помощью интонации (повышение голоса в конце предложения) или на письме — вопросительного знака:</p>
    <p><button class="speak-btn" data-speak-text="Magyar vagy?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Magyar vagy?</button> <span style="color:#8a7a68">(Ты венгр?)</span></p>
@@ -295,7 +296,7 @@ export const LESSON_2: Lesson = {
       eyebrow: "УРОК 2 · 8/10 · ДИАЛОГ",
       title: "Párbeszéd",
       subtitle: "Первый диалог",
-      activities: [L2_ROLEPLAY_GREETINGS],
+      activities: [P1_L2_READING, P1_L2_ROLEPLAY, L2_ROLEPLAY_GREETINGS],
       body: `
    <p><b>A:</b> <button class="speak-btn" data-speak-text="Szia! Hogy hívnak?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Hogy hívnak?</button></p>
    <p><b>B:</b> <button class="speak-btn" data-speak-text="Szia! Annának hívnak. És téged?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Annának hívnak. És téged?</button></p>
@@ -312,7 +313,8 @@ export const LESSON_2: Lesson = {
       eyebrow: "УРОК 2 · 9/10 · УПРАЖНЕНИЯ",
       title: "Gyakorlatok",
       subtitle: "Проверь себя",
-      activities: [L2_WRITING_SELF_INTRODUCTION],
+      activities: [P1_L2_WRITING, L2_WRITING_SELF_INTRODUCTION],
+      optionalSpeaking: P1_L2_SPEAKING,
       body: `
    <ol class="tasklist">
      <li>Переведите на венгерский: «Привет, я Анна, я из Армении»</li>

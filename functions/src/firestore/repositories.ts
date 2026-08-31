@@ -1,10 +1,13 @@
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import type { Entitlement } from '../domain/entitlements.js';
+import type { StoredActivityEvidence } from '../progress/model.js';
 import { firestore } from '../firebase/admin.js';
+import { sanitizePassedQuizzes } from '../progress/model.js';
 
 export interface ProgressData {
   viewedSlides: string[];
   passedQuizzes: number[];
+  activityEvidence: Record<string, StoredActivityEvidence>;
   reviewCards: Record<string, unknown>;
   customNotes?: string;
 }
@@ -70,7 +73,8 @@ export async function getProgress(uid: string): Promise<ProgressData> {
   const data = snapshot.data() || {};
   return {
     viewedSlides: Array.isArray(data.viewedSlides) ? data.viewedSlides : [],
-    passedQuizzes: Array.isArray(data.passedQuizzes) ? data.passedQuizzes : [],
+    passedQuizzes: sanitizePassedQuizzes(data.passedQuizzes),
+    activityEvidence: data.activityEvidence && typeof data.activityEvidence === 'object' ? data.activityEvidence : {},
     reviewCards: data.reviewCards && typeof data.reviewCards === 'object' ? data.reviewCards : {},
     ...(typeof data.customNotes === 'string' ? { customNotes: data.customNotes } : {}),
   };

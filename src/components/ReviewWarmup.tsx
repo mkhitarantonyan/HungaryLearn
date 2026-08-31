@@ -13,9 +13,9 @@ interface ReviewWarmupProps {
 }
 
 const GRADE_BUTTONS: { grade: ReviewGrade; label: string; color: string }[] = [
-  { grade: 'again', label: 'Не помню', color: '#C24B3A' },
-  { grade: 'hard', label: 'Трудно', color: '#B98A2B' },
-  { grade: 'good', label: 'Помню', color: '#2C5F58' },
+  { grade: 'again', label: 'Не помню', color: '#C23B4A' },
+  { grade: 'hard', label: 'Трудно', color: '#C77B00' },
+  { grade: 'good', label: 'Помню', color: '#3B1E90' },
   { grade: 'easy', label: 'Легко', color: '#3F7D5C' },
 ];
 
@@ -67,54 +67,54 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A2320]/70 backdrop-blur-xs">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252B2F]/70 backdrop-blur-xs">
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl w-full max-w-md p-6 shadow-2xl"
+        className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-md p-6 shadow-2xl"
       >
         <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-2 text-xs font-mono text-[#8A7A68]">
-            <Flame className="w-4 h-4 text-[#B98A2B]" />
+          <div className="flex items-center gap-2 text-xs font-mono text-[#666E7E]">
+            <Flame className="w-4 h-4 text-[#C77B00]" />
             <span>Разминка · {index + 1}/{session.length}</span>
           </div>
           <button
             onClick={onDone}
-            className="text-xs text-[#8A7A68] hover:text-[#7A1E2B] underline cursor-pointer"
+            className="text-xs text-[#666E7E] hover:text-[#116EEE] underline cursor-pointer"
           >
             Пропустить
           </button>
         </div>
 
-        <div className="h-1.5 bg-[#D9CBB0]/50 rounded-full mb-6 overflow-hidden">
+        <div className="h-1.5 bg-[#D6DEE6]/50 rounded-full mb-6 overflow-hidden">
           <motion.div
-            className="h-full bg-[#7A1E2B] rounded-full"
+            className="h-full bg-[#116EEE] rounded-full"
             animate={{ width: `${(gradedCount / session.length) * 100}%` }}
             transition={{ duration: 0.3 }}
           />
         </div>
 
-        <div className="text-[11px] font-mono uppercase tracking-wider text-[#B98A2B] mb-2">
+        <div className="text-[11px] font-mono uppercase tracking-wider text-[#C77B00] mb-2">
           {card.lessonTitle}
         </div>
 
         <div
           onClick={() => setIsFlipped((f) => !f)}
-          className="min-h-[140px] flex flex-col items-center justify-center text-center cursor-pointer rounded-xl border border-[#D9CBB0] bg-white p-6 mb-5"
+          className="min-h-[140px] flex flex-col items-center justify-center text-center cursor-pointer rounded-xl border border-[#D6DEE6] bg-white p-6 mb-5"
         >
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-2xl font-bold font-mono text-[#57121C]">{card.hu}</span>
+            <span className="text-2xl font-bold font-mono text-[#252B2F]">{card.hu}</span>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 playAudio();
               }}
-              className="p-1.5 rounded-full bg-[#7A1E2B]/10 hover:bg-[#7A1E2B] text-[#7A1E2B] hover:text-white transition-colors"
+              className="p-1.5 rounded-full bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors"
             >
               <Volume2 className="w-4 h-4" />
             </button>
           </div>
-          {card.phonetic && <div className="text-xs text-[#8A7A68] font-mono mb-3">{card.phonetic}</div>}
+          {card.phonetic && <div className="text-xs text-[#666E7E] font-mono mb-3">{card.phonetic}</div>}
           {audioUnavailable && (
             <div className="text-xs text-red-700 mb-3" role="alert">Записанное аудио недоступно.</div>
           )}
@@ -127,9 +127,9 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-1"
               >
-                <div className="text-lg font-semibold text-[#2C5F58]">{card.ru}</div>
+                <div className="text-lg font-semibold text-[#3B1E90]">{card.ru}</div>
                 {card.exampleSentence && (
-                  <div className="text-xs text-[#2A2320]/70 italic">{card.exampleSentence}</div>
+                  <div className="text-xs text-[#252B2F]/70 italic">{card.exampleSentence}</div>
                 )}
               </motion.div>
             ) : (
@@ -137,7 +137,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 key="prompt"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-xs text-[#8A7A68] italic border-b border-dashed border-[#8A7A68] pb-0.5"
+                className="text-xs text-[#666E7E] italic border-b border-dashed border-[#666E7E] pb-0.5"
               >
                 нажми, чтобы вспомнить перевод
               </motion.div>
@@ -146,7 +146,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
         </div>
 
         {isFlipped && reminder && (
-          <div className="text-xs text-[#2C5F58] bg-[#2C5F58]/10 border-l-4 border-[#2C5F58] rounded-r-lg px-3 py-2 mb-4">
+          <div className="text-xs text-[#3B1E90] bg-[#3B1E90]/10 border-l-4 border-[#3B1E90] rounded-r-lg px-3 py-2 mb-4">
             {reminder}
           </div>
         )}
@@ -169,7 +169,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
         ) : (
           <button
             onClick={() => setIsFlipped(true)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#7A1E2B] text-white text-sm font-semibold hover:bg-[#57121C] transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
           >
             <span>Показать перевод</span>
             <ArrowRight className="w-4 h-4" />

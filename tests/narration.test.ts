@@ -109,6 +109,7 @@ test('Header no longer renders Слова/Перевод/Тест and shows prog
       lessonTitle: 'Урок 6 · A0 összefoglaló',
       currentSlide: 3,
       totalSlides: 10,
+      lessonProgress: { percentage: 25, completedUnitCount: 2, totalUnitCount: 8 },
       onOpenDrawer: () => undefined,
       onOpenAdmin: () => undefined,
       onOpenUserModal: () => undefined,
@@ -118,7 +119,8 @@ test('Header no longer renders Слова/Перевод/Тест and shows prog
   assert.doesNotMatch(markup, /Слова|Перевод|Тест/);
   assert.match(markup, /Содержание/);
   assert.match(markup, /A0 összefoglaló/);
-  assert.match(markup, /4 из 10/);
+  assert.match(markup, /Урок: 25%/);
+  assert.match(markup, /Слайд 4\/10/);
 });
 
 test('NarrationPlayer exposes play, autoplay toggle, and speed', () => {
@@ -159,11 +161,18 @@ test('Navigation uses a retrieval-checkpoint CTA on the final slide', () => {
 
 test('LessonProgress exposes accessible progress semantics', () => {
   const markup = renderToStaticMarkup(
-    React.createElement(LessonProgress, { current: 3, total: 10 })
+    React.createElement(LessonProgress, {
+      current: 3,
+      total: 10,
+      percentage: 25,
+      completedUnits: 2,
+      totalUnits: 8,
+    })
   );
   assert.match(markup, /role="progressbar"/);
-  assert.match(markup, /aria-valuenow="4"/);
-  assert.match(markup, /4 из 10/);
+  assert.match(markup, /aria-valuenow="25"/);
+  assert.match(markup, /Урок: 25%/);
+  assert.match(markup, /Слайд 4\/10/);
 });
 
 test('run-token stale callbacks cannot mutate the current run', () => {
@@ -214,8 +223,8 @@ test('learning path level ranges are 1–6 / 7–14 / 15–20 / 21–28', () => 
       onSelectLesson: () => undefined,
       onOpenAdmin: () => undefined,
       isAdmin: false,
-      viewedSlideIds: [],
       passedQuizzes: [],
+      activityEvidence: {},
       dueReviewCount: 0,
     })
   );

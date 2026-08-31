@@ -7,7 +7,7 @@ import { CheckCircle2, XCircle, Award, RotateCcw, ArrowRight, HelpCircle } from 
 interface LessonQuizModalProps {
   onClose: () => void;
   lesson?: Lesson;
-  onQuizComplete?: (lessonNumber: number, score: number, total: number) => void;
+  onQuizComplete?: (lessonNumber: number, score: number, total: number, answers: number[]) => void;
 }
 
 export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesson, onQuizComplete }) => {
@@ -16,6 +16,7 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
   const [score, setScore] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [answers, setAnswers] = useState<number[]>([]);
 
   useEffect(() => {
     setCurrentIdx(0);
@@ -23,12 +24,13 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
     setScore(0);
     setShowExplanation(false);
     setIsCompleted(false);
+    setAnswers([]);
   }, [lesson?.id]);
 
   useEffect(() => {
     if (isCompleted && lesson && onQuizComplete) {
       const total = getLessonQuiz(lesson).length;
-      onQuizComplete(lesson.number, score, total);
+      onQuizComplete(lesson.number, score, total, answers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompleted]);
@@ -37,12 +39,12 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
 
   if (questions.length === 0) {
     return (
-      <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl text-center">
-        <h3 className="text-xl font-bold font-mono text-[#57121C]">Тест для этого урока ещё не опубликован</h3>
-        <p className="text-sm text-[#8A7A68]">Вопросы для этого урока пока не добавлены.</p>
+      <div className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl text-center">
+        <h3 className="text-xl font-bold font-mono text-[#252B2F]">Тест для этого урока ещё не опубликован</h3>
+        <p className="text-sm text-[#666E7E]">Вопросы для этого урока пока не добавлены.</p>
         <button
           onClick={onClose}
-          className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs md:text-sm cursor-pointer"
+          className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm cursor-pointer"
         >
           Вернуться к слайдам
         </button>
@@ -55,6 +57,11 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
   const handleSelect = (idx: number) => {
     if (selectedOption !== null) return;
     setSelectedOption(idx);
+    setAnswers((prev) => {
+      const next = [...prev];
+      next[currentIdx] = idx;
+      return next;
+    });
     setShowExplanation(true);
     if (idx === question.correctIndex) {
       setScore(prev => prev + 1);
@@ -77,25 +84,26 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
     setScore(0);
     setShowExplanation(false);
     setIsCompleted(false);
+    setAnswers([]);
   };
 
   if (isCompleted) {
     const percentage = Math.round((score / questions.length) * 100);
     const passed = percentage >= 80;
     return (
-      <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-lg mx-auto text-center space-y-6 shadow-xl">
-        <div className="w-16 h-16 bg-[#B98A2B]/20 text-[#B98A2B] rounded-full flex items-center justify-center mx-auto">
+      <div className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl p-6 max-w-lg mx-auto text-center space-y-6 shadow-xl">
+        <div className="w-16 h-16 bg-[#C77B00]/20 text-[#C77B00] rounded-full flex items-center justify-center mx-auto">
           <Award className="w-10 h-10" />
         </div>
-        <h3 className="text-2xl font-bold font-mono text-[#57121C]">
+        <h3 className="text-2xl font-bold font-mono text-[#252B2F]">
           {passed ? 'Тест пройден!' : 'Тест завершён'}
         </h3>
-        <p className="text-xs font-mono text-[#B98A2B] uppercase font-bold">Урок {lesson?.number}: {lesson?.title}</p>
-        <p className="text-sm text-[#2A2320]">
-          Вы правильно ответили на <strong className="text-[#7A1E2B]">{score} из {questions.length}</strong> вопросов ({percentage}%).
+        <p className="text-xs font-mono text-[#C77B00] uppercase font-bold">Урок {lesson?.number}: {lesson?.title}</p>
+        <p className="text-sm text-[#252B2F]">
+          Вы правильно ответили на <strong className="text-[#116EEE]">{score} из {questions.length}</strong> вопросов ({percentage}%).
         </p>
 
-        <div className="p-4 bg-white rounded-xl border border-[#D9CBB0] text-xs text-[#8A7A68]">
+        <div className="p-4 bg-white rounded-xl border border-[#D6DEE6] text-xs text-[#666E7E]">
           {passed
             ? 'Отличный результат! Порог этой проверки достигнут.'
             : 'Хорошая попытка! Рекомендуем просмотреть слайды ещё раз для закрепления.'}
@@ -104,14 +112,14 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
         <div className="flex justify-center gap-3">
           <button
             onClick={handleRestart}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#7A1E2B] text-[#7A1E2B] font-semibold text-xs md:text-sm hover:bg-[#7A1E2B]/10 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#116EEE] text-[#116EEE] font-semibold text-xs md:text-sm hover:bg-[#116EEE]/10 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Пройти заново</span>
           </button>
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs md:text-sm hover:bg-[#57121C] cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm hover:bg-[#0D5ED0] cursor-pointer"
           >
             Вернуться к слайдам
           </button>
@@ -121,22 +129,22 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
   }
 
   return (
-    <div className="bg-[#FBF7EF] border border-[#D9CBB0] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl">
-      <div className="flex items-center justify-between pb-3 border-b border-[#D9CBB0]">
-        <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A1E2B]">
+    <div className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl">
+      <div className="flex items-center justify-between pb-3 border-b border-[#D6DEE6]">
+        <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#116EEE]">
           <HelpCircle className="w-4 h-4" />
           <span>Тест Урока {lesson?.number || 1} (Вопрос {currentIdx + 1} из {questions.length})</span>
         </div>
-        <span className="text-xs font-mono text-[#8A7A68]">Счёт: {score}</span>
+        <span className="text-xs font-mono text-[#666E7E]">Счёт: {score}</span>
       </div>
 
-      <h4 className="text-base md:text-lg font-bold text-[#57121C] font-mono leading-snug">
+      <h4 className="text-base md:text-lg font-bold text-[#252B2F] font-mono leading-snug">
         {question.question}
       </h4>
 
       <div className="space-y-2.5">
         {question.options.map((option, idx) => {
-          let btnStyle = 'bg-white border-[#D9CBB0] text-[#2A2320] hover:border-[#7A1E2B]/50';
+          let btnStyle = 'bg-white border-[#D6DEE6] text-[#252B2F] hover:border-[#116EEE]/50';
           if (selectedOption !== null) {
             if (idx === question.correctIndex) {
               btnStyle = 'bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold';
@@ -168,13 +176,13 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
 
       {showExplanation && (
         <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="space-y-3 pt-2">
-          <div className="p-3.5 rounded-xl bg-[#2C5F58]/10 border border-[#2C5F58]/30 text-xs text-[#2C5F58] leading-relaxed">
+          <div className="p-3.5 rounded-xl bg-[#3B1E90]/10 border border-[#3B1E90]/30 text-xs text-[#3B1E90] leading-relaxed">
             <strong>Пояснение:</strong> {question.explanation}
           </div>
 
           <button
             onClick={handleNext}
-            className="w-full py-3 rounded-xl bg-[#7A1E2B] text-white font-semibold text-xs md:text-sm hover:bg-[#57121C] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm hover:bg-[#0D5ED0] transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>{currentIdx + 1 < questions.length ? 'Следующий вопрос' : 'Посмотреть результаты'}</span>
             <ArrowRight className="w-4 h-4" />

@@ -38,11 +38,26 @@ test('client cannot modify entitlement or make itself admin', async () => {
   await assertFails(setDoc(doc(db, 'users/alice'), { admin: true }));
 });
 
-test('client cannot access another user progress but can write its own validated progress', async () => {
+test('client cannot write progress directly, including its own document', async () => {
   const db = (await env()).authenticatedContext('alice').firestore();
   await assertFails(getDoc(doc(db, 'progress/bob')));
   await assertFails(setDoc(doc(db, 'progress/bob'), { viewedSlides: [], passedQuizzes: [], reviewCards: {} }));
-  await assertSucceeds(setDoc(doc(db, 'progress/alice'), { viewedSlides: ['l1_s1'], passedQuizzes: [], reviewCards: {} }));
+  await assertFails(setDoc(doc(db, 'progress/alice'), {
+    viewedSlides: ['l1_s1'],
+    passedQuizzes: [],
+    activityEvidence: {
+      'l1-cp': { activityId: 'l1-cp', attempted: true, completed: true, evidenceMode: 'direct', passed: true },
+    },
+    reviewCards: {},
+  }));
+  await assertFails(setDoc(doc(db, 'progress/alice'), {
+    viewedSlides: [],
+    passedQuizzes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+    activityEvidence: {
+      forged: { activityId: 'forged', attempted: true, completed: true, evidenceMode: 'direct', passed: true, score: 999, total: 999 },
+    },
+    reviewCards: {},
+  }));
   assert.ok(true);
 });
 

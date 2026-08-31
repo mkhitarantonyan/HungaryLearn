@@ -67,7 +67,7 @@ test('admin login form is accessible and supports password visibility and browse
   assert.match(source, /autoComplete="current-password"/);
   assert.match(source, /Показать пароль/);
   assert.match(source, /onSubmit=\{submit\}/);
-  assert.match(screen, /Hungary<span[^>]*>Learn<\/span>/);
+  assert.match(screen, /Magyar<span[^>]*>o<\/span>/);
 });
 
 test('admin logout has no legacy endpoint and clears the authorized snapshot', () => {

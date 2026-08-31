@@ -33,17 +33,17 @@ export function ConfirmDialog({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="bg-[#F6EFE4] border-2 border-[#D9CBB0] rounded-2xl p-6 max-w-sm w-full shadow-2xl text-[#2A2320]"
+          className="bg-[#EDF4FB] border-2 border-[#D6DEE6] rounded-2xl p-6 max-w-sm w-full shadow-2xl text-[#252B2F]"
         >
           <div className="flex items-center justify-between mb-4 border-b border-[#E6DBC9] pb-3">
-            <div className="flex items-center gap-2 text-[#7A1E2B]">
-              <AlertTriangle className="w-5 h-5 text-[#7A1E2B]" />
+            <div className="flex items-center gap-2 text-[#116EEE]">
+              <AlertTriangle className="w-5 h-5 text-[#116EEE]" />
               <h3 id="confirm-dialog-title" className="font-serif font-bold text-base">{title}</h3>
             </div>
             <button
               onClick={onCancel}
               aria-label="Закрыть"
-              className="text-[#8A7A68] hover:text-[#2A2320] transition-colors p-1 rounded-lg"
+              className="text-[#666E7E] hover:text-[#252B2F] transition-colors p-1 rounded-lg"
             >
               <X className="w-4 h-4" />
             </button>
@@ -54,13 +54,13 @@ export function ConfirmDialog({
           <div className="flex justify-end gap-3">
             <button
               onClick={onCancel}
-              className="px-4 py-2 rounded-xl bg-[#E6DBC9] hover:bg-[#D9CBB0] text-[#2A2320] text-xs font-semibold transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-[#E6DBC9] hover:bg-[#D6DEE6] text-[#252B2F] text-xs font-semibold transition-colors cursor-pointer"
             >
               {cancelLabel}
             </button>
             <button
               onClick={onConfirm}
-              className="px-4 py-2 rounded-xl bg-[#7A1E2B] hover:bg-[#57121C] text-white text-xs font-semibold transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-[#116EEE] hover:bg-[#0D5ED0] text-white text-xs font-semibold transition-colors cursor-pointer"
             >
               {confirmLabel}
             </button>

@@ -20,16 +20,16 @@ export const Navigation: React.FC<NavigationProps> = ({
   const isLast = currentSlide === totalSlides - 1;
 
   return (
-    <footer className="sticky bottom-0 z-30 border-t border-[#D9CBB0] bg-[#FBF7EF]/95 backdrop-blur">
-      <div className="max-w-4xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-3">
+    <footer className="sticky bottom-0 z-30 border-t border-[#D6DEE6] bg-white/95 backdrop-blur">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-3">
         <button
           onClick={onPrev}
           disabled={isFirst}
           aria-label="Предыдущий шаг"
-          className={`flex items-center gap-2 min-h-11 px-4 rounded-xl font-semibold text-sm transition-colors cursor-pointer border ${
+          className={`flex items-center gap-2 min-h-11 px-5 rounded-[10px] bg-white font-semibold text-sm transition-colors cursor-pointer border ${
             isFirst
-              ? 'opacity-40 border-[#D9CBB0] text-[#8A7A68] cursor-not-allowed'
-              : 'border-[#7A1E2B]/40 text-[#7A1E2B] hover:bg-[#7A1E2B]/10'
+              ? 'opacity-40 border-[#D6DEE6] text-[#666E7E] cursor-not-allowed'
+              : 'border-[#116EEE]/40 text-[#116EEE] hover:bg-[#116EEE]/10'
           }`}
         >
           <ArrowLeft className="w-4 h-4" />
@@ -40,7 +40,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             onClick={onNext}
             aria-label="Следующий шаг"
-            className="flex items-center gap-2 min-h-11 px-6 rounded-xl bg-[#7A1E2B] text-white font-semibold text-sm hover:bg-[#57121C] transition-colors cursor-pointer"
+            className="flex items-center gap-2 min-h-11 px-7 rounded-[10px] bg-[#116EEE] text-white font-semibold text-sm hover:bg-[#0D5ED0] transition-colors cursor-pointer shadow-sm"
           >
             <span>Вперёд</span>
             <ArrowRight className="w-4 h-4" />
@@ -49,7 +49,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             onClick={onFinish}
             aria-label="Проверить себя"
-            className="flex items-center gap-2 min-h-11 px-6 rounded-xl bg-[#2C5F58] text-white font-semibold text-sm hover:bg-[#2C5F58]/90 transition-colors cursor-pointer"
+            className="flex items-center gap-2 min-h-11 px-7 rounded-[10px] bg-[#3B1E90] text-white font-semibold text-sm hover:bg-[#2F176F] transition-colors cursor-pointer shadow-sm"
           >
             <span>Проверить себя</span>
             <ClipboardCheck className="w-4 h-4" />
