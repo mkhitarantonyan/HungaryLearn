@@ -1,6 +1,5 @@
 import express from 'express';
 import { authRouter } from './auth/routes.js';
-import { billingRouter } from './billing/routes.js';
 import { lessonRouter } from './lessons/routes.js';
 import { progressRouter } from './progress/routes.js';
 import { adminRouter } from './admin/routes.js';
@@ -9,9 +8,8 @@ import { audioRouter } from './audio/routes.js';
 export const app = express();
 app.disable('x-powered-by');
 
-// Firebase preserves the exact incoming bytes on req.rawBody. The webhook route
-// is registered before JSON middleware and verifies those bytes, never a re-serialization.
-app.use(billingRouter);
+// Core/admin API only. Billing routes live in the separate `billing` Function
+// so admin access never depends on Lemon Squeezy secrets.
 app.use(audioRouter);
 app.use(express.json({ limit: '256kb' }));
 

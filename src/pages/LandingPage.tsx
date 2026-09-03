@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, type ReactNode } from 'react';
+﻿import React, { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   BookOpen,
@@ -116,6 +116,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
     { href: '#features', label: 'Возможности' },
     { href: '#how', label: 'Как это работает' },
     { href: '#preview', label: 'Программа курса' },
+    { href: '/pricing', label: 'Pricing' },
   ];
 
   return (
@@ -792,6 +793,7 @@ function Footer() {
               <li><a href="#features" className="hover:text-[#116EEE] transition-colors">Возможности</a></li>
               <li><a href="#how" className="hover:text-[#116EEE] transition-colors">Как это работает</a></li>
               <li><a href="#preview" className="hover:text-[#116EEE] transition-colors">Программа курса</a></li>
+              <li><a href="/pricing" className="hover:text-[#116EEE] transition-colors">Pricing</a></li>
               <li>
                 <a
                   href="/lessons"
@@ -809,9 +811,9 @@ function Footer() {
               Документы
             </h4>
             <ul className="space-y-2.5 text-sm text-[#666E7E]">
-              <li><a href="#terms" className="hover:text-[#116EEE] transition-colors">Пользовательское соглашение</a></li>
-              <li><a href="#privacy" className="hover:text-[#116EEE] transition-colors">Политика конфиденциальности</a></li>
-              <li><a href="#refunds" className="hover:text-[#116EEE] transition-colors">Возврат средств</a></li>
+              <li><a href="/terms" className="hover:text-[#116EEE] transition-colors">Terms of Service</a></li>
+              <li><a href="/privacy" className="hover:text-[#116EEE] transition-colors">Privacy Policy</a></li>
+              <li><a href="/refund" className="hover:text-[#116EEE] transition-colors">Refund Policy</a></li>
             </ul>
           </div>
         </div>
@@ -953,3 +955,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

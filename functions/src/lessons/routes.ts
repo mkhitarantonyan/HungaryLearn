@@ -1,11 +1,11 @@
-import { Router } from 'express';
+﻿import { Router } from 'express';
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js';
 import { hasPaidAccess } from '../domain/entitlements.js';
 import { getEntitlement } from '../firestore/repositories.js';
 import { parseLessonNumber } from '../../../src/server/lessonAccess.ts';
 import { loadServerLesson } from '../../../src/server/lessonLoader.ts';
 import { asyncHandler } from '../http/asyncHandler.js';
-import { lemonTestMode } from '../billing/params.js';
+import { lemonTestMode } from '../runtime/params.js';
 
 export const lessonRouter = Router();
 
@@ -28,3 +28,4 @@ lessonRouter.get('/api/lessons/:lessonNumber', requireAuth, asyncHandler<Authent
   const lesson = await loadServerLesson(lessonNumber);
   res.status(lesson ? 200 : 404).json(lesson ? { success: true, lesson } : { success: false, message: 'Урок не найден' });
 }));
+

@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import App from './App';
 import LandingPage from './pages/LandingPage';
+import PricingPage from './pages/PricingPage';
+import { PrivacyPage, RefundPage, TermsPage } from './pages/LegalPages';
 import AdminGuard from './components/AdminGuard';
 import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -11,7 +13,6 @@ import AdminContent from './pages/admin/AdminContent';
 import AdminAudio from './pages/admin/AdminAudio';
 import AdminSettings from './pages/admin/AdminSettings';
 
-// Resets scroll position on every route change.
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -25,13 +26,14 @@ export default function AppRoutes() {
     <>
       <ScrollToTop />
       <Routes>
-        {/* Public landing page */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/refund" element={<RefundPage />} />
 
-        {/* Protected lessons page — first two lessons are free for anonymous users */}
         <Route path="/lessons" element={<App />} />
 
-        {/* Admin dashboard (requires admin session) */}
         <Route
           path="/admin"
           element={
@@ -48,7 +50,6 @@ export default function AppRoutes() {
           <Route path="settings" element={<AdminSettings />} />
         </Route>
 
-        {/* Everything else falls back to the landing page */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

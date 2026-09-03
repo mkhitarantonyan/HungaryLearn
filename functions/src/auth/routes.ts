@@ -1,9 +1,9 @@
-import { Router } from 'express';
+﻿import { Router } from 'express';
 import { requireAuth, type AuthenticatedRequest } from './middleware.js';
 import { ensureUserProfile, getEntitlement } from '../firestore/repositories.js';
 import { hasPaidAccess } from '../domain/entitlements.js';
 import { asyncHandler } from '../http/asyncHandler.js';
-import { lemonTestMode } from '../billing/params.js';
+import { lemonTestMode } from '../runtime/params.js';
 
 export const authRouter = Router();
 
@@ -35,3 +35,4 @@ authRouter.get('/api/admin/verify', requireAuth, (req: AuthenticatedRequest, res
   const isAdmin = req.auth?.admin === true;
   res.status(isAdmin ? 200 : 403).json({ success: isAdmin, isAdmin });
 });
+
