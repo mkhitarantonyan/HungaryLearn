@@ -1,6 +1,5 @@
 import { Router, type Request, type Response } from 'express';
 import { FieldValue } from 'firebase-admin/firestore';
-import { defineBoolean, defineSecret, defineString } from 'firebase-functions/params';
 import { requireAuth, type AuthenticatedRequest } from '../auth/middleware.js';
 import { firestore } from '../firebase/admin.js';
 import { getEntitlement } from '../firestore/repositories.js';
@@ -13,14 +12,16 @@ import {
   retrieveSubscription,
   type LemonConfig,
 } from './lemon.js';
-import { buildWebhookUpdate, getWebhookIdentity, parseWebhook, verifyLemonSignature, webhookHash } from './webhook.js';
-
-export const lemonApiKey = defineSecret('LEMONSQUEEZY_API_KEY');
-export const lemonWebhookSecret = defineSecret('LEMONSQUEEZY_WEBHOOK_SECRET');
-const lemonStoreId = defineString('LEMONSQUEEZY_STORE_ID');
-const lemonVariantId = defineString('LEMONSQUEEZY_VARIANT_ID');
-const appUrl = defineString('APP_URL');
-const lemonTestMode = defineBoolean('LEMONSQUEEZY_TEST_MODE', { default: true });
+import {
+  buildWebhookUpdate,
+  getWebhookEventName,
+  getWebhookFirebaseUid,
+  getWebhookSubscriptionId,
+  parseWebhook,
+  verifyLemonSignature,
+  webhookHash,
+} from './webhook.js';
+import { appUrl, lemonApiKey, lemonStoreId, lemonTestMode, lemonVariantId, lemonWebhookSecret } from './params.js';
 
 function config(): LemonConfig {
   return normalizeLemonConfig({
@@ -67,7 +68,17 @@ billingRouter.post('/api/billing/create-checkout', requireAuth, async (req: Auth
       res.status(400).json({ success: false, message: 'У аккаунта отсутствует e-mail' });
       return;
     }
-    const url = await createCheckout(config(), req.auth!.uid, email);
+    const lemonConfig = config();
+    const existing = await getEntitlement(req.auth!.uid);
+    const existingSubscriptionBlocksCheckout = existing?.provider === 'lemonsqueezy'
+      && existing.testMode === lemonConfig.testMode
+      && Boolean(existing.lemonSubscriptionId)
+      && ['active', 'cancelled', 'past_due', 'paused'].includes(existing.subscriptionStatus);
+    if (existingSubscriptionBlocksCheckout) {
+      res.status(409).json({ success: false, message: 'У аккаунта уже есть подписка. Используйте управление подпиской.' });
+      return;
+    }
+    const url = await createCheckout(lemonConfig, req.auth!.uid, email);
     res.json({ success: true, url });
   } catch (error) {
     const failure = safeCheckoutFailure(error);
@@ -78,12 +89,14 @@ billingRouter.post('/api/billing/create-checkout', requireAuth, async (req: Auth
 
 billingRouter.post('/api/billing/customer-portal', requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
+    const lemonConfig = config();
     const entitlement = await getEntitlement(req.auth!.uid);
-    if (entitlement?.provider !== 'lemonsqueezy' || !entitlement.lemonSubscriptionId) {
+    if (entitlement?.provider !== 'lemonsqueezy' || !entitlement.lemonSubscriptionId
+      || entitlement.testMode !== lemonConfig.testMode) {
       res.status(404).json({ success: false, message: 'Подписка Lemon Squeezy не найдена' });
       return;
     }
-    const url = await getCustomerPortalUrl(config(), entitlement.lemonSubscriptionId);
+    const url = await getCustomerPortalUrl(lemonConfig, entitlement.lemonSubscriptionId);
     res.json({ success: true, url });
   } catch (error) {
     console.error('Customer portal failed', error instanceof Error ? error.message : 'unknown error');
@@ -105,16 +118,33 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
   }
   try {
     const payload = parseWebhook(rawBody);
-    const identity = getWebhookIdentity(payload);
+    const eventName = getWebhookEventName(payload);
+    const subscriptionId = getWebhookSubscriptionId(payload);
+    let firebaseUid = getWebhookFirebaseUid(payload);
+
+    // Lemon documents checkout custom_data for Order/Subscription objects, but
+    // recurring payment events use Subscription Invoice objects. If a payment
+    // webhook ever arrives without custom_data, recover the owner from the
+    // subscription mapping written by the earlier subscription event. This also
+    // makes retries safe when Lemon changes which invoice fields are echoed.
+    if (!firebaseUid && subscriptionId) {
+      const mapped = await firestore.collection('billingSubscriptions').doc(subscriptionId).get();
+      const mappedUid = mapped.data()?.firebaseUid;
+      if (typeof mappedUid === 'string' && mappedUid.trim()) firebaseUid = mappedUid.trim();
+    }
+
     let hydrated: Record<string, unknown> | undefined;
-    const attributes = payload.data?.attributes || {};
-    const subscriptionId = typeof attributes.subscription_id === 'number' || typeof attributes.subscription_id === 'string'
-      ? String(attributes.subscription_id)
-      : undefined;
-    if (payload.data?.type !== 'subscriptions' && subscriptionId && identity.eventName !== 'order_refunded') {
+    if (payload.data?.type !== 'subscriptions' && subscriptionId && eventName !== 'order_refunded') {
       hydrated = await retrieveSubscription(config(), subscriptionId);
     }
-    const update = buildWebhookUpdate(payload, lemonStoreId.value(), lemonVariantId.value(), hydrated);
+    const update = buildWebhookUpdate(
+      payload,
+      lemonStoreId.value(),
+      lemonVariantId.value(),
+      lemonTestMode.value(),
+      hydrated,
+      firebaseUid,
+    );
     if (!update) {
       res.status(200).json({ success: true, ignored: true });
       return;
@@ -130,12 +160,21 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
       }
       const entitlementRef = firestore.collection('entitlements').doc(update.uid);
       const entitlementSnapshot = await transaction.get(entitlementRef);
-      const privileged = entitlementSnapshot.data()?.isPrivileged === true;
-      transaction.set(entitlementRef, {
+      const existingEntitlement = entitlementSnapshot.data() || {};
+      const privileged = existingEntitlement.isPrivileged === true;
+      const entitlementWrite: Record<string, unknown> = {
         ...update.entitlement,
         isPrivileged: privileged,
         updatedAt: FieldValue.serverTimestamp(),
-      }, { merge: true });
+      };
+      // Some Lemon event payloads (notably order refunds) do not carry every
+      // subscription/customer identifier. Never erase a known billing identity
+      // merely because a later event omitted that field. Null accessUntil/status
+      // values remain meaningful and are intentionally preserved.
+      for (const key of ['lemonCustomerId', 'lemonSubscriptionId', 'lemonOrderId', 'lemonVariantId']) {
+        if (entitlementWrite[key] == null && existingEntitlement[key] != null) delete entitlementWrite[key];
+      }
+      transaction.set(entitlementRef, entitlementWrite, { merge: true });
       if (update.subscriptionId && update.subscription) {
         transaction.set(firestore.collection('billingSubscriptions').doc(update.subscriptionId), {
           ...update.subscription,

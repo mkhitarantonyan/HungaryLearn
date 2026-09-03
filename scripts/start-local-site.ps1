@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location -LiteralPath $projectRoot
@@ -39,5 +39,6 @@ if ([string]::IsNullOrWhiteSpace($env:FUNCTIONS_DISCOVERY_TIMEOUT)) {
 }
 
 Write-Host 'Starting Magyaro at http://127.0.0.1:5000'
-& npm.cmd exec -- firebase emulators:start --only functions,hosting
+& firebase.cmd emulators:start --only functions,hosting --project hungarylearn
 exit $LASTEXITCODE
+

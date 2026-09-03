@@ -52,8 +52,7 @@
     },
     {
       "name": "LEMONSQUEEZY_TEST_MODE",
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     }
   ]
 }

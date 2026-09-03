@@ -5,6 +5,7 @@ import { getEntitlement } from '../firestore/repositories.js';
 import { parseLessonNumber } from '../../../src/server/lessonAccess.ts';
 import { loadServerLesson } from '../../../src/server/lessonLoader.ts';
 import { asyncHandler } from '../http/asyncHandler.js';
+import { lemonTestMode } from '../billing/params.js';
 
 export const lessonRouter = Router();
 
@@ -20,7 +21,7 @@ lessonRouter.get('/api/lessons/:lessonNumber', requireAuth, asyncHandler<Authent
     return;
   }
   const entitlement = await getEntitlement(req.auth!.uid);
-  if (!hasPaidAccess(entitlement)) {
+  if (!hasPaidAccess(entitlement, new Date(), lemonTestMode.value())) {
     res.status(403).json({ success: false, message: 'Для этого урока требуется действующая подписка' });
     return;
   }

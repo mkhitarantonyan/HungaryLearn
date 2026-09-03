@@ -48,16 +48,28 @@ export function normalizeLemonConfig(config: LemonConfig): LemonConfig {
   if (typeof config.testMode !== 'boolean') {
     throw new LemonConfigurationError('LEMONSQUEEZY_TEST_MODE', 'LEMONSQUEEZY_TEST_MODE must be boolean');
   }
+  const apiKey = typeof config.apiKey === 'string' ? config.apiKey.trim() : '';
+  if (!apiKey) throw new LemonConfigurationError('LEMONSQUEEZY_API_KEY', 'LEMONSQUEEZY_API_KEY is required');
   const storeId = resourceId(config.storeId, 'LEMONSQUEEZY_STORE_ID');
   const variantId = resourceId(config.variantId, 'LEMONSQUEEZY_VARIANT_ID');
   if (storeId === variantId) {
     throw new LemonConfigurationError('LEMONSQUEEZY_VARIANT_ID', 'Store and variant IDs must be different');
   }
+  let appUrl: URL;
+  try { appUrl = new URL(config.appUrl.trim()); }
+  catch { throw new LemonConfigurationError('APP_URL', 'APP_URL must be an absolute URL'); }
+  if (!['http:', 'https:'].includes(appUrl.protocol)) {
+    throw new LemonConfigurationError('APP_URL', 'APP_URL must use http or https');
+  }
+  if (!config.testMode && appUrl.protocol !== 'https:') {
+    throw new LemonConfigurationError('APP_URL', 'Production APP_URL must use https');
+  }
   return {
     ...config,
+    apiKey,
     storeId,
     variantId,
-    appUrl: config.appUrl.trim().replace(/\/+$/, ''),
+    appUrl: appUrl.toString().replace(/\/+$/, ''),
   };
 }
 
@@ -67,12 +79,13 @@ async function lemonRequest<T>(
   init: RequestInit,
   fetchImpl: typeof fetch = fetch,
 ): Promise<T> {
+  const normalized = normalizeLemonConfig(config);
   const response = await fetchImpl(`${LEMON_API}${path}`, {
     ...init,
     headers: {
       Accept: 'application/vnd.api+json',
       'Content-Type': 'application/vnd.api+json',
-      Authorization: `Bearer ${config.apiKey}`,
+      Authorization: `Bearer ${normalized.apiKey}`,
       ...(init.headers || {}),
     },
   });

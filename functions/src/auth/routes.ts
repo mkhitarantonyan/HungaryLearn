@@ -3,6 +3,7 @@ import { requireAuth, type AuthenticatedRequest } from './middleware.js';
 import { ensureUserProfile, getEntitlement } from '../firestore/repositories.js';
 import { hasPaidAccess } from '../domain/entitlements.js';
 import { asyncHandler } from '../http/asyncHandler.js';
+import { lemonTestMode } from '../billing/params.js';
 
 export const authRouter = Router();
 
@@ -11,18 +12,21 @@ authRouter.get('/api/auth/me', requireAuth, asyncHandler<AuthenticatedRequest>(a
   const email = req.auth!.email || '';
   await ensureUserProfile(uid, email);
   const entitlement = await getEntitlement(uid);
+  const expectedTestMode = lemonTestMode.value();
+  const billingEnvironmentMatches = entitlement?.provider !== 'lemonsqueezy' || entitlement.testMode === expectedTestMode;
   res.json({
     success: true,
     user: {
       id: uid,
       email,
       createdAt: req.auth!.auth_time ? new Date(req.auth!.auth_time * 1000).toISOString() : new Date().toISOString(),
-      subscriptionStatus: entitlement?.subscriptionStatus || 'unpaid',
-      accessUntil: entitlement?.accessUntil || null,
+      // Do not present stale Test-mode billing as an active Live subscription.
+      subscriptionStatus: billingEnvironmentMatches ? (entitlement?.subscriptionStatus || 'unpaid') : 'unpaid',
+      accessUntil: billingEnvironmentMatches ? (entitlement?.accessUntil || null) : null,
       isPrivileged: entitlement?.isPrivileged === true,
-      provider: entitlement?.provider || null,
-      cancelAtPeriodEnd: entitlement?.cancelAtPeriodEnd === true,
-      paidAccess: hasPaidAccess(entitlement),
+      provider: billingEnvironmentMatches ? (entitlement?.provider || null) : null,
+      cancelAtPeriodEnd: billingEnvironmentMatches && entitlement?.cancelAtPeriodEnd === true,
+      paidAccess: hasPaidAccess(entitlement, new Date(), expectedTestMode),
     },
   });
 }));

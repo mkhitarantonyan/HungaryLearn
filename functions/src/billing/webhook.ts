@@ -12,6 +12,7 @@ export const SUPPORTED_LEMON_EVENTS = new Set([
   'subscription_payment_success',
   'subscription_payment_failed',
   'subscription_payment_recovered',
+  'subscription_payment_refunded',
   'order_refunded',
 ]);
 
@@ -34,7 +35,7 @@ export function webhookHash(rawBody: Buffer): string {
 }
 
 export function verifyLemonSignature(rawBody: Buffer, signature: string | undefined, secret: string): boolean {
-  if (!signature || !/^[a-f0-9]{64}$/i.test(signature)) return false;
+  if (!secret || !signature || !/^[a-f0-9]{64}$/i.test(signature)) return false;
   const expected = Buffer.from(createHmac('sha256', secret).update(rawBody).digest('hex'), 'utf8');
   const actual = Buffer.from(signature.toLowerCase(), 'utf8');
   return expected.length === actual.length && timingSafeEqual(expected, actual);
@@ -59,17 +60,47 @@ function boolValue(value: unknown): boolean {
   return value === true;
 }
 
+function strictBoolValue(value: unknown): boolean | null {
+  if (value === true) return true;
+  if (value === false) return false;
+  return null;
+}
+
+function numberValue(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
+function isFullyRefunded(attributes: Record<string, unknown>): boolean {
+  if (attributes.refunded === true || stringValue(attributes.status) === 'refunded') return true;
+  const refundedAmount = numberValue(attributes.refunded_amount);
+  const total = numberValue(attributes.total);
+  return refundedAmount !== null && total !== null && total > 0 && refundedAmount >= total;
+}
+
 export function parseWebhook(rawBody: Buffer): LemonWebhookPayload {
   const parsed = JSON.parse(rawBody.toString('utf8')) as unknown;
   if (!parsed || typeof parsed !== 'object') throw new Error('Webhook payload must be an object');
   return parsed as LemonWebhookPayload;
 }
 
-export function getWebhookIdentity(payload: LemonWebhookPayload): { eventName: string; uid: string; objectId: string } {
+export function getWebhookEventName(payload: LemonWebhookPayload): string {
   const eventName = stringValue(payload.meta?.event_name);
-  const uid = stringValue(payload.meta?.custom_data?.firebase_uid);
-  const objectId = idValue(payload.data?.id);
   if (!eventName || !SUPPORTED_LEMON_EVENTS.has(eventName)) throw new Error('Unsupported event');
+  return eventName;
+}
+
+export function getWebhookFirebaseUid(payload: LemonWebhookPayload): string | null {
+  const uid = stringValue(payload.meta?.custom_data?.firebase_uid);
+  return uid && uid.length <= 128 ? uid : null;
+}
+
+export function getWebhookIdentity(
+  payload: LemonWebhookPayload,
+  fallbackUid?: string | null,
+): { eventName: string; uid: string; objectId: string } {
+  const eventName = getWebhookEventName(payload);
+  const uid = getWebhookFirebaseUid(payload) || stringValue(fallbackUid);
+  const objectId = idValue(payload.data?.id);
   if (!uid || uid.length > 128) throw new Error('Missing Firebase UID');
   if (!objectId) throw new Error('Missing object ID');
   return { eventName, uid, objectId };
@@ -86,13 +117,19 @@ function subscriptionIdFrom(payload: LemonWebhookPayload, attributes: Record<str
   return idValue(attributes.subscription_id) || relationId(payload, 'subscription');
 }
 
+export function getWebhookSubscriptionId(payload: LemonWebhookPayload): string | null {
+  return subscriptionIdFrom(payload, payload.data?.attributes || {});
+}
+
 export function buildWebhookUpdate(
   payload: LemonWebhookPayload,
   expectedStoreId: string,
   expectedVariantId: string,
-  hydratedSubscription?: Record<string, unknown>
+  expectedTestMode: boolean,
+  hydratedSubscription?: Record<string, unknown>,
+  fallbackUid?: string | null,
 ): WebhookUpdate | null {
-  const { eventName, uid, objectId } = getWebhookIdentity(payload);
+  const { eventName, uid, objectId } = getWebhookIdentity(payload, fallbackUid);
   const originalAttributes = payload.data?.attributes || {};
   const hydratedAttributes = hydratedSubscription?.attributes as Record<string, unknown> | undefined;
   const attributes = hydratedAttributes || originalAttributes;
@@ -103,7 +140,21 @@ export function buildWebhookUpdate(
     || relationId(payload, 'variant');
   if (storeId !== expectedStoreId || variantId !== expectedVariantId) return null;
 
-  const testMode = boolValue(attributes.test_mode);
+  const testMode = strictBoolValue(attributes.test_mode);
+  // Test and live Lemon data must never cross-contaminate the same entitlement
+  // collection, even if a store/variant is accidentally misconfigured. Missing
+  // environment metadata is rejected rather than silently treated as Live.
+  if (testMode === null || testMode !== expectedTestMode) return null;
+
+  // Lemon emits order_refunded for both full and partial refunds. A partial refund
+  // must not revoke an otherwise valid subscription. Full refunds do revoke paid
+  // access for the refunded order period.
+  if (eventName === 'order_refunded' && !isFullyRefunded(originalAttributes)) return null;
+  // Renewal invoice refunds are separate from initial order refunds. Ignore
+  // partial refunds; a full renewal refund removes paid access until a later
+  // successful subscription event restores it.
+  if (eventName === 'subscription_payment_refunded' && !isFullyRefunded(originalAttributes)) return null;
+
   const subscriptionId = subscriptionIdFrom(payload, attributes)
     || (hydratedSubscription?.type === 'subscriptions' ? idValue(hydratedSubscription.id) : null);
   const customerId = idValue(attributes.customer_id) || relationId(payload, 'customer');
@@ -112,6 +163,7 @@ export function buildWebhookUpdate(
 
   let rawStatus = stringValue(attributes.status) || 'unpaid';
   if (eventName === 'subscription_expired' || eventName === 'order_refunded') rawStatus = 'expired';
+  if (eventName === 'subscription_payment_refunded') rawStatus = 'unpaid';
   if (eventName === 'subscription_paused') rawStatus = 'paused';
   const status: SubscriptionStatus = normalizeLemonStatus(rawStatus, cancelled);
 

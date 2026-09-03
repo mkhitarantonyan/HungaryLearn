@@ -76,6 +76,19 @@ test('checkout config trims IDs and rejects stale/default/missing resource IDs',
     () => normalizeLemonConfig({ ...config, storeId: undefined as unknown as string }),
     LemonConfigurationError,
   );
+  assert.throws(
+    () => normalizeLemonConfig({ ...config, apiKey: '   ' }),
+    (error) => error instanceof LemonConfigurationError && error.parameter === 'LEMONSQUEEZY_API_KEY',
+  );
+  assert.throws(
+    () => normalizeLemonConfig({ ...config, appUrl: 'not-a-url' }),
+    (error) => error instanceof LemonConfigurationError && error.parameter === 'APP_URL',
+  );
+  assert.throws(
+    () => normalizeLemonConfig({ ...config, appUrl: 'http://example.com', testMode: false }),
+    (error) => error instanceof LemonConfigurationError && error.parameter === 'APP_URL',
+  );
+  assert.equal(normalizeLemonConfig({ ...config, appUrl: 'http://127.0.0.1:5000', testMode: true }).appUrl, 'http://127.0.0.1:5000');
 });
 
 test('Lemon API failures preserve safe status, title and detail without request secrets', async () => {

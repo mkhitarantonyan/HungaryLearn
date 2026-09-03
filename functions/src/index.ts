@@ -1,6 +1,6 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { app } from './app.js';
-import { lemonApiKey, lemonWebhookSecret } from './billing/routes.js';
+import { lemonApiKey, lemonWebhookSecret } from './billing/params.js';
 
 export const api = onRequest({
   region: 'europe-west1',

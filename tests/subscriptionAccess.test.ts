@@ -20,3 +20,24 @@ test('on_trial is normalized to unpaid and never grants access', () => {
   assert.equal(normalizeLemonStatus('on_trial'), 'unpaid');
   assert.equal(hasPaidAccess({ subscriptionStatus: normalizeLemonStatus('on_trial'), accessUntil: future }, now), false);
 });
+
+test('Lemon Test-mode entitlement cannot unlock Live production access', () => {
+  const testEntitlement = {
+    subscriptionStatus: 'active' as const,
+    accessUntil: future,
+    provider: 'lemonsqueezy' as const,
+    testMode: true,
+  };
+  assert.equal(hasPaidAccess(testEntitlement, now, true), true);
+  assert.equal(hasPaidAccess(testEntitlement, now, false), false);
+});
+
+test('Lemon entitlement without environment marker is rejected when server environment is explicit', () => {
+  const legacyEntitlement = {
+    subscriptionStatus: 'active' as const,
+    accessUntil: future,
+    provider: 'lemonsqueezy' as const,
+  };
+  assert.equal(hasPaidAccess(legacyEntitlement, now, false), false);
+});
+

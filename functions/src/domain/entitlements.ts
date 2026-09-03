@@ -29,9 +29,18 @@ function isFuture(value: string | null | undefined, now: Date): boolean {
 }
 
 /** The only commercial-access decision. Call this on trusted server data only. */
-export function hasPaidAccess(entitlement: Entitlement | null | undefined, now = new Date()): boolean {
+export function hasPaidAccess(
+  entitlement: Entitlement | null | undefined,
+  now = new Date(),
+  expectedTestMode?: boolean,
+): boolean {
   if (!entitlement) return false;
   if (entitlement.isPrivileged === true) return true;
+  // A Test-mode Lemon purchase must never unlock Live production content, and
+  // vice versa. Older Lemon entitlements without an explicit testMode are also
+  // rejected when the server declares its expected billing environment.
+  if (entitlement.provider === 'lemonsqueezy' && typeof expectedTestMode === 'boolean'
+    && entitlement.testMode !== expectedTestMode) return false;
   if (entitlement.subscriptionStatus === 'active') return isFuture(entitlement.accessUntil, now);
   if (entitlement.subscriptionStatus === 'cancelled') return isFuture(entitlement.accessUntil, now);
   return false;

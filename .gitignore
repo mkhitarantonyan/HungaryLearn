@@ -19,3 +19,9 @@ gcs-service-account.json
 # Local Firebase Functions config/secrets
 functions/.secret.local
 functions/.env.local
+# Firebase / Google credentials
+*firebase-adminsdk*.json
+*service-account*.json
+*.p12
+*.key
+
