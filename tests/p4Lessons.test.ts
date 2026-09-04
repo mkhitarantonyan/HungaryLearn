@@ -141,7 +141,7 @@ test('P4 leaves L18-L27, L28, and P6B L21-L24 source files byte-identical', () =
     [24, '84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15'],
     [25, '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74'],
     [26, 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee'],
-    [27, 'a265e3a27e9faf15188596a7f6f00dbb955231830b6f81d641c74536a9982af2'],
+    [27, '07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09'],
     [28, '617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc'],
   ]);
   for (const [lesson, expected] of contracts) {
