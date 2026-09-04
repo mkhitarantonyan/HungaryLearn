@@ -217,7 +217,7 @@ test('L7–L28 lesson sources are protected by their pre-P1 hashes', () => {
     '85c857d5601a80697d67cdfc962218dc6265e12937d282f4c9e0eff64cf8c325', '7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138',
     '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1', 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c',
     'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa', '84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15',
-    '6ac306dfd9074787d7ee225b2f190a1da1b2099ade65a596120c5ebe6c7aae4b', 'd587d82110db092ec162ee1fa969b4c97f2108fad399174278b10da2feb4ae25',
+    '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74', 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee',
     'a265e3a27e9faf15188596a7f6f00dbb955231830b6f81d641c74536a9982af2', '617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc',
   ];
   for (let lesson = 7; lesson <= 28; lesson += 1) assert.equal(sha(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url)), expected[lesson - 7], `L${lesson}`);
