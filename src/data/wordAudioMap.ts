@@ -137,7 +137,7 @@ const rawWordAudioMap: Record<string, string> = {
   'ember': audioUrl('ember.mp3'),
   'én': audioUrl('én.mp3'),
   'engem': audioUrl('engem.mp3'),
-  'engem mkhitárnak hívnak. honnan vagy?': audioUrl('Engem_Mkhitárnak_hívnak._Honnan_vagy.mp3'),
+  'péternek hívnak. honnan vagy?': audioUrl('Péternek_hívnak._Honnan_vagy.mp3'),
   'enni': audioUrl('enni.mp3'),
   'ért': audioUrl('ért.mp3'),
   'értekezlet / megbeszélés': audioUrl('értekezlet_megbeszélés.mp3'),

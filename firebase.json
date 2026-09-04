@@ -22,6 +22,20 @@
     ],
     "rewrites": [
       {
+        "source": "/api/webhooks/lemonsqueezy",
+        "function": {
+          "functionId": "billing",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/billing/**",
+        "function": {
+          "functionId": "billing",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "/api/**",
         "function": {
           "functionId": "api",

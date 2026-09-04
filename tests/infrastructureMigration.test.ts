@@ -8,8 +8,12 @@ const root = path.resolve('.');
 test('Firebase deployment configuration preserves API rewrite order and strict Storage rules', () => {
   const config = JSON.parse(readFileSync(path.join(root, 'firebase.json'), 'utf8'));
   assert.equal(config.hosting.public, 'dist');
-  assert.equal(config.hosting.rewrites[0].source, '/api/**');
-  assert.equal(config.hosting.rewrites[1].source, '**');
+  const rewriteSources = config.hosting.rewrites.map((rewrite: { source: string }) => rewrite.source);
+  const apiIndex = rewriteSources.indexOf('/api/**');
+  const spaIndex = rewriteSources.indexOf('**');
+  assert.notEqual(apiIndex, -1, 'Hosting must contain the /api/** rewrite');
+  assert.notEqual(spaIndex, -1, 'Hosting must contain the SPA ** rewrite');
+  assert.ok(apiIndex < spaIndex, '/api/** must be evaluated before the SPA catch-all');
   assert.match(readFileSync(path.join(root, 'storage.rules'), 'utf8'), /allow read, write: if false/);
 });
 test('local site build provides a discoverable API function before Hosting starts', () => {

@@ -12,7 +12,7 @@ type ProseReadingTask = ContentReadingTaskData & { content: ProseReadingContent 
 export const P1_L1_PRACTICE: ControlledPracticeData = {
   kind: 'controlledPractice',
   id: 'l1-cp-foundation-discrimination',
-  title: 'Итоговая дискриминация: буква, звук и знакомое слово',
+  title: 'Проверка: буквы, звуки и знакомые слова',
   passCount: 13,
   exercises: [
     { kind: 'singleChoice', id: 'l1-p1-cp1', prompt: 'Где написан долгий á?', options: ['hat', 'hát', 'hét'], correctIndex: 1, explanation: 'hát содержит á.' },
@@ -37,8 +37,8 @@ export const P1_L1_PRACTICE: ControlledPracticeData = {
 export const P1_L1_DECODING: ProseReadingTask = {
   kind: 'reading',
   id: 'l1-reading-decoding',
-  title: 'Чтение и декодирование: первые формы',
-  instructions: 'Прочитай слова и короткие фразы. Отвечай только о буквах, звуках и знакомом значении.',
+  title: 'Чтение: первые слова и фразы',
+  instructions: 'Прочитайте слова и короткие фразы. Используйте переводы и объяснения слайда, затем ответьте на вопросы о чтении и значении.',
   content: {
     type: 'prose',
     title: 'Első szavak',
@@ -61,10 +61,10 @@ export const P1_L1_DECODING: ProseReadingTask = {
 export const P1_L1_WRITING: WritingTaskData = {
   kind: 'writing',
   id: 'l1-writing-first-forms',
-  title: 'Письмо: 5–8 знакомых форм',
-  prompt: 'Напечатай 5–8 знакомых венгерских слов, затем 3 очень короткие фразы. Сохрани долгие гласные и буквосочетания точно. Это открытая самопроверка, а не оценка произношения.',
+  title: 'Письменная самопроверка: знакомые слова и фразы',
+  prompt: 'Напишите 5–8 знакомых венгерских слов, затем три короткие фразы. Точно сохраните долгие гласные, точки, штрихи и буквосочетания. Это письменная самопроверка; произношение здесь не оценивается.',
   modelAnswer: ['szia, sör, család, gyerek, nyár, kenyér, jó', 'Szia!', 'Jó napot!', 'Magyar vagyok.'],
-  rubric: ['Есть 5–8 знакомых слов', 'Есть 3 очень короткие знакомые фразы', 'Сохранены долгие гласные и буквосочетания', 'Произношение автоматически не оценивается'],
+  rubric: ['Написаны 5–8 знакомых слов', 'Написаны три короткие фразы', 'Сохранены все долгие гласные и буквосочетания', 'Проверено написание по образцу'],
 };
 
 export const P1_L1_SPEAKING: OptionalSpeakingPracticeData = {
@@ -135,10 +135,21 @@ export const P1_L2_ROLEPLAY: RolePlayData = {
 };
 
 export const P1_L2_WRITING: WritingTaskData = {
-  kind: 'writing', id: 'l2-writing-fictional-introduction', title: 'Письмо: короткое знакомство (30–50 слов)',
-  prompt: 'Напиши 30–50 слов: приветствие, имя, один факт о себе, один простой вопрос собеседнику и прощание.',
-  modelAnswer: ['Szia! Anna vagyok. Magyar vagyok, és diák vagyok. Ma jól vagyok, köszönöm. Ma itt tanulok magyarul. Te magyar vagy? Te is itt tanulsz? Te hogy vagy? Hogy hívnak? Örülök. Viszlát!'],
-  rubric: ['30–50 слов', 'Есть приветствие и прощание', 'Есть имя и один факт', 'Есть один простой вопрос'],
+  kind: 'writing',
+  id: 'l2-writing-fictional-introduction',
+  title: 'Письмо: знакомство (30–50 слов)',
+  prompt: 'Напишите 30–50 венгерских слов: приветствие, имя, национальность или происхождение, место жительства, профессию или статус, два простых вопроса собеседнику и прощание.',
+  modelAnswer: [
+    'Szia! Anna vagyok. Örmény vagyok. Örményországból vagyok, de Budapesten élek. Grafikus vagyok. Jól vagyok, köszönöm. És te? Hogy hívnak? Honnan vagy? Hol élsz? Mivel foglalkozol? Nagyon örülök, hogy megismerhetlek. Viszlát!',
+  ],
+  rubric: [
+    '30–50 венгерских слов',
+    'Есть приветствие и прощание',
+    'Есть имя, происхождение или национальность',
+    'Есть место жительства и профессия либо статус',
+    'Есть минимум два простых вопроса',
+    'Формы lenni и порядок слов использованы правильно',
+  ],
 };
 
 export const P1_L2_SPEAKING: OptionalSpeakingPracticeData = {
@@ -205,15 +216,34 @@ export const P1_L3_ROLEPLAY: RolePlayData = {
 };
 
 export const P1_L3_WRITING: WritingTaskData = {
-  kind: 'writing', id: 'l3-writing-fictional-room', title: 'Письмо: вымышленная комната (40–60 слов)',
-  prompt: 'Опиши вымышленную комнату в 40–60 словах. Используй a/az/egy, единственное и множественное число, itt/ott. Не используй винительный падеж.',
-  modelAnswer: ['Ez egy kis szoba. Az ajtó itt van, az ablak ott van. A szobában van egy asztal. Az asztal nagy. Itt vannak a székek és a könyvek. A telefon itt van. Azok ott füzetek. Ezek új könyvek. Ez egy egyszerű, világos szoba.'],
-  rubric: ['40–60 слов', 'Есть a, az и egy', 'Есть формы единственного и множественного числа', 'Нет обязательного винительного падежа'],
+  kind: 'writing',
+  id: 'l3-writing-fictional-room',
+  title: 'Письмо: вымышленная комната (40–60 слов)',
+  prompt: 'Опишите вымышленную комнату в 40–60 венгерских словах. Используйте a/az/egy, единственное и множественное число, itt/ott, van/vannak и одну количественную группу. Используйте только уже изученные конструкции.',
+  modelAnswer: [
+    'Ez egy kis, világos szoba. Van egy asztal és egy lámpa a szobában. Az asztal nagy. Két szék van az asztal mellett. A könyvek az asztalon vannak. Az ablakok nagyok. A tükör a falon van. Az ágy mellett van egy kis szőnyeg. A szoba szép és világos.',
+  ],
+  rubric: [
+    '40–60 венгерских слов',
+    'Есть a, az и egy в правильных контекстах',
+    'Есть формы единственного и множественного числа',
+    'Есть van и vannak для наличия или местонахождения',
+    'После числа существительное осталось в единственном числе',
+    'Есть хотя бы одно предложение о качестве без van/vannak',
+  ],
 };
 
 export const P1_L3_SPEAKING: OptionalSpeakingPracticeData = {
-  title: 'Устная самопрактика: предметы', instructions: 'Около 1 минуты назови предметы в вымышленной комнате. Без микрофона, score и evidence.',
-  prompt: 'Ez egy… Az egy… Ezek… Azok… A … itt van.', rubric: ['Названы несколько предметов', 'Есть один вопрос Mi ez? / Mi az?'],
+  title: 'Устная самопрактика: предметы в комнате',
+  instructions: 'Около одной минуты опишите вымышленную или настоящую комнату. Микрофон и автоматическая оценка не используются.',
+  prompt: 'Используйте модели: Van egy…; Vannak…; A/az … itt/ott van; A/az … itt/ott vannak; Két/három … van; A/az … nagy/szép.',
+  rubric: [
+    'Названы минимум четыре предмета',
+    'Есть один новый предмет с Van egy…',
+    'Есть множественное число с Vannak… или vannak',
+    'После точного числа существительное осталось в единственном числе',
+    'Есть одно предложение о качестве без van/vannak',
+  ],
 };
 
 export const P1_L4_PRACTICE: ControlledPracticeData = {

@@ -13,14 +13,6 @@
       "region": [
         "europe-west1"
       ],
-      "secretEnvironmentVariables": [
-        {
-          "key": "LEMONSQUEEZY_API_KEY"
-        },
-        {
-          "key": "LEMONSQUEEZY_WEBHOOK_SECRET"
-        }
-      ],
       "labels": {},
       "httpsTrigger": {},
       "entryPoint": "api"
@@ -31,28 +23,9 @@
   "extensions": {},
   "params": [
     {
-      "type": "secret",
-      "name": "LEMONSQUEEZY_API_KEY"
-    },
-    {
-      "type": "secret",
-      "name": "LEMONSQUEEZY_WEBHOOK_SECRET"
-    },
-    {
-      "name": "LEMONSQUEEZY_STORE_ID",
-      "type": "string"
-    },
-    {
-      "name": "LEMONSQUEEZY_VARIANT_ID",
-      "type": "string"
-    },
-    {
-      "name": "APP_URL",
-      "type": "string"
-    },
-    {
       "name": "LEMONSQUEEZY_TEST_MODE",
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     }
   ]
 }

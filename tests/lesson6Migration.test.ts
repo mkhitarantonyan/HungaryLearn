@@ -330,7 +330,7 @@ test('all eight L6 quiz items have unique options, one intended answer, and no c
 test('legacy out-of-scope A1+ forms are removed from learner-facing and scored content', () => {
   const text = JSON.stringify(LESSON_6);
   for (const banned of [
-    'könyvet', 'asztalnál', 'barátaimmal', 'szeretem', 'Mkhitárnak', 'Hétfőtől', 'péntekig',
+    'könyvet', 'asztalnál', 'barátaimmal', 'szeretem', 'Hétfőtől', 'péntekig',
     'megismertelek', 'reggelizem', 'nyelvet',
   ]) {
     assert.equal(text.includes(banned), false, `unexpected ${banned}`);

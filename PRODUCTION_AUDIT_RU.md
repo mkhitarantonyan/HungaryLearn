@@ -4,14 +4,14 @@
 
 ## Итог
 
-Архитектуру Firebase + Lemon Squeezy переделывать не нужно. Она уже построена правильно: Firebase Authentication выдаёт ID token, `/api/*` проверяет Bearer token через Firebase Admin, Firestore хранит серверный entitlement, а Lemon Squeezy webhook является источником истины для платного доступа.
+Архитектура разделена на две Firebase Functions: core `api` обслуживает Auth/Admin/Lessons/Progress/Audio без Lemon secrets, а `billing` обслуживает checkout/Customer Portal/webhook и единственная получает Lemon secrets. Firebase Authentication выдаёт ID token, Firestore хранит серверный entitlement, а Lemon Squeezy webhook остаётся источником истины только для платного доступа.
 
 Blaze уже включён. Основной остаток — Live-конфигурация Lemon Squeezy, production secrets/params, первый Firebase deploy и end-to-end smoke test.
 
 ## Что было усилено в коде этим аудитом
 
 1. Test и Live Lemon Squeezy теперь жёстко разделены при выдаче доступа. Старый Test-mode entitlement не сможет открыть платные уроки в Live.
-2. `LEMONSQUEEZY_TEST_MODE` больше не имеет опасного молчаливого default=true: среда должна быть указана явно.
+2. `LEMONSQUEEZY_TEST_MODE` имеет production-safe default=false. Local/Test окружение должно явно ставить `true`, поэтому Test-покупка не сможет случайно открыть Live-контент.
 3. Проверяется production `APP_URL`: в Live разрешён только HTTPS.
 4. Проверяется наличие Lemon API key и валидность Store/Variant ID.
 5. Повторный checkout блокируется, если у пользователя уже есть управляемая подписка в той же Lemon-среде.
@@ -45,8 +45,9 @@ Blaze уже включён. Основной остаток — Live-конфи
 - `/api/auth/me` и Bearer ID-token verification.
 - Firestore server-authoritative profile/entitlement model.
 - Firestore rules: browser не может сам выдать себе entitlement.
-- Firebase Functions v2 API в `europe-west1`.
-- Hosting rewrite `/api/** -> api`.
+- Firebase Functions v2 в `europe-west1`: core `api` и отдельный `billing`.
+- Hosting rewrites: `/api/billing/**` и `/api/webhooks/lemonsqueezy` → `billing`; остальные `/api/**` → `api`.
+- Admin/core Function не привязана к `LEMONSQUEEZY_API_KEY` или `LEMONSQUEEZY_WEBHOOK_SECRET`.
 - Lemon checkout создаётся сервером и получает Firebase UID из проверенного токена.
 - Firebase UID передаётся в Lemon checkout custom data.
 - Lemon webhook HMAC SHA-256 проверяется по `X-Signature` и raw body.
@@ -111,7 +112,7 @@ firebase functions:secrets:set LEMONSQUEEZY_WEBHOOK_SECRET
 
 ### 5. Non-secret Functions params
 
-Первый Functions deploy запросит значения, если их ещё нет:
+Core/admin `api` можно развернуть до активации Lemon. Billing-параметры имеют безопасные defaults: пустые Store/Variant (billing fail-closed), `APP_URL=https://hungarylearn.web.app`, `LEMONSQUEEZY_TEST_MODE=false`. Перед первым **billing** deploy задать реальные Live значения:
 
 ```text
 LEMONSQUEEZY_STORE_ID=<LIVE Store ID>
@@ -119,8 +120,6 @@ LEMONSQUEEZY_VARIANT_ID=<LIVE Variant ID>
 APP_URL=https://hungarylearn.web.app
 LEMONSQUEEZY_TEST_MODE=false
 ```
-
-`LEMONSQUEEZY_TEST_MODE=false` критичен.
 
 ### 6. Проверки на локальном компьютере
 
@@ -137,7 +136,15 @@ npm run functions:build
 
 Этот аудит не заменяет эти команды: в sandbox не удалось установить полный npm dependency tree, поэтому полный suite после изменений здесь не запускался. Синтаксис изменённых TypeScript файлов проверен отдельно, а ключевая billing-логика прошла изолированные runtime assertions.
 
-### 7. Первый deploy
+### 7. Deploy
+
+Core/admin можно опубликовать независимо от Lemon:
+
+```powershell
+firebase deploy --only functions:api
+```
+
+После активации Lemon и настройки Live secrets/params выполнить полный deploy:
 
 ```powershell
 firebase deploy --only firestore:rules,firestore:indexes,storage,functions,hosting

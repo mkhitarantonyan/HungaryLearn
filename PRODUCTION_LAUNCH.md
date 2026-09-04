@@ -1,6 +1,6 @@
 # Magyaro production launch — Firebase + Lemon Squeezy
 
-This repository is already structured for Firebase Authentication, Firestore, Cloud Functions v2, Firebase Hosting, and Lemon Squeezy subscriptions. The steps below configure production; they do not replace the existing architecture.
+This repository uses separate Cloud Functions for the core application and billing. `api` serves Auth/Admin/Lessons/Progress/Audio without Lemon secrets; `billing` serves Lemon checkout, Customer Portal, and webhook routes and is the only Function bound to Lemon secrets.
 
 ## 0. Security first
 
@@ -13,6 +13,8 @@ This repository is already structured for Firebase Authentication, Firestore, Cl
 - Firebase project: `hungarylearn`
 - Billing plan: Blaze
 - Firebase CLI logged into the Google account that owns the project
+For the core/admin deploy, only Firebase/Blaze access is required. Before deploying the separate `billing` Function, additionally prepare:
+
 - A live Lemon Squeezy subscription product/variant created in Live mode
 - A live Lemon Squeezy API key
 - A new production webhook signing secret (do not reuse the test secret)
@@ -46,7 +48,7 @@ The admin audio-override API uses the Admin SDK default Storage bucket (`storage
 
 ## 3. Lemon Squeezy live configuration
 
-Create the live product/variant in Lemon Squeezy before deploying Functions. Record:
+Create the live product/variant in Lemon Squeezy before deploying the `billing` Function. The core `api` Function can be deployed earlier. Record:
 
 - Live Store ID
 - Live Variant ID
@@ -69,7 +71,7 @@ Use a *live* Lemon API key and a *new production* webhook signing secret.
 
 ### Non-secret parameters
 
-`LEMONSQUEEZY_STORE_ID`, `LEMONSQUEEZY_VARIANT_ID`, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. On the first production Functions deploy, Firebase CLI will prompt for any missing values and save them to `functions/.env.hungarylearn` (gitignored).
+`LEMONSQUEEZY_STORE_ID`, `LEMONSQUEEZY_VARIANT_ID`, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. They have production-safe defaults so the core/admin `api` Function can deploy without Lemon configuration: empty Store/Variant values make billing fail closed, `APP_URL` defaults to the Firebase Hosting URL, and Test mode defaults to `false`. Set the real values before the first `billing` deploy.
 
 Enter:
 
@@ -95,9 +97,15 @@ npm run functions:build
 
 Do not deploy if any required check fails.
 
-## 5. First production deploy
+## 5. Production deploy
 
-Deploy Firestore rules/indexes, Storage rules, Functions, and Hosting:
+The core/admin backend can be deployed before Lemon activation:
+
+```powershell
+firebase deploy --only functions:api
+```
+
+After Live Lemon secrets and parameters are configured, deploy the complete stack:
 
 ```powershell
 firebase deploy --only firestore:rules,firestore:indexes,storage,functions,hosting
