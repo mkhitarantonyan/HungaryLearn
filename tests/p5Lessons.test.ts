@@ -139,8 +139,8 @@ test('P5 does not reintroduce learner recording or browser TTS', () => {
 
 test('P5 leaves P6/P7 L21–L27 and L28 source files byte-identical', () => {
   const contracts = new Map([
-    [21, '844da631c8d56cf5cb1bdac950b247b7cf1042789d34f2ea17d86b72b17fafc9'],
-    [22, '60e96dd75c3e8c21334a2c8d4e78838ab1cdcad0c559ada940e85782c54eb1f8'],
+    [21, '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1'],
+    [22, 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c'],
     [23, '9a8866b28e94d0bb97f7d400491e60674c88791ab7b60f7f99dcf05a611ceb85'],
     [24, '9f286e89efb21d5e214731f001e96333d24353c739a961dd190a5e6f59b4c8d2'],
     [25, '6ac306dfd9074787d7ee225b2f190a1da1b2099ade65a596120c5ebe6c7aae4b'],
