@@ -86,7 +86,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · {evidence.passed ? 'passed (practice)' : 'completed (не passed)'}
+            {evidence.score}/{evidence.total} · {evidence.passed ? 'Готово' : 'Стоит повторить'}
           </span>
         )}
       </div>
@@ -198,7 +198,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
         <p className="text-xs font-semibold" aria-live="polite">
           {score}/{total} ·{' '}
           <span className={evidence?.passed ? 'text-emerald-700' : 'text-[#C77B00]'}>
-            {evidence?.passed ? 'passed (practice)' : 'completed, но не passed'}
+            {evidence?.passed ? 'Готово' : 'Стоит повторить'}
           </span>
         </p>
       )}

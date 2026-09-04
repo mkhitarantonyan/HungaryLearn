@@ -127,7 +127,7 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · {evidence.passed ? 'met' : 'не met'}
+            {evidence.score}/{evidence.total} · {evidence.passed ? 'Готово' : 'Попробуй ещё раз'}
           </span>
         )}
       </div>

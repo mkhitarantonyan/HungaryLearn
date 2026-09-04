@@ -19,7 +19,7 @@ const EVIDENCE_LABELS: Record<EvidenceKind, string> = {
   grammar: 'Грамматика',
   vocabulary: 'Лексика',
   speaking: 'Говорение',
-  interaction: 'Интеракция',
+  interaction: 'Диалог',
   writing: 'Письмо',
   pronunciation: 'Произношение',
 };
@@ -42,25 +42,45 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
     switch (status.kind) {
       case 'direct-met':
         return {
-          label: status.label,
+          label: 'Готово',
           tone: 'text-emerald-700',
           icon: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
         };
       case 'direct-not-met':
+        return {
+          label: 'Попробуй ещё раз',
+          tone: 'text-[#C77B00]',
+          icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
+        };
       case 'none':
+        return {
+          label: 'Пока недоступно',
+          tone: 'text-[#C77B00]',
+          icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
+        };
       case 'composite-incomplete':
       case 'partial-components':
+        return {
+          label: 'Нужно завершить задания',
+          tone: 'text-[#C77B00]',
+          icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
+        };
       case 'partial-review':
         return {
-          label: status.label,
+          label: 'Лучше проверить с преподавателем',
           tone: 'text-[#C77B00]',
           icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'partial-incomplete':
+        return {
+          label: 'Не завершено',
+          tone: 'text-[#666E7E]',
+          icon: <Circle className="w-4 h-4 text-[#D6DEE6]" />,
+        };
       case 'not-started':
       default:
         return {
-          label: status.label,
+          label: 'Не начато',
           tone: 'text-[#666E7E]',
           icon: <Circle className="w-4 h-4 text-[#D6DEE6]" />,
         };
@@ -72,15 +92,13 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
       <div className="flex items-center gap-2">
         <ClipboardCheck className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Exit check'}
+          {data.title ?? 'Проверка урока'}
         </h3>
       </div>
 
       <p className="text-xs text-[#666E7E]">
-        Проверка достижения целей урока по собранным activity-evidence. Пройденный quiz — это
-        Retrieval Checkpoint, а не доказательство полного владения уроком. Открытые задания
-        Speaking/Writing остаются PARTIAL и требуют проверки; компоненты PRACTICE не считаются
-        квалифицирующим evidence (автоматическая оценка речи отсутствует).
+        Посмотри, что уже получилось. Зелёная отметка означает, что задание выполнено успешно.
+        Письмо и свободную речь лучше дополнительно показать преподавателю или носителю языка.
       </p>
 
       <ul className="space-y-2" aria-live="polite">
@@ -105,8 +123,6 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                 </p>
                 <p className="text-[11px] text-[#666E7E] mt-0.5">
                   <span className="font-mono">{EVIDENCE_LABELS[check.evidenceKind]}</span>
-                  {' · '}
-                  <span className="font-mono">{check.activityId}</span>
                 </p>
                 {hasComponentBreakdown && (
                   <div className="mt-2 space-y-1 text-[11px] text-[#435064]">
@@ -127,8 +143,6 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                             {EVIDENCE_LABELS[component.evidenceKind]}
                           </span>
                           {' · '}
-                          <span className="font-mono text-[#666E7E]">{component.activityId}</span>
-                          {' · '}
                           <span className={componentStatus.tone}>{componentStatus.label}</span>
                         </p>
                       );
@@ -137,7 +151,7 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                       <p key={component}>
                         <span className="font-mono font-semibold">{EVIDENCE_LABELS[component]}</span>
                         {' · '}
-                        <span className="text-[#C77B00]">PRACTICE · not qualified</span>
+                        <span className="text-[#666E7E]">Дополнительная практика</span>
                       </p>
                     ))}
                   </div>

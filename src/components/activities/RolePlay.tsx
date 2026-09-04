@@ -55,7 +55,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
             {data.title ?? 'Ролевая игра'}
           </h3>
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5" /> completed · PARTIAL
+            <CheckCircle2 className="w-3.5 h-3.5" /> Сценарий пройден
           </span>
         </div>
         <p className="text-sm text-[#252B2F]">
@@ -92,7 +92,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold">
-            ✓ completed · PARTIAL
+            ✓ Сценарий пройден
           </span>
         )}
       </div>
@@ -131,14 +131,14 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
               )}
               {isSelfPractice && (
                 <p className="text-xs text-[#666E7E]">
-                  Произнеси ответ вслух для самопрактики или просто продумай его. Микрофон,
-                  запись и автоматическая оценка не используются.
+                  Произнеси ответ вслух и сравни его с примером. Если можешь, попроси преподавателя
+                  или носителя дать обратную связь.
                 </p>
               )}
               {isSystemCategory && (
                 <p className="text-xs text-[#666E7E]">
-                  Проверка этой реплики требует оценки учителя/системы — автоматическое распознавание
-                  свободной речи не реализовано.
+                  Эту реплику лучше проверить с преподавателем или носителем — они помогут оценить
+                  естественность и произношение.
                 </p>
               )}
             </div>

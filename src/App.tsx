@@ -24,6 +24,7 @@ import { emptyProgressData, isLessonAccessible, getCurrentUser, isUserAuthReady,
 import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
 import { getLessonProgressState } from './utils/lessonProgress';
+import { humanizeLearnerText } from './utils/learnerCopy';
 import { beginProgressHydration, isCurrentProgressHydration, mergeActivityEvidence } from './utils/progressMerge';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizAttemptToServer, syncActivityAttemptToServer, syncActivityEvidenceToServer } from './utils/userStore';
 import { AlertCircle, Loader2 } from 'lucide-react';
@@ -634,7 +635,7 @@ useEffect(() => {
           playbackRate={narration.playbackRate}
           needsUserGesture={narration.needsUserGesture}
           audioUnavailable={narration.audioUnavailable}
-          slideLabel={`${currentSlideIndex + 1} · ${currentSlide.title}`}
+          slideLabel={`${currentSlideIndex + 1} · ${humanizeLearnerText(currentSlide.title)}`}
           onPlayPause={narration.toggle}
           onToggleAutoplay={() => narration.setAutoplay(!narration.autoplayEnabled)}
           onSetPlaybackRate={narration.setPlaybackRate}
@@ -688,10 +689,10 @@ useEffect(() => {
                     {currentSlide.eyebrow}
                   </div>
                   <h1 className="text-2xl md:text-4xl font-extrabold text-[#252B2F] tracking-tight leading-[1.15]">
-                    {currentSlide.title}
+                    {humanizeLearnerText(currentSlide.title)}
                   </h1>
                   {currentSlide.subtitle && (
-                    <p className="text-sm md:text-base text-[#666E7E] mt-2 mb-6">{currentSlide.subtitle}</p>
+                    <p className="text-sm md:text-base text-[#666E7E] mt-2 mb-6">{humanizeLearnerText(currentSlide.subtitle)}</p>
                   )}
 
                   <SlideContent
@@ -788,7 +789,7 @@ useEffect(() => {
         isOpen={isSlideAudioModalOpen}
         lessonNumber={activeLesson.number}
         slideId={currentSlide.id}
-        slideTitle={currentSlide.title}
+        slideTitle={humanizeLearnerText(currentSlide.title)}
         onClose={() => setIsSlideAudioModalOpen(false)}
         onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
       />

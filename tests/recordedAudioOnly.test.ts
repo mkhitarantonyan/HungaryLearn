@@ -123,7 +123,7 @@ test('existing MP3 plays normally with its playback rate', async () => {
 
 test('listening tasks expose missing audio without a browser-speech fallback', () => {
   const source = readFileSync(new URL('../src/components/activities/ListeningTask.tsx', import.meta.url), 'utf8');
-  assert.match(source, /До публикации записанного MP3 аудио недоступно/);
+  assert.match(source, /Вернись к этому заданию позже/);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|playRecordedAudio/);
 });
 

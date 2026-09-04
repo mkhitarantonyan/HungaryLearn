@@ -82,7 +82,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold">
-            ✓ self-reviewed · PARTIAL
+            ✓ Самопроверка завершена
           </span>
         )}
       </div>

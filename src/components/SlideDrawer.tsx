@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { SlideData } from '../types';
 import { X, BookOpen, ChevronRight } from 'lucide-react';
+import { humanizeLearnerText } from '../utils/learnerCopy';
 
 interface SlideDrawerProps {
   isOpen: boolean;
@@ -76,9 +77,9 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
                   <div className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${isActive ? 'text-[#C77B00]' : 'text-[#666E7E]'}`}>
                     {slide.eyebrow}
                   </div>
-                  <div className="text-sm font-bold mt-0.5 truncate">{slide.title}</div>
+                  <div className="text-sm font-bold mt-0.5 truncate">{humanizeLearnerText(slide.title)}</div>
                   <div className={`text-xs mt-0.5 truncate ${isActive ? 'text-white/80' : 'text-[#666E7E]'}`}>
-                    {slide.subtitle}
+                    {humanizeLearnerText(slide.subtitle)}
                   </div>
                 </div>
                 <ChevronRight className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-[#666E7E]'}`} />

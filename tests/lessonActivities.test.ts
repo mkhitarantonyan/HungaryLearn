@@ -1225,10 +1225,10 @@ test('l3_use-egy stays overall PARTIAL when only grammar has DIRECT evidence', (
   const row = markup.match(/<li[^>]*data-objective-id="l3_use-egy"[\s\S]*?<\/li>/)?.[0];
   assert.ok(row);
   const rowText = row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  assert.match(rowText, /Грамматика · 5\/6 · DIRECT · met/);
-  assert.match(rowText, /Говорение · PRACTICE · not qualified/);
-  assert.match(rowText, /Итог: PARTIAL · не все компоненты подтверждены/);
-  assert.doesNotMatch(rowText, /Итог: .*DIRECT · met/);
+  assert.match(rowText, /Грамматика · Готово/);
+  assert.match(rowText, /Говорение · Дополнительная практика/);
+  assert.match(rowText, /Итог: Нужно завершить задания/);
+  assert.doesNotMatch(rowText, /\b(?:DIRECT|PARTIAL|NONE|evidence)\b/i);
 });
 
 test('L3 ExitCheck covers all five objectives and every reference resolves', () => {
@@ -1679,8 +1679,9 @@ test('L4 composite ExitCheck remains readable and exposes each component textual
   assert.ok(row);
   const rowText = row.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
   assert.match(rowText, /Аудирование/);
-  assert.match(rowText, /Чтение · l4-cp-recognize-text · 4\/5 · DIRECT · met/);
-  assert.match(rowText, /Итог: INCOMPLETE · не все обязательные компоненты подтверждены/);
+  assert.match(rowText, /Чтение · Готово/);
+  assert.match(rowText, /Итог: Нужно завершить задания/);
+  assert.doesNotMatch(rowText, /l4-cp-recognize-text|DIRECT|INCOMPLETE/);
 });
 
 test('L4 listening question IDs are unique lesson-wide', () => {
@@ -1984,7 +1985,7 @@ test('L2 published MP3 is available without browser-speech fallback', () => {
   );
   assert.equal(canProduceDirectListeningEvidence(listening), true);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|TTS-превью/);
-  assert.match(source, /До публикации записанного MP3 аудио недоступно/);
+  assert.match(source, /Вернись к этому заданию позже/);
 });
 
 test('L2 listening questions test register, identity, basic detail, response, and closing', () => {
@@ -2023,7 +2024,7 @@ test('L2 listening transcript is gated until after submission', () => {
     new URL('../src/components/activities/ListeningTask.tsx', import.meta.url),
     'utf8'
   );
-  assert.match(source, /submitLabel="Ответить и показать transcript"/);
+  assert.match(source, /submitLabel="Ответить и показать текст"/);
 });
 
 test('l2_greet-introduce remains overall PARTIAL with receptive DIRECT plus interaction', () => {
@@ -2311,7 +2312,7 @@ test('L2 activity markup exposes textual states without learner microphone UI', 
   );
   assert.match(writingMarkup, /<textarea/);
   assert.match(writingMarkup, /aria-label=/);
-  assert.match(completedRolePlayMarkup, /completed · PARTIAL/);
+  assert.match(completedRolePlayMarkup, /Сценарий пройден/);
   assert.doesNotMatch(completedRolePlayMarkup, /<button[^>]*микрофон|MediaRecorder|getUserMedia/i);
   assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
 });
@@ -2319,7 +2320,7 @@ test('L2 activity markup exposes textual states without learner microphone UI', 
 test('slide audio manifest matches the approved regenerated narration inventory', () => {
   assert.equal(
     sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)),
-    '9C416EA8F19B4CF803C684A4A2A823C245C07741E30A0AD61E62171EA4E6BDFB'
+    '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B'
   );
 });
 

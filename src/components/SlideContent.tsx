@@ -6,6 +6,7 @@ import { SpeechButton } from './SpeechButton';
 import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
 import { playRecordedAudio } from '../utils/speech';
+import { humanizeLearnerHtml, humanizeLearnerText } from '../utils/learnerCopy';
 import { Info, AlertTriangle, BookOpen, Eye, EyeOff } from 'lucide-react';
 
 interface SlideContentProps {
@@ -58,7 +59,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         <div
           onClick={handleContentClick}
           className="space-y-3 text-[#252B2F] leading-relaxed text-sm md:text-base font-sans"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(slide.body) }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(humanizeLearnerHtml(slide.body)) }}
         />
       )}
 
@@ -116,7 +117,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
       {slide.type === 'sentence-reading' && (
         <div className="rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 space-y-2">
           <p className="font-mono text-sm font-bold text-[#252B2F]">Устная практика (необязательно)</p>
-          <p className="text-xs text-[#435064]">Прочитай фразу вслух. Микрофон, оценка и evidence не используются.</p>
+          <p className="text-xs text-[#435064]">Прочитай фразу вслух и сравни своё произношение с примерами урока.</p>
           <p className="font-mono text-sm text-[#252B2F]">{slide.targetText || "Budapesten élek, és nagyon szeretek magyarul tanulni."}</p>
           {slide.targetPhonetic && <p className="text-xs text-[#666E7E]">{slide.targetPhonetic}</p>}
           {slide.targetTranslation && <p className="text-xs text-[#3B1E90]">{slide.targetTranslation}</p>}
@@ -125,15 +126,15 @@ export const SlideContent: React.FC<SlideContentProps> = ({
 
       {slide.optionalSpeaking && (
         <section className="rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 space-y-2">
-          <h3 className="font-mono text-sm font-bold text-[#252B2F]">{slide.optionalSpeaking.title}</h3>
-          <p className="text-xs leading-relaxed text-[#435064]">{slide.optionalSpeaking.instructions}</p>
-          <p className="font-mono text-sm text-[#252B2F]">{slide.optionalSpeaking.prompt}</p>
+          <h3 className="font-mono text-sm font-bold text-[#252B2F]">{humanizeLearnerText(slide.optionalSpeaking.title)}</h3>
+          <p className="text-xs leading-relaxed text-[#435064]">{humanizeLearnerText(slide.optionalSpeaking.instructions)}</p>
+          <p className="font-mono text-sm text-[#252B2F]">{humanizeLearnerText(slide.optionalSpeaking.prompt)}</p>
           {slide.optionalSpeaking.rubric && (
             <ul className="list-disc space-y-1 pl-5 text-xs text-[#435064]">
-              {slide.optionalSpeaking.rubric.map((item) => <li key={item}>{item}</li>)}
+              {slide.optionalSpeaking.rubric.map((item) => <li key={item}>{humanizeLearnerText(item)}</li>)}
             </ul>
           )}
-          <p className="text-xs text-[#666E7E]">Необязательная самопрактика: без микрофона, score и evidence.</p>
+          <p className="text-xs text-[#666E7E]">Необязательная самопрактика: произнеси ответ вслух и сравни его с примерами урока.</p>
         </section>
       )}
 
@@ -145,7 +146,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
           className="bg-[#3B1E90]/10 border-l-4 border-[#3B1E90] p-3.5 rounded-r-xl text-xs md:text-sm text-[#3B1E90] flex items-start gap-2.5 font-sans"
         >
           <Info className="w-4 h-4 shrink-0 mt-0.5" />
-          <div>{slide.note}</div>
+          <div>{humanizeLearnerText(slide.note)}</div>
         </motion.div>
       )}
 
@@ -156,7 +157,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
           className="bg-[#C23B4A]/10 border-l-4 border-[#C23B4A] p-3.5 rounded-r-xl text-xs md:text-sm text-[#C23B4A] flex items-start gap-2.5 font-sans"
         >
           <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-          <div>{slide.warn}</div>
+          <div>{humanizeLearnerText(slide.warn)}</div>
         </motion.div>
       )}
 
@@ -167,7 +168,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
           className="bg-[#C77B00]/15 border-l-4 border-[#C77B00] p-3.5 rounded-r-xl text-xs md:text-sm text-[#252B2F] flex items-start gap-2.5 font-sans font-medium"
         >
           <BookOpen className="w-4 h-4 shrink-0 mt-0.5 text-[#C77B00]" />
-          <div>{slide.task}</div>
+          <div>{humanizeLearnerText(slide.task)}</div>
         </motion.div>
       )}
 

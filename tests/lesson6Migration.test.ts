@@ -82,7 +82,7 @@ test('frozen planning docs, translations, approved narration manifest, and gener
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '9C416EA8F19B4CF803C684A4A2A823C245C07741E30A0AD61E62171EA4E6BDFB');
+  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B');
   assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'F9249BEF9F8C6DE95C4CAD634F8DE0D6BD0204025A24EE5512F8AF6F0B2CA793');
 });
 

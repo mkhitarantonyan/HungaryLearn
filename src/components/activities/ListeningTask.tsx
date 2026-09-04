@@ -63,15 +63,15 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         </h3>
         {evidence?.passed ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · DIRECT · met
+            {evidence.score}/{evidence.total} · Готово
           </span>
         ) : evidence?.completed && evidence.evidenceMode === 'direct' ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
-            {evidence.score}/{evidence.total} · DIRECT · не met
+            {evidence.score}/{evidence.total} · Попробуй ещё раз
           </span>
         ) : evidence?.completed ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
-            {evidence.score}/{evidence.total} · NONE · audio недоступно
+            Запись недоступна
           </span>
         ) : null}
       </div>
@@ -106,7 +106,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         <div className="rounded-xl border border-[#C77B00]/40 bg-[#C77B00]/10 p-3 text-xs md:text-sm text-[#252B2F]">
           <p className="font-semibold">Аудиозапись для этого задания ещё не опубликована.</p>
           <p className="text-[#666E7E] mt-1">
-            Это ожидаемый пилотный asset. До публикации записанного MP3 аудио недоступно.
+            Вернись к этому заданию позже.
           </p>
         </div>
       )}
@@ -114,7 +114,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
       {/* Questions */}
       <QuestionSet
         questions={data.questions}
-        submitLabel="Ответить и показать transcript"
+        submitLabel="Ответить и показать текст"
         allowRetry
         onSubmit={handleSubmit}
         onRetry={() => {
@@ -130,7 +130,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
           aria-live="polite"
         >
           <p className="text-[10px] font-mono uppercase tracking-wider text-[#3B1E90] font-bold mb-2">
-            Transcript (после ответа)
+            Текст записи (после ответа)
           </p>
           <pre className="whitespace-pre-wrap text-xs md:text-sm text-[#252B2F] font-sans leading-relaxed">
             {data.transcript}

@@ -336,12 +336,56 @@ function segmentsFromHtml(html) {
   return segments;
 }
 
+function humanizeNarrationSource(value) {
+  return value
+    .replace(/Writing оста(?:ё|е)тся PARTIAL(?: до квалифицированной проверки)?\.?/giu, 'Написанный текст лучше дополнительно проверить с преподавателем или носителем языка.')
+    .replace(/RolePlay оста(?:ё|е)тся PARTIAL[^.<]*\.?/giu, 'Диалог выполнен; свободную речь полезно дополнительно проверить с преподавателем или носителем языка.')
+    .replace(/Optional speaking[^.<]*(?:score|evidence)[^.<]*\.?/giu, 'Устная практика предназначена для самостоятельной тренировки.')
+    .replace(/(?:Это )?текстовая инструкция без микрофона, score и evidence\.?/giu, 'Произнеси ответ вслух и сравни его с примерами урока.')
+    .replace(/(?:не использует микрофон, )?не оценивается и не созда(?:ё|е)т evidence\.?/giu, 'предназначена для самостоятельной тренировки.')
+    .replace(/без микрофона, score и evidence\.?/giu, 'для самостоятельной тренировки.')
+    .replace(/Controlled Practice, Reading и (?:загруженный )?Listening могут дать DIRECT после порога\.?/giu, 'Выполни упражнения, чтение и аудирование и проверь результат.')
+    .replace(/Quiz или завершение урока не означает автоматически «A1 achieved» и не является CEFR-сертификацией\.?/giu, 'Переходи дальше, когда основные задания урока стали понятными и уверенными.')
+    .replace(/Quiz и просмотр 11 слайдов сами по себе не выдают CEFR-сертификацию\.?/giu, 'Если основные задания ещё вызывают трудности, вернись к ним перед следующим уроком.')
+    .replace(/\bPARTIAL\b/gu, 'требует дополнительной проверки')
+    .replace(/\bDIRECT\b/gu, 'проверено')
+    .replace(/\bNONE\b/gu, 'пока недоступно')
+    .replace(/\bevidence\b/giu, 'результат')
+    .replace(/\bscore\b/giu, 'оценка')
+    .replace(/\bRolePlay\b/giu, 'диалог')
+    .replace(/\bWriting\b/giu, 'письмо')
+    .replace(/\bListening\b/giu, 'аудирование')
+    .replace(/\bControlled Practice\b/giu, 'упражнения')
+    .replace(/\bquiz\b/giu, 'проверка')
+    .replace(/\btranscript\b/giu, 'текст записи');
+}
+
+const LEARNER_META_PATTERN = /\b(?:PARTIAL|DIRECT|NONE|evidence|score)\b|CEFR-сертификац|A[012]\s+achieved/iu;
+
+function learnerMetaSlideKeys() {
+  const keys = [];
+  for (let lesson = 1; lesson <= 28; lesson += 1) {
+    const filename = join(LESSON_DIR, `lesson${lesson}.ts`);
+    if (!lessonCache.has(lesson)) {
+      lessonCache.set(lesson, parseLessonSource(readFileSync(filename, 'utf8'), filename));
+    }
+    for (const [slide, fields] of lessonCache.get(lesson)) {
+      const source = STRUCTURAL_FIELDS.map((field) => fields[field] ?? '').join(' ');
+      if (LEARNER_META_PATTERN.test(source)) keys.push(`${lesson}.${slide}`);
+    }
+  }
+  return keys.sort(compareSlideKeys);
+}
+
 function buildNarrationSegments(slide) {
   const segments = [];
-  if (slide.title) segments.push(...splitMixedText(slide.title, /\p{Script=Cyrillic}/u.test(slide.title) ? 'ru' : 'hu'));
-  if (slide.subtitle) segments.push(...splitMixedText(slide.subtitle, 'ru'));
-  if (slide.task) segments.push(...segmentsFromHtml(slide.task));
-  if (slide.body) segments.push(...segmentsFromHtml(slide.body));
+  if (slide.title) {
+    const title = humanizeNarrationSource(slide.title);
+    segments.push(...splitMixedText(title, /\p{Script=Cyrillic}/u.test(title) ? 'ru' : 'hu'));
+  }
+  if (slide.subtitle) segments.push(...splitMixedText(humanizeNarrationSource(slide.subtitle), 'ru'));
+  if (slide.task) segments.push(...segmentsFromHtml(humanizeNarrationSource(slide.task)));
+  if (slide.body) segments.push(...segmentsFromHtml(humanizeNarrationSource(slide.body)));
   return mergeSegments(segments);
 }
 
@@ -406,13 +450,14 @@ function mp3DurationSeconds(buffer) {
 }
 
 function parseArguments(argv) {
-  const options = { slides: [], all: false, audit: false, checkText: false, from: undefined, list: false, publish: false, yes: false, text: undefined, selfTest: false };
+  const options = { slides: [], all: false, audit: false, checkText: false, learnerMeta: false, from: undefined, list: false, publish: false, yes: false, text: undefined, selfTest: false };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === '--all') options.all = true;
     else if (argument === '--audit') options.audit = true;
     else if (argument === '--check-text') options.checkText = true;
     else if (argument === '--list') options.list = true;
+    else if (argument === '--learner-meta') options.learnerMeta = true;
     else if (argument === '--publish') options.publish = true;
     else if (argument === '--yes') options.yes = true;
     else if (argument === '--self-test') options.selfTest = true;
@@ -561,18 +606,18 @@ if (options.selfTest && process.argv.length === 3) process.exit(0);
 
 if (options.audit) {
   auditAgainstSynchronizedBaseline();
-  if (!options.all && !options.from && !options.slides.length && !options.text) process.exit(0);
+  if (!options.all && !options.learnerMeta && !options.from && !options.slides.length && !options.text) process.exit(0);
 }
 
 if (options.checkText) {
   checkAllNarrationText();
-  if (!options.all && !options.from && !options.slides.length && !options.text) process.exit(0);
+  if (!options.all && !options.learnerMeta && !options.from && !options.slides.length && !options.text) process.exit(0);
 }
 
-if (options.list || (!options.all && !options.from && !options.slides.length && !options.text)) {
+if (options.list || (!options.all && !options.learnerMeta && !options.from && !options.slides.length && !options.text)) {
   for (const [lesson, slides] of RERECORD_TARGETS) console.log(`L${lesson}: ${slides.map((slide) => `${lesson}.${slide}.mp3`).join(', ')}`);
   console.log(`TOTAL: ${TARGET_KEYS.length} slide narration files.`);
-  if (!options.all && !options.from && !options.slides.length && !options.text) process.exit(0);
+  if (!options.all && !options.learnerMeta && !options.from && !options.slides.length && !options.text) process.exit(0);
 }
 
 if (options.text) {
@@ -583,13 +628,18 @@ if (options.text) {
 }
 
 if (options.from && !TARGET_KEYS.includes(options.from)) throw new Error(`Slide ${options.from} is not in the approved rerecord list.`);
-const selected = options.from
-  ? TARGET_KEYS.filter((key) => compareSlideKeys(key, options.from) >= 0)
-  : options.all
-    ? TARGET_KEYS
-    : [...new Set(options.slides)].sort(compareSlideKeys);
-for (const key of selected) {
-  if (!TARGET_KEYS.includes(key)) throw new Error(`Slide ${key} is not in the approved rerecord list.`);
+const selected = options.learnerMeta
+  ? [...new Set([...learnerMetaSlideKeys(), ...options.slides])].sort(compareSlideKeys)
+  : options.from
+    ? TARGET_KEYS.filter((key) => compareSlideKeys(key, options.from) >= 0)
+    : options.all
+      ? TARGET_KEYS
+      : [...new Set(options.slides)].sort(compareSlideKeys);
+
+if (!options.learnerMeta) {
+  for (const key of selected) {
+    if (!TARGET_KEYS.includes(key)) throw new Error(`Slide ${key} is not in the approved rerecord list.`);
+  }
 }
 if (!selected.length) process.exit(0);
 if (options.publish && !options.yes) throw new Error('Publishing requires the explicit pair --publish --yes.');
