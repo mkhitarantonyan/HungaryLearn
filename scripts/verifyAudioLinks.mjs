@@ -19,7 +19,6 @@ const listeningPlanPath = path.resolve(root, 'docs/listening-audio-plan.json');
 // These MP3s were deliberately retained when the affected lessons returned to
 // the canonical 11-slide identity. They are not runtime slides and must remain harmless.
 const PRESERVED_LEGACY_SLIDES = new Set([
-  '8.12.mp3',
   '13.12.mp3',
   '15.12.mp3',
   '16.12.mp3',
