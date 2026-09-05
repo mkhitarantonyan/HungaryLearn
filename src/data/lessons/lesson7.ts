@@ -129,42 +129,600 @@ export const LESSON_7: Lesson = {
       id: 1,
       eyebrow: 'УРОК 7 · 1/11 · ПОНЯТИЕ',
       title: 'A tárgyeset',
-      subtitle: 'Кого? Что?',
+      subtitle: 'Прямое дополнение: kit? — кого? mit? — что?',
+      type: 'info',
+      note: 'Винительный падеж показывает, на кого или на что непосредственно направлено действие. Его основной показатель — -t, но реальная форма слова может включать соединительную гласную или изменение основы.',
+      warn: 'Не говорите, что венгерский использует -t «вместо предлогов». Прямое дополнение не требует предлога ни в венгерском, ни в русском примере «вижу дом». Различие состоит в способе изменения формы существительного.',
+      task: 'Сравните словарную форму и форму прямого дополнения, затем найдите объект в трёх коротких предложениях.',
       body: `
-        <p>Прямое дополнение отвечает на вопросы «кого?» или «что?». В венгерском его обычно отмечает суффикс <span class="hu-word">-t</span>.</p>
-        <p><span class="hu-word">Látom a házat.</span> — Я вижу дом. Словарная форма <span class="hu-word">ház</span>, форма дополнения <span class="hu-word">házat</span>.</p>
-        <div class="note">Именно окончание показывает роль слова: <span class="hu-word">A ház nagy.</span> — Дом большой; <span class="hu-word">Látom a házat.</span> — Я вижу дом.</div>
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что такое tárgyeset</h4>
+
+        <p>
+          <b>A tárgyeset</b> — винительный, или объектный, падеж.
+          Он отмечает <b>прямое дополнение</b>: человека или предмет,
+          на который непосредственно направлено действие.
+        </p>
+
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Перевод</th><th>Пример ответа</th></tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="Kit?" data-speak-lang="hu-HU">Kit?</button>
+            </td>
+            <td>кого?</td>
+            <td>
+              <button class="speak-btn" data-speak-text="Annát." data-speak-lang="hu-HU">Annát.</button>
+              — Анну.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="Mit?" data-speak-lang="hu-HU">Mit?</button>
+            </td>
+            <td>что?</td>
+            <td>
+              <button class="speak-btn" data-speak-text="Egy könyvet." data-speak-lang="hu-HU">Egy könyvet.</button>
+              — одну / какую-то книгу.
+            </td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Словарная форма и форма объекта</h4>
+
+        <p>
+          Словарная форма называет предмет. Когда тот же предмет становится
+          прямым дополнением, существительное обычно получает показатель
+          винительного падежа <b>-t</b>.
+        </p>
+
+        <table class="conj">
+          <tr><th>Словарная форма</th><th>Прямое дополнение</th><th>Значение</th></tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU">ház</button>
+            </td>
+            <td>
+              <button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU">házat</button>
+            </td>
+            <td>дом → дом как объект действия</td>
+          </tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="könyv" data-speak-lang="hu-HU">könyv</button>
+            </td>
+            <td>
+              <button class="speak-btn" data-speak-text="könyvet" data-speak-lang="hu-HU">könyvet</button>
+            </td>
+            <td>книга → книгу</td>
+          </tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="alma" data-speak-lang="hu-HU">alma</button>
+            </td>
+            <td>
+              <button class="speak-btn" data-speak-text="almát" data-speak-lang="hu-HU">almát</button>
+            </td>
+            <td>яблоко → яблоко как объект действия</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Основной падежный показатель — <b>-t</b>, но форма не всегда получается
+          механическим добавлением одной буквы. В <b>házat</b> и <b>könyvet</b>
+          появляется соединительная гласная, а в <b>almát</b> конечная
+          <b>a</b> удлиняется до <b>á</b>. Эти модели подробно разбираются на 7.2.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Одна и та же основа в разных ролях</h4>
+
+        <table class="conj">
+          <tr><th>Без прямого дополнения</th><th>С прямым дополнением</th></tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="Ez egy ház." data-speak-lang="hu-HU">
+                Ez egy ház.
+              </button>
+              <br />Это дом.
+            </td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látok egy házat." data-speak-lang="hu-HU">
+                Látok egy házat.
+              </button>
+              <br />Я вижу один / какой-то дом.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="speak-btn" data-speak-text="A ház nagy." data-speak-lang="hu-HU">
+                A ház nagy.
+              </button>
+              <br />Дом большой.
+            </td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU">
+                Látom a házat.
+              </button>
+              <br />Я вижу этот / известный дом.
+            </td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Неверно: <b>Látom a ház.</b><br />
+          Верно:
+          <button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU">
+            Látom a házat.
+          </button>
+          — Я вижу этот / известный дом.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Пока только замечаем форму глагола</h4>
+
+        <p>
+          В примерах встречаются две формы глагола <b>lát</b> — «видеть»:
+        </p>
+
+        <ul class="tick">
+          <li>
+            <button class="speak-btn" data-speak-text="Látok egy házat." data-speak-lang="hu-HU">
+              Látok egy házat.
+            </button>
+            — Я вижу один / какой-то дом.
+          </li>
+          <li>
+            <button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU">
+              Látom a házat.
+            </button>
+            — Я вижу этот / известный дом.
+          </li>
+        </ul>
+
+        <div class="note">
+          Сейчас не нужно учить полную систему неопределённого и определённого
+          спряжения. На этом уроке достаточно запомнить эти модели и сосредоточиться
+          на форме существительного с <b>-t</b>. Полная система спряжения изучается отдельно.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Мини-проверка</h4>
+
+        <ol class="tasklist">
+          <li>
+            В предложении
+            <button class="speak-btn" data-speak-text="Ez egy könyv." data-speak-lang="hu-HU">
+              Ez egy könyv.
+            </button>
+            — «Это книга» — есть ли прямое дополнение?
+          </li>
+          <li>
+            В предложении
+            <button class="speak-btn" data-speak-text="Olvasok egy könyvet." data-speak-lang="hu-HU">
+              Olvasok egy könyvet.
+            </button>
+            — «Я читаю одну / какую-то книгу» — какое слово является дополнением?
+          </li>
+          <li>
+            Какой вопрос подходит к слову
+            <button class="speak-btn" data-speak-text="Annát" data-speak-lang="hu-HU">Annát</button>:
+            <b>kit?</b> или <b>mit?</b>
+          </li>
+        </ol>
+
+        <div class="note">
+          Ответы: 1) нет; 2) <b>egy könyvet</b> — «одну / какую-то книгу»;
+          3) <b>kit?</b> — «кого?».
+        </div>
       `,
     },
     {
       id: 2,
       eyebrow: 'УРОК 7 · 2/11 · ОБРАЗОВАНИЕ',
       title: 'Hogyan képezzük?',
-      subtitle: 'Надёжные модели и словарные формы',
+      subtitle: 'Формы -t, -at/-et/-ot/-öt и изменения основы',
+      type: 'info',
+      note: 'У винительного падежа один основной показатель — -t. Но перед ним может появляться соединительная гласная, а некоторые основы изменяются. Поэтому важно различать надёжные модели и словарные формы.',
+      warn: 'Нельзя свести образование винительного падежа к правилу «мягкий согласный — просто -t». Слово tanár заканчивается на r, а выбор между tanárt, házat, ablakot и könyvet зависит от типа основы, фонетики и словарной модели.',
+      task: 'Разберите четыре основные модели, сравните соединительные гласные и исправьте типичные ошибочные формы.',
       body: `
-        <ul class="tick">
-          <li>После большинства гласных добавляется <b>-t</b>: <span class="hu-word">autó → autót</span>, <span class="hu-word">kávé → kávét</span>.</li>
-          <li>Конечные <b>-a/-e</b> удлиняются: <span class="hu-word">alma → almát</span>, <span class="hu-word">mese → mesét</span>.</li>
-          <li>После согласной встречается и голое <b>-t</b>, и соединительная гласная: <span class="hu-word">asztal → asztalt</span>, но <span class="hu-word">kert → kertet</span>.</li>
-        </ul>
-        <div class="warn">Выбор соединительной гласной частично лексический. На начальном уровне учи частые формы вместе с существительным: <span class="hu-word">könyv — könyvet</span>, <span class="hu-word">ház — házat</span>.</div>
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Основной показатель — <span class="hu-word">-t</span></h4>
+
+        <p>
+          Винительный падеж имеет основной показатель <b>-t</b>.
+          В реальном слове он проявляется как:
+          <b>-t, -at, -et, -ot</b> или <b>-öt</b>.
+        </p>
+
+        <div class="note">
+          Эти варианты не являются пятью разными падежами.
+          Это разные формы одного и того же винительного окончания.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Модель A: слово заканчивается на гласную</h4>
+
+        <p>
+          После большинства конечных гласных добавляется <b>-t</b>.
+          Долгая гласная сохраняется.
+        </p>
+
+        <table class="conj">
+          <tr><th>Словарная форма</th><th>Винительный падеж</th><th>Перевод</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="autó" data-speak-lang="hu-HU">autó</button></td>
+            <td><button class="speak-btn" data-speak-text="autót" data-speak-lang="hu-HU">autót</button></td>
+            <td>машина → машину</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="kávé" data-speak-lang="hu-HU">kávé</button></td>
+            <td><button class="speak-btn" data-speak-text="kávét" data-speak-lang="hu-HU">kávét</button></td>
+            <td>кофе → кофе как объект действия</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="taxi" data-speak-lang="hu-HU">taxi</button></td>
+            <td><button class="speak-btn" data-speak-text="taxit" data-speak-lang="hu-HU">taxit</button></td>
+            <td>такси → такси как объект действия</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Конечные <b>a</b> и <b>e</b> образуют отдельную модель:
+          они не остаются краткими.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Модель B: конечные a и e удлиняются</h4>
+
+        <table class="conj">
+          <tr><th>Изменение</th><th>Пример</th><th>Перевод</th></tr>
+          <tr>
+            <td><b>a → á</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="alma, almát" data-speak-lang="hu-HU">
+                alma → almát
+              </button>
+            </td>
+            <td>яблоко → яблоко как объект действия</td>
+          </tr>
+          <tr>
+            <td><b>e → é</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="kefe, kefét" data-speak-lang="hu-HU">
+                kefe → kefét
+              </button>
+            </td>
+            <td>щётка → щётку</td>
+          </tr>
+          <tr>
+            <td><b>e → é</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="mese, mesét" data-speak-lang="hu-HU">
+                mese → mesét
+              </button>
+            </td>
+            <td>сказка → сказку</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Неверно: <b>almat</b>, <b>kefet</b>.<br />
+          Верно: <b>almát</b>, <b>kefét</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Модель C: после согласной иногда добавляется только -t</h4>
+
+        <p>
+          Некоторые согласные основы принимают голое <b>-t</b>
+          без соединительной гласной.
+        </p>
+
+        <table class="conj">
+          <tr><th>Словарная форма</th><th>Винительный падеж</th><th>Перевод</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="tanár" data-speak-lang="hu-HU">tanár</button></td>
+            <td><button class="speak-btn" data-speak-text="tanárt" data-speak-lang="hu-HU">tanárt</button></td>
+            <td>учитель → учителя</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="asztal" data-speak-lang="hu-HU">asztal</button></td>
+            <td><button class="speak-btn" data-speak-text="asztalt" data-speak-lang="hu-HU">asztalt</button></td>
+            <td>стол → стол как объект действия</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="lány" data-speak-lang="hu-HU">lány</button></td>
+            <td><button class="speak-btn" data-speak-text="lányt" data-speak-lang="hu-HU">lányt</button></td>
+            <td>девочка → девочку</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Это не универсальное правило для всех слов на <b>r, l</b> или <b>ny</b>.
+          На уровне A1 безопаснее запоминать частотные пары.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Модель D: появляется соединительная гласная</h4>
+
+        <table class="conj">
+          <tr><th>Форма</th><th>Пример</th><th>Перевод</th></tr>
+          <tr>
+            <td><b>-at</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="ház, házat" data-speak-lang="hu-HU">
+                ház → házat
+              </button>
+            </td>
+            <td>дом → дом как объект действия</td>
+          </tr>
+          <tr>
+            <td><b>-ot</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="ablak, ablakot" data-speak-lang="hu-HU">
+                ablak → ablakot
+              </button>
+            </td>
+            <td>окно → окно как объект действия</td>
+          </tr>
+          <tr>
+            <td><b>-et</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="kert, kertet" data-speak-lang="hu-HU">
+                kert → kertet
+              </button>
+            </td>
+            <td>сад → сад как объект действия</td>
+          </tr>
+          <tr>
+            <td><b>-et</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="könyv, könyvet" data-speak-lang="hu-HU">
+                könyv → könyvet
+              </button>
+            </td>
+            <td>книга → книгу</td>
+          </tr>
+          <tr>
+            <td><b>-öt</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="gyümölcs, gyümölcsöt" data-speak-lang="hu-HU">
+                gyümölcs → gyümölcsöt
+              </button>
+            </td>
+            <td>фрукт → фрукт как объект действия</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что даёт гармония гласных</h4>
+
+        <p>
+          Гармония помогает выбрать <b>качество</b> соединительной гласной:
+        </p>
+
+        <table class="conj">
+          <tr><th>Тип гласных основы</th><th>Частый вариант</th><th>Пример</th></tr>
+          <tr>
+            <td>заднего ряда</td>
+            <td><b>-at / -ot</b></td>
+            <td><b>házat, ablakot</b></td>
+          </tr>
+          <tr>
+            <td>переднего ряда, неогублённые</td>
+            <td><b>-et</b></td>
+            <td><b>kertet, könyvet</b></td>
+          </tr>
+          <tr>
+            <td>переднего ряда, огублённые</td>
+            <td><b>-öt</b></td>
+            <td><b>gyümölcsöt</b></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Гармония не сообщает автоматически:
+          нужна ли вообще соединительная гласная и будет ли у заднерядного слова
+          <b>-at</b> или <b>-ot</b>.
+          Поэтому учим: <b>tanárt</b>, но <b>házat</b> и <b>ablakot</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Некоторые основы дополнительно изменяются</h4>
+
+        <p>
+          У части частотных односложных слов долгий гласный основы
+          сокращается перед окончанием. Это словарные формы:
+        </p>
+
+        <table class="conj">
+          <tr><th>Словарная форма</th><th>Винительный падеж</th><th>Перевод</th></tr>
+          <tr><td>út</td><td>utat</td><td>дорога → дорогу</td></tr>
+          <tr><td>víz</td><td>vizet</td><td>вода → воду</td></tr>
+          <tr><td>kéz</td><td>kezet</td><td>рука → руку</td></tr>
+        </table>
+
+        <div class="note">
+          Не применяйте сокращение ко всем односложным словам.
+          Запоминайте такие формы вместе со словом:
+          <b>út — utat, víz — vizet, kéz — kezet</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Исправьте ошибки</h4>
+
+        <ol class="tasklist">
+          <li><b>alma → almat</b></li>
+          <li><b>könyv → könyvt</b></li>
+          <li><b>ház → házot</b></li>
+          <li><b>tanár → tanárat</b></li>
+          <li><b>gyümölcs → gyümölcset</b></li>
+        </ol>
+
+        <div class="note">
+          Ответы:
+          <b>almát, könyvet, házat, tanárt, gyümölcsöt</b>.
+        </div>
       `,
     },
     {
       id: 3,
       eyebrow: 'УРОК 7 · 3/11 · ЧАСТЫЕ ФОРМЫ',
       title: 'Alakok együtt',
-      subtitle: 'Учим парами',
+      subtitle: 'Учим форму вместе с короткой фразой',
+      type: 'practice',
+      note: 'Форма винительного падежа запоминается надёжнее не как отдельное окончание, а в паре со словарной формой и в коротком предложении.',
+      warn: 'Не пытайтесь каждый раз строить форму только по последней букве слова. Сравнивайте готовые модели: tanárt, но házat; asztalt, но kertet.',
+      task: 'Прочитайте пары вслух, определите модель образования и затем выполните проверяемую практику.',
       body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Частые пары</h4>
+
         <table class="conj">
-          <tr><th>Словарная форма</th><th>Дополнение</th><th>Значение</th></tr>
-          <tr><td>autó</td><td>autót</td><td>машина</td></tr>
-          <tr><td>alma</td><td>almát</td><td>яблоко</td></tr>
-          <tr><td>kert</td><td>kertet</td><td>сад</td></tr>
-          <tr><td>könyv</td><td>könyvet</td><td>книга</td></tr>
-          <tr><td>ház</td><td>házat</td><td>дом</td></tr>
-          <tr><td>asztal</td><td>asztalt</td><td>стол</td></tr>
+          <tr>
+            <th>Словарная форма</th>
+            <th>Форма дополнения</th>
+            <th>Короткий контекст</th>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="kutya" data-speak-lang="hu-HU">kutya</button></td>
+            <td><button class="speak-btn" data-speak-text="kutyát" data-speak-lang="hu-HU">kutyát</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látok egy kutyát." data-speak-lang="hu-HU">
+                Látok egy kutyát.
+              </button>
+              — Я вижу одну / какую-то собаку.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="alma" data-speak-lang="hu-HU">alma</button></td>
+            <td><button class="speak-btn" data-speak-text="almát" data-speak-lang="hu-HU">almát</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Veszek egy almát." data-speak-lang="hu-HU">
+                Veszek egy almát.
+              </button>
+              — Я покупаю одно яблоко.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="autó" data-speak-lang="hu-HU">autó</button></td>
+            <td><button class="speak-btn" data-speak-text="autót" data-speak-lang="hu-HU">autót</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látok egy autót." data-speak-lang="hu-HU">
+                Látok egy autót.
+              </button>
+              — Я вижу одну / какую-то машину.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="tanár" data-speak-lang="hu-HU">tanár</button></td>
+            <td><button class="speak-btn" data-speak-text="tanárt" data-speak-lang="hu-HU">tanárt</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látom a tanárt." data-speak-lang="hu-HU">
+                Látom a tanárt.
+              </button>
+              — Я вижу учителя.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="kert" data-speak-lang="hu-HU">kert</button></td>
+            <td><button class="speak-btn" data-speak-text="kertet" data-speak-lang="hu-HU">kertet</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látom a kertet." data-speak-lang="hu-HU">
+                Látom a kertet.
+              </button>
+              — Я вижу сад.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="könyv" data-speak-lang="hu-HU">könyv</button></td>
+            <td><button class="speak-btn" data-speak-text="könyvet" data-speak-lang="hu-HU">könyvet</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Olvasok egy könyvet." data-speak-lang="hu-HU">
+                Olvasok egy könyvet.
+              </button>
+              — Я читаю одну / какую-то книгу.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU">ház</button></td>
+            <td><button class="speak-btn" data-speak-text="házat" data-speak-lang="hu-HU">házat</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látom a házat." data-speak-lang="hu-HU">
+                Látom a házat.
+              </button>
+              — Я вижу дом.
+            </td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="asztal" data-speak-lang="hu-HU">asztal</button></td>
+            <td><button class="speak-btn" data-speak-text="asztalt" data-speak-lang="hu-HU">asztalt</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Látom az asztalt." data-speak-lang="hu-HU">
+                Látom az asztalt.
+              </button>
+              — Я вижу стол.
+            </td>
+          </tr>
         </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Распределите формы по моделям</h4>
+
+        <table class="conj">
+          <tr><th>Модель</th><th>Примеры</th></tr>
+          <tr>
+            <td>конечная гласная + <b>-t</b></td>
+            <td><b>autó → autót</b></td>
+          </tr>
+          <tr>
+            <td><b>a → á</b> перед <b>-t</b></td>
+            <td><b>kutya → kutyát, alma → almát</b></td>
+          </tr>
+          <tr>
+            <td>голое <b>-t</b> после согласной</td>
+            <td><b>tanár → tanárt, asztal → asztalt</b></td>
+          </tr>
+          <tr>
+            <td>соединительная гласная</td>
+            <td><b>kert → kertet, könyv → könyvet, ház → házat</b></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Важно видеть не только окончание, но и всю форму:
+          <b>kutyát, almát, autót, tanárt, kertet, könyvet, házat, asztalt</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Форма должна работать в предложении</h4>
+
+        <p>
+          Существительное в винительном падеже отвечает на вопрос
+          <b>kit?</b> или <b>mit?</b> и является объектом действия.
+        </p>
+
+        <table class="conj">
+          <tr><th>Предложение</th><th>Вопрос</th><th>Ответ</th></tr>
+          <tr>
+            <td><b>Látom a tanárt.</b></td>
+            <td><b>Kit látsz?</b></td>
+            <td><b>A tanárt.</b></td>
+          </tr>
+          <tr>
+            <td><b>Olvasok egy könyvet.</b></td>
+            <td><b>Mit olvasol?</b></td>
+            <td><b>Egy könyvet.</b></td>
+          </tr>
+          <tr>
+            <td><b>Veszek egy almát.</b></td>
+            <td><b>Mit veszel?</b></td>
+            <td><b>Egy almát.</b></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          В переводе может не быть отдельного русского окончания,
+          которое точно соответствует венгерскому <b>-t</b>.
+          Поэтому ориентируйтесь на функцию слова: кого или что видят,
+          читают, покупают, просят.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Перед проверяемой практикой</h4>
+
+        <ol class="tasklist">
+          <li>Произнесите каждую пару дважды.</li>
+          <li>Закройте второй столбец и восстановите форму дополнения.</li>
+          <li>Составьте по одному предложению с <b>látok, látom, olvasok</b> или <b>veszek</b>.</li>
+          <li>Затем выполните упражнение ниже.</li>
+        </ol>
       `,
       activities: [L7_CP_FORMS],
     },
