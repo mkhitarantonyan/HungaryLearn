@@ -59,6 +59,11 @@ jobs:
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$CREDENTIALS_PATH"
           chmod 600 "$CREDENTIALS_PATH"
 
+      - name: Configure Functions production parameters
+        shell: bash
+        run: |
+          printf '%s\n' 'LEMONSQUEEZY_TEST_MODE=false' > functions/.env.hungarylearn
+
       - name: Deploy lesson API Function
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
@@ -75,4 +80,6 @@ jobs:
       - name: Remove temporary Firebase credentials
         if: always()
         shell: bash
-        run: rm -f "$RUNNER_TEMP/firebase-service-account.json"
+        run: |
+          rm -f "$RUNNER_TEMP/firebase-service-account.json"
+          rm -f functions/.env.hungarylearn
