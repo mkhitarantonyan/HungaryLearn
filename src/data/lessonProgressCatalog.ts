@@ -159,15 +159,15 @@ export const LESSON_PROGRESS_DEFINITIONS: readonly LessonProgressDefinition[] = 
         "activityId": "l3-cp-articles",
         "kind": "controlledPractice",
         "requirement": "pass",
-        "passCount": 8,
-        "total": 10
+        "passCount": 10,
+        "total": 14
       },
       {
         "activityId": "l3-cp-egy",
         "kind": "controlledPractice",
         "requirement": "pass",
-        "passCount": 5,
-        "total": 6
+        "passCount": 8,
+        "total": 10
       },
       {
         "activityId": "l3-cp-plurals",
@@ -211,8 +211,8 @@ export const LESSON_PROGRESS_DEFINITIONS: readonly LessonProgressDefinition[] = 
         "activityId": "l3-cp-written-phrases",
         "kind": "controlledPractice",
         "requirement": "pass",
-        "passCount": 4,
-        "total": 5
+        "passCount": 6,
+        "total": 8
       },
       {
         "activityId": "l3-writing-room",
