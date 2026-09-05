@@ -335,18 +335,18 @@ export const LESSON_PROGRESS_DEFINITIONS: readonly LessonProgressDefinition[] = 
         "total": 12
       },
       {
-        "activityId": "l5-reading-weekly-program",
-        "kind": "reading",
-        "requirement": "pass",
-        "passCount": 6,
-        "total": 8
-      },
-      {
         "activityId": "l5-reading-weekly-schedule",
         "kind": "reading",
         "requirement": "pass",
         "passCount": 4,
         "total": 5
+      },
+      {
+        "activityId": "l5-reading-weekly-program",
+        "kind": "reading",
+        "requirement": "pass",
+        "passCount": 6,
+        "total": 8
       },
       {
         "activityId": "l5-listening-number-dictation",
@@ -380,12 +380,12 @@ export const LESSON_PROGRESS_DEFINITIONS: readonly LessonProgressDefinition[] = 
         "total": 16
       },
       {
-        "activityId": "l5-writing-weekly-message",
+        "activityId": "l5-writing-schedule",
         "kind": "writing",
         "requirement": "complete"
       },
       {
-        "activityId": "l5-writing-schedule",
+        "activityId": "l5-writing-weekly-message",
         "kind": "writing",
         "requirement": "complete"
       }
