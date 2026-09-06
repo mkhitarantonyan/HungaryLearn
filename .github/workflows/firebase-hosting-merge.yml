@@ -1,6 +1,6 @@
 # Production deployment for HungaryLearn.
-# Paid lesson bodies (L3-L28) are served by the Firebase `api` Function,
-# so production must deploy BOTH the backend API and Hosting.
+# Paid lesson bodies are served by the Firebase API Function.
+# Lemon Squeezy checkout/webhooks are served by the billing Function.
 
 name: Deploy Firebase production on merge
 
@@ -62,12 +62,17 @@ jobs:
       - name: Configure Functions production parameters
         shell: bash
         run: |
-          printf '%s\n' 'LEMONSQUEEZY_TEST_MODE=false' > functions/.env.hungarylearn
+          printf '%s\n' \
+            'LEMONSQUEEZY_TEST_MODE=false' \
+            'LEMONSQUEEZY_STORE_ID=461197' \
+            'LEMONSQUEEZY_VARIANT_ID=2097546' \
+            'APP_URL=https://hungarylearn.web.app' \
+            > functions/.env.hungarylearn
 
-      - name: Deploy lesson API Function
+      - name: Deploy Firebase Functions
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-service-account.json
-        run: npx firebase-tools@15.29.0 deploy --only functions:api --project hungarylearn --non-interactive
+        run: npx firebase-tools@15.29.0 deploy --only "functions:api,functions:billing" --project hungarylearn --non-interactive
 
       - name: Deploy Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
