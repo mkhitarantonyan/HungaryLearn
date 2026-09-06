@@ -121,5 +121,5 @@ test('every learner-facing clickable pronunciation target has a physical mapped 
   );
   // Inventory guard: update this count only when learner-facing clickable targets intentionally change.
   // Every target above must still resolve to a physical mapped MP3.
-  assert.equal(targets.size, 1942, `Clickable-audio inventory changed: ${targets.size}/1942`);
+  assert.equal(targets.size, 2016, `Clickable-audio inventory changed: ${targets.size}/1942`);
 });
