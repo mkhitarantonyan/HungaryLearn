@@ -135,158 +135,1172 @@ export const LESSON_15: Lesson = {
       id: 1,
       eyebrow: "УРОК 15 · 1/11 · ДАТЕЛЬНЫЙ ПАДЕЖ",
       title: "A részes eset",
-      subtitle: "-nak/-nek — «кому», «для кого»",
+      subtitle: "-nak/-nek: адресат действия — «кому? / для кого?»",
+      type: "grammar",
+      note: "В этом уроке берём главное практическое значение -nak/-nek: человек или участник, для которого что-то дают, заказывают или приносят.",
+      warn: "Не переводим любой русский дательный автоматически через -nak/-nek. Сначала проверяем смысл: есть ли адресат или получатель действия?",
+      task: "Сначала найди адресата, затем задай Kinek? и только после этого выбери -nak или -nek по гармонии гласных.",
       body: `
-   <p>Суффикс <span class="hu-word">-nak/-nek</span> соответствует русскому дательному падежу («кому?», «для кого?»). Присоединяется напрямую, без соединительной гласной (гласная уже есть в самом суффиксе).</p>
-   <table class="conj">
-     <tr><th>Слово</th><th>+ -nak/-nek</th><th>Значение</th></tr>
-     <tr><td><button class="speak-btn" data-speak-text="ház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ház</button></td><td><button class="speak-btn" data-speak-text="háznak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> háznak</button></td><td>дому/для дома</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="kert" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kert</button></td><td><button class="speak-btn" data-speak-text="kertnek" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertnek</button></td><td>саду/для сада</td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="anya" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> anya</button></td><td><button class="speak-btn" data-speak-text="anyának" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> anyának</button></td><td>маме/для мамы</td></tr>
-   </table>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Смысл: кто получает действие?</h4>
+
+        <p>
+          Главный вопрос:
+          <button class="speak-btn" data-speak-text="Kinek?" data-speak-lang="hu-HU">Kinek?</button>
+          — <b>кому? / для кого?</b>
+        </p>
+
+        <div class="note">
+          В ресторанном контексте это особенно удобно:
+          кому заказать напиток, кому принести блюдо, кому дать приборы.
+        </div>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A gyereknek egy limonádét kérek." data-speak-lang="hu-HU">A gyereknek egy limonádét kérek.</button>
+          — Для ребёнка я закажу лимонад.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Ezt a levest a barátomnak rendeltem." data-speak-lang="hu-HU">Ezt a levest a barátomnak rendeltem.</button>
+          — Этот суп я заказал(а) для друга.
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Как выбрать -nak или -nek</h4>
+
+        <table class="conj">
+          <tr><th>Гласные основы</th><th>Суффикс</th><th>Пример</th></tr>
+          <tr>
+            <td><b>заднего ряда</b>: a, á, o, ó, u, ú</td>
+            <td><b>-nak</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="barát" data-speak-lang="hu-HU">barát</button>
+              →
+              <button class="speak-btn" data-speak-text="barátnak" data-speak-lang="hu-HU">barátnak</button>
+            </td>
+          </tr>
+          <tr>
+            <td><b>переднего ряда</b>: e, é, i, í, ö, ő, ü, ű</td>
+            <td><b>-nek</b></td>
+            <td>
+              <button class="speak-btn" data-speak-text="gyerek" data-speak-lang="hu-HU">gyerek</button>
+              →
+              <button class="speak-btn" data-speak-text="gyereknek" data-speak-lang="hu-HU">gyereknek</button>
+            </td>
+          </tr>
+        </table>
+
+        <p>
+          Ещё один прозрачный пример:
+          <button class="speak-btn" data-speak-text="pincér" data-speak-lang="hu-HU">pincér</button>
+          →
+          <button class="speak-btn" data-speak-text="pincérnek" data-speak-lang="hu-HU">pincérnek</button>
+        </p>
+
+        <div class="warn">
+          На этом слайде работаем с прозрачными знакомыми основами.
+          Смешанные и заимствованные основы не используем для вывода универсального правила.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Суффикс присоединяется прямо к основе</h4>
+
+        <table class="conj">
+          <tr><th>Слово</th><th>Дательный</th><th>Значение</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="gyerek" data-speak-lang="hu-HU">gyerek</button></td>
+            <td><button class="speak-btn" data-speak-text="gyereknek" data-speak-lang="hu-HU">gyereknek</button></td>
+            <td>ребёнку / для ребёнка</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="barát" data-speak-lang="hu-HU">barát</button></td>
+            <td><button class="speak-btn" data-speak-text="barátnak" data-speak-lang="hu-HU">barátnak</button></td>
+            <td>другу / для друга</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="pincér" data-speak-lang="hu-HU">pincér</button></td>
+            <td><button class="speak-btn" data-speak-text="pincérnek" data-speak-lang="hu-HU">pincérnek</button></td>
+            <td>официанту</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Важная орфография: anya → anyának</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="anya" data-speak-lang="hu-HU">anya</button>
+          →
+          <button class="speak-btn" data-speak-text="anyának" data-speak-lang="hu-HU">anyának</button>
+        </p>
+
+        <div class="note">
+          В знакомом слове <b>anya</b> конечное <b>a</b> перед суффиксом удлиняется:
+          <b>a → á</b>. Поэтому не <s>anyanak</s>, а <b>anyának</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Алгоритм для ученика</h4>
+
+        <ol class="tasklist">
+          <li>найди получателя / адресата;</li>
+          <li>спроси <b>Kinek?</b>;</li>
+          <li>определи гармонию знакомой основы;</li>
+          <li>выбери <b>-nak</b> или <b>-nek</b>;</li>
+          <li>проверь написание основы перед суффиксом.</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Мини-проверка</summary>
+          <p class="mt-3"><b>gyerek → ?</b> — gyereknek</p>
+          <p><b>barát → ?</b> — barátnak</p>
+          <p><b>anya → ?</b> — anyának</p>
+        </details>
+
+        <div class="warn">
+          Конструкция обладания <b>Nekem van...</b> — следующий шаг, слайд 15.3.
+          Здесь цель только одна: уверенно распознавать и образовывать адресата с -nak/-nek.
+        </div>
+      `,
+    },    {
       id: 2,
       eyebrow: "УРОК 15 · 2/11 · МЕСТОИМЕНИЯ",
       title: "Névmások részes esete",
-      subtitle: "«Мне», «тебе», «ему»...",
+      subtitle: "nekem, neked, neki... — готовые формы «кому?»",
+      type: "grammar",
+      note: "Эти формы лучше учить целиком. В живой речи они сразу отвечают на Kinek? — кому?",
+      warn: "Не строй формы как *énnek, *tenek или *őnek. Для личных местоимений используются специальные формы: nekem, neked, neki...",
+      task: "Прочитай таблицу вслух, затем закрой русский перевод и восстанови пары én→nekem, te→neked, ő→neki, mi→nekünk, ti→nektek, ők→nekik.",
       body: `
-   <table class="conj">
-     <tr><th>Именительный</th><th>Дательный</th><th>Значение</th></tr>
-     <tr><td>én</td><td><button class="speak-btn" data-speak-text="nekem" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nekem</button></td><td>мне</td></tr>
-     <tr><td>te</td><td><button class="speak-btn" data-speak-text="neked" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> neked</button></td><td>тебе</td></tr>
-     <tr><td>ő</td><td><button class="speak-btn" data-speak-text="neki" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> neki</button></td><td>ему/ей</td></tr>
-     <tr><td>mi</td><td><button class="speak-btn" data-speak-text="nekünk" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nekünk</button></td><td>нам</td></tr>
-     <tr><td>ti</td><td><button class="speak-btn" data-speak-text="nektek" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nektek</button></td><td>вам</td></tr>
-     <tr><td>ők</td><td><button class="speak-btn" data-speak-text="nekik" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nekik</button></td><td>им</td></tr>
-   </table>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Шесть форм нужно узнавать сразу</h4>
+
+        <table class="conj">
+          <tr><th>Кто?</th><th>Кому?</th><th>По-русски</th></tr>
+          <tr>
+            <td>én</td>
+            <td><button class="speak-btn" data-speak-text="nekem" data-speak-lang="hu-HU">nekem</button></td>
+            <td>мне</td>
+          </tr>
+          <tr>
+            <td>te</td>
+            <td><button class="speak-btn" data-speak-text="neked" data-speak-lang="hu-HU">neked</button></td>
+            <td>тебе</td>
+          </tr>
+          <tr>
+            <td>ő</td>
+            <td><button class="speak-btn" data-speak-text="neki" data-speak-lang="hu-HU">neki</button></td>
+            <td>ему / ей</td>
+          </tr>
+          <tr>
+            <td>mi</td>
+            <td><button class="speak-btn" data-speak-text="nekünk" data-speak-lang="hu-HU">nekünk</button></td>
+            <td>нам</td>
+          </tr>
+          <tr>
+            <td>ti</td>
+            <td><button class="speak-btn" data-speak-text="nektek" data-speak-lang="hu-HU">nektek</button></td>
+            <td>вам</td>
+          </tr>
+          <tr>
+            <td>ők</td>
+            <td><button class="speak-btn" data-speak-text="nekik" data-speak-lang="hu-HU">nekik</button></td>
+            <td>им</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          <b>neki</b> не показывает пол: форма может значить и «ему», и «ей».
+          Пол понятен только из контекста.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Не прибавляй -nak/-nek к én / te / ő</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Правильно</th></tr>
+          <tr><td><s>énnek</s></td><td><button class="speak-btn" data-speak-text="nekem" data-speak-lang="hu-HU">nekem</button></td></tr>
+          <tr><td><s>tenek</s></td><td><button class="speak-btn" data-speak-text="neked" data-speak-lang="hu-HU">neked</button></td></tr>
+          <tr><td><s>őnek</s></td><td><button class="speak-btn" data-speak-text="neki" data-speak-lang="hu-HU">neki</button></td></tr>
+        </table>
+
+        <div class="warn">
+          Для A2 не нужно разбирать историческое устройство этих форм.
+          Практическая задача — узнавать их как готовые слова.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. В ресторане: кому что заказать?</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem egy gulyáslevest, neki pedig egy salátát kérek." data-speak-lang="hu-HU">Nekem egy gulyáslevest, neki pedig egy salátát kérek.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hozna nekünk két villát?" data-speak-lang="hu-HU">Hozna nekünk két villát?</button>
+          — Не могли бы вы принести нам две вилки?
+        </p>
+
+        <div class="note">
+          Здесь местоимение показывает получателя:
+          <b>nekem</b> — мне, <b>neki</b> — ему/ей, <b>nekünk</b> — нам.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Быстрый вопрос-ответ</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kinek?" data-speak-lang="hu-HU">Kinek?</button>
+          →
+          <button class="speak-btn" data-speak-text="Nekem, köszönöm." data-speak-lang="hu-HU">Nekem, köszönöm.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kinek hozza a kávét?" data-speak-lang="hu-HU">Kinek hozza a kávét?</button>
+          →
+          <button class="speak-btn" data-speak-text="Neki." data-speak-lang="hu-HU">Neki.</button>
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как запомнить без зубрёжки списка</h4>
+
+        <ol class="tasklist">
+          <li><b>я / ты / он-она</b>: nekem → neked → neki;</li>
+          <li><b>мы / вы / они</b>: nekünk → nektek → nekik;</li>
+          <li>потренируй вопрос <b>Kinek?</b> с коротким ответом;</li>
+          <li>затем используй форму внутри ресторанной фразы.</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Мини-проверка</summary>
+          <p class="mt-3"><b>«нам»</b> → nekünk</p>
+          <p><b>«ему / ей»</b> → neki</p>
+          <p><b>«вам»</b> → nektek</p>
+        </details>
+
+        <div class="warn">
+          На следующем слайде знакомая форма <b>Nekem</b> войдёт в другую конструкцию:
+          <b>Nekem van...</b>. Пока не смешивай «кому?» и выражение обладания.
+        </div>
+      `,
+    },    {
       id: 3,
       eyebrow: "УРОК 15 · 3/11 · ГЛАВНОЕ ПРИМЕНЕНИЕ",
       title: "„Nekem van...”",
-      subtitle: "Как сказать «у меня есть» — вспоминаем 8-й урок",
+      subtitle: "Обладание: владелец + van + предмет с притяжательным суффиксом",
+      type: "grammar",
+      note: "Это не новая таблица притяжательных суффиксов: мы возвращаем материал Lesson 8 и соединяем его с nekem / neked / neki.",
+      warn: "Главная ошибка: оставить предмет без притяжательного суффикса. Не *Nekem van egy autó, а Nekem van egy autóm.",
+      task: "В каждом примере найди три элемента: владелец → van → предмет с притяжательным суффиксом. Затем сравни полную и нейтральную короткую модель.",
       body: `
-   <p>В венгерском нет отдельного глагола «иметь». Обладание выражается конструкцией <b>[дательный падеж владельца] + van/vannak + [существительное с притяжательным суффиксом]</b>:</p>
-   <p><button class="speak-btn" data-speak-text="Nekem van egy házam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nekem van egy házam.</button> <span style="color:#8a7a68">(У меня есть дом — дословно «мне есть дом-мой»)</span></p>
-   <p><button class="speak-btn" data-speak-text="Neked van egy autód." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Neked van egy autód.</button> <span style="color:#8a7a68">(У тебя есть машина)</span></p>
-   <p><button class="speak-btn" data-speak-text="Neki van egy testvére." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Neki van egy testvére.</button> <span style="color:#8a7a68">(У него есть сестра/брат)</span></p>
-   <div class="note">Заметьте: сочетаются сразу две темы курса — дательный падеж (этот урок) и притяжательный суффикс (8-й урок). Именно так и работает венгерская грамматика — темы постоянно комбинируются друг с другом.</div>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Базовая модель обладания</h4>
+
+        <div class="note">
+          <b>[владелец в дательной форме] + van + [предмет + притяжательный суффикс]</b>
+        </div>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem van egy házam." data-speak-lang="hu-HU">Nekem van egy házam.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Neked van egy autód." data-speak-lang="hu-HU">Neked van egy autód.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Neki van egy testvére." data-speak-lang="hu-HU">Neki van egy testvére.</button>
+        </p>
+
+        <table class="conj">
+          <tr><th>Владелец</th><th>van</th><th>Предмет показывает владельца</th></tr>
+          <tr><td>nekem</td><td>van</td><td>ház<b>am</b></td></tr>
+          <tr><td>neked</td><td>van</td><td>autó<b>d</b></td></tr>
+          <tr><td>neki</td><td>van</td><td>testvér<b>e</b></td></tr>
+        </table>
+
+        <div class="note">
+          <b>testvér</b> по-прежнему не указывает пол:
+          <b>Neki van egy testvére.</b> = у него / у неё есть брат или сестра.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Почему недостаточно только nekem + van?</h4>
+
+        <p>
+          <s>Nekem van egy autó.</s>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem van egy autóm." data-speak-lang="hu-HU">Nekem van egy autóm.</button>
+        </p>
+
+        <div class="warn">
+          В этой модели предмет сам маркирует владельца:
+          <b>autóm</b> — моя машина, <b>autód</b> — твоя машина.
+          Поэтому окончание существительного — часть конструкции, а не украшение.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Полная модель и естественное сокращение</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem van egy autóm." data-speak-lang="hu-HU">Nekem van egy autóm.</button>
+          — явный владелец; удобно для контраста или акцента.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Van egy autóm." data-speak-lang="hu-HU">Van egy autóm.</button>
+          — нейтрально: «У меня есть машина».
+        </p>
+
+        <div class="note">
+          <b>nekem</b> можно не произносить, если владелец уже понятен по форме
+          <b>autóm</b> и контексту. В Lesson 15 мы всё равно часто оставляем
+          <b>nekem / neked / neki</b>, чтобы отработать дательный компонент.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Полезная фраза для реального разговора</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Van egy kérdésem." data-speak-lang="hu-HU">Van egy kérdésem.</button>
+          — У меня есть вопрос.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem van egy kérdésem." data-speak-lang="hu-HU">Nekem van egy kérdésem.</button>
+          — У меня есть вопрос / именно у меня есть вопрос.
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Что с van / vannak?</h4>
+
+        <div class="note">
+          Если предмет один, в нашей основной модели используется <b>van</b>.
+          С несколькими предметами возможна модель с <b>vannak</b>, но здесь
+          не разворачиваем новую парадигму множественного обладания.
+        </div>
+
+        <p>
+          На этом слайде продуктивная цель — уверенно строить
+          <b>Nekem van egy ...-m</b>, <b>Neked van egy ...-d</b>,
+          <b>Neki van egy ...-a/-e</b> с уже знакомыми словами.
+        </p>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Мини-проверка</summary>
+          <p class="mt-3"><b>Nekem van egy ___.</b> autó → autóm</p>
+          <p><b>Neked van egy ___.</b> autó → autód</p>
+          <p><b>Neki van egy ___.</b> testvér → testvére</p>
+        </details>
+
+        <div class="warn">
+          Отрицание «у меня нет» пока не строим. Это следующий слайд 15.4.
+        </div>
+      `,
+    },    {
       id: 4,
       eyebrow: "УРОК 15 · 4/11 · ОТРИЦАНИЕ",
       title: "„Nincs”",
-      subtitle: "«У меня нет...»",
+      subtitle: "nincs / nincsenek: нет предмета, нет наличия, нет обладания",
+      type: "grammar",
+      note: "В обычном отрицании существования, наличия и обладания вместо *nem van используем nincs; для нескольких предметов — nincsenek.",
+      warn: "Смотри на то, ЧЕГО нет. Один предмет или неисчисляемое/массовое значение → nincs. Несколько предметов → nincsenek.",
+      task: "Сначала определи: один предмет или несколько. Затем выбери nincs / nincsenek и проверь, сохраняется ли притяжательный суффикс у предмета.",
       body: `
-   <p>Отрицательная форма van — не „nem van“, а особое слово <span class="hu-word">nincs</span> (ед. ч.) / <span class="hu-word">nincsenek</span> (мн. ч.):</p>
-   <p><button class="speak-btn" data-speak-text="Nincs autóm." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nincs autóm.</button> <span style="color:#8a7a68">(У меня нет машины)</span></p>
-   <p><button class="speak-btn" data-speak-text="Nincsenek gyerekei." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nincsenek gyerekei.</button> <span style="color:#8a7a68">(У неё нет детей)</span></p>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Базовый контраст</h4>
+
+        <table class="conj">
+          <tr><th>Есть</th><th>Нет</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Van autóm." data-speak-lang="hu-HU">Van autóm.</button></td>
+            <td><button class="speak-btn" data-speak-text="Nincs autóm." data-speak-lang="hu-HU">Nincs autóm.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          В этой обычной модели не говорим <s>nem van autóm</s>.
+          Нормальная отрицательная форма — <b>Nincs autóm.</b>
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. В ресторане: «этого нет»</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Sajnos nincs limonádé." data-speak-lang="hu-HU">Sajnos nincs limonádé.</button>
+          — К сожалению, лимонада нет.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nincs desszert." data-speak-lang="hu-HU">Nincs desszert.</button>
+          — Десерта нет.
+        </p>
+
+        <div class="note">
+          Здесь речь не об «обладании человеком», а о наличии.
+          Та же форма <b>nincs</b> работает в базовом отрицании существования/наличия.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Один предмет и несколько предметов</h4>
+
+        <table class="conj">
+          <tr><th>Чего нет?</th><th>Форма</th><th>Пример</th></tr>
+          <tr>
+            <td>одного / неисчисляемого</td>
+            <td><b>nincs</b></td>
+            <td><button class="speak-btn" data-speak-text="Nincs limonádé." data-speak-lang="hu-HU">Nincs limonádé.</button></td>
+          </tr>
+          <tr>
+            <td>нескольких</td>
+            <td><b>nincsenek</b></td>
+            <td><button class="speak-btn" data-speak-text="Nincsenek gyerekei." data-speak-lang="hu-HU">Nincsenek gyerekei.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          <b>nincsenek</b> связано с множественностью того, чего нет.
+          В <b>Nincsenek gyerekei.</b> множественное число — <b>gyerekei</b>,
+          а не владелец.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Притяжательный суффикс не исчезает</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem nincs autóm." data-speak-lang="hu-HU">Nekem nincs autóm.</button>
+          — У меня нет машины.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Neki nincs testvére." data-speak-lang="hu-HU">Neki nincs testvére.</button>
+          — У него / неё нет брата или сестры.
+        </p>
+
+        <div class="warn">
+          Не <s>Nekem nincs autó</s>, а <b>Nekem nincs autóm</b>:
+          отрицание меняет <b>van → nincs</b>, но не отменяет форму принадлежности предмета.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Полная и короткая форма</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem nincs autóm." data-speak-lang="hu-HU">Nekem nincs autóm.</button>
+          — явный владелец / контраст.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nincs autóm." data-speak-lang="hu-HU">Nincs autóm.</button>
+          — нейтральная короткая форма.
+        </p>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Мини-проверка</summary>
+          <p class="mt-3"><b>«Лимонада нет»</b> → Sajnos nincs limonádé.</p>
+          <p><b>«У меня нет машины»</b> → Nincs autóm.</p>
+          <p><b>«У неё нет детей»</b> → Nincsenek gyerekei.</p>
+        </details>
+
+        <div class="note">
+          На следующем слайде эти формы переходят из грамматической схемы
+          в полноценную ресторанную ситуацию: заказ, наличие и реакция на проблему.
+        </div>
+      `,
+    },    {
       id: 5,
       eyebrow: "УРОК 15 · 5/11 · КОСВЕННОЕ ДОПОЛНЕНИЕ",
       title: "Adok valamit valakinek",
-      subtitle: "«Даю кому-то что-то»",
+      subtitle: "Что передаём? Кому передаём? — два разных участника",
+      type: "practice",
+      note: "Дательный падеж показывает получателя/адресата. Сам предмет обычно остаётся прямым объектом и часто получает винительный -t.",
+      warn: "Не ставь -nak/-nek на сам предмет только потому, что рядом есть глагол «дать/заказать/принести». Сначала различи предмет и получателя.",
+      task: "Перед Controlled Practice для каждой ситуации задай себе два вопроса: «что?» и «кому?». Затем выбери форму и только потом решай коммуникативную задачу.",
       activities: [L15_CP_DATIVE],
       body: `
-   <p>Классическое применение дательного падежа — глаголы передачи (давать, показывать, говорить кому-то):</p>
-   <p><button class="speak-btn" data-speak-text="Adok egy könyvet a barátomnak." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Adok egy könyvet a barátomnak.</button> <span style="color:#8a7a68">(Даю книгу другу)</span></p>
-   <p><button class="speak-btn" data-speak-text="Megmutatom a fényképet anyámnak." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Megmutatom a fényképet anyámnak.</button> <span style="color:#8a7a68">(Показываю фотографию маме)</span></p>
-   <div class="note">Порядок обычно такой: Подлежащее – глагол – прямое дополнение (винительный) – косвенное дополнение (дательный), но венгерский допускает и другой порядок ради выделения нужного слова.</div>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Две роли в одной фразе</h4>
+
+        <table class="conj">
+          <tr><th>Роль</th><th>Вопрос</th><th>Что происходит</th></tr>
+          <tr>
+            <td>предмет / содержание</td>
+            <td><button class="speak-btn" data-speak-text="Mit?" data-speak-lang="hu-HU">Mit?</button></td>
+            <td>что дают, заказывают, приносят</td>
+          </tr>
+          <tr>
+            <td>получатель</td>
+            <td><button class="speak-btn" data-speak-text="Kinek?" data-speak-lang="hu-HU">Kinek?</button></td>
+            <td>кому это предназначено</td>
+          </tr>
+        </table>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Adok egy könyvet a barátomnak." data-speak-lang="hu-HU">Adok egy könyvet a barátomnak.</button>
+        </p>
+
+        <div class="note">
+          В этой модели <b>könyvet</b> отвечает на «что?»,
+          а <b>barátomnak</b> — на «кому?».
+          Не нужно учить порядок слов как жёсткую формулу: важнее правильно распределить роли.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Та же логика в ресторане</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A gyereknek egy limonádét kérünk." data-speak-lang="hu-HU">A gyereknek egy limonádét kérünk.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Ezt a levest a barátomnak rendeltem." data-speak-lang="hu-HU">Ezt a levest a barátomnak rendeltem.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hozna nekünk két villát?" data-speak-lang="hu-HU">Hozna nekünk két villát?</button>
+        </p>
+
+        <div class="note">
+          Получатель может быть существительным с дательным суффиксом
+          или готовой местоименной формой: «ребёнку», «другу», «нам».
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Когда заказ распределяется между людьми</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem egy kávét, neki pedig egy teát kérek." data-speak-lang="hu-HU">Nekem egy kávét, neki pedig egy teát kérek.</button>
+        </p>
+
+        <div class="note">
+          Здесь удобно сначала услышать «мне» и «ему/ей», а затем понять,
+          какой напиток относится к каждому человеку.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Типичная ошибка</h4>
+
+        <p><s>Egy levesnek kérek.</s></p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Egy levest kérek." data-speak-lang="hu-HU">Egy levest kérek.</button>
+        </p>
+
+        <div class="warn">
+          Суп — это предмет заказа, а не получатель.
+          Поэтому в обычном заказе нужен прямой объект, а не дательный падеж.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как проходить 14 ситуаций</h4>
+
+        <ol class="tasklist">
+          <li>сначала пойми цель ситуации: столик, рекомендация, заказ, просьба, проблема или оплата;</li>
+          <li>если есть получатель — найди его;</li>
+          <li>отдельно найди предмет/действие;</li>
+          <li>проверь вежливую форму целиком, а не отдельный суффикс;</li>
+          <li>для прохождения Controlled Practice нужно минимум <b>11 из 14</b>.</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Мини-проверка ролей</summary>
+          <p class="mt-3">В «принесите нам две вилки» получатель — <b>мы</b>, предмет — <b>две вилки</b>.</p>
+          <p>В «заказать лимонад ребёнку» получатель — <b>ребёнок</b>, предмет — <b>лимонад</b>.</p>
+        </details>
+
+        <div class="warn">
+          На этом слайде не вводим новую теорию порядка слов или спряжения.
+          Цель — уверенно различать предмет и получателя в знакомых A2-ситуациях.
+        </div>
+      `,
+    },    {
       id: 6,
       eyebrow: "УРОК 15 · 6/11 · ЧТЕНИЕ",
       title: "Ételek",
-      subtitle: "Еда — базовый словарь",
+      subtitle: "Словарь еды + стратегия чтения ресторанной истории",
+      type: "reading",
       activities: [L15_READING_MENU],
       note: 'Szeretem a gulyáslevest. — люблю / мне вообще нравится гуляшевый суп (gulyáslevest — винительный падеж, объект). Nekem ízlik a gulyásleves. — гуляшевый суп нравится мне на вкус (gulyásleves — подлежащее, nekem — experiencer). Nem ízlik nekem a hal. — рыба мне не по вкусу.',
+      warn: "Не открывай вопросы как тест на память отдельных слов. Сначала пойми хронологию истории и только потом ищи доказательство для каждого ответа.",
+      task: "Перед чтением повтори 8 слов еды. Затем прочитай историю в три прохода: общая ситуация → ключевые события → доказательство для 7 вопросов.",
       body: `
-   <div class="grid2">
-     <div>
-       <p><button class="speak-btn" data-speak-text="leves" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> leves</button> — суп</p>
-       <p><button class="speak-btn" data-speak-text="hús" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> hús</button> — мясо</p>
-       <p><button class="speak-btn" data-speak-text="hal" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> hal</button> — рыба</p>
-       <p><button class="speak-btn" data-speak-text="zöldség" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> zöldség</button> — овощи</p>
-     </div>
-     <div>
-       <p><button class="speak-btn" data-speak-text="sajt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> sajt</button> — сыр</p>
-       <p><button class="speak-btn" data-speak-text="saláta" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> saláta</button> — салат</p>
-       <p><button class="speak-btn" data-speak-text="desszert" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> desszert</button> — десерт</p>
-       <p><button class="speak-btn" data-speak-text="víz" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> víz</button> — вода</p>
-     </div>
-   </div>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Восемь базовых слов ресторана</h4>
+
+        <table class="conj">
+          <tr><th>Венгерский</th><th>Значение</th></tr>
+          <tr><td><button class="speak-btn" data-speak-text="leves" data-speak-lang="hu-HU">leves</button></td><td>суп</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="hús" data-speak-lang="hu-HU">hús</button></td><td>мясо</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="hal" data-speak-lang="hu-HU">hal</button></td><td>рыба</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="zöldség" data-speak-lang="hu-HU">zöldség</button></td><td>овощи</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="sajt" data-speak-lang="hu-HU">sajt</button></td><td>сыр</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="saláta" data-speak-lang="hu-HU">saláta</button></td><td>салат</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="desszert" data-speak-lang="hu-HU">desszert</button></td><td>десерт</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="víz" data-speak-lang="hu-HU">víz</button></td><td>вода</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Два разных способа сказать «нравится»</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Szeretem a gulyáslevest." data-speak-lang="hu-HU">Szeretem a gulyáslevest.</button>
+          — мне вообще нравится это блюдо.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem ízlik a gulyásleves." data-speak-lang="hu-HU">Nekem ízlik a gulyásleves.</button>
+          — это блюдо нравится мне именно на вкус.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nem ízlik nekem a hal." data-speak-lang="hu-HU">Nem ízlik nekem a hal.</button>
+          — рыба мне не по вкусу.
+        </p>
+
+        <table class="conj">
+          <tr><th>Модель</th><th>На что смотри</th></tr>
+          <tr>
+            <td><b>szeretem</b></td>
+            <td>еда — прямой объект, поэтому в примере видим винительный падеж</td>
+          </tr>
+          <tr>
+            <td><b>ízlik</b></td>
+            <td>еда — то, что «приятно на вкус»; человек выражен дательной формой</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Не превращай это в полную таблицу спряжения двух глаголов.
+          На этом уроке достаточно понимать смысловой контраст и узнавать модели в контексте еды.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Как читать историю</h4>
+
+        <div class="note">
+          Текст:
+          <b>Egy vacsora, ami majdnem tökéletes volt</b>.
+          Сначала не ищи ответы по одному слову — восстанови ход вечера.
+        </div>
+
+        <ol class="tasklist">
+          <li><b>Проход 1:</b> кто, где и зачем оказался в ресторане;</li>
+          <li><b>Проход 2:</b> что заказывали и какой вопрос задали о блюде;</li>
+          <li><b>Проход 3:</b> какая проблема возникла, как её решили, как оплатили и чем закончился вечер.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Таблица наблюдения — без готовых ответов</h4>
+
+        <table class="conj">
+          <tr><th>Что отслеживать</th><th>Твоё доказательство из текста</th></tr>
+          <tr><td>повод и бронирование</td><td>...</td></tr>
+          <tr><td>заказы двух людей</td><td>...</td></tr>
+          <tr><td>состав / ограничение</td><td>...</td></tr>
+          <tr><td>ошибка</td><td>...</td></tr>
+          <tr><td>решение</td><td>...</td></tr>
+          <tr><td>оплата</td><td>...</td></tr>
+          <tr><td>итоговое впечатление</td><td>...</td></tr>
+        </table>
+
+        <div class="note">
+          В Reading — <b>7 вопросов</b>, порог прохождения — <b>6</b>.
+          Слайд не даёт ответов: он только помогает искать их осознанно.
+        </div>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Перед стартом проверь себя</summary>
+          <p class="mt-3">Можешь без перевода узнать слова «суп», «рыба», «сыр», «салат», «десерт», «вода»?</p>
+          <p>Можешь объяснить, чем «нравится вообще» отличается от «нравится на вкус»?</p>
+        </details>
+      `,
+    },    {
       id: 7,
       eyebrow: "УРОК 15 · 7/11 · В РЕСТОРАНЕ",
       title: "Az étteremben",
-      subtitle: "Полезные фразы для заказа",
+      subtitle: "От рекомендации до счёта: готовые фразы + стратегия аудирования",
+      type: "listening",
       activities: [L15_LISTENING],
+      note: "Формы вежливой просьбы здесь учим как готовые разговорные блоки. Полную систему условного наклонения разберём только в Lesson 23.",
+      warn: "Не пытайся сейчас выводить окончания условного наклонения. Цель Lesson 15 — понимать и использовать несколько устойчивых ресторанных фраз.",
+      task: "Сначала повтори функции фраз. Затем прослушай запись два раза: первый раз — общая ситуация, второй — напиток, отсутствие позиции и основное блюдо. Для прохождения нужно 3 из 4.",
       body: `
-   <p><button class="speak-btn" data-speak-text="Szeretnék ezt rendelni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretnék ezt rendelni.</button> <span style="color:#8a7a68">(Я хотел бы это заказать)</span></p>
-   <p><button class="speak-btn" data-speak-text="Mit ajánl?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Mit ajánl?</button> <span style="color:#8a7a68">(Что вы посоветуете?)</span></p>
-   <p><button class="speak-btn" data-speak-text="Kérem a számlát." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Kérem a számlát.</button> <span style="color:#8a7a68">(Принесите мне, пожалуйста, счёт)</span></p>
-   <div class="note"><button class="speak-btn" data-speak-text="Szeretnék ezt rendelni." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretnék ezt rendelni.</button> использует условное наклонение („szeretnék“ — «я хотел бы») — вежливая форма заказа. Условное наклонение целиком разберём в 23-м уроке, а пока просто выучите эту фразу как готовый блок.</div>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Попросить рекомендацию</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit ajánl?" data-speak-lang="hu-HU">Mit ajánl?</button>
+          — Что вы порекомендуете?
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit tartalmaz ez az étel?" data-speak-lang="hu-HU">Mit tartalmaz ez az étel?</button>
+          — Что входит в это блюдо?
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Сделать заказ</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Ezt szeretném rendelni." data-speak-lang="hu-HU">Ezt szeretném rendelni.</button>
+          — Я хотел(а) бы заказать это.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Egy gulyáslevest kérek." data-speak-lang="hu-HU">Egy gulyáslevest kérek.</button>
+          — Один гуляшевый суп, пожалуйста.
+        </p>
+
+        <div class="note">
+          Если показываешь на позицию в меню, модель с <b>ezt</b> особенно удобна.
+          Если называешь блюдо, просто используй вежливую формулу заказа с названием блюда.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Если чего-то нет</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Sajnos nincs limonádé." data-speak-lang="hu-HU">Sajnos nincs limonádé.</button>
+          — К сожалению, лимонада нет.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Rendben, akkor egy narancslevet kérek." data-speak-lang="hu-HU">Rendben, akkor egy narancslevet kérek.</button>
+          — Хорошо, тогда апельсиновый сок.
+        </p>
+
+        <div class="note">
+          Это полезная связка для реального разговора:
+          сначала услышать, что позиции нет, затем спокойно выбрать замену.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Попросить счёт и уточнить оплату</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kérem a számlát." data-speak-lang="hu-HU">Kérem a számlát.</button>
+          — Счёт, пожалуйста.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kérhetnénk a számlát?" data-speak-lang="hu-HU">Kérhetnénk a számlát?</button>
+          — Можно нам счёт?
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Külön fizetünk." data-speak-lang="hu-HU">Külön fizetünk.</button>
+          /
+          <button class="speak-btn" data-speak-text="Együtt fizetünk." data-speak-lang="hu-HU">Együtt fizetünk.</button>
+        </p>
+
+        <div class="warn">
+          Вежливые формы из этого блока не превращаем в новую грамматическую тему.
+          Используй их как целые фразы; системная грамматика придёт позже.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как слушать запись</h4>
+
+        <ol class="tasklist">
+          <li><b>Первый проход:</b> определи место и общую цель разговора.</li>
+          <li><b>Второй проход:</b> отслеживай, какой напиток хочет гость, чего нет и какое основное блюдо он выбирает.</li>
+          <li>Не читай транскрипт заранее — сначала работай по слуху.</li>
+          <li>В аудировании <b>4 вопроса</b>; для прохождения нужно <b>3</b>.</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Быстрая самопроверка перед аудио</summary>
+          <p class="mt-3">Можешь попросить рекомендацию?</p>
+          <p>Можешь заказать конкретное блюдо?</p>
+          <p>Можешь спокойно выбрать замену, если чего-то нет?</p>
+          <p>Можешь попросить счёт?</p>
+        </details>
+      `,
+    },    {
       id: 8,
       eyebrow: "УРОК 15 · 8/11 · ДИАЛОГ",
       title: "Párbeszéd",
-      subtitle: "Заказ в ресторане",
+      subtitle: "Полный визит в ресторан: 8 реплик ученика без подсказки-ответа",
+      type: "roleplay",
       activities: [L15_ROLEPLAY],
+      note: "Ролевая игра проверяет открытую коммуникацию. Она даёт PARTIAL evidence: система видит прохождение сценария, но не может напрямую оценить качество твоей свободной речи.",
+      warn: "Не читай готовый текст. Используй короткие опоры и формулируй собственную реплику по ситуации. Ошибка не требует начинать всё заново — можно переформулировать.",
+      task: "Пройди 8 реплик ученика: столик → количество гостей → состав блюда → заказ себе → заказ другому → замена позиции → счёт → способ оплаты.",
       body: `
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Jó napot! Mit ajánl?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Jó napot! Mit ajánl?</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="A leves nagyon finom ma, és van friss hal is." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> A leves nagyon finom ma, és van friss hal is.</button></p>
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Akkor kérek egy levest és egy halat." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Akkor kérek egy levest és egy halat.</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Rendben, hozom rögtön." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Rendben, hozom rögtön.</button></p>
-   <div class="task">Задание 1. Прочитайте диалог вслух, затем составьте свой заказ из 3 блюд.</div>
- `
-    },
-    {
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта всего разговора</h4>
+
+        <table class="conj">
+          <tr><th>Шаг</th><th>Твоя коммуникативная задача</th><th>Опора</th></tr>
+          <tr><td>1</td><td>попросить столик</td><td>вежливая просьба</td></tr>
+          <tr><td>2</td><td>назвать количество гостей</td><td>число + «на ... человек»</td></tr>
+          <tr><td>3</td><td>спросить состав блюда</td><td>вопрос «что содержит?»</td></tr>
+          <tr><td>4</td><td>заказать себе еду и напиток</td><td>«мне...»</td></tr>
+          <tr><td>5</td><td>заказать другому человеку</td><td>«ему / ей...»</td></tr>
+          <tr><td>6</td><td>отреагировать, если позиции нет</td><td>«хорошо, тогда...»</td></tr>
+          <tr><td>7</td><td>оценить еду и попросить счёт</td><td>короткая оценка + просьба</td></tr>
+          <tr><td>8</td><td>сказать, как платите</td><td>отдельно / вместе</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Полезные опоры — не готовые ответы</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Jó estét!" data-speak-lang="hu-HU">Jó estét!</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit tartalmaz ez az étel?" data-speak-lang="hu-HU">Mit tartalmaz ez az étel?</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem..., neki pedig..." data-speak-lang="hu-HU">Nekem..., neki pedig...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Rendben, akkor..." data-speak-lang="hu-HU">Rendben, akkor...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kérhetnénk a számlát?" data-speak-lang="hu-HU">Kérhetnénk a számlát?</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Külön fizetünk." data-speak-lang="hu-HU">Külön fizetünk.</button>
+          /
+          <button class="speak-btn" data-speak-text="Együtt fizetünk." data-speak-lang="hu-HU">Együtt fizetünk.</button>
+        </p>
+
+        <div class="note">
+          Опоры специально неполные. Они помогают начать реплику,
+          но не заменяют твою собственную формулировку.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Что может сказать официант</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hány személyre?" data-speak-lang="hu-HU">Hány személyre?</button>
+          — На сколько человек?
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit hozhatok önnek?" data-speak-lang="hu-HU">Mit hozhatok önnek?</button>
+          — Что я могу вам принести?
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Külön vagy együtt fizetnek?" data-speak-lang="hu-HU">Külön vagy együtt fizetnek?</button>
+          — Отдельно или вместе будете платить?
+        </p>
+
+        <div class="note">
+          Здесь достаточно узнавать вежливое обращение официанта.
+          Отдельную систему формального обращения сейчас не вводим.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Если не понял собеседника</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, nem értem." data-speak-lang="hu-HU">Elnézést, nem értem.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Megismételné, kérem?" data-speak-lang="hu-HU">Megismételné, kérem?</button>
+        </p>
+
+        <div class="warn">
+          Вторая фраза — тоже готовая вежливая формула.
+          Не разбираем её условную морфологию на этом уроке.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как выполнять RolePlay</h4>
+
+        <ol class="tasklist">
+          <li>сначала пойми вопрос официанта;</li>
+          <li>ответь одной полноценной фразой;</li>
+          <li>если нужно, добавь одну деталь;</li>
+          <li>не копируй модель дословно, если можешь сказать по-своему;</li>
+          <li>пройди все <b>8 реплик ученика</b>.</li>
+        </ol>
+
+        <div class="note">
+          Это открытая практика взаимодействия, поэтому её evidence остаётся
+          <b>PARTIAL</b>, даже если сценарий завершён.
+        </div>
+      `,
+    },    {
       id: 9,
       eyebrow: "УРОК 15 · 9/11 · ПИСЬМО",
       title: "Éttermi élmény",
-      subtitle: "Связный отзыв о визите",
+      subtitle: "80–100 слов: спланируй отзыв, затем напиши связный текст",
+      type: "writing",
       activities: [L15_WRITING],
-      body: `<p>Напиши 80–100 слов: место и время, спутник, оба заказа, положительная деталь, небольшая проблема, её решение и итоговое мнение.</p>`
-    },
-    {
+      note: "Это открытая письменная работа. Она даёт PARTIAL evidence: система видит выполнение, но не может полностью оценить точность и качество свободного текста.",
+      warn: "Не копируй готовый образец. Сначала составь свой план из 7 смысловых блоков и только потом пиши полный текст.",
+      task: "Напиши 80–100 слов: где/когда → с кем → твой заказ → заказ другого человека → хорошая деталь → проблема и решение → итоговое мнение.",
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. План из 7 смысловых блоков</h4>
+
+        <table class="conj">
+          <tr><th>Блок</th><th>Что обязательно сказать</th></tr>
+          <tr><td>1</td><td>где и когда был визит</td></tr>
+          <tr><td>2</td><td>с кем ты ходил(а)</td></tr>
+          <tr><td>3</td><td>что заказал(а) ты</td></tr>
+          <tr><td>4</td><td>что заказал другой человек</td></tr>
+          <tr><td>5</td><td>одна положительная деталь</td></tr>
+          <tr><td>6</td><td>небольшая проблема и её решение</td></tr>
+          <tr><td>7</td><td>итоговое мнение</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Короткие опоры для начала фраз</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Szombat este..." data-speak-lang="hu-HU">Szombat este...</button>
+          — в субботу вечером...
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A barátommal..." data-speak-lang="hu-HU">A barátommal...</button>
+          — с моим другом / подругой...
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Én ... rendeltem." data-speak-lang="hu-HU">Én ... rendeltem.</button>
+          — я заказал(а)...
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A barátomnak pedig..." data-speak-lang="hu-HU">A barátomnak pedig...</button>
+          — а для моего друга / подруги...
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Sajnos..." data-speak-lang="hu-HU">Sajnos...</button>
+          — к сожалению...
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Végül..." data-speak-lang="hu-HU">Végül...</button>
+          — в конце / наконец...
+        </p>
+
+        <div class="note">
+          Это только стартовые опоры. После них обязательно добавляй собственную информацию,
+          иначе текст останется набором шаблонов.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Как связать события</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Először..." data-speak-lang="hu-HU">Először...</button>
+          →
+          <button class="speak-btn" data-speak-text="Aztán..." data-speak-lang="hu-HU">Aztán...</button>
+          →
+          <button class="speak-btn" data-speak-text="Végül..." data-speak-lang="hu-HU">Végül...</button>
+        </p>
+
+        <div class="note">
+          Три простых связки уже помогают превратить список событий в рассказ.
+          Не нужно вводить новые сложные союзы, если они ещё не изучались.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Грамматическая самопроверка</h4>
+
+        <ol class="tasklist">
+          <li>история уже произошла → используй знакомые формы прошедшего времени из предыдущих уроков;</li>
+          <li>если заказываешь что-то другому человеку — проверь дательный компонент;</li>
+          <li>если говоришь, что чего-то не было в наличии — используй уже изученную отрицательную модель;</li>
+          <li>названия заказанных блюд проверь как объекты действия;</li>
+          <li>не вводи новую грамматику только ради «красивого» текста.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Проверка содержания перед отправкой</h4>
+
+        <table class="conj">
+          <tr><th>Есть в тексте?</th><th>Проверка</th></tr>
+          <tr><td>□</td><td>80–100 слов</td></tr>
+          <tr><td>□</td><td>где/когда и с кем</td></tr>
+          <tr><td>□</td><td>оба заказа</td></tr>
+          <tr><td>□</td><td>положительная деталь</td></tr>
+          <tr><td>□</td><td>проблема + решение</td></tr>
+          <tr><td>□</td><td>итоговое мнение</td></tr>
+        </table>
+
+        <div class="warn">
+          Полный образец существует внутри задания для проверки после собственной попытки,
+          но visual специально не раскрывает его заранее.
+        </div>
+      `,
+    },    {
       id: 10,
       eyebrow: "УРОК 15 · 10/11 · SPEAKING PRACTICE",
       title: "Egy éttermi látogatás",
-      subtitle: "Необязательная практика без записи",
+      subtitle: "1,5–2 минуты: расскажи историю по опорным блокам, не читая готовый текст",
+      type: "speaking",
       optionalSpeaking: L15_SPEAKING,
-      body: `<p>Свяжи заказ, впечатление, небольшую проблему и её решение в короткий устный рассказ.</p><div class="note">Дательный падеж позже вернётся в конструкции nekem kell в L18.</div>`
-    },
-    {
+      note: "Необязательная самопрактика: без микрофона, score и evidence. Ничего записывать или отправлять не нужно.",
+      warn: "Не пиши полный монолог заранее. Подготовь 6–8 ключевых слов и говори по смысловым блокам.",
+      task: "Говори 1,5–2 минуты: место/спутник → заказ → что понравилось → проблема → решение → итог. Если сбился, используй короткую фразу восстановления и продолжай.",
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта рассказа из 6 блоков</h4>
+
+        <table class="conj">
+          <tr><th>Блок</th><th>О чём говорить</th></tr>
+          <tr><td>1</td><td>где был ресторан и с кем ты ходил(а)</td></tr>
+          <tr><td>2</td><td>что заказал(а) ты и другой человек</td></tr>
+          <tr><td>3</td><td>что понравилось</td></tr>
+          <tr><td>4</td><td>какая возникла небольшая проблема</td></tr>
+          <tr><td>5</td><td>как проблему решили</td></tr>
+          <tr><td>6</td><td>чем закончился визит и вернулся(ась) бы ты ещё</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Опоры для начала</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A múlt héten..." data-speak-lang="hu-HU">A múlt héten...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A barátommal..." data-speak-lang="hu-HU">A barátommal...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Én ... rendeltem." data-speak-lang="hu-HU">Én ... rendeltem.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nagyon finom volt." data-speak-lang="hu-HU">Nagyon finom volt.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Sajnos..." data-speak-lang="hu-HU">Sajnos...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Végül..." data-speak-lang="hu-HU">Végül...</button>
+        </p>
+
+        <div class="note">
+          Эти фрагменты — только старт. Добавляй свои детали и связывай их
+          знакомыми средствами из предыдущих уроков.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Если остановился и не знаешь, как продолжить</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Egy pillanat..." data-speak-lang="hu-HU">Egy pillanat...</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Azt szeretném mondani, hogy..." data-speak-lang="hu-HU">Azt szeretném mondani, hogy...</button>
+        </p>
+
+        <div class="note">
+          Цель — не идеальная скорость, а связный рассказ без перехода на русский язык.
+          Короткая пауза лучше, чем полный отказ от фразы.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Самопроверка после рассказа</h4>
+
+        <ol class="tasklist">
+          <li>говорил(а) примерно 1,5–2 минуты;</li>
+          <li>упомянул(а) место и спутника;</li>
+          <li>назвал(а) заказ;</li>
+          <li>добавил(а) положительную деталь;</li>
+          <li>описал(а) проблему и решение;</li>
+          <li>завершил(а) итоговым мнением.</li>
+        </ol>
+
+        <div class="warn">
+          Эта практика не создаёт evidence и не меняет статус целей урока.
+          Она нужна для реальной устной автоматизации перед итоговой проверкой.
+        </div>
+
+        <div class="note">
+          Новые конструкции следующих уроков здесь не вводим.
+          Используй только уже знакомую грамматику и ресторанный словарь Lesson 15.
+        </div>
+      `,
+    },    {
       id: 11,
       eyebrow: "УРОК 15 · 11/11 · ИТОГИ",
       title: "Összefoglalás",
-      subtitle: "Итоги 15-го урока",
+      subtitle: "Что уже должно работать в ресторане — и что именно подтверждают задания",
+      type: "summary",
       activities: [L15_EXIT_CHECK],
+      note: "Это учебный checkpoint Lesson 15, а не официальный языковой сертификат. DIRECT означает прямое подтверждение внутри задания; PARTIAL означает, что открытая продукция требует дополнительной оценки.",
+      warn: "Не смешивай функции: -nak/-nek показывает получателя; притяжательный суффикс показывает владельца; nincs/nincsenek выражает отсутствие. Это связанные, но не одинаковые механизмы.",
+      task: "Пройди итог в три шага: 1) восстанови ключевые функции без подсказки; 2) произнеси ресторанные фразы; 3) посмотри Exit Check и отличи DIRECT от PARTIAL.",
       body: `
-   <ul class="tick">
-     <li>-nak/-nek — дательный падеж, «кому/для кого», присоединяется напрямую</li>
-     <li>Обладание: [дательный] + van/vannak + [существительное с притяжательным суффиксом]</li>
-     <li>Отрицание обладания — особое слово nincs/nincsenek, а не „nem van“</li>
-     <li>Косвенное дополнение и ресторанные просьбы: кому принести или заказать</li>
-     <li>Столик, рекомендация, состав блюда, проблема, счёт и способ оплаты</li>
-   </ul>
-   <div class="note">Controlled Practice, Reading и Listening могут дать DIRECT после порога. RolePlay и Writing остаются PARTIAL; speaking practice не создаёт evidence.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Грамматика: четыре опоры урока</h4>
+
+        <table class="conj">
+          <tr><th>Функция</th><th>Что нужно понимать</th><th>Пример</th></tr>
+          <tr>
+            <td>получатель</td>
+            <td>кому / для кого предназначено действие</td>
+            <td><button class="speak-btn" data-speak-text="A gyereknek egy limonádét kérek." data-speak-lang="hu-HU">A gyereknek egy limonádét kérek.</button></td>
+          </tr>
+          <tr>
+            <td>личная форма получателя</td>
+            <td>мне / тебе / ему-ей / нам / вам / им</td>
+            <td><button class="speak-btn" data-speak-text="Nekem, köszönöm." data-speak-lang="hu-HU">Nekem, köszönöm.</button></td>
+          </tr>
+          <tr>
+            <td>обладание</td>
+            <td>предмет получает притяжательный суффикс</td>
+            <td><button class="speak-btn" data-speak-text="Nekem van egy autóm." data-speak-lang="hu-HU">Nekem van egy autóm.</button></td>
+          </tr>
+          <tr>
+            <td>отсутствие</td>
+            <td>обычная отрицательная модель существования / наличия / обладания</td>
+            <td><button class="speak-btn" data-speak-text="Sajnos nincs limonádé." data-speak-lang="hu-HU">Sajnos nincs limonádé.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Ресторан: минимальный рабочий сценарий</h4>
+
+        <ol class="tasklist">
+          <li>попросить рекомендацию или уточнить состав блюда;</li>
+          <li>заказать себе и другому человеку;</li>
+          <li>отреагировать, если нужной позиции нет;</li>
+          <li>сообщить о проблеме с заказом;</li>
+          <li>попросить счёт и выбрать способ оплаты.</li>
+        </ol>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit ajánl?" data-speak-lang="hu-HU">Mit ajánl?</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Mit tartalmaz ez az étel?" data-speak-lang="hu-HU">Mit tartalmaz ez az étel?</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, ezt nem én rendeltem." data-speak-lang="hu-HU">Elnézést, ezt nem én rendeltem.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Kérhetnénk a számlát?" data-speak-lang="hu-HU">Kérhetnénk a számlát?</button>
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Предпочтение в еде: не путай две модели</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Szeretem a gulyáslevest." data-speak-lang="hu-HU">Szeretem a gulyáslevest.</button>
+          — общее предпочтение.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nekem ízlik a gulyásleves." data-speak-lang="hu-HU">Nekem ízlik a gulyásleves.</button>
+          — нравится именно на вкус.
+        </p>
+
+        <div class="note">
+          На этом уровне достаточно уверенно различать смысл и узнавать обе модели.
+          Полную новую парадигму здесь не добавляем.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Что подтверждается напрямую, а что требует проверки</h4>
+
+        <table class="conj">
+          <tr><th>Цель</th><th>Основное evidence</th><th>Статус</th></tr>
+          <tr><td>узнавать и понимать лексику еды</td><td>Reading</td><td><b>DIRECT</b></td></tr>
+          <tr><td>образовывать дательный падеж</td><td>Controlled Practice</td><td><b>DIRECT</b></td></tr>
+          <tr><td>использовать модель обладания</td><td>Controlled Practice</td><td><b>DIRECT</b></td></tr>
+          <tr><td>выражать предпочтения в еде</td><td>Writing + Reading</td><td><b>PARTIAL</b></td></tr>
+          <tr><td>делать заказ в ресторане</td><td>RolePlay + Practice</td><td><b>PARTIAL</b></td></tr>
+          <tr><td>понимать ресторанный диалог</td><td>Listening</td><td><b>DIRECT</b></td></tr>
+        </table>
+
+        <div class="note">
+          Необязательная устная самопрактика не создаёт evidence.
+          Она нужна для автоматизации, но не меняет статус целей автоматически.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Финальная самопроверка без готовых ответов</h4>
+
+        <details class="note">
+          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
+          <p class="mt-3">Можешь объяснить, кто получатель в первой фразе?</p>
+          <p>Можешь построить одну фразу «у меня есть...» и одну «у меня нет...»?</p>
+          <p>Можешь попросить рекомендацию, сообщить о неправильном заказе и попросить счёт?</p>
+          <p>Можешь объяснить разницу между общим предпочтением и «нравится на вкус»?</p>
+        </details>
+
+        <div class="warn">
+          Если какая-то открытая задача отмечена PARTIAL, это не означает «не выучено».
+          Это означает, что автоматическая система не должна притворяться, будто полностью оценила свободную речь или письмо.
+        </div>
+      `,
     }
   ],
-  vocabulary: [
-    { id: "l15_v1", hu: "leves", ru: "суп", category: "Food Core", exampleSentence: "A leves nagyon finom.", ipa: "[ˈlɛvɛʃ]" },
+  vocabulary: [    { id: "l15_v1", hu: "leves", ru: "суп", category: "Food Core", exampleSentence: "A leves nagyon finom.", ipa: "[ˈlɛvɛʃ]" },
     { id: "l15_v2", hu: "hús", ru: "мясо", category: "Food Core", exampleSentence: "Friss hús.", ipa: "[ˈhuːʃ]" },
     { id: "l15_v3", hu: "hal", ru: "рыба", category: "Food Core", exampleSentence: "A hal egészséges.", ipa: "[ˈhɒl]" },
     { id: "l15_v4", hu: "zöldség", ru: "овощи", category: "Food Core", exampleSentence: "Sok zöldséget eszem.", ipa: "[ˈzøltʃeːɡ]" },
