@@ -16,6 +16,31 @@
       "labels": {},
       "httpsTrigger": {},
       "entryPoint": "api"
+    },
+    "billing": {
+      "availableMemoryMb": 256,
+      "timeoutSeconds": 60,
+      "minInstances": 0,
+      "maxInstances": 5,
+      "ingressSettings": null,
+      "concurrency": null,
+      "serviceAccountEmail": null,
+      "vpc": null,
+      "platform": "gcfv2",
+      "region": [
+        "europe-west1"
+      ],
+      "secretEnvironmentVariables": [
+        {
+          "key": "LEMONSQUEEZY_API_KEY"
+        },
+        {
+          "key": "LEMONSQUEEZY_WEBHOOK_SECRET"
+        }
+      ],
+      "labels": {},
+      "httpsTrigger": {},
+      "entryPoint": "billing"
     }
   },
   "specVersion": "v1alpha1",
@@ -26,6 +51,29 @@
       "name": "LEMONSQUEEZY_TEST_MODE",
       "type": "boolean",
       "default": false
+    },
+    {
+      "type": "secret",
+      "name": "LEMONSQUEEZY_API_KEY"
+    },
+    {
+      "type": "secret",
+      "name": "LEMONSQUEEZY_WEBHOOK_SECRET"
+    },
+    {
+      "name": "LEMONSQUEEZY_STORE_ID",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LEMONSQUEEZY_VARIANT_ID",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "APP_URL",
+      "type": "string",
+      "default": "https://hungarylearn.web.app"
     }
   ]
 }
