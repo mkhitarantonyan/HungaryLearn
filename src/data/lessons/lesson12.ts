@@ -24,10 +24,9 @@ const READING: LessonActivity = {
   kind: 'reading', id: 'l12-reading-library-route', title: 'Чтение: дорога в библиотеку', passCount: 6,
   instructions: 'Прочитай маршрут Анны и ответь по смыслу: транспорт, последовательность, ошибка и исправление.',
   content: { type: 'prose', title: 'Hogyan jut el Anna a könyvtárba?', paragraphs: [
-    'Anna délelőtt a Nyugati pályaudvarnál van. Egy új könyvtárhoz szeretne eljutni, mert egy magyar könyvet keres a tanfolyamához. Nem ismeri ezt a városrészt. Az információs pultnál megkérdezi, melyik busszal menjen. Az ügyintéző azt mondja, hogy szálljon fel a 9-es buszra, és a negyedik megállónál szálljon le. Átszállni nem kell.',
-    'Anna felszáll a buszra, de úgy érti, hogy a harmadik megállónál kell leszállnia. Ott nem lát könyvtárat, csak egy nagy gyógyszertárat. Megnézi a címet a telefonján, és látja, hogy rossz helyen van. Megkérdez egy nőt: „Elnézést, hol van a könyvtár?” A nő elmagyarázza, hogy Anna egy megállóval korábban szállt le. A könyvtár a következő megállónál van.',
-    'Anna újra buszra száll, és most jó helyen száll le. A megállótól egyenesen megy, a második utcánál balra fordul. Elmegy egy pékség mellett, majd meglát egy kis parkot. A könyvtár a parknál, a posta előtt van. Anna még egyszer ellenőrzi a címet, azután bemegy az épületbe. Örül, hogy végül megtalálta a helyes utat, és még időben érkezett.',
-  ] },
+    'Anna délelőtt a Nyugati pályaudvarnál van. Egy új könyvtárhoz megy, mert egy magyar könyvet keres. Nem ismeri jól ezt a városrészt, ezért az információnál segítséget kér. Megkérdezi: „Melyik busszal menjek?” Az ügyintéző válaszol: „Szálljon fel a 9-es buszra, és a negyedik megállónál szálljon le. Átszállni nem kell.” Anna megköszöni a segítséget és felszáll a buszra. A telefonján is megnézi a könyvtár címét.',
+    'A buszon Anna a megállókat figyeli, de rosszul érti a számot, és a harmadik megállónál száll le. Ott nem lát könyvtárat. Egy nagy gyógyszertár van előtte. Megnézi újra a címet a telefonján, majd megkérdez egy nőt: „Elnézést, hol van a könyvtár?” Most világos: Anna egy megállóval korábban száll le, mint kell. A nő azt mondja: „A könyvtár a következő megállónál van.” Anna most már érti, hol kell leszállnia.',
+    'Anna újra felszáll a buszra, és a következő megállónál leszáll. A megállótól egyenesen megy, a második utcánál balra fordul. Elmegy egy pékség mellett, majd egy kis parkhoz ér. A könyvtár a parknál, a posta előtt van. Anna ellenőrzi a címet, és bemegy a könyvtárba. Ott megkeresi a magyar könyvet.',  ] },
   questions: [
     { id: 'l12-reading-q1', question: 'Где Анна находится в начале?', options: ['у вокзала Ньюгати', 'у библиотеки', 'у почты'], correctIndex: 0 },
     { id: 'l12-reading-q2', question: 'На каком транспорте она едет?', options: ['на метро', 'на автобусе 9', 'на трамвае'], correctIndex: 1 },
@@ -79,7 +78,7 @@ const ROLEPLAY: LessonActivity = {
 const WRITING: LessonActivity = {
   kind: 'writing', id: 'l12-writing-near-exchange', title: 'Письмо: простой маршрут',
   prompt: 'Напиши 70–90 слов с маршрутом от вымышленной начальной точки до нужного места. Укажи транспорт, остановку, где выйти, два пеших указания, ориентир и конечное местоположение.',
-  modelAnswer: ['A pályaudvartól a városi múzeumhoz a 7-es busszal lehet eljutni. A buszmegálló a pályaudvar előtt van. Szálljon fel a 7-es buszra, és az ötödik megállónál szálljon le. Ott lát egy nagy bankot. A banktól menjen egyenesen, majd az első utcánál forduljon jobbra. Menjen el egy pékség mellett. A múzeum a kis parknál, a posta mellett van. Ha a könyvtárhoz érkezik, túl messz ment. Az út körülbelül húsz perc, és átszállni nem kell.'],
+  modelAnswer: ['A pályaudvartól a városi múzeumhoz a 7-es busszal megyek. A buszmegálló a pályaudvar előtt van. Felszállok a 7-es buszra, és az ötödik megállónál leszállok. Ott egy nagy bank van. A banktól egyenesen megyek, majd az első utcánál jobbra fordulok. Elmegyek egy pékség mellett. A múzeum a kis parknál, a posta mellett van. Az út körülbelül húsz perc. Átszállni nem kell, ezért egyszerű az út. A megállótól a múzeum nincs messze. A parkot könnyű megtalálni.'],
   rubric: ['70–90 слов', 'транспорт и остановка', 'место выхода', 'два пеших указания', 'ориентир и конечное местоположение'],
 };
 
@@ -106,18 +105,1587 @@ export const LESSON_12: Lesson = {
   description: 'Интеграция форм -nál/-nél, -hoz/-hez/-höz и -tól/-től с транспортом, остановками, простыми маршрутами и восстановлением понимания.',
   slidesCount: 11,
   slides: [
-    { id: 1, eyebrow: 'УРОК 12 · 1/11 · СИСТЕМА', title: 'Hol? Hová? Honnan?', subtitle: 'У, к и от человека или объекта', body: `<p><b>Hol?</b> — <b>Annánál vagyok.</b> <b>Hová?</b> — <b>Péterhez megyek.</b> <b>Honnan?</b> — <b>Az orvostól jövök.</b></p><div class="note">L12 сохраняет точную семью -nál/-nél, -hoz/-hez/-höz, -tól/-től и соединяет её с уже знакомыми формами места из L10–L11.</div>` },
-    { id: 2, eyebrow: 'УРОК 12 · 2/11 · ФОРМЫ', title: '-nál/-nél · -hoz/-hez/-höz · -tól/-től', subtitle: 'Три отношения как связанные модели', body: `<table class="conj"><tr><th></th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>orvos</td><td>orvosnál</td><td>orvoshoz</td><td>orvostól</td></tr><tr><td>Péter</td><td>Péternél</td><td>Péterhez</td><td>Pétertől</td></tr><tr><td>Anna</td><td>Annánál</td><td>Annához</td><td>Annától</td></tr></table><div class="note"><b>testvér</b> означает брат или сестра. Формы выбираются по гармонии гласных и учатся в частых сочетаниях.</div>` },
-    { id: 3, eyebrow: 'УРОК 12 · 3/11 · ИНТЕГРАЦИЯ', title: 'Három gyakori helycsalád', subtitle: 'Знакомые системы работают вместе', body: `<table class="conj"><tr><th>Отношение</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr><tr><td>внутри</td><td>-ban/-ben</td><td>-ba/-be</td><td>-ból/-ből</td></tr><tr><td>поверхность/место</td><td>-n/-on/-en/-ön</td><td>-ra/-re</td><td>-ról/-ről</td></tr><tr><td>у / к / от</td><td>-nál/-nél</td><td>-hoz/-hez/-höz</td><td>-tól/-től</td></tr></table><p>Дополнительное распознавание: <b>nálam, hozzám, tőlem</b>. Это учебная модель, а не полное описание пространства.</p>` },
-    { id: 4, eyebrow: 'УРОК 12 · 4/11 · ФУНКЦИОНАЛЬНЫЙ ЯЗЫК', title: 'Hogyan jutok el...?', subtitle: 'Транспорт, остановка и уточнение', body: `<div class="grid2"><div><p><b>Hol van a megálló?</b></p><p><b>Melyik busszal menjek?</b></p><p><b>Hol kell leszállnom?</b></p><p><b>Át kell szállni?</b></p></div><div><p><b>Menjen egyenesen.</b></p><p><b>Forduljon jobbra/balra.</b></p><p><b>Elnézést, még egyszer, kérem.</b></p><p><b>Jól értem, hogy...?</b></p></div></div><div class="note">Императивные формы здесь используются как готовые маршрутные chunks; систематическое образование императива относится к L22.</div>` },
-    { id: 5, eyebrow: 'УРОК 12 · 5/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА', title: 'Közlekedés és útvonal', subtitle: 'От формы к практическому маршруту', body: `<p>Четырнадцать ситуаций охватывают выбор транспорта, направление, местонахождение, посадку, выход, пересадку и восстановление понимания.</p>`, activities: [NEAR_MEANINGS] },
-    { id: 6, eyebrow: 'УРОК 12 · 6/11 · ЧТЕНИЕ', title: 'Hogyan jut el Anna a könyvtárba?', subtitle: 'Ошибка и исправленный маршрут', body: `<p>Следи за транспортом, остановками, ориентиром и тем, как Анна исправляет ошибку.</p>`, activities: [READING] },
-    { id: 7, eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ', title: 'Kihez? Kinél? Kitől?', subtitle: 'Существующая синхронизированная запись', body: `<p>Запись сохраняет короткую проверку базовой семьи у/к/от. Транскрипт и вопросы не изменены.</p>`, activities: [LISTENING] },
-    { id: 8, eyebrow: 'УРОК 12 · 8/11 · ВЗАИМОДЕЙСТВИЕ', title: 'Útbaigazítás', subtitle: 'Маршрут с одной ошибкой понимания', body: `<p>Спроси дорогу, транспорт и место выхода, попроси повторить и подтверди исправленный маршрут.</p>`, activities: [ROLEPLAY] },
-    { id: 9, eyebrow: 'УРОК 12 · 9/11 · ПИСЬМО', title: 'Írj egy útvonalat!', subtitle: 'Связные указания от старта до цели', body: `<p>Открытый маршрут остаётся PARTIAL до квалифицированной проверки.</p>`, activities: [WRITING] },
-    { id: 10, eyebrow: 'УРОК 12 · 10/11 · УСТНАЯ САМОПРАКТИКА', title: 'Ismerős útvonal', subtitle: 'Только текстовая инструкция', body: `<p>По желанию объясни знакомую дорогу. Упражнение не использует микрофон и не создаёт evidence.</p>`, optionalSpeaking: SPEAKING },
-    { id: 11, eyebrow: 'УРОК 12 · 11/11 · ИТОГИ', title: 'Összefoglalás', subtitle: 'Формы работают внутри маршрута', body: `<ul class="tick"><li>Hol? — -nál/-nél</li><li>Hová? — -hoz/-hez/-höz</li><li>Honnan? — -tól/-től</li><li>Транспорт, остановка, ориентир и уточнение образуют практический маршрут</li><li>RolePlay и Writing остаются PARTIAL</li></ul>`, activities: [EXIT_CHECK] },
-  ],
+    {
+      id: 1,
+      eyebrow: 'УРОК 12 · 1/11 · СИСТЕМА',
+      title: 'Hol? Hová? Honnan?',
+      subtitle: 'У кого / рядом с чем · к кому / к чему · от кого / от чего',
+      type: 'info',
+      note: 'L12 добавляет третью знакомую пространственную семью. Её главное значение — контакт с человеком или точкой как с ориентиром: быть у/рядом, двигаться к ней, двигаться от неё.',
+      warn: 'Не переводим механически русские «у / к / от». Сначала определяем пространственный смысл и тип отношения, а затем выбираем венгерскую семью.',
+      task: 'Пройди алгоритм: 1) Hol/Hová/Honnan? 2) внутри, на/в стандартном месте или у/рядом? 3) только после этого выбери семью. На этом слайде важен смысл; подробную гармонию разберём на 12.2.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Новая семья — одно отношение в трёх направлениях</h4>
+
+        <table class="conj">
+          <tr><th>Смысл</th><th>Вопрос</th><th>Семья L12</th><th>Пример</th></tr>
+          <tr>
+            <td>нахожусь у человека / рядом с точкой</td>
+            <td><b>Hol?</b></td>
+            <td><b>-nál / -nél</b></td>
+            <td><button class="speak-btn" data-speak-text="Annánál vagyok." data-speak-lang="hu-HU">Annánál vagyok.</button></td>
+          </tr>
+          <tr>
+            <td>двигаюсь к человеку / к точке</td>
+            <td><b>Hová?</b></td>
+            <td><b>-hoz / -hez / -höz</b></td>
+            <td><button class="speak-btn" data-speak-text="Péterhez megyek." data-speak-lang="hu-HU">Péterhez megyek.</button></td>
+          </tr>
+          <tr>
+            <td>двигаюсь от человека / от точки</td>
+            <td><b>Honnan?</b></td>
+            <td><b>-tól / -től</b></td>
+            <td><button class="speak-btn" data-speak-text="Az orvostól jövök." data-speak-lang="hu-HU">Az orvostól jövök.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Это одна логическая тройка:
+          <b>где у точки → к точке → от точки</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. С человеком смысл особенно нагляден</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annánál vagyok." data-speak-lang="hu-HU">Annánál vagyok.</button>
+          — я у Анны / у Анны дома.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annához megyek." data-speak-lang="hu-HU">Annához megyek.</button>
+          — я иду к Анне.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annától jövök." data-speak-lang="hu-HU">Annától jövök.</button>
+          — я иду / прихожу от Анны.
+        </p>
+
+        <div class="note">
+          У имён на конечное <b>-a</b> гласная перед суффиксом удлиняется:
+          <b>Anna → Anná-</b>. Подробные варианты суффиксов будут на следующем слайде.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. С объектом L12 означает «у / к / от точки»</h4>
+
+        <p>
+          Сравни:
+          <button class="speak-btn" data-speak-text="A könyvtárnál vagyok." data-speak-lang="hu-HU">A könyvtárnál vagyok.</button>
+          — я у библиотеки, рядом с ней.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtárhoz megyek." data-speak-lang="hu-HU">A könyvtárhoz megyek.</button>
+          — я иду к библиотеке / до библиотеки.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtártól jövök." data-speak-lang="hu-HU">A könyvtártól jövök.</button>
+          — я иду от библиотеки.
+        </p>
+
+        <div class="warn">
+          <b>-hoz/-hez/-höz</b> не означает автоматически «внутрь».
+          Это движение <b>к точке</b>; вход внутрь обычно выражается внутренней семьёй L10.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Главное различие L10, L11 и L12</h4>
+
+        <table class="conj">
+          <tr><th>Отношение</th><th>Пример</th><th>Что представляем</th></tr>
+          <tr>
+            <td><b>L10: внутри</b></td>
+            <td><button class="speak-btn" data-speak-text="A könyvtárban vagyok." data-speak-lang="hu-HU">A könyvtárban vagyok.</button></td>
+            <td>я внутри библиотеки</td>
+          </tr>
+          <tr>
+            <td><b>L11: поверхность / стандартное место</b></td>
+            <td><button class="speak-btn" data-speak-text="A postán vagyok." data-speak-lang="hu-HU">A postán vagyok.</button></td>
+            <td>стандартная форма для почты</td>
+          </tr>
+          <tr>
+            <td><b>L12: у / рядом</b></td>
+            <td><button class="speak-btn" data-speak-text="A könyvtárnál vagyok." data-speak-lang="hu-HU">A könyvtárnál vagyok.</button></td>
+            <td>я у здания / рядом с ним</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Один и тот же русский предлог не определяет венгерскую форму.
+          Важно, <b>какое пространственное отношение</b> ты хочешь выразить.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Алгоритм выбора</h4>
+
+        <ol class="tasklist">
+          <li><b>Определи направление:</b> Hol, Hová или Honnan?</li>
+          <li><b>Определи отношение:</b> внутри, на/в стандартном месте или у/рядом?</li>
+          <li>Если смысл <b>у / к / от точки</b>, выбирай семью L12.</li>
+          <li>После этого выбирай гармонический вариант суффикса.</li>
+        </ol>
+
+        <div class="note">
+          Подробная гармония — следующий шаг на <b>12.2</b>.
+          Здесь достаточно уверенно распознавать саму семью.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Три опорные тройки</h4>
+
+        <table class="conj">
+          <tr><th>Основа</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
+          <tr>
+            <td><b>Anna</b></td>
+            <td><button class="speak-btn" data-speak-text="Annánál" data-speak-lang="hu-HU">Annánál</button></td>
+            <td><button class="speak-btn" data-speak-text="Annához" data-speak-lang="hu-HU">Annához</button></td>
+            <td><button class="speak-btn" data-speak-text="Annától" data-speak-lang="hu-HU">Annától</button></td>
+          </tr>
+          <tr>
+            <td><b>Péter</b></td>
+            <td><button class="speak-btn" data-speak-text="Péternél" data-speak-lang="hu-HU">Péternél</button></td>
+            <td><button class="speak-btn" data-speak-text="Péterhez" data-speak-lang="hu-HU">Péterhez</button></td>
+            <td><button class="speak-btn" data-speak-text="Pétertől" data-speak-lang="hu-HU">Pétertől</button></td>
+          </tr>
+          <tr>
+            <td><b>orvos</b></td>
+            <td><button class="speak-btn" data-speak-text="orvosnál" data-speak-lang="hu-HU">orvosnál</button></td>
+            <td><button class="speak-btn" data-speak-text="orvoshoz" data-speak-lang="hu-HU">orvoshoz</button></td>
+            <td><button class="speak-btn" data-speak-text="orvostól" data-speak-lang="hu-HU">orvostól</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Почему неверно</th></tr>
+          <tr><td>«есть движение → всегда -hoz»</td><td>сначала нужен вопрос Hová? и именно отношение «к точке»</td></tr>
+          <tr><td>«к библиотеке» и «в библиотеку» — одно и то же</td><td><b>könyvtárhoz</b> и <b>könyvtárba</b> выражают разные пространственные отношения</td></tr>
+          <tr><td><b>Annanál / Annahoz / Annatól</b></td><td>у Anna конечное <b>a → á</b>: Annánál, Annához, Annától</td></tr>
+          <tr><td>выбирать форму по русскому предлогу</td><td>венгерская система строится по пространственному отношению</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
+
+        <ol class="tasklist">
+          <li>Ты уже у врача: Hol, Hová или Honnan?</li>
+          <li>Ты идёшь к Петеру: Hol, Hová или Honnan?</li>
+          <li>Ты идёшь от Анны: Hol, Hová или Honnan?</li>
+          <li>Ты стоишь у библиотеки, но не говоришь, что находишься внутри: какая семья нужна?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить ответы</summary>
+          <ol class="tasklist mt-3">
+            <li><b>Hol?</b> → <b>orvosnál</b>.</li>
+            <li><b>Hová?</b> → <b>Péterhez</b>.</li>
+            <li><b>Honnan?</b> → <b>Annától</b>.</li>
+            <li>Семья L12: <b>könyvtárnál</b>.</li>
+          </ol>
+        </details>
+      `,
+    },    {
+      id: 2,
+      eyebrow: 'УРОК 12 · 2/11 · ФОРМЫ',
+      title: '-nál/-nél · -hoz/-hez/-höz · -tól/-től',
+      subtitle: 'Две двухвариантные семьи и одна трёхвариантная',
+      type: 'grammar',
+      note: 'На этом слайде нужна практическая A1-модель гармонии: формы выбираются по типу гласных основы. Это учебная модель для регулярных примеров урока, а не полное описание всех особенностей венгерской гармонии.',
+      warn: 'Не выбирай суффикс по последней букве слова. Смотри на гласные основы и особенно различай передние неогублённые e/é/i/í и передние огублённые ö/ő/ü/ű.',
+      task: 'Сначала определи Hol/Hová/Honnan, затем тип гласных основы. Отдельно проверь Hová: именно там есть третий вариант -höz.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Вся система на одной карте</h4>
+
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Задние гласные</th><th>Передние неогублённые</th><th>Передние огублённые</th></tr>
+          <tr>
+            <td><b>Hol?</b></td>
+            <td><b>-nál</b></td>
+            <td><b>-nél</b></td>
+            <td><b>-nél</b></td>
+          </tr>
+          <tr>
+            <td><b>Hová?</b></td>
+            <td><b>-hoz</b></td>
+            <td><b>-hez</b></td>
+            <td><b>-höz</b></td>
+          </tr>
+          <tr>
+            <td><b>Honnan?</b></td>
+            <td><b>-tól</b></td>
+            <td><b>-től</b></td>
+            <td><b>-től</b></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Главное отличие:
+          <b>-nál/-nél</b> и <b>-tól/-től</b> имеют по два варианта,
+          а <b>-hoz/-hez/-höz</b> — три.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Задние гласные → -nál / -hoz / -tól</h4>
+
+        <p>
+          Для регулярных примеров с
+          <b>a, á, o, ó, u, ú</b> выбирай задний вариант.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="orvosnál" data-speak-lang="hu-HU">orvosnál</button>
+          ·
+          <button class="speak-btn" data-speak-text="orvoshoz" data-speak-lang="hu-HU">orvoshoz</button>
+          ·
+          <button class="speak-btn" data-speak-text="orvostól" data-speak-lang="hu-HU">orvostól</button>
+        </p>
+
+        <div class="note">
+          <b>orvos</b> содержит задние <b>o, o</b>:
+          поэтому вся тройка использует задний вариант.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Передние неогублённые → -nél / -hez / -től</h4>
+
+        <p>
+          Для учебных примеров с
+          <b>e, é, i, í</b> выбирай передний неогублённый вариант.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Péternél" data-speak-lang="hu-HU">Péternél</button>
+          ·
+          <button class="speak-btn" data-speak-text="Péterhez" data-speak-lang="hu-HU">Péterhez</button>
+          ·
+          <button class="speak-btn" data-speak-text="Pétertől" data-speak-lang="hu-HU">Pétertől</button>
+        </p>
+
+        <div class="note">
+          В <b>Péter</b> передние неогублённые гласные:
+          поэтому Hová получает <b>-hez</b>, а не -hoz и не -höz.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Передние огублённые: третий вариант виден только в Hová?</h4>
+
+        <p>
+          Передние огублённые:
+          <b>ö, ő, ü, ű</b>.
+        </p>
+
+        <p>
+          На примере <b>tükör</b> — «зеркало»:
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="tükörnél" data-speak-lang="hu-HU">tükörnél</button>
+          ·
+          <button class="speak-btn" data-speak-text="tükörhöz" data-speak-lang="hu-HU">tükörhöz</button>
+          ·
+          <button class="speak-btn" data-speak-text="tükörtől" data-speak-lang="hu-HU">tükörtől</button>
+        </p>
+
+        <div class="note">
+          Обрати внимание:
+          Hol остаётся <b>-nél</b>, Honnan остаётся <b>-től</b>,
+          но Hová получает специальный вариант <b>-höz</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Anna: сначала меняется основа, затем добавляется суффикс</h4>
+
+        <p>
+          У имени <b>Anna</b> конечное <b>a</b> перед суффиксом становится <b>á</b>:
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annánál" data-speak-lang="hu-HU">Annánál</button>
+          ·
+          <button class="speak-btn" data-speak-text="Annához" data-speak-lang="hu-HU">Annához</button>
+          ·
+          <button class="speak-btn" data-speak-text="Annától" data-speak-lang="hu-HU">Annától</button>
+        </p>
+
+        <div class="warn">
+          Не пиши <b>Annanál, Annahoz, Annatól</b>.
+          Здесь важно одновременно увидеть <b>a → á</b> и правильный гармонический вариант.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Алгоритм образования формы</h4>
+
+        <ol class="tasklist">
+          <li>Выбери смысл: <b>Hol / Hová / Honnan?</b></li>
+          <li>Определи тип гласных основы.</li>
+          <li>Выбери суффикс из нужного ряда.</li>
+          <li>Проверь изменение основы, если оно требуется: <b>Anna → Anná-</b>.</li>
+          <li>Прочитай готовую форму вслух целиком.</li>
+        </ol>
+
+        <div class="note">
+          Не учи девять форм как девять отдельных слов.
+          Учи <b>три отношения + гармонию</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th></tr>
+          <tr><td><b>Péterhoz</b></td><td><b>Péterhez</b></td></tr>
+          <tr><td><b>tükörhez</b> в целевом Hová-примере</td><td><b>tükörhöz</b></td></tr>
+          <tr><td><b>orvostől</b></td><td><b>orvostól</b></td></tr>
+          <tr><td><b>Annahoz</b></td><td><b>Annához</b></td></tr>
+          <tr><td>искать отдельный -nöl или -töl</td><td>таких вариантов в этой семье нет: здесь <b>-nél</b> и <b>-től</b></td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
+
+        <ol class="tasklist">
+          <li><b>orvos + Hová?</b> → какой вариант?</li>
+          <li><b>Péter + Hol?</b> → какой вариант?</li>
+          <li><b>tükör + Hová?</b> → какой вариант?</li>
+          <li><b>Anna + Honnan?</b> → что происходит с основой?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить ответы</summary>
+          <ol class="tasklist mt-3">
+            <li><b>orvoshoz</b>.</li>
+            <li><b>Péternél</b>.</li>
+            <li><b>tükörhöz</b>.</li>
+            <li><b>Anna → Anná-</b>, затем <b>Annától</b>.</li>
+          </ol>
+        </details>
+      `,
+    },    {
+      id: 3,
+      eyebrow: 'УРОК 12 · 3/11 · ИНТЕГРАЦИЯ',
+      title: 'Három gyakori helycsalád',
+      subtitle: 'Один Hol/Hová/Honnan — три разных пространственных отношения',
+      type: 'grammar',
+      note: 'L10, L11 и L12 не конкурируют как три набора случайных окончаний. Они кодируют разные отношения: внутри, на/в стандартном месте и у/рядом с точкой.',
+      warn: 'Глагол движения сам по себе не выбирает семью. Формы szobába, postára и Péterhez все отвечают на Hová?, но выражают разные пространственные отношения.',
+      task: 'Для каждой ситуации проходи два решения: 1) Hol/Hová/Honnan? 2) внутри, поверхность/стандартное место или у/рядом? Только затем выбирай суффикс.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Три семьи на одной карте</h4>
+
+        <table class="conj">
+          <tr><th>Отношение</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
+          <tr>
+            <td><b>L10 · внутри</b></td>
+            <td><b>-ban / -ben</b></td>
+            <td><b>-ba / -be</b></td>
+            <td><b>-ból / -ből</b></td>
+          </tr>
+          <tr>
+            <td><b>L11 · поверхность / стандартное место</b></td>
+            <td><b>-n / -on / -en / -ön</b></td>
+            <td><b>-ra / -re</b></td>
+            <td><b>-ról / -ről</b></td>
+          </tr>
+          <tr>
+            <td><b>L12 · у / рядом с точкой</b></td>
+            <td><b>-nál / -nél</b></td>
+            <td><b>-hoz / -hez / -höz</b></td>
+            <td><b>-tól / -től</b></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Сначала выбирай <b>отношение</b>, а не окончание. Это учебная модель, а не полное описание венгерской системы пространства.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Три типичных тройки</h4>
+
+        <table class="conj">
+          <tr><th>Семья</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
+          <tr>
+            <td><b>L10</b></td>
+            <td><button class="speak-btn" data-speak-text="szobában" data-speak-lang="hu-HU">szobában</button></td>
+            <td><button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU">szobába</button></td>
+            <td><button class="speak-btn" data-speak-text="szobából" data-speak-lang="hu-HU">szobából</button></td>
+          </tr>
+          <tr>
+            <td><b>L11</b></td>
+            <td><button class="speak-btn" data-speak-text="postán" data-speak-lang="hu-HU">postán</button></td>
+            <td><button class="speak-btn" data-speak-text="postára" data-speak-lang="hu-HU">postára</button></td>
+            <td><button class="speak-btn" data-speak-text="postáról" data-speak-lang="hu-HU">postáról</button></td>
+          </tr>
+          <tr>
+            <td><b>L12</b></td>
+            <td><button class="speak-btn" data-speak-text="orvosnál" data-speak-lang="hu-HU">orvosnál</button></td>
+            <td><button class="speak-btn" data-speak-text="orvoshoz" data-speak-lang="hu-HU">orvoshoz</button></td>
+            <td><button class="speak-btn" data-speak-text="orvostól" data-speak-lang="hu-HU">orvostól</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Один объект может менять смысл вместе с семьёй</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtárban vagyok." data-speak-lang="hu-HU">A könyvtárban vagyok.</button>
+          — я <b>внутри</b> библиотеки.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtárnál vagyok." data-speak-lang="hu-HU">A könyvtárnál vagyok.</button>
+          — я <b>у</b> библиотеки / рядом со зданием.
+        </p>
+
+        <div class="note">
+          Существительное одно и то же, но пространственное отношение другое.
+          Поэтому меняется и семья.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Hová? не означает одну конкретную семью</h4>
+
+        <p>
+          Все три предложения отвечают на <b>Hová?</b>:
+        </p>
+
+        <p><button class="speak-btn" data-speak-text="A szobába megyek." data-speak-lang="hu-HU">A szobába megyek.</button> — внутрь комнаты.</p>
+        <p><button class="speak-btn" data-speak-text="A postára megyek." data-speak-lang="hu-HU">A postára megyek.</button> — на/в почту как стандартное место.</p>
+        <p><button class="speak-btn" data-speak-text="Péterhez megyek." data-speak-lang="hu-HU">Péterhez megyek.</button> — к Петеру.</p>
+
+        <div class="warn">
+          Поэтому правило «есть движение → ставлю -hoz» неверно.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. То же самое с Honnan?</h4>
+
+        <p><button class="speak-btn" data-speak-text="A szobából jövök." data-speak-lang="hu-HU">A szobából jövök.</button> — из комнаты.</p>
+        <p><button class="speak-btn" data-speak-text="A postáról jövök." data-speak-lang="hu-HU">A postáról jövök.</button> — с/из почты.</p>
+        <p><button class="speak-btn" data-speak-text="Az orvostól jövök." data-speak-lang="hu-HU">Az orvostól jövök.</button> — от врача.</p>
+
+        <div class="note">
+          Honnan? говорит только «источник движения».
+          Какая именно семья нужна — решает пространственное отношение.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Самый важный контраст: könyvtárba vs könyvtárhoz</h4>
+
+        <table class="conj">
+          <tr><th>Форма</th><th>Смысл</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="A könyvtárba megyek." data-speak-lang="hu-HU">A könyvtárba megyek.</button></td>
+            <td>иду <b>внутрь</b> библиотеки</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="A könyvtárhoz megyek." data-speak-lang="hu-HU">A könyvtárhoz megyek.</button></td>
+            <td>иду <b>к</b> библиотеке как к точке / зданию</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Русский перевод может быть похожим, но венгерская форма точнее показывает отношение к месту.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Что проверить</th></tr>
+          <tr><td>сначала выбирать суффикс</td><td>сначала смысл и семья</td></tr>
+          <tr><td>все Hová? делать через -hoz</td><td>внутрь? стандартное место? к точке?</td></tr>
+          <tr><td>путать könyvtárban и könyvtárnál</td><td>внутри здания или рядом?</td></tr>
+          <tr><td>переводить русский предлог один к одному</td><td>восстановить реальное пространственное отношение</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
+
+        <ol class="tasklist">
+          <li>Ты уже внутри комнаты. Какая семья?</li>
+          <li>Ты идёшь на почту как в стандартное место. Какая семья?</li>
+          <li>Ты идёшь к врачу. Какая семья?</li>
+          <li>Ты стоишь у библиотеки, но не внутри. Какая форма?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить ответы</summary>
+          <ol class="tasklist mt-3">
+            <li><b>L10</b> → <b>szobában</b>.</li>
+            <li><b>L11</b> → <b>postára</b>.</li>
+            <li><b>L12</b> → <b>orvoshoz</b>.</li>
+            <li><b>L12</b> → <b>könyvtárnál</b>.</li>
+          </ol>
+        </details>
+      `,
+    },    {
+      id: 4,
+      eyebrow: 'УРОК 12 · 4/11 · ФУНКЦИОНАЛЬНЫЙ ЯЗЫК',
+      title: 'Hogyan jutok el...?',
+      subtitle: 'Спросить дорогу → понять маршрут → уточнить ошибку',
+      type: 'dialogue',
+      note: 'На этом слайде учим не новую грамматическую парадигму, а готовые фразы для реальной ситуации: спросить дорогу, понять транспорт и остановку, попросить повторить и подтвердить маршрут.',
+      warn: 'Не пытайся здесь разбирать по частям формы menjek, menjen, forduljon, busszal или leszállnom. В L12 они работают как готовые функциональные chunks.',
+      task: 'Пройди маршрут разговора из пяти шагов. Сначала читай фразы целиком, затем закрой перевод и попробуй восстановить нужную реплику по ситуации.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Сначала назови цель</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hogyan jutok el a könyvtárhoz?" data-speak-lang="hu-HU">Hogyan jutok el a könyvtárhoz?</button>
+          — Как мне добраться до библиотеки?
+        </p>
+
+        <p>
+          Здесь уже работает знакомая семья L12:
+          <button class="speak-btn" data-speak-text="könyvtárhoz" data-speak-lang="hu-HU">könyvtárhoz</button>
+          — «к библиотеке / до библиотеки».
+        </p>
+
+        <div class="note">
+          Шаблон <b>Hogyan jutok el ...?</b> удобно запоминать целиком:
+          меняй только место назначения.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Спроси про остановку и транспорт</h4>
+
+        <table class="conj">
+          <tr><th>Что нужно узнать</th><th>Фраза</th></tr>
+          <tr>
+            <td>где остановка?</td>
+            <td><button class="speak-btn" data-speak-text="Hol van a megálló?" data-speak-lang="hu-HU">Hol van a megálló?</button></td>
+          </tr>
+          <tr>
+            <td>каким автобусом ехать?</td>
+            <td><button class="speak-btn" data-speak-text="Melyik busszal menjek?" data-speak-lang="hu-HU">Melyik busszal menjek?</button></td>
+          </tr>
+          <tr>
+            <td>где мне выходить?</td>
+            <td><button class="speak-btn" data-speak-text="Hol kell leszállnom?" data-speak-lang="hu-HU">Hol kell leszállnom?</button></td>
+          </tr>
+          <tr>
+            <td>нужна пересадка?</td>
+            <td><button class="speak-btn" data-speak-text="Át kell szállni?" data-speak-lang="hu-HU">Át kell szállni?</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          На этом этапе цель — <b>узнать информацию</b>, а не анализировать внутреннее устройство этих фраз.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Узнавай готовые указания</h4>
+
+        <p><button class="speak-btn" data-speak-text="Menjen egyenesen." data-speak-lang="hu-HU">Menjen egyenesen.</button> — идите прямо.</p>
+        <p><button class="speak-btn" data-speak-text="Forduljon jobbra." data-speak-lang="hu-HU">Forduljon jobbra.</button> — поверните направо.</p>
+        <p><button class="speak-btn" data-speak-text="Forduljon balra." data-speak-lang="hu-HU">Forduljon balra.</button> — поверните налево.</p>
+        <p><button class="speak-btn" data-speak-text="Szálljon fel a 9-es buszra." data-speak-lang="hu-HU">Szálljon fel a 9-es buszra.</button> — садитесь на автобус 9.</p>
+        <p><button class="speak-btn" data-speak-text="Szálljon le a negyedik megállónál." data-speak-lang="hu-HU">Szálljon le a negyedik megállónál.</button> — выйдите на четвёртой остановке.</p>
+
+        <div class="note">
+          Сейчас эти указания распознаются как готовые маршрутные единицы.
+          Их систематическое образование будет изучаться позже.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Если не понял — останови разговор</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, még egyszer, kérem." data-speak-lang="hu-HU">Elnézést, még egyszer, kérem.</button>
+          — Извините, ещё раз, пожалуйста.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Nem értettem." data-speak-lang="hu-HU">Nem értettem.</button>
+          — Я не понял.
+        </p>
+
+        <div class="warn">
+          Не угадывай маршрут, если потерял одну остановку или направление.
+          Просьба повторить — нормальная часть реального разговора.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Подтверди, что понял правильно</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Jól értem, hogy a negyedik megállónál szállok le?" data-speak-lang="hu-HU">Jól értem, hogy a negyedik megállónál szállok le?</button>
+          — Я правильно понимаю, что выхожу на четвёртой остановке?
+        </p>
+
+        <p>
+          Короткая модель:
+          <button class="speak-btn" data-speak-text="Jól értem, hogy...?" data-speak-lang="hu-HU">Jól értem, hogy...?</button>
+        </p>
+
+        <div class="note">
+          Это особенно полезно после исправления ошибки:
+          сначала попроси повторить, затем сам повтори ключевую информацию.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Мини-диалог: вся стратегия целиком</h4>
+
+        <div class="dialogue">
+          <p><b>Te:</b> <button class="speak-btn" data-speak-text="Hogyan jutok el a könyvtárhoz?" data-speak-lang="hu-HU">Hogyan jutok el a könyvtárhoz?</button></p>
+          <p><b>Információ:</b> <button class="speak-btn" data-speak-text="Menjen a 9-es busszal." data-speak-lang="hu-HU">Menjen a 9-es busszal.</button></p>
+          <p><b>Te:</b> <button class="speak-btn" data-speak-text="Hol kell leszállnom?" data-speak-lang="hu-HU">Hol kell leszállnom?</button></p>
+          <p><b>Információ:</b> <button class="speak-btn" data-speak-text="A negyedik megállónál." data-speak-lang="hu-HU">A negyedik megállónál.</button></p>
+          <p><b>Te:</b> <button class="speak-btn" data-speak-text="Elnézést, még egyszer, kérem." data-speak-lang="hu-HU">Elnézést, még egyszer, kérem.</button></p>
+          <p><b>Te:</b> <button class="speak-btn" data-speak-text="Jól értem, hogy a negyedik megállónál szállok le?" data-speak-lang="hu-HU">Jól értem, hogy a negyedik megállónál szállok le?</button></p>
+        </div>
+
+        <div class="note">
+          Полезная последовательность:
+          <b>спросить → услышать → уточнить → подтвердить</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Что делать</th></tr>
+          <tr><td>пытаться сразу разбирать каждое окончание</td><td>на этом этапе учить всю фразу как chunk</td></tr>
+          <tr><td>после непонимания просто говорить «igen»</td><td>попросить повторить: <b>még egyszer, kérem</b></td></tr>
+          <tr><td>не проверять номер остановки</td><td>использовать <b>Jól értem, hogy...?</b></td></tr>
+          <tr><td>путать jobbra и balra</td><td>слушать направление как отдельное ключевое слово</td></tr>
+        </table>
+
+        <div class="warn">
+          Императивные формы здесь используются как готовые маршрутные chunks; систематическое образование императива относится к L22.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
+
+        <ol class="tasklist">
+          <li>Как спросить, где остановка?</li>
+          <li>Как спросить, где выходить?</li>
+          <li>Что сказать, если не понял?</li>
+          <li>Как проверить, что ты правильно понял номер остановки?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить ответы</summary>
+          <ol class="tasklist mt-3">
+            <li><b>Hol van a megálló?</b></li>
+            <li><b>Hol kell leszállnom?</b></li>
+            <li><b>Elnézést, még egyszer, kérem.</b> или <b>Nem értettem.</b></li>
+            <li><b>Jól értem, hogy a negyedik megállónál szállok le?</b></li>
+          </ol>
+        </details>
+      `,
+    },    {
+      id: 5,
+      eyebrow: 'УРОК 12 · 5/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА',
+      title: 'Közlekedés és útvonal',
+      subtitle: '14 ситуаций: место, маршрут и восстановление понимания',
+      type: 'practice',
+      note: 'Здесь проверяются не отдельные окончания сами по себе, а выбор подходящей реплики по ситуации. Цель — увидеть смысл раньше формы.',
+      warn: 'Не ищи одинаковое ключевое слово в вопросе и ответе. Сначала восстанови ситуацию: где ты, куда движешься, откуда идёшь, спрашиваешь маршрут или исправляешь непонимание.',
+      task: 'Выполни 14 заданий. Для каждого сначала назови тип задачи: МЕСТО, МАРШРУТ или REPAIR. Затем выбери реплику. Проходной результат — 11 из 14.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что именно тренируется</h4>
+
+        <table class="conj">
+          <tr><th>Тип задачи</th><th>Что нужно распознать</th></tr>
+          <tr><td><b>МЕСТО</b></td><td>Hol / Hová / Honnan и нужную пространственную семью</td></tr>
+          <tr><td><b>МАРШРУТ</b></td><td>остановку, транспорт, посадку, выход, пересадку, направление</td></tr>
+          <tr><td><b>REPAIR</b></td><td>как попросить повторить и как подтвердить понимание</td></tr>
+        </table>
+
+        <div class="note">
+          Эти три типа перемешаны специально: в реальном разговоре они тоже идут вперемешку.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Для задач МЕСТО — сначала вопрос</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Az orvosnál vagyok." data-speak-lang="hu-HU">Az orvosnál vagyok.</button>
+          — уже нахожусь у врача: <b>Hol?</b>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annához megyek." data-speak-lang="hu-HU">Annához megyek.</button>
+          — направляюсь к Анне: <b>Hová?</b>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Pétertől jövök." data-speak-lang="hu-HU">Pétertől jövök.</button>
+          — иду от Петера: <b>Honnan?</b>
+        </p>
+
+        <div class="note">
+          Не начинай с окончания. Сначала определи пространственное отношение.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Для задач МАРШРУТ — определи намерение</h4>
+
+        <table class="conj">
+          <tr><th>Намерение</th><th>Опорная фраза</th></tr>
+          <tr>
+            <td>спросить, где остановка</td>
+            <td><button class="speak-btn" data-speak-text="Hol van a megálló?" data-speak-lang="hu-HU">Hol van a megálló?</button></td>
+          </tr>
+          <tr>
+            <td>спросить, каким автобусом</td>
+            <td><button class="speak-btn" data-speak-text="Melyik busszal menjek?" data-speak-lang="hu-HU">Melyik busszal menjek?</button></td>
+          </tr>
+          <tr>
+            <td>спросить, где выходить</td>
+            <td><button class="speak-btn" data-speak-text="Hol kell leszállnom?" data-speak-lang="hu-HU">Hol kell leszállnom?</button></td>
+          </tr>
+          <tr>
+            <td>уточнить пересадку</td>
+            <td><button class="speak-btn" data-speak-text="Át kell szállni?" data-speak-lang="hu-HU">Át kell szállni?</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Формы <b>menjek, busszal, kell leszállnom</b> здесь остаются готовыми chunks.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Слушай противопоставления, а не отдельные слова</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Szálljon fel a buszra." data-speak-lang="hu-HU">Szálljon fel a buszra.</button>
+          — сесть / подняться в транспорт.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Szálljon le a következő megállónál." data-speak-lang="hu-HU">Szálljon le a következő megállónál.</button>
+          — выйти на остановке.
+        </p>
+
+        <div class="warn">
+          <b>fel</b> и <b>le</b> здесь критичны: одна короткая часть меняет действие.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. REPAIR — это тоже правильный ответ</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, még egyszer, kérem." data-speak-lang="hu-HU">Elnézést, még egyszer, kérem.</button>
+          — попросить повторить.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Jól értem, hogy...?" data-speak-lang="hu-HU">Jól értem, hogy...?</button>
+          — подтвердить, что понял правильно.
+        </p>
+
+        <div class="note">
+          В реальном маршруте умение восстановить понимание важнее, чем угадывать недослышанную деталь.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Алгоритм для каждого из 14 заданий</h4>
+
+        <ol class="tasklist">
+          <li>Прочитай ситуацию, не глядя на окончания.</li>
+          <li>Назови тип: <b>МЕСТО / МАРШРУТ / REPAIR</b>.</li>
+          <li>Для МЕСТО определи <b>Hol / Hová / Honnan</b>.</li>
+          <li>Для МАРШРУТ определи действие: спросить, сесть, выйти, пересесть, повернуть.</li>
+          <li>Для REPAIR реши: повторить или подтвердить.</li>
+          <li>Только теперь сравни варианты ответа.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ловушки</h4>
+
+        <table class="conj">
+          <tr><th>Ловушка</th><th>Как избежать</th></tr>
+          <tr><td>видишь megyek и автоматически выбираешь Hová</td><td>смотри на всю ситуацию и роль формы</td></tr>
+          <tr><td>путаешь felszáll и leszáll</td><td>отделяй посадку от выхода</td></tr>
+          <tr><td>слышишь megálló и выбираешь любую фразу с megálló</td><td>определи: где остановка или где выходить?</td></tr>
+          <tr><td>после ошибки выбираешь случайный маршрут</td><td>используй repair-фразу</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Перед стартом: быстрая самопроверка</h4>
+
+        <ol class="tasklist">
+          <li>Если ты уже у врача — это Hol, Hová или Honnan?</li>
+          <li>Если хочешь узнать место выхода — какая коммуникативная задача?</li>
+          <li>Если не понял номер остановки — нужно угадывать или просить повторить?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить</summary>
+          <ol class="tasklist mt-3">
+            <li><b>Hol?</b></li>
+            <li>Спросить, <b>где выходить</b>.</li>
+            <li>Попросить повторить, затем подтвердить понимание.</li>
+          </ol>
+        </details>
+
+        <div class="task">
+          Теперь переходи к 14 ситуациям ниже. Цель: <b>11/14</b> или лучше.
+        </div>
+      `,
+      activities: [NEAR_MEANINGS],
+    },    {
+      id: 6,
+      eyebrow: 'УРОК 12 · 6/11 · ЧТЕНИЕ',
+      title: 'Hogyan jut el Anna a könyvtárba?',
+      subtitle: 'Маршрут → ошибка → проверка → исправление',
+      type: 'reading',
+      note: 'Читай не ради перевода каждого слова. Задача — восстановить последовательность маршрута: старт, транспорт, место ошибки, ориентир и исправленный путь.',
+      warn: 'Не останавливайся на каждом незнакомом слове. Сначала найди знакомые опоры: busz, megálló, gyógyszertár, egyenesen, balra, könyvtár.',
+      task: 'Первое чтение: только маршрут. Второе чтение: найди ошибку Анны и то, как она её исправляет. После этого отвечай на 8 вопросов. Проходной результат — 6 из 8.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Перед чтением: карта задачи</h4>
+
+        <table class="conj">
+          <tr><th>Ищи</th><th>Вопрос к себе</th></tr>
+          <tr><td><b>START</b></td><td>Где Анна находится в начале?</td></tr>
+          <tr><td><b>TRANSPORT</b></td><td>На чём она едет и где должна выйти?</td></tr>
+          <tr><td><b>ERROR</b></td><td>Что она понимает неправильно?</td></tr>
+          <tr><td><b>LANDMARK</b></td><td>Что она видит после ошибки?</td></tr>
+          <tr><td><b>REPAIR</b></td><td>Как она возвращается к правильному маршруту?</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Опорные фразы маршрута</h4>
+
+        <p><button class="speak-btn" data-speak-text="Melyik busszal menjek?" data-speak-lang="hu-HU">Melyik busszal menjek?</button> — каким автобусом ехать?</p>
+        <p><button class="speak-btn" data-speak-text="Szálljon fel a 9-es buszra." data-speak-lang="hu-HU">Szálljon fel a 9-es buszra.</button> — сядьте на автобус 9.</p>
+        <p><button class="speak-btn" data-speak-text="A negyedik megállónál szálljon le." data-speak-lang="hu-HU">A negyedik megállónál szálljon le.</button> — выйдите на четвёртой остановке.</p>
+        <p><button class="speak-btn" data-speak-text="Átszállni nem kell." data-speak-lang="hu-HU">Átszállni nem kell.</button> — пересадка не нужна.</p>
+
+        <div class="note">
+          Эти четыре опоры дают правильный план ещё до того, как появляется ошибка.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Найди момент ошибки</h4>
+
+        <p>
+          В тексте рядом стоят два числа:
+          <b>negyedik</b> — четвёртый и <b>harmadik</b> — третий.
+        </p>
+
+        <p><button class="speak-btn" data-speak-text="A harmadik megállónál száll le." data-speak-lang="hu-HU">A harmadik megállónál száll le.</button></p>
+
+        <div class="warn">
+          Не просто запоминай число. Сравни инструкцию и действие Анны:
+          именно это показывает ошибку понимания.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Ориентир подтверждает, что место неверное</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Egy nagy gyógyszertár van előtte." data-speak-lang="hu-HU">Egy nagy gyógyszertár van előtte.</button>
+          — перед ней большая аптека.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, hol van a könyvtár?" data-speak-lang="hu-HU">Elnézést, hol van a könyvtár?</button>
+          — Извините, где библиотека?
+        </p>
+
+        <div class="note">
+          Вопрос после ошибки — часть стратегии REPAIR из предыдущего слайда.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как восстанавливается правильный маршрут</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtár a következő megállónál van." data-speak-lang="hu-HU">A könyvtár a következő megállónál van.</button>
+        </p>
+
+        <p>
+          Затем:
+          <button class="speak-btn" data-speak-text="A megállótól egyenesen megy." data-speak-lang="hu-HU">A megállótól egyenesen megy.</button>
+        </p>
+
+        <p>
+          И:
+          <button class="speak-btn" data-speak-text="A második utcánál balra fordul." data-speak-lang="hu-HU">A második utcánál balra fordul.</button>
+        </p>
+
+        <div class="note">
+          Финальный пеший маршрут читается как цепочка:
+          <b>megálló → egyenesen → második utca → balra</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Несколько слов можно читать рецептивно</h4>
+
+        <table class="conj">
+          <tr><th>Слово</th><th>Достаточно понять</th></tr>
+          <tr><td><b>városrész</b></td><td>район / часть города</td></tr>
+          <tr><td><b>ügyintéző</b></td><td>сотрудник, который даёт информацию</td></tr>
+          <tr><td><b>pékség</b></td><td>пекарня как ориентир</td></tr>
+          <tr><td><b>korábban</b></td><td>раньше / на более раннем этапе</td></tr>
+        </table>
+
+        <div class="note">
+          Эти слова не нужно превращать в активную грамматику урока.
+          Они помогают понять маршрут.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Алгоритм двух чтений</h4>
+
+        <ol class="tasklist">
+          <li><b>Первое чтение:</b> выпиши только места и транспорт.</li>
+          <li>Отметь правильную остановку и фактическую остановку Анны.</li>
+          <li><b>Второе чтение:</b> найди аптеку, вопрос о библиотеке и исправленный путь.</li>
+          <li>Только после этого переходи к 8 вопросам.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка перед вопросами</h4>
+
+        <ol class="tasklist">
+          <li>Правильная остановка — третья или четвёртая?</li>
+          <li>Что Анна видит после неправильного выхода?</li>
+          <li>Как начинается пешая часть после правильной остановки?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить</summary>
+          <ol class="tasklist mt-3">
+            <li><b>Четвёртая.</b></li>
+            <li><b>Большую аптеку.</b></li>
+            <li><b>От остановки прямо.</b></li>
+          </ol>
+        </details>
+
+        <div class="task">
+          Теперь прочитай полный текст ниже и ответь на 8 вопросов. Цель: <b>6/8</b> или лучше.
+        </div>
+      `,
+      activities: [READING],
+    },    {
+      id: 7,
+      eyebrow: 'УРОК 12 · 7/11 · АУДИРОВАНИЕ',
+      title: 'Kihez? Kinél? Kitől?',
+      subtitle: 'Услышать: к кому → у кого → от кого',
+      type: 'listening',
+      note: 'Цель — различать на слух три отношения L12. Не пытайся понять каждое слово: слушай человека, суффикс и направление отношения.',
+      warn: 'Не открывай транскрипт до первого прослушивания. Иначе упражнение превращается в чтение вместо аудирования.',
+      task: '1-е прослушивание: поймай только Kihez / Kinél / Kitől. 2-е прослушивание: восстанови последовательность людей и отношений. Затем ответь на 5 вопросов. Проходной результат — 4 из 5.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что нужно услышать</h4>
+
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Смысл</th><th>Сигнал</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kihez?" data-speak-lang="hu-HU">Kihez?</button></td>
+            <td>к кому?</td>
+            <td><b>-hoz / -hez / -höz</b></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kinél?" data-speak-lang="hu-HU">Kinél?</button></td>
+            <td>у кого?</td>
+            <td><b>-nál / -nél</b></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kitől?" data-speak-lang="hu-HU">Kitől?</button></td>
+            <td>от кого?</td>
+            <td><b>-tól / -től</b></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          На слух сначала распознавай <b>отношение</b>, а уже потом имя или существительное.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Различай окончания как звуковые сигналы</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annánál" data-speak-lang="hu-HU">Annánál</button>
+          ·
+          <button class="speak-btn" data-speak-text="Annához" data-speak-lang="hu-HU">Annához</button>
+          ·
+          <button class="speak-btn" data-speak-text="Annától" data-speak-lang="hu-HU">Annától</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Péternél" data-speak-lang="hu-HU">Péternél</button>
+          ·
+          <button class="speak-btn" data-speak-text="Péterhez" data-speak-lang="hu-HU">Péterhez</button>
+          ·
+          <button class="speak-btn" data-speak-text="Pétertől" data-speak-lang="hu-HU">Pétertől</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="orvosnál" data-speak-lang="hu-HU">orvosnál</button>
+          ·
+          <button class="speak-btn" data-speak-text="orvoshoz" data-speak-lang="hu-HU">orvoshoz</button>
+          ·
+          <button class="speak-btn" data-speak-text="orvostól" data-speak-lang="hu-HU">orvostól</button>
+        </p>
+
+        <div class="note">
+          Не нужно повторять гармонию целиком. Здесь задача — услышать разницу между
+          <b>nál/nél</b>, <b>hoz/hez/höz</b> и <b>tól/től</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Первое прослушивание: только отношения</h4>
+
+        <ol class="tasklist">
+          <li>Не записывай полные предложения.</li>
+          <li>Поставь три метки: <b>К КОМУ / У КОГО / ОТ КОГО</b>.</li>
+          <li>Отмечай каждую услышанную форму по типу окончания.</li>
+        </ol>
+
+        <div class="warn">
+          На первом прослушивании не пытайся сразу восстановить весь сюжет.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Второе прослушивание: добавь участников</h4>
+
+        <p>
+          Теперь рядом с каждой меткой запиши, кого ты услышал:
+          <b>Anna / Péter / orvos</b>.
+        </p>
+
+        <div class="note">
+          У тебя должна получиться не расшифровка, а короткая схема:
+          <b>человек + отношение + человек/место</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Не путай вопрос и ответ</h4>
+
+        <table class="conj">
+          <tr><th>Слышишь</th><th>Думаешь</th></tr>
+          <tr><td><b>-nál / -nél</b></td><td>кто-то уже находится у человека/места</td></tr>
+          <tr><td><b>-hoz / -hez / -höz</b></td><td>кто-то направляется к человеку/месту</td></tr>
+          <tr><td><b>-tól / -től</b></td><td>кто-то идёт/приходит от человека/места</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки при аудировании</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Что делать</th></tr>
+          <tr><td>ловить только имя</td><td>слушать имя вместе с окончанием</td></tr>
+          <tr><td>путать -nél и -től</td><td>сначала решить: «у» или «от»</td></tr>
+          <tr><td>читать транскрипт до аудио</td><td>первый проход всегда без текста</td></tr>
+          <tr><td>останавливаться после одного непонятного слова</td><td>продолжать и ловить знакомые окончания</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-разминка перед записью</h4>
+
+        <ol class="tasklist">
+          <li><b>Péterhez</b> — к Петеру, у Петера или от Петера?</li>
+          <li><b>Annánál</b> — к Анне, у Анны или от Анны?</li>
+          <li><b>orvostól</b> — к врачу, у врача или от врача?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить</summary>
+          <ol class="tasklist mt-3">
+            <li><b>к Петеру</b>.</li>
+            <li><b>у Анны</b>.</li>
+            <li><b>от врача</b>.</li>
+          </ol>
+        </details>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Теперь слушай опубликованную запись</h4>
+
+        <div class="task">
+          Сначала слушай без транскрипта. Затем ответь на 5 вопросов.
+          Цель: <b>4/5</b> или лучше.
+        </div>
+
+        <div class="note">
+          Транскрипт и вопросы опубликованного Listening не изменяются.
+        </div>
+      `,
+      activities: [LISTENING],
+    },    {
+      id: 8,
+      eyebrow: 'УРОК 12 · 8/11 · ВЗАИМОДЕЙСТВИЕ',
+      title: 'Útbaigazítás',
+      subtitle: 'Спроси → уточни → исправь ошибку → подтверди маршрут',
+      type: 'roleplay',
+      note: 'RolePlay проверяет не идеальную грамматику, а способность провести реальный разговор о маршруте. Восемь твоих реплик идут от первого вопроса до финального подтверждения.',
+      warn: 'Не читай model сразу. Сначала сформулируй свою реплику. Если форма из 12.4 сложная, используй её как готовый chunk, а не пытайся строить новую грамматику.',
+      task: 'Пройди все 8 learner turns в режиме selfPractice. На каждой реплике сначала скажи ответ вслух сам, затем сравни с model. Особое внимание — моменту непонимания и его исправлению.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта всего разговора</h4>
+
+        <table class="conj">
+          <tr><th>Этап</th><th>Твоя коммуникативная задача</th></tr>
+          <tr><td><b>1</b></td><td>спросить, как добраться до библиотеки</td></tr>
+          <tr><td><b>2</b></td><td>найти автобусную остановку</td></tr>
+          <tr><td><b>3</b></td><td>узнать, где выходить</td></tr>
+          <tr><td><b>4</b></td><td>показать непонимание и попросить повторить</td></tr>
+          <tr><td><b>5</b></td><td>подтвердить исправленную остановку</td></tr>
+          <tr><td><b>6</b></td><td>спросить последний пеший отрезок</td></tr>
+          <tr><td><b>7</b></td><td>повторить финальную часть маршрута</td></tr>
+          <tr><td><b>8</b></td><td>поблагодарить и завершить разговор</td></tr>
+        </table>
+
+        <div class="note">
+          Это не восемь отдельных фраз, а один связный разговор.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Начало: цель и остановка</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hogyan jutok el a könyvtárhoz?" data-speak-lang="hu-HU">Hogyan jutok el a könyvtárhoz?</button>
+          — как добраться до библиотеки?
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hol van a buszmegálló?" data-speak-lang="hu-HU">Hol van a buszmegálló?</button>
+          — где автобусная остановка?
+        </p>
+
+        <div class="note">
+          Сначала задай цель, потом уточняй детали маршрута.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Критическая деталь: где выходить</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hol kell leszállnom?" data-speak-lang="hu-HU">Hol kell leszállnom?</button>
+        </p>
+
+        <p>
+          В ответе ключевой информацией будет номер остановки.
+          Не пытайся запомнить всё предложение — удержи именно эту деталь.
+        </p>
+
+        <div class="warn">
+          В этом RolePlay специально появляется ошибка понимания:
+          learner слышит неверный номер остановки.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Repair: не угадывай, а останови разговор</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, nem értettem." data-speak-lang="hu-HU">Elnézést, nem értettem.</button>
+          — Извините, я не понял.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Még egyszer, kérem." data-speak-lang="hu-HU">Még egyszer, kérem.</button>
+          — Ещё раз, пожалуйста.
+        </p>
+
+        <div class="note">
+          Это центральный навык слайда:
+          <b>не делать вид, что понял, а восстановить информацию</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. После исправления — обязательно подтверди</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Jól értem, hogy a negyedik megállónál szállok le?" data-speak-lang="hu-HU">Jól értem, hogy a negyedik megállónál szállok le?</button>
+        </p>
+
+        <div class="note">
+          Схема:
+          <b>не понял → попросил повторить → услышал исправление → повторил ключевую информацию своими словами</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Последний пеший отрезок</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="És a pékségtől merre menjek?" data-speak-lang="hu-HU">És a pékségtől merre menjek?</button>
+          — А от пекарни куда мне идти?
+        </p>
+
+        <p>
+          Здесь снова работает L12:
+          <button class="speak-btn" data-speak-text="pékségtől" data-speak-lang="hu-HU">pékségtől</button>
+          — «от пекарни».
+        </p>
+
+        <div class="note">
+          В финальной части слушай три опоры:
+          <b>egyenesen → második utca → balra</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки в RolePlay</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Лучше</th></tr>
+          <tr><td>сразу открыть model</td><td>сначала самостоятельно сказать реплику</td></tr>
+          <tr><td>после непонимания сказать только «igen»</td><td>использовать repair-фразу</td></tr>
+          <tr><td>услышать новый номер и не проверить его</td><td>использовать <b>Jól értem, hogy...?</b></td></tr>
+          <tr><td>пытаться анализировать императив прямо в диалоге</td><td>воспринимать маршрутные формы как готовые chunks</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Перед стартом: мини-проверка стратегии</h4>
+
+        <ol class="tasklist">
+          <li>Ты не понял номер остановки. Что делаешь первым?</li>
+          <li>После повторения номер стал понятен. Что делаешь дальше?</li>
+          <li>Ты получил последний пеший маршрут. Что полезно сделать перед завершением?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить стратегию</summary>
+          <ol class="tasklist mt-3">
+            <li>Попросить повторить: <b>nem értettem / még egyszer, kérem</b>.</li>
+            <li>Подтвердить ключевую деталь: <b>Jól értem, hogy...?</b></li>
+            <li>Коротко повторить финальный маршрут своими словами.</li>
+          </ol>
+        </details>
+
+        <div class="task">
+          Теперь пройди RolePlay ниже. Все 8 learner turns выполняй сначала без model.
+        </div>
+      `,
+      activities: [ROLEPLAY],
+    },    {
+      id: 9,
+      eyebrow: 'УРОК 12 · 9/11 · ПИСЬМО',
+      title: 'Írj egy útvonalat!',
+      subtitle: '70–90 слов: от стартовой точки до понятного финального места',
+      type: 'writing',
+      note: 'Письменный маршрут должен быть понятен человеку, который не знает дорогу. Поэтому важна не длина сама по себе, а последовательность: старт → транспорт → выход → пеший отрезок → ориентир → цель.',
+      warn: 'Не превращай задание в список несвязанных фраз. Используй знакомые формы L10–L12 и маршрутные chunks; не вводи новое прошедшее время перед L13.',
+      task: 'Сначала составь план из 6 пунктов, затем напиши 70–90 слов. После написания проверь текст по рубрике. Writing остаётся PARTIAL до содержательной проверки.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Сначала сделай маршрутный план</h4>
+
+        <table class="conj">
+          <tr><th>Шаг</th><th>Что обязательно указать</th></tr>
+          <tr><td><b>START</b></td><td>откуда начинается маршрут</td></tr>
+          <tr><td><b>TRANSPORT</b></td><td>каким транспортом ехать</td></tr>
+          <tr><td><b>EXIT</b></td><td>где выйти</td></tr>
+          <tr><td><b>WALK 1–2</b></td><td>два пеших указания</td></tr>
+          <tr><td><b>LANDMARK</b></td><td>ориентир рядом с целью</td></tr>
+          <tr><td><b>FINISH</b></td><td>где именно находится нужное место</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Начало маршрута: откуда → куда</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A pályaudvartól a múzeumhoz megyek." data-speak-lang="hu-HU">A pályaudvartól a múzeumhoz megyek.</button>
+        </p>
+
+        <div class="note">
+          Здесь одновременно повторяются две формы L12:
+          <b>pályaudvartól</b> — от вокзала, <b>múzeumhoz</b> — к музею.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Транспорт и место выхода</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Felszállok a 7-es buszra." data-speak-lang="hu-HU">Felszállok a 7-es buszra.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Az ötödik megállónál leszállok." data-speak-lang="hu-HU">Az ötödik megállónál leszállok.</button>
+        </p>
+
+        <div class="note">
+          Не забудь назвать именно остановку выхода, а не только номер автобуса.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Два пеших указания должны идти по порядку</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A banktól egyenesen megyek." data-speak-lang="hu-HU">A banktól egyenesen megyek.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Az első utcánál jobbra fordulok." data-speak-lang="hu-HU">Az első utcánál jobbra fordulok.</button>
+        </p>
+
+        <div class="warn">
+          Два указания должны описывать последовательность, а не два случайных направления.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Ориентир и конечное местоположение</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A múzeum a kis parknál, a posta mellett van." data-speak-lang="hu-HU">A múzeum a kis parknál, a posta mellett van.</button>
+        </p>
+
+        <div class="note">
+          Читатель должен понять не только маршрут, но и как узнать место в конце.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Связки, которые помогают сделать текст связным</h4>
+
+        <table class="conj">
+          <tr><th>Связка</th><th>Функция</th></tr>
+          <tr><td><button class="speak-btn" data-speak-text="majd" data-speak-lang="hu-HU">majd</button></td><td>затем</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="ott" data-speak-lang="hu-HU">ott</button></td><td>там</td></tr>
+          <tr><td><button class="speak-btn" data-speak-text="azután" data-speak-lang="hu-HU">azután</button></td><td>после этого</td></tr>
+        </table>
+
+        <div class="note">
+          Достаточно 2–3 простых связок. Не усложняй текст ради количества слов.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Проверка</th></tr>
+          <tr><td>есть транспорт, но нет остановки выхода</td><td>добавь <b>hol kell leszállni / megállónál</b></td></tr>
+          <tr><td>есть два направления, но непонятен порядок</td><td>добавь <b>majd / azután</b></td></tr>
+          <tr><td>финальная точка названа без ориентира</td><td>добавь park, posta, bank и т.п.</td></tr>
+          <tr><td>пытаешься использовать новую сложную грамматику</td><td>останься в знакомых формах и chunks</td></tr>
+          <tr><td>текст меньше 70 или больше 90 слов</td><td>сделай финальный подсчёт слов</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Самопроверка перед отправкой</h4>
+
+        <ol class="tasklist">
+          <li>Есть старт и конечная цель?</li>
+          <li>Назван транспорт?</li>
+          <li>Названа остановка выхода?</li>
+          <li>Есть два последовательных пеших указания?</li>
+          <li>Есть ориентир и финальное местоположение?</li>
+          <li>Объём — <b>70–90 слов</b>?</li>
+        </ol>
+
+        <div class="task">
+          Теперь напиши свой маршрут. Не копируй model: используй его только после собственной попытки для самопроверки.
+        </div>
+      `,
+      activities: [WRITING],
+    },    {
+      id: 10,
+      eyebrow: 'УРОК 12 · 10/11 · УСТНАЯ САМОПРАКТИКА',
+      title: 'Ismerős útvonal',
+      subtitle: '1.5 минуты: объясни знакомый маршрут без чтения готового текста',
+      type: 'speaking',
+      note: 'Это добровольная устная самопрактика. Здесь нет записи голоса и автоматической оценки: цель — собрать уже знакомые элементы L12 в связное объяснение маршрута.',
+      warn: 'Не пытайся говорить сложнее своего уровня. Лучше 6–8 простых, понятных предложений с правильной последовательностью, чем длинная фраза с новой грамматикой.',
+      task: 'Выбери реальный или вымышленный знакомый маршрут. За 30 секунд составь 6 опор, затем говори около 1.5 минуты без чтения полного текста. После этого проверь себя по checklist.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Шесть опор для 1.5 минуты</h4>
+
+        <table class="conj">
+          <tr><th>Опора</th><th>Что сказать</th></tr>
+          <tr><td><b>START</b></td><td>откуда начинаешь</td></tr>
+          <tr><td><b>GOAL</b></td><td>куда идёшь / едешь</td></tr>
+          <tr><td><b>TRANSPORT</b></td><td>какой транспорт</td></tr>
+          <tr><td><b>EXIT</b></td><td>где выходишь</td></tr>
+          <tr><td><b>WALK</b></td><td>2 пеших шага</td></tr>
+          <tr><td><b>LANDMARK</b></td><td>ориентир и конечная точка</td></tr>
+        </table>
+
+        <div class="note">
+          Если держишь в голове эти шесть опор, не нужно заучивать полный монолог.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Начни с точки старта и цели</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A pályaudvartól a könyvtárhoz megyek." data-speak-lang="hu-HU">A pályaudvartól a könyvtárhoz megyek.</button>
+        </p>
+
+        <div class="note">
+          Здесь сразу работают две формы L12:
+          <b>-tól/-től</b> для старта и <b>-hoz/-hez/-höz</b> для цели.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Добавь транспорт и место выхода</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A 9-es busszal megyek." data-speak-lang="hu-HU">A 9-es busszal megyek.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A negyedik megállónál leszállok." data-speak-lang="hu-HU">A negyedik megállónál leszállok.</button>
+        </p>
+
+        <div class="note">
+          Не достаточно сказать только номер автобуса — назови и точку выхода.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Пешая часть: два шага по порядку</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A megállótól egyenesen megyek." data-speak-lang="hu-HU">A megállótól egyenesen megyek.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A második utcánál balra fordulok." data-speak-lang="hu-HU">A második utcánál balra fordulok.</button>
+        </p>
+
+        <div class="warn">
+          Не меняй порядок шагов во время речи. Сначала назови первый ориентир, затем следующий.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Закрой маршрут ориентиром</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtár a parknál van." data-speak-lang="hu-HU">A könyvtár a parknál van.</button>
+        </p>
+
+        <div class="note">
+          Конец должен быть очевидным: слушатель понимает, где находится цель.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Простые связки вместо сложной грамматики</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="majd" data-speak-lang="hu-HU">majd</button>
+          ·
+          <button class="speak-btn" data-speak-text="azután" data-speak-lang="hu-HU">azután</button>
+          ·
+          <button class="speak-btn" data-speak-text="ott" data-speak-lang="hu-HU">ott</button>
+        </p>
+
+        <div class="note">
+          Эти слова помогают связать 6–8 коротких предложений в один маршрут.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки устной самопрактики</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th></tr>
+          <tr><td>заучивать весь текст слово в слово</td><td>держать только 6 опор</td></tr>
+          <tr><td>говорить только транспорт и цель</td><td>добавить выход, пешую часть и ориентир</td></tr>
+          <tr><td>останавливаться после каждой неточности</td><td>закончить мысль, потом сделать self-check</td></tr>
+          <tr><td>вводить незнакомое прошедшее время</td><td>оставаться в знакомом настоящем времени</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Checklist после 1.5 минуты</h4>
+
+        <ol class="tasklist">
+          <li>Я назвал старт и цель?</li>
+          <li>Я назвал транспорт и место выхода?</li>
+          <li>Я дал минимум два пеших шага?</li>
+          <li>Я назвал ориентир у конечной точки?</li>
+          <li>Я использовал хотя бы одну форму <b>-nál/-nél, -hoz/-hez/-höz или -tól/-től</b>?</li>
+          <li>Маршрут можно понять без карты?</li>
+        </ol>
+
+        <div class="warn">
+          Эта самопрактика выполняется <b>без микрофона</b>, не создаёт score и не создаёт <b>evidence</b>.
+        </div>
+
+        <div class="task">
+          30 секунд на план → около <b>1.5 минуты</b> речи → self-check. Не читай готовый текст.
+        </div>
+      `,
+      optionalSpeaking: SPEAKING,
+    },    {
+      id: 11,
+      eyebrow: 'УРОК 12 · 11/11 · ИТОГИ',
+      title: 'Összefoglalás',
+      subtitle: 'L12 в одной системе: у / к / от + практический маршрут',
+      type: 'summary',
+      note: 'Финальный принцип L12: сначала определи отношение Hol / Hová / Honnan, затем выбери местную семью и гармонический вариант. Не начинай с окончания.',
+      warn: 'Не делай правило «есть движение → -hoz». Движение отвечает на Hová?, но семья зависит от смысла: внутрь, стандартное место или к/у точки.',
+      task: 'Пройди 8 итоговых блоков, затем выполни ExitCheck. Если какая-то форма вызывает сомнение, вернись к конкретному типу ошибки, а не перечитывай весь урок.',
+      body: `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Главная тройка L12</h4>
+
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Отношение</th><th>Суффикс</th></tr>
+          <tr><td><b>Hol?</b></td><td>у / около</td><td><b>-nál / -nél</b></td></tr>
+          <tr><td><b>Hová?</b></td><td>к</td><td><b>-hoz / -hez / -höz</b></td></tr>
+          <tr><td><b>Honnan?</b></td><td>от</td><td><b>-tól / -től</b></td></tr>
+        </table>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Annánál vagyok." data-speak-lang="hu-HU">Annánál vagyok.</button>
+          ·
+          <button class="speak-btn" data-speak-text="Péterhez megyek." data-speak-lang="hu-HU">Péterhez megyek.</button>
+          ·
+          <button class="speak-btn" data-speak-text="Az orvostól jövök." data-speak-lang="hu-HU">Az orvostól jövök.</button>
+        </p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Гармония: что нужно удержать</h4>
+
+        <table class="conj">
+          <tr><th>Тип</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
+          <tr><td>задние</td><td>-nál</td><td>-hoz</td><td>-tól</td></tr>
+          <tr><td>передние неогублённые</td><td>-nél</td><td>-hez</td><td>-től</td></tr>
+          <tr><td>передние огублённые</td><td>-nél</td><td>-höz</td><td>-től</td></tr>
+        </table>
+
+        <div class="note">
+          Отдельно помни изменение основы:
+          <b>Anna → Anná-</b> перед суффиксом.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Не путай L10, L11 и L12</h4>
+
+        <table class="conj">
+          <tr><th>Смысл</th><th>Пример</th></tr>
+          <tr>
+            <td>внутри</td>
+            <td><button class="speak-btn" data-speak-text="A könyvtárban vagyok." data-speak-lang="hu-HU">A könyvtárban vagyok.</button></td>
+          </tr>
+          <tr>
+            <td>стандартное / конвенциональное место</td>
+            <td><button class="speak-btn" data-speak-text="A postán vagyok." data-speak-lang="hu-HU">A postán vagyok.</button></td>
+          </tr>
+          <tr>
+            <td>у / рядом с точкой</td>
+            <td><button class="speak-btn" data-speak-text="A könyvtárnál vagyok." data-speak-lang="hu-HU">A könyvtárnál vagyok.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Один русский предлог не определяет венгерский суффикс.
+          Сначала восстанови реальное пространственное отношение.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Hová? — особенно важный контраст</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtárba megyek." data-speak-lang="hu-HU">A könyvtárba megyek.</button>
+          — иду внутрь библиотеки.
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="A könyvtárhoz megyek." data-speak-lang="hu-HU">A könyvtárhoz megyek.</button>
+          — иду к библиотеке как к точке.
+        </p>
+
+        <div class="note">
+          Сам по себе глагол движения не определяет падеж.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Практический маршрут = язык + repair</h4>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Hogyan jutok el a könyvtárhoz?" data-speak-lang="hu-HU">Hogyan jutok el a könyvtárhoz?</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Elnézést, még egyszer, kérem." data-speak-lang="hu-HU">Elnézést, még egyszer, kérem.</button>
+        </p>
+
+        <p>
+          <button class="speak-btn" data-speak-text="Jól értem, hogy...?" data-speak-lang="hu-HU">Jól értem, hogy...?</button>
+        </p>
+
+        <div class="note">
+          Хороший маршрутный диалог:
+          <b>спросить → услышать → заметить непонимание → попросить повторить → подтвердить</b>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что уже проверяют задания урока</h4>
+
+        <table class="conj">
+          <tr><th>Навык</th><th>Где проверяется</th></tr>
+          <tr><td>различение и образование трёх форм</td><td>Controlled Practice</td></tr>
+          <tr><td>понимание маршрута</td><td>Reading</td></tr>
+          <tr><td>различение у / к / от на слух</td><td>Listening</td></tr>
+          <tr><td>repair и взаимодействие</td><td>RolePlay</td></tr>
+          <tr><td>связный маршрут</td><td>Writing</td></tr>
+        </table>
+
+        <div class="note">
+          Первые четыре грамматические цели ExitCheck опираются на прямую проверку.
+          Интегрированная коммуникативная цель включает Reading, Listening, RolePlay и Writing;
+          открытая продукция остаётся <b>PARTIAL</b> до содержательной проверки.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Финальные типичные ошибки</h4>
+
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th></tr>
+          <tr><td><b>Péterhoz</b></td><td><b>Péterhez</b></td></tr>
+          <tr><td><b>Annahoz</b></td><td><b>Annához</b></td></tr>
+          <tr><td>könyvtárhoz = «внутрь библиотеки»</td><td>внутрь → <b>könyvtárba</b></td></tr>
+          <tr><td>любое движение → -hoz</td><td>сначала определить пространственную семью</td></tr>
+          <tr><td>после непонимания угадывать маршрут</td><td>использовать repair-фразу</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Финальный self-check перед ExitCheck</h4>
+
+        <ol class="tasklist">
+          <li>Как сказать «у Анны»?</li>
+          <li>Как сказать «к Петеру»?</li>
+          <li>Как сказать «от врача»?</li>
+          <li>Чем отличаются <b>könyvtárba</b> и <b>könyvtárhoz</b>?</li>
+          <li>Что сказать, если не понял маршрут?</li>
+        </ol>
+
+        <details class="note mt-4">
+          <summary class="font-bold cursor-pointer">Проверить</summary>
+          <ol class="tasklist mt-3">
+            <li><b>Annánál</b>.</li>
+            <li><b>Péterhez</b>.</li>
+            <li><b>orvostól</b>.</li>
+            <li><b>könyvtárba</b> — внутрь; <b>könyvtárhoz</b> — к точке/зданию.</li>
+            <li><b>Elnézést, még egyszer, kérem.</b> Затем можно подтвердить через <b>Jól értem, hogy...?</b></li>
+          </ol>
+        </details>
+
+        <div class="task">
+          Теперь выполни ExitCheck ниже. Если есть ошибка, возвращайся к конкретному блоку L12, который её объясняет.
+        </div>
+      `,
+      activities: [EXIT_CHECK],
+    },  ],
   vocabulary: [
     ['orvosnál', 'у врача'], ['orvoshoz', 'к врачу'], ['orvostól', 'от врача'], ['Péternél', 'у Петера'], ['Péterhez', 'к Петеру'], ['Pétertől', 'от Петера'],
     ['Annánál', 'у Анны'], ['Annához', 'к Анне'], ['Annától', 'от Анны'], ['alatt', 'под'], ['felett', 'над'], ['mellett', 'рядом с'], ['előtt', 'перед'], ['mögött', 'позади'], ['között', 'между'], ['nálam', 'у меня'],

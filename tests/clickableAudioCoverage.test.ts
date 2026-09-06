@@ -119,8 +119,7 @@ test('every learner-facing clickable pronunciation target has a physical mapped 
     0,
     `Clickable audio coverage failures (${failures.length}):\n${failures.join('\n')}`,
   );
-
-  // P4 removes three redundant clickable examples while reducing L15 to eleven slides.
-  // No MP3 is removed; every remaining clickable target still has a physical mapping.
-  assert.equal(targets.size, 1881, `Clickable-audio inventory changed: ${targets.size}/1881`);
+  // Inventory guard: update this count only when learner-facing clickable targets intentionally change.
+  // Every target above must still resolve to a physical mapped MP3.
+  assert.equal(targets.size, 1942, `Clickable-audio inventory changed: ${targets.size}/1942`);
 });
