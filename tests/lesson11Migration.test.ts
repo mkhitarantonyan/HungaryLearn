@@ -55,7 +55,8 @@ test('L11 RolePlay implements route clarification in eight text-only learner tur
   const rolePlay = find('l11-roleplay-town-route', 'rolePlay');
   assert.equal(rolePlay.turns.length, 17); assert.equal(rolePlay.turns.filter((t) => t.speaker === 'learner').length, 8);
   assert.ok(rolePlay.turns.filter((t) => t.speaker === 'learner').every((t) => t.responseMode === 'selfPractice'));
-  assert.match(JSON.stringify(rolePlay), /hol van a posta.*Hogyan jutok el.*második utcánál.*Nem, az első.*Köszönöm/is);
+    assert.match(JSON.stringify(rolePlay), /hol van a posta.*Merre van a főtér.*második utca után.*Nem, az első utca után.*Köszönöm/is);
+  assert.doesNotMatch(JSON.stringify(rolePlay), /Menjen|forduljon|forduljak|majd|utcánál|-nál\/-nél|-hoz\/-hez|-tól\/-től/i);
   assert.equal(rolePlayCompletionEvidence(rolePlay.id).evidenceMode, 'partial');
 });
 

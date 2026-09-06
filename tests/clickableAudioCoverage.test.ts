@@ -122,5 +122,5 @@ test('every learner-facing clickable pronunciation target has a physical mapped 
 
   // P4 removes three redundant clickable examples while reducing L15 to eleven slides.
   // No MP3 is removed; every remaining clickable target still has a physical mapping.
-  assert.equal(targets.size, 1808, `Clickable-audio inventory changed: ${targets.size}/1808`);
+  assert.equal(targets.size, 1881, `Clickable-audio inventory changed: ${targets.size}/1881`);
 });
