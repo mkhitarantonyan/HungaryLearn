@@ -1,3 +1,4 @@
+import { lessonText } from './fixtures/courseContracts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -85,12 +86,13 @@ test('P5 L19 writing is 90–110 words and optional speaking has no evidence', (
 });
 
 test('P5 L19 preserves present-for-future truth and recognition-only definite fog boundary', () => {
-  assert.match(source, /Holnap Budapestre megyek/);
-  assert.match(source, /Holnap Budapestre fogok menni/);
-  assert.match(source, /не утверждает, что каждое будущее предложение требует fog/);
-  assert.match(source, /порядок слов зависит от фокуса/);
+  const text = lessonText(LESSON_19);
+  assert.match(text, /Holnap dolgozom/);
+  assert.match(text, /Holnap dolgozni fogok/);
+  assert.match(text, /не каждое будущее предложение требует fog/);
+  assert.match(text, /порядок слов зависит от того, что говорящий выделяет/);
   for (const form of ['fogom', 'fogod', 'fogja', 'fogjuk', 'fogjátok', 'fogják']) assert.match(source, new RegExp(form));
-  assert.match(source, /не является условием прохождения L19/);
+  assert.match(text, /Для прохождения Lesson 19 продуктивно нужна неопределённая парадигма/);
 });
 
 test('P5 L19 published Listening transcript and MP3 hash remain byte-identical', () => {

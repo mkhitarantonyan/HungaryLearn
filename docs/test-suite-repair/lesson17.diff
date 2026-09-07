@@ -1,0 +1,1022 @@
+--- historical/src/data/lessons/lesson17.ts (41ea4749eeb494324bd8cdacd495be1b261bc14c)
++++ working/src/data/lessons/lesson17.ts
+@@ -92,20 +92,1006 @@
+ export const LESSON_17: Lesson = {
+   id: 17, number: 17, level: 'A2', title: 'Урок 17 · Időjárás és évszakok', subtitle: 'Погода, сезоны и практические планы', description: 'Описание погоды и температуры, сезоны, понимание прогноза и изменение практического плана из-за погодных условий.', slidesCount: 11,
+   slides: [
+-    { id: 1, eyebrow: 'УРОК 17 · 1/11 · CAN-DO', title: 'Milyen az idő?', subtitle: 'Погода как часть реального плана', body: `<p>После урока ты сможешь понять простой прогноз, описать погоду, подобрать одежду или занятие и изменить план с понятной причиной.</p><p><b>Süt a nap. Fúj a szél. Esik az eső. Esik a hó. Felhős az ég.</b></p>` },
+-    { id: 2, eyebrow: 'УРОК 17 · 2/11 · ТЕМПЕРАТУРА', title: 'Hány fok van?', subtitle: 'Текущая температура', body: `<p><b>Tíz fok van. Mínusz két fok van. Meleg van. Hideg van.</b></p><div class="note">В Meleg van / Hideg van слово van нужно. Сравни: Az idő meleg — здесь отдельной связки в настоящем времени нет.</div>` },
+-    { id: 3, eyebrow: 'УРОК 17 · 3/11 · СЕЗОНЫ', title: 'Évszakok', subtitle: 'Когда и какая погода', body: `<p><b>tavasz, nyár, ősz, tél</b></p><p>Частотные формы времени: <b>tavasszal, nyáron, ősszel, télen</b>. Tavasszal и ősszel повторяют ассимиляцию -val/-vel из L16.</p><p>Nyáron melegebb az idő, mint télen. Télen gyakran havazik.</p>` },
+-    { id: 4, eyebrow: 'УРОК 17 · 4/11 · ПРОГНОЗ', title: 'Időjárás és praktikus reakció', subtitle: '14 контекстных ситуаций', activities: [L17_CP], body: `<p><b>Holnap eső várható. Délután erős szél várható. Vigyél esernyőt! Vegyél fel kabátot!</b></p><p><b>Ha esik, nem megyünk kirándulni. Hideg van, ezért kabátot veszek fel.</b></p><div class="note">Будущее здесь служит пониманию прогноза; системно оно изучается в L19.</div>` },
+-    { id: 5, eyebrow: 'УРОК 17 · 5/11 · ЧТЕНИЕ', title: 'Hétvégi program az időjárás szerint', subtitle: 'Прогноз меняет планы', activities: [L17_READING], body: `<p>Сравни погоду в пятницу, субботу и воскресенье. Следи за температурой, причиной изменения и окончательным решением семьи.</p>` },
+-    { id: 6, eyebrow: 'УРОК 17 · 6/11 · АУДИРОВАНИЕ', title: 'Rövid időjárás-jelentés', subtitle: 'Место, время и детали прогноза', activities: [L17_LISTENING], body: `<p>Существующая запись проверяет место, облачность, температуру, дождь, ветер и погоду следующего дня.</p>` },
+-    { id: 7, eyebrow: 'УРОК 17 · 7/11 · ROLEPLAY', title: 'Mit csináljunk szombaton?', subtitle: 'Меняем план из-за прогноза', activities: [L17_ROLEPLAY], body: `<p>Уточни температуру и время, предложи indoor-вариант, сравни дни и согласуй окончательное место и время.</p><div class="note">RolePlay остаётся PARTIAL.</div>` },
+-    { id: 8, eyebrow: 'УРОК 17 · 8/11 · ПИСЬМО', title: 'Hétvégi terv egy barátnak', subtitle: 'Прогноз → причина → альтернатива', activities: [L17_WRITING], body: `<p>Напиши 90–110 слов о погоде, исходном плане, возможном изменении, альтернативе и практической рекомендации.</p>` },
+-    { id: 9, eyebrow: 'УРОК 17 · 9/11 · SPEAKING PRACTICE', title: 'A kedvenc évszakom', subtitle: 'Необязательная практика без записи', optionalSpeaking: L17_SPEAKING, body: `<p>Свяжи сезон, типичную погоду, одежду, занятия и один случай изменения планов.</p>` },
+-    { id: 10, eyebrow: 'УРОК 17 · 10/11 · ФУНКЦИОНАЛЬНЫЕ ФРАЗЫ', title: 'Időjárás → döntés', subtitle: 'От погоды к решению', body: `<ul class="tick"><li>Milyen idő van? Hány fok van?</li><li>Holnap eső várható.</li><li>Vigyél esernyőt! Vegyél fel kabátot!</li><li>Ha esik, inkább bent maradunk.</li><li>Rossz idő lesz, ezért megváltoztatjuk a programot.</li></ul>` },
+-    { id: 11, eyebrow: 'УРОК 17 · 11/11 · ИТОГ', title: 'Összefoglalás', subtitle: 'Честная проверка целей', activities: [L17_EXIT], body: `<p>Контекстная практика, Reading и опубликованный Listening могут дать DIRECT после порога. Writing и RolePlay остаются PARTIAL; speaking practice не создаёт evidence.</p>` },
++    {
++      id: 1,
++      eyebrow: 'УРОК 17 · 1/11 · CAN-DO',
++      title: 'Milyen az idő?',
++      subtitle: 'Погода → практическое решение: сначала опиши, потом действуй',
++      type: 'overview',
++      note: 'На первом слайде учим готовые выражения о текущей погоде. Температура будет на 17.2, сезоны — на 17.3, прогноз — позже в этом уроке.',
++      warn: 'Не переводи погодные выражения слово за словом. Запоминай целый блок: в венгерском разные явления погоды строятся разными способами.',
++      task: 'Посмотри на пять погодных ситуаций. Для каждой сначала назови погоду по-венгерски, затем придумай одно практическое действие: одежда, зонт или изменение занятия.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Главный вопрос</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Milyen az idő?" data-speak-lang="hu-HU">Milyen az idő?</button>
++          — Какая погода?
++        </p>
++
++        <div class="note">
++          Этот вопрос просит <b>описание</b> погоды.
++          Точное число градусов — отдельный вопрос на следующем слайде.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Пять базовых погодных ситуаций</h4>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Венгерская фраза</th><th>Смысл</th></tr>
++          <tr>
++            <td>☀️</td>
++            <td><button class="speak-btn" data-speak-text="Süt a nap." data-speak-lang="hu-HU">Süt a nap.</button></td>
++            <td>светит солнце</td>
++          </tr>
++          <tr>
++            <td>☁️</td>
++            <td><button class="speak-btn" data-speak-text="Felhős az ég." data-speak-lang="hu-HU">Felhős az ég.</button></td>
++            <td>небо облачное</td>
++          </tr>
++          <tr>
++            <td>🌧️</td>
++            <td><button class="speak-btn" data-speak-text="Esik az eső." data-speak-lang="hu-HU">Esik az eső.</button></td>
++            <td>идёт дождь</td>
++          </tr>
++          <tr>
++            <td>❄️</td>
++            <td><button class="speak-btn" data-speak-text="Esik a hó." data-speak-lang="hu-HU">Esik a hó.</button></td>
++            <td>идёт снег</td>
++          </tr>
++          <tr>
++            <td>💨</td>
++            <td><button class="speak-btn" data-speak-text="Fúj a szél." data-speak-lang="hu-HU">Fúj a szél.</button></td>
++            <td>дует ветер</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Погода должна вести к действию</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Esik az eső. Esernyőt viszek." data-speak-lang="hu-HU">Esik az eső. Esernyőt viszek.</button>
++          — идёт дождь, поэтому я беру зонт.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Fúj a szél. Bent maradok." data-speak-lang="hu-HU">Fúj a szél. Bent maradok.</button>
++          — дует ветер, я остаюсь внутри.
++        </p>
++
++        <div class="note">
++          Сейчас важно связать <b>наблюдение</b> и <b>простую реакцию</b>.
++          Причинные связки и изменение плана будут развиваться дальше в уроке.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Типичная ошибка</h4>
++
++        <div class="warn">
++          Не пытайся сделать одну универсальную модель вроде «погода + одно и то же слово».
++          Солнце, дождь, снег, ветер и облачность используют разные готовые конструкции.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Мини-проверка без ответов</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">На улице дождь. Какую фразу скажешь?</p>
++          <p>Небо серое и облачное. Как это описать?</p>
++          <p>Сильный ветер. Какую базовую фразу используешь?</p>
++          <p>Какой вопрос задашь, если хочешь узнать погоду вообще, а не число градусов?</p>
++        </details>
++
++        <div class="note">
++          Граница этого слайда: никаких форм будущего времени.
++          Сначала уверенно описываем то, что происходит сейчас.
++        </div>
++      `,
++    },    {
++      id: 2,
++      eyebrow: 'УРОК 17 · 2/11 · ТЕМПЕРАТУРА',
++      title: 'Hány fok van?',
++      subtitle: 'Точное число градусов и общая оценка — два разных типа ответа',
++      type: 'grammar',
++      note: 'Если нужен точный показатель, отвечай числом градусов. Если нужна общая оценка, используй готовую погодную конструкцию «тепло / холодно».',
++      warn: 'Не путай два вопроса: общий вопрос о погоде и вопрос о количестве градусов. Они могут описывать одну ситуацию, но требуют разного ответа.',
++      task: 'Потренируй три температуры: положительную, ноль и отрицательную. Затем для каждой добавь короткую общую оценку погоды.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Вопрос о точной температуре</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU">Hány fok van?</button>
++          — Сколько градусов?
++        </p>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Полный нейтральный ответ</th></tr>
++          <tr>
++            <td>+10 °C</td>
++            <td><button class="speak-btn" data-speak-text="Tíz fok van." data-speak-lang="hu-HU">Tíz fok van.</button></td>
++          </tr>
++          <tr>
++            <td>0 °C</td>
++            <td><button class="speak-btn" data-speak-text="Nulla fok van." data-speak-lang="hu-HU">Nulla fok van.</button></td>
++          </tr>
++          <tr>
++            <td>−2 °C</td>
++            <td><button class="speak-btn" data-speak-text="Mínusz két fok van." data-speak-lang="hu-HU">Mínusz két fok van.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          После числа существительное остаётся в форме единственного числа:
++          <b>fok</b>, не <s>fokok</s>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Общая оценка без точного числа</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Meleg van." data-speak-lang="hu-HU">Meleg van.</button>
++          — тепло.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hideg van." data-speak-lang="hu-HU">Hideg van.</button>
++          — холодно.
++        </p>
++
++        <div class="warn">
++          В этих безличных погодных конструкциях слово <b>van</b> нужно.
++          Не убирай его только потому, что в некоторых других предложениях настоящего времени связка отсутствует.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Почему рядом встречается другая модель</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Az idő meleg." data-speak-lang="hu-HU">Az idő meleg.</button>
++          — погода тёплая.
++        </p>
++
++        <div class="note">
++          Здесь есть явное подлежащее «погода» и именная характеристика.
++          В третьем лице настоящего времени отдельная связка в такой модели не ставится.
++          Это не отменяет форму <b>Meleg van.</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Два вопроса — два фокуса</h4>
++
++        <table class="conj">
++          <tr><th>Хочешь узнать...</th><th>Вопрос</th><th>Тип ответа</th></tr>
++          <tr>
++            <td>погоду вообще</td>
++            <td><button class="speak-btn" data-speak-text="Milyen az idő?" data-speak-lang="hu-HU">Milyen az idő?</button></td>
++            <td>солнечно, дождь, холодно...</td>
++          </tr>
++          <tr>
++            <td>точную температуру</td>
++            <td><button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU">Hány fok van?</button></td>
++            <td>число градусов</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Температура → практическая реакция</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Mínusz két fok van. Kabátot veszek fel." data-speak-lang="hu-HU">Mínusz két fok van. Kabátot veszek fel.</button>
++        </p>
++
++        <div class="note">
++          Урок постепенно ведёт от факта о погоде к практическому решению.
++          Прогноз на будущее пока не разбираем.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Как спросить точное число градусов?</p>
++          <p>Как сказать «ноль градусов»?</p>
++          <p>Как сказать «минус два градуса»?</p>
++          <p>Почему в конструкции «тепло» нужен глагол, а в модели «погода тёплая» он не выражается отдельно?</p>
++        </details>
++      `,
++    },    {
++      id: 3,
++      eyebrow: 'УРОК 17 · 3/11 · СЕЗОНЫ',
++      title: 'Évszakok',
++      subtitle: 'Название сезона ≠ форма «когда?»: четыре пары, которые нужно различать',
++      type: 'grammar',
++      note: 'Венгерский не использует одно универсальное окончание для всех четырёх сезонов. Поэтому учим пару: название сезона + частотная форма времени.',
++      warn: 'Не строй механическую модель «добавить один и тот же суффикс ко всем сезонам». Две формы повторяют -val/-vel из Lesson 16, две образуются иначе.',
++      task: 'Для каждого сезона сначала назови сам сезон, затем форму «когда?», потом добавь одну типичную погодную фразу.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Четыре сезона</h4>
++
++        <table class="conj">
++          <tr><th>Сезон</th><th>Название</th><th>Когда?</th></tr>
++          <tr>
++            <td>🌱 весна</td>
++            <td><button class="speak-btn" data-speak-text="tavasz" data-speak-lang="hu-HU">tavasz</button></td>
++            <td><button class="speak-btn" data-speak-text="tavasszal" data-speak-lang="hu-HU">tavasszal</button></td>
++          </tr>
++          <tr>
++            <td>☀️ лето</td>
++            <td><button class="speak-btn" data-speak-text="nyár" data-speak-lang="hu-HU">nyár</button></td>
++            <td><button class="speak-btn" data-speak-text="nyáron" data-speak-lang="hu-HU">nyáron</button></td>
++          </tr>
++          <tr>
++            <td>🍂 осень</td>
++            <td><button class="speak-btn" data-speak-text="ősz" data-speak-lang="hu-HU">ősz</button></td>
++            <td><button class="speak-btn" data-speak-text="ősszel" data-speak-lang="hu-HU">ősszel</button></td>
++          </tr>
++          <tr>
++            <td>❄️ зима</td>
++            <td><button class="speak-btn" data-speak-text="tél" data-speak-lang="hu-HU">tél</button></td>
++            <td><button class="speak-btn" data-speak-text="télen" data-speak-lang="hu-HU">télen</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Почему формы разные</h4>
++
++        <table class="conj">
++          <tr><th>Пара</th><th>Что происходит</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tavasz → tavasszal" data-speak-lang="hu-HU">tavasz → tavasszal</button></td>
++            <td>повторяем ассимиляцию -val/-vel из Lesson 16</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="ősz → ősszel" data-speak-lang="hu-HU">ősz → ősszel</button></td>
++            <td>тот же принцип ассимиляции</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="nyár → nyáron" data-speak-lang="hu-HU">nyár → nyáron</button></td>
++            <td>другая частотная временная форма</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tél → télen" data-speak-lang="hu-HU">tél → télen</button></td>
++            <td>другая частотная временная форма</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Для активной речи запоминай именно четыре готовые формы времени:
++          <b>tavasszal, nyáron, ősszel, télen</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Сезон + типичная погода</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tavasszal gyakran esik az eső." data-speak-lang="hu-HU">Tavasszal gyakran esik az eső.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nyáron meleg van." data-speak-lang="hu-HU">Nyáron meleg van.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Ősszel gyakran fúj a szél." data-speak-lang="hu-HU">Ősszel gyakran fúj a szél.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Télen gyakran havazik." data-speak-lang="hu-HU">Télen gyakran havazik.</button>
++        </p>
++
++        <div class="note">
++          Слово «часто» помогает описывать типичную сезонную погоду,
++          а не утверждать, что такая погода бывает всегда.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Одно простое сравнение</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nyáron melegebb az idő, mint télen." data-speak-lang="hu-HU">Nyáron melegebb az idő, mint télen.</button>
++          — летом погода теплее, чем зимой.
++        </p>
++
++        <div class="note">
++          Здесь достаточно узнать готовую модель сравнения с <b>mint</b>.
++          Полную систему сравнительной степени на этом слайде не разворачиваем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Мини-проверка без ответов</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">Как назвать «весну» и как сказать «весной»?</p>
++          <p>Какая форма отвечает на вопрос «когда?» для лета?</p>
++          <p>Какие две сезонные формы повторяют ассимиляцию прошлого урока?</p>
++          <p>Скажи одну типичную фразу о зимней погоде.</p>
++        </details>
++      `,
++    },    {
++      id: 4,
++      eyebrow: 'УРОК 17 · 4/11 · ПРОГНОЗ',
++      title: 'Időjárás és praktikus reakció',
++      subtitle: '14 ситуаций: понять прогноз → выбрать практическое решение',
++      type: 'practice',
++      activities: [L17_CP],
++      note: 'Здесь прогноз нужен для понимания и решения задачи. Полную систему будущего времени не изучаем: она будет отдельно в Lesson 19.',
++      warn: 'Не превращай каждую фразу о завтрашнем дне в урок будущего времени. На этом уровне сначала узнаём готовые прогнозные конструкции и реагируем на их смысл.',
++      task: 'Пройди 14 ситуаций. Для зачёта нужно минимум 11 правильных. После ошибки определи тип: погода, температура, сезонная форма, прогноз, практическая реакция или логика причины/условия.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Прогноз как готовая конструкция</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Holnap eső várható." data-speak-lang="hu-HU">Holnap eső várható.</button>
++          — завтра ожидается дождь.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Délután erős szél várható." data-speak-lang="hu-HU">Délután erős szél várható.</button>
++          — днём ожидается сильный ветер.
++        </p>
++
++        <div class="note">
++          Слово <b>várható</b> здесь узнаём как частотный прогнозный блок «ожидается».
++          Морфологию этого слова отдельно не разбираем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Ещё один прогнозный сигнал, который нужно узнавать</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Holnap napos idő lesz." data-speak-lang="hu-HU">Holnap napos idő lesz.</button>
++          — завтра будет солнечная погода.
++        </p>
++
++        <div class="warn">
++          Форму <b>lesz</b> пока достаточно понимать как «будет».
++          Полную систему будущего времени и её продуктивное образование оставляем для Lesson 19.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Прогноз → практическая рекомендация</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Vigyél esernyőt!" data-speak-lang="hu-HU">Vigyél esernyőt!</button>
++          — возьми зонт.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Vegyél fel kabátot!" data-speak-lang="hu-HU">Vegyél fel kabátot!</button>
++          — надень куртку.
++        </p>
++
++        <div class="note">
++          Эти формы используем как готовые практические рекомендации.
++          Полную систему повелительного наклонения здесь не вводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Условие и следствие — не одно и то же</h4>
++
++        <table class="conj">
++          <tr><th>Логика</th><th>Пример</th></tr>
++          <tr>
++            <td>если условие выполняется → меняем план</td>
++            <td><button class="speak-btn" data-speak-text="Ha esik, nem megyünk kirándulni." data-speak-lang="hu-HU">Ha esik, nem megyünk kirándulni.</button></td>
++          </tr>
++          <tr>
++            <td>есть причина → получаем практический результат</td>
++            <td><button class="speak-btn" data-speak-text="Hideg van, ezért kabátot veszek fel." data-speak-lang="hu-HU">Hideg van, ezért kabátot veszek fel.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          <b>ha</b> вводит условие «если», а <b>ezért</b> показывает результат «поэтому».
++          В этих примерах не требуется новая форма будущего времени.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как устроены 14 ситуаций</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что проверяется</th></tr>
++          <tr><td>1–5</td><td>базовая погода и температура</td></tr>
++          <tr><td>6–7</td><td>формы времени года «когда?»</td></tr>
++          <tr><td>8–9</td><td>одежда и нужная вещь по погоде</td></tr>
++          <tr><td>10–11</td><td>понимание прогноза и практический выбор</td></tr>
++          <tr><td>12–13</td><td>условие и причинно-следственная связь</td></tr>
++          <tr><td>14</td><td>сравнение двух дней и выбор лучшего плана</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Диагноз ошибки</h4>
++
++        <ul class="tick">
++          <li>не узнал погодную фразу → повтори 17.1;</li>
++          <li>перепутал число градусов и описание → повтори 17.2;</li>
++          <li>ошибся в форме сезона → повтори 17.3;</li>
++          <li>не понял прогноз → вернись к блокам 1–2 этого слайда;</li>
++          <li>выбрал нелогичное действие → сначала сформулируй ситуацию по-русски, затем отвечай.</li>
++        </ul>
++
++        <div class="warn">
++          Порог Controlled Practice: <b>11 из 14</b>.
++          Правильная стратегия важнее механического запоминания вариантов ответа.
++        </div>
++      `,
++    },    {
++      id: 5,
++      eyebrow: 'УРОК 17 · 5/11 · ЧТЕНИЕ',
++      title: 'Hétvégi program az időjárás szerint',
++      subtitle: 'Три дня, три прогноза, один меняющийся план: читай по хронологии',
++      type: 'reading',
++      activities: [L17_READING],
++      note: 'Текст построен по дням: пятница → суббота → воскресенье. Сначала восстанови линию событий, потом ищи доказательства для ответов.',
++      warn: 'Не выбирай ответ по одному знакомому слову. Вопросы проверяют причину, изменение плана, совет и итоговое решение семьи.',
++      task: 'Прочитай текст в три прохода. Затем ответь на 8 вопросов; для прохождения нужно минимум 6 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта чтения по дням</h4>
++
++        <table class="conj">
++          <tr><th>День</th><th>Погода / температура</th><th>План</th><th>Что изменилось?</th></tr>
++          <tr><td>пятница</td><td>...</td><td>...</td><td>...</td></tr>
++          <tr><td>суббота</td><td>...</td><td>...</td><td>...</td></tr>
++          <tr><td>воскресенье</td><td>...</td><td>...</td><td>...</td></tr>
++        </table>
++
++        <div class="note">
++          Таблица намеренно пустая: заполни её после первого чтения,
++          не заглядывая в варианты ответов.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Полезные слова для узнавания</h4>
++
++        <p><button class="speak-btn" data-speak-text="előrejelzés" data-speak-lang="hu-HU">előrejelzés</button> — прогноз.</p>
++        <p><button class="speak-btn" data-speak-text="kirándulás" data-speak-lang="hu-HU">kirándulás</button> — экскурсия / поход.</p>
++        <p><button class="speak-btn" data-speak-text="piknik" data-speak-lang="hu-HU">piknik</button> — пикник.</p>
++        <p><button class="speak-btn" data-speak-text="csúszós" data-speak-lang="hu-HU">csúszós</button> — скользкий.</p>
++        <p><button class="speak-btn" data-speak-text="vízálló cipő" data-speak-lang="hu-HU">vízálló cipő</button> — водонепроницаемая обувь.</p>
++        <p><button class="speak-btn" data-speak-text="megváltoztatják a programot" data-speak-lang="hu-HU">megváltoztatják a programot</button> — они меняют программу.</p>
++        <p><button class="speak-btn" data-speak-text="javul az idő" data-speak-lang="hu-HU">javul az idő</button> — погода улучшается.</p>
++
++        <div class="note">
++          Эти слова помогают увидеть структуру истории.
++          Не нужно переводить каждое предложение дословно.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Первый проход — только хронология</h4>
++
++        <ol class="tasklist">
++          <li>что семья планирует в начале;</li>
++          <li>в какой момент прогноз заставляет изменить решение;</li>
++          <li>почему первоначальный вариант становится непрактичным;</li>
++          <li>когда снова появляется возможность для занятия на улице.</li>
++        </ol>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Второй проход — причина и доказательство</h4>
++
++        <table class="conj">
++          <tr><th>Тип вопроса</th><th>Что искать</th></tr>
++          <tr><td>погода</td><td>облачность, осадки, ветер, температура</td></tr>
++          <tr><td>план</td><td>что собирались делать сначала</td></tr>
++          <tr><td>причина изменения</td><td>опасность, неудобство или состояние дороги</td></tr>
++          <tr><td>рекомендация</td><td>что взять или надеть</td></tr>
++          <tr><td>финал</td><td>какое решение остаётся после улучшения погоды</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Третий проход — 8 вопросов</h4>
++
++        <div class="note">
++          Перед каждым ответом найди конкретный фрагмент текста.
++          Если сомневаешься между двумя вариантами, проверь именно нужный день.
++        </div>
++
++        <div class="warn">
++          Порог Reading: <b>6 из 8</b>.
++          Если ошибся, сначала проверь хронологию и причинно-следственную связь.
++        </div>
++      `,
++    },    {
++      id: 6,
++      eyebrow: 'УРОК 17 · 6/11 · АУДИРОВАНИЕ',
++      title: 'Rövid időjárás-jelentés',
++      subtitle: 'Сначала линия времени, потом 5 деталей прогноза',
++      type: 'listening',
++      activities: [L17_LISTENING],
++      note: 'Это опубликованная запись. Сначала слушай без транскрипта. Первый проход нужен для линии времени, второй — для конкретных деталей.',
++      warn: 'Не пытайся удержать всё предложение целиком. Особенно при температуре сначала зафиксируй число, а затем продолжай слушать.',
++      task: 'Прослушай запись два раза. Затем ответь на 5 вопросов; для прохождения нужно минимум 4 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Четыре временных маркера</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Ma" data-speak-lang="hu-HU">Ma</button>
++          — сегодня.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Délután" data-speak-lang="hu-HU">Délután</button>
++          — днём / после полудня.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Este" data-speak-lang="hu-HU">Este</button>
++          — вечером.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Holnap" data-speak-lang="hu-HU">Holnap</button>
++          — завтра.
++        </p>
++
++        <div class="note">
++          Эти маркеры делят короткий прогноз на части.
++          Сначала пойми, к какому времени относится каждая деталь.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Первый проход — построить линию времени</h4>
++
++        <table class="conj">
++          <tr><th>Когда?</th><th>Что услышал?</th></tr>
++          <tr><td>сегодня</td><td>...</td></tr>
++          <tr><td>днём</td><td>...</td></tr>
++          <tr><td>вечером</td><td>...</td></tr>
++          <tr><td>завтра</td><td>...</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Второй проход — пять категорий</h4>
++
++        <table class="conj">
++          <tr><th>Категория вопроса</th><th>Твоя заметка</th></tr>
++          <tr><td>город / место</td><td>...</td></tr>
++          <tr><td>состояние неба сегодня</td><td>...</td></tr>
++          <tr><td>температура сегодня</td><td>...</td></tr>
++          <tr><td>что происходит днём</td><td>...</td></tr>
++          <tr><td>какая погода будет завтра</td><td>...</td></tr>
++        </table>
++
++        <div class="note">
++          В записи есть и дополнительная вечерняя деталь.
++          Она помогает линии времени, даже если отдельный вопрос не спрашивает её напрямую.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Как слушать температуру</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU">Hány fok van?</button>
++        </p>
++
++        <div class="note">
++          Услышав число, запиши только его. Не пытайся одновременно переводить соседние слова.
++          После этого возвращайся к общей линии прогноза.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Перед ответами</h4>
++
++        <ol class="tasklist">
++          <li>не открывай транскрипт до первой собственной попытки;</li>
++          <li>не используй информацию из Reading — это другая история;</li>
++          <li>если не уверен в одном пункте, переслушай именно его временной блок;</li>
++          <li>ответь на все 5 вопросов.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Listening: <b>4 из 5</b>.
++          Цель — понять ключевые детали короткого прогноза, а не расшифровать каждое слово.
++        </div>
++      `,
++    },    {
++      id: 7,
++      eyebrow: 'УРОК 17 · 7/11 · ROLEPLAY',
++      title: 'Mit csináljunk szombaton?',
++      subtitle: '7 реплик ученика: прогноз → альтернатива → окончательный план',
++      type: 'roleplay',
++      activities: [L17_ROLEPLAY],
++      note: 'В реальном сценарии 7 реплик ученика. RolePlay остаётся PARTIAL evidence: система видит прохождение диалога, но не должна считать свободную речь полностью оценённой.',
++      warn: 'Не учи наизусть model answer. Сначала пойми функцию своей очереди: согласиться, спросить, предложить, сравнить или согласовать.',
++      task: 'Пройди 7 реплик: исходная идея → время → реакция на прогноз → температура → indoor-альтернатива → сравнение дней → финальное место/время → завершение.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта разговора из 7 реплик ученика</h4>
++
++        <table class="conj">
++          <tr><th>Реплика</th><th>Твоя задача</th></tr>
++          <tr><td>1</td><td>согласиться с исходной идеей и уточнить время</td></tr>
++          <tr><td>2</td><td>отреагировать на дождь/ветер и спросить температуру</td></tr>
++          <tr><td>3</td><td>предложить занятие в помещении</td></tr>
++          <tr><td>4</td><td>сравнить субботу и воскресенье</td></tr>
++          <tr><td>5</td><td>согласовать окончательный план</td></tr>
++          <tr><td>6</td><td>подтвердить место и время встречи</td></tr>
++          <tr><td>7</td><td>вежливо завершить разговор</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Опоры для вопроса и реакции</h4>
++
++        <p><button class="speak-btn" data-speak-text="Jó ötlet!" data-speak-lang="hu-HU">Jó ötlet!</button></p>
++        <p><button class="speak-btn" data-speak-text="Mikor találkozzunk?" data-speak-lang="hu-HU">Mikor találkozzunk?</button></p>
++        <p><button class="speak-btn" data-speak-text="Hány fok lesz?" data-speak-lang="hu-HU">Hány fok lesz?</button></p>
++
++        <div class="note">
++          Форму со значением «будет» здесь используй как готовый вопрос о прогнозе.
++          Полную систему будущего времени по-прежнему не выводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Если погода портит исходный план</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Ha esik, inkább menjünk be valahova." data-speak-lang="hu-HU">Ha esik, inkább menjünk be valahova.</button>
++          — если идёт дождь, лучше пойдём куда-нибудь внутрь.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Menjünk moziba." data-speak-lang="hu-HU">Menjünk moziba.</button>
++          — пойдём в кино.
++        </p>
++
++        <div class="note">
++          Формы предложения совместного действия здесь нужны как готовые разговорные блоки.
++          Повелительную систему отдельно не изучаем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Сравнить два дня</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Vasárnap jobb lesz." data-speak-lang="hu-HU">Vasárnap jobb lesz.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Vasárnap melegebb lesz, mint szombaton." data-speak-lang="hu-HU">Vasárnap melegebb lesz, mint szombaton.</button>
++        </p>
++
++        <div class="warn">
++          Не превращай этот блок в урок сравнительной степени.
++          Цель — объяснить, почему один день практичнее для прогулки.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Согласовать решение и встречу</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szerintem ez jó megoldás." data-speak-lang="hu-HU">Szerintem ez jó megoldás.</button></p>
++        <p><button class="speak-btn" data-speak-text="Találkozzunk a mozi előtt." data-speak-lang="hu-HU">Találkozzunk a mozi előtt.</button></p>
++        <p><button class="speak-btn" data-speak-text="Fél háromkor találkozzunk." data-speak-lang="hu-HU">Fél háromkor találkozzunk.</button></p>
++
++        <div class="note">
++          В самой ролевой игре место и время могут отличаться.
++          Опоры помогают построить фразу, а не дают обязательный ответ.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Завершить разговор</h4>
++
++        <p><button class="speak-btn" data-speak-text="Rendben, akkor találkozunk." data-speak-lang="hu-HU">Rendben, akkor találkozunk.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szia!" data-speak-lang="hu-HU">Szia!</button></p>
++
++        <div class="warn">
++          Успех RolePlay — пройти все 7 коммуникативных функций и логично изменить план из-за прогноза,
++          а не повторить одну заранее заученную реплику.
++        </div>
++      `,
++    },    {
++      id: 8,
++      eyebrow: 'УРОК 17 · 8/11 · ПИСЬМО',
++      title: 'Hétvégi terv egy barátnak',
++      subtitle: '90–110 слов: прогноз → причина изменения → альтернатива → конкретное предложение',
++      type: 'writing',
++      activities: [L17_WRITING],
++      note: 'Это открытая письменная работа и она даёт PARTIAL evidence. Полный образец не открывай до собственной попытки.',
++      warn: 'Не вводи новую систему будущего времени ради письма. Используй уже знакомые прогнозные блоки с várható / lesz и простые конструкции Lesson 17.',
++      task: 'Напиши 90–110 слов: приветствие → прогноз+температура → исходный план → причина изменения → альтернатива → практическая рекомендация → конкретное предложение или вопрос.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Структура сообщения из 7 блоков</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что написать</th></tr>
++          <tr><td>1</td><td>короткое приветствие и тема выходных</td></tr>
++          <tr><td>2</td><td>прогноз и температура</td></tr>
++          <tr><td>3</td><td>что вы планировали сначала</td></tr>
++          <tr><td>4</td><td>почему план, возможно, придётся изменить</td></tr>
++          <tr><td>5</td><td>какую альтернативу ты предлагаешь</td></tr>
++          <tr><td>6</td><td>что взять или надеть по погоде</td></tr>
++          <tr><td>7</td><td>конкретное предложение о встрече или вопрос</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Опоры для прогноза — без новой грамматики</h4>
++
++        <p><button class="speak-btn" data-speak-text="Az előrejelzés szerint..." data-speak-lang="hu-HU">Az előrejelzés szerint...</button></p>
++        <p><button class="speak-btn" data-speak-text="Eső várható." data-speak-lang="hu-HU">Eső várható.</button></p>
++        <p><button class="speak-btn" data-speak-text="Erős szél várható." data-speak-lang="hu-HU">Erős szél várható.</button></p>
++        <p><button class="speak-btn" data-speak-text="Tíz fok lesz." data-speak-lang="hu-HU">Tíz fok lesz.</button></p>
++
++        <div class="note">
++          Эти формы нужны как готовые прогнозные блоки.
++          Полное продуктивное образование будущего времени остаётся для Lesson 19.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Причина и изменение плана</h4>
++
++        <p><button class="speak-btn" data-speak-text="Eredetileg..." data-speak-lang="hu-HU">Eredetileg...</button> — первоначально...</p>
++        <p><button class="speak-btn" data-speak-text="de..." data-speak-lang="hu-HU">de...</button> — но...</p>
++        <p><button class="speak-btn" data-speak-text="Ezért..." data-speak-lang="hu-HU">Ezért...</button> — поэтому...</p>
++        <p><button class="speak-btn" data-speak-text="Ha esik..." data-speak-lang="hu-HU">Ha esik...</button> — если идёт дождь...</p>
++        <p><button class="speak-btn" data-speak-text="inkább..." data-speak-lang="hu-HU">inkább...</button> — лучше / скорее...</p>
++
++        <div class="note">
++          Для A2 достаточно нескольких коротких ясных предложений.
++          Не объединяй всё сообщение в одну длинную конструкцию.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Практическая рекомендация</h4>
++
++        <p><button class="speak-btn" data-speak-text="Vigyél esernyőt!" data-speak-lang="hu-HU">Vigyél esernyőt!</button></p>
++        <p><button class="speak-btn" data-speak-text="Vegyél fel kabátot!" data-speak-lang="hu-HU">Vegyél fel kabátot!</button></p>
++
++        <div class="note">
++          Выбери рекомендацию, которая действительно подходит к твоему прогнозу.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Конкретный финал</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit gondolsz?" data-speak-lang="hu-HU">Mit gondolsz?</button> — Что думаешь?</p>
++        <p><button class="speak-btn" data-speak-text="Mikor találkozzunk?" data-speak-lang="hu-HU">Mikor találkozzunk?</button> — Когда встретимся?</p>
++        <p><button class="speak-btn" data-speak-text="Találkozzunk szombaton?" data-speak-lang="hu-HU">Találkozzunk szombaton?</button> — Встретимся в субботу?</p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Чек-лист перед отправкой</h4>
++
++        <table class="conj">
++          <tr><th>Есть?</th><th>Требование</th></tr>
++          <tr><td>□</td><td>90–110 слов</td></tr>
++          <tr><td>□</td><td>прогноз + температура</td></tr>
++          <tr><td>□</td><td>исходный план + причина изменения</td></tr>
++          <tr><td>□</td><td>альтернатива</td></tr>
++          <tr><td>□</td><td>практическая рекомендация</td></tr>
++          <tr><td>□</td><td>конкретное предложение или вопрос</td></tr>
++        </table>
++
++        <div class="warn">
++          Если не хватает объёма, добавь конкретику о времени, температуре, месте встречи или причине изменения.
++          Не добавляй новую грамматику только ради количества слов.
++        </div>
++      `,
++    },    {
++      id: 9,
++      eyebrow: 'УРОК 17 · 9/11 · SPEAKING PRACTICE',
++      title: 'A kedvenc évszakom',
++      subtitle: 'Около 2 минут: сезон → погода → одежда → занятия → изменение плана',
++      type: 'speaking',
++      optionalSpeaking: L17_SPEAKING,
++      note: 'Необязательная самопрактика: без микрофона, score и evidence. Ничего записывать или отправлять не нужно.',
++      warn: 'Не пиши полный монолог. Подготовь 6–8 ключевых слов и говори по смысловым блокам.',
++      task: 'Говори около 2 минут. Назови любимый сезон, типичную погоду, одежду, занятия и один случай, когда погода меняет твой план.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта рассказа из 6 блоков</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>О чём сказать</th></tr>
++          <tr><td>1</td><td>какой сезон тебе нравится больше всего</td></tr>
++          <tr><td>2</td><td>какая погода обычно бывает в это время</td></tr>
++          <tr><td>3</td><td>какая температура для тебя типична</td></tr>
++          <tr><td>4</td><td>что ты обычно надеваешь</td></tr>
++          <tr><td>5</td><td>что любишь делать в этот сезон</td></tr>
++          <tr><td>6</td><td>как плохая погода иногда меняет твой план</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Как начать</h4>
++
++        <p><button class="speak-btn" data-speak-text="A kedvenc évszakom a nyár." data-speak-lang="hu-HU">A kedvenc évszakom a nyár.</button></p>
++        <p><button class="speak-btn" data-speak-text="A kedvenc évszakom a tél." data-speak-lang="hu-HU">A kedvenc évszakom a tél.</button></p>
++
++        <div class="note">
++          Выбери только один сезон и строй весь рассказ вокруг него.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Типичная погода и сезонная форма</h4>
++
++        <p><button class="speak-btn" data-speak-text="Nyáron gyakran meleg van." data-speak-lang="hu-HU">Nyáron gyakran meleg van.</button></p>
++        <p><button class="speak-btn" data-speak-text="Télen gyakran havazik." data-speak-lang="hu-HU">Télen gyakran havazik.</button></p>
++        <p><button class="speak-btn" data-speak-text="Ősszel gyakran fúj a szél." data-speak-lang="hu-HU">Ősszel gyakran fúj a szél.</button></p>
++
++        <div class="note">
++          Используй форму «когда?» естественно: tavasszal, nyáron, ősszel или télen.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Одежда и занятия</h4>
++
++        <p><button class="speak-btn" data-speak-text="Kabátot veszek fel." data-speak-lang="hu-HU">Kabátot veszek fel.</button></p>
++        <p><button class="speak-btn" data-speak-text="Könnyű ruhát viselek." data-speak-lang="hu-HU">Könnyű ruhát viselek.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretek sétálni." data-speak-lang="hu-HU">Szeretek sétálni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretek kirándulni." data-speak-lang="hu-HU">Szeretek kirándulni.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Когда погода меняет план</h4>
++
++        <p><button class="speak-btn" data-speak-text="Ha esik, inkább bent maradok." data-speak-lang="hu-HU">Ha esik, inkább bent maradok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Ha erős szél fúj, megváltoztatom a programot." data-speak-lang="hu-HU">Ha erős szél fúj, megváltoztatom a programot.</button></p>
++
++        <div class="note">
++          Здесь достаточно уже знакомой логики «если → изменение плана».
++          Новую систему будущего времени не добавляем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Если остановился</h4>
++
++        <p><button class="speak-btn" data-speak-text="Egy pillanat..." data-speak-lang="hu-HU">Egy pillanat...</button></p>
++        <p><button class="speak-btn" data-speak-text="Azt szeretném mondani, hogy..." data-speak-lang="hu-HU">Azt szeretném mondani, hogy...</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Самопроверка</h4>
++
++        <ol class="tasklist">
++          <li>говорил(а) около 2 минут;</li>
++          <li>назвал(а) любимый сезон;</li>
++          <li>описал(а) типичную погоду и температуру;</li>
++          <li>сказал(а) про одежду и занятия;</li>
++          <li>привёл(а) один пример изменения плана из-за погоды.</li>
++        </ol>
++
++        <div class="warn">
++          Эта практика не создаёт evidence и не меняет статус целей автоматически.
++          Она нужна для устной автоматизации уже изученного материала.
++        </div>
++      `,
++    },    {
++      id: 10,
++      eyebrow: 'УРОК 17 · 10/11 · ФУНКЦИОНАЛЬНЫЕ ФРАЗЫ',
++      title: 'Időjárás → döntés',
++      subtitle: 'Не перечитывай список: распознай ситуацию и сам выбери нужную фразу',
++      type: 'review',
++      note: 'Повторение перед итогом: сначала сформулируй ситуацию по-русски, затем попробуй сказать венгерскую фразу без подсказки и только потом открой вариант.',
++      warn: 'Новой грамматики здесь нет. Формы прогноза и сравнения используются только в уже знакомых функциях Lesson 17.',
++      task: 'Пройди 6 ситуаций: текущая погода → температура → сезон → прогноз → практическая реакция → изменение плана.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Текущая погода</h4>
++
++        <p><button class="speak-btn" data-speak-text="Milyen az idő?" data-speak-lang="hu-HU">Milyen az idő?</button></p>
++        <p><button class="speak-btn" data-speak-text="Süt a nap." data-speak-lang="hu-HU">Süt a nap.</button></p>
++        <p><button class="speak-btn" data-speak-text="Esik az eső." data-speak-lang="hu-HU">Esik az eső.</button></p>
++        <p><button class="speak-btn" data-speak-text="Fúj a szél." data-speak-lang="hu-HU">Fúj a szél.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Температура</h4>
++
++        <p><button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU">Hány fok van?</button></p>
++        <p><button class="speak-btn" data-speak-text="Mínusz két fok van." data-speak-lang="hu-HU">Mínusz két fok van.</button></p>
++        <p><button class="speak-btn" data-speak-text="Hideg van." data-speak-lang="hu-HU">Hideg van.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Сезон и форма «когда?»</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="tavasszal" data-speak-lang="hu-HU">tavasszal</button>,
++          <button class="speak-btn" data-speak-text="nyáron" data-speak-lang="hu-HU">nyáron</button>,
++          <button class="speak-btn" data-speak-text="ősszel" data-speak-lang="hu-HU">ősszel</button>,
++          <button class="speak-btn" data-speak-text="télen" data-speak-lang="hu-HU">télen</button>
++        </p>
++
++        <p><button class="speak-btn" data-speak-text="Nyáron melegebb az idő, mint télen." data-speak-lang="hu-HU">Nyáron melegebb az idő, mint télen.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Прогноз</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap eső várható." data-speak-lang="hu-HU">Holnap eső várható.</button></p>
++        <p><button class="speak-btn" data-speak-text="Holnap napos idő lesz." data-speak-lang="hu-HU">Holnap napos idő lesz.</button></p>
++
++        <div class="note">
++          Эти формы по-прежнему нужны как готовые прогнозные блоки.
++          Системное будущее здесь не повторяем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Практическая реакция</h4>
++
++        <p><button class="speak-btn" data-speak-text="Vigyél esernyőt!" data-speak-lang="hu-HU">Vigyél esernyőt!</button></p>
++        <p><button class="speak-btn" data-speak-text="Vegyél fel kabátot!" data-speak-lang="hu-HU">Vegyél fel kabátot!</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Изменение плана</h4>
++
++        <p><button class="speak-btn" data-speak-text="Ha esik, inkább bent maradunk." data-speak-lang="hu-HU">Ha esik, inkább bent maradunk.</button></p>
++        <p><button class="speak-btn" data-speak-text="Rossz idő lesz, ezért megváltoztatjuk a programot." data-speak-lang="hu-HU">Rossz idő lesz, ezért megváltoztatjuk a programot.</button></p>
++
++        <div class="note">
++          Проверь логику: <b>ha</b> задаёт условие, <b>ezért</b> показывает результат.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-челлендж без подсказки</summary>
++          <p class="mt-3">Как спросить общую погоду?</p>
++          <p>Как спросить точную температуру?</p>
++          <p>Как сказать «летом» и «зимой»?</p>
++          <p>Как сообщить, что завтра ожидается дождь?</p>
++          <p>Как посоветовать взять зонт?</p>
++          <p>Как объяснить, что из-за плохой погоды вы меняете программу?</p>
++        </details>
++
++        <div class="warn">
++          Если одна ситуация не вспоминается, повтори только соответствующий блок.
++          Следующий слайд — итоговая проверка целей Lesson 17.
++        </div>
++      `,
++    },    {
++      id: 11,
++      eyebrow: 'УРОК 17 · 11/11 · ИТОГ',
++      title: 'Összefoglalás',
++      subtitle: 'Что должно работать после Lesson 17 — и чем это реально подтверждается',
++      type: 'summary',
++      activities: [L17_EXIT],
++      note: 'Это учебный checkpoint Lesson 17, а не официальный сертификат уровня. DIRECT означает прямое подтверждение внутри автоматического задания после его порога; PARTIAL — открытая продукция, которую нельзя полностью оценить автоматически.',
++      warn: 'Не путай три уровня: описать текущую погоду, понять прогноз и принять решение из-за прогноза. Это связанная цепочка, но не одна и та же задача.',
++      task: 'Перед Exit Check выполни 5 действий без подсказки: опиши погоду и температуру → назови сезон и форму «когда?» → пойми прогноз → выбери практическую реакцию → сравни условия и измени план.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Текущая погода и температура</h4>
++
++        <p><button class="speak-btn" data-speak-text="Milyen az idő?" data-speak-lang="hu-HU">Milyen az idő?</button></p>
++        <p><button class="speak-btn" data-speak-text="Esik az eső." data-speak-lang="hu-HU">Esik az eső.</button></p>
++        <p><button class="speak-btn" data-speak-text="Hány fok van?" data-speak-lang="hu-HU">Hány fok van?</button></p>
++        <p><button class="speak-btn" data-speak-text="Mínusz két fok van." data-speak-lang="hu-HU">Mínusz két fok van.</button></p>
++
++        <div class="note">
++          Сначала различай общее описание погоды и точное число градусов.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Сезоны и форма «когда?»</h4>
++
++        <table class="conj">
++          <tr><th>Название</th><th>Когда?</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tavasz" data-speak-lang="hu-HU">tavasz</button></td>
++            <td><button class="speak-btn" data-speak-text="tavasszal" data-speak-lang="hu-HU">tavasszal</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="nyár" data-speak-lang="hu-HU">nyár</button></td>
++            <td><button class="speak-btn" data-speak-text="nyáron" data-speak-lang="hu-HU">nyáron</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="ősz" data-speak-lang="hu-HU">ősz</button></td>
++            <td><button class="speak-btn" data-speak-text="ősszel" data-speak-lang="hu-HU">ősszel</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tél" data-speak-lang="hu-HU">tél</button></td>
++            <td><button class="speak-btn" data-speak-text="télen" data-speak-lang="hu-HU">télen</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Понять прогноз</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap eső várható." data-speak-lang="hu-HU">Holnap eső várható.</button></p>
++        <p><button class="speak-btn" data-speak-text="Holnap napos idő lesz." data-speak-lang="hu-HU">Holnap napos idő lesz.</button></p>
++
++        <div class="note">
++          Здесь эти формы остаются готовыми прогнозными блоками.
++          Полную систему будущего времени Lesson 17 не вводит.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Прогноз → практическое решение</h4>
++
++        <p><button class="speak-btn" data-speak-text="Vigyél esernyőt!" data-speak-lang="hu-HU">Vigyél esernyőt!</button></p>
++        <p><button class="speak-btn" data-speak-text="Ha esik, inkább bent maradunk." data-speak-lang="hu-HU">Ha esik, inkább bent maradunk.</button></p>
++        <p><button class="speak-btn" data-speak-text="Rossz idő lesz, ezért megváltoztatjuk a programot." data-speak-lang="hu-HU">Rossz idő lesz, ezért megváltoztatjuk a programot.</button></p>
++
++        <div class="note">
++          Условие и причина должны вести к логичному действию, а не к случайной заученной фразе.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Сравнить условия</h4>
++
++        <p><button class="speak-btn" data-speak-text="Nyáron melegebb az idő, mint télen." data-speak-lang="hu-HU">Nyáron melegebb az idő, mint télen.</button></p>
++
++        <p><button class="speak-btn" data-speak-text="Vasárnap jobb lesz a szabadtéri programhoz." data-speak-lang="hu-HU">Vasárnap jobb lesz a szabadtéri programhoz.</button></p>
++
++        <div class="note">
++          Цель — понять сравнение и использовать его для выбора плана.
++          Полную систему сравнительной степени здесь не расширяем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что реально подтверждают задания</h4>
++
++        <table class="conj">
++          <tr><th>Цель</th><th>Основное evidence</th><th>Статус</th></tr>
++          <tr><td>описать погоду</td><td>Controlled Practice + RolePlay</td><td><b>DIRECT + PARTIAL</b></td></tr>
++          <tr><td>назвать сезоны</td><td>Controlled Practice</td><td><b>DIRECT</b> после порога</td></tr>
++          <tr><td>употребить формы «когда?»</td><td>Controlled Practice</td><td><b>DIRECT</b> после порога</td></tr>
++          <tr><td>сравнить условия и изменить план</td><td>Writing + RolePlay</td><td><b>PARTIAL</b></td></tr>
++          <tr><td>понять прогноз</td><td>Published Listening + Reading</td><td><b>DIRECT</b> после соответствующих порогов</td></tr>
++        </table>
++
++        <div class="note">
++          Для Controlled Practice порог — <b>11/14</b>, для Reading — <b>6/8</b>,
++          для опубликованного Listening — <b>4/5</b>.
++          RolePlay и Writing остаются открытой продукцией и дают PARTIAL evidence.
++          Необязательная Speaking Practice evidence не создаёт.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Финальная самопроверка</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">Можешь описать текущую погоду и отдельно назвать температуру?</p>
++          <p>Можешь назвать четыре сезона и четыре формы «когда?»?</p>
++          <p>Можешь понять простой прогноз на завтра без разбора будущего времени?</p>
++          <p>Можешь выбрать одежду или изменить план по причине погоды?</p>
++          <p>Можешь сравнить два сезона или два дня и объяснить выбор?</p>
++        </details>
++
++        <div class="warn">
++          PARTIAL не означает «не выучено». Это означает, что свободную речь или письмо
++          нельзя честно считать полностью проверенными только автоматикой.
++        </div>
++      `,
++    }
+   ],
+-  vocabulary: [
+-    { id: 'l17_v1', hu: 'tavasz', ru: 'весна', category: 'Времена года', exampleSentence: 'Tavasszal gyakran esik az eső.' }, { id: 'l17_v2', hu: 'nyár', ru: 'лето', category: 'Времена года', exampleSentence: 'Nyáron meleg van.' }, { id: 'l17_v3', hu: 'ősz', ru: 'осень', category: 'Времена года', exampleSentence: 'Ősszel hidegebb az idő, mint nyáron.' }, { id: 'l17_v4', hu: 'tél', ru: 'зима', category: 'Времена года', exampleSentence: 'Télen hideg van.' },
++  vocabulary: [    { id: 'l17_v1', hu: 'tavasz', ru: 'весна', category: 'Времена года', exampleSentence: 'Tavasszal gyakran esik az eső.' }, { id: 'l17_v2', hu: 'nyár', ru: 'лето', category: 'Времена года', exampleSentence: 'Nyáron meleg van.' }, { id: 'l17_v3', hu: 'ősz', ru: 'осень', category: 'Времена года', exampleSentence: 'Ősszel hidegebb az idő, mint nyáron.' }, { id: 'l17_v4', hu: 'tél', ru: 'зима', category: 'Времена года', exampleSentence: 'Télen hideg van.' },
+     { id: 'l17_v5', hu: 'eső', ru: 'дождь', category: 'Погода', exampleSentence: 'Esik az eső.' }, { id: 'l17_v6', hu: 'szél', ru: 'ветер', category: 'Погода', exampleSentence: 'Fúj a szél.' }, { id: 'l17_v7', hu: 'havazik', ru: 'идёт снег', category: 'Погода', exampleSentence: 'Télen gyakran havazik.' }, { id: 'l17_v8', hu: 'fok', ru: 'градус', category: 'Температура', exampleSentence: 'Húsz fok van.' },
+   ],
+   quiz: [

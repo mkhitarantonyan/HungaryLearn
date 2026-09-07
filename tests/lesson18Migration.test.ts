@@ -1,3 +1,4 @@
+import { lessonText } from './fixtures/courseContracts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -114,9 +115,9 @@ test('P5 L18 ExitCheck reports direct auto-checks and partial open production ho
 });
 
 test('P5 L18 keeps boundaries, metadata, and excludes browser TTS/learner recording', () => {
-  assert.match(source, /правило не сводится к механическому «добавь -ni/);
-  assert.match(source, /Lehet, hogy\.\.\..*другая конструкция/s);
-  assert.match(source, /полная условная парадигма будет в L23/);
+  assert.match(lessonText(LESSON_18), /Не используй правило «к любой словарной форме просто добавить -ni»/);
+  assert.match(lessonText(LESSON_18), /Lehet, hogy\.\.\..*другая конструкция/s);
+  assert.match(lessonText(LESSON_18), /Полная система условного наклонения будет только в Lesson 23/);
   assert.doesNotMatch(source, /SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask|recordingCompleted|responseMode:\s*['"]recorded['"]/i);
   const meta = LESSONS_META.find((candidate) => candidate.id === 18);
   assert.ok(meta);

@@ -61,10 +61,26 @@ jobs:
 
       - name: Configure Functions production parameters
         shell: bash
+        env:
+          LEMON_MONTHLY: ${{ vars.LEMONSQUEEZY_VARIANT_ID_MONTHLY }}
+          LEMON_QUARTERLY: ${{ vars.LEMONSQUEEZY_VARIANT_ID_QUARTERLY }}
+          LEMON_YEARLY: ${{ vars.LEMONSQUEEZY_VARIANT_ID_YEARLY }}
         run: |
+          # Missing variables stay empty: deploy succeeds and checkout returns 503.
+          # Validate before writing dotenv; never interpolate repository values as shell code.
+          for variant in "$LEMON_MONTHLY" "$LEMON_QUARTERLY" "$LEMON_YEARLY"; do
+            if [[ -n "$variant" && ! "$variant" =~ ^[1-9][0-9]+$ ]]; then
+              echo 'Invalid Lemon variant parameter format' >&2
+              exit 1
+            fi
+          done
+          # Existing legacy ID is retained for Customer Portal only.
           printf '%s\n' \
             'LEMONSQUEEZY_TEST_MODE=false' \
             'LEMONSQUEEZY_STORE_ID=461197' \
+            "LEMONSQUEEZY_VARIANT_ID_MONTHLY=$LEMON_MONTHLY" \
+            "LEMONSQUEEZY_VARIANT_ID_QUARTERLY=$LEMON_QUARTERLY" \
+            "LEMONSQUEEZY_VARIANT_ID_YEARLY=$LEMON_YEARLY" \
             'LEMONSQUEEZY_VARIANT_ID=2097546' \
             'APP_URL=https://hungarylearn.web.app' \
             > functions/.env.hungarylearn

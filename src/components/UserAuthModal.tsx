@@ -15,6 +15,7 @@ import {
   validateRegistration,
 } from '../utils/userStore';
 import { subscriptionDisplay } from '../utils/subscriptionValidity';
+import { BILLING_PLANS, type BillingPlanKey } from '../config/pricing';
 
 interface UserAuthModalProps {
   isOpen: boolean;
@@ -37,6 +38,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [authReady, setAuthReady] = useState(isUserAuthReady());
+  const [selectedPlan, setSelectedPlan] = useState<BillingPlanKey>('quarterly');
+  const selectedPricing = BILLING_PLANS.find(plan => plan.key === selectedPlan)!;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -143,7 +146,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setErrorMsg('');
     setSuccessMsg('');
     
-    const result = await createLemonCheckout();
+    const result = await createLemonCheckout(selectedPlan);
     setIsUpgrading(false);
 
     if (result.success && result.url) {
@@ -175,7 +178,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#182230]/45 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white text-[#252B2F] w-full max-w-md rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] overflow-hidden relative">
+      <div className="bg-white text-[#252B2F] w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] relative">
         {/* Modal Header */}
         <div className="bg-[#116EEE] text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -259,17 +262,16 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   Подписка включает неограниченный доступ ко всем интерактивным урокам венгерского языка, озвучке слов и аудио-тренажерам.
                 </p>
 
-                <div className="pt-2 flex items-center justify-between border-t border-white/10">
-                  <span className="text-xs font-medium text-white/90">Стоимость: 44 500 Ft / месяц</span>
+                <div className="pt-2 border-t border-white/10">
                   {subscription?.status === 'privileged' ? (
                     <span className="text-xs font-semibold text-indigo-200 flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Доступ предоставлен администратором
                     </span>
                   ) : user.provider === 'lemonsqueezy' && (
-                    subscription?.status === 'active'
-                    || subscription?.status === 'cancelled'
-                    || subscription?.status === 'past_due'
-                    || subscription?.status === 'paused'
+                    user.subscriptionStatus === 'active'
+                    || user.subscriptionStatus === 'cancelled'
+                    || user.subscriptionStatus === 'past_due'
+                    || user.subscriptionStatus === 'paused'
                   ) ? (
                     <button
                       onClick={handleSubscriptionPortal}
@@ -279,23 +281,43 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       {isUpgrading ? 'Загрузка…' : 'Управлять подпиской'}
                     </button>
                   ) : (
-                    <button
-                      onClick={handlePaymentCheckout}
-                      disabled={isUpgrading}
-                      className="px-3.5 py-1.5 bg-[#C77B00] hover:bg-[#a37923] text-white rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs disabled:opacity-50"
-                    >
-                      {isUpgrading ? (
-                        <>
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          <span>Обработка...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Оформить подписку</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </>
-                      )}
-                    </button>
+                    <>
+                      <fieldset disabled={isUpgrading} className="space-y-2 mb-3">
+                        <legend className="text-xs font-medium mb-2">Выберите срок подписки</legend>
+                        {BILLING_PLANS.map(plan => (
+                          <label key={plan.key} className={`flex items-center gap-2.5 rounded-lg border p-3 cursor-pointer ${selectedPlan === plan.key ? 'border-white/70 bg-white/15' : 'border-white/20 hover:bg-white/10'}`}>
+                            <input type="radio" name="billing-plan" value={plan.key}
+                              checked={selectedPlan === plan.key}
+                              onChange={() => { setSelectedPlan(plan.key); setErrorMsg(''); }}
+                              className="accent-white shrink-0" />
+                            <span className="min-w-0 flex-1 text-xs">
+                              <span className="flex flex-wrap justify-between gap-x-2 gap-y-1 font-semibold">
+                                <span>{plan.title}</span><span className="whitespace-nowrap">{plan.formattedPrice}</span>
+                              </span>
+                              {plan.badge && <span className="block mt-1 text-[#D9E6FF]">{plan.badge}</span>}
+                            </span>
+                          </label>
+                        ))}
+                      </fieldset>
+                      <p className="text-xs text-[#D9E6FF] mb-3">Списание {selectedPricing.formattedPrice} {selectedPricing.billingLabel}. Все тарифы включают одинаковый Premium доступ.</p>
+                      <button
+                        onClick={handlePaymentCheckout}
+                        disabled={isUpgrading}
+                        className="px-3.5 py-1.5 bg-[#C77B00] hover:bg-[#a37923] text-white rounded-lg text-xs font-medium transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                      >
+                        {isUpgrading ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            <span>Обработка...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Оформить за {selectedPricing.formattedPrice}</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </>
+                        )}
+                      </button>
+                    </>
                   )}
                 </div>
               </div>

@@ -1,0 +1,2480 @@
+--- 3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson10.ts
++++ current/src/data/lessons/lesson10.ts
+@@ -1,185 +1,2262 @@
+-import { Lesson } from '../../types';
+-
+-export const LESSON_8_3: Lesson = { // wait, exported as LESSON_10
++import type { Lesson, LessonActivity } from '../../types';
++
++const L10_CP_MEANING: LessonActivity = {
++  kind: 'controlledPractice',
++  id: 'l10-cp-meaning',
++  title: 'Контекстная практика: Hol? Hová? Honnan?',
++  passCount: 11,
++  exercises: [
++    { kind: 'singleChoice', id: 'l10-meaning-1', prompt: 'Péter a házban van. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l10-meaning-2', prompt: 'Anna bemegy az iskolába. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 1 },
++    { kind: 'singleChoice', id: 'l10-meaning-3', prompt: 'Márk kijön a boltból. Какой вопрос подходит?', options: ['Hol?', 'Hová?', 'Honnan?'], correctIndex: 2 },
++    { kind: 'singleChoice', id: 'l10-meaning-4', prompt: 'Ты работаешь внутри офиса.', options: ['Az irodában dolgozom.', 'Az irodába dolgozom.', 'Az irodából dolgozom.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l10-meaning-5', prompt: 'Ты идёшь внутрь кафе.', options: ['A kávézóban megyek.', 'A kávézóba megyek.', 'A kávézóból megyek.'], correctIndex: 1 },
++    { kind: 'singleChoice', id: 'l10-meaning-6', prompt: 'Ты выходишь из библиотеки.', options: ['Kijövök a könyvtárban.', 'Kijövök a könyvtárba.', 'Kijövök a könyvtárból.'], correctIndex: 2 },
++    { kind: 'textInput', id: 'l10-meaning-7', prompt: 'ház → Hol?', accept: ['házban'] },
++    { kind: 'textInput', id: 'l10-meaning-8', prompt: 'iskola → Hová?', accept: ['iskolába'] },
++    { kind: 'textInput', id: 'l10-meaning-9', prompt: 'bolt → Honnan?', accept: ['boltból'] },
++    { kind: 'singleChoice', id: 'l10-meaning-10', prompt: 'Мини-диалог: — Hol vagy? — ___', options: ['A könyvtárban vagyok.', 'A könyvtárba megyek.', 'A könyvtárból jövök.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l10-meaning-11', prompt: 'Мини-диалог: — Hová mész? — ___', options: ['Az étteremben vagyok.', 'Az étterembe megyek.', 'Az étteremből jövök.'], correctIndex: 1 },
++    { kind: 'singleChoice', id: 'l10-meaning-12', prompt: 'Мини-диалог: — Honnan jössz? — ___', options: ['Az iskolában vagyok.', 'Az iskolába megyek.', 'Az iskolából jövök.'], correctIndex: 2 },
++    { kind: 'singleChoice', id: 'l10-meaning-13', prompt: 'Сначала человек внутри магазина, затем выходит.', options: ['A boltban van, majd kijön a boltból.', 'A boltba van, majd a boltban jön.', 'A boltból van, majd a boltba kijön.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l10-meaning-14', prompt: 'Мы меняем место встречи и идём внутрь кафе.', options: ['A kávézóban találkozunk, oda bemegyünk.', 'A kávézóba találkozunk, ott kijövünk.', 'A kávézóból találkozunk.'], correctIndex: 0 },
++  ],
++};
++
++const L10_READING: LessonActivity = {
++  kind: 'reading',
++  id: 'l10-reading-dialogue',
++  title: 'Чтение: несколько мест за одно утро',
++  instructions: 'Проследи путь Анны: где она находится, куда входит, что делает внутри и откуда выходит.',
++  passCount: 6,
++  content: {
++    type: 'prose',
++    title: 'Egy délelőtt több helyen',
++    paragraphs: [
++      'Anna szerda reggel otthon van. Hét órakor a konyhában reggelizik, majd bemegy a szobába a táskájáért. Nyolc órakor kijön a házból, és először egy kis kávézóba megy. A kávézóban kér egy teát és egy szendvicset. Ott találkozik a barátjával, Dórával, aki egy könyvet ad neki. A kávézóban sok ember van, de van egy szabad hely is.',
++      'Kilenc órakor Anna kijön a kávézóból, és bemegy egy boltba. A boltban almát és vizet vesz. Ezután az iskolába megy, mert tíz órakor magyarórája van. Az iskolában a második teremben tanul. Anna új szavakat ír és rövid magyar mondatokat olvas. Az óra után beszél a tanárával, majd délben kijön az épületből.',
++      'Anna ezután a könyvtárba megy. A könyvtárban visszaad két régi könyvet, és keres egy könnyű magyar történetet. A barátja már ott várja. Együtt olvasnak és tanulnak. A könyvtár csendes, ezért ott könnyű együtt tanulni. Anna délután kettőkor jön ki a könyvtárból. Végül hazamegy, és a szobájában pihen.',
++    ],
++  },
++  questions: [
++    { id: 'l10-reading-q1', question: 'Где Анна завтракает?', options: ['на кухне', 'в кафе', 'в школе'], correctIndex: 0 },
++    { id: 'l10-reading-q2', question: 'Куда она идёт после дома сначала?', options: ['в библиотеку', 'в кафе', 'в школу'], correctIndex: 1 },
++    { id: 'l10-reading-q3', question: 'Что Анна делает в кафе?', options: ['просит чай и бутерброд', 'покупает яблоки', 'возвращает книги'], correctIndex: 0 },
++    { id: 'l10-reading-q4', question: 'Откуда она выходит в девять часов?', options: ['из кафе', 'из школы', 'из библиотеки'], correctIndex: 0 },
++    { id: 'l10-reading-q5', question: 'Зачем Анна идёт в школу?', options: ['у неё урок венгерского', 'она встречает Дору', 'она покупает воду'], correctIndex: 0 },
++    { id: 'l10-reading-q6', question: 'С кем Анна встречается в библиотеке?', options: ['с учителем', 'с другом', 'с продавцом'], correctIndex: 1 },
++    { id: 'l10-reading-q7', question: 'Где заканчивается её путь?', options: ['дома, в комнате', 'в магазине', 'в кафе'], correctIndex: 0 },
++  ],
++};
++
++const L10_LISTENING: LessonActivity = {
++  kind: 'listening',
++  id: 'l10-listening-inner-locations',
++  title: 'Аудирование: маршрут Марка',
++  assetId: 'l10_listening_inner_locations',
++  audioStatus: 'published',
++  transcript: 'Márk reggel a szobában van. Kilenc órakor bemegy az iskolába. Délután kijön az iskolából. Utána bemegy a boltba. A boltban találkozik Annával. Végül kijön a boltból.',
++  passCount: 4,
++  questions: [
++    { id: 'l10-listening-q1', question: 'Где Марк утром?', options: ['a szobában', 'az iskolába', 'a boltból'], correctIndex: 0 },
++    { id: 'l10-listening-q2', question: 'Куда он входит в девять?', options: ['az iskolából', 'az iskolában', 'az iskolába'], correctIndex: 2 },
++    { id: 'l10-listening-q3', question: 'Откуда он выходит днём?', options: ['a boltból', 'az iskolából', 'a szobából'], correctIndex: 1 },
++    { id: 'l10-listening-q4', question: 'Где он встречает Анну?', options: ['a boltba', 'a boltban', 'a boltból'], correctIndex: 1 },
++    { id: 'l10-listening-q5', question: 'Откуда он выходит в конце?', options: ['a boltból', 'a boltba', 'a boltban'], correctIndex: 0 },
++  ],
++};
++
++const L10_ROLEPLAY: LessonActivity = {
++  kind: 'rolePlay', id: 'l10-roleplay-meeting-place', title: 'Ролевая игра: где встретимся?', partnerLabel: 'Barát', completionMessage: 'Egyeztettétek a találkozó helyét.', startTurnId: 'l10-rp-s1',
++  turns: [
++    { id: 'l10-rp-s1', speaker: 'waiter', prompt: 'Szia! Hol vagy most?', next: 'l10-rp-l1' },
++    { id: 'l10-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови текущее место внутри здания.', model: 'Szia! Most a könyvtárban vagyok.', next: 'l10-rp-s2' },
++    { id: 'l10-rp-s2', speaker: 'waiter', prompt: 'Rendben. Hová mész innen?', next: 'l10-rp-l2' },
++    { id: 'l10-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови следующую цель.', model: 'Innen egy kávézóba megyek.', next: 'l10-rp-s3' },
++    { id: 'l10-rp-s3', speaker: 'waiter', prompt: 'Aha, értem. Honnan jössz? A könyvtárból?', next: 'l10-rp-l3' },
++    { id: 'l10-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови исходную точку.', model: 'A könyvtárból jövök.', next: 'l10-rp-s4' },
++    { id: 'l10-rp-s4', speaker: 'waiter', prompt: 'Jó. Akkor háromkor a kávézóban találkozunk.', next: 'l10-rp-l4' },
++    { id: 'l10-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Подтверди место и время.', model: 'Rendben, akkor háromkor a kávézóban találkozunk.', next: 'l10-rp-s5' },
++    { id: 'l10-rp-s5', speaker: 'waiter', prompt: 'Van egy változás: a kávézó zárva van. Az étterembe megyünk.', next: 'l10-rp-l5' },
++    { id: 'l10-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Прими новое место и скажи, что идёшь внутрь.', model: 'Rendben, akkor bemegyek az étterembe.', next: 'l10-rp-s6' },
++    { id: 'l10-rp-s6', speaker: 'waiter', prompt: 'Rendben. Mikor találkozunk?', next: 'l10-rp-l6' },
++    { id: 'l10-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови время встречи.', model: 'Háromkor találkozunk.', next: 'l10-rp-s7' },
++    { id: 'l10-rp-s7', speaker: 'waiter', prompt: 'Szuper. Hol találkozunk pontosan?', next: 'l10-rp-l7' },
++    { id: 'l10-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Окончательно подтверди место.', model: 'Az étteremben találkozunk háromkor.', next: 'l10-rp-s8' },
++    { id: 'l10-rp-s8', speaker: 'waiter', prompt: 'Rendben, akkor ott várlak!', next: 'l10-rp-l8' },
++    { id: 'l10-rp-l8', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Коротко заверши разговор.', model: 'Jó, találkozunk!', next: 'l10-rp-s9' },
++    { id: 'l10-rp-s9', speaker: 'waiter', prompt: 'Szia, találkozunk!' },
++  ],
++};
++
++const L10_WRITING: LessonActivity = {
++  kind: 'writing',
++  id: 'l10-writing-morning-route',
++  title: 'Письмо: вымышленное утро',
++  prompt: 'Напиши 70–90 слов о вымышленном утре. Объясни, где начинаешь день, куда идёшь, что делаешь внутри, откуда выходишь, какова следующая цель и где заканчиваешь. Используй только внутреннее семейство L10. Построй связный маршрут минимум через три знакомых места и проверь Hol? / Hová? / Honnan? перед самопроверкой.',
++  modelAnswer: ['Reggel hétkor otthon, a konyhában reggelizem. Utána bemegyek a szobába. A táskám a szobában van. Nyolckor kijövök a házból, és egy kávézóba megyek. A kávézóban teát iszom és találkozom Annával. Kilenc órakor kijövök a kávézóból, majd bemegyek az iskolába. Az iskolában magyarul tanulok és rövid mondatokat olvasok. Délben kijövök az épületből, és a könyvtárba megyek. A könyvtárban könyvet olvasok és egy kicsit tanulok. Délután kijövök a könyvtárból, hazamegyek, és végül a szobámban pihenek.'],
++  rubric: [
++    '70–90 слов',
++    'начальная и конечная точки',
++    'минимум три знакомых внутренних места',
++    'корректные Hol? / Hová? / Honnan? формы',
++    'минимум одна ясная форма места, цели и источника',
++    'понятная последовательность',
++  ],
++};
++
++const L10_SPEAKING = {
++  title: 'Необязательная устная самопрактика',
++  instructions: 'Говори 1–1.5 минуты о местах дня: где находишься, куда входишь и откуда выходишь. Это текстовая инструкция без микрофона, score и evidence.',
++  prompt: 'После письма закрой model и расскажи похожий маршрут своими словами. Назови минимум три знакомых внутренних места и используй Hol? / Hová? / Honnan? как смысловые опоры.',
++  rubric: ['место Hol?', 'цель Hová?', 'исходная точка Honnan?', 'минимум три места', 'понятная последовательность'],
++};
++const L10_EXIT_CHECK: LessonActivity = {
++  kind: 'exitCheck',
++  id: 'l10-exit-check',
++  title: 'Проверка целей урока 10',
++  checks: [
++    { objectiveId: 'l10_distinguish-inner-cases', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
++    { objectiveId: 'l10_form-inessive', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
++    { objectiveId: 'l10_form-illative', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
++    { objectiveId: 'l10_form-elative', activityId: 'l10-cp-meaning', evidenceKind: 'grammar' },
++    {
++      objectiveId: 'l10_use-inner-cases',
++      activityId: 'l10-reading-dialogue',
++      evidenceKind: 'reading',
++      evidenceComponents: [
++        { activityId: 'l10-listening-inner-locations', evidenceKind: 'listening' },
++        { activityId: 'l10-roleplay-meeting-place', evidenceKind: 'interaction' },
++        { activityId: 'l10-writing-morning-route', evidenceKind: 'writing' },
++      ],
++    },
++  ],
++};
++
++export const LESSON_10: Lesson = {
+   id: 10,
+   number: 10,
+   level: 'A1',
+   title: 'Урок 10 · Helyhatározók I',
+-  subtitle: 'Местные падежи I — система трёх измерений и Belső csoport (-ban/-ben, -ba/-be, -ból/-ből)',
+-  description: 'Фундаментальная система трёх измерений (Где?, Куда?, Откуда?) и группа "Внутри" (-ban/-ben, -ba/-be, -ból/-ből). Правило гармонии гласных.',
++  subtitle: 'Внутренние местные падежи: где, куда, откуда',
++  description: 'Единая система внутренних местных падежей: Hol? (-ban/-ben), Hová? (-ba/-be), Honnan? (-ból/-ből).',
+   slidesCount: 11,
+   slides: [
+-    {
++            {
+       id: 1,
+-      eyebrow: "УРОК 10 · 1/11 · КОНЦЕПЦИЯ",
+-      title: "A 3D helyhatározó rendszer",
+-      subtitle: "Система 3 измерений пространственных падежей",
++      eyebrow: 'УРОК 10 · 1/11 · СМЫСЛ',
++      title: 'Hol? Hová? Honnan?',
++      subtitle: 'Где внутри → куда внутрь → откуда изнутри',
++      type: 'info',
++      note: 'Главная цель 10.1 — не выучить все варианты окончаний, а научиться мгновенно различать три пространственных отношения. Гармонию гласных и выбор -ban/-ben, -ba/-be, -ból/-ből разбираем на 10.2.',
++      warn: 'Не переводи русские «в» и «из» механически. В венгерском сначала определяется пространственная модель. В уроке 10 изучается только внутренняя семья; другие местные семьи идут в уроках 11–12.',
++      task: 'Пройди алгоритм на трёх ситуациях: 1) определи, человек уже внутри, движется внутрь или выходит изнутри; 2) задай Hol? / Hová? / Honnan?; 3) выбери нужную семью; 4) произнеси полный ответ. Затем выполни мини-проверку.',
+       body: `
+-   <p>Это одна из самых красивых и логичных систем венгерского языка. Для любого места венгерский строго различает <b>ТРИ направления движения</b>:</p>
+-   <div class="grid3">
+-     <div style="background:#f5eee6; padding:12px; border-radius:8px; text-align:center;">
+-       <b>1. ГДЕ?</b><br><span style="color:#8a7a68">(Hol?)</span><br>Покой / внутри
+-     </div>
+-     <div style="background:#f5eee6; padding:12px; border-radius:8px; text-align:center;">
+-       <b>2. КУДА?</b><br><span style="color:#8a7a68">(Hova?)</span><br>Движение внутрь
+-     </div>
+-     <div style="background:#f5eee6; padding:12px; border-radius:8px; text-align:center;">
+-       <b>3. ОТКУДА?</b><br><span style="color:#8a7a68">(Honnan?)</span><br>Движение наружу
+-     </div>
+-   </div>
+-   <div class="note">Эта трехмерная логика «Где – Куда – Откуда» применяется одинаково к 3 типам пространств: «Внутри», «На поверхности» и «Около/рядом». В этом уроке разбираем группу «Внутри».</div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Одна пространственная сцена — три разных вопроса</h4>
++
++        <p>
++          Венгерский различает не просто русское «в», а <b>три отношения к месту</b>:
++          человек <b>находится внутри</b>, <b>движется внутрь</b> или <b>движется изнутри наружу</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Вопрос</th><th>Русский смысл</th><th>Суффикс</th><th>Короткая опора</th></tr>
++          <tr>
++            <td><b>Hol?</b></td>
++            <td>Где?</td>
++            <td><span class="hu-word">-ban/-ben</span></td>
++            <td><b>место внутри</b></td>
++          </tr>
++          <tr>
++            <td><b>Hová?</b></td>
++            <td>Куда?</td>
++            <td><span class="hu-word">-ba/-be</span></td>
++            <td><b>цель внутрь</b></td>
++          </tr>
++          <tr>
++            <td><b>Honnan?</b></td>
++            <td>Откуда?</td>
++            <td><span class="hu-word">-ból/-ből</span></td>
++            <td><b>источник изнутри</b></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Запомни не три изолированных окончания, а одну смысловую цепочку:
++          <b>место → цель → источник</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Одна основа ház показывает всю систему</h4>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Вопрос</th><th>Форма</th><th>Полный ответ</th></tr>
++          <tr>
++            <td>я уже внутри дома</td>
++            <td><b>Hol?</b></td>
++            <td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td>
++            <td><button class="speak-btn" data-speak-text="A házban vagyok." data-speak-lang="hu-HU">A házban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>я направляюсь внутрь дома</td>
++            <td><b>Hová?</b></td>
++            <td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button></td>
++            <td><button class="speak-btn" data-speak-text="A házba megyek." data-speak-lang="hu-HU">A házba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>я иду / прихожу из дома</td>
++            <td><b>Honnan?</b></td>
++            <td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td>
++            <td><button class="speak-btn" data-speak-text="A házból jövök." data-speak-lang="hu-HU">A házból jövök.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Основа <b>ház</b> остаётся узнаваемой, а пространственное отношение выражает суффикс:
++          <b>ház + ban → házban</b>,
++          <b>ház + ba → házba</b>,
++          <b>ház + ból → házból</b>.
++          Почему иногда будет <b>-ben / -be / -ből</b>, объясняет следующий слайд.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Те же три отношения в реальной бытовой ситуации</h4>
++
++        <table class="conj">
++          <tr><th>Венгерский</th><th>Что происходит</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++            <td>я уже нахожусь в магазине → <b>Hol?</b></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++            <td>магазин — цель движения → <b>Hová?</b></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">A boltból jövök.</button></td>
++            <td>магазин — исходная точка → <b>Honnan?</b></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Полезно задавать вопрос к форме вслух:
++          <button class="speak-btn" data-speak-text="Hol? A boltban. Hová? A boltba. Honnan? A boltból." data-speak-lang="hu-HU">
++            Hol? A boltban. Hová? A boltba. Honnan? A boltból.
++          </button>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Глагол помогает понять ситуацию, но не выбирает форму автоматически</h4>
++
++        <p>
++          Часто <b>van / vagyok</b> сопровождает место, <b>megy</b> — направление,
++          а <b>jön</b> — источник. Но это не механическое правило «один глагол = один падеж».
++          В одном предложении могут одновременно быть и источник, и цель:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A házból a boltba megyek." data-speak-lang="hu-HU">
++            A házból a boltba megyek.
++          </button>
++          — Я иду <b>из дома</b> <b>в магазин</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Фрагмент</th><th>Вопрос</th><th>Почему</th></tr>
++          <tr><td><b>a házból</b></td><td>Honnan?</td><td>исходная точка</td></tr>
++          <tr><td><b>a boltba</b></td><td>Hová?</td><td>цель движения</td></tr>
++        </table>
++
++        <div class="note">
++          Поэтому рабочий алгоритм такой:
++          <b>ситуация → вопрос → семья суффиксов → конкретная форма</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Что означает «внутренняя семья»</h4>
++
++        <p>
++          На этом этапе рассматриваем места, которые венгерский обычно оформляет как
++          пространство «внутри»: <b>ház</b> — дом, <b>szoba</b> — комната,
++          <b>bolt</b> — магазин, <b>iskola</b> — школа.
++        </p>
++
++        <p>
++          Примеры для узнавания:
++          <button class="speak-btn" data-speak-text="a házban, a szobában, a boltban, az iskolában" data-speak-lang="hu-HU">
++            a házban · a szobában · a boltban · az iskolában
++          </button>
++        </p>
++
++        <div class="warn">
++          «Внутренняя» — название этой грамматической семьи, а не универсальное правило для любого русского «в».
++          Например, другие типы мест в венгерском могут использовать другие суффиксы — это тема следующих уроков.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки начинающего</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>Hol vagy? — A házba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Hol vagy? A házban vagyok." data-speak-lang="hu-HU">Hol vagy? — A házban vagyok.</button></td>
++            <td><b>Hol?</b> = место, не цель</td>
++          </tr>
++          <tr>
++            <td><s>Hová mész? — A házban.</s></td>
++            <td><button class="speak-btn" data-speak-text="Hová mész? A házba megyek." data-speak-lang="hu-HU">Hová mész? — A házba megyek.</button></td>
++            <td><b>Hová?</b> = направление внутрь</td>
++          </tr>
++          <tr>
++            <td><s>Honnan jössz? — A házba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Honnan jössz? A házból jövök." data-speak-lang="hu-HU">Honnan jössz? — A házból jövök.</button></td>
++            <td><b>Honnan?</b> = источник</td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          Не выбирай форму по русскому предлогу и не начинай с окончания.
++          Сначала задай вопрос: <b>Hol? Hová? Honnan?</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Ты уже находишься в магазине. Какой вопрос: <b>Hol, Hová</b> или <b>Honnan</b>?</li>
++          <li>Ты идёшь в дом. Какая форма: <b>házban, házba</b> или <b>házból</b>?</li>
++          <li>Ты выходишь из магазина. Какая форма: <b>boltban, boltba</b> или <b>boltból</b>?</li>
++          <li>Почему в предложении <b>A házból a boltba megyek.</b> используются две разные местные формы?</li>
++          <li>Какой шаг идёт первым: выбор суффикса или определение смысла?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Hol?</b> — человек уже находится внутри.</li>
++            <li><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button> — цель движения.</li>
++            <li><button class="speak-btn" data-speak-text="boltból" data-speak-lang="hu-HU">boltból</button> — источник.</li>
++            <li><b>házból</b> отвечает Honnan?, а <b>boltba</b> отвечает Hová?.</li>
++            <li>Сначала определить <b>пространственный смысл</b>, затем выбрать семью суффиксов.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Граница 10.1: сейчас нужно уверенно различать <b>где / куда / откуда</b>.
++          Выбор гармонического варианта <b>-ban/-ben, -ba/-be, -ból/-ből</b>
++          начинается на <b>10.2</b>.
++        </div>
++      `,
++    },    {
+       id: 2,
+-      eyebrow: "УРОК 10 · 2/11 · ВНУТРИ",
+-      title: "Belső csoport: Hol?",
+-      subtitle: "Внутри (Где?) — суффикс -ban / -ben",
++      eyebrow: 'УРОК 10 · 2/11 · ЕДИНАЯ МАТРИЦА',
++      title: 'A belső helyviszonyok',
++      subtitle: 'Гармония гласных: как выбрать вариант суффикса',
++      type: 'info',
++      note: 'На 10.1 ты выбрал смысл: Hol? / Hová? / Honnan?. Теперь второй шаг — выбрать гармонический вариант внутри нужной семьи. На этом слайде тренируем форму, а 10.3–10.5 отдельно закрепят каждое значение.',
++      warn: 'Не пытайся выбирать суффикс только по последней букве слова. Смотри на гласные основы и запоминай частые формы как цельные модели. У смешанных и заимствованных слов возможны лексические особенности.',
++      task: 'Сначала определи задний или передний ряд для слова. Затем проговори все три формы. После этого найди и исправь ошибки в таблице и выполни мини-проверку без подсказки.',
+       body: `
+-   <p>Отвечает на вопрос <b>Hol?</b> (Где?) — когда объект находится внутри закрытого пространства, помещения, здания или страны.</p>
+-   <ul class="tick">
+-     <li><b>-ban</b> (для слов с гласными заднего ряда a/o/u): <button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házban</button> <span style="color:#8a7a68">(в доме)</span>, <button class="speak-btn" data-speak-text="szobában" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szobában</button> <span style="color:#8a7a68">(в комнате)</span></li>
+-     <li><b>-ben</b> (для слов с гласными переднего ряда e/i/ö/ü): <button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertben</button> <span style="color:#8a7a68">(в саду)</span>, <button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> épületben</button> <span style="color:#8a7a68">(в здании)</span></li>
+-   </ul>
+-   <p><button class="speak-btn" data-speak-text="Péter a szobában van." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter a szobában van.</button> <span style="color:#8a7a68">(Петер в комнате)</span></p>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. После смысла выбираем гармонический вариант</h4>
++
++        <p>
++          У каждой внутренней семьи есть <b>два варианта</b>.
++          Выбор зависит от гармонии гласных основы:
++        </p>
++
++        <table class="conj">
++          <tr><th>Значение</th><th>Задний вариант</th><th>Передний вариант</th></tr>
++          <tr><td><b>Hol?</b> — где внутри</td><td><b>-ban</b></td><td><b>-ben</b></td></tr>
++          <tr><td><b>Hová?</b> — куда внутрь</td><td><b>-ba</b></td><td><b>-be</b></td></tr>
++          <tr><td><b>Honnan?</b> — откуда изнутри</td><td><b>-ból</b></td><td><b>-ből</b></td></tr>
++        </table>
++
++        <div class="note">
++          В этой теме работает один и тот же порядок:
++          <b>смысл → вопрос → семья суффиксов → гармонический вариант</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Задний и передний ряд на двух чистых моделях</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Гласные</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
++          <tr>
++            <td><b>ház</b> — дом</td>
++            <td>задняя <b>á</b></td>
++            <td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td>
++            <td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button></td>
++            <td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td>
++          </tr>
++          <tr>
++            <td><b>kert</b> — сад</td>
++            <td>только передняя <b>e</b></td>
++            <td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button></td>
++            <td><button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU">kertbe</button></td>
++            <td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Сравни две цельные цепочки:
++          <button class="speak-btn" data-speak-text="házban, házba, házból" data-speak-lang="hu-HU">
++            házban → házba → házból
++          </button>
++          и
++          <button class="speak-btn" data-speak-text="kertben, kertbe, kertből" data-speak-lang="hu-HU">
++            kertben → kertbe → kertből
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Какие гласные считать задними и передними</h4>
++
++        <table class="conj">
++          <tr><th>Группа</th><th>Гласные</th><th>Что обычно выбираем</th></tr>
++          <tr>
++            <td><b>задние</b></td>
++            <td>a, á, o, ó, u, ú</td>
++            <td>-ban · -ba · -ból</td>
++          </tr>
++          <tr>
++            <td><b>передние</b></td>
++            <td>e, é, i, í, ö, ő, ü, ű</td>
++            <td>-ben · -be · -ből, если в основе только передние гласные</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Для этих трёх семей отдельного третьего варианта для <b>ö/ő/ü/ű</b> нет:
++          <button class="speak-btn" data-speak-text="épületben, épületbe, épületből" data-speak-lang="hu-HU">
++            épületben → épületbe → épületből
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Смешанные гласные: не применяй правило механически</h4>
++
++        <p>
++          Некоторые частые слова содержат и передние, и задние гласные.
++          Например:
++        </p>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Правильная цепочка</th><th>Что запомнить</th></tr>
++          <tr>
++            <td><b>iskola</b></td>
++            <td>
++              <button class="speak-btn" data-speak-text="iskolában, iskolába, iskolából" data-speak-lang="hu-HU">
++                iskolában → iskolába → iskolából
++              </button>
++            </td>
++            <td>слово берёт задний ряд</td>
++          </tr>
++          <tr>
++            <td><b>iroda</b></td>
++            <td>
++              <button class="speak-btn" data-speak-text="irodában, irodába, irodából" data-speak-lang="hu-HU">
++                irodában → irodába → irodából
++              </button>
++            </td>
++            <td>тоже задний ряд</td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          На уровне A1 не нужно строить сложную теорию всех смешанных основ.
++          Частые формы <b>iskolában, irodában</b> лучше узнавать и запоминать целиком.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Конечные -a / -e перед суффиксом удлиняются</h4>
++
++        <p>
++          Если основа оканчивается на короткое <b>-a</b> или <b>-e</b>,
++          эта гласная перед суффиксом обычно становится долгой.
++          На частом слове <b>iskola</b> это видно сразу во всей тройке:
++        </p>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
++          <tr>
++            <td><b>iskola</b></td>
++            <td><button class="speak-btn" data-speak-text="iskolában" data-speak-lang="hu-HU">iskolában</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolába" data-speak-lang="hu-HU">iskolába</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td>
++          </tr>
++          <tr>
++            <td><b>szoba</b></td>
++            <td><button class="speak-btn" data-speak-text="szobában" data-speak-lang="hu-HU">szobában</button></td>
++            <td><button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU">szobába</button></td>
++            <td><button class="speak-btn" data-speak-text="szobából" data-speak-lang="hu-HU">szobából</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          В <b>iskolában</b> долгий <b>á</b> относится к изменённой основе
++          <b>iskolá-</b>; само окончание <b>-ban</b> содержит короткое <b>a</b>.
++          Уже долгий гласный не «удлиняется ещё раз»:
++          <b>kávézó → kávézóban</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. В -ból / -ből гласная всегда долгая</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th></tr>
++          <tr><td><s>házbol</s></td><td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td></tr>
++          <tr><td><s>kertböl</s></td><td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td></tr>
++          <tr><td><s>épületböl</s></td><td><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button></td></tr>
++        </table>
++
++        <div class="warn">
++          Пиши именно <b>-ból / -ből</b>: <b>ó</b> и <b>ő</b> долгие.
++          Длина гласной в венгерском — часть правильного написания слова.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>házben</s></td>
++            <td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td>
++            <td>ház выбирает задний вариант</td>
++          </tr>
++          <tr>
++            <td><s>kertban</s></td>
++            <td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button></td>
++            <td>у kert только передняя гласная</td>
++          </tr>
++          <tr>
++            <td><s>épületból</s></td>
++            <td><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button></td>
++            <td>передняя основа выбирает -ből</td>
++          </tr>
++          <tr>
++            <td><s>iskolaban</s></td>
++            <td><button class="speak-btn" data-speak-text="iskolában" data-speak-lang="hu-HU">iskolában</button></td>
++            <td>конечное a основы становится á</td>
++          </tr>
++          <tr>
++            <td><s>iskolabol</s></td>
++            <td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td>
++            <td>нужны и á основы, и ó в -ból</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Выбери Hol? для <b>kert</b>: <b>kertban</b> или <b>kertben</b>?</li>
++          <li>Выбери Hová? для <b>ház</b>: <b>házba</b> или <b>házbe</b>?</li>
++          <li>Образуй Honnan? от <b>épület</b>.</li>
++          <li>Почему пишется <b>iskolában</b>, а не <b>iskolaban</b>?</li>
++          <li>Какая гласная должна быть долгой в окончании <b>-ból/-ből</b>?</li>
++          <li>Назови всю тройку для <b>szoba</b>.</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button>.</li>
++            <li><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button>.</li>
++            <li><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button>.</li>
++            <li>Потому что конечное <b>a</b> основы <b>iskola</b> перед суффиксом становится <b>á</b>.</li>
++            <li><b>ó</b> в -ból и <b>ő</b> в -ből.</li>
++            <li><button class="speak-btn" data-speak-text="szobában, szobába, szobából" data-speak-lang="hu-HU">szobában → szobába → szobából</button>.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Граница 10.2: здесь мы выбираем <b>форму суффикса по гармонии</b>.
++          На 10.3, 10.4 и 10.5 отдельно закрепляются
++          <b>Hol?</b>, <b>Hová?</b> и <b>Honnan?</b> в предложениях.
++        </div>
++      `,
++    },    {
+       id: 3,
+-      eyebrow: "УРОК 10 · 3/11 · ВНУТРЬ",
+-      title: "Belső csoport: Hova?",
+-      subtitle: "Внутрь (Куда?) — суффикс -ba / -be",
++      eyebrow: 'УРОК 10 · 3/11 · HOL?',
++      title: '-ban / -ben',
++      subtitle: 'Hol? — где находится человек или предмет',
++      type: 'info',
++      note: 'На 10.3 закрепляем только значение Hol?: место без направления. Гармония уже изучена на 10.2, поэтому здесь главное — правильно увидеть ситуацию и построить естественное предложение.',
++      warn: 'Не путай Hol? и Hová?: házban = в доме, где?; házba = в дом, куда?. Одна буква n меняет пространственное отношение.',
++      task: 'Для каждого примера сначала задай Hol?, затем назови место, после этого произнеси полное предложение. В конце исправь типичные ошибки и выполни мини-проверку.',
+       body: `
+-   <p>Отвечает на вопрос <b>Hova?</b> (Куда?) — движение внутрь пространства.</p>
+-   <ul class="tick">
+-     <li><b>-ba</b> (задний ряд): <button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házba</button> <span style="color:#8a7a68">(в дом — движение)</span>, <button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szobába</button> <span style="color:#8a7a68">(в комнату)</span></li>
+-     <li><b>-be</b> (передний ряд): <button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertbe</button> <span style="color:#8a7a68">(в сад — движение)</span>, <button class="speak-btn" data-speak-text="épületbe" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> épületbe</button> <span style="color:#8a7a68">(в здание)</span></li>
+-   </ul>
+-   <p><button class="speak-btn" data-speak-text="Péter bemegy a szobába." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter bemegy a szobába.</button> <span style="color:#8a7a68">(Петер заходит в комнату)</span></p>
+-   <div class="note">Обратите внимание: глагол <button class="speak-btn" data-speak-text="bemegy" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> bemegy</button> содержит приставку be- (внутрь), которая совпадает по смыслу с суффиксом -ba/-be. В венгерском такое «двойное» подчёркивание норма.</div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Hol? означает место без направления</h4>
++
++        <p>
++          Если человек или предмет <b>уже находится</b> в некотором месте,
++          задаём вопрос <b>Hol?</b> — «где?».
++          Для внутренней семьи ответ строится с <b>-ban / -ben</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Вопрос</th><th>Ответ</th></tr>
++          <tr>
++            <td>я уже в доме</td>
++            <td><b>Hol vagy?</b></td>
++            <td><button class="speak-btn" data-speak-text="A házban vagyok." data-speak-lang="hu-HU">A házban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>Петер находится в комнате</td>
++            <td><b>Hol van Péter?</b></td>
++            <td><button class="speak-btn" data-speak-text="Péter a szobában van." data-speak-lang="hu-HU">Péter a szobában van.</button></td>
++          </tr>
++          <tr>
++            <td>книга находится в сумке</td>
++            <td><b>Hol van a könyv?</b></td>
++            <td><button class="speak-btn" data-speak-text="A könyv a táskában van." data-speak-lang="hu-HU">A könyv a táskában van.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Главная опора:
++          <b>Hol? → место уже актуально сейчас → -ban/-ben</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Повторяем гармонию только на готовых формах</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Hol?</th><th>Почему</th></tr>
++          <tr><td><b>ház</b></td><td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td><td>задний вариант -ban</td></tr>
++          <tr><td><b>kert</b></td><td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button></td><td>передний вариант -ben</td></tr>
++          <tr><td><b>épület</b></td><td><button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU">épületben</button></td><td>передний вариант -ben</td></tr>
++          <tr><td><b>szoba</b></td><td><button class="speak-btn" data-speak-text="szobában" data-speak-lang="hu-HU">szobában</button></td><td>конечное a → á</td></tr>
++          <tr><td><b>iskola</b></td><td><button class="speak-btn" data-speak-text="iskolában" data-speak-lang="hu-HU">iskolában</button></td><td>частая смешанная основа + a → á</td></tr>
++        </table>
++
++        <div class="note">
++          Здесь не нужно заново выводить правило гармонии.
++          Цель — быстро узнавать готовую форму <b>Hol?</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Hol? работает не только с van</h4>
++
++        <p>
++          Место с <b>-ban/-ben</b> можно использовать с разными знакомыми глаголами,
++          если действие происходит <b>внутри этого места</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Предложение</th><th>Что происходит</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Az irodában dolgozom." data-speak-lang="hu-HU">Az irodában dolgozom.</button></td>
++            <td>я работаю в офисе</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Az iskolában tanulok." data-speak-lang="hu-HU">Az iskolában tanulok.</button></td>
++            <td>я учусь в школе</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A kertben olvasok." data-speak-lang="hu-HU">A kertben olvasok.</button></td>
++            <td>я читаю в саду</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A boltban dolgozik." data-speak-lang="hu-HU">A boltban dolgozik.</button></td>
++            <td>он / она работает в магазине</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Не запоминай правило «van = -ban/-ben».
++          Правильнее: <b>если вопрос Hol? и используется внутренняя семья, выбираем -ban/-ben</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Не всегда речь о буквальном «внутри коробки»</h4>
++
++        <p>
++          Эта семья используется и в некоторых <b>условно пространственных</b> названиях.
++          Например, с большинством названий стран:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Németországban élek." data-speak-lang="hu-HU">
++            Németországban élek.
++          </button>
++          — Я живу в Германии.
++        </p>
++
++        <p>
++          С некоторыми иностранными городами тоже встречается эта семья:
++          <button class="speak-btn" data-speak-text="Berlinben dolgozom." data-speak-lang="hu-HU">
++            Berlinben dolgozom.
++          </button>
++          — Я работаю в Берлине.
++        </p>
++
++        <div class="warn">
++          Это не означает, что любое русское «в» автоматически становится -ban/-ben.
++          Например, для других типов мест венгерский использует другие местные семьи;
++          они начинаются в уроке 11.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Hol? и Hová? отличаются одной важной буквой</h4>
++
++        <table class="conj">
++          <tr><th>Вопрос</th><th>Форма</th><th>Пример</th></tr>
++          <tr>
++            <td><b>Hol?</b> — где?</td>
++            <td><b>-ban/-ben</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td><b>Hová?</b> — куда?</td>
++            <td><b>-ba/-be</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          В письменном стандартном венгерском <b>n</b> нельзя терять:
++          <b>boltban</b> = где в магазине,
++          <b>boltba</b> = куда в магазин.
++          В быстрой разговорной речи конечное n иногда слышится слабее, но писать нужно полную форму.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Причина</th></tr>
++          <tr>
++            <td><s>Hol vagy? — A házba.</s></td>
++            <td><button class="speak-btn" data-speak-text="A házban vagyok." data-speak-lang="hu-HU">A házban vagyok.</button></td>
++            <td>Hol? требует места, не направления</td>
++          </tr>
++          <tr>
++            <td><s>A kertban olvasok.</s></td>
++            <td><button class="speak-btn" data-speak-text="A kertben olvasok." data-speak-lang="hu-HU">A kertben olvasok.</button></td>
++            <td>kert выбирает -ben</td>
++          </tr>
++          <tr>
++            <td><s>Az iskolaban tanulok.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az iskolában tanulok." data-speak-lang="hu-HU">Az iskolában tanulok.</button></td>
++            <td>конечное a основы становится á</td>
++          </tr>
++          <tr>
++            <td><s>A bolt vagyok.</s></td>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++            <td>место нужно оформить местным суффиксом</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Ты уже в комнате. Выбери: <b>szobában</b> или <b>szobába</b>.</li>
++          <li>Скажи: «Я работаю в офисе».</li>
++          <li>Образуй Hol? от <b>épület</b>.</li>
++          <li>Почему в <b>iskolában</b> пишется <b>á</b>?</li>
++          <li>Что означает <b>Németországban élek</b>?</li>
++          <li>Какой вопрос подходит к <b>A boltban dolgozik</b>?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="szobában" data-speak-lang="hu-HU">szobában</button>.</li>
++            <li><button class="speak-btn" data-speak-text="Az irodában dolgozom." data-speak-lang="hu-HU">Az irodában dolgozom.</button></li>
++            <li><button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU">épületben</button>.</li>
++            <li>Потому что конечное <b>a</b> основы <b>iskola</b> перед суффиксом становится <b>á</b>.</li>
++            <li>«Я живу в Германии».</li>
++            <li><b>Hol?</b></li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Граница 10.3: здесь закрепляется только <b>местонахождение Hol? → -ban/-ben</b>.
++          Движение <b>внутрь</b> с Hová? начинается на 10.4.
++        </div>
++      `,
++    },    {
+       id: 4,
+-      eyebrow: "УРОК 10 · 4/11 · ИЗНУТРИ",
+-      title: "Belső csoport: Honnan?",
+-      subtitle: "Изнутри (Откуда?) — суффикс -ból / -ből",
++      eyebrow: 'УРОК 10 · 4/11 · HOVÁ?',
++      title: '-ba / -be',
++      subtitle: 'Hová? — цель движения внутрь',
++      type: 'info',
++      note: 'На 10.4 закрепляем только направление к внутренней цели. Гармония уже изучена на 10.2: здесь нужно быстро увидеть Hová? и выбрать готовую форму -ba/-be.',
++      warn: 'Не выбирай -ba/-be просто потому, что в предложении есть глагол движения. Сначала определи роль места: если это цель, задавай Hová?. Источник движения будет оформляться иначе на 10.5.',
++      task: 'В каждом примере сначала назови цель движения, затем задай Hová?, образуй форму места и произнеси полное предложение. После этого сравни Hol? и Hová? и выполни мини-проверку.',
+       body: `
+-   <p>Отвечает на вопрос <b>Honnan?</b> (Откуда?) — движение наружу изнутри пространства.</p>
+-   <ul class="tick">
+-     <li><b>-ból</b> (задний ряд): <button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házból</button> <span style="color:#8a7a68">(из дома)</span>, <button class="speak-btn" data-speak-text="szobából" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> szobából</button> <span style="color:#8a7a68">(из комнаты)</span></li>
+-     <li><b>-ből</b> (передний ряд): <button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertből</button> <span style="color:#8a7a68">(из сада)</span>, <button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> épületből</button> <span style="color:#8a7a68">(из здания)</span></li>
+-   </ul>
+-   <p><button class="speak-btn" data-speak-text="Péter kijön a szobából." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter kijön a szobából.</button> <span style="color:#8a7a68">(Петер выходит из комнаты)</span></p>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Hová? означает цель движения</h4>
++
++        <p>
++          Если человек <b>движется к месту и внутрь него</b>,
++          спрашиваем <b>Hová?</b> — «куда?».
++          Во внутренней семье используем <b>-ba / -be</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Вопрос</th><th>Ответ</th></tr>
++          <tr>
++            <td>я иду в дом</td>
++            <td><b>Hová mész?</b></td>
++            <td><button class="speak-btn" data-speak-text="A házba megyek." data-speak-lang="hu-HU">A házba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>Петер входит в комнату</td>
++            <td><b>Hová megy Péter?</b></td>
++            <td><button class="speak-btn" data-speak-text="Péter bemegy a szobába." data-speak-lang="hu-HU">Péter bemegy a szobába.</button></td>
++          </tr>
++          <tr>
++            <td>Анна входит в здание</td>
++            <td><b>Hová megy Anna?</b></td>
++            <td><button class="speak-btn" data-speak-text="Anna bemegy az épületbe." data-speak-lang="hu-HU">Anna bemegy az épületbe.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Главная опора:
++          <b>Hová? → место является целью → -ba/-be</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Повторяем гармонию на готовых формах</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Hová?</th><th>Комментарий</th></tr>
++          <tr><td><b>ház</b></td><td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button></td><td>задний вариант -ba</td></tr>
++          <tr><td><b>kert</b></td><td><button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU">kertbe</button></td><td>передний вариант -be</td></tr>
++          <tr><td><b>épület</b></td><td><button class="speak-btn" data-speak-text="épületbe" data-speak-lang="hu-HU">épületbe</button></td><td>передний вариант -be</td></tr>
++          <tr><td><b>szoba</b></td><td><button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU">szobába</button></td><td>конечное a → á</td></tr>
++          <tr><td><b>iskola</b></td><td><button class="speak-btn" data-speak-text="iskolába" data-speak-lang="hu-HU">iskolába</button></td><td>частая смешанная основа + a → á</td></tr>
++        </table>
++
++        <div class="note">
++          Не выводи гармонию заново. На этом этапе форма должна узнаваться быстро:
++          <b>házba, kertbe, épületbe, szobába, iskolába</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Megy и bemegy: цель всё равно получает -ba/-be</h4>
++
++        <p>
++          С обычным
++          <button class="speak-btn" data-speak-text="megy" data-speak-lang="hu-HU">megy</button>
++          мы просто называем направление:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">
++            Az iskolába megyek.
++          </button>
++          — Я иду в школу.
++        </p>
++
++        <p>
++          Глагол
++          <button class="speak-btn" data-speak-text="bemegy" data-speak-lang="hu-HU">bemegy</button>
++          подчёркивает вход внутрь:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Bemegyek a boltba." data-speak-lang="hu-HU">
++            Bemegyek a boltba.
++          </button>
++          — Я захожу в магазин.
++        </p>
++
++        <div class="warn">
++          Даже если в глаголе уже есть <b>be-</b>, место нельзя оставлять без местного суффикса:
++          <b>Bemegyek a boltba.</b> — правильно;
++          <b>Bemegyek a bolt.</b> — неправильно.
++          Полную систему глагольных приставок здесь не изучаем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Hová? работает с разными целями</h4>
++
++        <table class="conj">
++          <tr><th>Предложение</th><th>Цель</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++            <td>магазин</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Az irodába megyek." data-speak-lang="hu-HU">Az irodába megyek.</button></td>
++            <td>офис</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">Az iskolába megyek.</button></td>
++            <td>школа</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Egy étterembe megyünk." data-speak-lang="hu-HU">Egy étterembe megyünk.</button></td>
++            <td>ресторан</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Смысл один и тот же: место отвечает на <b>Hová?</b> и является целью движения.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Названия стран и некоторых городов</h4>
++
++        <p>
++          С большинством названий стран эта внутренняя семья тоже употребляется:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Németországba megyek." data-speak-lang="hu-HU">
++            Németországba megyek.
++          </button>
++          — Я еду / иду в Германию.
++        </p>
++
++        <p>
++          С некоторыми иностранными городами:
++          <button class="speak-btn" data-speak-text="Berlinbe megyek." data-speak-lang="hu-HU">
++            Berlinbe megyek.
++          </button>
++          — Я еду / иду в Берлин.
++        </p>
++
++        <div class="warn">
++          Не переноси эту модель автоматически на все названия городов и мест.
++          В венгерском выбор местной семьи часто зависит от конкретного названия;
++          следующая семья начинается в уроке 11.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Hol? и Hová?: n показывает разницу</h4>
++
++        <table class="conj">
++          <tr><th>Смысл</th><th>Вопрос</th><th>Форма</th><th>Пример</th></tr>
++          <tr>
++            <td>уже нахожусь внутри</td>
++            <td><b>Hol?</b></td>
++            <td><b>-ban/-ben</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>движусь внутрь</td>
++            <td><b>Hová?</b></td>
++            <td><b>-ba/-be</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Сравни вслух:
++          <button class="speak-btn" data-speak-text="boltban, boltba. iskolában, iskolába. szobában, szobába." data-speak-lang="hu-HU">
++            boltban ↔ boltba · iskolában ↔ iskolába · szobában ↔ szobába
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>Hová mész? — A házban.</s></td>
++            <td><button class="speak-btn" data-speak-text="A házba megyek." data-speak-lang="hu-HU">A házba megyek.</button></td>
++            <td>Hová? требует цели</td>
++          </tr>
++          <tr>
++            <td><s>A kertba megyek.</s></td>
++            <td><button class="speak-btn" data-speak-text="A kertbe megyek." data-speak-lang="hu-HU">A kertbe megyek.</button></td>
++            <td>kert выбирает -be</td>
++          </tr>
++          <tr>
++            <td><s>Az iskolaba megyek.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">Az iskolába megyek.</button></td>
++            <td>конечное a основы становится á</td>
++          </tr>
++          <tr>
++            <td><s>Bemegyek a szoba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Bemegyek a szobába." data-speak-lang="hu-HU">Bemegyek a szobába.</button></td>
++            <td>место-цель всё равно требует -ba/-be</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Ты идёшь в комнату. Выбери: <b>szobában</b> или <b>szobába</b>.</li>
++          <li>Скажи: «Я иду в школу».</li>
++          <li>Образуй Hová? от <b>épület</b>.</li>
++          <li>Исправь: <b>A kertba megyek.</b></li>
++          <li>Почему в <b>Bemegyek a boltba</b> слово <b>bolt</b> всё равно получает суффикс?</li>
++          <li>Как сказать «Я еду / иду в Берлин»?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU">szobába</button>.</li>
++            <li><button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">Az iskolába megyek.</button></li>
++            <li><button class="speak-btn" data-speak-text="épületbe" data-speak-lang="hu-HU">épületbe</button>.</li>
++            <li><button class="speak-btn" data-speak-text="A kertbe megyek." data-speak-lang="hu-HU">A kertbe megyek.</button></li>
++            <li>Потому что <b>bolt</b> — место-цель и отвечает на <b>Hová?</b>.</li>
++            <li><button class="speak-btn" data-speak-text="Berlinbe megyek." data-speak-lang="hu-HU">Berlinbe megyek.</button></li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Граница 10.4: здесь закрепляется только <b>цель движения Hová? → -ba/-be</b>.
++          Источник движения <b>Honnan? → -ból/-ből</b> начинается на 10.5.
++        </div>
++      `,
++    },    {
+       id: 5,
+-      eyebrow: "УРОК 10 · 5/11 · СВОДНАЯ ТАБЛИЦА",
+-      title: "Belső csoport — Összefoglalás",
+-      subtitle: "Вся группа «Внутри» в одной таблице",
++      eyebrow: 'УРОК 10 · 5/11 · HONNAN?',
++      title: '-ból / -ből',
++      subtitle: 'Honnan? — источник движения изнутри',
++      type: 'info',
++      note: 'На 10.5 закрепляем только источник: откуда человек приходит, выходит или движется. Гармония уже изучена на 10.2; здесь нужно быстро распознавать Honnan? и выбирать готовую форму -ból/-ből.',
++      warn: 'Не переводи русские «из / от / с» одним суффиксом. -ból/-ből относится именно к внутренней семье. Источник с поверхности и источник от человека или объекта будут изучаться в уроках 11–12.',
++      task: 'В каждом примере сначала назови исходную точку, затем задай Honnan?, образуй форму места и произнеси полное предложение. После этого сравни jön и kijön, исправь ошибки и выполни мини-проверку.',
+       body: `
+-   <table class="conj">
+-     <tr><th>Направление</th><th>Вопрос</th><th>Суффиксы</th><th>Пример (ház)</th><th>Пример (kert)</th></tr>
+-     <tr><td>Где? (покой)</td><td>Hol?</td><td>-ban / -ben</td><td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házban</button></td><td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertben</button></td></tr>
+-     <tr><td>Куда? (внутрь)</td><td>Hova?</td><td>-ba / -be</td><td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házba</button></td><td><button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertbe</button></td></tr>
+-     <tr><td>Откуда? (наружу)</td><td>Honnan?</td><td>-ból / -ből</td><td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> házból</button></td><td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kertből</button></td></tr>
+-   </table>
+-   <div class="note">Взгляните на эту гладкую внутреннюю стройность: все 3 пары отличаются лишь гласной (-a/-e, -á/-é, -ó/-ő), но сохраняют общие согласные b-!</div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Honnan? означает исходную точку</h4>
++
++        <p>
++          Если человек <b>движется изнутри места наружу</b>
++          или сообщает, <b>откуда он приходит</b>,
++          задаём вопрос <b>Honnan?</b> — «откуда?».
++          Во внутренней семье используем <b>-ból / -ből</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Вопрос</th><th>Ответ</th></tr>
++          <tr>
++            <td>я иду / прихожу из дома</td>
++            <td><b>Honnan jössz?</b></td>
++            <td><button class="speak-btn" data-speak-text="A házból jövök." data-speak-lang="hu-HU">A házból jövök.</button></td>
++          </tr>
++          <tr>
++            <td>Петер выходит из комнаты</td>
++            <td><b>Honnan jön ki Péter?</b></td>
++            <td><button class="speak-btn" data-speak-text="Péter kijön a szobából." data-speak-lang="hu-HU">Péter kijön a szobából.</button></td>
++          </tr>
++          <tr>
++            <td>Анна выходит из здания</td>
++            <td><b>Honnan jön ki Anna?</b></td>
++            <td><button class="speak-btn" data-speak-text="Anna kijön az épületből." data-speak-lang="hu-HU">Anna kijön az épületből.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Главная опора:
++          <b>Honnan? → место является источником → -ból/-ből</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Повторяем гармонию на готовых формах</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Honnan?</th><th>Комментарий</th></tr>
++          <tr><td><b>ház</b></td><td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td><td>задний вариант -ból</td></tr>
++          <tr><td><b>kert</b></td><td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td><td>передний вариант -ből</td></tr>
++          <tr><td><b>épület</b></td><td><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button></td><td>передний вариант -ből</td></tr>
++          <tr><td><b>szoba</b></td><td><button class="speak-btn" data-speak-text="szobából" data-speak-lang="hu-HU">szobából</button></td><td>конечное a → á</td></tr>
++          <tr><td><b>iskola</b></td><td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td><td>частая смешанная основа + a → á</td></tr>
++        </table>
++
++        <div class="note">
++          Быстрая цепочка для узнавания:
++          <button class="speak-btn" data-speak-text="házból, kertből, épületből, szobából, iskolából" data-speak-lang="hu-HU">
++            házból · kertből · épületből · szobából · iskolából
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. В -ból / -ből обязательно долгие ó / ő</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th></tr>
++          <tr><td><s>házbol</s></td><td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td></tr>
++          <tr><td><s>kertböl</s></td><td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td></tr>
++          <tr><td><s>iskolabol</s></td><td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td></tr>
++        </table>
++
++        <div class="warn">
++          Здесь одновременно могут быть <b>две долготы</b>:
++          <b>iskola → iskolá- + -ból → iskolából</b>.
++          В основе появляется <b>á</b>, а в самом суффиксе сохраняется <b>ó</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Jön и kijön: источник остаётся -ból/-ből</h4>
++
++        <p>
++          С
++          <button class="speak-btn" data-speak-text="jön" data-speak-lang="hu-HU">jön</button>
++          можно просто сообщить, откуда кто-то приходит:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">
++            A boltból jövök.
++          </button>
++          — Я иду / прихожу из магазина.
++        </p>
++
++        <p>
++          Глагол
++          <button class="speak-btn" data-speak-text="kijön" data-speak-lang="hu-HU">kijön</button>
++          подчёркивает выход наружу:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Kijövök a boltból." data-speak-lang="hu-HU">
++            Kijövök a boltból.
++          </button>
++          — Я выхожу из магазина.
++        </p>
++
++        <div class="warn">
++          Даже если в глаголе уже есть <b>ki-</b>, исходное место всё равно оформляется:
++          <b>Kijövök a boltból.</b> — правильно;
++          <b>Kijövök a bolt.</b> — неправильно.
++          Полную тему глагольных приставок здесь не открываем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Источник может сочетаться с целью в одном предложении</h4>
++
++        <p>
++          Одно движение может иметь сразу две пространственные точки:
++          <b>откуда</b> и <b>куда</b>.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A házból a boltba megyek." data-speak-lang="hu-HU">
++            A házból a boltba megyek.
++          </button>
++          — Я иду из дома в магазин.
++        </p>
++
++        <table class="conj">
++          <tr><th>Часть</th><th>Вопрос</th><th>Роль</th></tr>
++          <tr><td><b>a házból</b></td><td>Honnan?</td><td>источник</td></tr>
++          <tr><td><b>a boltba</b></td><td>Hová?</td><td>цель</td></tr>
++        </table>
++
++        <div class="note">
++          Это подтверждает главное правило урока:
++          форму места выбирает <b>его роль в ситуации</b>, а не один глагол.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Страны и некоторые города</h4>
++
++        <p>
++          Та же внутренняя семья используется с большинством названий стран:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Örményországból jövök." data-speak-lang="hu-HU">
++            Örményországból jövök.
++          </button>
++          — Я из Армении / я приезжаю из Армении.
++        </p>
++
++        <p>
++          С некоторыми иностранными городами:
++          <button class="speak-btn" data-speak-text="Berlinből jövök." data-speak-lang="hu-HU">
++            Berlinből jövök.
++          </button>
++          — Я приезжаю из Берлина.
++        </p>
++
++        <div class="warn">
++          Не делай вывод «любое русское из = -ból/-ből».
++          С поверхности будет другая семья, а «от человека / от объекта» — ещё одна.
++          Они идут после L10.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>Honnan jössz? — A házba.</s></td>
++            <td><button class="speak-btn" data-speak-text="A házból jövök." data-speak-lang="hu-HU">A házból jövök.</button></td>
++            <td>Honnan? требует источника</td>
++          </tr>
++          <tr>
++            <td><s>A kertból jövök.</s></td>
++            <td><button class="speak-btn" data-speak-text="A kertből jövök." data-speak-lang="hu-HU">A kertből jövök.</button></td>
++            <td>kert выбирает -ből</td>
++          </tr>
++          <tr>
++            <td><s>Az iskolabol jövök.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az iskolából jövök." data-speak-lang="hu-HU">Az iskolából jövök.</button></td>
++            <td>нужны á основы и ó суффикса</td>
++          </tr>
++          <tr>
++            <td><s>Kijövök a szoba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Kijövök a szobából." data-speak-lang="hu-HU">Kijövök a szobából.</button></td>
++            <td>исходное место всё равно требует -ból/-ből</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Ты выходишь из комнаты. Выбери: <b>szobába</b> или <b>szobából</b>.</li>
++          <li>Скажи: «Я иду / прихожу из магазина».</li>
++          <li>Образуй Honnan? от <b>épület</b>.</li>
++          <li>Исправь: <b>A kertból jövök.</b></li>
++          <li>Почему в <b>Kijövök a boltból</b> слово <b>bolt</b> всё равно получает суффикс?</li>
++          <li>Как сказать «Я из Армении / я приезжаю из Армении»?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="szobából" data-speak-lang="hu-HU">szobából</button>.</li>
++            <li><button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">A boltból jövök.</button></li>
++            <li><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button>.</li>
++            <li><button class="speak-btn" data-speak-text="A kertből jövök." data-speak-lang="hu-HU">A kertből jövök.</button></li>
++            <li>Потому что <b>bolt</b> — исходное место и отвечает на <b>Honnan?</b>.</li>
++            <li><button class="speak-btn" data-speak-text="Örményországból jövök." data-speak-lang="hu-HU">Örményországból jövök.</button></li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Граница 10.5: здесь закрепляется только <b>источник Honnan? → -ból/-ből</b>.
++          На 10.6 все три отношения <b>Hol? / Hová? / Honnan?</b> будут собраны в одну систему.
++        </div>
++      `,
++    },    {
+       id: 6,
+-      eyebrow: "УРОК 10 · 6/11 · ГОРОДА И СТРАНЫ",
+-      title: "Városok és országok",
+-      subtitle: "Как использовать местный падеж с названиями географических объектов",
++      eyebrow: 'УРОК 10 · 6/11 · КОНТРАСТ',
++      title: 'От смысла к вопросу',
++      subtitle: 'Hol? → Hová? → Honnan? как одна рабочая система',
++      type: 'info',
++      note: '10.6 собирает вместе материал 10.3–10.5. Здесь уже не изучаем новые суффиксы: задача — быстро выбрать правильную форму по смыслу ситуации и подготовиться к контекстной практике.',
++      warn: 'Не выбирай форму по одному глаголу и не переводи русский предлог механически. Сначала определи роль места: где находится, куда направляется или откуда выходит.',
++      task: 'Пройди алгоритм на примерах, затем преобразуй одну и ту же основу по трём вопросам. После мини-проверки выполни контекстную практику ниже: она проверяет именно выбор смысла и формы.',
+       body: `
+-   <p>Для большинства зарубежных стран и многих городов используется именно внутренняя группа (-ban/-ben):</p>
+-   <p><button class="speak-btn" data-speak-text="Németországban élek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Németországban élek.</button> <span style="color:#8a7a68">(Я живу в Германии)</span></p>
+-   <p><button class="speak-btn" data-speak-text="Örményországból jöttem." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Örményországból jöttem.</button> <span style="color:#8a7a68">(Я приехал из Армении)</span></p>
+-   <p><button class="speak-btn" data-speak-text="Berlinbe utazom." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Berlinbe utazom.</button> <span style="color:#8a7a68">(Я еду в Берлин)</span></p>
+-   <div class="warn">Исключение: для самого Венгрии (Magyarország) и большинства венгерских городов используется ДРУГАЯ группа — «на поверхности» (-n/-on/-en/-ön), которую мы разберём в 11-м уроке!</div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Три вопроса — одна пространственная система</h4>
++
++        <table class="conj">
++          <tr><th>Смысл</th><th>Вопрос</th><th>Семья</th><th>Пример</th></tr>
++          <tr>
++            <td>уже внутри</td>
++            <td><b>Hol?</b></td>
++            <td><b>-ban/-ben</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>движусь внутрь</td>
++            <td><b>Hová?</b></td>
++            <td><b>-ba/-be</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>движусь изнутри</td>
++            <td><b>Honnan?</b></td>
++            <td><b>-ból/-ből</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">A boltból jövök.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Не учи три строки отдельно. Проговаривай их как цепочку:
++          <button class="speak-btn" data-speak-text="boltban, boltba, boltból" data-speak-lang="hu-HU">
++            boltban → boltba → boltból
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Алгоритм выбора формы</h4>
++
++        <ol class="tasklist">
++          <li><b>Определи сцену:</b> человек уже в месте, движется туда или выходит оттуда?</li>
++          <li><b>Задай вопрос:</b> Hol? / Hová? / Honnan?</li>
++          <li><b>Выбери семью:</b> -ban/-ben · -ba/-be · -ból/-ből.</li>
++          <li><b>Выбери гармонический вариант</b> по правилу 10.2.</li>
++          <li><b>Проверь смысл всего предложения</b>, а не только последнего слова.</li>
++        </ol>
++
++        <div class="note">
++          Короткая формула:
++          <b>ситуация → вопрос → семья → гармония → готовое предложение</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Одна основа меняется вместе со смыслом</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
++          <tr>
++            <td><b>ház</b></td>
++            <td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td>
++            <td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button></td>
++            <td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td>
++          </tr>
++          <tr>
++            <td><b>kert</b></td>
++            <td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button></td>
++            <td><button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU">kertbe</button></td>
++            <td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td>
++          </tr>
++          <tr>
++            <td><b>iskola</b></td>
++            <td><button class="speak-btn" data-speak-text="iskolában" data-speak-lang="hu-HU">iskolában</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolába" data-speak-lang="hu-HU">iskolába</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td>
++          </tr>
++          <tr>
++            <td><b>épület</b></td>
++            <td><button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU">épületben</button></td>
++            <td><button class="speak-btn" data-speak-text="épületbe" data-speak-lang="hu-HU">épületbe</button></td>
++            <td><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Если смысл меняется, меняется и форма места.
++          Поэтому полезно учить не отдельное <b>iskolában</b>, а всю тройку
++          <b>iskolában → iskolába → iskolából</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Один глагол не определяет падеж автоматически</h4>
++
++        <p>
++          В одном предложении могут одновременно стоять <b>источник</b> и <b>цель</b>:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A házból a boltba megyek." data-speak-lang="hu-HU">
++            A házból a boltba megyek.
++          </button>
++          — Я иду из дома в магазин.
++        </p>
++
++        <table class="conj">
++          <tr><th>Фрагмент</th><th>Вопрос</th><th>Роль</th></tr>
++          <tr><td><b>a házból</b></td><td><b>Honnan?</b></td><td>источник</td></tr>
++          <tr><td><b>a boltba</b></td><td><b>Hová?</b></td><td>цель</td></tr>
++        </table>
++
++        <div class="warn">
++          Сам по себе глагол движения не определяет падеж. Поэтому правило «megy = -ba/-be» неверно.
++          Глагол один — <b>megyek</b>, но формы мест разные, потому что их роли разные.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Сцена важнее русского предлога</h4>
++
++        <table class="conj">
++          <tr><th>Русская подсказка</th><th>Что спросить по-венгерски</th><th>Пример</th></tr>
++          <tr>
++            <td>«в магазине», уже там</td>
++            <td><b>Hol?</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltban dolgozom." data-speak-lang="hu-HU">A boltban dolgozom.</button></td>
++          </tr>
++          <tr>
++            <td>«в магазин», цель</td>
++            <td><b>Hová?</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>«из магазина», источник</td>
++            <td><b>Honnan?</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">A boltból jövök.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Хороший навык — перед венгерской формой мысленно сказать только одно слово:
++          <b>где / куда / откуда</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Быстрые преобразования</h4>
++
++        <table class="conj">
++          <tr><th>Дано</th><th>Измени смысл</th><th>Результат</th></tr>
++          <tr>
++            <td><b>A könyvtárban vagyok.</b></td>
++            <td>теперь иду туда</td>
++            <td><button class="speak-btn" data-speak-text="A könyvtárba megyek." data-speak-lang="hu-HU">A könyvtárba megyek.</button></td>
++          </tr>
++          <tr>
++            <td><b>Az étterembe megyek.</b></td>
++            <td>теперь уже нахожусь там</td>
++            <td><button class="speak-btn" data-speak-text="Az étteremben vagyok." data-speak-lang="hu-HU">Az étteremben vagyok.</button></td>
++          </tr>
++          <tr>
++            <td><b>Az iskolában tanulok.</b></td>
++            <td>теперь выхожу оттуда</td>
++            <td><button class="speak-btn" data-speak-text="Kijövök az iskolából." data-speak-lang="hu-HU">Kijövök az iskolából.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Это уже не запоминание списка, а управление смыслом:
++          <b>место ↔ цель ↔ источник</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки смешения</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>Az irodába dolgozom.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az irodában dolgozom." data-speak-lang="hu-HU">Az irodában dolgozom.</button></td>
++            <td>работа происходит внутри → Hol?</td>
++          </tr>
++          <tr>
++            <td><s>A kávézóban megyek.</s></td>
++            <td><button class="speak-btn" data-speak-text="A kávézóba megyek." data-speak-lang="hu-HU">A kávézóba megyek.</button></td>
++            <td>кафе — цель → Hová?</td>
++          </tr>
++          <tr>
++            <td><s>Kijövök a könyvtárba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Kijövök a könyvtárból." data-speak-lang="hu-HU">Kijövök a könyvtárból.</button></td>
++            <td>библиотека — источник → Honnan?</td>
++          </tr>
++          <tr>
++            <td><s>Hol vagy? — Az étterembe.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az étteremben vagyok." data-speak-lang="hu-HU">Az étteremben vagyok.</button></td>
++            <td>вопрос Hol? требует местонахождения</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Мини-проверка перед основной практикой</h4>
++
++        <ol class="tasklist">
++          <li>Ты работаешь внутри офиса. Какой вопрос и какая форма слова <b>iroda</b>?</li>
++          <li>Ты идёшь в кафе. Выбери: <b>kávézóban</b>, <b>kávézóba</b> или <b>kávézóból</b>.</li>
++          <li>Ты выходишь из библиотеки. Какую форму использует <b>könyvtár</b>?</li>
++          <li>Преобразуй <b>iskolában</b> сначала в Hová?, затем в Honnan?.</li>
++          <li>Объясни две формы в <b>A házból a boltba megyek.</b></li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Hol?</b> → <button class="speak-btn" data-speak-text="irodában" data-speak-lang="hu-HU">irodában</button>.</li>
++            <li><b>Hová?</b> → <button class="speak-btn" data-speak-text="kávézóba" data-speak-lang="hu-HU">kávézóba</button>.</li>
++            <li><b>Honnan?</b> → <button class="speak-btn" data-speak-text="könyvtárból" data-speak-lang="hu-HU">könyvtárból</button>.</li>
++            <li><button class="speak-btn" data-speak-text="iskolába, iskolából" data-speak-lang="hu-HU">iskolába → iskolából</button>.</li>
++            <li><b>házból</b> = источник, <b>boltba</b> = цель.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          После этой мини-проверки переходи к основной контекстной практике ниже.
++          Она содержит ситуации на <b>Hol? / Hová? / Honnan?</b>,
++          готовые предложения и самостоятельное образование форм.
++        </div>
++      `,
++      activities: [L10_CP_MEANING],
++    },    {
+       id: 7,
+-      eyebrow: "УРОК 10 · 7/11 · ДИАЛОГ",
+-      title: "Párbeszéd",
+-      subtitle: "Где ты сейчас?",
++      eyebrow: 'УРОК 10 · 7/11 · ЧТЕНИЕ',
++      title: 'Egy délelőtt több helyen',
++      subtitle: 'Читаем маршрут: где → куда → откуда',
++      type: 'info',
++      note: 'Это не новый грамматический блок. Здесь ты применяешь 10.1–10.6 в связном тексте: находишь место, цель и источник и связываешь формы с событиями маршрута.',
++      warn: 'Не пытайся переводить каждое слово подряд. Сначала проследи маршрут по местным формам. Время в тексте оставлено в уже знакомой безопасной модели целых часов; разговорные fél/negyed здесь специально не вводятся.',
++      task: 'Прочитай текст в три прохода: 1) только маршрут и формы места; 2) действия Анны внутри каждого места; 3) детали для семи вопросов. Ответы на вопросы ищи в тексте, не угадывай по отдельным словам.',
+       body: `
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Szia! Hol vagy most?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Hol vagy most?</button></p>
+-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Szia! A házban vagyok, a szobámban. És te?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! A házban vagyok, a szobámban. És te?</button></p>
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Én most megyek a boltba. Кérsz valamit?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Én most megyek a boltba. Кérsz valamit?</button></p>
+-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Egy kávét, kérlek! Utána kijössz a kertbe?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Egy kávét, kérlek! Utána kijössz a kertbe?</button></p>
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Igen, fél óra múlva ott vagyok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Igen, fél óra múlva ott vagyok.</button></p>
+-   <div class="task">Задание 1. Прочитайте диалог вслух и найдите все суффиксы группы «Внутри».</div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Цель чтения — увидеть маршрут, а не переводить всё подряд</h4>
++
++        <p>
++          В тексте Анна несколько раз <b>находится внутри места</b>,
++          <b>идёт внутрь следующего места</b> и <b>выходит из предыдущего</b>.
++          Поэтому сначала отслеживай формы:
++          <b>-ban/-ben → -ba/-be → -ból/-ből</b>.
++        </p>
++
++        <table class="conj">
++          <tr><th>Если видишь</th><th>Спроси</th><th>Что ищешь в сюжете</th></tr>
++          <tr><td><b>-ban/-ben</b></td><td><b>Hol?</b></td><td>где происходит действие</td></tr>
++          <tr><td><b>-ba/-be</b></td><td><b>Hová?</b></td><td>какое место является следующей целью</td></tr>
++          <tr><td><b>-ból/-ből</b></td><td><b>Honnan?</b></td><td>из какого места она выходит</td></tr>
++        </table>
++
++        <div class="note">
++          Сначала пойми <b>скелет маршрута</b>, затем детали.
++          Это быстрее и полезнее, чем дословный перевод каждого предложения.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Формы-маркеры, которые встретятся в тексте</h4>
++
++        <table class="conj">
++          <tr><th>Форма</th><th>Вопрос</th><th>Что она сигнализирует</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="konyhában" data-speak-lang="hu-HU">konyhában</button></td>
++            <td>Hol?</td><td>действие происходит на кухне</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="szobába" data-speak-lang="hu-HU">szobába</button></td>
++            <td>Hová?</td><td>комната становится целью</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td>
++            <td>Honnan?</td><td>дом становится исходной точкой</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="kávézóba, kávézóban, kávézóból" data-speak-lang="hu-HU">kávézóba → kávézóban → kávézóból</button></td>
++            <td>Hová? → Hol? → Honnan?</td><td>вся тройка на одном месте</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="iskolába, iskolában, épületből" data-speak-lang="hu-HU">iskolába → iskolában → épületből</button></td>
++            <td>цель → место → источник</td><td>смена роли места в маршруте</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="könyvtárba, könyvtárban, könyvtárból" data-speak-lang="hu-HU">könyvtárba → könyvtárban → könyvtárból</button></td>
++            <td>Hová? → Hol? → Honnan?</td><td>ещё одна полная тройка</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Не обязательно запоминать маршрут заранее.
++          Эти формы — ориентиры, по которым ты восстановишь его во время чтения.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Три прохода по тексту</h4>
++
++        <ol class="tasklist">
++          <li><b>Первый проход:</b> подчеркни только формы места и мысленно поставь Hol? / Hová? / Honnan?.</li>
++          <li><b>Второй проход:</b> рядом с каждым местом отметь действие: reggelizik, kér, vesz, tanul, olvas, pihen и т. д.</li>
++          <li><b>Третий проход:</b> отвечай на вопросы, возвращаясь к конкретному предложению текста.</li>
++        </ol>
++
++        <div class="note">
++          Если вопрос спрашивает <b>где</b>, ищи форму Hol?.
++          Если <b>куда</b> — форму Hová?.
++          Если <b>откуда</b> — форму Honnan?.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Временная линия без новой грамматики времени</h4>
++
++        <p>
++          Для последовательности событий достаточно уже знакомых опор:
++        </p>
++
++        <table class="conj">
++          <tr><th>Форма</th><th>Смысл</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="hét órakor" data-speak-lang="hu-HU">hét órakor</button></td><td>в семь часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="nyolc órakor" data-speak-lang="hu-HU">nyolc órakor</button></td><td>в восемь часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kilenc órakor" data-speak-lang="hu-HU">kilenc órakor</button></td><td>в девять часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="tíz órakor" data-speak-lang="hu-HU">tíz órakor</button></td><td>в десять часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délben" data-speak-lang="hu-HU">délben</button></td><td>в полдень</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délután kettőkor" data-speak-lang="hu-HU">délután kettőkor</button></td><td>в два часа дня</td></tr>
++        </table>
++
++        <div class="warn">
++          Здесь не вводим разговорные часы типа <b>fél nyolc</b>.
++          Цель 10.7 — местные формы и понимание маршрута, а не новая система времени.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Полезные слова для понимания сюжета</h4>
++
++        <table class="conj">
++          <tr><th>Венгерский</th><th>Русский</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="reggelizik" data-speak-lang="hu-HU">reggelizik</button></td><td>завтракает</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kér" data-speak-lang="hu-HU">kér</button></td><td>просит / заказывает</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="találkozik" data-speak-lang="hu-HU">találkozik</button></td><td>встречается</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="vesz" data-speak-lang="hu-HU">vesz</button></td><td>покупает</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="visszaad" data-speak-lang="hu-HU">visszaad</button></td><td>возвращает</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="keres" data-speak-lang="hu-HU">keres</button></td><td>ищет</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="pihen" data-speak-lang="hu-HU">pihen</button></td><td>отдыхает</td></tr>
++        </table>
++
++        <div class="note">
++          Эти слова помогают понять действия, но главная учебная цель остаётся пространственной:
++          <b>где → куда → откуда</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки при чтении</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Как читать правильно</th></tr>
++          <tr>
++            <td>увидеть <b>kávézóba</b> и перевести просто «в кафе»</td>
++            <td>сразу спросить <b>Hová?</b>: кафе — цель движения</td>
++          </tr>
++          <tr>
++            <td>перепутать <b>iskolában</b> и <b>iskolába</b></td>
++            <td>проверить: действие уже происходит там или человек туда направляется?</td>
++          </tr>
++          <tr>
++            <td>читать <b>épületből</b> как цель</td>
++            <td><b>-ból/-ből</b> сигнализирует Honnan?: источник</td>
++          </tr>
++          <tr>
++            <td>угадывать ответ по одному знакомому слову</td>
++            <td>найти полное предложение и проверить роль формы в сюжете</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка перед чтением</h4>
++
++        <ol class="tasklist">
++          <li><b>kávézóba</b> отвечает Hol?, Hová? или Honnan?</li>
++          <li><b>iskolában</b> означает место, цель или источник?</li>
++          <li><b>épületből</b> — откуда или куда?</li>
++          <li>Какая тройка получается от <b>könyvtár</b>?</li>
++          <li>На каком проходе лучше отвечать на семь вопросов: первом, втором или третьем?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Hová?</b></li>
++            <li><b>место → Hol?</b></li>
++            <li><b>откуда → Honnan?</b></li>
++            <li><button class="speak-btn" data-speak-text="könyvtárban, könyvtárba, könyvtárból" data-speak-lang="hu-HU">könyvtárban → könyvtárba → könyvtárból</button></li>
++            <li>На <b>третьем</b>, после понимания маршрута и действий.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Теперь переходи к чтению ниже. Сначала прочитай весь маршрут без ответов,
++          затем выполни семь вопросов. Порог упражнения остаётся <b>6 из 7</b>.
++        </div>
++      `,
++      activities: [L10_READING],
++    },    {
+       id: 8,
+-      eyebrow: "УРОК 10 · 8/11 · ЗАДАНИЯ",
+-      title: "Gyakorlatok",
+-      subtitle: "Проверьте себя",
++      eyebrow: 'УРОК 10 · 8/11 · АУДИРОВАНИЕ',
++      title: 'Márk útvonala',
++      subtitle: 'Слушаем окончания и восстанавливаем маршрут',
++      type: 'info',
++      note: 'Аудиозапись упражнения и её транскрипт сохраняются без изменений. Здесь учимся слышать пространственные окончания в коротком естественном маршруте.',
++      warn: 'Не открывай транскрипт до отправки ответов. Иначе упражнение перестаёт проверять аудирование и превращается в чтение.',
++      task: 'Прослушай запись минимум два раза. Первый раз улови общую последовательность. Второй раз слушай -ban/-ben, -ba/-be, -ból/-ből и отвечай на пять вопросов. После отправки проверь транскрипт.',
+       body: `
+-   <ol class="tasklist">
+-     <li>Образуйте формы Hol? (где?), Hova? (куда?) и Honnan? (откуда?) для слова „szoba“</li>
+-     <li>То же самое для слова „épület“ (здание)</li>
+-     <li>Переведите: «Я иду в магазин» (bolt)</li>
+-     <li>Переведите: «Он выходит из дома»</li>
+-     <li>Скажите, из какой вы страны (используя -ból/-ből)</li>
+-   </ol>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что именно нужно услышать</h4>
++        <table class="conj">
++          <tr><th>Сигнал</th><th>Вопрос</th><th>Роль места</th></tr>
++          <tr><td><b>-ban/-ben</b></td><td><b>Hol?</b></td><td>человек уже находится внутри</td></tr>
++          <tr><td><b>-ba/-be</b></td><td><b>Hová?</b></td><td>место является целью</td></tr>
++          <tr><td><b>-ból/-ből</b></td><td><b>Honnan?</b></td><td>место является источником</td></tr>
++        </table>
++        <div class="note">Даже если не понял всё предложение, окончание часто уже показывает <b>роль места</b>.</div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Глаголы как дополнительная подсказка</h4>
++        <table class="conj">
++          <tr><th>Глагол</th><th>Что подсказывает</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="bemegy" data-speak-lang="hu-HU">bemegy</button></td><td>вход внутрь; потом слушай форму цели</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kijön" data-speak-lang="hu-HU">kijön</button></td><td>выход наружу; потом слушай форму источника</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="találkozik" data-speak-lang="hu-HU">találkozik</button></td><td>встречается; слушай, где происходит встреча</td></tr>
++        </table>
++        <div class="warn">Глагол не заменяет падеж. Как и на 10.6, форму места определяет его роль в ситуации.</div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Маркеры последовательности</h4>
++        <table class="conj">
++          <tr><th>Маркер</th><th>Смысл</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU">reggel</button></td><td>утром</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kilenc órakor" data-speak-lang="hu-HU">kilenc órakor</button></td><td>в девять часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button></td><td>после полудня</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="utána" data-speak-lang="hu-HU">utána</button></td><td>после этого</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button></td><td>в конце</td></tr>
++        </table>
++        <div class="note">Временные маркеры дают каркас последовательности, а местные окончания — каркас маршрута.</div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Слушай в два прохода</h4>
++        <ol class="tasklist">
++          <li><b>Первый раз:</b> не останавливайся; пойми общую последовательность и количество смен места.</li>
++          <li><b>Второй раз:</b> у каждого места мысленно поставь Hol? / Hová? / Honnan?.</li>
++          <li><b>После этого:</b> ответь на пять вопросов и отправь результат.</li>
++          <li><b>Только потом:</b> открой транскрипт и проверь, что именно расслышал неверно.</li>
++        </ol>
++        <div class="note">Порог упражнения — <b>4 из 5</b>. Если меньше, сначала переслушай без транскрипта.</div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Не нужно слышать каждую букву</h4>
++        <table class="conj">
++          <tr><th>Задача</th><th>Что достаточно услышать</th></tr>
++          <tr><td>местонахождение</td><td>основа места + <b>-ban/-ben</b></td></tr>
++          <tr><td>направление внутрь</td><td>движение + место с <b>-ba/-be</b></td></tr>
++          <tr><td>выход из места</td><td>сигнал выхода + место с <b>-ból/-ből</b></td></tr>
++        </table>
++        <div class="warn">Не подменяй услышанное догадкой по одному глаголу. Дослушай форму самого места.</div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки в аудировании</h4>
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Что делать</th></tr>
++          <tr><td>сразу выбрать ответ после знакомого названия места</td><td>дослушать окончание и определить Hol/Hová/Honnan</td></tr>
++          <tr><td>перепутать -ban и -ba</td><td>проверить: уже там или только движется туда?</td></tr>
++          <tr><td>пропустить utána / végül</td><td>использовать их как указатели порядка</td></tr>
++          <tr><td>открыть транскрипт после первого затруднения</td><td>сделать минимум две самостоятельные попытки</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка перед записью</h4>
++        <ol class="tasklist">
++          <li><b>étteremben</b> отвечает на какой вопрос?</li>
++          <li><b>bemegy a kávézóba</b>: место — цель или источник?</li>
++          <li><b>kijön a könyvtárból</b>: какой вопрос задаём к месту?</li>
++          <li>Что слушать сначала: каждое слово или общую последовательность?</li>
++          <li>Когда можно открыть транскрипт?</li>
++        </ol>
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Hol?</b></li>
++            <li><b>цель → Hová?</b></li>
++            <li><b>Honnan?</b></li>
++            <li>Сначала <b>общую последовательность</b>.</li>
++            <li><b>После отправки ответов</b>.</li>
++          </ol>
++        </details>
++
++        <div class="note">Теперь запускай аудирование ниже. Сам маршрут здесь заранее не раскрывается — его нужно восстановить по записи.</div>
++      `,
++      activities: [L10_LISTENING],
++    },    {
+       id: 9,
+-      eyebrow: "УРОК 10 · 9/11 · РАСШИРЕННЫЙ СЛОВАРЬ",
+-      title: "Kiegészítő szókincs",
+-      subtitle: "Здания и помещения",
++      eyebrow: 'УРОК 10 · 9/11 · ВЗАИМОДЕЙСТВИЕ',
++      title: 'Hol találkozunk?',
++      subtitle: 'Договариваемся о встрече и меняем место',
++      type: 'info',
++      note: 'Это первый связный разговор урока 10. Здесь нужно не повторять таблицу, а использовать Hol? / Hová? / Honnan? для реальной задачи: сказать, где ты сейчас, куда идёшь, откуда выходишь и где в итоге встречаетесь.',
++      warn: 'Не заучивай модели как один фиксированный диалог. После первого прохождения замени könyvtár, kávézó и étterem на другие знакомые места, но сохраняй правильную пространственную роль.',
++      task: 'Сначала просмотри карту разговора и ключевые модели. Затем пройди RolePlay без чтения model-ответов. После завершения повтори разговор ещё раз с другими местами.',
+       body: `
+-   <div class="grid2">
+-     <div>
+-       <p><button class="speak-btn" data-speak-text="bolt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> bolt</button> — магазин</p>
+-       <p><button class="speak-btn" data-speak-text="iskola" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> iskola</button> — школа</p>
+-       <p><button class="speak-btn" data-speak-text="kórház" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> kórház</button> — больница</p>
+-     </div>
+-     <div>
+-       <p><button class="speak-btn" data-speak-text="étterem" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> étterem</button> — ресторан</p>
+-       <p><button class="speak-btn" data-speak-text="mozi" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> mozi</button> — кинотеатр</p>
+-       <p><button class="speak-btn" data-speak-text="iroda" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> iroda</button> — офис</p>
+-     </div>
+-   </div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Коммуникативная цель разговора</h4>
++
++        <p>
++          В этом диалоге нужно решить конкретную бытовую задачу:
++          <b>договориться, где встретиться</b>, а затем изменить план,
++          если первое место недоступно.
++        </p>
++
++        <table class="conj">
++          <tr><th>Шаг разговора</th><th>Нужный вопрос</th><th>Что ты сообщаешь</th></tr>
++          <tr><td>1</td><td><b>Hol vagy?</b></td><td>где находишься сейчас</td></tr>
++          <tr><td>2</td><td><b>Hová mész?</b></td><td>куда идёшь дальше</td></tr>
++          <tr><td>3</td><td><b>Honnan jössz?</b></td><td>откуда выходишь / приходишь</td></tr>
++          <tr><td>4</td><td><b>Hol találkozunk?</b></td><td>где состоится встреча</td></tr>
++        </table>
++
++        <div class="note">
++          Здесь три местных вопроса превращаются в <b>один связный разговор</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Первая версия плана</h4>
++
++        <table class="conj">
++          <tr><th>Функция</th><th>Модель</th></tr>
++          <tr>
++            <td>где ты сейчас</td>
++            <td><button class="speak-btn" data-speak-text="Most a könyvtárban vagyok." data-speak-lang="hu-HU">Most a könyvtárban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>следующая цель</td>
++            <td><button class="speak-btn" data-speak-text="Innen egy kávézóba megyek." data-speak-lang="hu-HU">Innen egy kávézóba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>исходная точка</td>
++            <td><button class="speak-btn" data-speak-text="A könyvtárból jövök." data-speak-lang="hu-HU">A könyvtárból jövök.</button></td>
++          </tr>
++          <tr>
++            <td>место встречи</td>
++            <td><button class="speak-btn" data-speak-text="Háromkor a kávézóban találkozunk." data-speak-lang="hu-HU">Háromkor a kávézóban találkozunk.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Обрати внимание:
++          <b>kávézóba</b> — куда идёшь,
++          а <b>kávézóban</b> — где встречаетесь.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Маленькие слова, которые связывают реплики</h4>
++
++        <table class="conj">
++          <tr><th>Слово</th><th>Смысл</th><th>Пример</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="most" data-speak-lang="hu-HU">most</button></td>
++            <td>сейчас</td>
++            <td><button class="speak-btn" data-speak-text="Most a könyvtárban vagyok." data-speak-lang="hu-HU">Most a könyvtárban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="innen" data-speak-lang="hu-HU">innen</button></td>
++            <td>отсюда</td>
++            <td><button class="speak-btn" data-speak-text="Innen egy kávézóba megyek." data-speak-lang="hu-HU">Innen egy kávézóba megyek.</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="akkor" data-speak-lang="hu-HU">akkor</button></td>
++            <td>тогда</td>
++            <td><button class="speak-btn" data-speak-text="Rendben, akkor háromkor találkozunk." data-speak-lang="hu-HU">Rendben, akkor háromkor találkozunk.</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="ott" data-speak-lang="hu-HU">ott</button></td>
++            <td>там</td>
++            <td><button class="speak-btn" data-speak-text="Rendben, akkor ott találkozunk." data-speak-lang="hu-HU">Rendben, akkor ott találkozunk.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Эти слова помогают сделать диалог естественным,
++          но основная грамматическая задача остаётся <b>Hol / Hová / Honnan</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. План меняется: кафе закрыто</h4>
++
++        <p>
++          В RolePlay первое место становится недоступным:
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A kávézó zárva van." data-speak-lang="hu-HU">
++            A kávézó zárva van.
++          </button>
++          — Кафе закрыто.
++        </p>
++
++        <p>
++          Новый план:
++          <button class="speak-btn" data-speak-text="Az étterembe megyünk." data-speak-lang="hu-HU">
++            Az étterembe megyünk.
++          </button>
++          — Мы идём в ресторан.
++        </p>
++
++        <p>
++          Твоя реакция:
++          <button class="speak-btn" data-speak-text="Rendben, akkor bemegyek az étterembe." data-speak-lang="hu-HU">
++            Rendben, akkor bemegyek az étterembe.
++          </button>
++        </p>
++
++        <div class="note">
++          Смена плана автоматически меняет и формы места:
++          новая <b>цель</b> → <b>étterembe</b>,
++          итоговое <b>место встречи</b> → <b>étteremben</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Как завершить договорённость без новой грамматики</h4>
++
++        <table class="conj">
++          <tr><th>Функция</th><th>Простая модель A1</th></tr>
++          <tr>
++            <td>спросить время</td>
++            <td><button class="speak-btn" data-speak-text="Mikor találkozunk?" data-speak-lang="hu-HU">Mikor találkozunk?</button></td>
++          </tr>
++          <tr>
++            <td>назвать время</td>
++            <td><button class="speak-btn" data-speak-text="Háromkor találkozunk." data-speak-lang="hu-HU">Háromkor találkozunk.</button></td>
++          </tr>
++          <tr>
++            <td>подтвердить место</td>
++            <td><button class="speak-btn" data-speak-text="Az étteremben találkozunk háromkor." data-speak-lang="hu-HU">Az étteremben találkozunk háromkor.</button></td>
++          </tr>
++          <tr>
++            <td>завершить разговор</td>
++            <td><button class="speak-btn" data-speak-text="Jó, találkozunk!" data-speak-lang="hu-HU">Jó, találkozunk!</button></td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          На этом уровне не нужно специально использовать формы типа
++          <b>találkozzunk / menjünk / várj</b>.
++          Это уже отдельная грамматика повелительного наклонения и будет изучаться позже.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки в разговоре</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>Most a könyvtárba vagyok.</s></td>
++            <td><button class="speak-btn" data-speak-text="Most a könyvtárban vagyok." data-speak-lang="hu-HU">Most a könyvtárban vagyok.</button></td>
++            <td>текущее место → Hol?</td>
++          </tr>
++          <tr>
++            <td><s>Egy kávézóban megyek.</s></td>
++            <td><button class="speak-btn" data-speak-text="Egy kávézóba megyek." data-speak-lang="hu-HU">Egy kávézóba megyek.</button></td>
++            <td>цель → Hová?</td>
++          </tr>
++          <tr>
++            <td><s>A könyvtárba jövök.</s></td>
++            <td><button class="speak-btn" data-speak-text="A könyvtárból jövök." data-speak-lang="hu-HU">A könyvtárból jövök.</button></td>
++            <td>исходная точка → Honnan?</td>
++          </tr>
++          <tr>
++            <td><s>Az étterembe találkozunk.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az étteremben találkozunk." data-speak-lang="hu-HU">Az étteremben találkozunk.</button></td>
++            <td>встреча происходит там → Hol?</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Репетиция перед RolePlay</h4>
++
++        <ol class="tasklist">
++          <li>Скажи без подсказки, где ты сейчас: <b>könyvtár</b>.</li>
++          <li>Скажи, что отсюда идёшь в кафе: <b>kávézó</b>.</li>
++          <li>Скажи, что приходишь из библиотеки.</li>
++          <li>Подтверди встречу в кафе в три часа.</li>
++          <li>Теперь кафе закрыто: перенеси цель и место встречи в <b>étterem</b>.</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Возможные модели</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="Most a könyvtárban vagyok." data-speak-lang="hu-HU">Most a könyvtárban vagyok.</button></li>
++            <li><button class="speak-btn" data-speak-text="Innen egy kávézóba megyek." data-speak-lang="hu-HU">Innen egy kávézóba megyek.</button></li>
++            <li><button class="speak-btn" data-speak-text="A könyvtárból jövök." data-speak-lang="hu-HU">A könyvtárból jövök.</button></li>
++            <li><button class="speak-btn" data-speak-text="Háromkor a kávézóban találkozunk." data-speak-lang="hu-HU">Háromkor a kávézóban találkozunk.</button></li>
++            <li><button class="speak-btn" data-speak-text="Az étterembe megyünk. Az étteremben találkozunk háromkor." data-speak-lang="hu-HU">Az étterembe megyünk. Az étteremben találkozunk háromkor.</button></li>
++          </ol>
++        </details>
++
++        <div class="note">
++          После первого прохождения RolePlay повтори его с другими знакомыми местами.
++          Цель — свободно менять <b>место / цель / источник</b>, а не запомнить один сценарий.
++        </div>
++      `,
++      activities: [L10_ROLEPLAY],
++    },    {
+       id: 10,
+-      eyebrow: "УРОК 10 · 10/11 · ВАЖНОЕ ПРИМЕЧАНИЕ",
+-      title: "Gyakori hiba",
+-      subtitle: "Частая ошибка изучающих",
++      eyebrow: 'УРОК 10 · 10/11 · ПИСЬМО И САМОПРАКТИКА',
++      title: 'Egy kitalált délelőtt',
++      subtitle: 'Строим связный маршрут на 70–90 слов',
++      type: 'info',
++      note: 'Это продуктивная задача: теперь ты сам выбираешь места и управляешь формами Hol? / Hová? / Honnan?. Готовый model нужен только для самопроверки после собственного текста.',
++      warn: 'Не копируй Reading 10.7 и не превращай текст в список форм. Нужен связный маршрут с действиями. Используй только внутреннюю семью L10; другие местные семьи начнутся позже.',
++      task: 'Сначала составь маршрут из 5–7 шагов, затем напиши 70–90 слов. После текста проверь каждую форму места, длину и последовательность. Только потом открой model. В конце можно устно пересказать новый маршрут 1–1.5 минуты.',
+       body: `
+-   <p>Многие путают <b>Hol?</b> (где?) и <b>Hova?</b> (куда?). Помните:</p>
+-   <ul class="tick">
+-     <li>Если в предложении есть глагол движения (megy, jön, utazik) — нужен суффикс направления <b>-ba/-be</b>!</li>
+-     <li>Если действия нет, а есть покой (van, él, lakik, dolgozik) — нужен суффикс покоя <b>-ban/-ben</b>!</li>
+-   </ul>
+-   <div class="warn">Неверно: <i>*Megyek a boltban.</i> — Правильно: <button class="speak-btn" data-speak-text="Megyek a boltba." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Megyek a boltba.</button></div>
+- `
+-    },
+-    {
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что должен уметь твой текст</h4>
++
++        <p>
++          Хороший ответ — это не набор
++          <b>házban / házba / házból</b>,
++          а короткая история движения между знакомыми местами.
++        </p>
++
++        <table class="conj">
++          <tr><th>Функция</th><th>Вопрос</th><th>Что написать</th></tr>
++          <tr><td>начальная точка</td><td><b>Hol?</b></td><td>где начинается утро</td></tr>
++          <tr><td>первая цель</td><td><b>Hová?</b></td><td>куда ты идёшь</td></tr>
++          <tr><td>действие внутри</td><td><b>Hol?</b></td><td>что делаешь там</td></tr>
++          <tr><td>выход</td><td><b>Honnan?</b></td><td>откуда выходишь</td></tr>
++          <tr><td>следующая цель</td><td><b>Hová?</b></td><td>куда направляешься дальше</td></tr>
++          <tr><td>финальная точка</td><td><b>Hol?</b></td><td>где заканчивается маршрут</td></tr>
++        </table>
++
++        <div class="note">
++          Минимальная смысловая цепочка:
++          <b>место → цель → место → источник → новая цель → финальное место</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Сначала сделай карту маршрута</h4>
++
++        <table class="conj">
++          <tr><th>Шаг</th><th>Пример основы</th><th>Нужная роль</th></tr>
++          <tr><td>1</td><td><b>konyha</b></td><td>Hol? → где начинаешь</td></tr>
++          <tr><td>2</td><td><b>kávézó</b></td><td>Hová? → следующая цель</td></tr>
++          <tr><td>3</td><td><b>kávézó</b></td><td>Hol? → действие внутри</td></tr>
++          <tr><td>4</td><td><b>kávézó</b></td><td>Honnan? → выход</td></tr>
++          <tr><td>5</td><td><b>iskola</b></td><td>Hová? → новая цель</td></tr>
++          <tr><td>6</td><td><b>iskola</b></td><td>Hol? → действие внутри</td></tr>
++        </table>
++
++        <div class="note">
++          Сначала планируй <b>роль места</b>, а уже потом форму:
++          <button class="speak-btn" data-speak-text="kávézóba, kávézóban, kávézóból" data-speak-lang="hu-HU">
++            kávézóba → kávézóban → kávézóból
++          </button>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Готовые модели предложений</h4>
++
++        <table class="conj">
++          <tr><th>Задача</th><th>Модель</th></tr>
++          <tr>
++            <td>где ты находишься</td>
++            <td><button class="speak-btn" data-speak-text="A konyhában reggelizem." data-speak-lang="hu-HU">A konyhában reggelizem.</button></td>
++          </tr>
++          <tr>
++            <td>куда идёшь</td>
++            <td><button class="speak-btn" data-speak-text="Egy kávézóba megyek." data-speak-lang="hu-HU">Egy kávézóba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>что делаешь внутри</td>
++            <td><button class="speak-btn" data-speak-text="A kávézóban teát iszom." data-speak-lang="hu-HU">A kávézóban teát iszom.</button></td>
++          </tr>
++          <tr>
++            <td>откуда выходишь</td>
++            <td><button class="speak-btn" data-speak-text="Kijövök a kávézóból." data-speak-lang="hu-HU">Kijövök a kávézóból.</button></td>
++          </tr>
++          <tr>
++            <td>следующая цель</td>
++            <td><button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">Az iskolába megyek.</button></td>
++          </tr>
++          <tr>
++            <td>финал</td>
++            <td><button class="speak-btn" data-speak-text="Végül a szobámban pihenek." data-speak-lang="hu-HU">Végül a szobámban pihenek.</button></td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          Не ставь одну и ту же форму после любого глагола.
++          Каждый раз проверяй: <b>где? куда? откуда?</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Связки и время — только уже знакомые модели</h4>
++
++        <table class="conj">
++          <tr><th>Связка</th><th>Функция</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="reggel hétkor" data-speak-lang="hu-HU">reggel hétkor</button></td><td>начало утра</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="utána" data-speak-lang="hu-HU">utána</button></td><td>после этого</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="nyolckor" data-speak-lang="hu-HU">nyolckor</button></td><td>в восемь</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kilenc órakor" data-speak-lang="hu-HU">kilenc órakor</button></td><td>в девять часов</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délben" data-speak-lang="hu-HU">délben</button></td><td>в полдень</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button></td><td>после полудня</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button></td><td>в конце</td></tr>
++        </table>
++
++        <div class="warn">
++          Не вводим здесь новую разговорную систему времени типа <b>fél kilenc</b>.
++          Для L10 достаточно уже знакомых целых часов и простых связок.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Самопроверка перед model</h4>
++
++        <ol class="tasklist">
++          <li><b>70–90 слов:</b> текст не слишком короткий и не растянут.</li>
++          <li><b>Маршрут:</b> есть начало, минимум три знакомых места и финальная точка.</li>
++          <li><b>Hol?:</b> есть хотя бы одна ясная форма места.</li>
++          <li><b>Hová?:</b> есть хотя бы одна ясная цель движения.</li>
++          <li><b>Honnan?:</b> есть хотя бы один источник / выход.</li>
++          <li><b>Гармония:</b> проверь -ban/-ben, -ba/-be, -ból/-ből.</li>
++          <li><b>Связность:</b> события идут в понятном порядке.</li>
++        </ol>
++
++        <div class="note">
++          Только после этой проверки открывай modelAnswer и сравнивай
++          <b>структуру и формы</b>, а не копируй текст слово в слово.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки в письме</h4>
++
++        <table class="conj">
++          <tr><th>Неверно</th><th>Правильно</th><th>Почему</th></tr>
++          <tr>
++            <td><s>A kávézóba teát iszom.</s></td>
++            <td><button class="speak-btn" data-speak-text="A kávézóban teát iszom." data-speak-lang="hu-HU">A kávézóban teát iszom.</button></td>
++            <td>действие уже происходит внутри → Hol?</td>
++          </tr>
++          <tr>
++            <td><s>Az iskolában megyek.</s></td>
++            <td><button class="speak-btn" data-speak-text="Az iskolába megyek." data-speak-lang="hu-HU">Az iskolába megyek.</button></td>
++            <td>школа — цель → Hová?</td>
++          </tr>
++          <tr>
++            <td><s>Kijövök a könyvtárba.</s></td>
++            <td><button class="speak-btn" data-speak-text="Kijövök a könyvtárból." data-speak-lang="hu-HU">Kijövök a könyvtárból.</button></td>
++            <td>библиотека — источник → Honnan?</td>
++          </tr>
++          <tr>
++            <td>каждое предложение начинается одинаково</td>
++            <td><b>Utána · majd · délben · délután · végül</b></td>
++            <td>связки делают маршрут естественнее</td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. После письма — устная самопрактика</h4>
++
++        <p>
++          Закрой собственный текст и model. Говори <b>1–1.5 минуты</b>
++          о похожем, но не идентичном маршруте.
++        </p>
++
++        <table class="conj">
++          <tr><th>Что обязательно сказать</th><th>Опора</th></tr>
++          <tr><td>где начинаешь</td><td><b>Hol?</b></td></tr>
++          <tr><td>куда идёшь</td><td><b>Hová?</b></td></tr>
++          <tr><td>откуда выходишь</td><td><b>Honnan?</b></td></tr>
++          <tr><td>минимум три места</td><td>например konyha · kávézó · iskola</td></tr>
++          <tr><td>понятный порядок</td><td>utána · majd · végül</td></tr>
++        </table>
++
++        <div class="note">
++          Это текстовая optional speaking-практика:
++          <b>без микрофона, без score и без evidence</b>.
++          Цель — перенести письменный маршрут в свободную речь.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Быстрый план перед началом</h4>
++
++        <ol class="tasklist">
++          <li>Запиши 3–5 знакомых мест без суффиксов.</li>
++          <li>Рядом поставь H / HV / HN: Hol? / Hová? / Honnan?.</li>
++          <li>Преобразуй основы в нужные формы.</li>
++          <li>Добавь действия и 3–4 связки времени.</li>
++          <li>Напиши текст, посчитай слова и сделай самопроверку.</li>
++        </ol>
++
++        <div class="note">
++          После этого выполняй Writing ниже. Сначала свой текст — потом model и optional speaking.
++        </div>
++      `,
++      activities: [L10_WRITING],
++      optionalSpeaking: L10_SPEAKING,
++    },    {
+       id: 11,
+-      eyebrow: "УРОК 10 · 11/11 · ИТОГИ",
+-      title: "Összefoglalás",
+-      subtitle: "Итоги 10-го урока",
++      eyebrow: 'УРОК 10 · 11/11 · ИТОГИ',
++      title: 'Összefoglalás',
++      subtitle: 'Собери всю внутреннюю местную систему в одну картину',
++      type: 'info',
++      note: 'Финал урока 10 — это не новая грамматика. Здесь нужно проверить, что ты выбираешь форму по смыслу, образуешь её правильно и умеешь использовать в чтении, аудировании, разговоре и письме.',
++      warn: 'Не смешивай внутреннюю семью с другими местными моделями. На этом слайде остаёмся только внутри материала L10: -ban/-ben, -ba/-be, -ból/-ből.',
++      task: 'Пройди итог сверху вниз без подсказок. Если ошибаешься в смысле — вернись к 10.1/10.6; в гармонии — к 10.2; в одной конкретной форме — к 10.3–10.5. Затем выполни ExitCheck ниже.',
+       body: `
+-   <ul class="tick">
+-     <li>Трехмерность местных падежей: Hol? (покой) / Hova? (внутрь) / Honnan? (наружу)</li>
+-     <li>Группа «Внутри»: <b>-ban/-ben</b>, <b>-ba/-be</b>, <b>-ból/-ből</b></li>
+-     <li>Следим за гармонией гласных (a/o/u vs e/i/ö/ü)</li>
+-     <li>Различаем глаголы движения (-ba/-be) и покоя (-ban/-ben)</li>
+-   </ul>
+-   <div class="note"><b>Домашнее задание.</b> Опишите свой маршрут сегодня в 4 предложениях (откуда вы вышли, куда пошли и где находитесь сейчас). В следующем уроке — вторая группа мест: «На поверхности»!</div>
+- `
+-    }
+-  ],
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Главная матрица урока 10</h4>
++
++        <table class="conj">
++          <tr><th>Смысл</th><th>Вопрос</th><th>Семья</th><th>Пример</th></tr>
++          <tr>
++            <td>уже внутри</td>
++            <td><b>Hol?</b></td>
++            <td><b>-ban/-ben</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>движение внутрь</td>
++            <td><b>Hová?</b></td>
++            <td><b>-ba/-be</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltba megyek." data-speak-lang="hu-HU">A boltba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>движение изнутри</td>
++            <td><b>Honnan?</b></td>
++            <td><b>-ból/-ből</b></td>
++            <td><button class="speak-btn" data-speak-text="A boltból jövök." data-speak-lang="hu-HU">A boltból jövök.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Главная формула всего урока:
++          <b>ситуация → вопрос → семья суффиксов → гармонический вариант</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Быстрая проверка гармонии</h4>
++
++        <table class="conj">
++          <tr><th>Основа</th><th>Hol?</th><th>Hová?</th><th>Honnan?</th></tr>
++          <tr>
++            <td><b>ház</b></td>
++            <td><button class="speak-btn" data-speak-text="házban" data-speak-lang="hu-HU">házban</button></td>
++            <td><button class="speak-btn" data-speak-text="házba" data-speak-lang="hu-HU">házba</button></td>
++            <td><button class="speak-btn" data-speak-text="házból" data-speak-lang="hu-HU">házból</button></td>
++          </tr>
++          <tr>
++            <td><b>kert</b></td>
++            <td><button class="speak-btn" data-speak-text="kertben" data-speak-lang="hu-HU">kertben</button></td>
++            <td><button class="speak-btn" data-speak-text="kertbe" data-speak-lang="hu-HU">kertbe</button></td>
++            <td><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button></td>
++          </tr>
++          <tr>
++            <td><b>iskola</b></td>
++            <td><button class="speak-btn" data-speak-text="iskolában" data-speak-lang="hu-HU">iskolában</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolába" data-speak-lang="hu-HU">iskolába</button></td>
++            <td><button class="speak-btn" data-speak-text="iskolából" data-speak-lang="hu-HU">iskolából</button></td>
++          </tr>
++          <tr>
++            <td><b>épület</b></td>
++            <td><button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU">épületben</button></td>
++            <td><button class="speak-btn" data-speak-text="épületbe" data-speak-lang="hu-HU">épületbe</button></td>
++            <td><button class="speak-btn" data-speak-text="épületből" data-speak-lang="hu-HU">épületből</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Помни две орфографические детали:
++          конечное <b>a</b> в <b>iskola</b> становится <b>á</b>,
++          а в <b>-ból/-ből</b> пишутся долгие <b>ó/ő</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Один и тот же объект — три разных роли</h4>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Форма</th><th>Полное предложение</th></tr>
++          <tr>
++            <td>ты уже в библиотеке</td>
++            <td><b>könyvtárban</b></td>
++            <td><button class="speak-btn" data-speak-text="A könyvtárban vagyok." data-speak-lang="hu-HU">A könyvtárban vagyok.</button></td>
++          </tr>
++          <tr>
++            <td>ты идёшь в библиотеку</td>
++            <td><b>könyvtárba</b></td>
++            <td><button class="speak-btn" data-speak-text="A könyvtárba megyek." data-speak-lang="hu-HU">A könyvtárba megyek.</button></td>
++          </tr>
++          <tr>
++            <td>ты выходишь из библиотеки</td>
++            <td><b>könyvtárból</b></td>
++            <td><button class="speak-btn" data-speak-text="Kijövök a könyvtárból." data-speak-lang="hu-HU">Kijövök a könyvtárból.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Если можешь без подсказки менять
++          <b>könyvtárban → könyvtárba → könyvtárból</b>,
++          ты уже управляешь смыслом, а не просто запоминаешь окончания.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. В одном предложении могут быть две роли</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="A házból a boltba megyek." data-speak-lang="hu-HU">
++            A házból a boltba megyek.
++          </button>
++          — Я иду из дома в магазин.
++        </p>
++
++        <table class="conj">
++          <tr><th>Фрагмент</th><th>Вопрос</th><th>Роль</th></tr>
++          <tr><td><b>a házból</b></td><td><b>Honnan?</b></td><td>источник</td></tr>
++          <tr><td><b>a boltba</b></td><td><b>Hová?</b></td><td>цель</td></tr>
++        </table>
++
++        <div class="warn">
++          Это окончательно показывает, почему нельзя выбирать падеж по одному глаголу:
++          один <b>megyek</b>, но две разные пространственные роли.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Пять целей: можешь ли ты это сделать?</h4>
++
++        <ol class="tasklist">
++          <li>Без подсказки различить <b>Hol? / Hová? / Honnan?</b>.</li>
++          <li>Образовать <b>-ban/-ben</b> для знакомого слова.</li>
++          <li>Образовать <b>-ba/-be</b> для знакомого слова.</li>
++          <li>Образовать <b>-ból/-ből</b> для знакомого слова.</li>
++          <li>Использовать все три роли в связном маршруте, разговоре или тексте.</li>
++        </ol>
++
++        <div class="note">
++          Именно эти пять целей проверяет <b>ExitCheck</b> ниже.
++          Если один пункт неуверенный, лучше вернуться к соответствующему слайду до перехода дальше.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Диагностика типичных ошибок</h4>
++
++        <table class="conj">
++          <tr><th>Если пишешь</th><th>Проблема</th><th>Что повторить</th></tr>
++          <tr><td><s>A házba vagyok.</s></td><td>перепутаны Hol? и Hová?</td><td>10.3 + 10.6</td></tr>
++          <tr><td><s>A kertban vagyok.</s></td><td>ошибка гармонии</td><td>10.2</td></tr>
++          <tr><td><s>Az iskolaba megyek.</s></td><td>не удлинено конечное a</td><td>10.2 + 10.4</td></tr>
++          <tr><td><s>Az épületbol jövök.</s></td><td>неверный вариант и потеря долготы</td><td>10.2 + 10.5</td></tr>
++          <tr><td>правильные формы по отдельности, но путаешь их в рассказе</td><td>не закреплён контекст</td><td>10.6–10.10</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Финальная мини-проверка без подсказки</h4>
++
++        <ol class="tasklist">
++          <li><b>épület → Hol?</b></li>
++          <li><b>iskola → Hová?</b></li>
++          <li><b>kert → Honnan?</b></li>
++          <li>Скажи: «Я в магазине».</li>
++          <li>Скажи: «Я иду из дома в магазин».</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Ответы</summary>
++          <ol class="tasklist mt-3">
++            <li><button class="speak-btn" data-speak-text="épületben" data-speak-lang="hu-HU">épületben</button>.</li>
++            <li><button class="speak-btn" data-speak-text="iskolába" data-speak-lang="hu-HU">iskolába</button>.</li>
++            <li><button class="speak-btn" data-speak-text="kertből" data-speak-lang="hu-HU">kertből</button>.</li>
++            <li><button class="speak-btn" data-speak-text="A boltban vagyok." data-speak-lang="hu-HU">A boltban vagyok.</button></li>
++            <li><button class="speak-btn" data-speak-text="A házból a boltba megyek." data-speak-lang="hu-HU">A házból a boltba megyek.</button></li>
++          </ol>
++        </details>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Граница урока 10</h4>
++
++        <p>
++          После L10 нужно уверенно владеть <b>внутренней местной семьёй</b>.
++          Следующий урок продолжит тему местных отношений, но уже с другой моделью.
++        </p>
++
++        <div class="warn">
++          Не пытайся заранее переносить окончания L10 на каждое венгерское место.
++          Сейчас достаточно чётко закончить именно эту систему.
++        </div>
++
++        <div class="note">
++          Если пять целей выше выполняются уверенно — переходи к ExitCheck.
++          Это последняя проверка перед завершением урока 10.
++        </div>
++      `,
++      activities: [L10_EXIT_CHECK],
++    },  ],
+   vocabulary: [
+     { id: 'l10_v1', hu: 'hol', ru: 'где?', category: 'Вопросы места' },
+     { id: 'l10_v2', hu: 'hová', ru: 'куда?', category: 'Вопросы места' },
+@@ -196,7 +2273,57 @@
+     { id: 'l10_v13', hu: 'iroda', ru: 'офис', category: 'Лексика' },
+     { id: 'l10_v14', hu: 'Németországban', ru: 'в Германии', category: 'Страны' },
+     { id: 'l10_v15', hu: 'Berlinbe', ru: 'в Берлин', category: 'Города' },
+-    { id: 'l10_v16', hu: 'Örményországból', ru: 'из Армении', category: 'Страны' }
+-  ]
++    { id: 'l10_v16', hu: 'Örményországból', ru: 'из Армении', category: 'Страны' },
++  ],
++  quiz: [
++    {
++      id: 1001,
++      question: 'Какие суффиксы отвечают на вопрос Hol? в семье внутренних местных падежей?',
++      options: ['-ban/-ben', '-ba/-be', '-ból/-ből', '-ban/-be'],
++      correctIndex: 0,
++      explanation: 'Hol? обозначает место внутри: -ban/-ben.',
++    },
++    {
++      id: 1002,
++      question: 'Какие суффиксы отвечают на вопрос Hová? в семье внутренних местных падежей?',
++      options: ['-ban/-ben', '-ba/-be', '-ból/-ből', '-ba/-ből'],
++      correctIndex: 1,
++      explanation: 'Hová? обозначает цель движения внутрь: -ba/-be.',
++    },
++    {
++      id: 1003,
++      question: 'Как сказать «Я живу в Германии»?',
++      options: ['Németországban élek.', 'Németországba megyek.', 'Németországból jöttem.', 'Németországben élek.'],
++      correctIndex: 0,
++      explanation: 'Здесь спрашивается место проживания — Hol?: Németországban élek.',
++    },
++    {
++      id: 1004,
++      question: 'Как сказать «Я иду в магазин»?',
++      options: ['A boltban vagyok.', 'A boltba megyek.', 'A boltból jövök.', 'A boltbe megyek.'],
++      correctIndex: 1,
++      explanation: 'Магазин является целью — Hová?: A boltba megyek. Выбор определяется отношением цели, а не одним лишь глаголом движения.',
++    },
++    {
++      id: 1005,
++      question: 'Петер уже находится внутри школы и там учится. Какое предложение выражает эту ситуацию?',
++      options: ['Péter az iskolába megy.', 'Péter az iskolából jön.', 'Péter az iskolában tanul.', 'Péter az iskolaben tanul.'],
++      correctIndex: 2,
++      explanation: 'Петер находится внутри школы — Hol?: Péter az iskolában tanul.',
++    },
++    {
++      id: 1006,
++      question: 'Какая форма слова épület правильно отвечает на вопрос Honnan?',
++      options: ['épületben', 'épületbe', 'épületből', 'épületból'],
++      correctIndex: 2,
++      explanation: 'Honnan? требует -ból/-ből; передние гласные слова épület выбирают -ből: épületből.',
++    },
++  ],
++  objectives: [
++    { id: 'l10_distinguish-inner-cases', text: 'Различать значения «где?», «куда?» и «откуда?» для внутренних падежей.', skills: ['grammar'] },
++    { id: 'l10_form-inessive', text: 'Образовывать падеж -ban/-ben для ответа на вопрос «где?».', skills: ['grammar', 'writing'] },
++    { id: 'l10_form-illative', text: 'Образовывать падеж -ba/-be для ответа на вопрос «куда?».', skills: ['grammar', 'writing'] },
++    { id: 'l10_form-elative', text: 'Образовывать падеж -ból/-ből для ответа на вопрос «откуда?».', skills: ['grammar', 'writing'] },
++    { id: 'l10_use-inner-cases', text: 'Употреблять внутренние падежи при описании местоположения и движения.', skills: ['speaking', 'writing', 'listening'] },
++  ],
+ };
+-export const LESSON_10 = LESSON_8_3;

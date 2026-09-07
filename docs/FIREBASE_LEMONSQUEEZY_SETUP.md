@@ -63,7 +63,8 @@ The first Functions deployment prompts for non-secret parameters:
 
 - `APP_URL` — the final HTTPS origin without a trailing slash.
 - `LEMONSQUEEZY_STORE_ID` — the real store ID.
-- `LEMONSQUEEZY_VARIANT_ID` — the real monthly variant ID.
+- `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, `LEMONSQUEEZY_VARIANT_ID_YEARLY` — real IDs for the three plans. Each defaults to an empty string until created; its checkout returns 503.
+- `LEMONSQUEEZY_VARIANT_ID` — optional existing legacy ID for Customer Portal only, never checkout or webhook.
 - `LEMONSQUEEZY_TEST_MODE` — `true` during test mode; switch to `false` only together with live IDs and secrets.
 
 Never add API keys, signing secrets or service-account JSON to a `VITE_*` variable or commit them.
@@ -71,15 +72,15 @@ Never add API keys, signing secrets or service-account JSON to a `VITE_*` variab
 ## Configure Lemon Squeezy
 
 1. Enable **Test Mode**.
-2. Create a monthly subscription product/variant priced at **44 500 HUF**, with no trial.
-3. Record its Store ID and Variant ID.
+2. Create three subscription variants with no trial: **7 990 Ft / 1 month**, **19 990 Ft / 3 months**, **59 990 Ft / 1 year**. All grant the same Premium access.
+3. Record their actual Variant IDs in the matching server parameters. Keep the existing Store ID. Do not invent IDs or use the legacy variant for a new plan.
 4. Settings → API → create an API key.
 5. Settings → Webhooks → add `https://YOUR_DOMAIN/api/webhooks/lemonsqueezy` and record its signing secret.
 6. Subscribe to `subscription_created`, `subscription_updated`, `subscription_cancelled`, `subscription_resumed`, `subscription_expired`, `subscription_paused`, `subscription_unpaused`, `subscription_payment_success`, `subscription_payment_failed`, `subscription_payment_recovered` and `order_refunded`.
 
 Checkout is created only by the authenticated Function. The Function derives UID and e-mail from the verified Firebase token and places that UID in Lemon custom data. The return query `?payment=success` displays a pending message only. Access changes exclusively after a valid signed webhook.
 
-Webhook verification uses the exact raw request bytes, HMAC-SHA256, a length check and `timingSafeEqual`. Store and variant must match configuration. A deterministic Firestore marker makes duplicate delivery idempotent. `on_trial` normalizes to unpaid. Cancellation retains access only until Lemon `ends_at`.
+Webhook verification uses the exact raw request bytes, HMAC-SHA256, a length check and `timingSafeEqual`. Store must match configuration and variant must belong to the three configured new IDs. Exact test/live mode must match. A deterministic Firestore marker makes duplicate delivery idempotent. `on_trial` normalizes to unpaid. Cancellation retains access only until Lemon `ends_at`.
 
 ## Admin
 
@@ -145,3 +146,17 @@ Firebase Console → Hosting → **Add custom domain**. Enter the final domain, 
 ## Rollback
 
 Keep a local source archive and the last known-good build before first deployment. If a code release fails, roll Hosting back to the previous release in Firebase Console, redeploy the last known-good Functions source, and temporarily disable the Lemon webhook while investigating. Do not delete Firestore billing or entitlement records. Restore webhook delivery only after signature, idempotency and access smoke tests pass again.
+
+## Before the new variants exist
+
+Leave these non-secret parameters empty (also see `functions/.env.example`):
+
+```dotenv
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
+LEMONSQUEEZY_VARIANT_ID_YEARLY=
+```
+
+The authenticated checkout accepts only a `plan` field (`monthly`, `quarterly`, `yearly`); additional fields including `variantId` and unknown plans return 400. Empty or invalid selected IDs return 503 with a safe UI message. There is no legacy fallback. Populate the same-named GitHub Actions variables after creating the actual variants. Keep API key and webhook secret in Firebase Secret Manager unchanged.
+
+The legacy parameter remains for Customer Portal management only. Per the migration decision, webhooks ignore legacy variants, including their renewal/refund events. Review and migrate/close any legacy subscriptions manually before deploying this change. The three new variants retain existing signature verification, UID binding, deduplication, hydration, refund handling and trusted server entitlement logic.

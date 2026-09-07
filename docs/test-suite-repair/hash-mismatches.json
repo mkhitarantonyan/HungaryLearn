@@ -1,0 +1,279 @@
+[
+  {
+    "file": "src/data/lessons/lesson7.ts",
+    "expectedSha256": "1a6cd1e5ca9e074b7d2ebc464d7bbbb9d4fbbb462bbcaf1836d4a9557b30bf8e",
+    "actualSha256": "486576ec9b4863a40f3f0127cd6bbcf6bd7d87087f25adafcb4a93bd8d3d7067",
+    "historicalBlob": "6249981ff15470c92aca0f03656918678dfefe22",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "d86741d Complete lesson 7 pedagogical slide and audio review",
+      "4e6b37b Update lesson 7 audio and remove obsolete lesson 8 audio",
+      "c487a3f Naturalize L7 and L20 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson7.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson8.ts",
+    "expectedSha256": "aa1d5203da9cc94acf9544591936510fa22d9de0060a6e7085d96065fe89d77a",
+    "actualSha256": "df3bb21d4bb875374dcc1b2d61b3dbccf1707c6223e00f7f36f63d15f7e416fb",
+    "uncommitted": false,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson8.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson8-earliest-available.diff",
+    "history": [
+      "66df354 Update lesson 8 slides and audio",
+      "9267a3a Naturalize L8 and L10 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson9.ts",
+    "expectedSha256": "c0f75d5bec761516abaeed9004ce35cc4901d9346b145fdabc57a4b1c647036d",
+    "actualSha256": "bb36b1d48d4300dc163418a6e23fb9a5c78444f2152c2ba33e2d52f681152f46",
+    "uncommitted": false,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson9.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson9-earliest-available.diff",
+    "history": [
+      "2ba01bb Update lesson 9 slides and audio",
+      "097e043 Naturalize L9 and L11 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson10.ts",
+    "expectedSha256": "1e508adfc4da95be14052882e3691352fd90393ea28500be40a394ca9906be96",
+    "actualSha256": "867afe0be5a26a8397ea8fbcb8f1dab894600b8a2a68f4221ea00ae81c17284e",
+    "uncommitted": false,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson10.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson10-earliest-available.diff",
+    "history": [
+      "2d0bc99 Update lesson 10 slides and audio",
+      "9267a3a Naturalize L8 and L10 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson11.ts",
+    "expectedSha256": "49f9cbcec6e5c7bd5d53e80aff3d2a741a6097aee9c9b109bc63a5e360fd552f",
+    "actualSha256": "b6e0308eef91218915f955e33d14ac59dc193699b72c87ff4c4d653c9d3e0c6f",
+    "historicalBlob": "56060cfcd02d5d0e4350d0f1324948fed41d455a",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "1b0a28b Update lesson 11 slides audio and clickable pronunciation",
+      "097e043 Naturalize L9 and L11 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson11.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson12.ts",
+    "expectedSha256": "8f4873db26bf8d241cf14934c724c6f6d22a0796d8caf9be7f2eaee13db9936e",
+    "actualSha256": "ea19ab6b9654c16fc11944c5c7001cad9cf6f16e888e94a3c80e8682f064bdc4",
+    "historicalBlob": "37a4ce51694d800217a8c34658e7395b21ee1539",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "aecfa9d Update lesson 12 slides and audio",
+      "dd7a92a Naturalize L12 and L13 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3c1a238 fix P0 P1",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson12.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson13.ts",
+    "expectedSha256": "dbbeb3c9b0a5215f23fbb9d15afd30de4b1380bf1d6e8e7087f0d2852d207b5b",
+    "actualSha256": "c96ffa074192b95f9f6b2e659cc8dc8564478d1dfab3048ae0f571bd9abb71db",
+    "uncommitted": false,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson13.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson13-earliest-available.diff",
+    "history": [
+      "b1ae6e1 Update lesson 13 slides and audio",
+      "dd7a92a Naturalize L12 and L13 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3c1a238 fix P0 P1",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson14.ts",
+    "expectedSha256": "3db407c1f7e037f5125696133a864c19004fb081acb201aeeae69df3d59968ef",
+    "actualSha256": "dfe754f936423e6f58e0ac1771ba3c61e2a658823cedcb6d8ee6bb365149a66f",
+    "uncommitted": false,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson14.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson14-earliest-available.diff",
+    "history": [
+      "d39e50b Update lesson 14 slides and audio",
+      "9ca8b43 Naturalize L14 and L15 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson15.ts",
+    "expectedSha256": "bcd1d4e37188314d4ce6683ff4c1c3264dc5b4f582e95ce0e830ad738a00fd10",
+    "actualSha256": "c60b9ad9bd293c8d7f9a6b5ba27bfb5dffabcd530ff6335c5e60ceabb2495dbe",
+    "historicalBlob": "b5fb04527e16a0c1e80a6982507704e10dcf5aac",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "367df5f Update lessons 15-17 slides and audio",
+      "9ca8b43 Naturalize L14 and L15 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "7c8647c vocabulary refactoring",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson15.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson16.ts",
+    "expectedSha256": "f66f5adfb9abfb3e179ba10642d39f6e89390de01e495a344d137b33adecf657",
+    "actualSha256": "328e073c35e297bb98e9314a685ccd5b9c65dfcaecb5b952e353c4f258c7a712",
+    "historicalBlob": "7e8cd0f579969d5e28e14d1cee1a40d764882075",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "367df5f Update lessons 15-17 slides and audio",
+      "6220653 Naturalize L16 and L17 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "7c8647c vocabulary refactoring",
+      "17d3f41 close A1 updates",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson16.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson17.ts",
+    "expectedSha256": "c46096bd93fdba90a71eb4dabec4558bc78ba2543d95c3d7ce09c8e59ae03a3e",
+    "actualSha256": "2af608b66f08f16c895496465256815b8655789cbc7c29f642a618160d896578",
+    "historicalBlob": "41ea4749eeb494324bd8cdacd495be1b261bc14c",
+    "newlineStyle": "LF",
+    "uncommitted": false,
+    "history": [
+      "367df5f Update lessons 15-17 slides and audio",
+      "6220653 Naturalize L16 and L17 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "lesson17.diff",
+    "exactHistoricalSourceAvailable": true
+  },
+  {
+    "file": "src/data/lessons/lesson18.ts",
+    "expectedSha256": "dc5729fb6d2ba0bf2d4ea8d48e5f8437858e5a52a2e9de0e319d56bd045ab7cf",
+    "actualSha256": "80ba6e440d5d64fdc3c67587fccb26c0398fd3f24833b16641aeca6aa7a00e7c",
+    "uncommitted": true,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson18.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson18-earliest-available.diff",
+    "history": [
+      "d2a725c Naturalize L18 and L19 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/lessons/lesson19.ts",
+    "expectedSha256": "85c857d5601a80697d67cdfc962218dc6265e12937d282f4c9e0eff64cf8c325",
+    "actualSha256": "7e9ea3ac90bc9822cdb980bb610eda0225a0a7b327d9cc17c6ee31567aa8a7e1",
+    "uncommitted": true,
+    "comparisonBase": "3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson19.ts",
+    "exactHistoricalSourceAvailable": false,
+    "diff": "lesson19-earliest-available.diff",
+    "history": [
+      "d2a725c Naturalize L18 and L19 roleplay dialogues",
+      "37be803 big changes in lessons queezy",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "cc6580b change A0 lessons logic",
+      "3cea332 Restore state from commit 0a50710"
+    ]
+  },
+  {
+    "file": "src/data/slideAudioManifest.ts",
+    "expectedSha256": "820712eaf81e760920524075f90fb9a8c00cd1c2c4ab9bc89cfdb9fd4f1fea7b",
+    "actualSha256": "98f85782336841a018372879f7d3b4f9bb80f26a55eaff0468f04a732fd631d7",
+    "historicalBlob": "61bcbc144a310b62980d7f887c58cc2a009393b8",
+    "newlineStyle": "LF",
+    "uncommitted": true,
+    "history": [
+      "367df5f Update lessons 15-17 slides and audio",
+      "d39e50b Update lesson 14 slides and audio",
+      "b1ae6e1 Update lesson 13 slides and audio",
+      "aecfa9d Update lesson 12 slides and audio",
+      "1b0a28b Update lesson 11 slides audio and clickable pronunciation",
+      "2d0bc99 Update lesson 10 slides and audio",
+      "c065615 Compact lesson 5 slides and update audio",
+      "2ba01bb Update lesson 9 slides and audio",
+      "d86741d Complete lesson 7 pedagogical slide and audio review",
+      "66df354 Update lesson 8 slides and audio",
+      "3cce4a2 Fix lesson 6 final review and deployment validation",
+      "d01e407 Complete A0 lessons 1-6 pedagogy and audio review",
+      "584cdb1 Humanize learner-facing feedback and narration",
+      "451a8ce all",
+      "39ad2a7 all problem has been fixed",
+      "7c8647c vocabulary refactoring",
+      "cc6580b change A0 lessons logic",
+      "3c1a238 fix P0 P1",
+      "3cea332 Restore state from commit 0a50710"
+    ],
+    "diff": "slideAudioManifest.diff",
+    "exactHistoricalSourceAvailable": true
+  }
+]

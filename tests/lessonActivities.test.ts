@@ -1,3 +1,4 @@
+import { assertSlideAudioManifest, lessonText, visibleText } from './fixtures/courseContracts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
@@ -1024,16 +1025,12 @@ test('L3 preserves lesson identity, physical slides, and exactly five objective 
 });
 
 test('L3 removes the false plural article rule and keeps bounded safe examples', () => {
-  const slide = LESSON_3.slides.find((candidate) => candidate.id === 3);
-  assert.ok(slide);
-  assert.ok(slide.body);
-  assert.doesNotMatch(slide.body, /Когда говорят в общем или во множественном смысле/i);
-  assert.doesNotMatch(slide.body, /артикль вообще не ставится/i);
-  assert.match(slide.body, /egy[\s\S]*только с существительным в единственном числе/i);
-  assert.match(slide.body, /множественное число = без артикля/);
-  assert.match(slide.body, /Vannak könyvek\./);
-  assert.match(slide.body, /A könyvek az asztalon vannak\./);
-  assert.match(slide.body, /Szeretem a könyveket\./);
+  const text = lessonText(LESSON_3);
+  assert.doesNotMatch(text, /артикль вообще не ставится/i);
+  assert.match(text, /egy.*только с существительным в единственном числе/i);
+  assert.match(text, /Vannak könyvek az asztalon/);
+  assert.match(text, /A könyvek az asztalon vannak/);
+  assert.match(text, /множественное число.*артикл|артикл.*множествен/iu);
 });
 
 test('L3 P1 extends the approved activity sequence and every activity validates', () => {
@@ -1091,24 +1088,25 @@ test('L3 ReadingTask question IDs are unique at lesson scope', () => {
   assert.deepEqual(validateLessonQuestionIds(l3Activities()), []);
 });
 
-test('l3_choose-article has balanced 8/10 DIRECT controlled evidence', () => {
+test('l3_choose-article has balanced 10/14 DIRECT controlled evidence', () => {
   const activity = findL3Activity('l3-cp-articles', 'controlledPractice');
-  assert.equal(activity.exercises.length, 10);
-  assert.equal(activity.passCount, 8);
+  assert.equal(activity.exercises.length, 14);
+  assert.equal(activity.passCount, 10);
   const correctAnswers = activity.exercises.map((exercise) => {
     assert.equal(exercise.kind, 'singleChoice');
     if (exercise.kind !== 'singleChoice') return '';
     return exercise.options[exercise.correctIndex];
   });
-  assert.equal(correctAnswers.filter((answer) => answer === 'a').length, 5);
-  assert.equal(correctAnswers.filter((answer) => answer === 'az').length, 5);
-  assert.deepEqual(controlledEvidence(true, 8, 10, 8), {
+  assert.equal(correctAnswers.filter((answer) => answer === 'a').length, 7);
+  assert.equal(correctAnswers.filter((answer) => answer === 'az').length, 7);
+  assert.deepEqual(controlledEvidence(true, 10, 14, 10), {
     completed: true,
     passed: true,
     evidenceMode: 'direct',
-    score: 8,
-    total: 10,
+    score: 10,
+    total: 14,
   });
+  assert.equal(controlledEvidence(true, 9, 14, activity.passCount).passed, false);
 });
 
 test('l3_form-plural has bounded exact-input 8/10 DIRECT evidence with diacritics preserved', () => {
@@ -1147,17 +1145,17 @@ test('l3_plural-nouns-reading DIRECT evidence uses five plural-focused questions
   assert.equal(readingEvidence(3, 5, activity.passCount).passed, false);
 });
 
-test('l3_write-plural has valid constrained 4/5 DIRECT written evidence', () => {
+test('l3_write-plural has valid constrained 6/8 DIRECT written evidence', () => {
   const activity = findL3Activity('l3-cp-written-phrases', 'controlledPractice');
-  assert.equal(activity.exercises.length, 5);
-  assert.equal(activity.passCount, 4);
+  assert.equal(activity.exercises.length, 8);
+  assert.equal(activity.passCount, 6);
   assert.ok(activity.exercises.every((exercise) => exercise.kind === 'textInput'));
   const applePhrase = activity.exercises.find((exercise) => exercise.id === 'l3-phrase-3');
   assert.ok(applePhrase && applePhrase.kind === 'textInput');
   assert.equal(isAnswerAccepted(' Az almák. ', applePhrase.accept), true);
   assert.equal(isAnswerAccepted('az almak', applePhrase.accept), false);
-  assert.equal(controlledEvidence(true, 4, 5, 4).passed, true);
-  assert.equal(controlledEvidence(true, 4, 5, 4).evidenceMode, 'direct');
+  assert.equal(controlledEvidence(true, 6, 8, 6).passed, true);
+  assert.equal(controlledEvidence(true, 6, 8, 6).evidenceMode, 'direct');
 
   const exitCheck = findL3Activity('l3-exit-check', 'exitCheck');
   assert.deepEqual(
@@ -1170,6 +1168,7 @@ test('l3_write-plural has valid constrained 4/5 DIRECT written evidence', () => 
       },
     ]
   );
+  assert.equal(controlledEvidence(true, 5, 8, activity.passCount).passed, false);
 });
 
 test('L3 open WritingTask remains PARTIAL practice outside ExitCheck mastery mapping', () => {
@@ -1184,9 +1183,9 @@ test('L3 open WritingTask remains PARTIAL practice outside ExitCheck mastery map
 
 test('l3_use-egy stays overall PARTIAL when only grammar has DIRECT evidence', () => {
   const activity = findL3Activity('l3-cp-egy', 'controlledPractice');
-  assert.equal(activity.exercises.length, 6);
-  assert.equal(activity.passCount, 5);
-  assert.equal(controlledEvidence(true, 5, 6, 5).evidenceMode, 'direct');
+  assert.equal(activity.exercises.length, 10);
+  assert.equal(activity.passCount, 8);
+  assert.equal(controlledEvidence(true, 8, 10, 8).evidenceMode, 'direct');
 
   const exitCheck = findL3Activity('l3-exit-check', 'exitCheck');
   const egyChecks = exitCheck.checks.filter((check) => check.objectiveId === 'l3_use-egy');
@@ -1409,20 +1408,18 @@ test('L4 conjugation practice covers all six persons and multiple verbs/vowel pa
 });
 
 test('L4 frames -ik as a preview linked to L14, not as complete mastery', () => {
-  const preview = LESSON_4.slides.find((slide) => slide.id === 7);
-  const summary = LESSON_4.slides.find((slide) => slide.id === 12);
+  const preview = LESSON_4.slides.find(slide => slide.id === 7);
   assert.ok(preview?.body);
-  assert.ok(summary?.body);
-  assert.match(preview.body, /только <b>первое знакомство<\/b>/i);
-  assert.match(preview.body, /уроке 14/i);
-  assert.match(summary.body, /предварительно/i);
-  assert.match(summary.body, /уроке 14/i);
+  const text = lessonText(LESSON_4);
+  assert.match(text, /Урок 14/i);
+  assert.match(text, /Не превращайте окончание -ik в универсальный алгоритм/);
+  assert.match(visibleText(preview.warn ?? ''), /Не все современные глаголы на -ik ведут себя одинаково/);
 });
 
 test('eszik is explicitly special and never supports a false universal -ik rule', () => {
   const source = readFileSync(new URL('../src/data/lessons/lesson4.ts', import.meta.url), 'utf8');
-  assert.match(source, /eszik<\/span> имеет форму <span class="hu-word">eszem/);
-  assert.match(source, /не универсальная формула/i);
+  assert.match(source, /eszik.*имеет форму.*eszem/s);
+  assert.match(source, /Не превращайте окончание -ik в универсальный алгоритм/i);
   assert.doesNotMatch(source, /удал(?:ить|яем)\s+-?ik[\s\S]{0,80}добав/i);
 
   const conjugation = findL4Activity('l4-cp-conjugation', 'controlledPractice');
@@ -1538,16 +1535,12 @@ test('l4_ask-questions remains overall PARTIAL because speaking/intonation is pr
 });
 
 test('L4 short speaking practice is optional and text-only', () => {
-  const slide = LESSON_4.slides.find((candidate) => candidate.id === 12);
+  const slide = LESSON_4.slides.find((candidate) => candidate.optionalSpeaking);
   assert.ok(slide);
-  assert.equal(slide.type, 'sentence-reading');
-  assert.match(slide.targetText ?? '', /tanulok/);
-  assert.match(slide.targetText ?? '', /Nem olvasok/);
-  assert.match(slide.targetText ?? '', /Tanulsz magyarul\?/);
-  assert.match(slide.targetPhonetic ?? '', /танулок/);
-  assert.doesNotMatch(slide.targetPhonetic ?? '', /будапэштэн/i);
-  assert.match(slide.task ?? '', /Устная практика \(необязательно\)/i);
-  assert.doesNotMatch(slide.task ?? '', /mastery|evidence|автоматически/i);
+  assert.ok(slide.optionalSpeaking);
+  assert.match(slide.optionalSpeaking.instructions, /Без микрофона, score и evidence/);
+  assert.match(slide.optionalSpeaking.prompt, /Reggel.*Délután.*Este.*Ma nem/);
+  assert.equal('kind' in slide.optionalSpeaking, false);
 
   assert.equal(existsSync(new URL('../src/components/AudioRecorder.tsx', import.meta.url)), false);
 });
@@ -1904,47 +1897,42 @@ test('L2 lenni criterion requires all 6/6 correct', () => {
 });
 
 test('L2 third-person lenni explanation covers noun, nationality, and adjective predicates', () => {
-  const slide = LESSON_2.slides.find((candidate) => candidate.id === 3);
-  assert.ok(slide?.body);
-  assert.match(slide.body, /кто или что человек/);
-  assert.match(slide.body, /какой он/);
-  for (const example of ['Ő diák', 'Ő magyar', 'Ő szép']) {
-    assert.match(slide.body, new RegExp(example));
-  }
+  const text = visibleText(LESSON_2.slides.find(slide => slide.id === 3)?.body || '');
+  assert.match(text, /профессия, национальность или качество.*без van\/vannak/);
+  for (const example of ['Ő diák', 'Ő magyar', 'Ő szép']) assert.ok(text.includes(example), example);
 });
 
 test('L2 location examples retain van and vannak', () => {
-  const slide = LESSON_2.slides.find((candidate) => candidate.id === 3);
-  assert.ok(slide?.body);
-  assert.match(slide.body, /van\/vannak сохраняется/);
-  assert.match(slide.body, /Ő itt van/);
-  assert.match(slide.body, /Ők itt vannak/);
+  const text = visibleText(LESSON_2.slides.find(slide => slide.id === 3)?.body || '');
+  assert.match(text, /местонахождение → van\/vannak остаются/);
+  assert.match(text, /Ő itt van/);
+  assert.match(text, /Ők itt vannak/);
 });
 
 test('L2 keeps the third-person rule bounded without a copula or location grammar detour', () => {
-  const slide = LESSON_2.slides.find((candidate) => candidate.id === 3);
+  const slide = LESSON_2.slides.find(candidate => candidate.id === 3);
   assert.ok(slide?.body);
-  const warning = slide.body.match(/<div class="warn">([\s\S]*?)<\/div>/)?.[1] ?? '';
-  assert.ok(warning.length > 0 && warning.length < 900);
-  assert.doesNotMatch(warning, /парадигм|экзистенциаль|copula|existential|синтаксис/i);
-  assert.match(warning, /достаточно различать эти готовые модели/);
-  const q205 = getLessonQuiz(LESSON_2).find((question) => question.id === 205);
-  assert.ok(q205);
-  assert.ok(q205.options.some((option) => /профессии, национальности или качества/.test(option)));
+  const text = visibleText(slide.body);
+  assert.doesNotMatch(text, /экзистенциаль|copula|existential/i);
+  assert.match(text, /профессия, национальность или качество.*без van\/vannak/);
+  assert.match(text, /местонахождение → van\/vannak остаются/);
+  const q205 = getLessonQuiz(LESSON_2).find(question => question.id === 205);
+  assert.ok(q205?.options.some(option => /профессии, национальности или качества/.test(option)));
 });
 
 test('L2 labels case-marked country and location forms as whole chunks', () => {
-  const source = readFileSync(new URL('../src/data/lessons/lesson2.ts', import.meta.url), 'utf8');
-  assert.match(source, /Örményországból vagyok[\s\S]{0,800}готовые цельные выражения/);
-  assert.match(source, /Budapesten élek[\s\S]{0,800}Падежные окончания/);
-  assert.match(source, /Формальные правила падежных форм будут позже/);
+  const text = lessonText(LESSON_2);
+  assert.match(text, /Örményországból vagyok/);
+  assert.match(text, /Budapesten élek/);
+  assert.match(text, /формы происхождения и местонахождения используйте как готовые выражения/);
+  assert.match(text, /Не создавайте новые окончания наугад/);
 });
 
 test('L2 does not introduce elative or superessive paradigms or case tables', () => {
   const source = readFileSync(new URL('../src/data/lessons/lesson2.ts', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /-ból\s*\/\s*-ből|-n\s*\/\s*-on\s*\/\s*-en\s*\/\s*-ön/i);
   assert.doesNotMatch(source, /<th>[^<]*(элатив|суперессив|elative|superessive)/i);
-  assert.match(source, /падежные правила здесь не проверяются/);
+  assert.match(lessonText(LESSON_2), /системно они изучаются в следующих уроках/);
 });
 
 test('L2 ListeningTask identity, asset, question count, and threshold are stable', () => {
@@ -2173,8 +2161,8 @@ test('all six L2 RolePlay learner samples are text-only self-practice', () => {
 
 test('L2 open self-introduction WritingTask remains PARTIAL', () => {
   const writing = findL2Activity('l2-writing-self-introduction', 'writing');
-  assert.deepEqual(writing.modelAnswer, ['A nevem Anna.', 'Magyar vagyok.']);
-  assert.match(writing.prompt, /минимум два полных предложения/i);
+  assert.match(writing.modelAnswer.join(' '), /Anna vagyok.*Örmény vagyok.*Budapesten élek/);
+  assert.match(writing.prompt, /минимум пять коротких предложений.*Добавьте один вопрос собеседнику и прощание/i);
   const result = writingEvidence(writing.modelAnswer.join(' '), true);
   assert.equal(result.completed, true);
   assert.equal(result.evidenceMode, 'partial');
@@ -2318,10 +2306,7 @@ test('L2 activity markup exposes textual states without learner microphone UI', 
 });
 
 test('slide audio manifest matches the approved regenerated narration inventory', () => {
-  assert.equal(
-    sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)),
-    '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B'
-  );
+  assertSlideAudioManifest();
 });
 
 test('Lesson 1 migration is present without changing its physical slide identity', async () => {

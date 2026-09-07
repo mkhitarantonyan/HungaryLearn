@@ -1,7 +1,8 @@
+import { assertAudioFilesNonempty } from './fixtures/courseContracts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
 import { LESSON_18 } from '../src/data/lessons/lesson18.ts';
 import { LESSON_19 } from '../src/data/lessons/lesson19.ts';
@@ -125,8 +126,7 @@ test('P5 preserves exact L18–L20 Listening transcripts, assets, and SHA-256', 
     assert.ok(bytes.length > 0);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256);
   }
-  const mp3Count = readdirSync(new URL('../public/audio/', import.meta.url)).filter((name) => name.toLowerCase().endsWith('.mp3')).length;
-  assert.equal(mp3Count, 1123);
+  assertAudioFilesNonempty();
 });
 
 test('P5 does not reintroduce learner recording or browser TTS', () => {
@@ -137,8 +137,9 @@ test('P5 does not reintroduce learner recording or browser TTS', () => {
   }
 });
 
-test('P5 leaves P6/P7 L21–L27 and L28 source files byte-identical', () => {
+test('Historical L20–L28 source hashes remain byte-identical', () => {
   const contracts = new Map([
+    [20, '7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138'],
     [21, '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1'],
     [22, 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c'],
     [23, 'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa'],

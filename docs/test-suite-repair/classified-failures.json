@@ -1,0 +1,402 @@
+[
+  {
+    "n": 1,
+    "title": "19 - every learner-facing clickable pronunciation target has a physical mapped audio file",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\clickableAudioCoverage.test.ts:91:1'",
+    "error": " |-\n    Clickable-audio inventory changed: 2410/2097\n    \n    2410 !== 2097\n    \n",
+    "category": 4,
+    "resolution": "Устаревший счётчик clickable targets: 2097 вместо 2410. В свежем baseline все кнопки уже имели физические MP3 и mappings; сохранена исчерпывающая проверка каждой ссылки."
+  },
+  {
+    "n": 2,
+    "title": "149 - P5 L18 keeps boundaries, metadata, and excludes browser TTS/learner recording",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson18Migration.test.ts:116:1'",
+    "error": " |-\n    The input did not match the regular expression /правило не сводится к механическому «добавь -ni/. Input:\n    \n    \"import { Lesson, LessonActivity } from '../../types';\\n\" +\n      '\\n' +\n      'const L18_CONTROLLED: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l18-cp-contextual-modals',\\n\" +\n      \"  title: 'Модальные конструкции в практических ситуациях',\\n\" +\n      '  passCount: 11,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l18-p5-cp-1', prompt: 'A · Ты сообщаешь о навыке вождения.', options: ['Tudok vezetni.', 'Lehet vezetni.', 'Vezetnem kell.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l18-p5-cp-2', prompt: 'A · Сегодня ты не можешь уйти с работы раньше.', options: ['Ma nem tudok korábban elmenni.', 'Ma nem szabad korábban elmenni.', 'Ma nem akarok korábban elmenni.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'fillGap', id: 'l18-p5-cp-3', prompt: 'B · Holnap korán felkelnem ___.', accept: ['kell'] },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l18-p5-cp-4', prompt: 'B · Совет уставшему другу: «Тебе нужно отдохнуть».', options: ['Pihenned kell.', 'Pihenni tudsz.', 'Lehet pihenni.']",
+    "category": 4,
+    "resolution": "L18: изменённая ранее формулировка границ -ni/modals; проверяется видимый текст и граница с L23."
+  },
+  {
+    "n": 3,
+    "title": "156 - P5 L19 preserves present-for-future truth and recognition-only definite fog boundary",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson19Migration.test.ts:87:1'",
+    "error": " |-\n    The input did not match the regular expression /Holnap Budapestre fogok menni/. Input:\n    \n    \"import { Lesson, LessonActivity } from '../../types';\\n\" +\n      '\\n' +\n      'const L19_CONTROLLED: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l19-cp-contextual-future',\\n\" +\n      \"  title: 'Планы, прогнозы и изменение договорённости',\\n\" +\n      '  passCount: 11,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l19-p5-cp-1', prompt: 'A · У вас назначена встреча с Анной сегодня вечером.', options: ['Este találkozom Annával.', 'Este találkozni fogtam Annával.', 'Este találkoztam Annával.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l19-p5-cp-2', prompt: 'A · У тебя фиксированная поездка на следующей неделе.', options: ['Jövő héten Budapestre utazom.', 'Jövő héten Budapestre utaztam.', 'Jövő héten utazni fogott.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l19-p5-cp-3', prompt: 'A · Какое предложение грамматически в настоящем, но обозначает будущий график?', options: ['Holnap dolgozom.', 'Tegnap dolgoztam.', 'Most dolgozni fogok.'], correctIndex: 0 },\\n\" +\n      \"    { kind: '",
+    "category": 4,
+    "resolution": "L19: пересмотренный текст о present-for-future и recognition-only definite fog; смысловые ограничения сохранены."
+  },
+  {
+    "n": 4,
+    "title": "163 - frozen planning and translation files plus the approved narration manifest remain unchanged",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:103:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + '3349334288533265B52EF0B8EE3AEBDE787F14CCAACBB9C6C97EB44A0C55C17A'\n    - '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B'\n    \n",
+    "category": 2,
+    "resolution": "Hash generated slideAudioManifest относится к старой версии аудио; проверяется соответствие каждой записи реальному MP3."
+  },
+  {
+    "n": 5,
+    "title": "166 - L1 says 44 letters/letter units, includes digraphs and dzs, and never says 44 sounds",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:130:1'",
+    "error": " |-\n    The input did not match the regular expression /триграф dzs/. Input:\n    \n    '{\"id\":1,\"number\":1,\"level\":\"A0\",\"title\":\"Урок 1 · Üdvözöllek! Алфавит и базовые звуки\",\"subtitle\":\"Алфавит, особые согласные, долгие гласные, ударение\",\"description\":\"Введение в 44 буквы/буквенные единицы венгерского алфавита, предсказуемое чтение, контрасты s/sz, gy/ty/ny и j/ly, гласные и начальное словесное ударение.\",\"slidesCount\":11,\"slides\":[{\"id\":1,\"eyebrow\":\"УРОК 1 · 1/11 · ВВЕДЕНИЕ\",\"title\":\"Üdvözöllek! Добро пожаловать\",\"subtitle\":\"Как устроен этот курс\",\"type\":\"intro\",\"note\":\"Начинаем с практической системы чтения и ключевых звуковых контрастов: они станут опорой для следующих уроков.\",\"body\":\"\\\\n        <p>Этот курс представляет собой структурный путь из <strong>28 уроков</strong>: от первых венгерских слов к уверенному общению, с объяснениями на русском.</p>\\\\n        <div class=\\\\\"grid3 my-4\\\\\">\\\\n          <div class=\\\\\"p-4 bg-[#7A1E2B]/5 border-l-4 border-[#7A1E2B] rounded-r-xl\\\\\"><div class=\\\\\"font-bold text-[#57121C] text-sm font-mono mb-1\\\\\">1. Модель</div><div class=\\\\\"text-xs text-[#2A2320]/80\\\\\">Короткое и точное объяснение букв и звуков.</div></div>\\\\n          <div class=\\",
+    "category": 4,
+    "resolution": "L1: старый шаблон текста алфавита; отрицательный пример «не то же самое, что 44 звука» не является ошибочным утверждением."
+  },
+  {
+    "n": 6,
+    "title": "167 - L1 teaches gy /ɟ/, ty /c/, ny /ɲ/ as separate phonemes with bounded Russian approximations",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:140:1'",
+    "error": " |-\n    The input did not match the regular expression /gy → \\/ɟ\\//. Input:\n    \n    '{\"id\":1,\"number\":1,\"level\":\"A0\",\"title\":\"Урок 1 · Üdvözöllek! Алфавит и базовые звуки\",\"subtitle\":\"Алфавит, особые согласные, долгие гласные, ударение\",\"description\":\"Введение в 44 буквы/буквенные единицы венгерского алфавита, предсказуемое чтение, контрасты s/sz, gy/ty/ny и j/ly, гласные и начальное словесное ударение.\",\"slidesCount\":11,\"slides\":[{\"id\":1,\"eyebrow\":\"УРОК 1 · 1/11 · ВВЕДЕНИЕ\",\"title\":\"Üdvözöllek! Добро пожаловать\",\"subtitle\":\"Как устроен этот курс\",\"type\":\"intro\",\"note\":\"Начинаем с практической системы чтения и ключевых звуковых контрастов: они станут опорой для следующих уроков.\",\"body\":\"\\\\n        <p>Этот курс представляет собой структурный путь из <strong>28 уроков</strong>: от первых венгерских слов к уверенному общению, с объяснениями на русском.</p>\\\\n        <div class=\\\\\"grid3 my-4\\\\\">\\\\n          <div class=\\\\\"p-4 bg-[#7A1E2B]/5 border-l-4 border-[#7A1E2B] rounded-r-xl\\\\\"><div class=\\\\\"font-bold text-[#57121C] text-sm font-mono mb-1\\\\\">1. Модель</div><div class=\\\\\"text-xs text-[#2A2320]/80\\\\\">Короткое и точное объяснение букв и звуков.</div></div>\\\\n          <div class=\\\\",
+    "category": 4,
+    "resolution": "L1: IPA и объяснения gy/ty/ny теперь оформлены иначе и обёрнуты clickable HTML."
+  },
+  {
+    "n": 7,
+    "title": "168 - L1 teaches j and ly as /j/ without an acoustic spelling contrast",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:150:1'",
+    "error": " |-\n    The input did not match the regular expression /j = ly = \\/j\\//. Input:\n    \n    '{\"id\":1,\"number\":1,\"level\":\"A0\",\"title\":\"Урок 1 · Üdvözöllek! Алфавит и базовые звуки\",\"subtitle\":\"Алфавит, особые согласные, долгие гласные, ударение\",\"description\":\"Введение в 44 буквы/буквенные единицы венгерского алфавита, предсказуемое чтение, контрасты s/sz, gy/ty/ny и j/ly, гласные и начальное словесное ударение.\",\"slidesCount\":11,\"slides\":[{\"id\":1,\"eyebrow\":\"УРОК 1 · 1/11 · ВВЕДЕНИЕ\",\"title\":\"Üdvözöllek! Добро пожаловать\",\"subtitle\":\"Как устроен этот курс\",\"type\":\"intro\",\"note\":\"Начинаем с практической системы чтения и ключевых звуковых контрастов: они станут опорой для следующих уроков.\",\"body\":\"\\\\n        <p>Этот курс представляет собой структурный путь из <strong>28 уроков</strong>: от первых венгерских слов к уверенному общению, с объяснениями на русском.</p>\\\\n        <div class=\\\\\"grid3 my-4\\\\\">\\\\n          <div class=\\\\\"p-4 bg-[#7A1E2B]/5 border-l-4 border-[#7A1E2B] rounded-r-xl\\\\\"><div class=\\\\\"font-bold text-[#57121C] text-sm font-mono mb-1\\\\\">1. Модель</div><div class=\\\\\"text-xs text-[#2A2320]/80\\\\\">Короткое и точное объяснение букв и звуков.</div></div>\\\\n          <div clas",
+    "category": 4,
+    "resolution": "L1: текст j/ly переработан; сохраняются одинаковый /j/ и отсутствие различения написания на слух."
+  },
+  {
+    "n": 8,
+    "title": "176 - stress uses direct rule practice with an obligatory explicit rule item and no listening asset",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:248:1'",
+    "error": " |-\n    The input did not match the regular expression /изолированном венгерском слове/iu. Input:\n    \n    'Куда падает основное словесное ударение в отдельно произнесённом венгерском слове?'\n    \n",
+    "category": 4,
+    "resolution": "L1: «изолированном» заменено в activity на «отдельно произнесённом»; обязательный rule item сохранён."
+  },
+  {
+    "n": 9,
+    "title": "177 - L1 has no Recording activity and keeps read-aloud as optional text-only practice",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:260:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    5 !== 4\n    \n",
+    "category": 4,
+    "resolution": "L1: rubric устной самопрактики содержит 5 пунктов вместо 4 после переработки; evidence не добавляется."
+  },
+  {
+    "n": 10,
+    "title": "182 - L2/L5/L15 RolePlay and L4 sentence-reading are text-only",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:315:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n",
+    "category": 4,
+    "resolution": "L4: устная практика стала optionalSpeaking вместо sentence-reading; text-only контракт сохранён."
+  },
+  {
+    "n": 11,
+    "title": "193 - L1 P1 adds bounded open Writing but no artificial RolePlay or fake listening evidence",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:531:1'",
+    "error": " |-\n    The input did not match the regular expression /5–8.*3 очень короткие/. Input:\n    \n    'Напишите 5–8 знакомых венгерских слов, затем три короткие фразы. Точно сохраните долгие гласные, точки, штрихи и буквосочетания. Это письменная самопроверка; произношение здесь не оценивается.'\n    \n",
+    "category": 4,
+    "resolution": "L1: в Writing «3» заменено словом «три»; word bounds и partial evidence сохранены."
+  },
+  {
+    "n": 12,
+    "title": "196 - summary keeps corrected phonetic categories and does not group ly with gy/ty/ny",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson1Migration.test.ts:561:1'",
+    "error": " |-\n    The input did not match the regular expression /gy = \\/ɟ\\//. Input:\n    \n    '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mb-2\">1. Алфавит и принцип чтения</h4>\\n' +\n      '        <ul class=\"tick\">\\n' +\n      '          <li>Венгерский алфавит традиционно содержит <b>44 буквы и буквенные единицы</b>. В это число входят обычные буквы, диграфы и триграф <b>dzs</b>.</li>\\n' +\n      '          <li>Это число <b>не является количеством звуков</b> венгерского языка.</li>\\n' +\n      '          <li>Написание в целом достаточно регулярно: изучив основные соответствия между записью и звуком, обычно можно предсказать чтение слова.</li>\\n' +\n      '          <li>Диграф или триграф произносится как <b>один цельный звук</b>; его знаки не читаются по отдельности.</li>\\n' +\n      '        </ul>\\n' +\n      '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mt-5 mb-2\">2. Краткие и долгие гласные</h4>\\n' +\n      '        <div class=\"grid2 my-3\">\\n' +\n      '          <div class=\"p-4 rounded-xl border border-[#D9CBB0] bg-white\">\\n' +\n      '            <div class=\"font-bold text-[#7A1E2B]\">7 кратких гласных</div>\\n' +\n      '            <div class=\"font-mono ",
+    "category": 4,
+    "resolution": "L1: summary phonetics представлен таблицей; тест проверяет видимый IPA вместо старого HTML."
+  },
+  {
+    "n": 13,
+    "title": "242 - date guidance is bounded, accurate, and contains no ISO shortcut",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson5Migration.test.ts:428:1'",
+    "error": " |-\n    The input did not match the regular expression /В этом уроке полную систему порядковых числительных не изучаем/. Input:\n    \n    '\\n' +\n      '        <div class=\"grid2\">\\n' +\n      '          <table class=\"conj\">\\n' +\n      '            <tr><th>1–5</th><th>Венгерский</th></tr>\\n' +\n      '            <tr><td>1</td><td><b>egy</b></td></tr>\\n' +\n      '            <tr><td>2</td><td><b>kettő</b></td></tr>\\n' +\n      '            <tr><td>3</td><td><b>három</b></td></tr>\\n' +\n      '            <tr><td>4</td><td><b>négy</b></td></tr>\\n' +\n      '            <tr><td>5</td><td><b>öt</b></td></tr>\\n' +\n      '          </table>\\n' +\n      '          <table class=\"conj\">\\n' +\n      '            <tr><th>6–10</th><th>Венгерский</th></tr>\\n' +\n      '            <tr><td>6</td><td><b>hat</b></td></tr>\\n' +\n      '            <tr><td>7</td><td><b>hét</b></td></tr>\\n' +\n      '            <tr><td>8</td><td><b>nyolc</b></td></tr>\\n' +\n      '            <tr><td>9</td><td><b>kilenc</b></td></tr>\\n' +\n      '            <tr><td>10</td><td><b>tíz</b></td></tr>\\n' +\n      '          </table>\\n' +\n      '        </div>\\n' +\n      '        <div class=\"note\"><b>kettő</b> = самостоятельное число:",
+    "category": 4,
+    "resolution": "L5: компактная редакция изменила объяснение даты, сохранив ограниченный объём темы."
+  },
+  {
+    "n": 14,
+    "title": "243 - kettő/két and perc/másodperc are taught accurately",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson5Migration.test.ts:439:1'",
+    "error": " |-\n    The input did not match the regular expression /самостоятельно[^<]*—[^<]*<span class=\"hu-word\">kettő/. Input:\n    \n    '\\n' +\n      '        <div class=\"grid2\">\\n' +\n      '          <table class=\"conj\">\\n' +\n      '            <tr><th>1–5</th><th>Венгерский</th></tr>\\n' +\n      '            <tr><td>1</td><td><b>egy</b></td></tr>\\n' +\n      '            <tr><td>2</td><td><b>kettő</b></td></tr>\\n' +\n      '            <tr><td>3</td><td><b>három</b></td></tr>\\n' +\n      '            <tr><td>4</td><td><b>négy</b></td></tr>\\n' +\n      '            <tr><td>5</td><td><b>öt</b></td></tr>\\n' +\n      '          </table>\\n' +\n      '          <table class=\"conj\">\\n' +\n      '            <tr><th>6–10</th><th>Венгерский</th></tr>\\n' +\n      '            <tr><td>6</td><td><b>hat</b></td></tr>\\n' +\n      '            <tr><td>7</td><td><b>hét</b></td></tr>\\n' +\n      '            <tr><td>8</td><td><b>nyolc</b></td></tr>\\n' +\n      '            <tr><td>9</td><td><b>kilenc</b></td></tr>\\n' +\n      '            <tr><td>10</td><td><b>tíz</b></td></tr>\\n' +\n      '          </table>\\n' +\n      '        </div>\\n' +\n      '        <div class=\"note\"><b>kettő</b> = самостоятельное число: <b>Hány? ",
+    "category": 4,
+    "resolution": "L5: в компактной редакции убрана тема секунд; проверяются kettő/két и отсутствие неверного перевода perc."
+  },
+  {
+    "n": 15,
+    "title": "251 - frozen planning docs, translations, approved narration manifest, and generator remain unchanged",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson6Migration.test.ts:80:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + '3349334288533265B52EF0B8EE3AEBDE787F14CCAACBB9C6C97EB44A0C55C17A'\n    - '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B'\n    \n",
+    "category": 2,
+    "resolution": "Повтор старого hash generated manifest; остальные frozen hashes и hash генератора оставлены."
+  },
+  {
+    "n": 16,
+    "title": "266 - reflection hosts the scored P1 checkpoint but remains explicitly non-mastery",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson6Migration.test.ts:261:1'",
+    "error": " |-\n    The input did not match the regular expression /не оценка мастерства/. Input:\n    \n    '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mb-2\">1. Что результат действительно показывает</h4>\\n' +\n      '\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr><th>Можно определить</th><th>Нельзя утверждать только по результату</th></tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>правильно ли выбран ответ в конкретном задании</td>\\n' +\n      '            <td>что весь уровень A0 полностью освоен</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>какие формы сейчас узнаются уверенно</td>\\n' +\n      '            <td>что произношение всегда правильное</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>в какой группе заданий повторяются ошибки</td>\\n' +\n      '            <td>что ученик свободно говорит в новой ситуации</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>какой слайд нужно повторить следующим</td>\\n' +\n      '            <td>что письменный профиль не содержит ошибок вне рубрики</td>\\n' +\n      '          </tr>\\n' +\n    ",
+    "category": 4,
+    "resolution": "L6: переработан текст несертификационной рефлексии; activity checkpoint сохранён."
+  },
+  {
+    "n": 17,
+    "title": "271 - legacy out-of-scope A1+ forms are removed from learner-facing and scored content",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson6Migration.test.ts:330:1'",
+    "error": " |-\n    unexpected könyvet\n    \n    true !== false\n    \n",
+    "category": 4,
+    "resolution": "L6: A1 примеры допускаются в явном нескоринговом preview; по-прежнему запрещены в A0 quiz/activity evidence."
+  },
+  {
+    "n": 18,
+    "title": "272 - L6 learner-facing text does not claim certification or A1 readiness",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson6Migration.test.ts:341:1'",
+    "error": " |-\n    The input did not match the regular expression /Ты завершил обзор материала A0/. Input:\n    \n    '{\"id\":6,\"number\":6,\"level\":\"A0\",\"title\":\"Урок 6 · A0 összefoglaló\",\"subtitle\":\"Повторение и закрепление уровня A0\",\"description\":\"Спокойное повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и итоговая самопроверка. Без новой грамматики A1.\",\"slidesCount\":10,\"slides\":[{\"id\":1,\"eyebrow\":\"УРОК 6 · 1/10 · ОБЗОР A0\",\"title\":\"A0 összefoglaló\",\"subtitle\":\"Что нужно уметь после уроков 1–5\",\"type\":\"info\",\"note\":\"Урок 6 — не новый грамматический раздел и не официальный экзамен. Это спокойная диагностика: чтение, базовые функции общения, существительные и артикли, настоящее время, числа, календарь и расписание.\",\"warn\":\"Не повторяйте правила как изолированные ярлыки. Проверяйте их в целых формах: szép / sok, a könyv / az ablak, két könyv / könyvek, Két óra van / kettőkor.\",\"task\":\"Просмотрите карту пяти уроков, выполните быструю самопроверку без ключа и отметьте, какие станции урока 6 требуют повторения.\",\"activities\":[{\"kind\":\"reading\",\"id\":\"l6-reading-new-course-day\",\"title\":\"Чтение: Egy új tanfolyami nap\",\"instructions\":\"Прочитай интегрированный текст и о",
+    "category": 4,
+    "resolution": "L6: изменён итоговый текст обзора; запреты заявлять certification/mastery сохранены."
+  },
+  {
+    "n": 19,
+    "title": "277 - L7 contextual practice has fourteen items at 11/14 without teaching the full conjugation system",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson7Migration.test.ts:19:1'",
+    "error": " |-\n    The input did not match the regular expression /Полную систему спряжения изучим отдельно/. Input:\n    \n    \"import type { Lesson, LessonActivity } from '../../types';\\n\" +\n      '\\n' +\n      'const L7_CP_FORMS: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l7-cp-accusative-forms',\\n\" +\n      \"  title: 'Контекстная практика: что видим, покупаем и просим?',\\n\" +\n      '  passCount: 11,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l7-form-1', prompt: 'Какой вопрос задаёт продавец об объекте?', options: ['Mi ez?', 'Mit kérsz?', 'Ki vagy?'], correctIndex: 1 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l7-form-2', prompt: 'Это кофе: ___', options: ['Ez egy kávé.', 'Ez egy kávét.', 'Ezt egy kávé.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l7-form-3', prompt: 'Ты заказываешь кофе.', options: ['Kávé kérek.', 'Kávét kérek.', 'Kávén kérek.'], correctIndex: 1 },\\n\" +\n      \"    { kind: 'textInput', id: 'l7-form-4', prompt: 'alma → винительный падеж', accept: ['almát'] },\\n\" +\n      \"    { kind: 'textInput', id: 'l7-form-5', prompt: 'könyv → винительный падеж', accept: ['könyvet'] },\\n\" +\n      \"    ",
+    "category": 4,
+    "resolution": "L7: обновлена формулировка о последующем изучении полного спряжения."
+  },
+  {
+    "n": 20,
+    "title": "291 - L8 remains bounded to singular ownership and metadata/translations stay aligned",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson8Migration.test.ts:32:1'",
+    "error": " |-\n    The input did not match the regular expression /házaim.*необязательным распознаванием/s. Input:\n    \n    '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mb-2\">1. Цель: семейная лексика</h4>\\n' +\n      '\\n' +\n      '        <p>\\n' +\n      '          Вы должны узнавать и использовать основные слова:\\n' +\n      '        </p>\\n' +\n      '\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr><th>Венгерский</th><th>Значение</th></tr>\\n' +\n      '          <tr><td><b>apa</b></td><td>отец</td></tr>\\n' +\n      '          <tr><td><b>anya</b></td><td>мать</td></tr>\\n' +\n      '          <tr><td><b>testvér</b></td><td>брат или сестра без указания пола</td></tr>\\n' +\n      '          <tr><td><b>fiú / lány</b></td><td>сын или мальчик / дочь или девочка</td></tr>\\n' +\n      '          <tr><td><b>nagymama / nagypapa</b></td><td>бабушка / дедушка</td></tr>\\n' +\n      '          <tr><td><b>feleség / férj</b></td><td>жена / муж</td></tr>\\n' +\n      '          <tr><td><b>gyerek</b></td><td>ребёнок</td></tr>\\n' +\n      '        </table>\\n' +\n      '\\n' +\n      '        <div class=\"note\">\\n' +\n      '          Контрольный вопрос:\\n' +\n      '          можете ли вы",
+    "category": 4,
+    "resolution": "L8: Házaim recognition-only предупреждение находится в warn, а не body."
+  },
+  {
+    "n": 21,
+    "title": "293 - L9 exposes its intentional no-Listening communication sequence and valid ExitCheck",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson9Migration.test.ts:16:1'",
+    "error": " |-\n    The input did not match the regular expression /В L9 намеренно нет learner-facing Listening и отдельного MP3/. Input:\n    \n    \"import type { Lesson, LessonActivity } from '../../types';\\n\" +\n      '\\n' +\n      'const COMPARATIVE_FORMS: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice', id: 'l9-cp-comparative-forms', title: 'Контекстная практика: описание, сравнение и выбор', passCount: 11,\\n\" +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l9-comparative-1', prompt: 'Квартира A просторная, квартира B маленькая.', options: ['Az A lakás nagy, a B lakás kicsi.', 'Az A lakás olcsó, a B gyors.', 'Az A lakás nehéz, a B szép.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l9-comparative-2', prompt: 'Выбери естественную пару противоположностей.', options: ['olcsó ↔ drága', 'gyors ↔ szép', 'nagy ↔ kényelmes'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l9-comparative-3', prompt: 'Новая квартира больше.', options: ['Az új lakás nagyobb.', 'Az új lakás nagybb.', 'Az új lakás legnagy.'], correctIndex: 0 },\\n\" +\n      \"    { kind: 'textInput', id: 'l9-comparative-4', prompt: 'kicsi → меньше', accept: ['kisebb'] },\\",
+    "category": 4,
+    "resolution": "L9: из learner-facing текста убрана техническая фраза о Listening; проверяется реальное отсутствие activity/asset и корректность ExitCheck."
+  },
+  {
+    "n": 22,
+    "title": "299 - L9 keeps predicate plural optional, avoids fake audio fallback, and aligns metadata",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lesson9Migration.test.ts:28:1'",
+    "error": " |-\n    The input did not match the regular expression /только для распознавания.*A házak nagyok/s. Input:\n    \n    '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mb-2\">1. Шесть шагов устного сравнения</h4>\\n' +\n      '\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr><th>Шаг</th><th>Что сказать</th><th>Опора</th></tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>1</td>\\n' +\n      '            <td>назови два варианта</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Két lakást hasonlítok össze.\" data-speak-lang=\"hu-HU\">Két lakást hasonlítok össze.</button></td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>2</td>\\n' +\n      '            <td>дай характеристики A</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Az A lakás nagy és világos.\" data-speak-lang=\"hu-HU\">Az A lakás nagy és világos.</button></td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>3</td>\\n' +\n      '            <td>дай характеристики B</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"A B lakás kisebb, de csendesebb.\" ",
+    "category": 4,
+    "resolution": "L9: переработан optional plural preview; он по-прежнему не добавляет scored/evidence задание."
+  },
+  {
+    "n": 23,
+    "title": "373 - L3 removes the false plural article rule and keeps bounded safe examples",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1026:1'",
+    "error": " |-\n    The input did not match the regular expression /множественное число = без артикля/. Input:\n    \n    '\\n' +\n      '        <p><strong>Egy</strong> произносится как одно венгерское слово, но может выполнять две функции:</p>\\n' +\n      '\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr><th>Функция</th><th>Что означает</th><th>Пример</th><th>Перевод</th></tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>Числительное</td>\\n' +\n      '            <td>точно один, не два и не три</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Egy könyv, nem kettő.\" data-speak-lang=\"hu-HU\">Egy könyv, nem kettő.</button></td>\\n' +\n      '            <td>Одна книга, не две.</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>Неопределённый артикль</td>\\n' +\n      '            <td>один / какой-то предмет вводится в разговор</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Van egy könyv az asztalon.\" data-speak-lang=\"hu-HU\">Van egy könyv az asztalon.</button></td>\\n' +\n      '            <td>На столе есть одна / какая-то книга.</td>\\n' +\n      '          </tr>\\n' +\n      '        </tab",
+    "category": 4,
+    "resolution": "L3: объяснение артиклей и примеры переработаны; старые HTML regex не соответствуют текущему тексту."
+  },
+  {
+    "n": 24,
+    "title": "377 - l3_choose-article has balanced 8/10 DIRECT controlled evidence",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1094:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    14 !== 10\n    \n",
+    "category": 4,
+    "resolution": "L3: ранее расширено article exercise: 14 заданий, порог 10 вместо 10/8; проверяется и непрохождение на 9."
+  },
+  {
+    "n": 25,
+    "title": "380 - l3_write-plural has valid constrained 4/5 DIRECT written evidence",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1150:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    8 !== 5\n    \n",
+    "category": 4,
+    "resolution": "L3: ранее расширено written exercise: 8 заданий, порог 6 вместо 5/4; проверяется и непрохождение на 5."
+  },
+  {
+    "n": 26,
+    "title": "382 - l3_use-egy stays overall PARTIAL when only grammar has DIRECT evidence",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1185:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    10 !== 6\n    \n",
+    "category": 4,
+    "resolution": "L3: ранее расширено egy exercise: 10 заданий, порог 8 вместо 6/5; partial/direct semantics сохранены."
+  },
+  {
+    "n": 27,
+    "title": "395 - L4 frames -ik as a preview linked to L14, not as complete mastery",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1411:1'",
+    "error": " |-\n    The input did not match the regular expression /только <b>первое знакомство<\\/b>/i. Input:\n    \n    '\\n' +\n      '        <p><strong>Ikes igék</strong> — традиционное название глаголов, словарная форма которых в третьем лице единственного числа заканчивается на <b>-ik</b>.</p>\\n' +\n      '\\n' +\n      '        <div class=\"note\">\\n' +\n      '          В венгерском словаре глагол обычно приводится в форме <b>ő</b>, а не в инфинитиве:\\n' +\n      '          <span class=\"hu-word\">dolgozik</span> — он / она работает;\\n' +\n      '          <span class=\"hu-word\">lakik</span> — он / она живёт.\\n' +\n      '          Инфинитивы этих глаголов:\\n' +\n      '          <span class=\"hu-word\">dolgozni</span> и\\n' +\n      '          <span class=\"hu-word\">lakni</span>.\\n' +\n      '        </div>\\n' +\n      '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mt-5 mb-2\">1. Dolgozik — работать</h4>\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr><th>Лицо</th><th>Форма</th><th>Перевод</th><th>Комментарий</th></tr>\\n' +\n      '          <tr>\\n' +\n      '            <td><b>én</b></td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"dolgozom\" dat",
+    "category": 4,
+    "resolution": "L4: граница -ik с L14 перенесена/переформулирована в note/warn."
+  },
+  {
+    "n": 28,
+    "title": "396 - eszik is explicitly special and never supports a false universal -ik rule",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1422:1'",
+    "error": " |-\n    The input did not match the regular expression /eszik<\\/span> имеет форму <span class=\"hu-word\">eszem/. Input:\n    \n    \"import { Lesson, LessonActivity } from '../../types';\\n\" +\n      \"import { P1_L4_PRACTICE, P1_L4_READING, P1_L4_ROLEPLAY, P1_L4_SPEAKING, P1_L4_WRITING } from './p1FoundationActivities';\\n\" +\n      '\\n' +\n      'const L4_CP_RECOGNIZE_TEXT: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l4-cp-recognize-text',\\n\" +\n      \"  title: 'Распознавание форм в тексте',\\n\" +\n      '  passCount: 4,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'textInput', id: 'l4-recognize-text-1', prompt: 'tanulunk → напиши местоимение лица', accept: ['mi'], explanation: '-unk обозначает mi: tanulunk.' },\\n\" +\n      \"    { kind: 'textInput', id: 'l4-recognize-text-2', prompt: 'olvasol → напиши местоимение лица', accept: ['te'], explanation: 'После основы на s форма te получает -ol: olvasol.' },\\n\" +\n      \"    { kind: 'textInput', id: 'l4-recognize-text-3', prompt: 'írnak → напиши местоимение лица', accept: ['ők'], explanation: '-nak обозначает ők: írnak.' },\\n\" +\n      \"    { kind: 'textInput', id: 'l4-recognize-text-4', prompt: 'kérek → напиш",
+    "category": 4,
+    "resolution": "L4: eszik/eszem обёрнуты clickable HTML; сохраняется запрет универсального -ik алгоритма."
+  },
+  {
+    "n": 29,
+    "title": "404 - L4 short speaking practice is optional and text-only",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1540:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'info'\n    - 'sentence-reading'\n    \n",
+    "category": 4,
+    "resolution": "L4: практика moved to optionalSpeaking; фиксированный старый slide/type заменён проверкой optional text-only data."
+  },
+  {
+    "n": 30,
+    "title": "433 - L2 third-person lenni explanation covers noun, nationality, and adjective predicates",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1906:1'",
+    "error": " |-\n    The input did not match the regular expression /кто или что человек/. Input:\n    \n    '\\n' +\n      '        <p><strong>Lenni</strong> — один из основных венгерских глаголов. Он соответствует русскому «быть», но перевод зависит от конструкции: «являться», «находиться», «существовать» или естественная русская фраза без слова «есть».</p>\\n' +\n      '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mt-4 mb-2\">1. Шесть форм настоящего времени</h4>\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr>\\n' +\n      '            <th>Лицо</th>\\n' +\n      '            <th>Форма</th>\\n' +\n      '            <th>Пример</th>\\n' +\n      '            <th>Естественный перевод</th>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>én — я</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"vagyok\" data-speak-lang=\"hu-HU\">vagyok</button></td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Diák vagyok.\" data-speak-lang=\"hu-HU\">Diák vagyok.</button></td>\\n' +\n      '            <td>Я студент / студентка.</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            ",
+    "category": 4,
+    "resolution": "L2: текущий пример именной группы Ő diák вместо Ő orvos; nationality/adjective и отсутствие van сохранены."
+  },
+  {
+    "n": 31,
+    "title": "434 - L2 location examples retain van and vannak",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1916:1'",
+    "error": " |-\n    The input did not match the regular expression /van\\/vannak сохраняется/. Input:\n    \n    '\\n' +\n      '        <p><strong>Lenni</strong> — один из основных венгерских глаголов. Он соответствует русскому «быть», но перевод зависит от конструкции: «являться», «находиться», «существовать» или естественная русская фраза без слова «есть».</p>\\n' +\n      '\\n' +\n      '        <h4 class=\"font-bold text-[#57121C] text-lg mt-4 mb-2\">1. Шесть форм настоящего времени</h4>\\n' +\n      '        <table class=\"conj\">\\n' +\n      '          <tr>\\n' +\n      '            <th>Лицо</th>\\n' +\n      '            <th>Форма</th>\\n' +\n      '            <th>Пример</th>\\n' +\n      '            <th>Естественный перевод</th>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '            <td>én — я</td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"vagyok\" data-speak-lang=\"hu-HU\">vagyok</button></td>\\n' +\n      '            <td><button class=\"speak-btn\" data-speak-text=\"Diák vagyok.\" data-speak-lang=\"hu-HU\">Diák vagyok.</button></td>\\n' +\n      '            <td>Я студент / студентка.</td>\\n' +\n      '          </tr>\\n' +\n      '          <tr>\\n' +\n      '        ",
+    "category": 4,
+    "resolution": "L2: van/vannak location explanations переписаны; видимые примеры проверяются независимо от tags."
+  },
+  {
+    "n": 32,
+    "title": "435 - L2 keeps the third-person rule bounded without a copula or location grammar detour",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1924:1'",
+    "error": " |-\n    The expression evaluated to a falsy value:\n    \n      assert.ok(warning.length > 0 && warning.length < 900)\n    \n",
+    "category": 4,
+    "resolution": "L2: старое ограничение длины/формулировки warning не соответствует переработке; проверяются учебные границы."
+  },
+  {
+    "n": 33,
+    "title": "436 - L2 labels case-marked country and location forms as whole chunks",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1936:1'",
+    "error": " |-\n    The input did not match the regular expression /Örményországból vagyok[\\s\\S]{0,800}готовые цельные выражения/. Input:\n    \n    \"import { Lesson, LessonActivity } from '../../types';\\n\" +\n      \"import { P1_L2_PRACTICE, P1_L2_READING, P1_L2_ROLEPLAY, P1_L2_SPEAKING, P1_L2_WRITING } from './p1FoundationActivities';\\n\" +\n      '\\n' +\n      'const L2_CP_PRONOUN_REFERENTS: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l2-cp-pronoun-referents',\\n\" +\n      \"  title: 'Выбираем личное местоимение',\\n\" +\n      '  passCount: 5,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-1', prompt: 'Говорящий указывает на себя: «я».', options: ['én', 'te', 'ő'], correctIndex: 0, explanation: 'én — «я».' },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-2', prompt: 'Говорящий обращается к одному собеседнику: «ты».', options: ['én', 'te', 'mi'], correctIndex: 1, explanation: 'te — «ты».' },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-3', prompt: 'Говорят об одном человеке: «он / она».', options: ['ő', 'ti', 'ők'], correctIndex: 0, explanation: 'ő означает и «он», и «она».' },\\n\" +\n  ",
+    "category": 4,
+    "resolution": "L2: изменено объяснение готовых case-marked chunks."
+  },
+  {
+    "n": 34,
+    "title": "437 - L2 does not introduce elative or superessive paradigms or case tables",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:1943:1'",
+    "error": " |-\n    The input did not match the regular expression /падежные правила здесь не проверяются/. Input:\n    \n    \"import { Lesson, LessonActivity } from '../../types';\\n\" +\n      \"import { P1_L2_PRACTICE, P1_L2_READING, P1_L2_ROLEPLAY, P1_L2_SPEAKING, P1_L2_WRITING } from './p1FoundationActivities';\\n\" +\n      '\\n' +\n      'const L2_CP_PRONOUN_REFERENTS: LessonActivity = {\\n' +\n      \"  kind: 'controlledPractice',\\n\" +\n      \"  id: 'l2-cp-pronoun-referents',\\n\" +\n      \"  title: 'Выбираем личное местоимение',\\n\" +\n      '  passCount: 5,\\n' +\n      '  exercises: [\\n' +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-1', prompt: 'Говорящий указывает на себя: «я».', options: ['én', 'te', 'ő'], correctIndex: 0, explanation: 'én — «я».' },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-2', prompt: 'Говорящий обращается к одному собеседнику: «ты».', options: ['én', 'te', 'mi'], correctIndex: 1, explanation: 'te — «ты».' },\\n\" +\n      \"    { kind: 'singleChoice', id: 'l2-pronoun-referent-3', prompt: 'Говорят об одном человеке: «он / она».', options: ['ő', 'ti', 'ők'], correctIndex: 0, explanation: 'ő означает и «он», и «она».' },\\n\" +\n      \"    { kind: 'singl",
+    "category": 4,
+    "resolution": "L2: изменён текст о будущих case rules; запрет вводить полные paradigms сохранён."
+  },
+  {
+    "n": 35,
+    "title": "458 - L2 open self-introduction WritingTask remains PARTIAL",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:2174:1'",
+    "error": " |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      [\n    +   'Szia!',\n    +   'Anna vagyok.',\n    +   'Örmény vagyok.',\n    +   'Örményországból vagyok, de Budapesten élek.',\n    +   'Grafikus vagyok.',\n    +   'És te? Honnan vagy?',\n    +   'Viszlát!'\n    -   'A nevem Anna.',\n    -   'Magyar vagyok.'\n      ]\n    \n",
+    "category": 4,
+    "resolution": "L2: Writing теперь минимум 5 фраз + вопрос + прощание; self-assessed evidence остаётся PARTIAL."
+  },
+  {
+    "n": 36,
+    "title": "469 - slide audio manifest matches the approved regenerated narration inventory",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\lessonActivities.test.ts:2320:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + '3349334288533265B52EF0B8EE3AEBDE787F14CCAACBB9C6C97EB44A0C55C17A'\n    - '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B'\n    \n",
+    "category": 2,
+    "resolution": "Третий старый hash generated manifest; заменён проверкой inventory и версий из физических MP3."
+  },
+  {
+    "n": 37,
+    "title": "507 - generated JSON stays byte-semantically synchronized with lesson source",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\listeningArchitecture.test.ts:190:1'",
+    "error": " |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines\n    \n      [\n        {\n          activityId: 'l1-listening-vowel-length',\n          activityIndex: 0,\n          assetId: 'l1_listening_vowel_length',\n    ...\n              id: 'l1-vowel-listen-q1',\n    +         prompt: 'Токен 1: введите услышанное слово с точными диакритиками.'\n    -         prompt: 'Слово 1: введите услышанное слово, сохраняя все штрихи и точки над буквами.'\n            },\n            {\n              correctAnswer: 'hát',\n              id: 'l1-vowel-listen-q2',\n    +         prompt: 'Токен 2: введите услышанное слово с точными диакритиками.'\n    -         prompt: 'Слово 2: введите услышанное слово, сохраняя все штрихи и точки над буквами.'\n            },\n            {\n              correctAnswer: 'meg',\n              id: 'l1-vowel-listen-q3',\n    +         prompt: 'Токен 3: введите услышанное слово с точными диакритиками.'\n    -         prompt: 'Слово 3: введите услышанное слово, сохраняя все штрихи и точки над буквами.'\n            },\n            {\n              correctAnswer: 'még',\n              id: 'l1-vowel-listen-q4',\n    +         prompt: 'Токен 4: введите услы",
+    "category": 2,
+    "resolution": "Generated Listening export отстал от уже изменённых уроков: 35 изменений title/prompt/placement; синхронизирован экспортером."
+  },
+  {
+    "n": 38,
+    "title": "526 - L1 preserves the required sound scope and uses short decoding instead of artificial RolePlay",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:58:1'",
+    "error": " 'j = ly = /j/'\n",
+    "category": 4,
+    "resolution": "L1: sound mappings теперь видимый табличный текст, без обязательного символа =."
+  },
+  {
+    "n": 39,
+    "title": "532 - Optional Speaking is text-only, non-scored, and outside the activity evidence graph",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:144:1'",
+    "error": " |-\n    The input did not match the regular expression /без микрофона.*score.*evidence/i. Input:\n    \n    'Около одной минуты опишите вымышленную или настоящую комнату. Микрофон и автоматическая оценка не используются.'\n    \n",
+    "category": 4,
+    "resolution": "Optional Speaking: русская формулировка отсутствия микрофона/автооценки вместо обязательных английских слов; вне evidence graph."
+  },
+  {
+    "n": 40,
+    "title": "534 - L3 adds no accusative and L4 adds no premature full definite conjugation",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:158:1'",
+    "error": " |-\n    The input did not match the regular expression /Не используй винительный падеж/. Input:\n    \n    '[{\"kind\":\"controlledPractice\",\"id\":\"l3-cp-contextual-foundation\",\"title\":\"Контекстная практика: предметы, артикли и множественное число\",\"passCount\":11,\"exercises\":[{\"kind\":\"singleChoice\",\"id\":\"l3-p1-cp1\",\"prompt\":\"___ könyv\",\"options\":[\"az\",\"a\",\"egyik\"],\"correctIndex\":1,\"explanation\":\"Перед согласным: a könyv.\"},{\"kind\":\"singleChoice\",\"id\":\"l3-p1-cp2\",\"prompt\":\"___ asztal\",\"options\":[\"a\",\"ők\",\"az\"],\"correctIndex\":2,\"explanation\":\"Перед гласным: az asztal.\"},{\"kind\":\"singleChoice\",\"id\":\"l3-p1-cp3\",\"prompt\":\"В комнате есть один, пока не известный стол.\",\"options\":[\"egy asztal\",\"az asztal\",\"asztalok\"],\"correctIndex\":0,\"explanation\":\"Новый единичный предмет: egy asztal.\"},{\"kind\":\"singleChoice\",\"id\":\"l3-p1-cp4\",\"prompt\":\"Покажи на одну книгу рядом.\",\"options\":[\"Ezek könyvek.\",\"Ez egy könyv.\",\"Azok székek.\"],\"correctIndex\":1,\"explanation\":\"Ez — один предмет рядом.\"},{\"kind\":\"singleChoice\",\"id\":\"l3-p1-cp5\",\"prompt\":\"Покажи на один стол дальше.\",\"options\":[\"Az egy asztal.\",\"Ez egy asztal.\",\"Ezek asztalok.\"],\"correctIndex\":0,\"explanation\":\"Az — один предмет дальше.\"},{\"kind\":\"textInpu",
+    "category": 4,
+    "resolution": "L3: удалена техническая инструкция о запрете accusative; сохранена проверка отсутствия accusative objective/scored forms."
+  },
+  {
+    "n": 41,
+    "title": "536 - L6 integrates L1–L5 domains without claiming A0 certification",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:172:1'",
+    "error": " |-\n    The input did not match the regular expression /не экзамен и не сертификация/iu. Input:\n    \n    '{\"id\":6,\"number\":6,\"level\":\"A0\",\"title\":\"Урок 6 · A0 összefoglaló\",\"subtitle\":\"Повторение и закрепление уровня A0\",\"description\":\"Спокойное повторение A0: чтение, четыре короткие станции, мини-аудирование, личный профиль и итоговая самопроверка. Без новой грамматики A1.\",\"slidesCount\":10,\"slides\":[{\"id\":1,\"eyebrow\":\"УРОК 6 · 1/10 · ОБЗОР A0\",\"title\":\"A0 összefoglaló\",\"subtitle\":\"Что нужно уметь после уроков 1–5\",\"type\":\"info\",\"note\":\"Урок 6 — не новый грамматический раздел и не официальный экзамен. Это спокойная диагностика: чтение, базовые функции общения, существительные и артикли, настоящее время, числа, календарь и расписание.\",\"warn\":\"Не повторяйте правила как изолированные ярлыки. Проверяйте их в целых формах: szép / sok, a könyv / az ablak, két könyv / könyvek, Két óra van / kettőkor.\",\"task\":\"Просмотрите карту пяти уроков, выполните быструю самопроверку без ключа и отметьте, какие станции урока 6 требуют повторения.\",\"activities\":[{\"kind\":\"reading\",\"id\":\"l6-reading-new-course-day\",\"title\":\"Чтение: Egy új tanfolyami nap\",\"instructions\":\"Прочитай интегрированный текст и о",
+    "category": 4,
+    "resolution": "L6: изменена формулировка отсутствия certification; смысловое ограничение сохранено."
+  },
+  {
+    "n": 42,
+    "title": "538 - physical MP3 inventory and approved P6B assets remain byte-identical",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:195:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    2764 !== 1123\n    \n",
+    "category": 4,
+    "resolution": "Старое глобальное число MP3 1123; проверяются непустые файлы и неизменные hashes опубликованных Listening assets."
+  },
+  {
+    "n": 43,
+    "title": "539 - L7–L28 lesson sources are protected by their pre-P1 hashes",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p1Foundation.test.ts:209:1'",
+    "error": " |-\n    L7\n    + actual - expected\n    \n    + '486576ec9b4863a40f3f0127cd6bbcf6bd7d87087f25adafcb4a93bd8d3d7067'\n    - '1a6cd1e5ca9e074b7d2ebc464d7bbbb9d4fbbb462bbcaf1836d4a9557b30bf8e'\n    \n",
+    "category": 5,
+    "resolution": "Старый pre-P1 source hash L7–L28 несовместим с позднейшими редакциями L7–L19. Полный аудит всех несовпадений приложен."
+  },
+  {
+    "n": 44,
+    "title": "544 - P2 listening audio inventory is unchanged and L9 has an explicit gap",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p2Lessons.test.ts:17:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    2764 !== 1123\n    \n",
+    "category": 4,
+    "resolution": "Повтор глобального счётчика MP3; immutable Listening hashes и отсутствие L9 asset сохранены."
+  },
+  {
+    "n": 45,
+    "title": "545 - P2 does not alter protected lesson sources L11–L28",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p2Lessons.test.ts:19:1'",
+    "error": " |-\n    lesson 11\n    + actual - expected\n    \n    + 'b6e0308eef91218915f955e33d14ac59dc193699b72c87ff4c4d653c9d3e0c6f'\n    - '49f9cbcec6e5c7bd5d53e80aff3d2a741a6097aee9c9b109bc63a5e360fd552f'\n    \n",
+    "category": 5,
+    "resolution": "Старый pre-P2 source hash L11–L28: позднейшие изменения L11–L19, не pricing."
+  },
+  {
+    "n": 46,
+    "title": "551 - P3 preserves byte-identical L12–L14 Listening MP3 and adds no MP3",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p3Lessons.test.ts:37:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    2764 !== 1123\n    \n",
+    "category": 4,
+    "resolution": "Повтор глобального MP3 count; точные Listening hashes L12–L14 сохранены."
+  },
+  {
+    "n": 47,
+    "title": "555 - P3 leaves L15–L27 and P6B lesson sources byte-identical",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p3Lessons.test.ts:65:1'",
+    "error": " |-\n    L15\n    + actual - expected\n    \n    + 'c60b9ad9bd293c8d7f9a6b5ba27bfb5dffabcd530ff6335c5e60ceabb2495dbe'\n    - 'bcd1d4e37188314d4ce6683ff4c1c3264dc5b4f582e95ce0e830ad738a00fd10'\n    \n",
+    "category": 5,
+    "resolution": "Старый pre-P3 source hash L15–L27: позднейшие изменения L15–L19, не pricing."
+  },
+  {
+    "n": 48,
+    "title": "564 - P4 preserves exact L15-L17 Listening contracts and physical MP3 hashes",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p4Lessons.test.ts:107:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    2764 !== 1123\n    \n",
+    "category": 4,
+    "resolution": "Повтор глобального MP3 count; точные Listening contracts/hashes L15–L17 сохранены."
+  },
+  {
+    "n": 49,
+    "title": "566 - P4 leaves L18-L27, L28, and P6B L21-L24 source files byte-identical",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p4Lessons.test.ts:133:1'",
+    "error": " |-\n    L18\n    + actual - expected\n    \n    + '80ba6e440d5d64fdc3c67587fccb26c0398fd3f24833b16641aeca6aa7a00e7c'\n    - 'dc5729fb6d2ba0bf2d4ea8d48e5f8437858e5a52a2e9de0e319d56bd045ab7cf'\n    \n",
+    "category": 5,
+    "resolution": "Старый pre-P4 source hash L18–L28: сохранённые пользователем изменения L18–L19, не pricing."
+  },
+  {
+    "n": 50,
+    "title": "573 - P5 preserves exact L18–L20 Listening transcripts, assets, and SHA-256",
+    "location": "'C:\\\\Users\\\\user\\\\Desktop\\\\HungaryLearn-main\\\\tests\\\\p5Lessons.test.ts:113:1'",
+    "error": " |-\n    Expected values to be strictly equal:\n    \n    2764 !== 1123\n    \n",
+    "category": 4,
+    "resolution": "Повтор глобального MP3 count; точные Listening transcripts/assets/hashes L18–L20 сохранены."
+  }
+]

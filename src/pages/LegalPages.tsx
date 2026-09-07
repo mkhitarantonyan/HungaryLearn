@@ -2,7 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import PublicInfoLayout from './PublicInfoLayout';
 
-const UPDATED = 'September 3, 2026';
+const UPDATED = 'September 7, 2026';
 
 function usePageTitle(title: string) {
   useEffect(() => {
@@ -42,8 +42,9 @@ function ProductSummary() {
       <p>
         Magyaro is a premade self-study digital Hungarian-language course. It does not
         provide consulting, live tutoring, agency work, or customisable client services.
-        Lessons 1–2 are free. Premium access unlocks lessons 3–28 for 44,500 HUF per
-        month. The subscription renews monthly until cancelled. The initial Premium
+        Lessons 1–2 are free. Premium access unlocks lessons 3–28 with a selected
+        subscription period of 1 month, 3 months, or 1 year, at the price shown at
+        checkout. The subscription renews for that period until cancelled. The initial Premium
         subscription payment is covered by a 14-day money-back guarantee. Payments are
         intended to be processed by Lemon Squeezy as Merchant of Record.
       </p>
@@ -85,8 +86,8 @@ export function TermsPage() {
                 Premium features requires an active paid subscription.
               </p>
               <p>
-                The current public price is <strong>44,500 HUF per month</strong>. The
-                current plan and included features are described on the{' '}
+                Premium is available for 1 month, 3 months, or 1 year. The price of the
+                selected plan is confirmed at checkout. Plans and included features are described on the{' '}
                 <Link to="/pricing" className="text-[#116EEE] underline underline-offset-4">
                   Pricing page
                 </Link>.
@@ -103,9 +104,9 @@ export function TermsPage() {
 
             <Section title="4. Subscription, payment, and renewal">
               <p>
-                Premium is offered as a monthly subscription. Unless otherwise stated at
-                checkout, the subscription renews automatically every month until
-                cancelled.
+                Premium is offered with a subscription period of 1 month, 3 months, or
+                1 year. Unless otherwise stated at checkout, the subscription renews
+                automatically for the selected period until cancelled.
               </p>
               <p>
                 Payments are intended to be processed by Lemon Squeezy, which acts as

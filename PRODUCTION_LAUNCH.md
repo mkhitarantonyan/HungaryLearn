@@ -15,9 +15,9 @@ This repository uses separate Cloud Functions for the core application and billi
 - Firebase CLI logged into the Google account that owns the project
 For the core/admin deploy, only Firebase/Blaze access is required. Before deploying the separate `billing` Function, additionally prepare:
 
-- A live Lemon Squeezy subscription product/variant created in Live mode
+- Three live Lemon Squeezy subscription variants (required to enable checkout; empty IDs keep checkout closed)
 - A live Lemon Squeezy API key
-- A new production webhook signing secret (do not reuse the test secret)
+- The existing production webhook signing secret (keep it in Firebase Secret Manager)
 
 From the repository root:
 
@@ -48,15 +48,15 @@ The admin audio-override API uses the Admin SDK default Storage bucket (`storage
 
 ## 3. Lemon Squeezy live configuration
 
-Create the live product/variant in Lemon Squeezy before deploying the `billing` Function. The core `api` Function can be deployed earlier. Record:
+Create the three live variants before enabling purchases. Both Functions can build/deploy with empty new Variant IDs; the corresponding checkout returns 503 until configured. Keep the existing store and Secret Manager secrets. Record:
 
 - Live Store ID
-- Live Variant ID
+- Monthly, Quarterly and Yearly Live Variant IDs
 - Live API key
 
-Use the live Variant ID, not the existing Test-mode Variant ID.
+Use Live Variant IDs only in production and Test Variant IDs only in the test environment.
 
-Before copying the product to Live mode, confirm the final Live monthly price. The current UI still displays **44 500 Ft / month** as a fixed string, so the Live variant price must match it until pricing is made data-driven.
+The frontend price source is `src/config/pricing.ts`: Monthly **7 990 Ft / 1 month**, Quarterly **19 990 Ft / 3 months**, Yearly **59 990 Ft / 1 year**. All variants grant the same Premium features. Match each full-period amount and renewal interval in Lemon, with no trial.
 
 ### Secrets
 
@@ -67,17 +67,19 @@ firebase functions:secrets:set LEMONSQUEEZY_API_KEY
 firebase functions:secrets:set LEMONSQUEEZY_WEBHOOK_SECRET
 ```
 
-Use a *live* Lemon API key and a *new production* webhook signing secret.
+Keep the existing working Live API key and webhook signing secret in Firebase Secret Manager. This pricing migration does not rotate secrets.
 
 ### Non-secret parameters
 
-`LEMONSQUEEZY_STORE_ID`, `LEMONSQUEEZY_VARIANT_ID`, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. They have production-safe defaults so the core/admin `api` Function can deploy without Lemon configuration: empty Store/Variant values make billing fail closed, `APP_URL` defaults to the Firebase Hosting URL, and Test mode defaults to `false`. Set the real values before the first `billing` deploy.
+`LEMONSQUEEZY_STORE_ID`, the three `LEMONSQUEEZY_VARIANT_ID_*` parameters below, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. They have production-safe defaults so the core/admin `api` Function can deploy without Lemon configuration: empty Store/Variant values make billing fail closed, `APP_URL` defaults to the Firebase Hosting URL, and Test mode defaults to `false`. The new Variant IDs intentionally remain empty until Lemon variants exist; no fallback checkout is available.
 
 Enter:
 
 ```text
 LEMONSQUEEZY_STORE_ID=<LIVE store id>
-LEMONSQUEEZY_VARIANT_ID=<LIVE variant id>
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
+LEMONSQUEEZY_VARIANT_ID_YEARLY=
 APP_URL=https://hungarylearn.web.app
 LEMONSQUEEZY_TEST_MODE=false
 ```
@@ -164,7 +166,7 @@ Use a new non-admin user on the deployed site.
 1. Register.
 2. Confirm `/api/auth/me` returns 200 after login.
 3. Confirm lessons 1–2 are accessible and paid lessons remain locked.
-4. Start checkout and verify it is a **Live** checkout (not Test mode).
+4. Check all three plans: verify the exact price, renewal interval and **Live** mode. With an empty ID, expect 503 and no redirect.
 5. Complete one real low-risk production payment only when the product/price is final.
 6. In Lemon Squeezy Webhooks, verify a successful delivery to the production callback URL.
 7. In Firestore verify `entitlements/{uid}` contains the Lemon provider data and a paid status.
@@ -195,3 +197,11 @@ After the default Firebase-hosted smoke test passes:
 Keep local Lemon values in `functions/.env.local` and local secrets in `functions/.secret.local` (both gitignored). Local configuration should use `LEMONSQUEEZY_TEST_MODE=true` and Test-mode Store/Variant IDs.
 
 Do not copy production secrets into local files unless you intentionally need a controlled production diagnostic.
+
+## Pricing migration / GitHub Actions
+
+Set repository Actions variables `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, and `LEMONSQUEEZY_VARIANT_ID_YEARLY` only after copying their actual IDs from Lemon. The merge workflow writes them to `functions/.env.hungarylearn` through quoted environment values; absent variables stay empty. Do not enter placeholders. API key and webhook secret remain Firebase Secret Manager secrets, not GitHub plaintext.
+
+The old `LEMONSQUEEZY_VARIANT_ID` is retained exclusively for Customer Portal compatibility. It is never a checkout fallback and is excluded from the webhook allowlist. By explicit migration decision, legacy subscription events (including renewal/refund) are ignored after this code is deployed. Before deployment, review existing legacy subscriptions and arrange their migration/closure manually in Lemon; do not assume their entitlements will keep updating. The existing Store ID and Firebase project remain unchanged.
+
+The browser sends only `{ plan: 'monthly' | 'quarterly' | 'yearly' }`. Invalid bodies, extra fields and client `variantId` return 400; a missing/malformed selected Variant ID returns 503 without contacting Lemon. Webhooks accept only configured new IDs, the configured store and exact test/live mode. Signature, UID binding, deduplication and refund rules remain in place.

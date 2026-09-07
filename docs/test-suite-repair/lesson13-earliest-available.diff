@@ -1,0 +1,1581 @@
+--- 3cea3327877b596b7913dd4e662c69b9a7832ad9:src/data/lessons/lesson13.ts
++++ current/src/data/lessons/lesson13.ts
+@@ -1,209 +1,1379 @@
+-import { Lesson } from '../../types';
++import type { Lesson, LessonActivity } from '../../types';
++
++const PAST_FORMS: LessonActivity = {
++  kind: 'controlledPractice', id: 'l13-cp-past-forms', title: 'Контекстная практика: что было вчера?', passCount: 11,
++  exercises: [
++    { kind: 'fillGap', id: 'l13-past-1', prompt: 'Tegnap otthon ___. (én, lenni)', accept: ['voltam'] },
++    { kind: 'fillGap', id: 'l13-past-2', prompt: 'Szombaton egész nap ___. (én, dolgozik)', accept: ['dolgoztam'] },
++    { kind: 'fillGap', id: 'l13-past-3', prompt: 'Délután a parkban ___. (én, sétál)', accept: ['sétáltam'] },
++    { kind: 'singleChoice', id: 'l13-past-4', prompt: 'Как спросить друга, что он делал вчера?', options: ['Mit csináltál tegnap?', 'Mit csinálsz holnap?', 'Hol vagy most?'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-5', prompt: 'Ответ на вопрос Hol voltál?', options: ['Otthon voltam.', 'Otthon vagyok.', 'Otthon leszek.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-6', prompt: 'Выбери отрицательное событие прошлого.', options: ['Nem dolgoztam.', 'Nem dolgozom.', 'Nem fogok dolgozni.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-7', prompt: 'Куда ты ходил вчера?', options: ['Tegnap boltba mentem.', 'Ma boltba megyek.', 'Holnap boltba megyek.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-8', prompt: 'С кем ты встретился?', options: ['Annával találkoztam.', 'Annánál voltam.', 'Annához megyek.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-9', prompt: 'Поставь события в естественном порядке.', options: ['Reggel dolgoztam, délután sétáltam, este filmet néztem.', 'Este reggeliztem, reggel lefeküdtem.', 'Végül először boltba mentem.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-10', prompt: 'План не состоялся.', options: ['Nem mentem sehova.', 'Nem megyek sehova.', 'Sehova megyek tegnap.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-11', prompt: 'Что делал Петер вечером?', options: ['Péter este filmet nézett.', 'Péter este filmet néz.', 'Péter holnap filmet nézett.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-12', prompt: 'Какой маркер продолжает последовательность?', options: ['Utána találkoztam Annával.', 'Holnap találkoztam Annával.', 'Most találkoztam tegnap.'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-13', prompt: 'Выбери вопрос о спутнике в прошлом.', options: ['Kivel találkoztál?', 'Kivel találkozol most?', 'Hová mész holnap?'], correctIndex: 0 },
++    { kind: 'singleChoice', id: 'l13-past-14', prompt: 'Финальная оценка прошедшего дня.', options: ['Végül hazamentem. Jó nap volt.', 'Végül hazamegyek tegnap.', 'Jó nap van múlt héten.'], correctIndex: 0 },
++  ],
++};
++
++const TENSE_READING: LessonActivity = {
++  kind: 'reading', id: 'l13-reading-tense-contrast', title: 'Чтение: насыщенная суббота', passCount: 6,
++  instructions: 'Прочитай простой рассказ о завершённых событиях и восстанови последовательность дня.',
++  content: { type: 'prose', title: 'Egy mozgalmas szombat', paragraphs: [
++    'Múlt szombaton korán keltem fel, mert sok dolgom volt. Reggel nyolckor reggeliztem, azután a piacra mentem. Gyümölcsöt, kenyeret és sajtot vettem. A piacon sok ember volt, ezért lassan haladtam. Találkoztam a szomszédommal, Évával. Röviden beszélgettünk, és megmutatta, hol van egy olcsó zöldséges. Ezután a postára mentem, mert egy levelet küldtem a testvéremnek.',
++    'Délben a városközpontban találkoztam a barátommal, Gáborral. Régen nem láttuk egymást, ezért sok témáról beszéltünk. Egy kis étteremben ebédeltünk. Én levest kértem, Gábor pedig tésztát evett. Az étel finom volt, de sokat vártunk rá. Ebéd után a folyóhoz sétáltunk, majd fényképeket készítettünk a főtéren. Délután még egy régi könyvesboltba is bementünk néhány percre együtt.',
++    'Délután moziba akartunk menni, de nem kaptunk jegyet, mert minden hely foglalt volt. Ezért nem néztük meg a filmet. Helyette beültünk egy kávézóba, ahol én teát ittam, Gábor pedig kávét kért. Este hétkor hazamentem. Otthon még magyarul tanultam egy órát, azután vacsorát készítettem és zenét hallgattam. Tíz óra után már fáradt voltam, ezért korán lefeküdtem. A nap hosszú volt, de nagyon jól éreztem magam.',
++  ] },
++  questions: [
++    { id: 'l13-reading-q1', question: 'Что рассказчик сделал утром после завтрака?', options: ['пошёл на рынок', 'пошёл в кино', 'лёг спать'], correctIndex: 0 },
++    { id: 'l13-reading-q2', question: 'Куда он пошёл после рынка?', options: ['на почту', 'домой', 'в библиотеку'], correctIndex: 0 },
++    { id: 'l13-reading-q3', question: 'С кем он встретился в центре?', options: ['с Евой', 'с Габором', 'с братом'], correctIndex: 1 },
++    { id: 'l13-reading-q4', question: 'Что друзья делали после обеда?', options: ['работали', 'гуляли и фотографировали', 'покупали продукты'], correctIndex: 1 },
++    { id: 'l13-reading-q5', question: 'Какой план не состоялся?', options: ['поход в кино', 'обед', 'поход на рынок'], correctIndex: 0 },
++    { id: 'l13-reading-q6', question: 'Почему они не посмотрели фильм?', options: ['не было билетов', 'шёл дождь', 'они устали'], correctIndex: 0 },
++    { id: 'l13-reading-q7', question: 'Что рассказчик делал дома вечером?', options: ['готовил обед', 'учил венгерский и слушал музыку', 'смотрел фильм'], correctIndex: 1 },
++    { id: 'l13-reading-q8', question: 'Как он оценивает день?', options: ['долгий, но приятный', 'короткий и скучный', 'трудный и неудачный'], correctIndex: 0 },
++  ],
++};
++
++const TENSE_LISTENING: LessonActivity = {
++  kind: 'listening', id: 'l13-listening-tense-contrast', title: 'Аудирование: сейчас и вчера',
++  assetId: 'l13_listening_tense_contrast', audioStatus: 'published', passCount: 4,
++  transcript: 'Ma Péter otthon dolgozik. Tegnap nem dolgozott: délelőtt a parkban sétált, délután pedig a barátaival volt. Este filmet néztek.',
++  questions: [
++    { id: 'l13-listening-q1', question: 'Что Петер делает сегодня?', options: ['otthon dolgozik', 'a parkban sétált', 'filmet nézett'], correctIndex: 0 },
++    { id: 'l13-listening-q2', question: 'Работал ли он вчера?', options: ['да', 'нет', 'не сказано'], correctIndex: 1 },
++    { id: 'l13-listening-q3', question: 'Где он гулял утром?', options: ['otthon', 'a parkban', 'a moziban'], correctIndex: 1 },
++    { id: 'l13-listening-q4', question: 'С кем он был днём?', options: ['a családjával', 'egyedül', 'a barátaival'], correctIndex: 2 },
++    { id: 'l13-listening-q5', question: 'Какой маркер указывает на прошлое?', options: ['ma', 'tegnap', 'most'], correctIndex: 1 },
++  ],
++};
++
++const PAST_ROLEPLAY: LessonActivity = {
++  kind: 'rolePlay', id: 'l13-roleplay-weekend', title: 'Ролевая игра: разговор о выходных', partnerLabel: 'Barát', completionMessage: 'Elmeséltétek a hétvégét.', startTurnId: 'l13-rp-s1',
++  turns: [
++    { id: 'l13-rp-s1', speaker: 'waiter', prompt: 'Szia! Mit csináltál szombaton?', next: 'l13-rp-l1' },
++    { id: 'l13-rp-l1', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови два утренних события.', model: 'Reggel még otthon voltam, aztán a piacra mentem.', next: 'l13-rp-s2' },
++    { id: 'l13-rp-s2', speaker: 'waiter', prompt: 'Értem. Hol voltál délután?', next: 'l13-rp-l2' },
++    { id: 'l13-rp-l2', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови место и действие.', model: 'Délután a parkban sétáltam.', next: 'l13-rp-s3' },
++    { id: 'l13-rp-s3', speaker: 'waiter', prompt: 'Aha. Kivel találkoztál?', next: 'l13-rp-l3' },
++    { id: 'l13-rp-l3', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови человека.', model: 'A barátommal, Annával találkoztam.', next: 'l13-rp-s4' },
++    { id: 'l13-rp-s4', speaker: 'waiter', prompt: 'Jól hangzik. Mit csináltatok együtt?', next: 'l13-rp-l4' },
++    { id: 'l13-rp-l4', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Назови совместное действие.', model: 'Egy kávézóban beszélgettünk, aztán filmet néztünk.', next: 'l13-rp-s5' },
++    { id: 'l13-rp-s5', speaker: 'waiter', prompt: 'Értem. Volt valami probléma?', next: 'l13-rp-l5' },
++    { id: 'l13-rp-l5', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Скажи, что один план не состоялся, и почему.', model: 'Igen. Kirándulni is akartunk, de nem mentünk, mert esett az eső.', next: 'l13-rp-s6' },
++    { id: 'l13-rp-s6', speaker: 'waiter', prompt: 'Kár. És mit csináltál este?', next: 'l13-rp-l6' },
++    { id: 'l13-rp-l6', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Заверши рассказ вечерним событием и мнением.', model: 'Este otthon vacsoráztam és zenét hallgattam. Jó nap volt.', next: 'l13-rp-s7' },
++    { id: 'l13-rp-s7', speaker: 'waiter', prompt: 'Elég mozgalmas nap volt!', next: 'l13-rp-l7' },
++    { id: 'l13-rp-l7', speaker: 'learner', responseMode: 'selfPractice', prompt: 'Задай собеседнику вопрос о его выходных.', model: 'És te? Mit csináltál vasárnap?', next: 'l13-rp-s8' },
++    { id: 'l13-rp-s8', speaker: 'waiter', prompt: 'Én a családommal voltam, elég nyugodt nap volt. Jó volt beszélgetni. Szia!' },
++  ],
++};
++
++const PAST_WRITING: LessonActivity = {
++  kind: 'writing', id: 'l13-writing-past-story', title: 'Письмо: короткая история о прошлом',
++  prompt: 'Напиши 80–100 слов о вымышленном вчерашнем дне или выходном. Укажи когда и где всё происходило, 3–4 действия, одного человека, одно отрицательное предложение в прошлом, понятную хронологию и итоговое мнение.',
++  modelAnswer: ['Tegnap szabadnapom volt. Reggel nyolckor felkeltem és otthon nyugodtan reggeliztem. Azután a piacra mentem, ahol friss gyümölcsöt és kenyeret vettem. Délben találkoztam a barátommal, Péterrel. Egy kis étteremben ebédeltünk, majd a parkban sétáltunk. Sok ember volt a parkban, de találtunk egy csendes helyet. Délután moziba akartunk menni, de nem kaptunk jegyet, ezért nem néztünk filmet. Helyette egy közeli kávézóban sokáig beszélgettünk, és én teát ittam. Este hétkor hazamentem, vacsorát készítettem és zenét hallgattam. Fáradt voltam, de nagyon jól éreztem magam.'],
++  rubric: ['80–100 слов', '3–4 завершённых действия', 'одно отрицательное предложение', 'человек и место', 'хронологический порядок', 'финальное мнение'],
++};
++
++const PAST_SPEAKING = {
++  title: 'Необязательная устная самопрактика',
++  instructions: 'Говори 1.5–2 минуты о вчерашнем дне: утро → день → вечер. Это текстовая инструкция без микрофона, score и evidence.',
++  prompt: 'Расскажи, где ты был, что делал, с кем встречался, чего не делал и как оцениваешь день.',
++  rubric: ['утро, день и вечер', 'несколько форм прошлого', 'одно отрицание', 'финальное мнение'],
++};
++
++const EXIT_CHECK: LessonActivity = {
++  kind: 'exitCheck', id: 'l13-exit-check', title: 'Проверка целей урока 13', checks: [
++    { objectiveId: 'l13_form-past', activityId: 'l13-cp-past-forms', evidenceKind: 'grammar' },
++    { objectiveId: 'l13_use-volt', activityId: 'l13-cp-past-forms', evidenceKind: 'grammar' },
++    { objectiveId: 'l13_distinguish-present-past', activityId: 'l13-reading-tense-contrast', evidenceKind: 'reading', evidenceComponents: [{ activityId: 'l13-listening-tense-contrast', evidenceKind: 'listening' }] },
++    { objectiveId: 'l13_tell-past', activityId: 'l13-writing-past-story', evidenceKind: 'writing', evidenceComponents: [{ activityId: 'l13-roleplay-weekend', evidenceKind: 'interaction' }] },
++  ],
++};
+ 
+ export const LESSON_13: Lesson = {
+-  id: 13,
+-  number: 13,
+-  level: 'A1',
+-  title: 'Урок 13 · A múlt idő',
+-  subtitle: 'Прошедшее время глаголов — суффикс -t/-tt',
+-  description: 'Образование прошедшего времени (Múlt idő) с суффиксом -t/-tt, спряжение глаголов в прошедшем времени, особенности lenni в прошедшем (volt) и временные маркеры tegnap, tavaly.',
+-  slidesCount: 12,
++  id: 13, number: 13, level: 'A1', title: 'Урок 13 · A múlt idő',
++  subtitle: 'Введение в прошедшее время: частотные формы и volt',
++  description: 'Коммуникативное введение в прошедшее время: частотные формы, volt, вопросы, отрицание и простой связный рассказ о завершённых событиях.',
++  slidesCount: 11,
+   slides: [
+     {
+       id: 1,
+-      eyebrow: "УРОК 13 · 1/12 · ВВЕДЕНИЕ",
+-      title: "A múlt idő",
+-      subtitle: "Прошедшее время — общая идея",
++      eyebrow: 'УРОК 13 · 1/11 · ВВЕДЕНИЕ',
++      title: 'A múlt idő',
++      subtitle: 'Сначала смысл: что произошло раньше и уже завершилось',
++      type: 'grammar',
++      note: 'Это ограниченное введение в прошедшее время. В L13 сначала учимся узнавать и использовать частотные готовые формы в понятном контексте.',
++      warn: 'Не добавляй -t механически к любому глаголу. В венгерском есть изменения основы, соединительные гласные и разные личные окончания. Полная система будет в L20.',
++      task: 'Сначала различи MA и TEGNAP. Затем прочитай пары вслух и скажи, какая форма описывает настоящее, а какая — завершённое прошлое.',
+       body: `
+-   <p>В венгерском языке существует <b>всего ОДНО прошедшее время</b> (в отличие от английского или испанского с их версиями Past Simple, Past Continuous, Present Perfect!). Это делает освоение прошедшего времени удивительно прямым и быстрым.</p>
+-   <p>Показателем прошедшего времени является показатель <span class="hu-word">-t-</span> (или удвоенный <span class="hu-word">-tt-</span>), который ставится сразу после основы глагола, перед личным окончанием.</p>
+-   <p><button class="speak-btn" data-speak-text="tanultam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultam</button> <span style="color:#8a7a68">(я учился / выучил — от tanul)</span></p>
+-   <p><button class="speak-btn" data-speak-text="dolgoztam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> dolgoztam</button> <span style="color:#8a7a68">(я работал — от dolgozik)</span></p>
+-   <div class="note">Одна форма прошедшего времени покрывает все оттенки русского завершённого и незавершённого вида («я делал» и «я сделал»).</div>
+- `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Линия времени</h4>
++
++        <div class="note">
++          <b>TEGNAP / MÚLT SZOMBATON</b> ← завершённое прошлое
++          &nbsp;&nbsp;|&nbsp;&nbsp;
++          <b>MA / MOST</b> ← настоящее
++        </div>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tegnap dolgoztam." data-speak-lang="hu-HU">Tegnap dolgoztam.</button>
++          — вчера я работал.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Ma dolgozom." data-speak-lang="hu-HU">Ma dolgozom.</button>
++          — сегодня я работаю.
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Что выражает múlt idő</h4>
++
++        <p>
++          На этом уровне думай просто:
++          <b>событие или состояние относится к прошлому времени</b>.
++          Контекст обычно показывает, когда это было.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tegnap a parkban sétáltam." data-speak-lang="hu-HU">Tegnap a parkban sétáltam.</button>
++        </p>
++
++        <div class="note">
++          Венгерское прошедшее время одно как продуктивная морфологическая система,
++          но оттенок ситуации всё равно зависит от значения глагола, приставки и контекста.
++          В L13 не нужно анализировать эти оттенки отдельно.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Маркеры, которые сразу помогают</h4>
++
++        <table class="conj">
++          <tr><th>Венгерский</th><th>Сигнал</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU">tegnap</button></td><td>вчера</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="múlt szombaton" data-speak-lang="hu-HU">múlt szombaton</button></td><td>в прошлую субботу</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="régen" data-speak-lang="hu-HU">régen</button></td><td>давно</td></tr>
++        </table>
++
++        <div class="note">
++          Маркер времени помогает распознать прошлое, но форму глагола всё равно нужно поставить в múlt idő.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Первый практический вопрос</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hol voltál tegnap?" data-speak-lang="hu-HU">Hol voltál tegnap?</button>
++          — где ты был вчера?
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Otthon voltam." data-speak-lang="hu-HU">Otthon voltam.</button>
++          — я был дома.
++        </p>
++
++        <div class="note">
++          <b>voltál / voltam</b> — прошедшие формы <b>lenni</b>.
++          Их будем закреплять отдельно на следующем опорном слайде.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Что пока НЕ изучаем</h4>
++
++        <ul class="tick">
++          <li>не строим полную таблицу каждого типа глагола;</li>
++          <li>не вводим систематическое противопоставление спряжений;</li>
++          <li>не пытаемся вывести любую форму только по инфинитиву.</li>
++        </ul>
++
++        <div class="warn">
++          Полные правила и систематическая система форм относятся к L20.
++          L13 — коммуникативное введение через частотные формы.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Что сделать</th></tr>
++          <tr><td><b>Tegnap dolgozom.</b></td><td>для законченного вчерашнего события: <b>dolgoztam</b></td></tr>
++          <tr><td>видеть <b>tegnap</b> и забывать форму глагола</td><td>проверить и маркер времени, и глагол</td></tr>
++          <tr><td>механически добавлять <b>-t</b></td><td>учить подтверждённые частотные формы</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Какое слово значит «вчера»?</li>
++          <li>Какая форма относится к прошлому: <b>dolgozom</b> или <b>dolgoztam</b>?</li>
++          <li>Как спросить «Где ты был вчера?»</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить</summary>
++          <ol class="tasklist mt-3">
++            <li><b>tegnap</b>.</li>
++            <li><b>dolgoztam</b>.</li>
++            <li><b>Hol voltál tegnap?</b></li>
++          </ol>
++        </details>
++      `,
++    },    {
++      id: 2,
++      eyebrow: 'УРОК 13 · 2/11 · ЧАСТОТНЫЕ ФОРМЫ',
++      title: 'Gyakori alakok',
++      subtitle: 'Узнаём -t/-tt, но не строим формы механически',
++      type: 'grammar',
++      note: 'В прошедших формах часто виден показатель -t/-tt; иногда появляется соединительная гласная. На этом этапе это ориентир для распознавания, а не универсальный алгоритм.',
++      warn: 'Не смешивай лицо: dolgoztam = «я работал», dolgozott = «он/она работал(а)». Одинаковый глагол даёт разные личные формы.',
++      task: 'Прослушай формы по группам. Сначала определи лицо én или ő, затем найди знакомый показатель прошедшего времени.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что замечаем в форме</h4>
++
++        <p>
++          В частых формах múlt idő появляется показатель <b>-t / -tt</b>.
++          Иногда перед личным окончанием слышна соединительная гласная.
++        </p>
++
++        <div class="warn">
++          Это <b>не</b> правило «возьми любой глагол и просто добавь -t».
++          Здесь учим подтверждённые модели.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Частые формы с én</h4>
++
++        <table class="conj">
++          <tr><th>Глагол</th><th>Готовая форма</th></tr>
++          <tr><td>vár</td><td><button class="speak-btn" data-speak-text="vártam" data-speak-lang="hu-HU">vártam</button></td></tr>
++          <tr><td>mond</td><td><button class="speak-btn" data-speak-text="mondtam" data-speak-lang="hu-HU">mondtam</button></td></tr>
++          <tr><td>nyit</td><td><button class="speak-btn" data-speak-text="nyitottam" data-speak-lang="hu-HU">nyitottam</button></td></tr>
++          <tr><td>fut</td><td><button class="speak-btn" data-speak-text="futottam" data-speak-lang="hu-HU">futottam</button></td></tr>
++          <tr><td>tanul</td><td><button class="speak-btn" data-speak-text="tanultam" data-speak-lang="hu-HU">tanultam</button></td></tr>
++          <tr><td>dolgozik</td><td><button class="speak-btn" data-speak-text="dolgoztam" data-speak-lang="hu-HU">dolgoztam</button></td></tr>
++        </table>
++
++        <div class="note">
++          Эти формы отвечают на вопрос «что <b>я</b> делал?».
++          Полную модель лица и числа закрепим постепенно.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Один глагол, другое лицо</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tegnap dolgoztam." data-speak-lang="hu-HU">Tegnap dolgoztam.</button>
++          — вчера <b>я</b> работал.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Péter tegnap dolgozott." data-speak-lang="hu-HU">Péter tegnap dolgozott.</button>
++          — вчера Петер работал.
++        </p>
++
++        <div class="note">
++          Сравни только функцию:
++          <b>dolgoztam</b> = én,
++          <b>dolgozott</b> = ő.
++          Не выводи отсюда полную парадигму.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Контекст важнее голой формы</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tegnap tanultam." data-speak-lang="hu-HU">Tegnap tanultam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Este futottam." data-speak-lang="hu-HU">Este futottam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Sokat vártam." data-speak-lang="hu-HU">Sokat vártam.</button>
++        </p>
++
++        <div class="note">
++          В предложении одновременно работают время, лицо и значение глагола.
++          Поэтому учи форму вместе с коротким контекстом.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Что можно заметить на слух</h4>
++
++        <ul class="tick">
++          <li><b>vártam, mondtam, tanultam</b> — слышен <b>t</b> перед личным окончанием;</li>
++          <li><b>nyitottam, futottam</b> — форма длиннее, слышится <b>tt</b> и дополнительная гласная;</li>
++          <li><b>dolgozott</b> — форма ő отличается от <b>dolgoztam</b>.</li>
++        </ul>
++
++        <div class="warn">
++          Эти наблюдения помогают <b>распознавать</b> формы.
++          Они ещё не заменяют полное правило образования múlt idő.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Исправление</th></tr>
++          <tr><td><b>dolgoztam</b> = «он работал»</td><td><b>dolgoztam</b> = я; <b>dolgozott</b> = он/она</td></tr>
++          <tr><td>к любому глаголу просто прибавить <b>-t</b></td><td>использовать изученную модель</td></tr>
++          <tr><td>учить только изолированное слово</td><td>добавить маркер времени или короткое предложение</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Какая форма означает «я учился»: <b>tanultam</b> или <b>tanult</b>?</li>
++          <li>Что значит <b>Péter tegnap dolgozott</b>?</li>
++          <li>Можно ли по L13 механически построить прошедшую форму любого нового глагола?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить</summary>
++          <ol class="tasklist mt-3">
++            <li><b>tanultam</b>.</li>
++            <li>Вчера Петер работал.</li>
++            <li>Нет. Это изученные модели; полная система будет в уроке 20.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Это изученные модели, а не правило для механического образования формы любого глагола.
++          Полная система будет в уроке 20.
++        </div>
++      `,
++    },    {
++      id: 3,
++      eyebrow: 'УРОК 13 · 3/11 · ОПОРНАЯ МОДЕЛЬ',
++      title: 'Tanul és lenni',
++      subtitle: 'Две опоры: обычная частотная модель и особый глагол lenni',
++      type: 'grammar',
++      note: 'Таблица tanul нужна как первая опора для узнавания личных форм. Она не является универсальным алгоритмом образования múlt idő для любого глагола.',
++      warn: 'Не смешивай tanult и volt: tanult — форма глагола tanul, а volt — прошедшая форма lenni. Сначала определи смысл глагола, затем лицо.',
++      task: 'Пройди таблицы сверху вниз, прослушай формы и затем сравни три предложения: Péter orvos. / Péter orvos volt. / Péter otthon van.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Опорная модель: tanul → «учиться»</h4>
++
++        <table class="conj">
++          <tr><th>Лицо</th><th>Прошедшая форма</th><th>Короткий смысл</th></tr>
++          <tr><td>én</td><td><button class="speak-btn" data-speak-text="tanultam" data-speak-lang="hu-HU">tanultam</button></td><td>я учился</td></tr>
++          <tr><td>te</td><td><button class="speak-btn" data-speak-text="tanultál" data-speak-lang="hu-HU">tanultál</button></td><td>ты учился</td></tr>
++          <tr><td>ő</td><td><button class="speak-btn" data-speak-text="tanult" data-speak-lang="hu-HU">tanult</button></td><td>он / она учился(-ась)</td></tr>
++          <tr><td>mi</td><td><button class="speak-btn" data-speak-text="tanultunk" data-speak-lang="hu-HU">tanultunk</button></td><td>мы учились</td></tr>
++          <tr><td>ti</td><td><button class="speak-btn" data-speak-text="tanultatok" data-speak-lang="hu-HU">tanultatok</button></td><td>вы учились</td></tr>
++          <tr><td>ők</td><td><button class="speak-btn" data-speak-text="tanultak" data-speak-lang="hu-HU">tanultak</button></td><td>они учились</td></tr>
++        </table>
++
++        <div class="note">
++          Местоимение часто можно опустить, потому что лицо уже видно по форме:
++          <button class="speak-btn" data-speak-text="Tegnap magyarul tanultam." data-speak-lang="hu-HU">Tegnap magyarul tanultam.</button>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Lenni в прошлом</h4>
++
++        <table class="conj">
++          <tr><th>Лицо</th><th>Форма</th></tr>
++          <tr><td>én</td><td><button class="speak-btn" data-speak-text="voltam" data-speak-lang="hu-HU">voltam</button></td></tr>
++          <tr><td>te</td><td><button class="speak-btn" data-speak-text="voltál" data-speak-lang="hu-HU">voltál</button></td></tr>
++          <tr><td>ő</td><td><button class="speak-btn" data-speak-text="volt" data-speak-lang="hu-HU">volt</button></td></tr>
++          <tr><td>mi</td><td><button class="speak-btn" data-speak-text="voltunk" data-speak-lang="hu-HU">voltunk</button></td></tr>
++          <tr><td>ti</td><td><button class="speak-btn" data-speak-text="voltatok" data-speak-lang="hu-HU">voltatok</button></td></tr>
++          <tr><td>ők</td><td><button class="speak-btn" data-speak-text="voltak" data-speak-lang="hu-HU">voltak</button></td></tr>
++        </table>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Tegnap otthon voltam." data-speak-lang="hu-HU">Tegnap otthon voltam.</button>
++          — вчера я был дома.
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Очень важный контраст с настоящим</h4>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Венгерский</th></tr>
++          <tr>
++            <td>профессия, настоящее</td>
++            <td><button class="speak-btn" data-speak-text="Péter orvos." data-speak-lang="hu-HU">Péter orvos.</button></td>
++          </tr>
++          <tr>
++            <td>профессия, прошлое</td>
++            <td><button class="speak-btn" data-speak-text="Péter orvos volt." data-speak-lang="hu-HU">Péter orvos volt.</button></td>
++          </tr>
++          <tr>
++            <td>место, настоящее</td>
++            <td><button class="speak-btn" data-speak-text="Péter otthon van." data-speak-lang="hu-HU">Péter otthon van.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          В настоящем времени у профессии или характеристики в 3-м лице связка обычно не произносится:
++          <b>Péter orvos.</b>
++          Но при обозначении местонахождения нужна форма <b>van</b>:
++          <b>Péter otthon van.</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Сначала лицо, потом форма</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hol voltál tegnap?" data-speak-lang="hu-HU">Hol voltál tegnap?</button>
++        </p>
++        <p>
++          <button class="speak-btn" data-speak-text="A barátomnál voltam." data-speak-lang="hu-HU">A barátomnál voltam.</button>
++        </p>
++
++        <div class="note">
++          В вопросе <b>voltál</b> показывает te, в ответе <b>voltam</b> показывает én.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Правильная опора</th></tr>
++          <tr><td><b>Én volt.</b></td><td><b>Én voltam.</b></td></tr>
++          <tr><td><b>Péter orvos voltam.</b></td><td><b>Péter orvos volt.</b></td></tr>
++          <tr><td><b>Péter orvos van.</b></td><td>для профессии: <b>Péter orvos.</b></td></tr>
++          <tr><td>считать tanul моделью любого глагола</td><td>это только первая опорная модель; полные правила — L20</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Как сказать «мы учились»?</li>
++          <li>Как сказать «они были»?</li>
++          <li>Что правильно для профессии сейчас: <b>Péter orvos.</b> или <b>Péter orvos van.</b>?</li>
++          <li>Как ответить на <b>Hol voltál tegnap?</b>: «Я был у друга»?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить</summary>
++          <ol class="tasklist mt-3">
++            <li><b>tanultunk</b>.</li>
++            <li><b>voltak</b>.</li>
++            <li><b>Péter orvos.</b></li>
++            <li><b>A barátomnál voltam.</b></li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Это первая опорная модель, а не замена полных правил урока 20.
++        </div>
++      `,
++    },    {
++      id: 4,
++      eyebrow: 'УРОК 13 · 4/11 · ОТРИЦАНИЕ И ПОСЛЕДОВАТЕЛЬНОСТЬ',
++      title: 'Nem… · reggel → végül',
++      subtitle: 'Отрицание + порядок событий = короткая история о вчера',
++      type: 'grammar',
++      note: 'Для A1 используй нейтральную опору: nem перед прошедшей формой глагола. Затем соединяй события временными маркерами.',
++      warn: 'Венгерский порядок слов гибкий, поэтому это не единственно возможная схема. Здесь даётся нейтральный безопасный шаблон для начинающего.',
++      task: 'Сначала отработай три отрицательных предложения, затем собери рассказ по цепочке reggel → délután → este → végül и ответь на три вопроса.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Простое отрицание в прошлом</h4>
++
++        <p>
++          Нейтральная опора:
++          <b>nem + прошедшая форма глагола</b>.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem voltam otthon." data-speak-lang="hu-HU">Nem voltam otthon.</button>
++          — меня не было дома / я не был дома.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem dolgoztam." data-speak-lang="hu-HU">Nem dolgoztam.</button>
++          — я не работал.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem mentem sehova." data-speak-lang="hu-HU">Nem mentem sehova.</button>
++          — я никуда не ходил.
++        </p>
++
++        <div class="note">
++          <b>sehova</b> = «никуда». В нейтральном отрицательном предложении оно употребляется вместе с <b>nem</b>:
++          <b>Nem mentem sehova.</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Временные точки дня</h4>
++
++        <table class="conj">
++          <tr><th>Маркер</th><th>Значение</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU">reggel</button></td><td>утром</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délelőtt" data-speak-lang="hu-HU">délelőtt</button></td><td>до полудня</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button></td><td>днём / после полудня</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU">este</button></td><td>вечером</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Как продолжать рассказ</h4>
++
++        <table class="conj">
++          <tr><th>Маркер</th><th>Функция</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="azután" data-speak-lang="hu-HU">azután</button></td><td>после этого / затем</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="utána" data-speak-lang="hu-HU">utána</button></td><td>после этого / потом</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button></td><td>в конце концов / наконец</td></tr>
++        </table>
++
++        <div class="note">
++          <b>azután</b> и <b>utána</b> в таком рассказе часто выполняют близкую функцию.
++          Не нужно вставлять оба после каждого предложения.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Собираем историю, а не список форм</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tegnap nem dolgoztam." data-speak-lang="hu-HU">Tegnap nem dolgoztam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Reggel otthon voltam." data-speak-lang="hu-HU">Reggel otthon voltam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Délelőtt boltba mentem." data-speak-lang="hu-HU">Délelőtt boltba mentem.</button></p>
++        <p><button class="speak-btn" data-speak-text="Délután Annával találkoztam." data-speak-lang="hu-HU">Délután Annával találkoztam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Este filmet néztem." data-speak-lang="hu-HU">Este filmet néztem.</button></p>
++        <p><button class="speak-btn" data-speak-text="Végül hazamentem." data-speak-lang="hu-HU">Végül hazamentem.</button></p>
++
++        <div class="note">
++          Уже шесть коротких предложений дают понятную хронологию:
++          вчера → утро → до полудня → день → вечер → финал.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Три вопроса для разговора</h4>
++
++        <table class="conj">
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Mit csináltál tegnap?" data-speak-lang="hu-HU">Mit csináltál tegnap?</button></td>
++            <td>Что ты делал вчера?</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Hol voltál?" data-speak-lang="hu-HU">Hol voltál?</button></td>
++            <td>Где ты был?</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Kivel találkoztál?" data-speak-lang="hu-HU">Kivel találkoztál?</button></td>
++            <td>С кем ты встретился?</td>
++          </tr>
++        </table>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Annával találkoztam." data-speak-lang="hu-HU">Annával találkoztam.</button>
++          — я встретился с Анной.
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Нейтральная A1-опора</th></tr>
++          <tr><td><b>Tegnap nem dolgozom.</b></td><td><b>Tegnap nem dolgoztam.</b></td></tr>
++          <tr><td><b>Mentem sehova.</b> в значении «никуда не ходил»</td><td><b>Nem mentem sehova.</b></td></tr>
++          <tr><td>перечислять формы без времени</td><td>добавить <b>reggel / délután / este / végül</b></td></tr>
++          <tr><td>отвечать одним словом на все вопросы</td><td>дать хотя бы одно полное короткое предложение</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Как сказать «Я не работал»?</li>
++          <li>Как сказать «Я никуда не ходил»?</li>
++          <li>Какой маркер удобно использовать для финального события?</li>
++          <li>Как спросить «С кем ты встретился?»</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Nem dolgoztam.</b></li>
++            <li><b>Nem mentem sehova.</b></li>
++            <li><b>végül</b>.</li>
++            <li><b>Kivel találkoztál?</b></li>
++          </ol>
++        </details>
++      `,
++    },    {
++      id: 5,
++      eyebrow: 'УРОК 13 · 5/11 · КОНТРОЛИРУЕМАЯ ПРАКТИКА',
++      title: 'Mi történt tegnap?',
++      subtitle: '14 ситуаций: сначала контекст, затем форма',
++      type: 'practice',
++      note: 'Проходной результат — 11 из 14. Ошибка в одном пункте не означает, что нужно угадывать: возвращайся к маркеру времени, лицу и смыслу.',
++      warn: 'Практика проверяет изученные частотные формы и контекст. Она не требует выводить полную морфологическую систему прошедшего времени.',
++      task: 'Перед каждым ответом проговори четыре шага: когда? кто? утверждение или отрицание? какая изученная форма подходит?',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Алгоритм решения каждого пункта</h4>
++
++        <ol class="tasklist">
++          <li><b>Когда?</b> Найди tegnap, szombaton, délután, este, utána, végül.</li>
++          <li><b>Кто?</b> én, te, ő или явно названный человек?</li>
++          <li><b>Что происходит?</b> действие, состояние, вопрос или отрицание?</li>
++          <li><b>Какая уже изученная форма</b> выражает этот смысл?</li>
++        </ol>
++
++        <div class="note">
++          Не начинай с окончания. Начинай со смысла ситуации.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Три опорных типа</h4>
++
++        <table class="conj">
++          <tr><th>Тип</th><th>Пример</th></tr>
++          <tr>
++            <td>состояние</td>
++            <td><button class="speak-btn" data-speak-text="Tegnap otthon voltam." data-speak-lang="hu-HU">Tegnap otthon voltam.</button></td>
++          </tr>
++          <tr>
++            <td>действие</td>
++            <td><button class="speak-btn" data-speak-text="Szombaton egész nap dolgoztam." data-speak-lang="hu-HU">Szombaton egész nap dolgoztam.</button></td>
++          </tr>
++          <tr>
++            <td>другое действие</td>
++            <td><button class="speak-btn" data-speak-text="Délután a parkban sétáltam." data-speak-lang="hu-HU">Délután a parkban sétáltam.</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Вопрос → ожидаемый тип ответа</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Mit csináltál tegnap?" data-speak-lang="hu-HU">Mit csináltál tegnap?</button>
++          — ожидай действие.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hol voltál?" data-speak-lang="hu-HU">Hol voltál?</button>
++          — ожидай место или состояние с формой lenni.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Kivel találkoztál?" data-speak-lang="hu-HU">Kivel találkoztál?</button>
++          — ожидай человека.
++        </p>
++
++        <div class="note">
++          Сначала пойми вопрос целиком, потом смотри варианты.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Отрицание — отдельная проверка</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem dolgoztam." data-speak-lang="hu-HU">Nem dolgoztam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem mentem sehova." data-speak-lang="hu-HU">Nem mentem sehova.</button>
++        </p>
++
++        <div class="warn">
++          Если ситуация явно относится к вчера, форма настоящего времени вроде <b>dolgozom</b> не подходит.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Хронология тоже проверяется</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Reggel dolgoztam, délután sétáltam, este filmet néztem." data-speak-lang="hu-HU">Reggel dolgoztam, délután sétáltam, este filmet néztem.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Utána találkoztam Annával." data-speak-lang="hu-HU">Utána találkoztam Annával.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Végül hazamentem." data-speak-lang="hu-HU">Végül hazamentem.</button>
++        </p>
++
++        <div class="note">
++          Маркеры времени должны образовывать естественную последовательность, а не противоречить друг другу.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ловушки</h4>
++
++        <table class="conj">
++          <tr><th>Ловушка</th><th>Проверка</th></tr>
++          <tr><td><b>tegnap + настоящее</b></td><td>нужна прошедшая форма</td></tr>
++          <tr><td>правильный глагол, но неправильное лицо</td><td>снова определить én / te / ő</td></tr>
++          <tr><td>правильная форма, но нелогичный маркер</td><td>проверить временную последовательность</td></tr>
++          <tr><td>угадывать по одному знакомому слову</td><td>прочитать всё предложение</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Перед стартом</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Мини-проверка стратегии</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Tegnap</b> — сигнал какого времени? → прошлого.</li>
++            <li><b>Hol voltál?</b> спрашивает о чём? → о месте / состоянии в прошлом.</li>
++            <li><b>végül</b> удобно ставить где? → перед финальным событием.</li>
++          </ol>
++        </details>
++      `,
++      activities: [PAST_FORMS],
++    },    {
++      id: 6,
++      eyebrow: 'УРОК 13 · 6/11 · ЧТЕНИЕ',
++      title: 'Egy mozgalmas szombat',
++      subtitle: 'Читай по хронологии, а не переводя каждое слово',
++      type: 'reading',
++      note: 'Текст длиннее предыдущих примеров, но задача остаётся A1: понять последовательность, людей, места, проблему и итог. Не требуется переводить каждое слово.',
++      warn: 'В тексте встречаются разные формы прошедшего времени. Здесь распознавай их по контексту; не пытайся выводить полную парадигму из каждого нового глагола.',
++      task: 'Сделай три прохода: 1) найди временные маркеры; 2) отметь людей и места; 3) восстанови проблему, замену плана и финал. Только потом отвечай на 8 вопросов.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Первый проход: только время</h4>
++
++        <p>Ищи в тексте опорные точки:</p>
++
++        <div class="note">
++          <button class="speak-btn" data-speak-text="Múlt szombaton" data-speak-lang="hu-HU">Múlt szombaton</button>
++          →
++          <button class="speak-btn" data-speak-text="Reggel nyolckor" data-speak-lang="hu-HU">Reggel nyolckor</button>
++          →
++          <button class="speak-btn" data-speak-text="Délben" data-speak-lang="hu-HU">Délben</button>
++          →
++          <button class="speak-btn" data-speak-text="Délután" data-speak-lang="hu-HU">Délután</button>
++          →
++          <button class="speak-btn" data-speak-text="Este hétkor" data-speak-lang="hu-HU">Este hétkor</button>
++        </div>
++
++        <p>
++          На первом проходе не останавливайся на каждом незнакомом слове.
++          Твоя цель — увидеть каркас дня.
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Второй проход: кто и где</h4>
++
++        <table class="conj">
++          <tr><th>Найди</th><th>Что отмечать</th></tr>
++          <tr><td>Éva</td><td>где появляется и что происходит рядом с ней</td></tr>
++          <tr><td>Gábor</td><td>где начинается совместная часть дня</td></tr>
++          <tr><td>piac / posta / étterem / folyó / főtér / kávézó</td><td>цепочка мест</td></tr>
++        </table>
++
++        <div class="note">
++          Имя человека и место часто дают больше смысла, чем отдельное незнакомое слово.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Третий проход: проблема и изменение плана</h4>
++
++        <p>Найди в тексте отрицательные сигналы и причинно-следственную связь.</p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem kaptunk jegyet." data-speak-lang="hu-HU">Nem kaptunk jegyet.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Ezért nem néztük meg a filmet." data-speak-lang="hu-HU">Ezért nem néztük meg a filmet.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Helyette beültünk egy kávézóba." data-speak-lang="hu-HU">Helyette beültünk egy kávézóba.</button>
++        </p>
++
++        <div class="note">
++          <b>ezért</b> показывает следствие, <b>helyette</b> — что сделали вместо первоначального плана.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Формы распознаём по роли в рассказе</h4>
++
++        <table class="conj">
++          <tr><th>Фрагмент</th><th>Что достаточно понять</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="a piacra mentem" data-speak-lang="hu-HU">a piacra mentem</button></td>
++            <td>рассказчик: «я пошёл на рынок»</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="beszélgettünk" data-speak-lang="hu-HU">beszélgettünk</button></td>
++            <td>«мы разговаривали»</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="hazamentem" data-speak-lang="hu-HU">hazamentem</button></td>
++            <td>рассказчик вернулся домой</td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          Не превращай чтение в урок образования всех окончаний. Для этого текста достаточно понять, кто действовал и что произошло.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Контроль понимания до вопросов</h4>
++
++        <ol class="tasklist">
++          <li>Сколько крупных частей дня ты видишь?</li>
++          <li>В какой части появляется Gábor?</li>
++          <li>Есть ли план, который не состоялся?</li>
++          <li>Чем заканчивается день рассказчика?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить только структуру</summary>
++          <p>
++            Должна получиться понятная линия:
++            утро → дела в городе → встреча → несостоявшийся план → замена плана → возвращение домой и вечер.
++          </p>
++        </details>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Как отвечать на 8 вопросов</h4>
++
++        <ul class="tick">
++          <li>сначала найди соответствующий эпизод, а не вспоминай текст целиком;</li>
++          <li>сверь временной маркер;</li>
++          <li>проверь, о ком спрашивают;</li>
++          <li>после ответа найди в тексте короткое подтверждение.</li>
++        </ul>
++
++        <div class="note">
++          Проходной результат — 6 из 8. Главная цель — понимание связного прошлого рассказа.
++        </div>
++      `,
++      activities: [TENSE_READING],
++    },    {
++      id: 7,
++      eyebrow: 'УРОК 13 · 7/11 · АУДИРОВАНИЕ',
++      title: 'Ma vagy tegnap?',
++      subtitle: 'Сначала услышь время, потом детали',
++      type: 'listening',
++      note: 'Аудирование выполняй без предварительного чтения транскрипта. Цель — услышать контраст настоящего и прошлого, а затем восстановить детали.',
++      warn: 'Не пытайся понять каждое слово с первого раза. Если сразу открыть транскрипт, упражнение превращается в чтение.',
++      task: 'Сделай два прослушивания до ответов: 1) только ma или tegnap и общий смысл; 2) время дня, место и люди. Затем ответь на 5 вопросов.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Разогрев перед записью</h4>
++
++        <p>Прослушай только маркеры, которые помогут ориентироваться во времени:</p>
++
++        <div class="note">
++          <button class="speak-btn" data-speak-text="ma" data-speak-lang="hu-HU">ma</button>
++          ·
++          <button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU">tegnap</button>
++          ·
++          <button class="speak-btn" data-speak-text="délelőtt" data-speak-lang="hu-HU">délelőtt</button>
++          ·
++          <button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button>
++          ·
++          <button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU">este</button>
++        </div>
++
++        <div class="note">
++          Перед основным audio не нужно знать весь текст. Достаточно различать эти опорные слова.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Первое прослушивание: только временная рамка</h4>
++
++        <ol class="tasklist">
++          <li>Есть ли часть про <b>сегодня</b>?</li>
++          <li>Есть ли часть про <b>вчера</b>?</li>
++          <li>Какой фрагмент длиннее: настоящее или рассказ о прошлом?</li>
++        </ol>
++
++        <div class="warn">
++          На первом проходе не ставь запись на паузу после каждого слова.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Второе прослушивание: собираем детали</h4>
++
++        <table class="conj">
++          <tr><th>Что услышать</th><th>Что записать мысленно</th></tr>
++          <tr><td>действие сегодня</td><td>что делает Péter сейчас / сегодня</td></tr>
++          <tr><td>утро вчера</td><td>где он был или что делал</td></tr>
++          <tr><td>день вчера</td><td>с кем он был</td></tr>
++          <tr><td>вечер вчера</td><td>что произошло вечером</td></tr>
++        </table>
++
++        <div class="note">
++          Слушай не отдельные окончания, а связку:
++          <b>маркер времени + действие / состояние</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Что именно проверяют 5 вопросов</h4>
++
++        <ul class="tick">
++          <li>сегодняшнее действие;</li>
++          <li>было ли это действие вчера;</li>
++          <li>утренний эпизод;</li>
++          <li>дневной эпизод и люди;</li>
++          <li>маркер прошлого.</li>
++        </ul>
++
++        <div class="note">
++          Проходной результат — <b>4 из 5</b>. После ответа вернись к записи и найди звуковое подтверждение.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Если не понял с первого раза</h4>
++
++        <ol class="tasklist">
++          <li>Снова найди <b>ma</b> и <b>tegnap</b>.</li>
++          <li>Затем ищи <b>délelőtt / délután / este</b>.</li>
++          <li>Только после этого уточняй действие и человека.</li>
++        </ol>
++
++        <div class="warn">
++          Транскрипт не используем как подсказку до выполнения listening.
++          Он остаётся частью опубликованного упражнения, но не заменяет прослушивание.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка стратегии</summary>
++          <p>
++            Первый вопрос к себе: <b>когда?</b>
++            Второй: <b>что произошло?</b>
++            Третий: <b>с кем / где?</b>
++          </p>
++        </details>
++      `,
++      activities: [TENSE_LISTENING],
++    },    {
++      id: 8,
++      eyebrow: 'УРОК 13 · 8/11 · ВЗАИМОДЕЙСТВИЕ',
++      title: 'Mit csináltál hétvégén?',
++      subtitle: '7 реплик ученика: ответить, связать события и вернуть вопрос',
++      type: 'roleplay',
++      note: 'Цель — не повторить model слово в слово, а удержать разговор: коротко ответить по смыслу, использовать прошедшее время и задать встречный вопрос.',
++      warn: 'RolePlay остаётся selfPractice и PARTIAL evidence. Здесь нет автоматической проверки свободной речи и не используется микрофон.',
++      task: 'Перед стартом проговори семь функций разговора: утро → место → человек → совместное действие → проблема → вечер → встречный вопрос.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Каркас разговора из 7 шагов</h4>
++
++        <table class="conj">
++          <tr><th>Шаг</th><th>Что нужно сделать</th></tr>
++          <tr><td>1</td><td>назвать два утренних события</td></tr>
++          <tr><td>2</td><td>сказать, где был днём и что делал</td></tr>
++          <tr><td>3</td><td>назвать человека</td></tr>
++          <tr><td>4</td><td>назвать совместное действие</td></tr>
++          <tr><td>5</td><td>описать одну проблему или несостоявшийся план</td></tr>
++          <tr><td>6</td><td>завершить вечерним событием и мнением</td></tr>
++          <tr><td>7</td><td>задать собеседнику встречный вопрос</td></tr>
++        </table>
++
++        <div class="note">
++          Это уже маленький связный разговор, а не тест отдельных окончаний.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Вопросы, которые держат разговор</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit csináltál szombaton?" data-speak-lang="hu-HU">Mit csináltál szombaton?</button></p>
++        <p><button class="speak-btn" data-speak-text="Hol voltál délután?" data-speak-lang="hu-HU">Hol voltál délután?</button></p>
++        <p><button class="speak-btn" data-speak-text="Kivel találkoztál?" data-speak-lang="hu-HU">Kivel találkoztál?</button></p>
++        <p><button class="speak-btn" data-speak-text="Mit csináltatok együtt?" data-speak-lang="hu-HU">Mit csináltatok együtt?</button></p>
++        <p><button class="speak-btn" data-speak-text="Volt valami probléma?" data-speak-lang="hu-HU">Volt valami probléma?</button></p>
++        <p><button class="speak-btn" data-speak-text="És mit csináltál este?" data-speak-lang="hu-HU">És mit csináltál este?</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Как строить короткий ответ</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Reggel még otthon voltam, aztán a piacra mentem." data-speak-lang="hu-HU">Reggel még otthon voltam, aztán a piacra mentem.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Délután a parkban sétáltam." data-speak-lang="hu-HU">Délután a parkban sétáltam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Annával találkoztam." data-speak-lang="hu-HU">Annával találkoztam.</button>
++        </p>
++
++        <div class="note">
++          Безопасная длина ответа на A1: одно-два коротких предложения.
++          Не пытайся сразу строить длинный монолог.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Как сообщить о проблеме</h4>
++
++        <div class="note">
++          Простая схема:
++          <b>хотели что-то сделать → de → не получилось → mert → причина</b>.
++        </div>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Kirándulni is akartunk, de nem mentünk, mert esett az eső." data-speak-lang="hu-HU">Kirándulni is akartunk, de nem mentünk, mert esett az eső.</button>
++        </p>
++
++        <div class="warn">
++          Это готовая коммуникативная модель из текущего RolePlay.
++          Не нужно выводить из неё новую грамматику.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Заверши и верни вопрос</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Este otthon vacsoráztam és zenét hallgattam. Jó nap volt." data-speak-lang="hu-HU">Este otthon vacsoráztam és zenét hallgattam. Jó nap volt.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="És te? Mit csináltál vasárnap?" data-speak-lang="hu-HU">És te? Mit csináltál vasárnap?</button>
++        </p>
++
++        <div class="note">
++          Встречный вопрос превращает упражнение из анкеты в взаимодействие.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Что проверить</th></tr>
++          <tr><td>отвечать в настоящем времени</td><td>разговор о прошедших выходных → нужны изученные прошлые формы</td></tr>
++          <tr><td>не отвечать на тип вопроса</td><td>Hol? → место; Kivel? → человек; Mit? → действие</td></tr>
++          <tr><td>читать model как обязательный текст</td><td>сохранить функцию реплики, но менять детали</td></tr>
++          <tr><td>забыть последний вопрос собеседнику</td><td>закончить через <b>És te?</b></td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Мини-проверка перед RolePlay</h4>
++
++        <ol class="tasklist">
++          <li>Можешь назвать два события утра?</li>
++          <li>Можешь ответить на <b>Hol voltál délután?</b> полным коротким предложением?</li>
++          <li>Можешь сказать одну проблему через <b>de</b>?</li>
++          <li>Можешь закончить встречным вопросом?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить структуру</summary>
++          <p>
++            Утро → место → человек → совместное действие → проблема → вечер → <b>És te?</b>
++          </p>
++        </details>
++
++        <div class="warn">
++          Успешное прохождение интерфейса не делает свободную речь DIRECT evidence.
++          RolePlay остаётся PARTIAL и требует самопроверки качества ответа.
++        </div>
++      `,
++      activities: [PAST_ROLEPLAY],
++    },    {
++      id: 9,
++      eyebrow: 'УРОК 13 · 9/11 · ПИСЬМО',
++      title: 'Mi történt tegnap?',
++      subtitle: '80–100 слов: сначала план, потом связный текст',
++      type: 'writing',
++      note: 'Открытый текст остаётся PARTIAL до квалифицированной проверки. Самопроверка помогает улучшить работу, но не превращает writing в DIRECT evidence.',
++      warn: 'Не пытайся использовать новые сложные времена или правила из следующих уроков. Здесь достаточно изученных форм прошлого, простых связок и понятной хронологии.',
++      task: 'До написания заполни мысленно шесть блоков: когда → утро → человек/место → 3–4 действия → одно отрицание → итоговое мнение.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Сначала сделай план из 6 блоков</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что написать</th></tr>
++          <tr><td>1</td><td>когда происходил день</td></tr>
++          <tr><td>2</td><td>что было утром</td></tr>
++          <tr><td>3</td><td>где был и с кем встретился</td></tr>
++          <tr><td>4</td><td>ещё 2–3 завершённых действия</td></tr>
++          <tr><td>5</td><td>одно отрицательное предложение</td></tr>
++          <tr><td>6</td><td>чем всё закончилось и как оцениваешь день</td></tr>
++        </table>
++
++        <div class="note">
++          Если эти шесть блоков есть, текст уже будет иметь начало, развитие и финал.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Полезные начала предложений</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tegnap szabadnapom volt." data-speak-lang="hu-HU">Tegnap szabadnapom volt.</button></p>
++        <p><button class="speak-btn" data-speak-text="Reggel nyolckor felkeltem." data-speak-lang="hu-HU">Reggel nyolckor felkeltem.</button></p>
++        <p><button class="speak-btn" data-speak-text="Azután a piacra mentem." data-speak-lang="hu-HU">Azután a piacra mentem.</button></p>
++        <p><button class="speak-btn" data-speak-text="Délben találkoztam a barátommal." data-speak-lang="hu-HU">Délben találkoztam a barátommal.</button></p>
++
++        <div class="note">
++          Это опорные chunks. Не копируй готовую историю: меняй время, место, человека и действия под свой текст.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Как связать события</h4>
++
++        <div class="note">
++          <button class="speak-btn" data-speak-text="azután" data-speak-lang="hu-HU">azután</button>
++          ·
++          <button class="speak-btn" data-speak-text="majd" data-speak-lang="hu-HU">majd</button>
++          ·
++          <button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button>
++          ·
++          <button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU">este</button>
++          ·
++          <button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button>
++        </div>
++
++        <p>
++          Не нужно ставить связку перед каждым предложением.
++          Используй их там, где они помогают читателю видеть порядок.
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Одно отрицание обязательно</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem dolgoztam." data-speak-lang="hu-HU">Nem dolgoztam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem néztünk filmet." data-speak-lang="hu-HU">Nem néztünk filmet.</button>
++        </p>
++
++        <div class="warn">
++          Проверяй, чтобы отрицательное предложение тоже относилось к прошлому, а не случайно осталось в настоящем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Финальное мнение</h4>
++
++        <p><button class="speak-btn" data-speak-text="Jó nap volt." data-speak-lang="hu-HU">Jó nap volt.</button></p>
++        <p><button class="speak-btn" data-speak-text="Fáradt voltam, de jól éreztem magam." data-speak-lang="hu-HU">Fáradt voltam, de jól éreztem magam.</button></p>
++
++        <div class="note">
++          Финал не должен вводить новое событие без связи. Сначала закончи день, затем дай короткую оценку.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Самопроверка перед отправкой</h4>
++
++        <ul class="tick">
++          <li>80–100 слов;</li>
++          <li>3–4 завершённых действия;</li>
++          <li>есть человек и место;</li>
++          <li>есть одно отрицательное предложение;</li>
++          <li>понятен порядок событий;</li>
++          <li>есть итоговое мнение.</li>
++        </ul>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Типичные ошибки</h4>
++
++        <table class="conj">
++          <tr><th>Ошибка</th><th>Что исправить</th></tr>
++          <tr><td>список предложений без связи</td><td>добавить 2–3 временных маркера</td></tr>
++          <tr><td>вчера + форма настоящего</td><td>проверить глаголы, описывающие прошлые события</td></tr>
++          <tr><td>слишком много новых форм</td><td>вернуться к надёжным изученным моделям</td></tr>
++          <tr><td>нет финального мнения</td><td>добавить короткую оценку дня</td></tr>
++        </table>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Финальный контроль структуры</summary>
++          <p>
++            Когда → утро → место/человек → действия → отрицание → вечер → мнение.
++          </p>
++        </details>
++      `,
++      activities: [PAST_WRITING],
++    },    {
++      id: 10,
++      eyebrow: 'УРОК 13 · 10/11 · УСТНАЯ САМОПРАКТИКА',
++      title: 'Mesélj a tegnapról!',
++      subtitle: '1.5–2 минуты: говори по опорам, а не по заученному тексту',
++      type: 'speaking',
++      note: 'Это необязательная устная самопрактика. Она остаётся текстовой инструкцией без микрофона, score и evidence.',
++      warn: 'Не пытайся говорить идеально или слишком сложно. Лучше 8–12 коротких понятных предложений из изученных моделей, чем длинная фраза с новой грамматикой.',
++      task: 'Говори по шести опорам: когда → утро → день → человек/место → одно отрицание → вечер и мнение. Цель — примерно 1.5–2 минуты.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Каркас монолога</h4>
++
++        <table class="conj">
++          <tr><th>Часть</th><th>О чём сказать</th></tr>
++          <tr><td>1</td><td>когда происходил день</td></tr>
++          <tr><td>2</td><td>что делал утром</td></tr>
++          <tr><td>3</td><td>где был днём</td></tr>
++          <tr><td>4</td><td>с кем встретился и что делали вместе</td></tr>
++          <tr><td>5</td><td>чего не делал / что не получилось</td></tr>
++          <tr><td>6</td><td>что было вечером и как оцениваешь день</td></tr>
++        </table>
++
++        <div class="note">
++          8–12 коротких предложений обычно достаточно, чтобы удерживать речь около 1.5–2 минут без спешки.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Начало</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tegnap elég mozgalmas napom volt." data-speak-lang="hu-HU">Tegnap elég mozgalmas napom volt.</button></p>
++        <p><button class="speak-btn" data-speak-text="Reggel otthon voltam." data-speak-lang="hu-HU">Reggel otthon voltam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Azután a városba mentem." data-speak-lang="hu-HU">Azután a városba mentem.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Середина: место и человек</h4>
++
++        <p><button class="speak-btn" data-speak-text="Délután a parkban sétáltam." data-speak-lang="hu-HU">Délután a parkban sétáltam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Találkoztam a barátommal." data-speak-lang="hu-HU">Találkoztam a barátommal.</button></p>
++        <p><button class="speak-btn" data-speak-text="Együtt beszélgettünk." data-speak-lang="hu-HU">Együtt beszélgettünk.</button></p>
++
++        <div class="note">
++          Меняй детали: parkban → kávézóban, barátommal → Annával, beszélgettünk → sétáltunk.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Одно отрицание</h4>
++
++        <p><button class="speak-btn" data-speak-text="Nem dolgoztam." data-speak-lang="hu-HU">Nem dolgoztam.</button></p>
++        <p><button class="speak-btn" data-speak-text="Nem mentem moziba." data-speak-lang="hu-HU">Nem mentem moziba.</button></p>
++
++        <div class="warn">
++          Достаточно одного отрицательного эпизода. Не усложняй рассказ ради количества форм.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Финал</h4>
++
++        <p><button class="speak-btn" data-speak-text="Este hazamentem." data-speak-lang="hu-HU">Este hazamentem.</button></p>
++        <p><button class="speak-btn" data-speak-text="Fáradt voltam, de jó nap volt." data-speak-lang="hu-HU">Fáradt voltam, de jó nap volt.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Если остановился</h4>
++
++        <p>Не переходи на новую грамматику. Возьми следующий временной маркер:</p>
++
++        <div class="note">
++          <button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU">reggel</button>
++          →
++          <button class="speak-btn" data-speak-text="azután" data-speak-lang="hu-HU">azután</button>
++          →
++          <button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button>
++          →
++          <button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU">este</button>
++          →
++          <button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button>
++        </div>
++
++        <div class="note">
++          Пауза допустима. После паузы продолжай с нового временного блока.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Самопроверка после речи</h4>
++
++        <ul class="tick">
++          <li>было начало, середина и финал;</li>
++          <li>использовал несколько изученных форм прошлого;</li>
++          <li>было хотя бы одно отрицание;</li>
++          <li>упомянул человека или место;</li>
++          <li>дал итоговое мнение;</li>
++          <li>не читал готовый текст слово в слово.</li>
++        </ul>
++
++        <div class="warn">
++          Самопрактика не создаёт evidence и не оценивается автоматически.
++          Никакой записи голоса или микрофона здесь нет.
++        </div>
++      `,
++      optionalSpeaking: PAST_SPEAKING,
++    },    {
++      id: 11,
++      eyebrow: 'УРОК 13 · 11/11 · ИТОГИ',
++      title: 'Összefoglalás',
++      subtitle: 'Собери прошлое в одну систему перед A1 checkpoint',
++      type: 'summary',
++      note: 'L13 — коммуникативное введение: ты уже можешь распознавать и использовать частотные формы прошлого в знакомых ситуациях. Полная система образования múlt idő остаётся в L20.',
++      warn: 'Не делай вывод, что теперь можно механически образовать прошедшую форму любого нового глагола. Итог L13 — уверенное использование изученного набора в контексте.',
++      task: 'Пройди итог сверху вниз: время → lenni → отрицание → вопросы → хронология → короткий рассказ. В конце сверяй не количество форм, а смысл.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Главное различие: сейчас или раньше?</h4>
++
++        <table class="conj">
++          <tr><th>Настоящее</th><th>Прошлое</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Ma dolgozom." data-speak-lang="hu-HU">Ma dolgozom.</button></td>
++            <td><button class="speak-btn" data-speak-text="Tegnap dolgoztam." data-speak-lang="hu-HU">Tegnap dolgoztam.</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="Most otthon vagyok." data-speak-lang="hu-HU">Most otthon vagyok.</button></td>
++            <td><button class="speak-btn" data-speak-text="Tegnap otthon voltam." data-speak-lang="hu-HU">Tegnap otthon voltam.</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Сначала найди временную рамку, потом проверяй форму глагола.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Lenni: ключевые опоры</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Hol voltál tegnap?" data-speak-lang="hu-HU">Hol voltál tegnap?</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Otthon voltam." data-speak-lang="hu-HU">Otthon voltam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Péter orvos volt." data-speak-lang="hu-HU">Péter orvos volt.</button>
++        </p>
++
++        <div class="note">
++          Для знакомых лиц уже распознаём:
++          <b>voltam / voltál / volt / voltunk / voltatok / voltak</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Отрицание</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem dolgoztam." data-speak-lang="hu-HU">Nem dolgoztam.</button>
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Nem mentem sehova." data-speak-lang="hu-HU">Nem mentem sehova.</button>
++        </p>
++
++        <div class="note">
++          Безопасная A1-опора: <b>nem + прошедшая форма</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Три вопроса, которые запускают рассказ</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit csináltál tegnap?" data-speak-lang="hu-HU">Mit csináltál tegnap?</button></p>
++        <p><button class="speak-btn" data-speak-text="Hol voltál?" data-speak-lang="hu-HU">Hol voltál?</button></p>
++        <p><button class="speak-btn" data-speak-text="Kivel találkoztál?" data-speak-lang="hu-HU">Kivel találkoztál?</button></p>
++
++        <div class="note">
++          Mit? → действие · Hol? → место / состояние · Kivel? → человек.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Хронология превращает формы в рассказ</h4>
++
++        <div class="note">
++          <button class="speak-btn" data-speak-text="reggel" data-speak-lang="hu-HU">reggel</button>
++          →
++          <button class="speak-btn" data-speak-text="délelőtt" data-speak-lang="hu-HU">délelőtt</button>
++          →
++          <button class="speak-btn" data-speak-text="délután" data-speak-lang="hu-HU">délután</button>
++          →
++          <button class="speak-btn" data-speak-text="este" data-speak-lang="hu-HU">este</button>
++          →
++          <button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button>
++        </div>
++
++        <p>
++          <button class="speak-btn" data-speak-text="Reggel dolgoztam, délután sétáltam, este filmet néztem." data-speak-lang="hu-HU">Reggel dolgoztam, délután sétáltam, este filmet néztem.</button>
++        </p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что уже проверено, а что остаётся PARTIAL</h4>
++
++        <table class="conj">
++          <tr><th>Цель</th><th>Статус в уроке</th></tr>
++          <tr><td>частотные формы múlt idő</td><td><b>DIRECT</b> через controlled practice</td></tr>
++          <tr><td>формы volt</td><td><b>DIRECT</b> через controlled practice</td></tr>
++          <tr><td>настоящее ↔ прошлое</td><td><b>DIRECT</b> через reading + listening</td></tr>
++          <tr><td>связный рассказ о прошлом</td><td><b>PARTIAL</b> через writing + roleplay</td></tr>
++        </table>
++
++        <div class="warn">
++          Writing и RolePlay остаются PARTIAL: открытая продукция требует самопроверки или квалифицированной проверки.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Финальная мини-проверка</h4>
++
++        <ol class="tasklist">
++          <li>Как сказать «Вчера я работал»?</li>
++          <li>Как спросить «Где ты был вчера?»</li>
++          <li>Как сказать «Я никуда не ходил»?</li>
++          <li>Каким словом удобно ввести финальное событие?</li>
++          <li>Можно ли после L13 механически образовать любую новую прошедшую форму?</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Проверить</summary>
++          <ol class="tasklist mt-3">
++            <li><b>Tegnap dolgoztam.</b></li>
++            <li><b>Hol voltál tegnap?</b></li>
++            <li><b>Nem mentem sehova.</b></li>
++            <li><b>végül</b>.</li>
++            <li>Нет. Полная система образования múlt idő будет в L20.</li>
++          </ol>
++        </details>
++
++        <div class="note">
++          Следующий шаг — L14: интегрированный checkpoint конца A1.
++        </div>
++      `,
++      activities: [EXIT_CHECK],
+     },
+-    {
+-      id: 2,
+-      eyebrow: "УРОК 13 · 2/12 · ТРИ ТИПА ОБРАЗОВАНИЯ",
+-      title: "Hogyan képezzük?",
+-      subtitle: "Три вариантa показателя -t / -ott-ett-ött / -tt",
+-      body: `
+-   <ul class="tick">
+-     <li><b>Просто -t-</b> — если основа оканчивается на гласную или гласные l, r, n, ny, j: <button class="speak-btn" data-speak-text="vár" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vár</button> → <button class="speak-btn" data-speak-text="vártam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vártam</button> <span style="color:#8a7a68">(я ждал)</span></li>
+-     <li><b>Соединительная гласная + -tt- (-ott/-ett/-ött)</b> — если основа оканчивается на два согласных подряд или на -t: <button class="speak-btn" data-speak-text="mond" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> mond</button> → <button class="speak-btn" data-speak-text="mondtam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> mondtam</button> <span style="color:#8a7a68">(я сказал)</span>, <button class="speak-btn" data-speak-text="nyit" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyit</button> → <button class="speak-btn" data-speak-text="nyitottam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nyitottam</button></li>
+-     <li><b>Удвоенное -tt- без соединительной</b> — у односложных глаголов с короткой гласной: <button class="speak-btn" data-speak-text="fut" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> fut</button> → <button class="speak-btn" data-speak-text="futottam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> futottam</button></li>
+-   </ul>
+- `
+-    },
+-    {
+-      id: 3,
+-      eyebrow: "УРОК 13 · 3/12 · СПРЯЖЕНИЕ В ПРОШЕДШЕМ (НЕОПРЕДЕЛЁННОЕ)",
+-      title: "Általános ragozás múlt időben",
+-      subtitle: "Неопределённое спряжение в прошедшем времени",
+-      body: `
+-   <p>Рассмотрим парадигму регулярного глагола <button class="speak-btn" data-speak-text="tanul" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanul</button> (учить):</p>
+-   <table class="conj">
+-     <tr><th>Лицо</th><th>Форма</th><th>Перевод</th></tr>
+-     <tr><td>én</td><td><button class="speak-btn" data-speak-text="tanultam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultam</button></td><td>я учился</td></tr>
+-     <tr><td>te</td><td><button class="speak-btn" data-speak-text="tanultál" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultál</button></td><td>ты учился</td></tr>
+-     <tr><td>ő</td><td><button class="speak-btn" data-speak-text="tanult" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanult</button></td><td>он/она учился(-лась)</td></tr>
+-     <tr><td>mi</td><td><button class="speak-btn" data-speak-text="tanultunk" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultunk</button></td><td>мы учились</td></tr>
+-     <tr><td>ti</td><td><button class="speak-btn" data-speak-text="tanultatok" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultatok</button></td><td>вы учились</td></tr>
+-     <tr><td>ők</td><td><button class="speak-btn" data-speak-text="tanultak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanultak</button></td><td>они учились</td></tr>
+-   </table>
+-   <div class="note">Обратите внимание на 3-е лицо единственного числа (ő): окончание <b>нулевое</b> (<button class="speak-btn" data-speak-text="tanult" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tanult</button>) — чистый показатель -t!</div>
+- `
+-    },
+-    {
+-      id: 4,
+-      eyebrow: "УРОК 13 · 4/12 · ГЛАГОЛ LENNI В ПРОШЕДШЕМ",
+-      title: "A „lenni” múlt ideje (volt)",
+-      subtitle: "Глагол быть — «был, была, было, были»",
+-      body: `
+-   <p>Глагол <button class="speak-btn" data-speak-text="lenni" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> lenni</button> в прошедшем времени имеет основу <b>vol-</b> + показателем -t-:</p>
+-   <table class="conj">
+-     <tr><th>Лицо</th><th>Форма</th><th>Перевод</th></tr>
+-     <tr><td>én</td><td><button class="speak-btn" data-speak-text="voltam" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> voltam</button></td><td>я был(-а)</td></tr>
+-     <tr><td>te</td><td><button class="speak-btn" data-speak-text="voltál" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> voltál</button></td><td>ты был(-а)</td></tr>
+-     <tr><td>ő</td><td><button class="speak-btn" data-speak-text="volt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> volt</button></td><td>он/она был(-а)</td></tr>
+-     <tr><td>mi</td><td><button class="speak-btn" data-speak-text="voltunk" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> voltunk</button></td><td>мы были</td></tr>
+-     <tr><td>ti</td><td><button class="speak-btn" data-speak-text="volttok -> voltatok" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> voltatok</button></td><td>вы были</td></tr>
+-     <tr><td>ők</td><td><button class="speak-btn" data-speak-text="voltak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> voltak</button></td><td>они были</td></tr>
+-   </table>
+-   <div class="warn">Важнейшее отличие от настоящего времени: в настоящем времени 3-е лицо (ő/ők) при существительном/прилагательном <b>опускается</b> (Péter orvos — без van). Но в прошедшем времени <b>volt / voltak ОБЯЗАТЕЛЬНО присутствует всегда</b>! (<button class="speak-btn" data-speak-text="Péter orvos volt." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter orvos volt.</button> — Петер был врачом).</div>
+- `
+-    },
+-    {
+-      id: 5,
+-      eyebrow: "УРОК 13 · 5/12 · ОТРЕЦАНИЕ В ПРОШЕДШЕМ",
+-      title: "Tagadás múlt időben",
+-      subtitle: "«Не был», «не видел», «не делал»",
+-      body: `
+-   <p>Отрицание образуется с помощью частицы <b>nem</b> перед глаголом:</p>
+-   <p><button class="speak-btn" data-speak-text="Nem voltam otthon." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem voltam otthon.</button> <span style="color:#8a7a68">(Я не был дома)</span></p>
+-   <p><button class="speak-btn" data-speak-text="Péter nem dolgozott tegnap." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter nem dolgozott tegnap.</button> <span style="color:#8a7a68">(Петер не работал вчера)</span></p>
+-   <p><button class="speak-btn" data-speak-text="Nem láttam semmit." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem láttam semmit.</button> <span style="color:#8a7a68">(Я ничего не видел)</span></p>
+-   <div class="note">Слово nincs (нет в настоящем времени) в прошедшем времени заменяется на <button class="speak-btn" data-speak-text="nem volt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nem volt</button> или <button class="speak-btn" data-speak-text="nem voltak" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> nem voltak</button>! (<button class="speak-btn" data-speak-text="Nem volt időm." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem volt időm.</button> — У меня не было времени).</div>
+- `
+-    },
+-    {
+-      id: 6,
+-      eyebrow: "УРОК 13 · 6/12 · ВРЕМЕННЫЕ ВУКАТОРЫ ПРОШЛОГО",
+-      title: "Múlt idejű időhatározók",
+-      subtitle: "Слова-маркеры прошедшего времени",
+-      body: `
+-   <div class="grid2">
+-     <div>
+-       <p><button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tegnap</button> — вчера</p>
+-       <p><button class="speak-btn" data-speak-text="tegnapelőtt" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tegnapelőtt</button> — позавчера</p>
+-       <p><button class="speak-btn" data-speak-text="a múlt héten" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> a múlt héten</button> — на прошлой неделе</p>
+-     </div>
+-     <div>
+-       <p><button class="speak-btn" data-speak-text="a múlt hónapban" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> a múlt hónapban</button> — в прошлом месяце</p>
+-       <p><button class="speak-btn" data-speak-text="tavaly" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> tavaly</button> — в прошлом году</p>
+-       <p><button class="speak-btn" data-speak-text="régebben" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> régebben</button> — раньше</p>
+-     </div>
+-   </div>
+-   <p><button class="speak-btn" data-speak-text="Tavaly Budapestre utaztam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tavaly Budapestre utaztam.</button> <span style="color:#8a7a68">(В прошлом году я ездил в Будапешт)</span></p>
+- `
+-    },
+-    {
+-      id: 7,
+-      eyebrow: "УРОК 13 · 7/12 · ДИАЛОГ",
+-      title: "Párbeszéd",
+-      subtitle: "Что ты делал вчера?",
+-      body: `
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Szia! Mit csináltál tegnap?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szia! Mit csináltál tegnap?</button></p>
+-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Tegnap reggel dolgoztam, délután pedig a parkban sétáltam. És te?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tegnap reggel dolgoztam, délután pedig a parkban sétáltam. És te?</button></p>
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Én mozinál voltam a barátaimmal. Egy jó filmet néztünk." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Én mozinál voltam a barátaimmal. Egy jó filmet néztünk.</button></p>
+-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Jó volt a film?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Jó volt a film?</button></p>
+-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Igen, nagyon tetszett!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Igen, nagyon tetszett!</button></p>
+-   <div class="task">Задание 1. Прочитайте диалог вслух 3 раза и найдите все глаголы в прошедшем времени.</div>
+- `
+-    },
+-    {
+-      id: 8,
+-      eyebrow: "УРОК 13 · 8/12 · ЗАДАНИЯ",
+-      title: "Gyakorlatok",
+-      subtitle: "Проверьте себя",
+-      body: `
+-   <ol class="tasklist">
+-     <li>Проспрягайте глагол „olvas“ (читать) в прошедшем времени для всех 6 лиц</li>
+-     <li>Проспрягайте глагол „lenni“ (быть) в прошедшем времени для всех 6 лиц</li>
+-     <li>Переведите: «Вчера я не работал»</li>
+-     <li>Переведите: «В прошлом году мы были в Будапеште»</li>
+-     <li>Напишите 4 предложения о том, что вы делали на прошлых выходных</li>
+-   </ol>
+- `
+-    },
+-    {
+-      id: 9,
+-      eyebrow: "УРОК 13 · 9/12 · ОПРЕДЕЛЁННОЕ СПРЯЖЕНИЕ В ПРОШЕДШЕМ",
+-      title: "Határozott ragozás múlt időben",
+-      subtitle: "Краткий анонс определенного спряжения в прошедшем",
+-      body: `
+-   <p>Если прямое дополнение определено (например, «эту книгу», «книгу Анны»), формы прошедшего времени немного отличаются:</p>
+-   <p><button class="speak-btn" data-speak-text="Olvastam egy könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Olvastam egy könyvet.</button> <span style="color:#8a7a68">(Я читал [какую-то] книгу — неопределённое)</span></p>
+-   <p><button class="speak-btn" data-speak-text="Olvastam a könyvet." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Olvastam a könyvet.</button> <span style="color:#8a7a68">(Я прочел [эту конкретную] книгу — определённое)</span></p>
+-   <div class="note">Подробно систему определённого спряжения во всех временах разберём в 21-м уроке уровня A2. Пока достаточно освоить базoвые неопределённые формы этого урока!</div>
+- `
+-    },
+-    {
+-      id: 10,
+-      eyebrow: "УРОК 13 · 10/12 · ИТОГОВЫЙ СБОРНИК A1",
+-      title: "Az A1 szint vége",
+-      subtitle: "Поздравляем! Вы завершили уровень A1!",
+-      body: `
+-   <p>Это 13-й, финальный урок уровня A1. Давайте посмотрим, какой колоссальный путь вы прошли:</p>
+-   <ul class="tick">
+-     <li><b>A0 (Уроки 1–6):</b> Алфавит, произношение, greeting, lenni, существительное (-k), спряжение в настоящем времени, числа, время, дни.</li>
+-     <li><b>A1 (Уроки 7–13):</b> Винительный падеж (-t), семья и притяжательность (házam, anyja), прилагательные и сравнения (-bb, leg-), 9 пространственных падежей (матрица 3×3), послелоги (alatt, előtt) и прошедшее время (volt, tanultam).</li>
+-   </ul>
+- `
+-    },
+-    {
+-      id: 11,
+-      eyebrow: "УРОК 13 · 11/12 · ЧТО ДАЛЬШЕ?",
+-      title: "Mi következik az A2-en?",
+-      subtitle: "Планы на уровень A2",
+-      body: `
+-   <p>На уровне A2 вы научитесь выражать сложные мысли и вести полноценную беглость:</p>
+-   <ul class="tick">
+-     <li>Будущее время (jövő idő — fog + инфинитив)</li>
+-     <li>Повелительное наклонение и просьбы (felszólító mód)</li>
+-     <li>Условное наклонение (feltételes mód — «я хотел бы», «если бы»)</li>
+-     <li>Определённое спряжение глаголов (határozott ragozás)</li>
+-     <li>Глагольные приставки (igekötők: be-, ki-, fel-, le-, el-, meg-)</li>
+-   </ul>
+- `
+-    },
+-    {
+-      id: 12,
+-      eyebrow: "УРОК 13 · 12/12 · ФИНАЛЬНЫЙ ИТОГ",
+-      title: "Gratulálunk!",
+-      subtitle: "Финал 13-го урока",
+-      body: `
+-   <p><b>Köszönjük a munkádat! Szép volt!</b> (Спасибо за твою работу! Отлично сработано!)</p>
+-   <div class="note"><b>Финатное задание уровня A1.</b> Напишите сочинение о себе из 15 предложений на венгерском языке, охватывающее: кто вы, откуда, где живете, вашу семью, что вы делали вчера и куда поедете в будущем. Прочитайте его вслух!</div>
+- `
+-    }
+   ],
+   vocabulary: [
+-    { id: 'l13_v1', hu: 'múlt idő', ru: 'прошедшее время', category: 'Грамматика' },
+-    { id: 'l13_v2', hu: 'tanultam', ru: 'я учился', category: 'Прошедшее время' },
+-    { id: 'l13_v3', hu: 'tanultál', ru: 'ты учился', category: 'Прошедшее время' },
+-    { id: 'l13_v4', hu: 'tanult', ru: 'он/она учился(-ась)', category: 'Прошедшее время' },
+-    { id: 'l13_v5', hu: 'voltam', ru: 'я был', category: 'Lenni в прошлом' },
+-    { id: 'l13_v6', hu: 'volt', ru: 'он/она был(-а)', category: 'Lenni в прошлом' },
+-    { id: 'l13_v7', hu: 'voltak', ru: 'они были', category: 'Lenni в прошлом' },
+-    { id: 'l13_v8', hu: 'nem volt', ru: 'не был / не было', category: 'Отрицание' },
+-    { id: 'l13_v9', hu: 'tegnap', ru: 'вчера', category: 'Маркеры времени' },
+-    { id: 'l13_v10', hu: 'tegnapelőtt', ru: 'позавчера', category: 'Маркеры времени' },
+-    { id: 'l13_v11', hu: 'tavaly', ru: 'в прошлом году', category: 'Маркеры времени' },
+-    { id: 'l13_v12', hu: 'a múlt héten', ru: 'на прошлой неделе', category: 'Маркеры времени' },
+-    { id: 'l13_v13', hu: 'dolgoztam', ru: 'я работал', category: 'Прошедшее время' },
+-    { id: 'l13_v14', hu: 'utaztam', ru: 'я путешествовал', category: 'Прошедшее время' },
+-    { id: 'l13_v15', hu: 'láttam', ru: 'я видел', category: 'Прошедшее время' },
+-    { id: 'l13_v16', hu: 'tetszett', ru: 'понравился / понравилось', category: 'Прошедшее время' }
+-  ]
++    ['múlt idő', 'прошедшее время', 'Грамматика'], ['tanultam', 'я учился', 'Прошедшее время'], ['tanultál', 'ты учился', 'Прошедшее время'], ['tanult', 'он/она учился(-ась)', 'Прошедшее время'],
++    ['voltam', 'я был', 'Lenni в прошлом'], ['volt', 'он/она был(-а)', 'Lenni в прошлом'], ['voltak', 'они были', 'Lenni в прошлом'], ['nem volt', 'не был / не было', 'Отрицание'],
++    ['tegnap', 'вчера', 'Маркеры времени'], ['tegnapelőtt', 'позавчера', 'Маркеры времени'], ['tavaly', 'в прошлом году', 'Маркеры времени'], ['a múlt héten', 'на прошлой неделе', 'Маркеры времени'],
++    ['dolgoztam', 'я работал', 'Прошедшее время'], ['utaztam', 'я путешествовал', 'Прошедшее время'], ['láttam', 'я видел', 'Прошедшее время'], ['tetszett', 'понравился / понравилось', 'Лексическая фраза'],
++  ].map(([hu, ru, category], index) => ({ id: `l13_v${index + 1}`, hu, ru, category })),
++  quiz: [
++    { id: 1301, question: 'Выбери изученную форму: vár → én в прошедшем времени.', options: ['vártam', 'vártal', 'várottam', 'vártok'], correctIndex: 0, explanation: 'В изученном наборе vár → vártam. Полные правила будут в уроке 20.' },
++    { id: 1302, question: 'Выбери изученную форму: dolgozik → ő в прошедшем времени.', options: ['dolgozik', 'dolgoztam', 'dolgozott', 'dolgozol'], correctIndex: 2, explanation: 'Форма третьего лица: dolgozott.' },
++    { id: 1303, question: 'Как сказать «Петер был врачом»?', options: ['Péter orvos volt.', 'Péter orvos van.', 'Péter orvos voltam.', 'Péter orvos voltál.'], correctIndex: 0, explanation: 'В прошедшем именном предложении нужна форма третьего лица volt.' },
++    { id: 1304, question: 'Как сказать «Я не был дома»?', options: ['Nem voltam otthon.', 'Nem voltál otthon.', 'Nem volt otthon.', 'Otthon voltam.'], correctIndex: 0, explanation: 'Для én используется voltam, а nem стоит перед глаголом.' },
++    { id: 1305, question: 'Какое предложение описывает прошлое?', options: ['Most otthon vagyok.', 'Tegnap otthon voltam.', 'Ma magyarul tanulok.', 'Most a parkban sétálok.'], correctIndex: 1, explanation: 'Tegnap и voltam указывают на прошлое.' },
++    { id: 1306, question: 'Какое предложение правильно соединяет маркер прошлого и форму?', options: ['Tegnap dolgoztam.', 'Tegnap dolgozom.', 'Most dolgoztam holnap.', 'Holnap voltam otthon.'], correctIndex: 0, explanation: 'Tegnap dolgoztam — «Вчера я работал».' },
++  ],
++  objectives: [
++    { id: 'l13_form-past', text: 'Образовывать частотные базовые формы прошедшего времени по изученным моделям -t/-tt.', skills: ['grammar', 'writing'] },
++    { id: 'l13_use-volt', text: 'Употреблять формы глагола lenni в прошедшем времени в простых контекстах.', skills: ['grammar', 'writing'] },
++    { id: 'l13_distinguish-present-past', text: 'Различать настоящее и прошедшее время на слух и в тексте.', skills: ['listening', 'reading'] },
++    { id: 'l13_tell-past', text: 'Рассказывать о прошедших событиях в коротких связанных предложениях.', skills: ['speaking', 'writing'] },
++  ],
+ };

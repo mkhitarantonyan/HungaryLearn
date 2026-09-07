@@ -1,0 +1,2285 @@
+diff --git a/public/audio/18.1.mp3 b/public/audio/18.1.mp3
+index 7547e8d..660c254 100644
+Binary files a/public/audio/18.1.mp3 and b/public/audio/18.1.mp3 differ
+diff --git a/public/audio/18.10.mp3 b/public/audio/18.10.mp3
+index a374d86..ce9bc1f 100644
+Binary files a/public/audio/18.10.mp3 and b/public/audio/18.10.mp3 differ
+diff --git a/public/audio/18.11.mp3 b/public/audio/18.11.mp3
+index 136d89e..798e9b3 100644
+Binary files a/public/audio/18.11.mp3 and b/public/audio/18.11.mp3 differ
+diff --git a/public/audio/18.2.mp3 b/public/audio/18.2.mp3
+index 972b024..a834ba8 100644
+Binary files a/public/audio/18.2.mp3 and b/public/audio/18.2.mp3 differ
+diff --git a/public/audio/18.3.mp3 b/public/audio/18.3.mp3
+index a119445..4c26dcd 100644
+Binary files a/public/audio/18.3.mp3 and b/public/audio/18.3.mp3 differ
+diff --git a/public/audio/18.4.mp3 b/public/audio/18.4.mp3
+index 1f0ffff..5d5e8eb 100644
+Binary files a/public/audio/18.4.mp3 and b/public/audio/18.4.mp3 differ
+diff --git a/public/audio/18.5.mp3 b/public/audio/18.5.mp3
+index e29fa23..f291f3b 100644
+Binary files a/public/audio/18.5.mp3 and b/public/audio/18.5.mp3 differ
+diff --git a/public/audio/18.6.mp3 b/public/audio/18.6.mp3
+index a3e3acf..3878bff 100644
+Binary files a/public/audio/18.6.mp3 and b/public/audio/18.6.mp3 differ
+diff --git a/public/audio/18.7.mp3 b/public/audio/18.7.mp3
+index ea89c97..e8efada 100644
+Binary files a/public/audio/18.7.mp3 and b/public/audio/18.7.mp3 differ
+diff --git a/public/audio/18.8.mp3 b/public/audio/18.8.mp3
+index 3bfc6b6..597a070 100644
+Binary files a/public/audio/18.8.mp3 and b/public/audio/18.8.mp3 differ
+diff --git a/public/audio/18.9.mp3 b/public/audio/18.9.mp3
+index 49047c3..fd1b8d3 100644
+Binary files a/public/audio/18.9.mp3 and b/public/audio/18.9.mp3 differ
+diff --git a/public/audio/19.1.mp3 b/public/audio/19.1.mp3
+index abb3070..c086698 100644
+Binary files a/public/audio/19.1.mp3 and b/public/audio/19.1.mp3 differ
+diff --git a/public/audio/19.10.mp3 b/public/audio/19.10.mp3
+index 6bdaac1..9d036d9 100644
+Binary files a/public/audio/19.10.mp3 and b/public/audio/19.10.mp3 differ
+diff --git a/public/audio/19.11.mp3 b/public/audio/19.11.mp3
+index 09c9686..66267ab 100644
+Binary files a/public/audio/19.11.mp3 and b/public/audio/19.11.mp3 differ
+diff --git a/public/audio/19.2.mp3 b/public/audio/19.2.mp3
+index 3a7caf7..6cdee9d 100644
+Binary files a/public/audio/19.2.mp3 and b/public/audio/19.2.mp3 differ
+diff --git a/public/audio/19.3.mp3 b/public/audio/19.3.mp3
+index 1e6451f..37eeacc 100644
+Binary files a/public/audio/19.3.mp3 and b/public/audio/19.3.mp3 differ
+diff --git a/public/audio/19.4.mp3 b/public/audio/19.4.mp3
+index b81ec9b..27db63d 100644
+Binary files a/public/audio/19.4.mp3 and b/public/audio/19.4.mp3 differ
+diff --git a/public/audio/19.5.mp3 b/public/audio/19.5.mp3
+index 441a881..a226473 100644
+Binary files a/public/audio/19.5.mp3 and b/public/audio/19.5.mp3 differ
+diff --git a/public/audio/19.6.mp3 b/public/audio/19.6.mp3
+index 88a6131..55d407b 100644
+Binary files a/public/audio/19.6.mp3 and b/public/audio/19.6.mp3 differ
+diff --git a/public/audio/19.7.mp3 b/public/audio/19.7.mp3
+index a0b20af..0ded120 100644
+Binary files a/public/audio/19.7.mp3 and b/public/audio/19.7.mp3 differ
+diff --git a/public/audio/19.8.mp3 b/public/audio/19.8.mp3
+index e3f68af..923af07 100644
+Binary files a/public/audio/19.8.mp3 and b/public/audio/19.8.mp3 differ
+diff --git a/public/audio/19.9.mp3 b/public/audio/19.9.mp3
+index 44b7414..119deb9 100644
+Binary files a/public/audio/19.9.mp3 and b/public/audio/19.9.mp3 differ
+diff --git a/src/data/lessons/lesson18.ts b/src/data/lessons/lesson18.ts
+index 33647ed..62a356e 100644
+--- a/src/data/lessons/lesson18.ts
++++ b/src/data/lessons/lesson18.ts
+@@ -135,89 +135,1031 @@ export const LESSON_18: Lesson = {
+       id: 1,
+       eyebrow: 'УРОК 18 · 1/11 · ИНФИНИТИВ',
+       title: 'A főnévi igenév',
+-      subtitle: 'Базовая форма на -ni',
+-      body: `<p>Венгерский инфинитив обычно узнаётся по <b>-ni</b>: <b>tanul → tanulni</b>, <b>ír → írni</b>, <b>olvas → olvasni</b>, <b>főz → főzni</b>.</p><p>Но правило не сводится к механическому «добавь -ni к словарной форме». У <b>-ik</b>-глаголов словарное <b>-ik</b> не сохраняется: <b>dolgozik → dolgozni</b>. Частые формы полезно выучить целиком: <b>megy → menni</b>, <b>eszik → enni</b>, <b>iszik → inni</b>, <b>van → lenni</b>.</p><div class="note"><b>Can-Do:</b> сообщить, что ты умеешь, должен, можешь по правилу, хочешь или хотел(а) бы сделать; понять практические правила и простой совет.</div>`,
+-    },
+-    {
++      subtitle: 'Сначала найди инфинитив: именно он нужен большинству модальных конструкций',
++      type: 'grammar',
++      note: 'Венгерская словарная форма глагола и инфинитив — не одно и то же. На этом слайде учим базовый инфинитив; личные формы с kell начнутся только на 18.3.',
++      warn: 'Не используй правило «к любой словарной форме просто добавить -ni». Для частотных неправильных глаголов инфинитив нужно узнавать целиком.',
++      task: 'Для каждого глагола сначала назови словарную форму, затем инфинитив. После этого проверь, можешь ли быстро узнать инфинитив внутри модальной конструкции.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Что такое инфинитив</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="főnévi igenév" data-speak-lang="hu-HU">főnévi igenév</button>
++          — венгерский термин для инфинитива.
++        </p>
++
++        <div class="note">
++          Для большинства глаголов инфинитив легко узнать по окончанию <b>-ni</b>.
++          Это форма действия без указания лица: «учиться», «читать», «готовить».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Прямой регулярный шаблон</h4>
++
++        <table class="conj">
++          <tr><th>Словарная форма</th><th>Инфинитив</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tanul" data-speak-lang="hu-HU">tanul</button></td>
++            <td><button class="speak-btn" data-speak-text="tanulni" data-speak-lang="hu-HU">tanulni</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="ír" data-speak-lang="hu-HU">ír</button></td>
++            <td><button class="speak-btn" data-speak-text="írni" data-speak-lang="hu-HU">írni</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="olvas" data-speak-lang="hu-HU">olvas</button></td>
++            <td><button class="speak-btn" data-speak-text="olvasni" data-speak-lang="hu-HU">olvasni</button></td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="főz" data-speak-lang="hu-HU">főz</button></td>
++            <td><button class="speak-btn" data-speak-text="főzni" data-speak-lang="hu-HU">főzni</button></td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Здесь удобно видеть модель «основа + <b>-ni</b>».
++          Но сначала убедись, что перед тобой действительно простая основа.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Что делать со словарной формой на -ik</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="dolgozik" data-speak-lang="hu-HU">dolgozik</button>
++          →
++          <button class="speak-btn" data-speak-text="dolgozni" data-speak-lang="hu-HU">dolgozni</button>
++        </p>
++
++        <div class="note">
++          В инфинитиве словарное <b>-ik</b> не сохраняется.
++          Поэтому не получаем форму вроде <s>dolgozikni</s>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Частотные формы, которые лучше выучить целиком</h4>
++
++        <table class="conj">
++          <tr><th>Словарная форма</th><th>Инфинитив</th><th>Смысл</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="megy" data-speak-lang="hu-HU">megy</button></td>
++            <td><button class="speak-btn" data-speak-text="menni" data-speak-lang="hu-HU">menni</button></td>
++            <td>идти</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="eszik" data-speak-lang="hu-HU">eszik</button></td>
++            <td><button class="speak-btn" data-speak-text="enni" data-speak-lang="hu-HU">enni</button></td>
++            <td>есть</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="iszik" data-speak-lang="hu-HU">iszik</button></td>
++            <td><button class="speak-btn" data-speak-text="inni" data-speak-lang="hu-HU">inni</button></td>
++            <td>пить</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="van" data-speak-lang="hu-HU">van</button></td>
++            <td><button class="speak-btn" data-speak-text="lenni" data-speak-lang="hu-HU">lenni</button></td>
++            <td>быть</td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          Не пытайся вывести эти четыре формы из одного школьного правила.
++          Для уровня A2 надёжнее узнавать их сразу как готовые пары.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Зачем инфинитив нужен уже сейчас</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tudok vezetni." data-speak-lang="hu-HU">Tudok vezetni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet itt parkolni?" data-speak-lang="hu-HU">Lehet itt parkolni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretnék pihenni." data-speak-lang="hu-HU">Szeretnék pihenni.</button></p>
++
++        <div class="note">
++          Во всех трёх примерах действие стоит в базовом инфинитиве.
++          На следующем слайде разберём, почему модальные слова выбираются по разному смыслу.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Какой инфинитив у tanul?</p>
++          <p>Какой инфинитив у dolgozik?</p>
++          <p>Какой инфинитив у megy?</p>
++          <p>Какие две формы из enni, inni, lenni ты можешь назвать без подсказки?</p>
++        </details>
++
++        <div class="note">
++          Граница 18.1: пока только базовый инфинитив.
++          Формы типа «мне нужно идти» с личным окончанием начнутся на 18.3.
++        </div>
++      `,
++    },    {
+       id: 2,
+       eyebrow: 'УРОК 18 · 2/11 · КАРТА МОДАЛЬНЫХ ФУНКЦИЙ',
+       title: 'Kell, lehet, szabad, tud, szeretnék, akarok',
+-      subtitle: 'Не все модели означают одно и то же',
+-      body: `<table class="conj"><tr><th>Модель</th><th>Функция</th><th>Пример</th></tr><tr><td><b>tud + инф.</b></td><td>способность</td><td>Tudok magyarul beszélni.</td></tr><tr><td><b>kell</b></td><td>необходимость</td><td>Holnap korán kell felkelnem.</td></tr><tr><td><b>lehet + инф.</b></td><td>разрешено / возможно</td><td>Lehet itt parkolni?</td></tr><tr><td><b>nem szabad + инф.</b></td><td>запрещено</td><td>Itt nem szabad dohányozni.</td></tr><tr><td><b>szeretnék + инф.</b></td><td>вежливое желание</td><td>Szeretnék időpontot kérni.</td></tr><tr><td><b>akarok + инф.</b></td><td>прямое намерение</td><td>El akarok menni a boltba.</td></tr></table>`,
+-    },
+-    {
++      subtitle: 'Сначала выбери смысл: способность, необходимость, правило или желание',
++      type: 'grammar',
++      note: 'Это карта функций. Не учи шесть слов как взаимозаменяемые переводы русского «могу / надо / хочу». Сначала определи ситуацию, потом выбирай модель.',
++      warn: 'На этом слайде не выводим полные парадигмы. Личный инфинитив с kell — следующий слайд; различие tud / lehet / szabad подробно закрепится на 18.4.',
++      task: 'Для каждой из 6 ситуаций сначала назови функцию по-русски, затем выбери венгерскую модель и только после этого произнеси пример.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта из шести функций</h4>
++
++        <table class="conj">
++          <tr><th>Что хочешь выразить?</th><th>Модель</th><th>Пример</th></tr>
++
++          <tr>
++            <td><b>Я умею / способен</b></td>
++            <td>tud + инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="Tudok vezetni." data-speak-lang="hu-HU">Tudok vezetni.</button></td>
++          </tr>
++
++          <tr>
++            <td><b>Мне / кому-то нужно</b></td>
++            <td>kell + личный инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="Holnap dolgoznom kell." data-speak-lang="hu-HU">Holnap dolgoznom kell.</button></td>
++          </tr>
++
++          <tr>
++            <td><b>Можно по правилу / ситуации?</b></td>
++            <td>lehet + инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="Lehet itt fényképezni?" data-speak-lang="hu-HU">Lehet itt fényképezni?</button></td>
++          </tr>
++
++          <tr>
++            <td><b>Нельзя по правилу</b></td>
++            <td>nem szabad + инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="Itt nem szabad dohányozni." data-speak-lang="hu-HU">Itt nem szabad dohányozni.</button></td>
++          </tr>
++
++          <tr>
++            <td><b>Я хотел(а) бы — вежливо</b></td>
++            <td>szeretnék + инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="Szeretnék időpontot kérni." data-speak-lang="hu-HU">Szeretnék időpontot kérni.</button></td>
++          </tr>
++
++          <tr>
++            <td><b>Я хочу / намерен — прямо</b></td>
++            <td>akarok + инфинитив</td>
++            <td><button class="speak-btn" data-speak-text="El akarok menni a boltba." data-speak-lang="hu-HU">El akarok menni a boltba.</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Быстрый выбор по ситуации</h4>
++
++        <table class="conj">
++          <tr><th>Вопрос к себе</th><th>Выбирай</th></tr>
++          <tr><td>Есть навык или реальная способность?</td><td><b>tud</b></td></tr>
++          <tr><td>Есть обязанность / необходимость конкретного человека?</td><td><b>kell</b></td></tr>
++          <tr><td>Правило или ситуация разрешает действие?</td><td><b>lehet</b></td></tr>
++          <tr><td>Правило запрещает действие?</td><td><b>nem szabad</b></td></tr>
++          <tr><td>Нужно выразить просьбу или желание вежливо?</td><td><b>szeretnék</b></td></tr>
++          <tr><td>Нужно прямо сообщить своё намерение?</td><td><b>akarok</b></td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Где находится лицо</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tudok vezetni." data-speak-lang="hu-HU">Tudok vezetni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretnék pihenni." data-speak-lang="hu-HU">Szeretnék pihenni.</button></p>
++        <p><button class="speak-btn" data-speak-text="El akarok menni." data-speak-lang="hu-HU">El akarok menni.</button></p>
++
++        <div class="note">
++          В этих трёх моделях лицо уже видно по модальному слову, а действие остаётся в базовом инфинитиве.
++        </div>
++
++        <p class="mt-3"><button class="speak-btn" data-speak-text="Dolgoznom kell." data-speak-lang="hu-HU">Dolgoznom kell.</button></p>
++
++        <div class="note">
++          С <b>kell</b> при конкретном исполнителе лицо часто выражается на инфинитиве.
++          Сейчас только узнай модель; окончания подробно разберём на 18.3.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Две особенно опасные пары</h4>
++
++        <div class="warn">
++          <b>tud ≠ lehet:</b> «я умею / могу физически» и «здесь можно по правилу» — разные функции.
++          Подробное сравнение будет на 18.4.
++        </div>
++
++        <div class="warn">
++          <b>szeretnék ≠ akarok:</b> первое удобно для вежливой просьбы или желания;
++          второе звучит как прямое «хочу / намерен».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Мини-проверка без ответов</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">Ты умеешь водить. Какую модель выберешь?</p>
++          <p>Тебе завтра обязательно нужно работать. Какую?</p>
++          <p>В музее спрашиваешь разрешение фотографировать. Какую?</p>
++          <p>Табличка запрещает курить. Какую?</p>
++          <p>Вежливо просишь время на приём. Какую?</p>
++          <p>Прямо говоришь, что хочешь пойти в магазин. Какую?</p>
++        </details>
++
++        <div class="note">
++          Граница 18.2: запомни функцию каждой модели.
++          Формообразование с <b>kell</b> — на 18.3, тонкое различие возможности и разрешения — на 18.4.
++        </div>
++      `,
++    },    {
+       id: 3,
+       eyebrow: 'УРОК 18 · 3/11 · KELL',
+       title: 'Mennem kell',
+-      subtitle: 'Лицо выражает личный инфинитив',
+-      body: `<p>Когда нужно сказать, <b>кому именно</b> надо выполнить действие, с <b>kell</b> используется личный инфинитив: <b>mennem kell, menned kell, mennie kell</b>; <b>dolgoznom kell, dolgoznod kell, dolgoznia kell</b>; <b>tanulnom kell, tanulnod kell</b>.</p><p><b>Nekem mennem kell.</b> Здесь nekem только подчёркивает «мне», а личное окончание в mennem всё равно остаётся. Не разбирай форму как <b>menni + m</b>.</p><div class="note">Без конкретного лица возможна общая конструкция: <b>Itt várni kell.</b> Формы <b>mennünk, mennetek, menniük</b> пока достаточно узнавать.</div>`,
+-    },
+-    {
++      subtitle: 'Общая необходимость ≠ необходимость конкретного человека',
++      type: 'grammar',
++      note: 'С kell есть два полезных шаблона: общий безличный и личный. На A2 продуктивно тренируем прежде всего 1-е, 2-е и 3-е лицо единственного числа.',
++      warn: 'Не разбирай mennem как menni + m. Личный инфинитив — отдельная форма; в ней меняется окончание и иногда вид основы.',
++      task: 'Сначала реши: речь вообще о правиле/необходимости или о конкретном человеке? Затем выбери базовый или личный инфинитив.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Общая необходимость: кто именно не указан</h4>
++
++        <p><button class="speak-btn" data-speak-text="Itt várni kell." data-speak-lang="hu-HU">Itt várni kell.</button></p>
++
++        <div class="note">
++          Здесь смысл общий: «здесь нужно ждать».
++          Конкретный исполнитель не назван, поэтому используется базовый инфинитив.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Конкретный человек: личный инфинитив</h4>
++
++        <table class="conj">
++          <tr><th>Кому нужно?</th><th>Пример с menni</th><th>Смысл</th></tr>
++          <tr>
++            <td>мне</td>
++            <td><button class="speak-btn" data-speak-text="mennem kell" data-speak-lang="hu-HU">mennem kell</button></td>
++            <td>мне нужно идти</td>
++          </tr>
++          <tr>
++            <td>тебе</td>
++            <td><button class="speak-btn" data-speak-text="menned kell" data-speak-lang="hu-HU">menned kell</button></td>
++            <td>тебе нужно идти</td>
++          </tr>
++          <tr>
++            <td>ему / ей</td>
++            <td><button class="speak-btn" data-speak-text="mennie kell" data-speak-lang="hu-HU">mennie kell</button></td>
++            <td>ему / ей нужно идти</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          На этом этапе запоминай эти три формы как рабочую мини-парадигму.
++          Полную систему личного инфинитива не нужно выводить из одного окончания.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Та же функция с другим глаголом</h4>
++
++        <table class="conj">
++          <tr><th>Лицо</th><th>dolgozni + kell</th></tr>
++          <tr><td>я</td><td><button class="speak-btn" data-speak-text="dolgoznom kell" data-speak-lang="hu-HU">dolgoznom kell</button></td></tr>
++          <tr><td>ты</td><td><button class="speak-btn" data-speak-text="dolgoznod kell" data-speak-lang="hu-HU">dolgoznod kell</button></td></tr>
++          <tr><td>он / она</td><td><button class="speak-btn" data-speak-text="dolgoznia kell" data-speak-lang="hu-HU">dolgoznia kell</button></td></tr>
++        </table>
++
++        <p class="mt-3"><button class="speak-btn" data-speak-text="Holnap dolgoznom kell." data-speak-lang="hu-HU">Holnap dolgoznom kell.</button></p>
++        <p><button class="speak-btn" data-speak-text="Pihenned kell." data-speak-lang="hu-HU">Pihenned kell.</button></p>
++
++        <div class="note">
++          Эти два примера напрямую пригодятся в контекстной практике:
++          необходимость для «я» и совет/необходимость для «ты».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Зачем иногда добавляют nekem</h4>
++
++        <p><button class="speak-btn" data-speak-text="Nekem mennem kell." data-speak-lang="hu-HU">Nekem mennem kell.</button></p>
++
++        <div class="note">
++          <b>nekem</b> подчёркивает «именно мне».
++          Но оно не заменяет личную форму: <b>mennem</b> всё равно остаётся.
++        </div>
++
++        <div class="warn">
++          Ошибка: <s>Nekem menni kell</s> в значении «мне нужно идти» как основная личная модель.
++          Для конкретного «мне» на этом уроке используй <b>Nekem mennem kell.</b>
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Множественное число — пока только узнавать</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="mennünk" data-speak-lang="hu-HU">mennünk</button>,
++          <button class="speak-btn" data-speak-text="mennetek" data-speak-lang="hu-HU">mennetek</button>,
++          <button class="speak-btn" data-speak-text="menniük" data-speak-lang="hu-HU">menniük</button>
++        </p>
++
++        <div class="note">
++          Эти формы полезно узнавать в тексте и речи.
++          Активно строить всю множественную парадигму на 18.3 не требуется.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Как сказать общее «здесь нужно ждать»?</p>
++          <p>Как сказать «мне нужно идти»?</p>
++          <p>Как сказать «тебе нужно отдохнуть»?</p>
++          <p>Как сказать «завтра мне нужно работать»?</p>
++        </details>
++
++        <div class="note">
++          Граница 18.3: только необходимость с <b>kell</b>.
++          На следующем слайде вернёмся к разнице между способностью, разрешением и запретом.
++        </div>
++      `,
++    },    {
+       id: 4,
+       eyebrow: 'УРОК 18 · 4/11 · LEHET, SZABAD И TUD',
+       title: 'Lehet / szabad ≠ tud',
+-      subtitle: 'Правило ситуации и способность человека',
+-      body: `<p><b>Tudok úszni.</b> — человек умеет плавать. <b>Lehet itt úszni?</b> — разрешает ли место или ситуация плавать? <b>Itt nem szabad úszni.</b> — это запрещено правилом.</p><div class="note">Русское «могу/можно» смешивает разные значения. В L18: <b>tud</b> описывает способность; <b>lehet</b> — доступную возможность или разрешение; <b>nem szabad</b> — запрет. <b>Lehet, hogy...</b> — другая конструкция и здесь только узнаётся.</div>`,
+-    },
+-    {
++      subtitle: '«Могу» как способность и «можно» как правило — разные венгерские модели',
++      type: 'grammar',
++      note: 'Русское «могу / можно» скрывает несколько смыслов. Перед выбором формы спроси: это способность человека, разрешение ситуации или запрет правила?',
++      warn: 'Не заменяй tud и lehet друг другом только потому, что по-русски оба иногда переводятся словом «можно / могу».',
++      task: 'Разбери каждую ситуацию по трём вопросам: человек способен? место/правило разрешает? правило запрещает?',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. tud — способность или реальная возможность человека</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tudok úszni." data-speak-lang="hu-HU">Tudok úszni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Ma nem tudok korábban elmenni." data-speak-lang="hu-HU">Ma nem tudok korábban elmenni.</button></p>
++
++        <div class="note">
++          В первом примере это навык.
++          Во втором — человек реально не может сделать действие сегодня.
++          В обоих случаях речь о возможности конкретного человека, а не о правиле места.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. lehet — ситуация допускает или делает действие возможным</h4>
++
++        <p><button class="speak-btn" data-speak-text="Lehet itt úszni?" data-speak-lang="hu-HU">Lehet itt úszni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet itt fényképezni?" data-speak-lang="hu-HU">Lehet itt fényképezni?</button></p>
++
++        <div class="note">
++          Такие вопросы естественны, когда нужно узнать, допускается ли действие здесь или в этой ситуации.
++          Конкретное «я умею» они не выражают.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. szabad / nem szabad — разрешение и запрет правила</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szabad itt fényképezni?" data-speak-lang="hu-HU">Szabad itt fényképezni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad dohányozni." data-speak-lang="hu-HU">Itt nem szabad dohányozni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad parkolni." data-speak-lang="hu-HU">Itt nem szabad parkolni.</button></p>
++
++        <div class="note">
++          <b>szabad</b> подчёркивает разрешённость по правилу.
++          Особенно важный готовый блок уровня A2 — <b>nem szabad + инфинитив</b> для запрета.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Один русский вопрос — три разных венгерских смысла</h4>
++
++        <table class="conj">
++          <tr><th>Ситуация</th><th>Что проверяем?</th><th>Модель</th></tr>
++          <tr><td>Я умею плавать?</td><td>мой навык</td><td><b>tud</b></td></tr>
++          <tr><td>Здесь можно плавать?</td><td>возможность / разрешение места</td><td><b>lehet</b></td></tr>
++          <tr><td>Здесь запрещено плавать?</td><td>правило запрещает</td><td><b>nem szabad</b></td></tr>
++        </table>
++
++        <div class="warn">
++          Типичная ошибка: увидеть русское «можно» и автоматически выбрать одну и ту же венгерскую форму.
++          Сначала определи источник ограничения: человек или правило.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Контекстная практика уже проверяет это различие</h4>
++
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad parkolni." data-speak-lang="hu-HU">Itt nem szabad parkolni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet itt fényképezni?" data-speak-lang="hu-HU">Lehet itt fényképezni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Ma nem tudok korábban elmenni." data-speak-lang="hu-HU">Ma nem tudok korábban elmenni.</button></p>
++
++        <div class="note">
++          Если в упражнении ошибся, не просто запоминай правильный вариант.
++          Назови функцию: способность, разрешение/возможность или запрет.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что пока не изучаем</h4>
++
++        <p><button class="speak-btn" data-speak-text="Lehet, hogy..." data-speak-lang="hu-HU">Lehet, hogy...</button></p>
++
++        <div class="note">
++          Это другая конструкция со значением «возможно, что...».
++          На 18.4 её достаточно узнавать; активно строить такие предложения пока не требуется.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Ты умеешь водить. Какая модель?</p>
++          <p>В музее спрашиваешь, можно ли фотографировать. Какая?</p>
++          <p>Знак запрещает парковаться. Какая?</p>
++          <p>Сегодня ты реально не можешь уйти раньше. Какая?</p>
++        </details>
++
++        <div class="note">
++          Граница 18.4: различаем способность, разрешение/возможность и запрет.
++          На 18.5 перейдём к вежливому желанию и прямому намерению.
++        </div>
++      `,
++    },    {
+       id: 5,
+       eyebrow: 'УРОК 18 · 5/11 · ЖЕЛАНИЕ И ПРАКТИКА',
+       title: 'Szeretnék és akarok',
+-      subtitle: 'Вежливое желание и прямое намерение в контексте',
++      subtitle: 'Вежливое желание и прямое намерение: выбирай по ситуации, затем проверь все модальные функции',
++      type: 'practice',
+       activities: [L18_CONTROLLED],
+-      body: `<p><b>Szeretnék pihenni.</b> — вежливое «я хотел(а) бы». <b>Pihenni akarok.</b> — прямое желание или намерение.</p><p>В просьбе обычно уместнее <b>Szeretnék időpontot kérni.</b> В L18 szeretnék остаётся готовым частотным блоком; полная условная парадигма будет в L23.</p><div class="note">Контекстная практика проверяет пять функций: способность, обязанность/совет, разрешение/запрет, намерение и вежливую просьбу.</div>`,
+-    },
+-    {
++      note: 'szeretnék здесь учим как готовую частотную форму для вежливого желания и просьбы. Полная система условного наклонения будет только в Lesson 23.',
++      warn: 'akarok не является «неправильным» словом. Оно выражает прямое желание или намерение, поэтому в просьбе к сотруднику, врачу или координатору часто звучит слишком прямолинейно.',
++      task: 'Сначала различи szeretnék и akarok, затем пройди 14 контекстных заданий. Порог Controlled Practice — минимум 11 правильных из 14.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Вежливое желание или просьба</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szeretnék pihenni." data-speak-lang="hu-HU">Szeretnék pihenni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretnék időpontot kérni." data-speak-lang="hu-HU">Szeretnék időpontot kérni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szeretnék beszélni a koordinátorral." data-speak-lang="hu-HU">Szeretnék beszélni a koordinátorral.</button></p>
++
++        <div class="note">
++          После <b>szeretnék</b> действие остаётся в базовом инфинитиве.
++          Для этого урока форму лучше воспринимать целиком как «я хотел(а) бы».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Прямое желание или намерение</h4>
++
++        <p><button class="speak-btn" data-speak-text="Pihenni akarok." data-speak-lang="hu-HU">Pihenni akarok.</button></p>
++        <p><button class="speak-btn" data-speak-text="El akarok menni a boltba." data-speak-lang="hu-HU">El akarok menni a boltba.</button></p>
++        <p><button class="speak-btn" data-speak-text="El akarok kezdeni magyarul tanulni." data-speak-lang="hu-HU">El akarok kezdeni magyarul tanulni.</button></p>
++
++        <div class="note">
++          <b>akarok</b> подходит, когда ты прямо сообщаешь своё собственное намерение.
++          В нейтральном рассказе это нормально; в вежливой просьбе обычно выбирают другую модель.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Сравни одну ситуацию</h4>
++
++        <table class="conj">
++          <tr><th>Контекст</th><th>Естественный выбор</th></tr>
++          <tr>
++            <td>Ты рассказываешь другу о своём плане</td>
++            <td><button class="speak-btn" data-speak-text="El akarok menni a boltba." data-speak-lang="hu-HU">El akarok menni a boltba.</button></td>
++          </tr>
++          <tr>
++            <td>Ты вежливо просишь время на приём</td>
++            <td><button class="speak-btn" data-speak-text="Szeretnék időpontot kérni." data-speak-lang="hu-HU">Szeretnék időpontot kérni.</button></td>
++          </tr>
++        </table>
++
++        <div class="warn">
++          Не выбирай форму только по русскому слову «хочу».
++          Сначала спроси: я просто сообщаю намерение или обращаюсь к другому человеку вежливо?
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Что проверяют 14 контекстных заданий</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Функция</th></tr>
++          <tr><td>A</td><td>способность / реальная возможность человека + базовый инфинитив</td></tr>
++          <tr><td>B</td><td>необходимость и совет с kell</td></tr>
++          <tr><td>C</td><td>разрешение / возможность ситуации и запрет</td></tr>
++          <tr><td>D</td><td>прямое намерение с akarok</td></tr>
++          <tr><td>E</td><td>вежливое желание / просьба с szeretnék</td></tr>
++        </table>
++
++        <div class="note">
++          Отдельно встретится проверка базового инфинитива.
++          То есть практика собирает вместе материал 18.1–18.5, а не только два слова этого слайда.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Если ошибся — диагностируй функцию</h4>
++
++        <ol class="tasklist">
++          <li>неправильно выбрал способность и правило → повтори 18.4;</li>
++          <li>ошибся в необходимости конкретного лица → повтори 18.3;</li>
++          <li>перепутал прямое намерение и вежливую просьбу → сравни блоки 1–3 этого слайда;</li>
++          <li>ошибся в инфинитиве → вернись к 18.1.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Controlled Practice: <b>11 из 14</b>.
++          Цель — выбрать модель по функции, а не угадывать знакомое слово.
++        </div>
++      `,
++    },    {
+       id: 6,
+       eyebrow: 'УРОК 18 · 6/11 · ЧТЕНИЕ',
+       title: 'Az első nap egy új munkahelyen',
+-      subtitle: 'Правила, возможности и намерения нового сотрудника',
++      subtitle: 'Читай рабочие правила по функции: нужно → можно → нельзя → может → хочет',
++      type: 'reading',
+       activities: [L18_READING],
+-      body: `<p>Читай ради практической информации: когда нужно прийти, что можно и нельзя делать, кто может помочь и чему Дора хочет научиться.</p>`,
+-    },
+-    {
++      note: 'Текст длиннее предыдущих примеров и содержит формы, которые нужны только для понимания. Не пытайся разбирать каждое окончание: цель — извлечь практическую информацию.',
++      warn: 'В тексте встретятся рецептивные формы вне продуктивной темы этого урока. Не выводи из них новую грамматику; используй контекст и уже знакомые модальные сигналы.',
++      task: 'Прочитай текст в два прохода. Затем ответь на 7 вопросов; для прохождения нужно минимум 6 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Первый проход — рабочая ситуация</h4>
++
++        <table class="conj">
++          <tr><th>Что выяснить</th><th>Твоя заметка</th></tr>
++          <tr><td>когда начинается рабочий день и что происходит до начала работы</td><td>...</td></tr>
++          <tr><td>где сотрудник оставляет вещи</td><td>...</td></tr>
++          <tr><td>кто помогает в первый день</td><td>...</td></tr>
++          <tr><td>какие правила действуют во время работы и перерыва</td><td>...</td></tr>
++          <tr><td>чему сотрудница хочет научиться</td><td>...</td></tr>
++        </table>
++
++        <div class="note">
++          Не заполняй таблицу по памяти из вариантов ответа.
++          Сначала найди доказательство в самом тексте.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Второй проход — пометь модальную функцию</h4>
++
++        <table class="conj">
++          <tr><th>Сигнал в тексте</th><th>Какую функцию ищем</th></tr>
++          <tr><td><button class="speak-btn" data-speak-text="kell" data-speak-lang="hu-HU">kell</button></td><td>что обязательно / необходимо</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="nem tud" data-speak-lang="hu-HU">nem tud</button></td><td>что человек пока не может</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="lehet" data-speak-lang="hu-HU">lehet</button></td><td>что допускается ситуацией</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="nem szabad" data-speak-lang="hu-HU">nem szabad</button></td><td>что запрещено</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="szeretné" data-speak-lang="hu-HU">szeretné</button></td><td>чему она хотела бы научиться</td></tr>
++          <tr><td><button class="speak-btn" data-speak-text="akarja" data-speak-lang="hu-HU">akarja</button></td><td>что она прямо хочет лучше знать</td></tr>
++        </table>
++
++        <div class="note">
++          Здесь встречаются не только формы первого лица из предыдущего слайда.
++          В чтении важно узнавать функцию по контексту, даже если окончание другое.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Неизвестная форма — не повод останавливаться</h4>
++
++        <p>
++          В тексте есть формы со значением возможности вроде
++          <button class="speak-btn" data-speak-text="hagyhatja" data-speak-lang="hu-HU">hagyhatja</button>,
++          <button class="speak-btn" data-speak-text="teheti" data-speak-lang="hu-HU">teheti</button>,
++          <button class="speak-btn" data-speak-text="kérdezhet" data-speak-lang="hu-HU">kérdezhet</button>.
++        </p>
++
++        <div class="warn">
++          Сейчас не изучай образование этих форм.
++          Для Reading достаточно понять из контекста, что они описывают доступное или разрешённое действие.
++        </div>
++
++        <p class="mt-3">
++          Также может встретиться
++          <button class="speak-btn" data-speak-text="tud majd segíteni" data-speak-lang="hu-HU">tud majd segíteni</button>.
++        </p>
++
++        <div class="note">
++          Это рецептивный фрагмент текста. Системное будущее будет в следующем уроке;
++          здесь достаточно понять общий смысл «сможет помочь».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Как отвечать на 7 вопросов</h4>
++
++        <ol class="tasklist">
++          <li>найди нужный абзац;</li>
++          <li>определи функцию: необходимость, возможность, запрет, способность или желание;</li>
++          <li>только потом сравни варианты ответа;</li>
++          <li>если два варианта похожи, проверь конкретную деталь: время, место, причину или цель.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Reading: <b>6 из 7</b>.
++          Цель — понять правила и намерения нового сотрудника, а не перевести текст слово в слово.
++        </div>
++      `,
++    },    {
+       id: 7,
+       eyebrow: 'УРОК 18 · 7/11 · АУДИРОВАНИЕ',
+       title: 'Mit kell, lehet, tud és akar?',
+-      subtitle: 'Существующий синхронизированный Listening',
++      subtitle: 'Сначала кто и когда, затем модальная функция и действие',
++      type: 'listening',
+       activities: [L18_LISTENING],
+-      body: `<p>Слушай связку целиком: что человек должен сделать, что умеет, что возможно и чего хочет. Transcript открывается только после ответа.</p>`,
+-    },
+-    {
++      note: 'Это опубликованное Listening. Не открывай transcript до первой собственной попытки: сначала поймай структуру разговора, а не отдельные слова.',
++      warn: 'Не считай знакомое модальное слово готовым ответом. После него нужно услышать действие, время или причину.',
++      task: 'Прослушай запись минимум два раза. Затем ответь на 5 вопросов; для прохождения нужно минимум 4 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Первый проход — кто и когда</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="ma este" data-speak-lang="hu-HU">ma este</button>,
++          <button class="speak-btn" data-speak-text="előbb" data-speak-lang="hu-HU">előbb</button>,
++          <button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button>
++        </p>
++
++        <table class="conj">
++          <tr><th>Кто?</th><th>Когда?</th><th>Что за функция?</th></tr>
++          <tr><td>первый говорящий</td><td>сегодня вечером</td><td>...</td></tr>
++          <tr><td>первый говорящий</td><td>сначала</td><td>...</td></tr>
++          <tr><td>первый говорящий</td><td>завтра</td><td>...</td></tr>
++          <tr><td>Петер</td><td>—</td><td>...</td></tr>
++          <tr><td>Анна</td><td>—</td><td>...</td></tr>
++        </table>
++
++        <div class="note">
++          На первом прослушивании не заполняй действия целыми предложениями.
++          Достаточно связать человека и временной маркер.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Второй проход — услышь модальный сигнал</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="szeretnék" data-speak-lang="hu-HU">szeretnék</button> —
++          вежливое желание.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="kell" data-speak-lang="hu-HU">kell</button> —
++          необходимость.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="tudok" data-speak-lang="hu-HU">tudok</button> /
++          <button class="speak-btn" data-speak-text="nem tud" data-speak-lang="hu-HU">nem tud</button> —
++          возможность или невозможность человека.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="lehet" data-speak-lang="hu-HU">lehet</button> —
++          возможность ситуации.
++        </p>
++
++        <p>
++          <button class="speak-btn" data-speak-text="akar" data-speak-lang="hu-HU">akar</button> —
++          прямое желание / намерение.
++        </p>
++
++        <div class="note">
++          Услышал модальный сигнал — не останавливайся.
++          Следующее действие часто находится в инфинитиве рядом с ним.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Отдельно слушай причину</h4>
++
++        <p><button class="speak-btn" data-speak-text="mert" data-speak-lang="hu-HU">mert</button> — потому что.</p>
++
++        <div class="note">
++          Если вопрос спрашивает «почему человек не может?», после отрицательной возможности ищи причину после этого слова.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Третий проход — проверь 5 деталей</h4>
++
++        <ol class="tasklist">
++          <li>чего хочет первый говорящий;</li>
++          <li>что ему/ей нужно сделать раньше;</li>
++          <li>когда он/она может встретиться;</li>
++          <li>почему другой человек не может прийти;</li>
++          <li>чего хочет третий упомянутый человек.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Listening: <b>4 из 5</b>.
++          Transcript открывай только после собственной попытки и используй его для разбора ошибки, а не вместо слушания.
++        </div>
++      `,
++    },    {
+       id: 8,
+       eyebrow: 'УРОК 18 · 8/11 · ИНТЕРАКЦИЯ',
+       title: 'A tanfolyam szabályai',
+-      subtitle: 'Уточняем правила и договариваемся об альтернативе',
++      subtitle: '7 реплик ученика: правило → уточнение → проблема → альтернатива',
++      type: 'roleplay',
+       activities: [L18_ROLEPLAY],
+-      body: `<p>Не повторяй модель механически: задай свои вопросы о времени, ноутбуке, еде и ограничениях, объясни невозможность прийти и договорись о другом варианте.</p><div class="note">RolePlay даёт только PARTIAL evidence и требует квалифицированной проверки.</div>`,
+-    },
+-    {
++      note: 'В сценарии 15 ходов, из них 7 реплик ученика. RolePlay остаётся PARTIAL evidence: открытый ответ нельзя честно оценить полностью автоматически.',
++      warn: 'Не заучивай model answer целиком. Сначала определи функцию своей реплики, затем собери собственную фразу из знакомых моделей.',
++      task: 'Пройди 7 коммуникативных задач: время прихода → ноутбук → еда/напитки → запрет телефона → невозможность прийти → другая группа → подтверждение и завершение.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта 7 реплик ученика</h4>
++
++        <table class="conj">
++          <tr><th>Реплика</th><th>Коммуникативная задача</th><th>Главная функция</th></tr>
++          <tr><td>1</td><td>поприветствовать и спросить, к какому времени нужно приходить</td><td>необходимость</td></tr>
++          <tr><td>2</td><td>спросить, можно ли пользоваться ноутбуком</td><td>разрешение</td></tr>
++          <tr><td>3</td><td>спросить, где можно есть или пить</td><td>разрешение / возможность</td></tr>
++          <tr><td>4</td><td>уточнить, правильно ли понял запрет телефона</td><td>запрет</td></tr>
++          <tr><td>5</td><td>объяснить, почему в конкретное время не можешь прийти</td><td>невозможность + причина</td></tr>
++          <tr><td>6</td><td>спросить о другой группе</td><td>альтернатива / возможность</td></tr>
++          <tr><td>7</td><td>подтвердить новый вариант и вежливо завершить</td><td>реальная возможность + завершение</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Спросить о необходимости и разрешении</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mikorra kell megérkeznem?" data-speak-lang="hu-HU">Mikorra kell megérkeznem?</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet laptopot használni?" data-speak-lang="hu-HU">Lehet laptopot használni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Hol lehet enni vagy inni?" data-speak-lang="hu-HU">Hol lehet enni vagy inni?</button></p>
++
++        <div class="note">
++          Здесь не нужно строить новую грамматику.
++          Ты переносишь уже изученные функции в реальный диалог.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Уточнить запрет</h4>
++
++        <p><button class="speak-btn" data-speak-text="Jól értem, hogy itt nem szabad telefonálni?" data-speak-lang="hu-HU">Jól értem, hogy itt nem szabad telefonálni?</button></p>
++
++        <div class="note">
++          Полезная стратегия: сначала вежливо проверить, правильно ли ты понял правило,
++          а не сразу спорить или повторять табличку.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Объяснить проблему: не могу + потому что нужно</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szerdán reggel nem tudok eljönni." data-speak-lang="hu-HU">Szerdán reggel nem tudok eljönni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Dolgoznom kell." data-speak-lang="hu-HU">Dolgoznom kell.</button></p>
++
++        <div class="note">
++          Это хороший функциональный контраст:
++          сначала реальная невозможность человека, затем причина-необходимость.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Попросить альтернативу</h4>
++
++        <p><button class="speak-btn" data-speak-text="Lehet másik csoportba menni?" data-speak-lang="hu-HU">Lehet másik csoportba menni?</button></p>
++
++        <div class="note">
++          В реальном сценарии группа конкретизирована.
++          Здесь опора намеренно общая, чтобы не выдавать полный model answer.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Подтвердить и завершить</h4>
++
++        <p><button class="speak-btn" data-speak-text="Oda tudok érni." data-speak-lang="hu-HU">Oda tudok érni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Köszönöm szépen a segítséget!" data-speak-lang="hu-HU">Köszönöm szépen a segítséget!</button></p>
++
++        <div class="note">
++          В последней реплике покажи, что новый вариант тебе реально подходит,
++          и только потом заверши разговор.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Самопроверка после RolePlay</h4>
++
++        <ol class="tasklist">
++          <li>задал(а) вопрос о необходимости;</li>
++          <li>дважды использовал(а) функцию разрешения / возможности;</li>
++          <li>правильно уточнил(а) запрет;</li>
++          <li>объяснил(а) невозможность через причину;</li>
++          <li>договорился(-ась) об альтернативе;</li>
++          <li>вежливо завершил(а) разговор.</li>
++        </ol>
++
++        <div class="warn">
++          PARTIAL evidence означает не «плохо выполнено», а то, что свободную интеракцию
++          нельзя полностью подтвердить автоматической проверкой.
++        </div>
++      `,
++    },    {
+       id: 9,
+       eyebrow: 'УРОК 18 · 9/11 · ПИСЬМО',
+       title: 'Üzenet a koordinátornak',
+-      subtitle: 'Связное практическое сообщение, 80–100 слов',
++      subtitle: '80–100 слов: причина → не могу → должен(а) → альтернатива → вопрос → вежливый финал',
++      type: 'writing',
+       activities: [L18_WRITING],
+-      body: `<p>Соедини причину, невозможность, обязанность, запрос альтернативы и практический вопрос в одном сообщении.</p><div class="note">Writing остаётся PARTIAL без квалифицированной проверки.</div>`,
+-    },
+-    {
++      note: 'Это открытая письменная работа и она даёт PARTIAL evidence. Сначала составь план из 6 блоков, затем пиши связный текст.',
++      warn: 'Не копируй полный образец до собственной попытки. Для запроса альтернативы достаточно прямого вопроса с lehet; новую конструкцию с вопросительной частицей здесь отдельно не изучаем.',
++      task: 'Напиши 80–100 слов координатору курса. Проверь все 6 обязательных элементов рубрики перед отправкой.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. План сообщения из 6 блоков</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что должно быть</th></tr>
++          <tr><td>1</td><td>приветствие + причина, почему ты пишешь</td></tr>
++          <tr><td>2</td><td>что именно ты не можешь сделать</td></tr>
++          <tr><td>3</td><td>что тебе нужно сделать вместо этого</td></tr>
++          <tr><td>4</td><td>запрос другого времени или варианта</td></tr>
++          <tr><td>5</td><td>один практический вопрос</td></tr>
++          <tr><td>6</td><td>вежливое завершение</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Начало и причина сообщения</h4>
++
++        <p><button class="speak-btn" data-speak-text="Kedves Koordinátor!" data-speak-lang="hu-HU">Kedves Koordinátor!</button></p>
++        <p><button class="speak-btn" data-speak-text="Azért írok, mert..." data-speak-lang="hu-HU">Azért írok, mert...</button></p>
++
++        <div class="note">
++          После причины переходи сразу к проблеме.
++          Для A2 лучше несколько коротких ясных предложений, чем одно длинное.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Не могу + должен(а)</h4>
++
++        <p><button class="speak-btn" data-speak-text="Nem tudok..." data-speak-lang="hu-HU">Nem tudok...</button></p>
++        <p><button class="speak-btn" data-speak-text="Dolgoznom kell." data-speak-lang="hu-HU">Dolgoznom kell.</button></p>
++
++        <div class="note">
++          Здесь соединяются две разные функции урока:
++          реальная невозможность человека и необходимость выполнить другое действие.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Попросить другой вариант</h4>
++
++        <p><button class="speak-btn" data-speak-text="Lehet másik időpontot választani?" data-speak-lang="hu-HU">Lehet másik időpontot választani?</button></p>
++
++        <div class="note">
++          Это прямой вопрос о возможности, который уже укладывается в грамматику Lesson 18.
++          Не нужно усложнять письмо новой вопросительной конструкцией.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Добавить практический вопрос</h4>
++
++        <p><button class="speak-btn" data-speak-text="Lehet laptopot használni?" data-speak-lang="hu-HU">Lehet laptopot használni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Mikorra kell megérkeznem?" data-speak-lang="hu-HU">Mikorra kell megérkeznem?</button></p>
++
++        <div class="note">
++          Выбери один вопрос, который логично подходит именно к твоей ситуации.
++          Не вставляй обе фразы только ради объёма.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Вежливый финал</h4>
++
++        <p><button class="speak-btn" data-speak-text="Köszönöm a segítségét." data-speak-lang="hu-HU">Köszönöm a segítségét.</button></p>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Чек-лист перед отправкой</h4>
++
++        <table class="conj">
++          <tr><th>Есть?</th><th>Требование</th></tr>
++          <tr><td>□</td><td>80–100 слов</td></tr>
++          <tr><td>□</td><td>понятная причина сообщения</td></tr>
++          <tr><td>□</td><td>одно действие, которое ты не можешь выполнить</td></tr>
++          <tr><td>□</td><td>необходимость с kell</td></tr>
++          <tr><td>□</td><td>другое время или вариант</td></tr>
++          <tr><td>□</td><td>один практический вопрос</td></tr>
++          <tr><td>□</td><td>вежливое завершение</td></tr>
++        </table>
++
++        <div class="warn">
++          Если не хватает объёма, добавь конкретику о времени, причине или варианте.
++          Не добавляй новую грамматику только ради количества слов.
++        </div>
++      `,
++    },    {
+       id: 10,
+       eyebrow: 'УРОК 18 · 10/11 · OPTIONAL SPEAKING',
+       title: 'Mondd el!',
+-      subtitle: 'Короткие модальные фразы вслух',
++      subtitle: '1,5–2 минуты: способность → желание → нужно → не нужно → запрещено',
++      type: 'speaking',
+       optionalSpeaking: L18_SPEAKING,
+-      body: `<p>Используй текстовые опоры для самостоятельного монолога. Микрофон, score и evidence отсутствуют.</p>`,
+-    },
+-    {
++      note: 'Необязательная самопрактика: без микрофона, score и evidence. Ничего записывать, отправлять или автоматически оценивать не нужно.',
++      warn: 'Не пиши полный монолог заранее. Подготовь 6–8 ключевых слов и говори по пяти смысловым блокам.',
++      task: 'Говори 1,5–2 минуты: что умеешь, чему хочешь научиться, что обязан(а) делать, чего делать не обязан(а) и что запрещено в знакомом месте.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта монолога из 5 функций</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что сказать</th><th>Главная модель</th></tr>
++          <tr><td>1</td><td>что ты умеешь делать хорошо</td><td><b>tud</b></td></tr>
++          <tr><td>2</td><td>чему хочешь научиться / чего хотел(а) бы</td><td><b>szeretnék</b> или <b>akarok</b></td></tr>
++          <tr><td>3</td><td>что тебе нужно делать регулярно</td><td><b>kell</b></td></tr>
++          <tr><td>4</td><td>чего тебе делать не обязательно</td><td><b>nem kell</b></td></tr>
++          <tr><td>5</td><td>что запрещено в знакомом месте</td><td><b>nem szabad</b></td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Способность</h4>
++
++        <p><button class="speak-btn" data-speak-text="Jól tudok főzni." data-speak-lang="hu-HU">Jól tudok főzni.</button></p>
++
++        <div class="note">
++          Замени действие на своё настоящее умение.
++          Не обязательно использовать пример со слайда.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Желание или цель</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szeretnék megtanulni vezetni." data-speak-lang="hu-HU">Szeretnék megtanulni vezetni.</button></p>
++        <p><button class="speak-btn" data-speak-text="El akarok kezdeni többet olvasni." data-speak-lang="hu-HU">El akarok kezdeni többet olvasni.</button></p>
++
++        <div class="note">
++          Достаточно одной из двух функций: вежливое желание или прямое личное намерение.
++          Не вставляй обе конструкции только ради количества фраз.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Нужно и не нужно — не одно и то же, что запрет</h4>
++
++        <p><button class="speak-btn" data-speak-text="Minden nap dolgoznom kell." data-speak-lang="hu-HU">Minden nap dolgoznom kell.</button></p>
++        <p><button class="speak-btn" data-speak-text="Hétvégén nem kell dolgoznom." data-speak-lang="hu-HU">Hétvégén nem kell dolgoznom.</button></p>
++
++        <div class="warn">
++          <b>nem kell</b> = нет необходимости / не обязательно.
++          Это НЕ означает «запрещено».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Запрет</h4>
++
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad dohányozni." data-speak-lang="hu-HU">Itt nem szabad dohányozni.</button></p>
++
++        <div class="warn">
++          <b>nem szabad</b> = нельзя по правилу / запрещено.
++          Не заменяй эту функцию на <b>nem kell</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Если остановился</h4>
++
++        <p><button class="speak-btn" data-speak-text="Egy pillanat..." data-speak-lang="hu-HU">Egy pillanat...</button></p>
++        <p><button class="speak-btn" data-speak-text="Még egy dolog..." data-speak-lang="hu-HU">Még egy dolog...</button></p>
++
++        <div class="note">
++          Сделай короткую паузу и переходи к следующему смысловому блоку.
++          Не начинай монолог заново из-за одной ошибки.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Самопроверка после речи</h4>
++
++        <ol class="tasklist">
++          <li>говорил(а) примерно 1,5–2 минуты;</li>
++          <li>была способность с tud;</li>
++          <li>было желание или намерение;</li>
++          <li>были необходимость с kell и отсутствие необходимости с nem kell;</li>
++          <li>был запрет с nem szabad;</li>
++          <li>не перепутал(а) «не обязательно» и «запрещено».</li>
++        </ol>
++
++        <div class="note">
++          Эта Speaking Practice не создаёт evidence и не меняет статус целей автоматически.
++          Её задача — устно автоматизировать уже изученные функции.
++        </div>
++      `,
++    },    {
+       id: 11,
+       eyebrow: 'УРОК 18 · 11/11 · ИТОГИ',
+       title: 'Összefoglalás',
+-      subtitle: 'Проверка целей 18-го урока',
++      subtitle: 'Что должно работать после Lesson 18 — и чем это реально подтверждается',
++      type: 'summary',
+       activities: [L18_EXIT],
+-      body: `<ul class="tick"><li><b>tud</b> — способность; <b>kell</b> — необходимость или простой совет.</li><li><b>lehet</b> — разрешение/возможность; <b>nem szabad</b> — запрет.</li><li><b>szeretnék</b> — вежливое желание; <b>akarok</b> — прямое намерение.</li><li>Reading, Listening и Controlled Practice проверяются автоматически; Writing и RolePlay остаются PARTIAL.</li></ul><div class="note">Прохождение quiz не означает полного коммуникативного владения. L19 добавит планы и прогнозы с <b>fog + инфинитив</b>.</div>`,
+-    },
++      note: 'Это учебный checkpoint Lesson 18, а не официальный сертификат уровня. DIRECT означает прямое автоматическое подтверждение после порога; PARTIAL — открытую продукцию, которую автоматика не может честно оценить полностью.',
++      warn: 'Финальная типичная ошибка: nem kell = «не обязательно», а nem szabad = «запрещено». Эти функции нельзя менять местами.',
++      task: 'Перед Exit Check выполни 5 действий без подсказки: назови инфинитив → выбери модальную функцию → вырази необходимость → различи можно/умею/нельзя → различи вежливое и прямое желание.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Базовый инфинитив</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="tanulni" data-speak-lang="hu-HU">tanulni</button>,
++          <button class="speak-btn" data-speak-text="dolgozni" data-speak-lang="hu-HU">dolgozni</button>,
++          <button class="speak-btn" data-speak-text="menni" data-speak-lang="hu-HU">menni</button>
++        </p>
++
++        <div class="note">
++          Ты должен(на) узнавать базовый инфинитив и не путать его с личной формой при конкретной необходимости.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Необходимость: общая и личная</h4>
++
++        <p><button class="speak-btn" data-speak-text="Itt várni kell." data-speak-lang="hu-HU">Itt várni kell.</button></p>
++        <p><button class="speak-btn" data-speak-text="Mennem kell." data-speak-lang="hu-HU">Mennem kell.</button></p>
++        <p><button class="speak-btn" data-speak-text="Pihenned kell." data-speak-lang="hu-HU">Pihenned kell.</button></p>
++
++        <div class="note">
++          Общий шаблон не называет исполнителя; личный инфинитив показывает, кому именно нужно выполнить действие.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Способность, разрешение и запрет</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tudok úszni." data-speak-lang="hu-HU">Tudok úszni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet itt parkolni?" data-speak-lang="hu-HU">Lehet itt parkolni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad dohányozni." data-speak-lang="hu-HU">Itt nem szabad dohányozni.</button></p>
++
++        <div class="note">
++          Сначала определи источник возможности: способность человека или правило/ситуация.
++          Запрет правила выражается отдельной моделью.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Вежливое желание и прямое намерение</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szeretnék pihenni." data-speak-lang="hu-HU">Szeretnék pihenni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Pihenni akarok." data-speak-lang="hu-HU">Pihenni akarok.</button></p>
++
++        <div class="note">
++          Первое — удобный вежливый блок; второе — прямое сообщение о собственном желании или намерении.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Не нужно ≠ запрещено</h4>
++
++        <p><button class="speak-btn" data-speak-text="Hétvégén nem kell dolgoznom." data-speak-lang="hu-HU">Hétvégén nem kell dolgoznom.</button></p>
++        <p><button class="speak-btn" data-speak-text="Itt nem szabad dohányozni." data-speak-lang="hu-HU">Itt nem szabad dohányozni.</button></p>
++
++        <div class="warn">
++          В первом случае действие не обязательно.
++          Во втором случае действие запрещено правилом.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Что реально подтверждают задания</h4>
++
++        <table class="conj">
++          <tr><th>Цель</th><th>Основное evidence</th><th>Статус</th></tr>
++          <tr><td>узнавать и образовывать изученные инфинитивы</td><td>Controlled Practice</td><td><b>DIRECT</b> после порога</td></tr>
++          <tr><td>выбирать модальную модель по функции</td><td>Controlled Practice + RolePlay</td><td><b>DIRECT + PARTIAL</b></td></tr>
++          <tr><td>выражать необходимость / возможность</td><td>Reading + Writing</td><td><b>DIRECT + PARTIAL</b></td></tr>
++          <tr><td>различать вежливое и прямое желание</td><td>Controlled Practice + Writing</td><td><b>DIRECT + PARTIAL</b></td></tr>
++          <tr><td>понимать модальные функции на слух</td><td>Published Listening</td><td><b>DIRECT</b> после порога</td></tr>
++        </table>
++
++        <div class="note">
++          Пороги: Controlled Practice — <b>11/14</b>, Reading — <b>6/7</b>, Published Listening — <b>4/5</b>.
++          Writing и RolePlay дают PARTIAL evidence.
++          Optional Speaking Practice evidence не создаёт.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Финальная самопроверка</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">Можешь быстро назвать инфинитив у знакомого глагола?</p>
++          <p>Можешь сказать, что тебе нужно сделать?</p>
++          <p>Можешь различить «я могу» и «здесь можно»?</p>
++          <p>Можешь отличить «не обязательно» от «запрещено»?</p>
++          <p>Можешь выбрать между вежливым желанием и прямым намерением?</p>
++        </details>
++
++        <div class="warn">
++          Прохождение quiz и автоматических заданий не означает полного коммуникативного владения.
++          Следующий урок перейдёт к планам и прогнозам на будущее.
++        </div>
++      `,
++    }
+   ],
+-  vocabulary: [
+-    { id: 'l18_v1', hu: 'tanulni', ru: 'учиться', category: 'Инфинитив', exampleSentence: 'Magyarul szeretnék tanulni.' },
++  vocabulary: [    { id: 'l18_v1', hu: 'tanulni', ru: 'учиться', category: 'Инфинитив', exampleSentence: 'Magyarul szeretnék tanulni.' },
+     { id: 'l18_v2', hu: 'dolgozni', ru: 'работать', category: 'Инфинитив', exampleSentence: 'Holnap dolgoznom kell.' },
+     { id: 'l18_v3', hu: 'menni', ru: 'идти', category: 'Инфинитив', exampleSentence: 'Mennem kell.' },
+     { id: 'l18_v4', hu: 'mennem kell', ru: 'мне нужно идти', category: 'Модальная модель', exampleSentence: 'Most mennem kell.' },
+diff --git a/src/data/lessons/lesson19.ts b/src/data/lessons/lesson19.ts
+index 79b7458..2ee806e 100644
+--- a/src/data/lessons/lesson19.ts
++++ b/src/data/lessons/lesson19.ts
+@@ -143,88 +143,949 @@ export const LESSON_19: Lesson = {
+       id: 1,
+       eyebrow: 'УРОК 19 · 1/11 · ЛИНИЯ ВРЕМЕНИ',
+       title: 'Tegnap — ma — holnap',
+-      subtitle: 'Связываем знакомое прошлое и настоящее с будущим',
+-      body: `<p><b>Tegnap dolgoztam.</b> — вчера. <b>Ma dolgozom.</b> — сегодня. <b>Holnap dolgozom.</b> или <b>Holnap dolgozni fogok.</b> — завтра.</p><div class="note"><b>Can-Do:</b> рассказать о планах, договориться о времени, сделать простой прогноз, отреагировать на изменение и согласовать новый вариант. L19 не утверждает, что каждое будущее предложение требует fog.</div>`,
+-    },
+-    {
++      subtitle: 'Будущее определяется не только формой глагола, но и временным контекстом',
++      type: 'overview',
++      note: 'В венгерском не каждое будущее предложение требует fog. Если будущий момент уже понятен из времени или ситуации, настоящее время часто звучит естественно.',
++      warn: 'Не переноси автоматически английское правило «будущее = отдельная форма». Сначала посмотри на маркер времени и контекст.',
++      task: 'Для каждого примера сначала определи время по контексту: прошлое, настоящее или будущее. Затем объясни, почему в будущем примере fog может быть или не быть.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Одна линия времени</h4>
++
++        <table class="conj">
++          <tr><th>Время</th><th>Пример</th><th>Что замечаем</th></tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU">tegnap</button></td>
++            <td><button class="speak-btn" data-speak-text="Tegnap dolgoztam." data-speak-lang="hu-HU">Tegnap dolgoztam.</button></td>
++            <td>прошлое — здесь только знакомый ориентир</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="ma" data-speak-lang="hu-HU">ma</button></td>
++            <td><button class="speak-btn" data-speak-text="Ma dolgozom." data-speak-lang="hu-HU">Ma dolgozom.</button></td>
++            <td>настоящее / текущий день</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button></td>
++            <td><button class="speak-btn" data-speak-text="Holnap dolgozom." data-speak-lang="hu-HU">Holnap dolgozom.</button></td>
++            <td>форма настоящего, но значение будущее</td>
++          </tr>
++          <tr>
++            <td><button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button></td>
++            <td><button class="speak-btn" data-speak-text="Holnap dolgozni fogok." data-speak-lang="hu-HU">Holnap dolgozni fogok.</button></td>
++            <td>будущее выражено явно</td>
++          </tr>
++        </table>
++
++        <div class="note">
++          Два последних предложения могут говорить об одном и том же завтрашнем действии.
++          Разница не сводится к «правильно / неправильно».
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Будущее через настоящее время</h4>
++
++        <p><button class="speak-btn" data-speak-text="Este találkozom Annával." data-speak-lang="hu-HU">Este találkozom Annával.</button></p>
++        <p><button class="speak-btn" data-speak-text="Jövő héten Budapestre utazom." data-speak-lang="hu-HU">Jövő héten Budapestre utazom.</button></p>
++
++        <div class="note">
++          Когда план или будущий момент уже понятен, настоящее время очень часто используется для будущего.
++          Особенно естественно это звучит с конкретным временем, расписанием или договорённостью.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Явное будущее</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap dolgozni fogok." data-speak-lang="hu-HU">Holnap dolgozni fogok.</button></p>
++
++        <div class="note">
++          Конструкция с fog делает будущую перспективу явной.
++          Она будет особенно полезна дальше для прогнозов, обещаний и нейтрального сообщения о будущем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Маркеры будущего</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button>,
++          <button class="speak-btn" data-speak-text="ma este" data-speak-lang="hu-HU">ma este</button>,
++          <button class="speak-btn" data-speak-text="hétvégén" data-speak-lang="hu-HU">hétvégén</button>,
++          <button class="speak-btn" data-speak-text="jövő héten" data-speak-lang="hu-HU">jövő héten</button>,
++          <button class="speak-btn" data-speak-text="később" data-speak-lang="hu-HU">később</button>
++        </p>
++
++        <div class="warn">
++          Сам маркер будущего не заставляет автоматически использовать fog.
++          Сначала выбери смысл и контекст, затем форму.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Какое время обозначает предложение с holnap и формой настоящего?</p>
++          <p>Почему фраза о встрече вечером может стоять в настоящем времени?</p>
++          <p>Нужно ли обязательно добавлять fog после каждого будущего маркера?</p>
++        </details>
++
++        <div class="note">
++          Граница 19.1: здесь только линия времени и две стратегии будущего.
++          На 19.2 разберём явную конструкцию, а на 19.3 — её формы по лицам.
++        </div>
++      `,
++    },    {
+       id: 2,
+       eyebrow: 'УРОК 19 · 2/11 · FOG + ИНФИНИТИВ',
+       title: 'Dolgozni fogok',
+-      subtitle: 'Базовая конструкция будущего',
+-      body: `<p>Для явного будущего часто используется <b>инфинитив + спрягаемая форма fog</b>: <b>tanulni fogok</b>, <b>dolgozni fogsz</b>, <b>utazni fog</b>.</p><p>Удобная нейтральная модель для L19: <b>маркер времени + инфинитив + fog-форма</b>: <b>Holnap tanulni fogok.</b></p><div class="note">Венгерский порядок слов зависит от фокуса, поэтому не считай другой порядок автоматически ошибочным. В контролируемых упражнениях L19 используем одну нейтральную модель, чтобы сначала закрепить саму конструкцию.</div><div class="note">Инфинитивы опираются на L18: <b>tanulni, dolgozni, utazni, főzni, olvasni</b>. Из L17 уже знакомо <b>Holnap napos idő lesz.</b> Форма <b>lesz</b> — частотная будущая форма <b>van / lenni</b>; в L19 держим её как знакомую отдельную форму, а продуктивно тренируем <b>fog + инфинитив</b>.</div>`,
+-    },
+-    {
++      subtitle: 'Явное будущее: действие остаётся в инфинитиве, лицо выражает форма fog',
++      type: 'grammar',
++      note: 'Для уровня A2 закрепляем одну нейтральную учебную модель с простыми глаголами. Это не означает, что венгерский порядок слов всегда фиксирован.',
++      warn: 'Не спрягая смысловой глагол дважды. В явной будущей конструкции действие стоит в инфинитиве, а лицо показывает форма fog.',
++      task: 'В каждом примере найди три части: маркер времени, инфинитив действия и форму fog. Формы по всем шести лицам пока не учи — это 19.3.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Базовая учебная схема</h4>
++
++        <div class="note">
++          <b>маркер времени + инфинитив + форма fog</b>
++        </div>
++
++        <p><button class="speak-btn" data-speak-text="Holnap tanulni fogok." data-speak-lang="hu-HU">Holnap tanulni fogok.</button></p>
++
++        <table class="conj">
++          <tr><th>Часть</th><th>Что делает</th></tr>
++          <tr><td><b>Holnap</b></td><td>задаёт будущий момент</td></tr>
++          <tr><td><b>tanulni</b></td><td>называет действие в инфинитиве</td></tr>
++          <tr><td><b>fogok</b></td><td>показывает явное будущее и лицо</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Действие не получает личное окончание</h4>
++
++        <p><button class="speak-btn" data-speak-text="tanulni fogok" data-speak-lang="hu-HU">tanulni fogok</button></p>
++        <p><button class="speak-btn" data-speak-text="dolgozni fogsz" data-speak-lang="hu-HU">dolgozni fogsz</button></p>
++        <p><button class="speak-btn" data-speak-text="utazni fog" data-speak-lang="hu-HU">utazni fog</button></p>
++
++        <div class="note">
++          Инфинитив сохраняется как название действия.
++          Меняется вспомогательная форма — именно она показывает лицо.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Добавь временной контекст</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap tanulni fogok." data-speak-lang="hu-HU">Holnap tanulni fogok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Este dolgozni fogsz." data-speak-lang="hu-HU">Este dolgozni fogsz.</button></p>
++        <p><button class="speak-btn" data-speak-text="Jövő héten utazni fog." data-speak-lang="hu-HU">Jövő héten utazni fog.</button></p>
++
++        <div class="note">
++          Для первых упражнений удобно держать именно такой порядок.
++          Позже ты увидишь другие порядки слов в вопросах, фокусе и естественном диалоге.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Не превращай схему в абсолютное правило порядка слов</h4>
++
++        <div class="warn">
++          Венгерский порядок слов зависит от того, что говорящий выделяет.
++          Поэтому другая позиция формы fog не означает автоматически грамматическую ошибку.
++          На 19.2 нужна стабильная тренировочная модель, а не вся система фокуса.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Отдельная частотная будущая форма</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap napos idő lesz." data-speak-lang="hu-HU">Holnap napos idő lesz.</button></p>
++
++        <div class="note">
++          Форма <b>lesz</b> уже знакома по погоде и означает будущее для глагола «быть».
++          На этом уроке узнаём её как отдельную частотную форму, а продуктивно строим будущее через fog + инфинитив.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">В каком слове выражается лицо в явной будущей конструкции?</p>
++          <p>Что происходит со смысловым глаголом?</p>
++          <p>Почему учебный порядок слов нельзя считать единственно возможным?</p>
++        </details>
++
++        <div class="note">
++          Граница 19.2: только устройство явного будущего.
++          На 19.3 выучим шесть неопределённых форм fog; другие парадигмы пока не вводим.
++        </div>
++      `,
++    },    {
+       id: 3,
+       eyebrow: 'УРОК 19 · 3/11 · СПРЯЖЕНИЕ FOG',
+       title: 'fogok, fogsz, fog...',
+-      subtitle: 'Продуктивно: неопределённая парадигма',
+-      body: `<table class="conj"><tr><th>Лицо</th><th>Форма</th><th>Пример</th></tr><tr><td>én</td><td><b>fogok</b></td><td>tanulni fogok</td></tr><tr><td>te</td><td><b>fogsz</b></td><td>dolgozni fogsz</td></tr><tr><td>ő</td><td><b>fog</b></td><td>utazni fog</td></tr><tr><td>mi</td><td><b>fogunk</b></td><td>főzni fogunk</td></tr><tr><td>ti</td><td><b>fogtok</b></td><td>tanulni fogtok</td></tr><tr><td>ők</td><td><b>fognak</b></td><td>dolgozni fognak</td></tr></table><div class="note"><b>Главное в L19:</b> эти шесть неопределённых форм нужно уметь образовать. С определёнными формами fog познакомимся на следующем слайде.</div>`,
+-    },
+-    {
++      subtitle: 'Шесть продуктивных неопределённых форм: лицо выражает fog, действие остаётся инфинитивом',
++      type: 'grammar',
++      note: 'Это обязательная продуктивная мини-парадигма Lesson 19. Местоимения én, te, ő, mi, ti, ők нужны как учебная опора, но в обычной фразе часто опускаются.',
++      warn: 'Не добавляй личное окончание к инфинитиву. В конструкции будущего меняется fog, а действие остаётся в базовом инфинитиве.',
++      task: 'Закрой столбец с формами fog и восстанови 6 форм по лицам. Затем выбери форму для трёх новых инфинитивов без подсказки.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Единственное число</h4>
++
++        <table class="conj">
++          <tr><th>Лицо</th><th>Форма fog</th><th>Пример</th></tr>
++          <tr>
++            <td>én</td>
++            <td><button class="speak-btn" data-speak-text="fogok" data-speak-lang="hu-HU">fogok</button></td>
++            <td><button class="speak-btn" data-speak-text="tanulni fogok" data-speak-lang="hu-HU">tanulni fogok</button></td>
++          </tr>
++          <tr>
++            <td>te</td>
++            <td><button class="speak-btn" data-speak-text="fogsz" data-speak-lang="hu-HU">fogsz</button></td>
++            <td><button class="speak-btn" data-speak-text="dolgozni fogsz" data-speak-lang="hu-HU">dolgozni fogsz</button></td>
++          </tr>
++          <tr>
++            <td>ő</td>
++            <td><button class="speak-btn" data-speak-text="fog" data-speak-lang="hu-HU">fog</button></td>
++            <td><button class="speak-btn" data-speak-text="utazni fog" data-speak-lang="hu-HU">utazni fog</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Множественное число</h4>
++
++        <table class="conj">
++          <tr><th>Лицо</th><th>Форма fog</th><th>Пример</th></tr>
++          <tr>
++            <td>mi</td>
++            <td><button class="speak-btn" data-speak-text="fogunk" data-speak-lang="hu-HU">fogunk</button></td>
++            <td><button class="speak-btn" data-speak-text="főzni fogunk" data-speak-lang="hu-HU">főzni fogunk</button></td>
++          </tr>
++          <tr>
++            <td>ti</td>
++            <td><button class="speak-btn" data-speak-text="fogtok" data-speak-lang="hu-HU">fogtok</button></td>
++            <td><button class="speak-btn" data-speak-text="tanulni fogtok" data-speak-lang="hu-HU">tanulni fogtok</button></td>
++          </tr>
++          <tr>
++            <td>ők</td>
++            <td><button class="speak-btn" data-speak-text="fognak" data-speak-lang="hu-HU">fognak</button></td>
++            <td><button class="speak-btn" data-speak-text="dolgozni fognak" data-speak-lang="hu-HU">dolgozni fognak</button></td>
++          </tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Алгоритм выбора формы</h4>
++
++        <ol class="tasklist">
++          <li>определи, кто выполняет действие;</li>
++          <li>оставь действие в базовом инфинитиве;</li>
++          <li>выбери форму fog по лицу;</li>
++          <li>добавь временной маркер, если он нужен контексту.</li>
++        </ol>
++
++        <p class="mt-3"><button class="speak-btn" data-speak-text="Holnap főzni fogunk." data-speak-lang="hu-HU">Holnap főzni fogunk.</button></p>
++        <p><button class="speak-btn" data-speak-text="Este tanulni fogtok." data-speak-lang="hu-HU">Este tanulni fogtok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Jövő héten dolgozni fognak." data-speak-lang="hu-HU">Jövő héten dolgozni fognak.</button></p>
++
++        <div class="note">
++          По форме fog уже видно лицо, поэтому отдельное местоимение обычно не обязательно.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Типичные ошибки</h4>
++
++        <div class="warn">
++          Не смешивай лица: для «мы» нужна форма <b>fogunk</b>, для «они» — <b>fognak</b>.
++          И не изменяй инфинитив ради лица.
++        </div>
++
++        <div class="warn">
++          На 19.3 тренируем только эту неопределённую парадигму.
++          Формы определённого спряжения — следующий слайд и только для узнавания.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Какая форма нужна для «ты»?</p>
++          <p>Какая для «мы»?</p>
++          <p>Какая для «они»?</p>
++          <p>Как сказать: «завтра мы будем готовить»?</p>
++          <p>Как сказать: «вечером вы будете учиться»?</p>
++        </details>
++
++        <div class="note">
++          Граница 19.3: шесть неопределённых форм fog — активно.
++          Отрицание и вопрос оставляем для 19.5.
++        </div>
++      `,
++    },    {
+       id: 4,
+       eyebrow: 'УРОК 19 · 4/11 · ЗНАКОМСТВО С ОПРЕДЕЛЁННЫМИ ФОРМАМИ',
+       title: 'fogok или fogom?',
+-      subtitle: 'Пока учимся узнавать контраст',
+-      body: `<p>Знакомый контраст объекта влияет и на форму <b>fog</b>. Сравни:</p><p><b>Olvasni fogok egy könyvet.</b> — Я буду читать одну / какую-то книгу.</p><p><b>El fogom olvasni a könyvet.</b> — Я прочитаю эту / определённую книгу.</p><p>Можно встретить формы <b>fogom, fogod, fogja, fogjuk, fogjátok, fogják</b>. Они принадлежат определённому спряжению.</p><div class="warn"><b>Граница L19:</b> здесь достаточно узнавать этот контраст и форму <b>fogom</b> в знакомом контексте. Полное продуктивное владение системой определённого/неопределённого спряжения не является условием прохождения L19.</div>`,
+-    },
+-    {
++      subtitle: 'Главная цель — узнать контраст, а не выучить вторую парадигму наизусть',
++      type: 'grammar',
++      note: 'На 19.4 определённые формы только узнаём. Для прохождения Lesson 19 продуктивно нужна неопределённая парадигма с предыдущего слайда.',
++      warn: 'Не выводи общее правило только из артикля a/az или egy. Здесь два примера служат знакомым ориентиром; полная система определённого/неопределённого спряжения шире.',
++      task: 'Сравни две фразы и объясни только одно: почему в первой узнаём fogok, а во второй fogom. Остальные определённые формы достаточно распознать визуально и на слух.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Сравни два знакомых объекта</h4>
++
++        <p><button class="speak-btn" data-speak-text="Olvasni fogok egy könyvet." data-speak-lang="hu-HU">Olvasni fogok egy könyvet.</button></p>
++        <p><button class="speak-btn" data-speak-text="El fogom olvasni a könyvet." data-speak-lang="hu-HU">El fogom olvasni a könyvet.</button></p>
++
++        <table class="conj">
++          <tr><th>В этом примере</th><th>Объект</th><th>Форма</th></tr>
++          <tr><td>одна / какая-то книга</td><td><button class="speak-btn" data-speak-text="egy könyvet" data-speak-lang="hu-HU">egy könyvet</button></td><td><button class="speak-btn" data-speak-text="fogok" data-speak-lang="hu-HU">fogok</button></td></tr>
++          <tr><td>конкретная книга</td><td><button class="speak-btn" data-speak-text="a könyvet" data-speak-lang="hu-HU">a könyvet</button></td><td><button class="speak-btn" data-speak-text="fogom" data-speak-lang="hu-HU">fogom</button></td></tr>
++        </table>
++
++        <div class="note">
++          На этом уровне достаточно увидеть знакомый контраст объекта и узнать форму <b>fogom</b>.
++          Полную систему выбора спряжения здесь не строим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Почему во второй фразе стоит el отдельно</h4>
++
++        <p><button class="speak-btn" data-speak-text="El fogom olvasni a könyvet." data-speak-lang="hu-HU">El fogom olvasni a könyvet.</button></p>
++
++        <div class="note">
++          В этой будущей конструкции приставка <b>el</b> стоит перед формой fog, а инфинитив <b>olvasni</b> — после неё.
++          Просто узнавай готовый шаблон; отдельную теорию порядка приставок здесь не вводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Банк распознавания — не активная парадигма</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="fogom" data-speak-lang="hu-HU">fogom</button>,
++          <button class="speak-btn" data-speak-text="fogod" data-speak-lang="hu-HU">fogod</button>,
++          <button class="speak-btn" data-speak-text="fogja" data-speak-lang="hu-HU">fogja</button>,
++          <button class="speak-btn" data-speak-text="fogjuk" data-speak-lang="hu-HU">fogjuk</button>,
++          <button class="speak-btn" data-speak-text="fogjátok" data-speak-lang="hu-HU">fogjátok</button>,
++          <button class="speak-btn" data-speak-text="fogják" data-speak-lang="hu-HU">fogják</button>
++        </p>
++
++        <div class="warn">
++          Эти шесть форм сейчас не нужно воспроизводить по памяти.
++          Задача — не удивляться им в тексте и узнавать, что это формы определённого спряжения fog.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Что нужно уметь после 19.4</h4>
++
++        <ol class="tasklist">
++          <li>уверенно строить неопределённые формы с 19.3;</li>
++          <li>узнавать контраст fogok / fogom в знакомой паре;</li>
++          <li>распознавать остальные определённые формы без требования активно их спрягать;</li>
++          <li>не переносить упрощённый пример на всю систему объектов.</li>
++        </ol>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Какая из двух форм на этом уроке продуктивная для «я» в неопределённой парадигме?</p>
++          <p>Какую определённую форму «я» нужно уверенно узнавать?</p>
++          <p>Нужно ли сейчас воспроизводить все шесть определённых форм по памяти?</p>
++        </details>
++
++        <div class="note">
++          Граница 19.4: распознавание определённых форм.
++          На 19.5 возвращаемся к продуктивной модели и добавляем отрицание и базовый вопрос.
++        </div>
++      `,
++    },    {
+       id: 5,
+       eyebrow: 'УРОК 19 · 5/11 · ОТРИЦАНИЕ И ВОПРОС',
+       title: 'Nem fogok... Dolgozni fogsz?',
+-      subtitle: 'Два частотных шаблона',
+-      body: `<p>В отрицании <b>nem</b> ставим перед спрягаемой формой <b>fog</b>: <b>Holnap nem fogok dolgozni.</b> — Завтра я не буду работать.</p><p>В простом вопросе можно сохранить знакомую структуру и вопросительную интонацию: <b>Holnap dolgozni fogsz?</b> — Ты завтра будешь работать?</p><p>Короткий ответ: <b>Igen, fogok.</b> / <b>Nem, nem fogok.</b></p><div class="note">В L19 контролируем утверждение, отрицание и базовый вопрос; отдельную теорию фокуса и всех вариантов порядка слов здесь не вводим.</div>`,
+-    },
+-    {
++      subtitle: 'Нейтральное отрицание и два базовых вопросительных шаблона',
++      type: 'grammar',
++      note: 'На 19.5 закрепляем нейтральные учебные модели. Полную систему фокуса и всех возможных порядков слов не вводим.',
++      warn: 'В нейтральном отрицании nem ставим перед личной формой fog. Не переносим немеханически порядок из русского.',
++      task: 'Построй 3 типа фраз: отрицательное будущее, вопрос да/нет и вопрос с вопросительным словом. В каждом примере найди форму fog и инфинитив.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Нейтральное отрицание</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap nem fogok dolgozni." data-speak-lang="hu-HU">Holnap nem fogok dolgozni.</button></p>
++
++        <table class="conj">
++          <tr><th>Часть</th><th>Функция</th></tr>
++          <tr><td><b>Holnap</b></td><td>будущий момент</td></tr>
++          <tr><td><b>nem</b></td><td>отрицание</td></tr>
++          <tr><td><b>fogok</b></td><td>лицо + явное будущее</td></tr>
++          <tr><td><b>dolgozni</b></td><td>действие в инфинитиве</td></tr>
++        </table>
++
++        <div class="note">
++          Для нейтрального отрицания держи рабочую схему:
++          <b>маркер времени + nem + форма fog + инфинитив</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Вопрос да / нет</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap dolgozni fogsz?" data-speak-lang="hu-HU">Holnap dolgozni fogsz?</button></p>
++
++        <p><button class="speak-btn" data-speak-text="Igen, fogok." data-speak-lang="hu-HU">Igen, fogok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Nem, nem fogok." data-speak-lang="hu-HU">Nem, nem fogok.</button></p>
++
++        <div class="note">
++          В простом вопросе этого урока сохраняем знакомую учебную структуру и используем вопросительную интонацию.
++          Короткий ответ повторяет личную форму.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Вопрос с вопросительным словом</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit fogsz csinálni hétvégén?" data-speak-lang="hu-HU">Mit fogsz csinálni hétvégén?</button></p>
++
++        <div class="note">
++          Этот шаблон напрямую пригодится в Controlled Practice:
++          сначала вопросительное слово, затем личная форма, затем инфинитив действия.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Типичные ошибки</h4>
++
++        <div class="warn">
++          Для нейтрального задания не используй порядок <s>Holnap fogok nem dolgozni.</s>
++          Целевая форма: <b>Holnap nem fogok dolgozni.</b>
++        </div>
++
++        <div class="warn">
++          Не перепутай будущее и знакомое прошедшее:
++          <b>holnap</b> требует будущего смысла, а форма прошлого относится к уже завершённому действию.
++        </div>
++
++        <details class="note mt-4">
++          <summary class="font-bold cursor-pointer">Мини-проверка без ответов</summary>
++          <p class="mt-3">Как сказать «завтра я не буду работать»?</p>
++          <p>Как спросить «ты завтра будешь работать?»?</p>
++          <p>Как спросить «что ты будешь делать на выходных?»?</p>
++          <p>Как кратко ответить отрицательно?</p>
++        </details>
++
++        <div class="note">
++          Граница 19.5: нейтральное отрицание и базовые вопросы.
++          На 19.6 соберём планы, прогнозы и изменение договорённости в одну контекстную практику.
++        </div>
++      `,
++    },    {
+       id: 6,
+       eyebrow: 'УРОК 19 · 6/11 · ПЛАНЫ',
+       title: 'Holnap megyek / Holnap menni fogok',
+-      subtitle: 'Настоящая форма тоже может говорить о будущем',
++      subtitle: 'Планы, прогнозы и изменение договорённости: выбирай модель по функции',
++      type: 'practice',
+       activities: [L19_CONTROLLED],
+-      body: `<p>С ясным будущим маркером настоящее время часто описывает запланированное будущее: <b>Holnap Budapestre megyek.</b> / <b>Este találkozom Annával.</b></p><p>Явное будущее тоже возможно: <b>Holnap Budapestre fogok menni.</b> <b>fog + инфинитив</b> естественно используется в прогнозе: <b>Szerintem esni fog.</b></p><p>Маркеры: <b>holnap, holnapután, jövő héten, jövő hónapban, jövőre, hamarosan</b>. Для обещания или отложенного действия полезно <b>Majd felhívlak.</b></p><div class="note"><b>Holnap dolgozom</b> — график/договорённость в настоящей форме. <b>Szerintem holnap sokat fogok dolgozni</b> — прогноз. Обе модели могут говорить о будущем; не выводи жёсткое правило только из формы.</div>`,
+-    },
+-    {
++      note: 'Controlled Practice собирает материал 19.1–19.6. Порог прохождения — 11 правильных из 14.',
++      warn: 'Не превращай различие «настоящее / fog» в жёсткое правило. Обе модели могут говорить о будущем; контекст и коммуникативная функция важнее одной формы.',
++      task: 'Пройди 5 функциональных блоков: план → явное будущее → отрицание → прогноз → изменение договорённости. После ошибки назови функцию, а не только правильный вариант.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">A. Будущий план в настоящей форме</h4>
++
++        <p><button class="speak-btn" data-speak-text="Este találkozom Annával." data-speak-lang="hu-HU">Este találkozom Annával.</button></p>
++        <p><button class="speak-btn" data-speak-text="Jövő héten Budapestre utazom." data-speak-lang="hu-HU">Jövő héten Budapestre utazom.</button></p>
++        <p><button class="speak-btn" data-speak-text="Holnap dolgozom." data-speak-lang="hu-HU">Holnap dolgozom.</button></p>
++
++        <div class="note">
++          Конкретное время, расписание или договорённость часто позволяют использовать настоящее время с будущим значением.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">B. Явное будущее и разговорное majd</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit fogsz csinálni hétvégén?" data-speak-lang="hu-HU">Mit fogsz csinálni hétvégén?</button></p>
++        <p><button class="speak-btn" data-speak-text="Este tanulni fogtok." data-speak-lang="hu-HU">Este tanulni fogtok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Majd felhívlak." data-speak-lang="hu-HU">Majd felhívlak.</button></p>
++
++        <div class="note">
++          <b>Majd felhívlak.</b> здесь учим как готовый разговорный блок «позже / потом позвоню».
++          Окончание внутри этой формы отдельно не разбираем.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">C. Отрицание и множественное число</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap nem fogok dolgozni." data-speak-lang="hu-HU">Holnap nem fogok dolgozni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Vasárnap pihenni fogunk." data-speak-lang="hu-HU">Vasárnap pihenni fogunk.</button></p>
++
++        <div class="note">
++          Если здесь ошибаешься, вернись к 19.3 для формы по лицу и к 19.5 для нейтрального отрицания.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">D. Прогноз</h4>
++
++        <p><button class="speak-btn" data-speak-text="Szerintem esni fog." data-speak-lang="hu-HU">Szerintem esni fog.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szerintem holnap sokat fogok dolgozni." data-speak-lang="hu-HU">Szerintem holnap sokat fogok dolgozni.</button></p>
++        <p><button class="speak-btn" data-speak-text="A barátaim is dolgozni fognak." data-speak-lang="hu-HU">A barátaim is dolgozni fognak.</button></p>
++
++        <div class="note">
++          <b>szerintem</b> помогает явно маркировать прогноз или личное предположение.
++          Здесь fog естественно показывает будущую перспективу.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">E. Измени договорённость по шагам</h4>
++
++        <p><button class="speak-btn" data-speak-text="Rendben. Mikor tudunk találkozni?" data-speak-lang="hu-HU">Rendben. Mikor tudunk találkozni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Találkozzunk inkább délután kettőkor!" data-speak-lang="hu-HU">Találkozzunk inkább délután kettőkor!</button></p>
++        <p><button class="speak-btn" data-speak-text="Jó, akkor kettőkor találkozunk a pályaudvarnál." data-speak-lang="hu-HU">Jó, akkor kettőkor találkozunk a pályaudvarnál.</button></p>
++
++        <div class="note">
++          Логика диалога: спокойно отреагировать → спросить новое время → предложить вариант → подтвердить точное время и место.
++        </div>
++
++        <div class="warn">
++          <b>Találkozzunk...</b> здесь только готовый функциональный блок для предложения нового плана.
++          Систему повелительного наклонения на 19.6 не выводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Карта Controlled Practice</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что проверяет</th></tr>
++          <tr><td>A</td><td>будущий план в настоящей форме</td></tr>
++          <tr><td>B</td><td>явное будущее и готовый блок с majd</td></tr>
++          <tr><td>C</td><td>отрицание и формы множественного числа</td></tr>
++          <tr><td>D</td><td>прогнозы</td></tr>
++          <tr><td>E</td><td>реакция и новая договорённость</td></tr>
++        </table>
++
++        <div class="warn">
++          Порог: <b>11 из 14</b>.
++          Если ошибся, возвращайся к конкретной функции, а не перечитывай весь урок подряд.
++        </div>
++
++        <div class="note">
++          Граница 19.6: контекстная интеграция изученных моделей.
++          На 19.7 эти же функции нужно будет распознавать внутри связного текста.
++        </div>
++      `,
++    },    {
+       id: 7,
+       eyebrow: 'УРОК 19 · 7/11 · ЧТЕНИЕ',
+       title: 'Egy sűrű hétvége',
+-      subtitle: 'План, отмена, прогноз и новая договорённость',
++      subtitle: 'Восстанови не отдельные предложения, а изменение плана по хронологии',
++      type: 'reading',
+       activities: [L19_READING],
+-      body: `<p>Следи за хронологией и причинами: что было запланировано, почему время изменилось, как прогноз повлиял на программу и какая договорённость стала окончательной.</p>`,
+-    },
+-    {
++      note: 'Текст состоит из нескольких этапов одного уикенда. На первом проходе ищи время и события, на втором — причины изменений и форму будущего.',
++      warn: 'Не выбирай вариант ответа по одному знакомому слову. Сначала найди в тексте доказательство: исходный план, причину изменения, новую договорённость или прогноз.',
++      task: 'Прочитай текст в два прохода и ответь на 8 вопросов. Для прохождения нужно минимум 6 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Первый проход — собери хронологию</h4>
++
++        <table class="conj">
++          <tr><th>Этап</th><th>Что нужно найти</th></tr>
++          <tr><td>пятница</td><td>что было запланировано на вечер</td></tr>
++          <tr><td>суббота: исходный план</td><td>как собирались провести день до изменения</td></tr>
++          <tr><td>изменение</td><td>какая причина заставила поменять время</td></tr>
++          <tr><td>суббота: новый план</td><td>какая договорённость стала актуальной</td></tr>
++          <tr><td>погода</td><td>какой прогноз влияет на программу</td></tr>
++          <tr><td>запасной вариант</td><td>что меняют в порядке действий</td></tr>
++          <tr><td>воскресенье</td><td>что делает каждый герой</td></tr>
++        </table>
++
++        <div class="note">
++          Не заполняй эту карту из вариантов ответа.
++          Сначала найди соответствующий абзац и только потом формулируй краткую заметку.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Сигналы изменения плана</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="azonban" data-speak-lang="hu-HU">azonban</button> —
++          однако, появляется препятствие.
++        </p>
++        <p>
++          <button class="speak-btn" data-speak-text="ezért" data-speak-lang="hu-HU">ezért</button> —
++          поэтому, следствие причины.
++        </p>
++        <p>
++          <button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button> —
++          в итоге, окончательное решение.
++        </p>
++        <p>
++          <button class="speak-btn" data-speak-text="az előrejelzés szerint" data-speak-lang="hu-HU">az előrejelzés szerint</button> —
++          по прогнозу.
++        </p>
++        <p>
++          <button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button> —
++          если; сигнал условия.
++        </p>
++
++        <div class="warn">
++          На этом слайде <b>ha</b> нужно только узнавать как сигнал условия.
++          Новую систему условных конструкций здесь не выводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Второй проход — как выражено будущее</h4>
++
++        <table class="conj">
++          <tr><th>Что ищем</th><th>Как распознать</th></tr>
++          <tr><td>запланированное будущее</td><td>форма настоящего + ясный будущий контекст</td></tr>
++          <tr><td>явное будущее / прогноз</td><td>инфинитив рядом с формой fog</td></tr>
++          <tr><td>причина изменения</td><td>знакомая необходимость с kell</td></tr>
++          <tr><td>окончательное решение</td><td>слова связи + новая последовательность действий</td></tr>
++        </table>
++
++        <div class="note">
++          Главный навык 19.7 — не считать каждую форму настоящего «событием сейчас».
++          Смотри на время, абзац и общий план.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Как отвечать на 8 вопросов</h4>
++
++        <ol class="tasklist">
++          <li>определи, к какому этапу выходных относится вопрос;</li>
++          <li>найди предложение-доказательство в тексте;</li>
++          <li>проверь, спрашивают исходный план или уже изменённый;</li>
++          <li>если речь о погоде, отдели прогноз от решения героев;</li>
++          <li>если варианты похожи, сравни время, причину и итог.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Reading: <b>6 из 8</b>.
++          Ошибка между исходным и новым планом означает, что нужно восстановить хронологию, а не перечитывать текст слово в слово.
++        </div>
++
++        <div class="note">
++          Граница 19.7: чтение планов, изменений и прогноза.
++          На 19.8 те же временные контрасты нужно будет распознавать уже на слух.
++        </div>
++      `,
++    },    {
+       id: 8,
+       eyebrow: 'УРОК 19 · 8/11 · АУДИРОВАНИЕ',
+       title: 'Mikor történik?',
+-      subtitle: 'Существующий синхронизированный Listening',
++      subtitle: 'Сначала временной маркер, затем форма глагола: прошлое → настоящее → будущее',
++      type: 'listening',
+       activities: [L19_LISTENING],
+-      body: `<p>Определи, что произошло вчера, что происходит сегодня, а что относится к планам и прогнозам.</p>`,
+-    },
+-    {
++      note: 'Это опубликованное Listening. Transcript открывай только после первой самостоятельной попытки: цель — различить время на слух.',
++      warn: 'Не пытайся запомнить весь текст после одного прослушивания. Сначала поймай только временной маркер, затем действие и форму.',
++      task: 'Прослушай запись минимум два раза и ответь на 5 вопросов. Для прохождения нужно минимум 4 правильных.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Первый проход — поймай время</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU">tegnap</button>,
++          <button class="speak-btn" data-speak-text="ma" data-speak-lang="hu-HU">ma</button>,
++          <button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button>,
++          <button class="speak-btn" data-speak-text="a hétvégén" data-speak-lang="hu-HU">a hétvégén</button>,
++          <button class="speak-btn" data-speak-text="vasárnap" data-speak-lang="hu-HU">vasárnap</button>,
++          <button class="speak-btn" data-speak-text="jövő héten" data-speak-lang="hu-HU">jövő héten</button>
++        </p>
++
++        <table class="conj">
++          <tr><th>Маркер</th><th>Какую временную зону отмечаем</th></tr>
++          <tr><td>вчера</td><td>завершённое прошлое</td></tr>
++          <tr><td>сегодня</td><td>настоящее / текущая ситуация</td></tr>
++          <tr><td>завтра, выходные, следующая неделя</td><td>будущая перспектива</td></tr>
++        </table>
++
++        <div class="note">
++          На первом прослушивании можно записать только последовательность временных зон.
++          Действия добавляй на втором проходе.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Второй проход — проверь форму</h4>
++
++        <table class="conj">
++          <tr><th>Сигнал</th><th>Что распознаём</th></tr>
++          <tr><td>знакомая форма прошедшего</td><td>действие уже произошло</td></tr>
++          <tr><td>форма настоящего</td><td>что происходит сейчас</td></tr>
++          <tr><td>инфинитив + форма fog</td><td>явное будущее / прогноз</td></tr>
++        </table>
++
++        <div class="note">
++          Слушай маркер времени вместе с глагольной формой.
++          Один элемент подтверждает другой.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Отдельно поймай прогноз</h4>
++
++        <p><button class="speak-btn" data-speak-text="szerinte" data-speak-lang="hu-HU">szerinte</button> — по его мнению / как он считает.</p>
++
++        <div class="note">
++          Это сигнал личного прогноза.
++          После него нужно услышать содержание прогноза самостоятельно — слайд ответ не раскрывает.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Как отвечать на 5 вопросов</h4>
++
++        <ol class="tasklist">
++          <li>сначала выдели временной маркер;</li>
++          <li>определи временную форму;</li>
++          <li>только затем восстанови действие;</li>
++          <li>для прогноза отдельно найди маркер мнения;</li>
++          <li>после ответа проверь transcript и разберись, что именно не услышал.</li>
++        </ol>
++
++        <div class="warn">
++          Порог Listening: <b>4 из 5</b>.
++          Transcript — инструмент разбора ошибки после ответа, а не замена аудирования.
++        </div>
++
++        <div class="note">
++          Граница 19.8: распознавание прошлого, настоящего и будущего на слух.
++          На 19.9 эти модели переходят в живое согласование нового плана.
++        </div>
++      `,
++    },    {
+       id: 9,
+       eyebrow: 'УРОК 19 · 9/11 · ИНТЕРАКЦИЯ',
+       title: 'Mit csináljunk szombaton?',
+-      subtitle: 'Меняем время и согласовываем новый план',
++      subtitle: '7 реплик ученика: согласие → изменение времени → новый план → запасной вариант → подтверждение',
++      type: 'roleplay',
+       activities: [L19_ROLEPLAY],
+-      body: `<p>Отреагируй на неожиданную работу до полудня, предложи новое время и программу, обсуди транспорт и погоду, затем подтверди итог.</p><div class="note">RolePlay остаётся PARTIAL.</div>`,
+-    },
+-    {
++      note: 'RolePlay содержит 15 ходов, из них 7 реплик ученика. Это открытая интеракция, поэтому evidence остаётся PARTIAL.',
++      warn: 'Не заучивай полные model answers. Сначала определи коммуникативную функцию своей реплики и только потом собирай фразу.',
++      task: 'Пройди 7 функций ученика: согласись и спроси план → уточни новое время → предложи программу → обсуди транспорт → предложи запасной план → подтверди итог → вежливо заверши.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Карта 7 реплик ученика</h4>
++
++        <table class="conj">
++          <tr><th>Шаг</th><th>Что нужно сделать</th><th>Опора</th></tr>
++          <tr><td>1</td><td>согласиться и спросить о программе</td><td>вопрос о будущем</td></tr>
++          <tr><td>2</td><td>спокойно отреагировать и спросить новое время</td><td>реакция + tud</td></tr>
++          <tr><td>3</td><td>предложить новое занятие / порядок</td><td>готовый блок предложения</td></tr>
++          <tr><td>4</td><td>обсудить транспорт и место встречи</td><td>выбор варианта</td></tr>
++          <tr><td>5</td><td>отреагировать на прогноз и дать запасной план</td><td>ha как сигнал условия</td></tr>
++          <tr><td>6</td><td>подтвердить точные время, место и программу</td><td>итог договорённости</td></tr>
++          <tr><td>7</td><td>вежливо завершить разговор</td><td>короткое закрытие</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Спросить план и новое время</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mit fogunk csinálni?" data-speak-lang="hu-HU">Mit fogunk csinálni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Mikor tudunk találkozni?" data-speak-lang="hu-HU">Mikor tudunk találkozni?</button></p>
++
++        <div class="note">
++          Первая фраза проверяет будущее, вторая повторно использует знакомую модель возможности из Lesson 18.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Предложить другой вариант</h4>
++
++        <p><button class="speak-btn" data-speak-text="Találkozzunk inkább később!" data-speak-lang="hu-HU">Találkozzunk inkább később!</button></p>
++        <p><button class="speak-btn" data-speak-text="Vonattal menjünk?" data-speak-lang="hu-HU">Vonattal menjünk?</button></p>
++
++        <div class="warn">
++          Эти формы здесь используются как готовые разговорные блоки для совместного предложения.
++          Систему повелительного наклонения на этом уроке не выводим.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Запасной план из-за погоды</h4>
++
++        <p><button class="speak-btn" data-speak-text="Ha esik, maradjunk bent." data-speak-lang="hu-HU">Ha esik, maradjunk bent.</button></p>
++
++        <div class="note">
++          <b>ha</b> здесь только показывает условие: «если».
++          Не разбирай новую грамматическую парадигму — важно понять логику запасного плана.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Подтвердить итог</h4>
++
++        <p><button class="speak-btn" data-speak-text="Tehát kettőkor találkozunk." data-speak-lang="hu-HU">Tehát kettőkor találkozunk.</button></p>
++        <p><button class="speak-btn" data-speak-text="Rendben, szia!" data-speak-lang="hu-HU">Rendben, szia!</button></p>
++
++        <div class="note">
++          Перед завершением разговора обязательно проверь три детали:
++          <b>когда</b>, <b>где</b> и <b>что делаете сначала</b>.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Самопроверка RolePlay</h4>
++
++        <ol class="tasklist">
++          <li>я отреагировал(а), а не сразу выдал(а) новый план;</li>
++          <li>уточнил(а) новое время;</li>
++          <li>предложил(а) занятие или порядок программы;</li>
++          <li>обсудил(а) транспорт / место;</li>
++          <li>учёл(а) прогноз и запасной вариант;</li>
++          <li>в конце подтвердил(а) итоговые детали;</li>
++          <li>не копировал(а) полный model answer.</li>
++        </ol>
++
++        <div class="warn">
++          PARTIAL evidence не означает плохой результат.
++          Это означает только, что свободную реплику нельзя полностью проверить автоматикой.
++        </div>
++
++        <div class="note">
++          Граница 19.9: интеракция и изменение плана.
++          На 19.10 те же функции нужно будет связно выразить письменно и устно.
++        </div>
++      `,
++    },    {
+       id: 10,
+       eyebrow: 'УРОК 19 · 10/11 · ПИСЬМО И ГОВОРЕНИЕ',
+       title: 'A következő hétvége',
+-      subtitle: 'Связное сообщение 90–110 слов и optional speaking',
+-      activities: [L19_WRITING], optionalSpeaking: L19_SPEAKING,
+-      body: `<p>В письме различай фиксированную договорённость, намерение, прогноз и возможное изменение. Optional speaking — только текстовая self-practice без evidence.</p><div class="note">Writing остаётся PARTIAL без квалифицированной проверки.</div>`,
+-    },
+-    {
++      subtitle: 'Writing 90–110 слов + optional speaking около 2 минут: одинаковая тема, разные задачи',
++      type: 'production',
++      activities: [L19_WRITING],
++      optionalSpeaking: L19_SPEAKING,
++      note: 'Writing даёт PARTIAL evidence. Optional Speaking — только self-practice без микрофона, score и evidence.',
++      warn: 'Не пиши полный текст по готовому образцу. Сначала собери содержание по рубрике, затем выбери формы будущего по контексту.',
++      task: 'Сначала напиши сообщение 90–110 слов о следующих выходных. После этого отдельно проговори около 2 минут о следующей неделе без чтения готового текста.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">A. Writing — план 90–110 слов</h4>
++
++        <table class="conj">
++          <tr><th>Блок</th><th>Что обязательно включить</th></tr>
++          <tr><td>1</td><td>пятница: одно конкретное событие / договорённость</td></tr>
++          <tr><td>2</td><td>суббота: план или намерение</td></tr>
++          <tr><td>3</td><td>воскресенье: ещё один план</td></tr>
++          <tr><td>4</td><td>один прогноз</td></tr>
++          <tr><td>5</td><td>одно возможное изменение + причина</td></tr>
++          <tr><td>6</td><td>финальный вопрос другу</td></tr>
++        </table>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">B. Формы для связного письма</h4>
++
++        <p><button class="speak-btn" data-speak-text="Péntek este találkozom egy barátommal." data-speak-lang="hu-HU">Péntek este találkozom egy barátommal.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szombaton kirándulni fogok." data-speak-lang="hu-HU">Szombaton kirándulni fogok.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szerintem vasárnap jó idő lesz." data-speak-lang="hu-HU">Szerintem vasárnap jó idő lesz.</button></p>
++        <p><button class="speak-btn" data-speak-text="Lehet, hogy a terv megváltozik, mert dolgoznom kell." data-speak-lang="hu-HU">Lehet, hogy a terv megváltozik, mert dolgoznom kell.</button></p>
++        <p><button class="speak-btn" data-speak-text="És te mit fogsz csinálni hétvégén?" data-speak-lang="hu-HU">És te mit fogsz csinálni hétvégén?</button></p>
++
++        <div class="note">
++          Здесь <b>Lehet, hogy...</b> — готовая опора для «возможно, что...».
++          Не выводим новую систему сложных предложений; важно выразить возможное изменение и его причину.
++        </div>
++
++        <div class="note">
++          Настоящая форма удобно показывает конкретную договорённость, а fog — явное будущее и прогноз.
++          Это полезная стратегия, но не абсолютное правило для всех будущих фраз.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">C. Writing — чек-лист перед отправкой</h4>
++
++        <ol class="tasklist">
++          <li>90–110 слов;</li>
++          <li>есть пятница, суббота и воскресенье;</li>
++          <li>есть одна фиксированная договорённость;</li>
++          <li>есть намерение и прогноз;</li>
++          <li>есть возможное изменение с причиной;</li>
++          <li>последняя часть содержит вопрос другу.</li>
++        </ol>
++
++        <div class="warn">
++          Если не хватает объёма, добавь конкретику о времени, месте или причине.
++          Не добавляй новую грамматику только ради количества слов.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">D. Optional Speaking — около 2 минут</h4>
++
++        <table class="conj">
++          <tr><th>Шаг</th><th>О чём сказать</th></tr>
++          <tr><td>1</td><td>работа или учёба на следующей неделе</td></tr>
++          <tr><td>2</td><td>одна назначенная встреча</td></tr>
++          <tr><td>3</td><td>план на выходные</td></tr>
++          <tr><td>4</td><td>одно ожидаемое событие / прогноз</td></tr>
++          <tr><td>5</td><td>одно возможное изменение</td></tr>
++        </table>
++
++        <p class="mt-3"><button class="speak-btn" data-speak-text="Jövő héten sokat fogok dolgozni." data-speak-lang="hu-HU">Jövő héten sokat fogok dolgozni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Kedden találkozom Annával." data-speak-lang="hu-HU">Kedden találkozom Annával.</button></p>
++        <p><button class="speak-btn" data-speak-text="A hétvégén pihenni fogok." data-speak-lang="hu-HU">A hétvégén pihenni fogok.</button></p>
++
++        <div class="note">
++          Для Speaking подготовь только 6–8 ключевых слов.
++          Не читай свой Writing вслух как готовый монолог.
++        </div>
++
++        <div class="warn">
++          Optional Speaking не создаёт evidence и не меняет статус целей автоматически.
++          Это практика свободного устного использования уже изученных моделей.
++        </div>
++
++        <div class="note">
++          Граница 19.10: связная письменная и устная продукция без новой грамматической парадигмы.
++          На 19.11 останется итоговая проверка целей Lesson 19.
++        </div>
++      `,
++    },    {
+       id: 11,
+       eyebrow: 'УРОК 19 · 11/11 · ИТОГИ',
+       title: 'Összefoglalás',
+-      subtitle: 'Что должно остаться после L19',
++      subtitle: 'Проверь 5 целей Lesson 19: форма будущего → fog → планы → времена → прогнозы',
++      type: 'summary',
+       activities: [L19_EXIT],
+-      body: `<ul class="tick"><li>Настоящее с будущим маркером естественно выражает график и договорённость.</li><li><b>fog + инфинитив</b> выражает явное будущее и прогноз.</li><li>Изменившийся план требует реакции, альтернативы и точного подтверждения.</li><li>Controlled Practice, Reading и Listening дают DIRECT только при пороге; RolePlay и Writing остаются PARTIAL.</li></ul><div class="note">Quiz — retrieval checkpoint, а не полное подтверждение коммуникативного владения. L20 интегрирует прошедшее время в A2 checkpoint.</div>`,
+-    },
++      note: 'Это учебный checkpoint Lesson 19, а не официальный сертификат уровня. DIRECT означает прямое автоматическое подтверждение после порога; PARTIAL — открытую продукцию, которую автоматика не может оценить полностью.',
++      warn: 'Финальная ошибка урока: не превращай будущее в правило «всегда нужен fog». Настоящая форма с ясным будущим контекстом тоже естественно говорит о будущем.',
++      task: 'Перед Exit Check выполни 5 действий без подсказки: выбери стратегию будущего → восстанови форму fog → построй отрицание/вопрос → отличи три времени → сформулируй прогноз.',
++      body: `
++        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Две стратегии будущего</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap dolgozom." data-speak-lang="hu-HU">Holnap dolgozom.</button></p>
++        <p><button class="speak-btn" data-speak-text="Holnap dolgozni fogok." data-speak-lang="hu-HU">Holnap dolgozni fogok.</button></p>
++
++        <div class="note">
++          Первая фраза имеет форму настоящего, но будущий смысл задаёт контекст.
++          Вторая делает будущую перспективу явной через fog + инфинитив.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Шесть активных неопределённых форм fog</h4>
++
++        <p>
++          <button class="speak-btn" data-speak-text="fogok" data-speak-lang="hu-HU">fogok</button>,
++          <button class="speak-btn" data-speak-text="fogsz" data-speak-lang="hu-HU">fogsz</button>,
++          <button class="speak-btn" data-speak-text="fog" data-speak-lang="hu-HU">fog</button>,
++          <button class="speak-btn" data-speak-text="fogunk" data-speak-lang="hu-HU">fogunk</button>,
++          <button class="speak-btn" data-speak-text="fogtok" data-speak-lang="hu-HU">fogtok</button>,
++          <button class="speak-btn" data-speak-text="fognak" data-speak-lang="hu-HU">fognak</button>
++        </p>
++
++        <div class="note">
++          Именно эти шесть форм нужно уметь продуктивно восстановить по лицам.
++          Определённые формы вроде <b>fogom</b> в Lesson 19 остаются уровнем распознавания.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Отрицание и вопрос</h4>
++
++        <p><button class="speak-btn" data-speak-text="Holnap nem fogok dolgozni." data-speak-lang="hu-HU">Holnap nem fogok dolgozni.</button></p>
++        <p><button class="speak-btn" data-speak-text="Mit fogsz csinálni hétvégén?" data-speak-lang="hu-HU">Mit fogsz csinálni hétvégén?</button></p>
++
++        <div class="note">
++          Для нейтрального отрицания держи nem перед личной формой fog.
++          Для вопроса сначала определи, какую информацию нужно получить.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. План и прогноз — не одно и то же</h4>
++
++        <p><button class="speak-btn" data-speak-text="Este találkozom Annával." data-speak-lang="hu-HU">Este találkozom Annával.</button></p>
++        <p><button class="speak-btn" data-speak-text="Szerintem esni fog." data-speak-lang="hu-HU">Szerintem esni fog.</button></p>
++
++        <div class="note">
++          Конкретная договорённость часто естественно стоит в настоящей форме.
++          Для прогноза fog особенно удобен, а szerintem явно показывает, что это предположение говорящего.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">5. Три времени в одном контексте</h4>
++
++        <p><button class="speak-btn" data-speak-text="tegnap" data-speak-lang="hu-HU">tegnap</button> → прошлое</p>
++        <p><button class="speak-btn" data-speak-text="ma" data-speak-lang="hu-HU">ma</button> → настоящее</p>
++        <p><button class="speak-btn" data-speak-text="holnap" data-speak-lang="hu-HU">holnap</button> → будущее</p>
++
++        <div class="note">
++          В Reading и Listening проверяй вместе временной маркер, форму глагола и контекст.
++          Не определяй время только по одному слову.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">6. Изменившийся план</h4>
++
++        <p><button class="speak-btn" data-speak-text="Mikor tudunk találkozni?" data-speak-lang="hu-HU">Mikor tudunk találkozni?</button></p>
++        <p><button class="speak-btn" data-speak-text="Találkozzunk inkább később!" data-speak-lang="hu-HU">Találkozzunk inkább később!</button></p>
++        <p><button class="speak-btn" data-speak-text="Tehát kettőkor találkozunk." data-speak-lang="hu-HU">Tehát kettőkor találkozunk.</button></p>
++
++        <div class="note">
++          Рабочая последовательность: отреагировать → уточнить новое время → предложить альтернативу → подтвердить итог.
++          Готовые формы совместного предложения здесь остаются функциональными блоками, а не новой парадигмой.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">7. Что реально подтверждают задания</h4>
++
++        <table class="conj">
++          <tr><th>Цель</th><th>Основное evidence</th><th>Статус</th></tr>
++          <tr><td>строить изученное fog-будущее, включая отрицание</td><td>Controlled Practice</td><td><b>DIRECT</b> после порога</td></tr>
++          <tr><td>восстанавливать шесть неопределённых форм fog</td><td>Controlled Practice</td><td><b>DIRECT</b> после порога</td></tr>
++          <tr><td>связно описывать будущие планы</td><td>Writing</td><td><b>PARTIAL</b></td></tr>
++          <tr><td>различать прошлое, настоящее и будущее</td><td>Reading + Published Listening</td><td><b>DIRECT + DIRECT</b></td></tr>
++          <tr><td>формулировать прогнозы</td><td>Controlled Practice + RolePlay</td><td><b>DIRECT + PARTIAL</b></td></tr>
++        </table>
++
++        <div class="note">
++          Пороги: Controlled Practice — <b>11/14</b>, Reading — <b>6/8</b>, Published Listening — <b>4/5</b>.
++          Writing и RolePlay остаются PARTIAL.
++          Optional Speaking Practice evidence не создаёт.
++        </div>
++
++        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">8. Финальная самопроверка</h4>
++
++        <details class="note">
++          <summary class="font-bold cursor-pointer">Открой после собственной попытки</summary>
++          <p class="mt-3">Можешь сказать о завтрашнем плане двумя способами?</p>
++          <p>Можешь без таблицы восстановить шесть неопределённых форм fog?</p>
++          <p>Можешь построить нейтральное отрицание и вопрос?</p>
++          <p>Можешь на слух отличить вчера, сегодня и будущее?</p>
++          <p>Можешь сформулировать простой прогноз и изменить договорённость?</p>
++        </details>
++
++        <div class="warn">
++          Quiz — retrieval checkpoint, а не доказательство полного коммуникативного владения.
++          Lesson 20 будет интегрировать уже изученные времена; новую грамматику следующего урока здесь не вводим.
++        </div>
++      `,
++    }
+   ],
+-  vocabulary: [
+-    { id: 'l19_v1', hu: 'holnapután', ru: 'послезавтра', category: 'Время', exampleSentence: 'Holnapután dolgozni fogok.' },
++  vocabulary: [    { id: 'l19_v1', hu: 'holnapután', ru: 'послезавтра', category: 'Время', exampleSentence: 'Holnapután dolgozni fogok.' },
+     { id: 'l19_v2', hu: 'jövő héten', ru: 'на следующей неделе', category: 'Время', exampleSentence: 'Jövő héten találkozni fogunk.' },
+     { id: 'l19_v3', hu: 'jövő hónapban', ru: 'в следующем месяце', category: 'Время', exampleSentence: 'Jövő hónapban utazni fogok.' },
+     { id: 'l19_v4', hu: 'jövőre', ru: 'в следующем году', category: 'Время', exampleSentence: 'Jövőre többet fogok tanulni.' },
+diff --git a/src/data/wordAudioMap.ts b/src/data/wordAudioMap.ts
+index c633257..daf8210 100644
+--- a/src/data/wordAudioMap.ts
++++ b/src/data/wordAudioMap.ts
+@@ -2364,6 +2364,133 @@ const rawWordAudioMap: Record<string, string> = {
+   'ha esik, inkább bent maradunk.': audioUrl('Ha_esik,_inkább_bent_maradunk.mp3'),
+   'rossz idő lesz, ezért megváltoztatjuk a programot.': audioUrl('Rossz_idő_lesz,_ezért_megváltoztatjuk_a_programot.mp3'),
+   'vasárnap jobb lesz a szabadtéri programhoz.': audioUrl('Vasárnap_jobb_lesz_a_szabadtéri_programhoz.mp3'),
++  'főnévi igenév': audioUrl('főnévi_igenév.mp3'),
++  'főzni': audioUrl('főzni.mp3'),
++  'lehet itt parkolni?': audioUrl('Lehet_itt_parkolni.mp3'),
++  'olvasni': audioUrl('olvasni.mp3'),
++  'szeretnék pihenni.': audioUrl('Szeretnék_pihenni.mp3'),
++  'tudok vezetni.': audioUrl('Tudok_vezetni.mp3'),
++  'dolgoznom kell.': audioUrl('Dolgoznom_kell.mp3'),
++  'el akarok menni a boltba.': audioUrl('El_akarok_menni_a_boltba.mp3'),
++  'holnap dolgoznom kell.': audioUrl('Holnap_dolgoznom_kell.mp3'),
++  'itt nem szabad dohányozni.': audioUrl('Itt_nem_szabad_dohányozni.mp3'),
++  'lehet itt fényképezni?': audioUrl('Lehet_itt_fényképezni.mp3'),
++  'szeretnék időpontot kérni.': audioUrl('Szeretnék_időpontot_kérni.mp3'),
++  'dolgoznia kell': audioUrl('dolgoznia_kell.mp3'),
++  'dolgoznod kell': audioUrl('dolgoznod_kell.mp3'),
++  'dolgoznom kell': audioUrl('Dolgoznom_kell.mp3'),
++  'itt várni kell.': audioUrl('Itt_várni_kell.mp3'),
++  'menned kell': audioUrl('menned_kell.mp3'),
++  'mennetek': audioUrl('mennetek.mp3'),
++  'mennie kell': audioUrl('mennie_kell.mp3'),
++  'menniük': audioUrl('menniük.mp3'),
++  'mennünk': audioUrl('mennünk.mp3'),
++  'pihenned kell.': audioUrl('Pihenned_kell.mp3'),
++  'itt nem szabad parkolni.': audioUrl('Itt_nem_szabad_parkolni.mp3'),
++  'lehet itt úszni?': audioUrl('Lehet_itt_úszni.mp3'),
++  'lehet, hogy...': audioUrl('Lehet,_hogy.mp3'),
++  'ma nem tudok korábban elmenni.': audioUrl('Ma_nem_tudok_korábban_elmenni.mp3'),
++  'szabad itt fényképezni?': audioUrl('Szabad_itt_fényképezni.mp3'),
++  'tudok úszni.': audioUrl('Tudok_úszni.mp3'),
++  'el akarok kezdeni magyarul tanulni.': audioUrl('El_akarok_kezdeni_magyarul_tanulni.mp3'),
++  'pihenni akarok.': audioUrl('Pihenni_akarok.mp3'),
++  'szeretnék beszélni a koordinátorral.': audioUrl('Szeretnék_beszélni_a_koordinátorral.mp3'),
++  'akarja': audioUrl('akarja.mp3'),
++  'hagyhatja': audioUrl('hagyhatja.mp3'),
++  'kell': audioUrl('kell.mp3'),
++  'kérdezhet': audioUrl('kérdezhet.mp3'),
++  'nem szabad': audioUrl('nem_szabad.mp3'),
++  'nem tud': audioUrl('nem_tud.mp3'),
++  'szeretné': audioUrl('szeretné.mp3'),
++  'teheti': audioUrl('teheti.mp3'),
++  'tud majd segíteni': audioUrl('tud_majd_segíteni.mp3'),
++  'akar': audioUrl('akar.mp3'),
++  'előbb': audioUrl('előbb.mp3'),
++  'ma este': audioUrl('ma_este.mp3'),
++  'hol lehet enni vagy inni?': audioUrl('Hol_lehet_enni_vagy_inni.mp3'),
++  'jól értem, hogy itt nem szabad telefonálni?': audioUrl('Jól_értem,_hogy_itt_nem_szabad_telefonálni.mp3'),
++  'köszönöm szépen a segítséget!': audioUrl('Köszönöm_szépen_a_segítséget.mp3'),
++  'lehet laptopot használni?': audioUrl('Lehet_laptopot_használni.mp3'),
++  'lehet másik csoportba menni?': audioUrl('Lehet_másik_csoportba_menni.mp3'),
++  'mikorra kell megérkeznem?': audioUrl('Mikorra_kell_megérkeznem.mp3'),
++  'oda tudok érni.': audioUrl('Oda_tudok_érni.mp3'),
++  'szerdán reggel nem tudok eljönni.': audioUrl('Szerdán_reggel_nem_tudok_eljönni.mp3'),
++  'azért írok, mert...': audioUrl('Azért_írok,_mert.mp3'),
++  'kedves koordinátor!': audioUrl('Kedves_Koordinátor.mp3'),
++  'köszönöm a segítségét.': audioUrl('Köszönöm_a_segítségét.mp3'),
++  'lehet másik időpontot választani?': audioUrl('Lehet_másik_időpontot_választani.mp3'),
++  'nem tudok...': audioUrl('Nem_tudok.mp3'),
++  'el akarok kezdeni többet olvasni.': audioUrl('El_akarok_kezdeni_többet_olvasni.mp3'),
++  'hétvégén nem kell dolgoznom.': audioUrl('Hétvégén_nem_kell_dolgoznom.mp3'),
++  'jól tudok főzni.': audioUrl('Jól_tudok_főzni.mp3'),
++  'még egy dolog...': audioUrl('Még_egy_dolog.mp3'),
++  'minden nap dolgoznom kell.': audioUrl('Minden_nap_dolgoznom_kell.mp3'),
++  'szeretnék megtanulni vezetni.': audioUrl('Szeretnék_megtanulni_vezetni.mp3'),
++  'mennem kell.': audioUrl('mennem_kell.mp3'),
++  'este találkozom annával.': audioUrl('Este_találkozom_Annával.mp3'),
++  'holnap dolgozni fogok.': audioUrl('Holnap_dolgozni_fogok.mp3'),
++  'holnap dolgozom.': audioUrl('Holnap_dolgozom.mp3'),
++  'jövő héten budapestre utazom.': audioUrl('Jövő_héten_Budapestre_utazom.mp3'),
++  'dolgozni fogsz': audioUrl('dolgozni_fogsz.mp3'),
++  'este dolgozni fogsz.': audioUrl('Este_dolgozni_fogsz.mp3'),
++  'holnap tanulni fogok.': audioUrl('Holnap_tanulni_fogok.mp3'),
++  'jövő héten utazni fog.': audioUrl('Jövő_héten_utazni_fog.mp3'),
++  'tanulni fogok': audioUrl('tanulni_fogok.mp3'),
++  'utazni fog': audioUrl('utazni_fog.mp3'),
++  'dolgozni fognak': audioUrl('dolgozni_fognak.mp3'),
++  'este tanulni fogtok.': audioUrl('Este_tanulni_fogtok.mp3'),
++  'fog': audioUrl('fog.mp3'),
++  'fognak': audioUrl('fognak.mp3'),
++  'fogok': audioUrl('fogok.mp3'),
++  'fogsz': audioUrl('fogsz.mp3'),
++  'fogtok': audioUrl('fogtok.mp3'),
++  'fogunk': audioUrl('fogunk.mp3'),
++  'főzni fogunk': audioUrl('főzni_fogunk.mp3'),
++  'holnap főzni fogunk.': audioUrl('Holnap_főzni_fogunk.mp3'),
++  'jövő héten dolgozni fognak.': audioUrl('Jövő_héten_dolgozni_fognak.mp3'),
++  'tanulni fogtok': audioUrl('tanulni_fogtok.mp3'),
++  'a könyvet': audioUrl('a_könyvet.mp3'),
++  'egy könyvet': audioUrl('Egy_könyvet.mp3'),
++  'el fogom olvasni a könyvet.': audioUrl('El_fogom_olvasni_a_könyvet.mp3'),
++  'fogja': audioUrl('fogja.mp3'),
++  'fogják': audioUrl('fogják.mp3'),
++  'fogjátok': audioUrl('fogjátok.mp3'),
++  'fogjuk': audioUrl('fogjuk.mp3'),
++  'fogod': audioUrl('fogod.mp3'),
++  'fogom': audioUrl('fogom.mp3'),
++  'olvasni fogok egy könyvet.': audioUrl('Olvasni_fogok_egy_könyvet.mp3'),
++  'holnap dolgozni fogsz?': audioUrl('Holnap_dolgozni_fogsz.mp3'),
++  'holnap nem fogok dolgozni.': audioUrl('Holnap_nem_fogok_dolgozni.mp3'),
++  'igen, fogok.': audioUrl('Igen,_fogok.mp3'),
++  'mit fogsz csinálni hétvégén?': audioUrl('Mit_fogsz_csinálni_hétvégén.mp3'),
++  'nem, nem fogok.': audioUrl('Nem,_nem_fogok.mp3'),
++  'a barátaim is dolgozni fognak.': audioUrl('A_barátaim_is_dolgozni_fognak.mp3'),
++  'jó, akkor kettőkor találkozunk a pályaudvarnál.': audioUrl('Jó,_akkor_kettőkor_találkozunk_a_pályaudvarnál.mp3'),
++  'majd felhívlak.': audioUrl('Majd_felhívlak.mp3'),
++  'rendben. mikor tudunk találkozni?': audioUrl('Rendben._Mikor_tudunk_találkozni.mp3'),
++  'szerintem esni fog.': audioUrl('Szerintem_esni_fog.mp3'),
++  'szerintem holnap sokat fogok dolgozni.': audioUrl('Szerintem_holnap_sokat_fogok_dolgozni.mp3'),
++  'találkozzunk inkább délután kettőkor!': audioUrl('Találkozzunk_inkább_délután_kettőkor.mp3'),
++  'vasárnap pihenni fogunk.': audioUrl('Vasárnap_pihenni_fogunk.mp3'),
++  'az előrejelzés szerint': audioUrl('Az_előrejelzés_szerint.mp3'),
++  'a hétvégén': audioUrl('a_hétvégén.mp3'),
++  'szerinte': audioUrl('szerinte.mp3'),
++  'vasárnap': audioUrl('vasárnap.mp3'),
++  'ha esik, maradjunk bent.': audioUrl('Ha_esik,_maradjunk_bent.mp3'),
++  'mikor tudunk találkozni?': audioUrl('Mikor_tudunk_találkozni.mp3'),
++  'mit fogunk csinálni?': audioUrl('Mit_fogunk_csinálni.mp3'),
++  'rendben, szia!': audioUrl('Rendben,_szia.mp3'),
++  'találkozzunk inkább később!': audioUrl('Találkozzunk_inkább_később.mp3'),
++  'tehát kettőkor találkozunk.': audioUrl('Tehát_kettőkor_találkozunk.mp3'),
++  'vonattal menjünk?': audioUrl('Vonattal_menjünk.mp3'),
++  'a hétvégén pihenni fogok.': audioUrl('A_hétvégén_pihenni_fogok.mp3'),
++  'és te mit fogsz csinálni hétvégén?': audioUrl('És_te_mit_fogsz_csinálni_hétvégén.mp3'),
++  'jövő héten sokat fogok dolgozni.': audioUrl('Jövő_héten_sokat_fogok_dolgozni.mp3'),
++  'kedden találkozom annával.': audioUrl('Kedden_találkozom_Annával.mp3'),
++  'lehet, hogy a terv megváltozik, mert dolgoznom kell.': audioUrl('Lehet,_hogy_a_terv_megváltozik,_mert_dolgoznom_kell.mp3'),
++  'péntek este találkozom egy barátommal.': audioUrl('Péntek_este_találkozom_egy_barátommal.mp3'),
++  'szerintem vasárnap jó idő lesz.': audioUrl('Szerintem_vasárnap_jó_idő_lesz.mp3'),
++  'szombaton kirándulni fogok.': audioUrl('Szombaton_kirándulni_fogok.mp3'),
+ };
+ 
+ export const wordAudioMap: Record<string, string> = rawWordAudioMap;

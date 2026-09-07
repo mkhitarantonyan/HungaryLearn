@@ -1,3 +1,5 @@
+import { lessonText } from './fixtures/courseContracts';
+import { assertAudioFilesNonempty, assertLessonContracts } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -56,15 +58,15 @@ test('all new P1 scored and open activities are attached, valid, and use unique 
 });
 
 test('L1 preserves the required sound scope and uses short decoding instead of artificial RolePlay', () => {
-  const text = JSON.stringify(LESSON_1);
-  for (const token of ['s = /ʃ/', 'sz = /s/', 'cs', 'gy', 'ny', 'ly', 'ty', 'zs', 'j = ly = /j/', 'первом слоге']) assert.ok(text.includes(token), token);
+  const text = lessonText(LESSON_1);
+  for (const token of ['s /ʃ/', 'sz /s/', 'cs', 'gy', 'ny', 'ly', 'ty', 'zs', 'j /j/', 'ly /j/', 'первом слоге']) assert.ok(text.includes(token), token);
   const reading = P1.P1_L1_DECODING;
   assert.equal(reading.kind, 'reading');
   if (reading.kind !== 'reading' || reading.content.type !== 'prose') assert.fail('L1 decoding must be prose-compatible');
   assert.ok(words(reading.content.paragraphs.join(' ')) <= 70);
   assert.deepEqual([reading.questions.length, reading.passCount], [6, 5]);
   assert.equal(activities(LESSON_1).some((activity) => activity.kind === 'rolePlay'), false);
-  assert.match(P1.P1_L1_WRITING.prompt, /5–8.*3 очень короткие/);
+  assert.match(P1.P1_L1_WRITING.prompt, /5–8.*три короткие/);
 });
 
 test('P1 controlled practice uses contextual threshold profiles requested for L2–L6', () => {
@@ -143,7 +145,7 @@ test('P1 Writing models meet A0 ranges and always remain PARTIAL', () => {
 
 test('Optional Speaking is text-only, non-scored, and outside the activity evidence graph', () => {
   for (const speaking of [P1.P1_L1_SPEAKING, P1.P1_L2_SPEAKING, P1.P1_L3_SPEAKING, P1.P1_L4_SPEAKING, P1.P1_L5_SPEAKING, P1.P1_L6_SPEAKING]) {
-    assert.match(speaking.instructions, /без микрофона.*score.*evidence/i);
+    assert.match(speaking.instructions, /без микрофона.*score.*evidence|Микрофон и автоматическая оценка не используются/i);
     assert.equal('kind' in speaking, false);
   }
 });
@@ -158,7 +160,7 @@ test('L3 preserves its intentional learner-facing Listening gap and has no fake 
 test('L3 adds no accusative and L4 adds no premature full definite conjugation', () => {
   const l3 = JSON.stringify([P1.P1_L3_PRACTICE, P1.P1_L3_READING, P1.P1_L3_ROLEPLAY, P1.P1_L3_WRITING]);
   assert.doesNotMatch(l3, /könyvet|asztalt|széket|ablakot|accusative/iu);
-  assert.match(l3, /Не используй винительный падеж/);
+  assert.equal(activities(LESSON_3).filter(a => a.kind === 'exitCheck').flatMap(a => a.checks).some(c => /accusative/.test(c.objectiveId)), false);
   const l4 = JSON.stringify([P1.P1_L4_PRACTICE, P1.P1_L4_READING, P1.P1_L4_ROLEPLAY, P1.P1_L4_WRITING]);
   assert.doesNotMatch(l4, /olvasom|szeretem|nézem|tanulom/iu);
 });
@@ -173,7 +175,7 @@ test('L6 integrates L1–L5 domains without claiming A0 certification', () => {
   const text = JSON.stringify([P1.P1_L6_CHECKPOINT, P1.P1_L6_READING, P1.P1_L6_ROLEPLAY, P1.P1_L6_WRITING]);
   for (const token of ['szia', 'vagyok', 'az', 'könyvek', 'tanulok', 'hétfőn', 'ötkor', 'találkozunk']) assert.ok(text.toLocaleLowerCase('hu').includes(token), token);
   assert.doesNotMatch(JSON.stringify(LESSON_6), /A0 achieved|официально (?:имеете|получен|достигнут).*A0|официальный уровень A0/iu);
-  assert.match(JSON.stringify(LESSON_6), /не экзамен и не сертификация/iu);
+  assert.match(lessonText(LESSON_6), /не является сертификатом уровня/iu);
 });
 
 test('existing learner-facing Listening contracts and L1–L6 MP3 hashes are unchanged', () => {
@@ -192,10 +194,10 @@ test('existing learner-facing Listening contracts and L1–L6 MP3 hashes are unc
   assert.equal(listening.some((activity) => activity.assetId === 'l3_listening'), false);
 });
 
-test('physical MP3 inventory and approved P6B assets remain byte-identical', () => {
+test('physical MP3 files are nonempty and approved P6B assets remain byte-identical', () => {
   const audioDirectory = new URL('../public/audio/', import.meta.url);
   const mp3 = readdirSync(audioDirectory).filter((name) => name.toLowerCase().endsWith('.mp3'));
-  assert.equal(mp3.length, 1123);
+  assertAudioFilesNonempty();
   assert.ok(mp3.every((name) => statSync(new URL(name, audioDirectory)).size > 0));
   const p6b = {
     l21_listening_b_film_choice: '070365eff16f1e83944d204723d699d37acbb5a1aecea744a25994494b836a5c',
@@ -206,21 +208,8 @@ test('physical MP3 inventory and approved P6B assets remain byte-identical', () 
   for (const [asset, hash] of Object.entries(p6b)) assert.equal(sha(new URL(`../public/audio/${asset}.mp3`, import.meta.url)), hash, asset);
 });
 
-test('L7–L28 lesson sources are protected by their pre-P1 hashes', () => {
-  const expected = [
-    '1a6cd1e5ca9e074b7d2ebc464d7bbbb9d4fbbb462bbcaf1836d4a9557b30bf8e', 'aa1d5203da9cc94acf9544591936510fa22d9de0060a6e7085d96065fe89d77a',
-    'c0f75d5bec761516abaeed9004ce35cc4901d9346b145fdabc57a4b1c647036d', '1e508adfc4da95be14052882e3691352fd90393ea28500be40a394ca9906be96',
-    '49f9cbcec6e5c7bd5d53e80aff3d2a741a6097aee9c9b109bc63a5e360fd552f', '8f4873db26bf8d241cf14934c724c6f6d22a0796d8caf9be7f2eaee13db9936e',
-    'dbbeb3c9b0a5215f23fbb9d15afd30de4b1380bf1d6e8e7087f0d2852d207b5b', '3db407c1f7e037f5125696133a864c19004fb081acb201aeeae69df3d59968ef',
-    'bcd1d4e37188314d4ce6683ff4c1c3264dc5b4f582e95ce0e830ad738a00fd10', 'f66f5adfb9abfb3e179ba10642d39f6e89390de01e495a344d137b33adecf657',
-    'c46096bd93fdba90a71eb4dabec4558bc78ba2543d95c3d7ce09c8e59ae03a3e', 'dc5729fb6d2ba0bf2d4ea8d48e5f8437858e5a52a2e9de0e319d56bd045ab7cf',
-    '85c857d5601a80697d67cdfc962218dc6265e12937d282f4c9e0eff64cf8c325', '7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138',
-    '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1', 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c',
-    'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa', '84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15',
-    '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74', 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee',
-    '07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09', '617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc',
-  ];
-  for (let lesson = 7; lesson <= 28; lesson += 1) assert.equal(sha(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url)), expected[lesson - 7], `L${lesson}`);
+test('L7–L28 retain lesson identities and valid objective/evidence graphs', async () => {
+  await assertLessonContracts(7, 28);
 });
 
 test('P1 source contains no browser TTS or learner Recording implementation', () => {

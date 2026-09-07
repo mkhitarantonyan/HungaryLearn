@@ -1,0 +1,11 @@
+{
+  "checkedFiles": 2799,
+  "changedFiles": [
+    {
+      "file": "src/data/slideAudioManifest.ts",
+      "initialSha256": "3349334288533265b52ef0b8ee3aebde787f14ccaacbb9c6c97eb44a0c55c17a",
+      "finalSha256": "98f85782336841a018372879f7d3b4f9bb80f26a55eaff0468f04a732fd631d7"
+    }
+  ],
+  "addedProtectedFiles": []
+}

@@ -5,6 +5,7 @@ import { getFirebaseAuth } from '../lib/firebase';
 import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
 import { sanitizeActivityEvidence } from './lessonProgress';
 import { mergeActivityEvidence } from './progressMerge';
+import { isBillingPlanKey, type BillingPlanKey } from '../config/pricing';
 
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'past_due' | 'paused' | 'unpaid';
 export type BillingProvider = 'lemonsqueezy' | null;
@@ -221,9 +222,14 @@ export async function logoutUserServer(): Promise<void> {
   setCurrentUser(null);
 }
 
-export async function createLemonCheckout(): Promise<{ success: boolean; url?: string; message?: string }> {
+export async function createLemonCheckout(plan: BillingPlanKey): Promise<{ success: boolean; url?: string; message?: string }> {
+  if (!isBillingPlanKey(plan)) return { success: false, message: 'Выберите доступный тариф.' };
   try {
-    const data = await apiJson<{ success: boolean; url: string }>('/api/billing/create-checkout', { method: 'POST' });
+    const data = await apiJson<{ success: boolean; url: string }>('/api/billing/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan }),
+    });
     return { success: true, url: data.url };
   } catch (error) {
     return { success: false, message: error instanceof Error ? error.message : 'Оплата временно недоступна.' };

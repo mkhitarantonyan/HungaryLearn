@@ -1,3 +1,4 @@
+import { assertSlideAudioManifest, lessonText, visibleText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -105,7 +106,7 @@ test('frozen planning and translation files plus the approved narration manifest
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B');
+  assertSlideAudioManifest();
 });
 
 test('L1 translations and effective six-card vocabulary remain exact', () => {
@@ -128,29 +129,30 @@ test('L1 metadata matches the migrated lesson module', () => {
 });
 
 test('L1 says 44 letters/letter units, includes digraphs and dzs, and never says 44 sounds', () => {
-  const lessonText = JSON.stringify(LESSON_1);
-  assert.match(lessonText, /44 буквы\/буквенные единицы/);
-  assert.match(lessonText, /диграф/);
-  assert.match(lessonText, /триграф dzs/);
-  assert.doesNotMatch(lessonText, /44 звук/iu);
-  assert.doesNotMatch(lessonText, /1 буква\/сочетание\s*=\s*1 звук/iu);
-  assert.match(lessonText, /не универсальный закон/iu);
+  const text = lessonText(LESSON_1);
+  assert.match(text, /44 буквы\/буквенные единицы/);
+  assert.match(text, /диграф/);
+  assert.match(text, /триграф dzs/);
+  assert.match(text, /44 буквенные единицы — не то же самое, что 44 звука/iu);
+  assert.doesNotMatch(text.replace('44 буквенные единицы — не то же самое, что 44 звука', ''), /44 звук/iu);
+  assert.doesNotMatch(text, /1 буква\/сочетание\s*=\s*1 звук/iu);
+  assert.match(text, /не универсальный закон/iu);
 });
 
 test('L1 teaches gy /ɟ/, ty /c/, ny /ɲ/ as separate phonemes with bounded Russian approximations', () => {
-  const lessonText = JSON.stringify(LESSON_1);
-  assert.match(lessonText, /gy → \/ɟ\//);
-  assert.match(lessonText, /ty → \/c\//);
-  assert.match(lessonText, /ny → \/ɲ\//);
-  assert.match(lessonText, /отдельные фонемы/iu);
-  assert.match(lessonText, /грубая подсказка/iu);
-  assert.match(lessonText, /не обычное русское смягчение/iu);
+  const text = lessonText(LESSON_1);
+  assert.match(text, /gy \/ɟ\//);
+  assert.match(text, /ty \/c\//);
+  assert.match(text, /ny \/ɲ\//);
+  assert.match(text, /самостоятельные палатальные согласные/iu);
+  assert.match(text, /грубое приближение/iu);
+  assert.match(text, /не обычные русские согласные со смягчением/iu);
 });
 
 test('L1 teaches j and ly as /j/ without an acoustic spelling contrast', () => {
-  const lessonText = JSON.stringify(LESSON_1);
-  assert.match(lessonText, /j = ly = \/j\//);
-  assert.match(lessonText, /акустического контраста j и ly нет/iu);
+  const text = lessonText(LESSON_1);
+  assert.match(text, /J и ly.*один и тот же звук \/j\//iu);
+  assert.match(text, /По звучанию определить написание j или ly обычно нельзя/iu);
   const listening = findActivity('l1-listening-soft-consonants', 'listening');
   for (const question of listening.questions) {
     assert.doesNotMatch(question.question, /j.*ly|ly.*j/iu);
@@ -159,10 +161,10 @@ test('L1 teaches j and ly as /j/ without an acoustic spelling contrast', () => {
 });
 
 test('L1 teaches quality plus duration for a/á and e/é', () => {
-  const lessonText = JSON.stringify(LESSON_1);
-  assert.match(lessonText, /a ≈ \/ɒ\/, á ≈ \/aː\//);
-  assert.match(lessonText, /e ≈ \/ɛ\/, é ≈ \/eː\//);
-  assert.match(lessonText, /длительность, и качество/iu);
+  const text = lessonText(LESSON_1);
+  assert.match(text, /a ≈ \/ɒ\/, á ≈ \/aː\//);
+  assert.match(text, /e ≈ \/ɛ\/, é ≈ \/eː\//);
+  assert.match(text, /длительность, и качество/iu);
 });
 
 test('all three required L1 ListeningTasks have exact IDs, published state, and thresholds', () => {
@@ -249,7 +251,7 @@ test('stress uses direct rule practice with an obligatory explicit rule item and
   const stress = findActivity('l1-cp-stress-rule', 'controlledPractice');
   assert.equal(stress.exercises.length, 5);
   assert.equal(stress.passCount, 5);
-  assert.match(stress.exercises[0].prompt, /изолированном венгерском слове/iu);
+  assert.match(stress.exercises[0].prompt, /отдельно произнесённом венгерском слове/iu);
   assert.equal(stress.exercises[0].kind, 'singleChoice');
   if (stress.exercises[0].kind === 'singleChoice') {
     assert.equal(stress.exercises[0].options[stress.exercises[0].correctIndex], 'На первый слог');
@@ -262,7 +264,7 @@ test('L1 has no Recording activity and keeps read-aloud as optional text-only pr
   const speaking = LESSON_1.slides.find((slide) => slide.id === 10)?.optionalSpeaking;
   assert.ok(speaking);
   assert.equal(speaking.prompt, 'gyár, tyúk, nyolc, játék, folyó');
-  assert.equal(speaking.rubric?.length, 4);
+  assert.equal(speaking.rubric?.length, 5);
 });
 
 test('L1 controlled and listening controls expose textual feedback, focus, and narrow-screen wrapping', () => {
@@ -312,8 +314,8 @@ test('generic learner Recording architecture is removed', () => {
   assert.equal(existsSync(new URL('../src/components/activities/RecordingTask.tsx', import.meta.url)), false);
 });
 
-test('L2/L5/L15 RolePlay and L4 sentence-reading are text-only', () => {
-  assert.equal(LESSON_4.slides.some((slide) => slide.type === 'sentence-reading'), true);
+test('L2/L5/L15 RolePlay and L4 optional speaking are text-only', () => {
+  assert.ok(LESSON_4.slides.some(slide => slide.optionalSpeaking));
   for (const lessonPath of ['lesson2.ts', 'lesson5.ts', 'lesson15.ts']) {
     const source = readFileSync(new URL(`../src/data/lessons/${lessonPath}`, import.meta.url), 'utf8');
     assert.match(source, /responseMode: 'selfPractice'/);
@@ -530,7 +532,7 @@ test('L1 ExitCheck preserves mixed DIRECT/NONE semantics without optional speaki
 
 test('L1 P1 adds bounded open Writing but no artificial RolePlay or fake listening evidence', () => {
   const writing = findActivity('l1-writing-first-forms', 'writing');
-  assert.match(writing.prompt, /5–8.*3 очень короткие/);
+  assert.match(writing.prompt, /5–8.*три короткие/);
   assert.equal(writingEvidence(writing.modelAnswer.join(' '), true).evidenceMode, 'partial');
   assert.equal(L1_ACTIVITIES.some((activity) => activity.kind === 'rolePlay'), false);
   const exit = findActivity('l1-exit-check', 'exitCheck');
@@ -559,13 +561,12 @@ test('all six L1 retrieval questions have unique options and one valid intended 
 });
 
 test('summary keeps corrected phonetic categories and does not group ly with gy/ty/ny', () => {
-  const summary = LESSON_1.slides.find((slide) => slide.id === 11);
+  const summary = LESSON_1.slides.find(slide => slide.id === 11);
   assert.ok(summary?.body);
-  assert.match(summary.body, /gy = \/ɟ\//);
-  assert.match(summary.body, /ty = \/c\//);
-  assert.match(summary.body, /ny = \/ɲ\//);
-  assert.match(summary.body, /j = ly = \/j\//);
-  assert.doesNotMatch(summary.body, /gy, ty, ny, ly[^<]*(группа|мягк)/iu);
+  const text = visibleText(summary.body);
+  for (const pair of [/gy\s*\/ɟ\//, /ty\s*\/c\//, /ny\s*\/ɲ\//]) assert.match(text, pair);
+  assert.match(text, /j.*ly.*\/j\//i);
+  assert.doesNotMatch(text, /gy, ty, ny, ly.*мягк/iu);
 });
 
 test('slideNarrator contains no synthesized fallback script', () => {

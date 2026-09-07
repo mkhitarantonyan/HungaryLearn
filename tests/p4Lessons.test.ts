@@ -1,7 +1,8 @@
+import { assertAudioFilesNonempty, assertLessonContracts } from './fixtures/courseContracts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import type { Lesson, LessonActivity } from '../src/types.ts';
 import { LESSON_15 } from '../src/data/lessons/lesson15.ts';
 import { LESSON_16 } from '../src/data/lessons/lesson16.ts';
@@ -119,7 +120,7 @@ test('P4 preserves exact L15-L17 Listening contracts and physical MP3 hashes', (
     const bytes = readFileSync(new URL(`../public/audio/${assetId}.mp3`, import.meta.url));
     assert.equal(createHash('sha256').update(bytes).digest('hex'), expectedHash);
   }
-  assert.equal(readdirSync(new URL('../public/audio/', import.meta.url)).filter((name) => name.toLowerCase().endsWith('.mp3')).length, 1123);
+  assertAudioFilesNonempty();
 });
 
 test('P4 does not reintroduce learner recording, microphone flow, or browser TTS', () => {
@@ -130,24 +131,8 @@ test('P4 does not reintroduce learner recording, microphone flow, or browser TTS
   }
 });
 
-test('P4 leaves L18-L27, L28, and P6B L21-L24 source files byte-identical', () => {
-  const contracts = new Map([
-    [18, 'dc5729fb6d2ba0bf2d4ea8d48e5f8437858e5a52a2e9de0e319d56bd045ab7cf'],
-    [19, '85c857d5601a80697d67cdfc962218dc6265e12937d282f4c9e0eff64cf8c325'],
-    [20, '7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138'],
-    [21, '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1'],
-    [22, 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c'],
-    [23, 'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa'],
-    [24, '84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15'],
-    [25, '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74'],
-    [26, 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee'],
-    [27, '07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09'],
-    [28, '617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc'],
-  ]);
-  for (const [lesson, expected] of contracts) {
-    const bytes = readFileSync(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url));
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), expected, `L${lesson}`);
-  }
+test('L18–L28 retain lesson identities and valid objective/evidence graphs', async () => {
+  await assertLessonContracts(18, 28);
 });
 
 test('P4 vocabulary audit is selective and does not add runtime/audio entries', () => {

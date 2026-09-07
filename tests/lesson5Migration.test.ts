@@ -1,3 +1,4 @@
+import { lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -426,23 +427,21 @@ test('L4 mixed recognition objective keeps DIRECT text evidence as PARTIAL when 
 });
 
 test('date guidance is bounded, accurate, and contains no ISO shortcut', () => {
-  const lessonText = LESSON_5.slides.map((slide) => slide.body ?? '').join('\n');
-  assert.doesNotMatch(lessonText, /ISO/i);
-  assert.match(lessonText, /год → месяц → день/);
-  assert.match(lessonText, /augusztus harmadika/);
-  assert.match(lessonText, /В этом уроке полную систему порядковых числительных не изучаем/);
-  assert.match(lessonText, /Для даты пока используй этот готовый образец/);
-  assert.doesNotMatch(lessonText, /будет позже/i);
-  assert.doesNotMatch(lessonText, /első, második|первый, второй, третий/i);
+  const text = lessonText(LESSON_5);
+  assert.doesNotMatch(text, /ISO/i);
+  assert.match(text, /год → месяц → день/);
+  assert.match(text, /augusztus harmadika/);
+  assert.match(text, /Не нужно сейчас учить все порядковые формы дней месяца/);
+  assert.match(text, /достаточно понять модель на нескольких частых примерах/);
+  assert.doesNotMatch(text, /első, második|первый, второй, третий/i);
 });
 
-test('kettő/két and perc/másodperc are taught accurately', () => {
-  const lessonText = LESSON_5.slides.map((slide) => slide.body ?? '').join('\n');
-  assert.match(lessonText, /самостоятельно[^<]*—[^<]*<span class="hu-word">kettő/);
-  assert.match(lessonText, /перед существительным или единицей[^<]*—[^<]*<span class="hu-word">két/);
-  assert.match(lessonText, /perc<\/span> — минута/);
-  assert.match(lessonText, /másodperc<\/span> — секунда/);
-  assert.match(lessonText, /perc<\/span> не означает «секунда»/);
+test('kettő/két distinguish standalone numbers from counts before units', () => {
+  const text = lessonText(LESSON_5);
+  assert.match(text, /kettő употребляется самостоятельно/);
+  assert.match(text, /két — перед существительным или единицей/);
+  assert.match(text, /huszonkettő.*huszonkét perc/);
+  assert.doesNotMatch(text, /perc — секунда/);
 });
 
 test('Q506 is objective-aligned and all quiz options are unique', () => {

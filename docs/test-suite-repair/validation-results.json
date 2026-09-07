@@ -1,0 +1,77 @@
+[
+  {
+    "command": "npm run functions:typecheck",
+    "exitCode": 0,
+    "log": "test-repair-functions-typecheck.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm run functions:build",
+    "exitCode": 0,
+    "log": "test-repair-functions-build.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm run build",
+    "exitCode": 0,
+    "log": "test-repair-frontend-build.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm test",
+    "exitCode": 0,
+    "log": "test-repair-full.log",
+    "tests": 668,
+    "pass": 668,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "targeted billing/security (13 files)",
+    "exitCode": 0,
+    "log": "test-repair-billing-security.log",
+    "tests": 77,
+    "pass": 77,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm run test:rules (isolated CLI config)",
+    "exitCode": 0,
+    "log": "test-repair-firestore-rules-isolated.log",
+    "tests": 4,
+    "pass": 4,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0,
+    "log": "test-repair-tsc.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "targeted ESLint (all repaired tests)",
+    "exitCode": 0,
+    "log": "test-repair-eslint.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm run validate:lessons",
+    "exitCode": 0,
+    "log": "test-repair-lesson-validation.log",
+    "logArchivedOutsideProject": true
+  },
+  {
+    "command": "npm run validate:listening",
+    "exitCode": 0,
+    "log": "test-repair-audio-validation.log",
+    "logArchivedOutsideProject": true
+  }
+]

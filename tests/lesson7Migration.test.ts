@@ -1,3 +1,4 @@
+import { lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -16,7 +17,7 @@ test('L7 preserves identity, objective IDs, quiz IDs, vocabulary IDs, and eleven
 
 test('L7 exposes the complete valid communication sequence and resolvable ExitCheck',()=>{assert.deepEqual(activities.map((a)=>a.kind),['controlledPractice','reading','listening','rolePlay','writing','exitCheck']);assert.equal(new Set(activities.map((a)=>a.id)).size,activities.length);assert.deepEqual(activities.flatMap(validateActivity),[]);assert.deepEqual(validateLessonQuestionIds(activities),[]);const exit=find('l7-exit-check','exitCheck');const objectives=LESSON_7.objectives?.map((o)=>o.id)??[];assert.deepEqual(validateExitCheckReferences(exit,objectives,activities.map((a)=>a.id)),[]);});
 
-test('L7 contextual practice has fourteen items at 11/14 without teaching the full conjugation system',()=>{const cp=find('l7-cp-accusative-forms','controlledPractice');assert.deepEqual([cp.exercises.length,cp.passCount],[14,11]);const text=JSON.stringify(cp);for(const token of ['Mit kérsz','Kávét kérek','Kenyeret veszek','Látom a buszt','Szeretem ezt a filmet','Olvasok egy könyvet','almát','könyvet','asztalt','Annát','vizet'])assert.ok(text.includes(token),token);assert.match(source,/Полную систему спряжения изучим отдельно/);assert.doesNotMatch(source,/полная парадигма (алanyi|tárgyas)|все формы определённого спряжения/i);});
+test('L7 contextual practice has fourteen items at 11/14 without teaching the full conjugation system',()=>{const cp=find('l7-cp-accusative-forms','controlledPractice');assert.deepEqual([cp.exercises.length,cp.passCount],[14,11]);const text=JSON.stringify(cp);for(const token of ['Mit kérsz','Kávét kérek','Kenyeret veszek','Látom a buszt','Szeretem ezt a filmet','Olvasok egy könyvet','almát','könyvet','asztalt','Annát','vizet'])assert.ok(text.includes(token),token);assert.match(lessonText(LESSON_7),/Полная система неопределённого и определённого спряжения изучается позже/);assert.doesNotMatch(source,/полная парадигма (алanyi|tárgyas)|все формы определённого спряжения/i);});
 
 test('L7 Reading is a 130–160 word shopping story with seven meaning questions',()=>{const reading=find('l7-reading-bookshop','reading');const content=prose(reading);const words=content.paragraphs.join(' ').trim().split(/\s+/u).length;assert.ok(words>=130&&words<=160,`words=${words}`);assert.deepEqual([reading.questions.length,reading.passCount],[7,6]);assert.match(content.title??'',/Bevásárlás vacsorához/);assert.match(content.paragraphs.join(' '),/rizs.*paradicsomot.*csirkét.*eladót.*pulykát.*vacsorát/s);});
 

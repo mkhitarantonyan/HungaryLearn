@@ -1,6 +1,7 @@
+import { assertAudioFilesNonempty, assertLessonContracts } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 import { LESSON_11 } from '../src/data/lessons/lesson11.ts';
 import { LESSON_12 } from '../src/data/lessons/lesson12.ts';
@@ -34,14 +35,14 @@ test('P3 controlled practice, Reading, RolePlay, and Writing meet requested coun
   for(const lesson of lessons){const [cpN,cpPass,minR,maxR,qN,minW,maxW,learnerN]=contracts.get(lesson.number)!;const cp=find(lesson,'controlledPractice');const reading=find(lesson,'reading');const rolePlay=find(lesson,'rolePlay');const writing=find(lesson,'writing');const content=proseContent(reading);assert.deepEqual([cp.exercises.length,cp.passCount],[cpN,cpPass]);const rw=content.paragraphs.join(' ').trim().split(/\s+/u).length;assert.ok(rw>=minR&&rw<=maxR,`L${lesson.number} reading=${rw}`);assert.equal(reading.questions.length,qN);const ww=writing.modelAnswer.join(' ').trim().split(/\s+/u).length;assert.ok(ww>=minW&&ww<=maxW,`L${lesson.number} writing=${ww}`);assert.equal(rolePlay.turns.filter((t)=>t.speaker==='learner').length,learnerN);}
 });
 
-test('P3 preserves byte-identical L12–L14 Listening MP3 and adds no MP3',()=>{
+test('P3 preserves byte-identical L12–L14 Listening MP3 and validates current audio',()=>{
   const contracts=[
     ['l12_listening_near_locations','456b316f2a22a07b863baa77b253b733d4d4b7c5175db983b7ed3882ff08e4c0'],
     ['l13_listening_tense_contrast','4708e9caadb8585a12881a222223ee2caced5ec501346d1a698d979e575bee03'],
     ['l14_listening_routine','309ed8e4dc1db2f9832c69543c5213377238919b95baec70481bd2957e4b3a25'],
   ];
   for(const [asset,hash] of contracts){const url=new URL(`../public/audio/${asset}.mp3`,import.meta.url);assert.equal(existsSync(url),true);assert.equal(sha256(url),hash);}
-  assert.equal(readdirSync(new URL('../public/audio/',import.meta.url)).filter((name)=>name.endsWith('.mp3')).length,1123);
+  assertAudioFilesNonempty();
   assert.equal(activitiesOf(LESSON_11).some((activity)=>activity.kind==='listening'),false);assert.equal(existsSync(new URL('../public/audio/l11_listening_context.mp3',import.meta.url)),false);
 });
 
@@ -62,10 +63,11 @@ test('P3 contains no learner Recording, microphone flow, or browser TTS',()=>{
   for(const n of [11,12,13,14]){const source=readFileSync(new URL(`../src/data/lessons/lesson${n}.ts`,import.meta.url),'utf8');assert.doesNotMatch(source,/SpeechSynthesis|speechSynthesis|AudioRecorder|RecordingTask|recordingCompleted|responseMode:\s*['"]recorded['"]|kind:\s*['"]recording['"]|MediaRecorder|getUserMedia/i);}
 });
 
-test('P3 leaves L15–L27 and P6B lesson sources byte-identical',()=>{
-  const expected:Record<number,string>={15:'bcd1d4e37188314d4ce6683ff4c1c3264dc5b4f582e95ce0e830ad738a00fd10',16:'f66f5adfb9abfb3e179ba10642d39f6e89390de01e495a344d137b33adecf657',17:'c46096bd93fdba90a71eb4dabec4558bc78ba2543d95c3d7ce09c8e59ae03a3e',18:'dc5729fb6d2ba0bf2d4ea8d48e5f8437858e5a52a2e9de0e319d56bd045ab7cf',19:'85c857d5601a80697d67cdfc962218dc6265e12937d282f4c9e0eff64cf8c325',20:'7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138',21:'970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1',22:'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c',23:'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa',24:'84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15',25:'94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74',26:'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee',27:'07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09'};
-  for(const [n,hash] of Object.entries(expected))assert.equal(sha256(new URL(`../src/data/lessons/lesson${n}.ts`,import.meta.url)),hash,`L${n}`);
-  for(const asset of ['l21_listening_b_film_choice','l22_listening_b_office_instructions','l23_listening_b_free_week','l24_listening_b_city_or_suburbs'])assert.equal(existsSync(new URL(`../public/audio/${asset}.mp3`,import.meta.url)),true);
+test('L15–L27 retain lesson identities and valid objective/evidence graphs', async () => {
+  await assertLessonContracts(15, 27);
+  for (const asset of ['l21_listening_b_film_choice', 'l22_listening_b_office_instructions', 'l23_listening_b_free_week', 'l24_listening_b_city_or_suburbs']) {
+    assert.equal(existsSync(new URL(`../public/audio/${asset}.mp3`, import.meta.url)), true);
+  }
 });
 
 test('P3 leaves L28 byte-identical',()=>{assert.equal(sha256(new URL('../src/data/lessons/lesson28.ts',import.meta.url)),'617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc');});

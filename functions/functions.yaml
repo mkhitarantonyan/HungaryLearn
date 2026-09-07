@@ -71,6 +71,21 @@
       "default": ""
     },
     {
+      "name": "LEMONSQUEEZY_VARIANT_ID_MONTHLY",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LEMONSQUEEZY_VARIANT_ID_QUARTERLY",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LEMONSQUEEZY_VARIANT_ID_YEARLY",
+      "type": "string",
+      "default": ""
+    },
+    {
       "name": "APP_URL",
       "type": "string",
       "default": "https://hungarylearn.web.app"

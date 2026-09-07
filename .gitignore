@@ -5,6 +5,8 @@ functions/lib/
 .firebase/
 coverage/
 .DS_Store
+desktop.ini
+Thumbs.db
 *.log
 .env*
 !.env.example
@@ -24,4 +26,3 @@ functions/.env.local
 *service-account*.json
 *.p12
 *.key
-

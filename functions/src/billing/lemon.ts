@@ -1,11 +1,14 @@
 const LEMON_API = 'https://api.lemonsqueezy.com/v1';
 
-export interface LemonConfig {
+export interface LemonBaseConfig {
   apiKey: string;
   storeId: string;
-  variantId: string;
   appUrl: string;
   testMode: boolean;
+}
+
+export interface LemonConfig extends LemonBaseConfig {
+  variantId: string;
 }
 
 interface LemonErrorDocument {
@@ -44,17 +47,13 @@ function resourceId(value: unknown, parameter: string): string {
   return id;
 }
 
-export function normalizeLemonConfig(config: LemonConfig): LemonConfig {
+export function normalizeLemonBaseConfig(config: LemonBaseConfig): LemonBaseConfig {
   if (typeof config.testMode !== 'boolean') {
     throw new LemonConfigurationError('LEMONSQUEEZY_TEST_MODE', 'LEMONSQUEEZY_TEST_MODE must be boolean');
   }
   const apiKey = typeof config.apiKey === 'string' ? config.apiKey.trim() : '';
   if (!apiKey) throw new LemonConfigurationError('LEMONSQUEEZY_API_KEY', 'LEMONSQUEEZY_API_KEY is required');
   const storeId = resourceId(config.storeId, 'LEMONSQUEEZY_STORE_ID');
-  const variantId = resourceId(config.variantId, 'LEMONSQUEEZY_VARIANT_ID');
-  if (storeId === variantId) {
-    throw new LemonConfigurationError('LEMONSQUEEZY_VARIANT_ID', 'Store and variant IDs must be different');
-  }
   let appUrl: URL;
   try { appUrl = new URL(config.appUrl.trim()); }
   catch { throw new LemonConfigurationError('APP_URL', 'APP_URL must be an absolute URL'); }
@@ -68,18 +67,26 @@ export function normalizeLemonConfig(config: LemonConfig): LemonConfig {
     ...config,
     apiKey,
     storeId,
-    variantId,
     appUrl: appUrl.toString().replace(/\/+$/, ''),
   };
 }
 
+export function normalizeLemonConfig(config: LemonConfig): LemonConfig {
+  const base = normalizeLemonBaseConfig(config);
+  const variantId = resourceId(config.variantId, 'LEMONSQUEEZY_VARIANT_ID');
+  if (base.storeId === variantId) {
+    throw new LemonConfigurationError('LEMONSQUEEZY_VARIANT_ID', 'Store and variant IDs must be different');
+  }
+  return { ...base, variantId };
+}
+
 async function lemonRequest<T>(
-  config: LemonConfig,
+  config: LemonBaseConfig,
   path: string,
   init: RequestInit,
   fetchImpl: typeof fetch = fetch,
 ): Promise<T> {
-  const normalized = normalizeLemonConfig(config);
+  const normalized = normalizeLemonBaseConfig(config);
   const response = await fetchImpl(`${LEMON_API}${path}`, {
     ...init,
     headers: {
@@ -135,18 +142,19 @@ export async function createCheckout(
   return result.data.attributes.url;
 }
 
-export async function retrieveSubscription(config: LemonConfig, subscriptionId: string): Promise<Record<string, unknown>> {
+export async function retrieveSubscription(config: LemonBaseConfig, subscriptionId: string, fetchImpl: typeof fetch = fetch): Promise<Record<string, unknown>> {
   const result = await lemonRequest<{ data: Record<string, unknown> }>(config, `/subscriptions/${encodeURIComponent(subscriptionId)}`, {
     method: 'GET',
-  });
+  }, fetchImpl);
   return result.data;
 }
 
-export async function getCustomerPortalUrl(config: LemonConfig, subscriptionId: string): Promise<string> {
-  const data = await retrieveSubscription(config, subscriptionId);
+export async function getCustomerPortalUrl(config: LemonBaseConfig, subscriptionId: string, allowedVariantIds: readonly string[], fetchImpl: typeof fetch = fetch): Promise<string> {
+  const normalized = normalizeLemonBaseConfig(config);
+  const data = await retrieveSubscription(normalized, subscriptionId, fetchImpl);
   const attributes = data.attributes as { store_id?: unknown; variant_id?: unknown; test_mode?: unknown; urls?: { customer_portal?: unknown } } | undefined;
-  if (String(attributes?.store_id) !== config.storeId || String(attributes?.variant_id) !== config.variantId
-    || Boolean(attributes?.test_mode) !== config.testMode) {
+  if (String(attributes?.store_id) !== normalized.storeId || !allowedVariantIds.includes(String(attributes?.variant_id))
+    || attributes?.test_mode !== normalized.testMode) {
     throw new Error('Subscription does not match the configured Lemon environment');
   }
   const url = attributes?.urls?.customer_portal;

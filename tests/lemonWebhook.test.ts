@@ -71,35 +71,51 @@ test('invalid signature is rejected and valid exact-body signature passes', () =
 });
 
 test('valid allowed store, variant and environment create active entitlement', () => {
-  const update = buildWebhookUpdate(parseWebhook(payload()), '11', '22', true);
+  const update = buildWebhookUpdate(parseWebhook(payload()), '11', ['22', '23', '24'], true);
   assert.equal(update?.uid, 'firebase-user-1');
   assert.equal(update?.entitlement.subscriptionStatus, 'active');
   assert.equal(update?.entitlement.accessUntil, '2026-10-01T00:00:00.000Z');
 });
 
+test('all three configured variants produce the same entitlement and preserve variant identity', () => {
+  for (const variantId of [22, 23, 24]) {
+    const update = buildWebhookUpdate(parseWebhook(payload({ variant_id: variantId })), '11', ['22', '23', '24'], true);
+    assert.equal(update?.entitlement.subscriptionStatus, 'active');
+    assert.equal(update?.entitlement.lemonVariantId, String(variantId));
+    assert.equal(update?.entitlement.testMode, true);
+    assert.equal(update?.subscription?.variantId, String(variantId));
+  }
+});
+
+test('unknown/legacy variants and an empty allowlist cannot update entitlement', () => {
+  assert.equal(buildWebhookUpdate(parseWebhook(payload({ variant_id: 99 })), '11', ['22', '23', '24'], true), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '11', [], true), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload({ variant_id: undefined })), '11', ['22', '23', '24'], true), null);
+});
+
 test('wrong store, variant, environment, or missing environment metadata cannot create entitlement', () => {
-  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '999', '22', true), null);
-  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '11', '999', true), null);
-  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '11', '22', false), null);
-  assert.equal(buildWebhookUpdate(parseWebhook(payload({ test_mode: undefined })), '11', '22', false), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '999', ['22', '23', '24'], true), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '11', ['999'], true), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload()), '11', ['22', '23', '24'], false), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(payload({ test_mode: undefined })), '11', ['22', '23', '24'], false), null);
 });
 
 test('cancelled retains endsAt while expired closes access', () => {
   const cancelledPayload = payload({ status: 'cancelled', cancelled: true, ends_at: '2026-09-01T00:00:00Z' });
-  const cancelled = buildWebhookUpdate(parseWebhook(cancelledPayload), '11', '22', true);
+  const cancelled = buildWebhookUpdate(parseWebhook(cancelledPayload), '11', ['22', '23', '24'], true);
   assert.equal(cancelled?.entitlement.subscriptionStatus, 'cancelled');
   assert.equal(cancelled?.entitlement.accessUntil, '2026-09-01T00:00:00.000Z');
   const expiredPayload = payload({ status: 'expired', renews_at: '2026-10-01T00:00:00Z' });
-  const expired = buildWebhookUpdate(parseWebhook(expiredPayload), '11', '22', true);
+  const expired = buildWebhookUpdate(parseWebhook(expiredPayload), '11', ['22', '23', '24'], true);
   assert.equal(expired?.entitlement.subscriptionStatus, 'expired');
   assert.equal(expired?.entitlement.accessUntil, null);
 });
 
 test('partial initial-order refund is ignored while full refund revokes access', () => {
   const partial = refundPayload({ refundedAmount: 250, total: 1000, refunded: false, status: 'partial_refund' });
-  assert.equal(buildWebhookUpdate(parseWebhook(partial), '11', '22', true), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(partial), '11', ['22', '23', '24'], true), null);
 
-  const full = buildWebhookUpdate(parseWebhook(refundPayload()), '11', '22', true);
+  const full = buildWebhookUpdate(parseWebhook(refundPayload()), '11', ['22', '23', '24'], true);
   assert.equal(full?.entitlement.subscriptionStatus, 'expired');
   assert.equal(full?.entitlement.accessUntil, null);
 });
@@ -113,10 +129,10 @@ test('partial renewal refund is ignored while full renewal refund removes paid a
     refunded: false,
     status: 'partial_refund',
   });
-  assert.equal(buildWebhookUpdate(parseWebhook(partial), '11', '22', true, hydratedSubscription), null);
+  assert.equal(buildWebhookUpdate(parseWebhook(partial), '11', ['22', '23', '24'], true, hydratedSubscription), null);
 
   const full = refundPayload({ eventName: 'subscription_payment_refunded', type: 'subscription-invoices' });
-  const update = buildWebhookUpdate(parseWebhook(full), '11', '22', true, hydratedSubscription);
+  const update = buildWebhookUpdate(parseWebhook(full), '11', ['22', '23', '24'], true, hydratedSubscription);
   assert.equal(update?.entitlement.subscriptionStatus, 'unpaid');
   assert.equal(update?.entitlement.accessUntil, null);
   assert.equal(update?.entitlement.lemonSubscriptionId, '77');
@@ -126,8 +142,8 @@ test('subscription-invoice webhooks can recover Firebase UID from stored subscri
   const raw = refundPayload({ eventName: 'subscription_payment_refunded', type: 'subscription-invoices' });
   const parsed = parseWebhook(raw);
   if (parsed.meta) delete parsed.meta.custom_data;
-  assert.throws(() => buildWebhookUpdate(parsed, '11', '22', true, hydratedSubscription), /Missing Firebase UID/);
-  const update = buildWebhookUpdate(parsed, '11', '22', true, hydratedSubscription, 'firebase-user-1');
+  assert.throws(() => buildWebhookUpdate(parsed, '11', ['22', '23', '24'], true, hydratedSubscription), /Missing Firebase UID/);
+  const update = buildWebhookUpdate(parsed, '11', ['22', '23', '24'], true, hydratedSubscription, 'firebase-user-1');
   assert.equal(update?.uid, 'firebase-user-1');
   assert.equal(update?.entitlement.lemonSubscriptionId, '77');
 });

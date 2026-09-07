@@ -65,11 +65,11 @@ Blaze уже включён. Основной остаток — Live-конфи
 
 1. Переключиться в Live mode.
 2. Скопировать Test product в Live или создать финальный Live product.
-3. Проверить итоговую цену. Сейчас UI показывает `44 500 Ft / месяц` статически; Live variant должен иметь ту же цену до отдельного изменения UI.
-4. Записать новый Live Store ID.
-5. Записать новый Live Variant ID.
-6. Создать новый Live API key.
-7. Подготовить новый random webhook signing secret.
+3. Создать три тарифа без trial: 7 990 Ft за 1 месяц, 19 990 Ft за 3 месяца, 59 990 Ft за 1 год. Цены UI централизованы в `src/config/pricing.ts`; суммы и периоды Lemon должны совпадать.
+4. Сохранить существующий Live Store ID.
+5. Записать три реальных Live Variant ID в соответствующие параметры; до создания вариантов оставить новые значения пустыми.
+6. Сохранить существующий Live API key в Firebase Secret Manager.
+7. Сохранить существующий webhook signing secret там же.
 
 Test Store/Variant/API key нельзя использовать в production.
 
@@ -116,7 +116,9 @@ Core/admin `api` можно развернуть до активации Lemon. 
 
 ```text
 LEMONSQUEEZY_STORE_ID=<LIVE Store ID>
-LEMONSQUEEZY_VARIANT_ID=<LIVE Variant ID>
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
+LEMONSQUEEZY_VARIANT_ID_YEARLY=
 APP_URL=https://hungarylearn.web.app
 LEMONSQUEEZY_TEST_MODE=false
 ```
@@ -216,3 +218,13 @@ order_refunded
 - Не давать frontend право писать `entitlements`.
 - Не заменять Firebase Hosting rewrite прямым публичным Functions URL без причины.
 - Не использовать Test Lemon IDs/API key в Live.
+
+## Обновление тарифов — 7 сентября 2026
+
+Новые `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, `LEMONSQUEEZY_VARIANT_ID_YEARLY` имеют default `''`. Build/deploy возможен без них; checkout ненастроенного тарифа возвращает 503. Workflow читает одноимённые GitHub Actions variables; заглушки и будущие ID в исходники не добавляются. Существующие Store ID, Firebase project и Secret Manager secrets сохраняются.
+
+Frontend передаёт только plan key. Backend отклоняет неизвестный plan и дополнительные поля, в том числе variantId (400). Старый параметр `LEMONSQUEEZY_VARIANT_ID` используется только для Customer Portal. Fallback на старый checkout отсутствует.
+
+По решению владельца webhook принимает строго три новых настроенных варианта. Старые события продления и возврата будут игнорироваться после будущего deploy: перед публикацией требуется вручную проверить и мигрировать/закрыть старые подписки. Подпись, Store ID, test/live, UID binding, дедупликация, hydration, refund и trusted hasPaidAccess сохранены. У всех тарифов одинаковый доступ; политика возврата 14 дней не менялась.
+
+Этот coding task не выполняет deploy, push или создание продуктов. Результаты локальных проверок новой сетки приведены в отчёте задачи; ограничения запуска тестов из первоначального аудита выше относятся к тому аудиту.

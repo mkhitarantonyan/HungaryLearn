@@ -124,7 +124,7 @@ export function getWebhookSubscriptionId(payload: LemonWebhookPayload): string |
 export function buildWebhookUpdate(
   payload: LemonWebhookPayload,
   expectedStoreId: string,
-  expectedVariantId: string,
+  allowedVariantIds: readonly string[],
   expectedTestMode: boolean,
   hydratedSubscription?: Record<string, unknown>,
   fallbackUid?: string | null,
@@ -138,7 +138,7 @@ export function buildWebhookUpdate(
   const variantId = idValue(attributes.variant_id)
     || idValue((attributes.first_order_item as Record<string, unknown> | undefined)?.variant_id)
     || relationId(payload, 'variant');
-  if (storeId !== expectedStoreId || variantId !== expectedVariantId) return null;
+  if (storeId !== expectedStoreId || !variantId || !allowedVariantIds.includes(variantId)) return null;
 
   const testMode = strictBoolValue(attributes.test_mode);
   // Test and live Lemon data must never cross-contaminate the same entitlement

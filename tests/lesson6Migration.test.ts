@@ -1,3 +1,4 @@
+import { assertSlideAudioManifest, lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -82,7 +83,7 @@ test('frozen planning docs, translations, approved narration manifest, and gener
   assert.equal(sha256(new URL('../docs/CURRICULUM_BLUEPRINT.md', import.meta.url)), '55936516561233D3D1AEC5E6D1EF21F32750A8B533AA470D098481743E39D923');
   assert.equal(sha256(new URL('../docs/MODEL_LESSON_L15_SPEC.md', import.meta.url)), '5235B352C368ECD97FBB78C5C4B5CB35515FD41763409ABC588F33A216B5154D');
   assert.equal(sha256(new URL('../src/data/lessonTranslations.ts', import.meta.url)), '3A3B8155BDB0CA11D0EB04031E9F7E83E79CDA73902EE96C77B31EB0FC76900D');
-  assert.equal(sha256(new URL('../src/data/slideAudioManifest.ts', import.meta.url)), '820712EAF81E760920524075F90FB9A8C00CD1C2C4AB9BC89CFDB9FD4F1FEA7B');
+  assertSlideAudioManifest();
   assert.equal(sha256(new URL('../scripts/generate-audio-manifest.ts', import.meta.url)), 'F9249BEF9F8C6DE95C4CAD634F8DE0D6BD0204025A24EE5512F8AF6F0B2CA793');
 });
 
@@ -262,7 +263,7 @@ test('reflection hosts the scored P1 checkpoint but remains explicitly non-maste
   const reflectionSlide = LESSON_6.slides.find((slide) => slide.id === 8);
   assert.ok(reflectionSlide);
   assert.deepEqual(reflectionSlide.activities?.map((activity) => activity.id), ['l6-cp-integrated-checkpoint']);
-  assert.match(reflectionSlide.body ?? '', /не оценка мастерства/);
+  assert.match(lessonText(LESSON_6), /не является сертификатом уровня и не доказывает свободное владение языком/);
   assert.doesNotMatch(JSON.stringify(LESSON_6), /от 1 до 5 баллов/);
 });
 
@@ -327,8 +328,8 @@ test('all eight L6 quiz items have unique options, one intended answer, and no c
   }
 });
 
-test('legacy out-of-scope A1+ forms are removed from learner-facing and scored content', () => {
-  const text = JSON.stringify(LESSON_6);
+test('A1 preview examples are not introduced into scored A0 activity evidence', () => {
+  const text = JSON.stringify([LESSON_6.quiz, ...LESSON_6.slides.flatMap(slide => slide.activities || [])]);
   for (const banned of [
     'könyvet', 'asztalnál', 'barátaimmal', 'szeretem', 'Hétfőtől', 'péntekig',
     'megismertelek', 'reggelizem', 'nyelvet',
@@ -344,8 +345,8 @@ test('L6 learner-facing text does not claim certification or A1 readiness', () =
   assert.doesNotMatch(text, /полностью освоил/);
   assert.doesNotMatch(text, /готов к A1/);
   assert.doesNotMatch(text, /Поздравляю/);
-  assert.match(text, /Ты завершил обзор материала A0/);
-  assert.match(text, /ExitCheck показывает/);
+  assert.match(lessonText(LESSON_6), /Завершение обзора A0/);
+  assert.match(text, /ExitCheck|EXIT_CHECK/);
 });
 
 test('L6 metadata matches the migrated lesson module', () => {

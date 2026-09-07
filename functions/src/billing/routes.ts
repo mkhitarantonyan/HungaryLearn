@@ -8,9 +8,9 @@ import {
   getCustomerPortalUrl,
   LemonApiError,
   LemonConfigurationError,
-  normalizeLemonConfig,
+  normalizeLemonBaseConfig,
   retrieveSubscription,
-  type LemonConfig,
+  type LemonBaseConfig,
 } from './lemon.js';
 import {
   buildWebhookUpdate,
@@ -21,13 +21,17 @@ import {
   verifyLemonSignature,
   webhookHash,
 } from './webhook.js';
-import { appUrl, lemonApiKey, lemonStoreId, lemonTestMode, lemonVariantId, lemonWebhookSecret } from './params.js';
+import { appUrl, lemonApiKey, lemonStoreId, lemonTestMode, lemonLegacyVariantId, lemonVariantIdMonthly, lemonVariantIdQuarterly, lemonVariantIdYearly, lemonWebhookSecret } from './params.js';
+import { checkoutConfig, checkoutPlan, configuredVariantIds, type PlanVariantIds } from './plans.js';
 
-function config(): LemonConfig {
-  return normalizeLemonConfig({
+function planVariants(): PlanVariantIds {
+  return { monthly: lemonVariantIdMonthly.value(), quarterly: lemonVariantIdQuarterly.value(), yearly: lemonVariantIdYearly.value() };
+}
+
+function config(): LemonBaseConfig {
+  return normalizeLemonBaseConfig({
     apiKey: lemonApiKey.value(),
     storeId: lemonStoreId.value(),
-    variantId: lemonVariantId.value(),
     appUrl: appUrl.value(),
     testMode: lemonTestMode.value(),
   });
@@ -50,7 +54,12 @@ function safeCheckoutFailure(error: unknown): {
   if (error instanceof LemonConfigurationError) {
     return {
       log: { provider: 'Lemon Squeezy', parameter: error.parameter, detail: error.message },
-      response: { success: false, message: `Некорректная конфигурация оплаты: ${error.parameter}.` },
+      response: {
+        success: false,
+        message: error.parameter.startsWith('LEMONSQUEEZY_VARIANT_ID_')
+          ? 'Этот тариф пока недоступен для оформления.'
+          : `Некорректная конфигурация оплаты: ${error.parameter}.`,
+      },
     };
   }
   return {
@@ -62,22 +71,28 @@ function safeCheckoutFailure(error: unknown): {
 export const billingRouter = Router();
 
 billingRouter.post('/api/billing/create-checkout', requireAuth, async (req: AuthenticatedRequest, res) => {
+  const plan = checkoutPlan(req.body);
+  if (!plan) {
+    res.status(400).json({ success: false, message: 'Выберите доступный тариф. Разрешено только поле plan.' });
+    return;
+  }
   try {
     const email = req.auth?.email;
     if (!email) {
       res.status(400).json({ success: false, message: 'У аккаунта отсутствует e-mail' });
       return;
     }
-    const lemonConfig = config();
+    const baseConfig = config();
     const existing = await getEntitlement(req.auth!.uid);
     const existingSubscriptionBlocksCheckout = existing?.provider === 'lemonsqueezy'
-      && existing.testMode === lemonConfig.testMode
+      && existing.testMode === baseConfig.testMode
       && Boolean(existing.lemonSubscriptionId)
       && ['active', 'cancelled', 'past_due', 'paused'].includes(existing.subscriptionStatus);
     if (existingSubscriptionBlocksCheckout) {
       res.status(409).json({ success: false, message: 'У аккаунта уже есть подписка. Используйте управление подпиской.' });
       return;
     }
+    const lemonConfig = checkoutConfig(baseConfig, planVariants(), plan);
     const url = await createCheckout(lemonConfig, req.auth!.uid, email);
     res.json({ success: true, url });
   } catch (error) {
@@ -96,7 +111,11 @@ billingRouter.post('/api/billing/customer-portal', requireAuth, async (req: Auth
       res.status(404).json({ success: false, message: 'Подписка Lemon Squeezy не найдена' });
       return;
     }
-    const url = await getCustomerPortalUrl(lemonConfig, entitlement.lemonSubscriptionId);
+    // Legacy compatibility is limited to management of existing subscriptions.
+    const allowedVariantIds = configuredVariantIds(planVariants());
+    const legacyVariantId = lemonLegacyVariantId.value().trim();
+    if (/^[1-9]\d+$/.test(legacyVariantId) && legacyVariantId !== '1') allowedVariantIds.push(legacyVariantId);
+    const url = await getCustomerPortalUrl(lemonConfig, entitlement.lemonSubscriptionId, allowedVariantIds);
     res.json({ success: true, url });
   } catch (error) {
     console.error('Customer portal failed', error instanceof Error ? error.message : 'unknown error');
@@ -140,7 +159,7 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
     const update = buildWebhookUpdate(
       payload,
       lemonStoreId.value(),
-      lemonVariantId.value(),
+      configuredVariantIds(planVariants()),
       lemonTestMode.value(),
       hydrated,
       firebaseUid,
