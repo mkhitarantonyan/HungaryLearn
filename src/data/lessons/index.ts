@@ -182,7 +182,7 @@ export const LESSONS_META: LessonMeta[] = [
     title: 'Урок 20 · A múlt idő',
     subtitle: 'Прошедшее время полностью',
     description: 'Показатели прошедшего времени (-t- / -ott / -ett / -ött), неопределённое и определённое спряжение, неправильные глаголы (volt, ment, evett...) и завершение уровня A2.',
-    slidesCount: 11
+    slidesCount: 12
   },
   {
     id: 21,

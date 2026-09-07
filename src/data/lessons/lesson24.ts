@@ -116,144 +116,1861 @@ export const LESSON_24: Lesson = {
       id: 1,
       eyebrow: "УРОК 24 · 1/11 · ВВЕДЕНИЕ",
       title: "Összetett mondatok",
-      subtitle: "Связываем мысли в единую речь",
+      subtitle: "Сначала найди части предложения, затем установи связь между ними",
+      note: 'Сложное предложение состоит минимум из двух частей — tagmondatok. У каждой части есть собственное сказуемое или предикативный центр.',
+      warn: 'Не считай только видимые глаголы. В венгерском настоящего времени сказуемое иногда выражается без van: Péter fáradt. — полноценная часть предложения.',
+      task: 'В каждом примере найди сказуемые, проведи границу между частями и назови логическое отношение.',
       body: `
-   <p>Чтобы говорить красиво на уровне B1, мало простых предложений — нужно уметь связывать их в логические цепочки: «я не пришёл, <b>потому что</b> болел», «он сказал, <b>что</b> приедет», «мы пошли, <b>хотя</b> шёл дождь». В этом уроке разберём главные союзы и правила их употребления.</p>
-   <div class="note">Запятая в венгерском определяется прежде всего границами частей предложения, а не самим словом-союзом. В сложном предложении граница между частями обычно обозначается запятой. Но перед <b>és</b> и другими союзами между однородными членами запятая не ставится.</div>
-   <div class="note"><b>Can-Do:</b> строить высказывание по цепочке: позиция → причина → пример → контраргумент → условие → вывод.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Простое или сложное?</h4>
+        <table class="conj">
+          <tr><th>Пример</th><th>Сказуемые</th><th>Структура</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kávét és teát kérek." data-speak-lang="hu-HU">Kávét és teát kérek.</button></td>
+            <td><button class="speak-btn" data-speak-text="kérek" data-speak-lang="hu-HU">kérek</button></td>
+            <td>одна часть; два однородных объекта</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kávét kérek, Anna pedig teát választ." data-speak-lang="hu-HU">Kávét kérek, Anna pedig teát választ.</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="kérek" data-speak-lang="hu-HU">kérek</button>,
+              <button class="speak-btn" data-speak-text="választ" data-speak-lang="hu-HU">választ</button>
+            </td>
+            <td>две равноправные части</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Péter fáradt, de tovább dolgozik." data-speak-lang="hu-HU">Péter fáradt, de tovább dolgozik.</button></td>
+            <td>
+              <button class="speak-btn" data-speak-text="fáradt" data-speak-lang="hu-HU">fáradt</button>,
+              <button class="speak-btn" data-speak-text="dolgozik" data-speak-lang="hu-HU">dolgozik</button>
+            </td>
+            <td>первая часть имеет именное сказуемое без видимого van</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Надёжный первый шаг: найди, что сообщается в каждой части.
+          Подлежащее может быть выражено или опущено, поэтому одной проверки «сколько существительных» недостаточно.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Два основных типа связи</h4>
+        <table class="conj">
+          <tr><th>Тип</th><th>Как устроен</th><th>Пример</th></tr>
+          <tr>
+            <td><b>mellérendelés</b><br>сочинение</td>
+            <td>части равноправны; вторая добавляет, противопоставляет, предлагает выбор или результат</td>
+            <td><button class="speak-btn" data-speak-text="Péter tanul, én pedig olvasok." data-speak-lang="hu-HU">Péter tanul, én pedig olvasok.</button></td>
+          </tr>
+          <tr>
+            <td><b>alárendelés</b><br>подчинение</td>
+            <td>одна часть раскрывает причину, содержание, условие, уступку или другую функцию относительно главной части</td>
+            <td><button class="speak-btn" data-speak-text="Nem mentem el, mert beteg voltam." data-speak-lang="hu-HU">Nem mentem el, mert beteg voltam.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Карта логических отношений урока</h4>
+        <table class="conj">
+          <tr><th>Отношение</th><th>Связующее слово</th><th>Мини-пример</th></tr>
+          <tr>
+            <td>добавление</td>
+            <td><button class="speak-btn" data-speak-text="és" data-speak-lang="hu-HU">és</button></td>
+            <td><button class="speak-btn" data-speak-text="Dolgozom, és magyarul tanulok." data-speak-lang="hu-HU">Dolgozom, és magyarul tanulok.</button></td>
+          </tr>
+          <tr>
+            <td>противопоставление</td>
+            <td><button class="speak-btn" data-speak-text="de" data-speak-lang="hu-HU">de</button></td>
+            <td><button class="speak-btn" data-speak-text="Fáradt vagyok, de tanulok." data-speak-lang="hu-HU">Fáradt vagyok, de tanulok.</button></td>
+          </tr>
+          <tr>
+            <td>причина</td>
+            <td><button class="speak-btn" data-speak-text="mert" data-speak-lang="hu-HU">mert</button></td>
+            <td><button class="speak-btn" data-speak-text="Otthon maradok, mert esik." data-speak-lang="hu-HU">Otthon maradok, mert esik.</button></td>
+          </tr>
+          <tr>
+            <td>содержание</td>
+            <td><button class="speak-btn" data-speak-text="hogy" data-speak-lang="hu-HU">hogy</button></td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy késik." data-speak-lang="hu-HU">Azt mondta, hogy késik.</button></td>
+          </tr>
+          <tr>
+            <td>уступка</td>
+            <td><button class="speak-btn" data-speak-text="bár" data-speak-lang="hu-HU">bár</button></td>
+            <td><button class="speak-btn" data-speak-text="Bár esett, elindultunk." data-speak-lang="hu-HU">Bár esett, elindultunk.</button></td>
+          </tr>
+          <tr>
+            <td>условие</td>
+            <td><button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha lesz időm, elmegyek." data-speak-lang="hu-HU">Ha lesz időm, elmegyek.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Запятая: сначала граница, потом союз</h4>
+        <p>Запятая обычно разделяет части сложного предложения; между однородными членами союз сам по себе не требует запятой.</p>
+        <table class="conj">
+          <tr><th>Структура</th><th>Пример</th><th>Запятая</th></tr>
+          <tr>
+            <td>одна часть, однородные объекты</td>
+            <td><button class="speak-btn" data-speak-text="Kávét és teát kérek." data-speak-lang="hu-HU">Kávét és teát kérek.</button></td>
+            <td>перед és нет</td>
+          </tr>
+          <tr>
+            <td>две части</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérek, és Anna teát választ." data-speak-lang="hu-HU">Kávét kérek, és Anna teát választ.</button></td>
+            <td>перед és есть</td>
+          </tr>
+          <tr>
+            <td>одна часть, выбор объекта</td>
+            <td><button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button></td>
+            <td>перед vagy нет</td>
+          </tr>
+          <tr>
+            <td>две части с выбором действий</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérsz, vagy inkább teát választasz?" data-speak-lang="hu-HU">Kávét kérsz, vagy inkább teát választasz?</button></td>
+            <td>перед vagy есть</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          На границе частей сложного предложения запятая обычно ставится даже перед
+          <button class="speak-btn" data-speak-text="és" data-speak-lang="hu-HU">és</button>,
+          <b>s</b>,
+          <b>meg</b> и
+          <button class="speak-btn" data-speak-text="vagy" data-speak-lang="hu-HU">vagy</button>.
+          Между однородными членами перед этими словами запятая обычно не ставится.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Маршрут урока</h4>
+        <ol class="tasklist">
+          <li>Научиться видеть границы частей.</li>
+          <li>Соединять равноправные части.</li>
+          <li>Различать причину и результат.</li>
+          <li>Строить содержание, условие и уступку.</li>
+          <li>Создавать связную цепочку: позиция → причина → пример → контраргумент → вывод.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Сколько частей в каждом из четырёх примеров из блока о запятой?</li>
+          <li>Почему перед одним и тем же союзом запятая иногда есть, а иногда нет?</li>
+          <li>Какая связь равноправная, а какая подчинительная?</li>
+          <li>Составь одно сложное предложение из двух простых.</li>
+        </ol>
+
+        <div class="note">
+          Граница 24.1: здесь мы учимся распознавать структуру.
+          Подробные значения и позиции конкретных союзов начинаются на следующем слайде.
+        </div>
+      `,
     },
     {
       id: 2,
-      eyebrow: "УРОК 24 · 2/11 · СОЧИНИТЕЛЬНЫЕ СОЮЗЫ",
+      eyebrow: "УРОК 24 · 2/11 · СОЧИНИТЕЛЬНЫЕ СВЯЗИ",
       title: "Mellérendelő kötőszavak",
-      subtitle: "Союзы, связывающие равноправные части",
+      subtitle: "Добавление, параллельный контраст, выбор и результат",
+      note: 'При сочинении части равноправны. Сначала выбери логическое отношение, затем подходящее связующее слово.',
+      warn: 'Не переводи связующее слово изолированно. Одно русское «а» может передаваться через és, pedig, viszont или de в зависимости от отношения между частями.',
+      task: 'Для каждого примера назови отношение, положение связующего слова и причину постановки или отсутствия запятой.',
       body: `
-   <table class="conj">
-     <tr><th>Союз</th><th>Значение</th><th>Пример</th></tr>
-     <tr><td><button class="speak-btn" data-speak-text="és / s" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> és / s</button></td><td>и / а</td><td><button class="speak-btn" data-speak-text="Péter tanul, én pedig olvasok." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Péter tanul, én pedig olvasok.</button></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="de" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> de</button></td><td>но / однако</td><td><button class="speak-btn" data-speak-text="Szeretnék menni, de nincs időm." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Szeretnék menni, de nincs időm.</button></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="vagy" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> vagy</button></td><td>или</td><td><button class="speak-btn" data-speak-text="Kávét kérsz, vagy teát?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Kávét kérsz, vagy teát?</button></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="ezért" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> ezért</button></td><td>поэтому</td><td><button class="speak-btn" data-speak-text="Esik az eső, ezért itthon maradunk." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Esik az eső, ezért itthon maradunk.</button></td></tr>
-     <tr><td><button class="speak-btn" data-speak-text="így" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> így</button></td><td>так что / таким образом</td><td><button class="speak-btn" data-speak-text="Kész vagyok, így elmehetek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Kész vagyok, így elmehetek.</button></td></tr>
-   </table>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Добавление</h4>
+        <table class="conj">
+          <tr><th>Связующее слово</th><th>Пример</th><th>Употребление</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="és" data-speak-lang="hu-HU">és</button></td>
+            <td><button class="speak-btn" data-speak-text="Péter dolgozik, és Anna tanul." data-speak-lang="hu-HU">Péter dolgozik, és Anna tanul.</button></td>
+            <td>нейтральное добавление второй части</td>
+          </tr>
+          <tr>
+            <td><b>s</b></td>
+            <td><button class="speak-btn" data-speak-text="Péter dolgozik, s Anna tanul." data-speak-lang="hu-HU">Péter dolgozik, s Anna tanul.</button></td>
+            <td>краткий вариант; чаще встречается в письменной или стилистически более компактной речи</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="meg" data-speak-lang="hu-HU">meg</button></td>
+            <td><button class="speak-btn" data-speak-text="Én főzök, te meg mosogatsz." data-speak-lang="hu-HU">Én főzök, te meg mosogatsz.</button></td>
+            <td>разговорное добавление или сопоставление</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Параллельные темы и противопоставление</h4>
+        <table class="conj">
+          <tr><th>Связующее слово</th><th>Пример</th><th>Что подчёркивает</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="pedig" data-speak-lang="hu-HU">pedig</button></td>
+            <td><button class="speak-btn" data-speak-text="Péter tanul, én pedig olvasok." data-speak-lang="hu-HU">Péter tanul, én pedig olvasok.</button></td>
+            <td>сопоставляет две темы; обычно стоит после темы второй части</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="de" data-speak-lang="hu-HU">de</button></td>
+            <td><button class="speak-btn" data-speak-text="Szeretnék menni, de nincs időm." data-speak-lang="hu-HU">Szeretnék menni, de nincs időm.</button></td>
+            <td>прямое противоречие или препятствие</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="viszont" data-speak-lang="hu-HU">viszont</button></td>
+            <td><button class="speak-btn" data-speak-text="Péter korán kel, Anna viszont sokáig alszik." data-speak-lang="hu-HU">Péter korán kel, Anna viszont sokáig alszik.</button></td>
+            <td>контрастирует вторую тему с первой</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="hanem" data-speak-lang="hu-HU">hanem</button></td>
+            <td><button class="speak-btn" data-speak-text="Nem kávét kérek, hanem teát." data-speak-lang="hu-HU">Nem kávét kérek, hanem teát.</button></td>
+            <td>исправляет отрицавшийся вариант: не это, а другое</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          В конструкции с
+          <button class="speak-btn" data-speak-text="hanem" data-speak-lang="hu-HU">hanem</button>
+          первая часть обычно содержит отрицание:
+          <button class="speak-btn" data-speak-text="Nem busszal megyek, hanem villamossal." data-speak-lang="hu-HU">Nem busszal megyek, hanem villamossal.</button>
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Выбор</h4>
+        <table class="conj">
+          <tr><th>Структура</th><th>Пример</th><th>Запятая</th></tr>
+          <tr>
+            <td>одна часть, выбор объекта</td>
+            <td><button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button></td>
+            <td>нет</td>
+          </tr>
+          <tr>
+            <td>две части, выбор действия</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérsz, vagy inkább teát választasz?" data-speak-lang="hu-HU">Kávét kérsz, vagy inkább teát választasz?</button></td>
+            <td>есть на границе частей</td>
+          </tr>
+          <tr>
+            <td>парная конструкция</td>
+            <td><button class="speak-btn" data-speak-text="Vagy most indulunk, vagy otthon maradunk." data-speak-lang="hu-HU">Vagy most indulunk, vagy otthon maradunk.</button></td>
+            <td>перед вторым элементом парной конструкции</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">4. Результат и вывод</h4>
+        <table class="conj">
+          <tr><th>Связующее слово</th><th>Пример</th><th>Оттенок</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="ezért" data-speak-lang="hu-HU">ezért</button></td>
+            <td><button class="speak-btn" data-speak-text="Esik az eső, ezért itthon maradunk." data-speak-lang="hu-HU">Esik az eső, ezért itthon maradunk.</button></td>
+            <td>прямое следствие причины: поэтому</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="így" data-speak-lang="hu-HU">így</button></td>
+            <td><button class="speak-btn" data-speak-text="Befejeztem a munkát, így elmehetek." data-speak-lang="hu-HU">Befejeztem a munkát, így elmehetek.</button></td>
+            <td>так, таким образом, вследствие этого</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="tehát" data-speak-lang="hu-HU">tehát</button></td>
+            <td><button class="speak-btn" data-speak-text="Késő van, tehát indulnunk kell." data-speak-lang="hu-HU">Késő van, tehát indulnunk kell.</button></td>
+            <td>логический вывод: итак, следовательно</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Слово
+          <button class="speak-btn" data-speak-text="így" data-speak-lang="hu-HU">így</button>
+          может обозначать и способ действия:
+          <button class="speak-btn" data-speak-text="Így csináld!" data-speak-lang="hu-HU">Így csináld!</button>
+          В сложном предложении контекст показывает значение «таким образом».
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Запятая: четыре надёжные модели</h4>
+        <table class="conj">
+          <tr><th>Модель</th><th>Пример</th></tr>
+          <tr>
+            <td>однородные члены с és — без запятой</td>
+            <td><button class="speak-btn" data-speak-text="Kávét és teát kérek." data-speak-lang="hu-HU">Kávét és teát kérek.</button></td>
+          </tr>
+          <tr>
+            <td>две части с és — с запятой</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérek, és Anna teát választ." data-speak-lang="hu-HU">Kávét kérek, és Anna teát választ.</button></td>
+          </tr>
+          <tr>
+            <td>противопоставление с de — с запятой</td>
+            <td><button class="speak-btn" data-speak-text="A lakás olcsó, de kényelmes." data-speak-lang="hu-HU">A lakás olcsó, de kényelmes.</button></td>
+          </tr>
+          <tr>
+            <td>исправление с hanem — с запятой</td>
+            <td><button class="speak-btn" data-speak-text="Nem ma indulunk, hanem holnap." data-speak-lang="hu-HU">Nem ma indulunk, hanem holnap.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Kávét, vagy teát kérsz?</td>
+            <td><button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button></td>
+            <td>однородные объекты в одной части</td>
+          </tr>
+          <tr>
+            <td>Péter dolgozik és Anna tanul.</td>
+            <td><button class="speak-btn" data-speak-text="Péter dolgozik, és Anna tanul." data-speak-lang="hu-HU">Péter dolgozik, és Anna tanul.</button></td>
+            <td>граница двух частей</td>
+          </tr>
+          <tr>
+            <td>Nem kávét kérek, de teát.</td>
+            <td><button class="speak-btn" data-speak-text="Nem kávét kérek, hanem teát." data-speak-lang="hu-HU">Nem kávét kérek, hanem teát.</button></td>
+            <td>исправление отрицавшегося варианта</td>
+          </tr>
+          <tr>
+            <td>Péter tanul, pedig én olvasok.</td>
+            <td><button class="speak-btn" data-speak-text="Péter tanul, én pedig olvasok." data-speak-lang="hu-HU">Péter tanul, én pedig olvasok.</button></td>
+            <td>в нейтральной модели pedig следует за темой второй части</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Соедини два параллельных действия через pedig.</li>
+          <li>Вырази препятствие через de.</li>
+          <li>Предложи выбор между двумя предметами и между двумя действиями.</li>
+          <li>Преобразуй причину в результат через ezért.</li>
+          <li>Сделай логический вывод через tehát.</li>
+        </ol>
+
+        <details>
+          <summary><b>Проверить возможные модели</b></summary>
+          <p>
+            <button class="speak-btn" data-speak-text="Anna dolgozik, Péter pedig tanul." data-speak-lang="hu-HU">Anna dolgozik, Péter pedig tanul.</button><br>
+            <button class="speak-btn" data-speak-text="Elmennék, de nincs időm." data-speak-lang="hu-HU">Elmennék, de nincs időm.</button><br>
+            <button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button><br>
+            <button class="speak-btn" data-speak-text="Kávét kérsz, vagy inkább teát választasz?" data-speak-lang="hu-HU">Kávét kérsz, vagy inkább teát választasz?</button><br>
+            <button class="speak-btn" data-speak-text="Esik az eső, ezért itthon maradunk." data-speak-lang="hu-HU">Esik az eső, ezért itthon maradunk.</button><br>
+            <button class="speak-btn" data-speak-text="Késő van, tehát indulnunk kell." data-speak-lang="hu-HU">Késő van, tehát indulnunk kell.</button>
+          </p>
+        </details>
+
+        <div class="note">
+          Граница 24.2: здесь изучены основные сочинительные отношения.
+          Причина, содержание, уступка и условие как подчинительные связи рассматриваются на следующих слайдах.
+        </div>
+      `,
     },
     {
       id: 3,
-      eyebrow: "УРОК 24 · 3/11 · МЕРТ",
-      title: "Alárendelő kötőszavak: mert",
-      subtitle: "Причинный союз mert — «потому что»",
+      eyebrow: "УРОК 24 · 3/11 · ПРИЧИНА",
+      title: "Okhatározói mellékmondat: mert",
+      subtitle: "Ответ на вопрос Miért? и связь причины с результатом",
+      note: 'Главная часть сообщает действие или результат, а придаточная с mert называет причину. Между частями ставится запятая.',
+      warn: 'Не путай mert и ezért: mert вводит причину — «потому что», ezért указывает на результат — «поэтому».',
+      task: 'В каждом примере найди результат и причину, задай вопрос Miért?, затем перестрой предложение через ezért.',
       body: `
-   <p><span class="hu-word">mert</span> вводит причину действия («потому что» / «так как»):</p>
-   <p><button class="speak-btn" data-speak-text="Nem jöttem, mert beteg voltam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem jöttem, mert beteg voltam.</button> <span style="color:#8a7a68">(Я не пришёл, потому что был болен)</span></p>
-   <p><button class="speak-btn" data-speak-text="Azért tanulok magyarul, mert Budapesten élek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért tanulok magyarul, mert Budapesten élek.</button> <span style="color:#8a7a68">(Я учу венгерский, потому что живу в Будапеште)</span></p>
-   <div class="note">Парная конструкция <span class="hu-word">azért..., mert...</span> («потому..., что...») делает акцент на причине ещё более упругим и четким.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Начни с вопроса</h4>
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Краткий ответ</th><th>Полное предложение</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Miért nem jöttél?" data-speak-lang="hu-HU">Miért nem jöttél?</button></td>
+            <td><button class="speak-btn" data-speak-text="Mert beteg voltam." data-speak-lang="hu-HU">Mert beteg voltam.</button></td>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert beteg voltam." data-speak-lang="hu-HU">Nem jöttem el, mert beteg voltam.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Miért tanulsz magyarul?" data-speak-lang="hu-HU">Miért tanulsz magyarul?</button></td>
+            <td><button class="speak-btn" data-speak-text="Mert Budapesten élek." data-speak-lang="hu-HU">Mert Budapesten élek.</button></td>
+            <td><button class="speak-btn" data-speak-text="Magyarul tanulok, mert Budapesten élek." data-speak-lang="hu-HU">Magyarul tanulok, mert Budapesten élek.</button></td>
+          </tr>
+        </table>
+        <div class="note">Magyarul tanulok, mert Budapesten élek. — Я учу венгерский, потому что живу в Будапеште.</div>
+
+        <div class="note">
+          В самостоятельном ответе на вопрос причина может начинаться со слова
+          <button class="speak-btn" data-speak-text="Mert" data-speak-lang="hu-HU">Mert</button>.
+          В полном предложении перед причинной частью ставится запятая.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Результат → причина</h4>
+        <table class="conj">
+          <tr><th>Результат в главной части</th><th>Причина после mert</th><th>Полная модель</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Otthon maradok" data-speak-lang="hu-HU">Otthon maradok</button></td>
+            <td><button class="speak-btn" data-speak-text="esik az eső" data-speak-lang="hu-HU">esik az eső</button></td>
+            <td><button class="speak-btn" data-speak-text="Otthon maradok, mert esik az eső." data-speak-lang="hu-HU">Otthon maradok, mert esik az eső.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Segítséget kérek" data-speak-lang="hu-HU">Segítséget kérek</button></td>
+            <td><button class="speak-btn" data-speak-text="nem értem a feladatot" data-speak-lang="hu-HU">nem értem a feladatot</button></td>
+            <td><button class="speak-btn" data-speak-text="Segítséget kérek, mert nem értem a feladatot." data-speak-lang="hu-HU">Segítséget kérek, mert nem értem a feladatot.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Korán lefekszem" data-speak-lang="hu-HU">Korán lefekszem</button></td>
+            <td><button class="speak-btn" data-speak-text="holnap korán kelek" data-speak-lang="hu-HU">holnap korán kelek</button></td>
+            <td><button class="speak-btn" data-speak-text="Korán lefekszem, mert holnap korán kelek." data-speak-lang="hu-HU">Korán lefekszem, mert holnap korán kelek.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Коррелятивная конструкция azért…, mert…</h4>
+        <table class="conj">
+          <tr><th>Нейтральная причина</th><th>Причина выделена сильнее</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Magyarul tanulok, mert Budapesten élek." data-speak-lang="hu-HU">Magyarul tanulok, mert Budapesten élek.</button></td>
+            <td><button class="speak-btn" data-speak-text="Azért tanulok magyarul, mert Budapesten élek." data-speak-lang="hu-HU">Azért tanulok magyarul, mert Budapesten élek.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Otthon maradok, mert esik az eső." data-speak-lang="hu-HU">Otthon maradok, mert esik az eső.</button></td>
+            <td><button class="speak-btn" data-speak-text="Azért maradok otthon, mert esik az eső." data-speak-lang="hu-HU">Azért maradok otthon, mert esik az eső.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Слово
+          <button class="speak-btn" data-speak-text="azért" data-speak-lang="hu-HU">azért</button>
+          находится в главной части и заранее указывает: причина будет раскрыта после
+          <button class="speak-btn" data-speak-text="mert" data-speak-lang="hu-HU">mert</button>.
+          В нейтральной фразе azért часто можно опустить.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Причина и результат — два направления</h4>
+        <table class="conj">
+          <tr><th>Через причину</th><th>Через результат</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Nem megyek el, mert fáradt vagyok." data-speak-lang="hu-HU">Nem megyek el, mert fáradt vagyok.</button></td>
+            <td><button class="speak-btn" data-speak-text="Fáradt vagyok, ezért nem megyek el." data-speak-lang="hu-HU">Fáradt vagyok, ezért nem megyek el.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Lekéstük a vonatot, mert későn indultunk." data-speak-lang="hu-HU">Lekéstük a vonatot, mert későn indultunk.</button></td>
+            <td><button class="speak-btn" data-speak-text="Későn indultunk, ezért lekéstük a vonatot." data-speak-lang="hu-HU">Későn indultunk, ezért lekéstük a vonatot.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          При перестройке меняется порядок мыслей:
+          с mert сначала сообщается результат, затем причина;
+          с ezért сначала причина, затем следствие.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Nem jöttem el, ezért beteg voltam.</td>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert beteg voltam." data-speak-lang="hu-HU">Nem jöttem el, mert beteg voltam.</button></td>
+            <td>вторая часть объясняет причину</td>
+          </tr>
+          <tr>
+            <td>Azért tanulok magyarul, ezért Budapesten élek.</td>
+            <td><button class="speak-btn" data-speak-text="Azért tanulok magyarul, mert Budapesten élek." data-speak-lang="hu-HU">Azért tanulok magyarul, mert Budapesten élek.</button></td>
+            <td>после azért причина раскрывается через mert</td>
+          </tr>
+          <tr>
+            <td>Nem megyek el mert fáradt vagyok.</td>
+            <td><button class="speak-btn" data-speak-text="Nem megyek el, mert fáradt vagyok." data-speak-lang="hu-HU">Nem megyek el, mert fáradt vagyok.</button></td>
+            <td>между частями нужна запятая</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Ответь полным предложением: почему ты учишь венгерский?</li>
+          <li>Выдели причину с помощью парной конструкции.</li>
+          <li>Преобразуй предложение с mert в предложение с ezért.</li>
+          <li>Исправь пунктуацию в предложении без запятой.</li>
+        </ol>
+
+        <details>
+          <summary><b>Проверить возможные модели</b></summary>
+          <p>
+            <button class="speak-btn" data-speak-text="Magyarul tanulok, mert Magyarországon élek." data-speak-lang="hu-HU">Magyarul tanulok, mert Magyarországon élek.</button><br>
+            <button class="speak-btn" data-speak-text="Azért tanulok magyarul, mert Magyarországon élek." data-speak-lang="hu-HU">Azért tanulok magyarul, mert Magyarországon élek.</button><br>
+            <button class="speak-btn" data-speak-text="Magyarországon élek, ezért magyarul tanulok." data-speak-lang="hu-HU">Magyarországon élek, ezért magyarul tanulok.</button><br>
+            <button class="speak-btn" data-speak-text="Otthon maradok, mert esik az eső." data-speak-lang="hu-HU">Otthon maradok, mert esik az eső.</button>
+          </p>
+        </details>
+
+        <div class="note">Граница 24.3: здесь рассматриваются причина и её связь с результатом. Содержание, цель и желаемое действие с hogy изучаются на следующем слайде.</div>
+      `,
     },
     {
       id: 4,
-      eyebrow: "УРОК 24 · 4/11 · ХОДЬ",
+      eyebrow: "УРОК 24 · 4/11 · СОДЕРЖАНИЕ, ЖЕЛАНИЕ И ЦЕЛЬ",
       title: "Alárendelő kötőszavak: hogy",
-      subtitle: "Изъяснительный и целевой союз hogy — «что» / «чтобы»",
+      subtitle: "Функция главной части определяет смысл и форму придаточного",
+      note: 'Hogy вводит личную придаточную часть. Перевод «что» или «чтобы» и наклонение глагола зависят от функции всей конструкции, а не от союза самого по себе.',
+      warn: 'Форма повелительного наклонения внутри придаточной части не обязательно является прямым приказом. Она может выражать желание, просьбу, необходимость или цель.',
+      task: 'Для каждого примера назови функцию главной части, исполнителя придаточного действия, наклонение и возможный русский перевод.',
       body: `
-   <p><span class="hu-word">hogy</span> имеет два основных значения в зависимости от контекста и наклонения глагола:</p>
-   <p><b>1. «что» (с изъявительным наклонением)</b> — передаёт мысли, слова, факты:</p>
-   <p><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hogy itt vagy.</button> <span style="color:#8a7a68">(Знаю, что ты здесь)</span></p>
-   <p><button class="speak-btn" data-speak-text="Azt mondta, hogy holnap jön." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt mondta, hogy holnap jön.</button> <span style="color:#8a7a68">(Он сказал, что придёт завтра)</span></p>
-   <p><b>2. «чтобы» (с повелительным наклонением из 22-го урока!)</b> — передаёт цель или приказ:</p>
-   <p><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért jöttem, hogy segítsek.</button> <span style="color:#8a7a68">(Я пришёл [для того], чтобы помочь — segítsek = повелительное наклонение 1-го лица!)</span></p>
-   <div class="warn"><b>Критическое правило:</b> В значении «чтобы» глагол в придаточном предложении ОБЯЗАТЕЛЬНО ставится в повелительное наклонение (felszólító mód)! Инфинитив, как в русском «чтобы помочь», тут использовать нельзя.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">1. Содержание мысли, речи или восприятия</h4>
+        <table class="conj">
+          <tr><th>Главная часть</th><th>Придаточная часть</th><th>Полная модель</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Tudom" data-speak-lang="hu-HU">Tudom</button></td>
+            <td><button class="speak-btn" data-speak-text="itt vagy" data-speak-lang="hu-HU">itt vagy</button></td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Azt mondta" data-speak-lang="hu-HU">Azt mondta</button></td>
+            <td><button class="speak-btn" data-speak-text="holnap jön" data-speak-lang="hu-HU">holnap jön</button></td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy holnap jön." data-speak-lang="hu-HU">Azt mondta, hogy holnap jön.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Látom" data-speak-lang="hu-HU">Látom</button></td>
+            <td><button class="speak-btn" data-speak-text="dolgozol" data-speak-lang="hu-HU">dolgozol</button></td>
+            <td><button class="speak-btn" data-speak-text="Látom, hogy dolgozol." data-speak-lang="hu-HU">Látom, hogy dolgozol.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Здесь придаточная часть сообщает факт или содержание.
+          Обычно используются формы изъявительного наклонения, а по-русски hogy чаще переводится как «что».
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">2. Желаемое, требуемое или необходимое действие</h4>
+        <table class="conj">
+          <tr><th>Функция главной части</th><th>Пример</th><th>Кто выполняет действие</th></tr>
+          <tr>
+            <td>желание</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy gyere el." data-speak-lang="hu-HU">Azt szeretném, hogy gyere el.</button></td>
+            <td>собеседник</td>
+          </tr>
+          <tr>
+            <td>просьба</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérlek, hogy várj itt." data-speak-lang="hu-HU">Arra kérlek, hogy várj itt.</button></td>
+            <td>собеседник</td>
+          </tr>
+          <tr>
+            <td>формальная просьба</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy várjon itt." data-speak-lang="hu-HU">Arra kérem, hogy várjon itt.</button></td>
+            <td>формальный собеседник</td>
+          </tr>
+          <tr>
+            <td>важность или необходимость</td>
+            <td><button class="speak-btn" data-speak-text="Fontos, hogy időben érkezz." data-speak-lang="hu-HU">Fontos, hogy időben érkezz.</button></td>
+            <td>собеседник</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Формы
+          <button class="speak-btn" data-speak-text="gyere" data-speak-lang="hu-HU">gyere</button>,
+          <button class="speak-btn" data-speak-text="várj" data-speak-lang="hu-HU">várj</button>,
+          <button class="speak-btn" data-speak-text="várjon" data-speak-lang="hu-HU">várjon</button>
+          и
+          <button class="speak-btn" data-speak-text="érkezz" data-speak-lang="hu-HU">érkezz</button>
+          совпадают с формами повелительного наклонения, но внутри этих сложных предложений выражают зависимое желаемое действие.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">3. Цель действия</h4>
+        <table class="conj">
+          <tr><th>Основное действие</th><th>Цель</th><th>Полное предложение</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem" data-speak-lang="hu-HU">Azért jöttem</button></td>
+            <td><button class="speak-btn" data-speak-text="segítsek" data-speak-lang="hu-HU">segítsek</button></td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Elmentem a boltba" data-speak-lang="hu-HU">Elmentem a boltba</button></td>
+            <td><button class="speak-btn" data-speak-text="kenyeret vegyek" data-speak-lang="hu-HU">kenyeret vegyek</button></td>
+            <td><button class="speak-btn" data-speak-text="Elmentem a boltba, hogy kenyeret vegyek." data-speak-lang="hu-HU">Elmentem a boltba, hogy kenyeret vegyek.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Kinyitottam az ablakot" data-speak-lang="hu-HU">Kinyitottam az ablakot</button></td>
+            <td><button class="speak-btn" data-speak-text="bejöjjön a friss levegő" data-speak-lang="hu-HU">bejöjjön a friss levegő</button></td>
+            <td><button class="speak-btn" data-speak-text="Kinyitottam az ablakot, hogy bejöjjön a friss levegő." data-speak-lang="hu-HU">Kinyitottam az ablakot, hogy bejöjjön a friss levegő.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          В целевой конструкции после hogy используется личная форма:
+          видно, кто должен выполнить действие.
+          Это может быть тот же исполнитель или другой участник ситуации.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Указательные слова в главной части</h4>
+        <table class="conj">
+          <tr><th>Пара</th><th>Типичная функция</th><th>Пример</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="azt, hogy" data-speak-lang="hu-HU">azt, hogy</button></td>
+            <td>содержание или желаемый объект мысли</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy maradj itt." data-speak-lang="hu-HU">Azt szeretném, hogy maradj itt.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="arra, hogy" data-speak-lang="hu-HU">arra, hogy</button></td>
+            <td>просьба или направленность</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérlek, hogy segíts." data-speak-lang="hu-HU">Arra kérlek, hogy segíts.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="azért, hogy" data-speak-lang="hu-HU">azért, hogy</button></td>
+            <td>цель</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy beszéljünk." data-speak-lang="hu-HU">Azért jöttem, hogy beszéljünk.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Одна главная часть — два разных смысла</h4>
+        <table class="conj">
+          <tr><th>Сообщение</th><th>Переданная инструкция</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy Péter holnap jön." data-speak-lang="hu-HU">Azt mondta, hogy Péter holnap jön.</button></td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta Péternek, hogy holnap jöjjön." data-speak-lang="hu-HU">Azt mondta Péternek, hogy holnap jöjjön.</button></td>
+          </tr>
+          <tr>
+            <td>сообщил, что Пётр придёт</td>
+            <td>сказал Петру прийти</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Наклонение меняет функцию придаточной части:
+          факт или переданное содержание противопоставляется желаемому либо требуемому действию.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Инфинитив: точное правило</h4>
+        <table class="conj">
+          <tr><th>Конструкция</th><th>Пример</th><th>Оценка</th></tr>
+          <tr>
+            <td>hogy + личная форма</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+            <td>правильно</td>
+          </tr>
+          <tr>
+            <td>hogy + инфинитив</td>
+            <td><span class="line-through">Azért jöttem, hogy segíteni.</span></td>
+            <td>неправильно</td>
+          </tr>
+          <tr>
+            <td>отдельная инфинитивная конструкция без hogy</td>
+            <td><button class="speak-btn" data-speak-text="Segíteni jöttem." data-speak-lang="hu-HU">Segíteni jöttem.</button></td>
+            <td>возможна при подходящем смысле</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Точное правило: инфинитив нельзя ставить непосредственно после hogy вместо личной формы.
+          Но цель иногда можно выразить другой конструкцией без hogy.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Tudom, hogy itt legyél.</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+            <td>сообщается известный факт</td>
+          </tr>
+          <tr>
+            <td>Azt szeretném, hogy itt vagy.</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy itt legyél." data-speak-lang="hu-HU">Azt szeretném, hogy itt legyél.</button></td>
+            <td>выражается желаемое действие или состояние</td>
+          </tr>
+          <tr>
+            <td>Azért jöttem, hogy segíteni.</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+            <td>после hogy нужна личная форма</td>
+          </tr>
+          <tr>
+            <td>Azt mondta Péternek, hogy holnap jön, если смысл — приказ Петру.</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta Péternek, hogy holnap jöjjön." data-speak-lang="hu-HU">Azt mondta Péternek, hogy holnap jöjjön.</button></td>
+            <td>передаётся требуемое действие</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Передай факт: «Я знаю, что он дома».</li>
+          <li>Вырази желание: «Я хочу, чтобы ты остался».</li>
+          <li>Назови цель: «Я пришёл, чтобы поговорить».</li>
+          <li>Передай инструкцию третьему лицу.</li>
+          <li>Преобразуй целевое предложение в инфинитивную конструкцию без hogy, если это возможно.</li>
+        </ol>
+
+        <details>
+          <summary><b>Проверить возможные модели</b></summary>
+          <p>
+            <button class="speak-btn" data-speak-text="Tudom, hogy otthon van." data-speak-lang="hu-HU">Tudom, hogy otthon van.</button><br>
+            <button class="speak-btn" data-speak-text="Azt szeretném, hogy maradj itt." data-speak-lang="hu-HU">Azt szeretném, hogy maradj itt.</button><br>
+            <button class="speak-btn" data-speak-text="Azért jöttem, hogy beszéljünk." data-speak-lang="hu-HU">Azért jöttem, hogy beszéljünk.</button><br>
+            <button class="speak-btn" data-speak-text="Azt mondta Annának, hogy várjon kint." data-speak-lang="hu-HU">Azt mondta Annának, hogy várjon kint.</button><br>
+            <button class="speak-btn" data-speak-text="Beszélni jöttem." data-speak-lang="hu-HU">Beszélni jöttem.</button>
+          </p>
+        </details>
+
+        <div class="note">Граница 24.4: здесь изучены содержание, желаемое действие и цель с hogy. Другие типы придаточных и более сложные случаи опущения союза будут рассматриваться отдельно.</div>
+      `,
     },
     {
       id: 5,
-      eyebrow: "УРОК 24 · 5/11 · БАР И ХА",
-      title: "Alárendelő kötőszavak: bár / ha",
-      subtitle: "Уступительный bár («хотя») и условный ha («если»)",
+      eyebrow: "УРОК 24 · 5/11 · УСТУПКА И УСЛОВИЕ",
+      title: "Bár / habár és ha",
+      subtitle: "Действие вопреки препятствию или результат при определённом условии",
+      note: 'Bár и habár вводят препятствие, которое не отменяет результат. Ha вводит условие, от которого результат зависит.',
+      warn: 'Не выбирай союз только по русскому переводу. Сначала спроси: результат уже происходит вопреки обстоятельству или он наступит только при выполнении условия?',
+      task: 'В каждом примере назови препятствие или условие, результат, тип глагольной формы и причину постановки запятой.',
       body: `
-   <p><span class="hu-word">bár / habár</span> — «хотя / несмотря на то что»:</p>
-   <p><button class="speak-btn" data-speak-text="Elmentem, bár fáradt voltam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Elmentem, bár fáradt voltam.</button> <span style="color:#8a7a68">(Я пошёл, хотя был уставшим)</span></p>
-   <p><span class="hu-word">ha</span> — «если» (реальное или гипотетическое условие):</p>
-   <p><button class="speak-btn" data-speak-text="Ha ráérsz, gyere át!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Ha ráérsz, gyere át!</button> <span style="color:#8a7a68">(Если свободен, приходи ко мне!)</span></p>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Главное смысловое различие</h4>
+        <table class="conj">
+          <tr><th>Связь</th><th>Пример</th><th>Логика</th></tr>
+          <tr>
+            <td>уступка с <button class="speak-btn" data-speak-text="bár" data-speak-lang="hu-HU">bár</button></td>
+            <td><button class="speak-btn" data-speak-text="Bár esik az eső, elindulunk." data-speak-lang="hu-HU">Bár esik az eső, elindulunk.</button></td>
+            <td>дождь мешает, но мы всё равно отправляемся</td>
+          </tr>
+          <tr>
+            <td>условие с <button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha esik az eső, otthon maradunk." data-speak-lang="hu-HU">Ha esik az eső, otthon maradunk.</button></td>
+            <td>решение остаться дома зависит от дождя</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Уступительная часть отвечает на вопрос «несмотря на что?»,
+          условная — «при каком условии?».
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Bár и habár</h4>
+        <table class="conj">
+          <tr><th>Форма</th><th>Пример</th><th>Комментарий</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="bár" data-speak-lang="hu-HU">bár</button></td>
+            <td><button class="speak-btn" data-speak-text="Elmentem, bár fáradt voltam." data-speak-lang="hu-HU">Elmentem, bár fáradt voltam.</button></td>
+            <td>частая нейтральная уступительная связь</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="habár" data-speak-lang="hu-HU">habár</button></td>
+            <td><button class="speak-btn" data-speak-text="Habár késő volt, tovább beszélgettünk." data-speak-lang="hu-HU">Habár késő volt, tovább beszélgettünk.</button></td>
+            <td>близкий по значению вариант</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Усиление результата через mégis</h4>
+        <p><button class="speak-btn" data-speak-text="Bár fáradt voltam, mégis elmentem." data-speak-lang="hu-HU">Bár fáradt voltam, mégis elmentem.</button></p>
+        <p><button class="speak-btn" data-speak-text="Habár esett az eső, mégis sétáltunk." data-speak-lang="hu-HU">Habár esett az eső, mégis sétáltunk.</button></p>
+        <div class="note">
+          Слово
+          <button class="speak-btn" data-speak-text="mégis" data-speak-lang="hu-HU">mégis</button>
+          подчёркивает значение «всё-таки», но в нейтральной фразе не всегда обязательно.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Реальное и гипотетическое условие</h4>
+        <table class="conj">
+          <tr><th>Тип</th><th>Пример</th><th>Как говорящий оценивает ситуацию</th></tr>
+          <tr>
+            <td>реальное или открытое</td>
+            <td><button class="speak-btn" data-speak-text="Ha ráérsz, gyere át!" data-speak-lang="hu-HU">Ha ráérsz, gyere át!</button></td>
+            <td>свободное время считается реальной возможностью</td>
+          </tr>
+          <tr>
+            <td>реальное будущее</td>
+            <td><button class="speak-btn" data-speak-text="Ha holnap jó idő lesz, kirándulni megyünk." data-speak-lang="hu-HU">Ha holnap jó idő lesz, kirándulni megyünk.</button></td>
+            <td>условие ещё не известно, но вполне возможно</td>
+          </tr>
+          <tr>
+            <td>гипотетическое</td>
+            <td><button class="speak-btn" data-speak-text="Ha több időm lenne, többet olvasnék." data-speak-lang="hu-HU">Ha több időm lenne, többet olvasnék.</button></td>
+            <td>говорящий воображает другую ситуацию</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Сам союз
+          <button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button>
+          не требует условного наклонения автоматически.
+          Формы зависят от того, реальным или гипотетическим представлено условие.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Порядок частей и запятая</h4>
+        <table class="conj">
+          <tr><th>Условная или уступительная часть сначала</th><th>Главная часть сначала</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt voltam, elmentem." data-speak-lang="hu-HU">Bár fáradt voltam, elmentem.</button></td>
+            <td><button class="speak-btn" data-speak-text="Elmentem, bár fáradt voltam." data-speak-lang="hu-HU">Elmentem, bár fáradt voltam.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Ha lesz időm, felhívlak." data-speak-lang="hu-HU">Ha lesz időm, felhívlak.</button></td>
+            <td><button class="speak-btn" data-speak-text="Felhívlak, ha lesz időm." data-speak-lang="hu-HU">Felhívlak, ha lesz időm.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Обе позиции возможны. Между частями сложного предложения ставится запятая.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Сравнение похожих ситуаций</h4>
+        <table class="conj">
+          <tr><th>Уступка</th><th>Условие</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár kevés időm van, tanulok." data-speak-lang="hu-HU">Bár kevés időm van, tanulok.</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha van időm, tanulok." data-speak-lang="hu-HU">Ha van időm, tanulok.</button></td>
+          </tr>
+          <tr>
+            <td>учусь несмотря на нехватку времени</td>
+            <td>учусь при наличии времени</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár drága, megveszem." data-speak-lang="hu-HU">Bár drága, megveszem.</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha olcsóbb lesz, megveszem." data-speak-lang="hu-HU">Ha olcsóbb lesz, megveszem.</button></td>
+          </tr>
+          <tr>
+            <td>покупаю вопреки высокой цене</td>
+            <td>покупка зависит от снижения цены</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Bár fáradt voltam elmentem.</td>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt voltam, elmentem." data-speak-lang="hu-HU">Bár fáradt voltam, elmentem.</button></td>
+            <td>между частями нужна запятая</td>
+          </tr>
+          <tr>
+            <td>Ha lenne időm, többet olvasok.</td>
+            <td><button class="speak-btn" data-speak-text="Ha lenne időm, többet olvasnék." data-speak-lang="hu-HU">Ha lenne időm, többet olvasnék.</button></td>
+            <td>гипотетический результат тоже условный</td>
+          </tr>
+          <tr>
+            <td>Bár esik az eső, ezért elindulunk.</td>
+            <td><button class="speak-btn" data-speak-text="Bár esik az eső, elindulunk." data-speak-lang="hu-HU">Bár esik az eső, elindulunk.</button></td>
+            <td>дождь является препятствием, а не причиной отправления</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Скажи: «Хотя я устал, я продолжу работать».</li>
+          <li>Скажи реальное условие с инструкцией.</li>
+          <li>Сделай то же условие гипотетическим.</li>
+          <li>Поставь условную часть после результата.</li>
+          <li>Добавь mégis в уступительное предложение.</li>
+        </ol>
+
+        <details>
+          <summary><b>Проверить возможные модели</b></summary>
+          <p>
+            <button class="speak-btn" data-speak-text="Bár fáradt vagyok, tovább dolgozom." data-speak-lang="hu-HU">Bár fáradt vagyok, tovább dolgozom.</button><br>
+            <button class="speak-btn" data-speak-text="Ha megérkezel, hívj fel!" data-speak-lang="hu-HU">Ha megérkezel, hívj fel!</button><br>
+            <button class="speak-btn" data-speak-text="Ha több időd lenne, gyakrabban hívnál fel." data-speak-lang="hu-HU">Ha több időd lenne, gyakrabban hívnál fel.</button><br>
+            <button class="speak-btn" data-speak-text="Felhívlak, ha megérkezem." data-speak-lang="hu-HU">Felhívlak, ha megérkezem.</button><br>
+            <button class="speak-btn" data-speak-text="Bár fáradt vagyok, mégis tovább dolgozom." data-speak-lang="hu-HU">Bár fáradt vagyok, mégis tovább dolgozom.</button>
+          </p>
+        </details>
+
+        <div class="note">
+          Граница 24.5: здесь различаются уступка и условие.
+          Прошедшие нереальные условия и дополнительные уступительные конструкции в этот слайд не входят.
+        </div>
+      `,
     },
     {
       id: 6,
       eyebrow: "УРОК 24 · 6/11 · ПОРЯДОК СЛОВ",
-      title: "Szórend összetett mondatokban",
-      subtitle: "Как ведут себя глагольные приставки в придаточных",
+      title: "Igekötők a mellékmondatban",
+      subtitle: "Придаточная часть не отделяет приставку сама по себе",
+      note: 'Внутри придаточной части действуют обычные правила нейтрального утверждения, отрицания, фокуса и вопросительного слова. Для зависимых форм, совпадающих с повелительными, дополнительно важна функция: желание, необходимость или переданная просьба.',
+      warn: 'Не ставь приставку после глагола только потому, что перед частью стоит hogy, ha, bár или вопросительное слово главной части.',
+      task: 'В каждой строке найди элемент непосредственно перед спрягаемым глаголом и объясни, почему приставка стоит перед глаголом или после него.',
       body: `
-   <p>Само придаточное предложение не заставляет глагольную приставку отделяться. Внутри него действуют обычные правила фокуса, вопроса и отрицания; сравните со знакомыми приставочными глаголами из 14-го урока:</p>
-   <p><button class="speak-btn" data-speak-text="Tudom, hol van a bolt." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Tudom, hol van a bolt.</button></p>
-   <p><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt mondta, hogy nem jön el.</button> <span style="color:#8a7a68">(nem оторвало el от jön)</span></p>
- `
+        <div class="note">Само придаточное предложение не заставляет глагольную приставку отделяться. Порядок определяют отрицание, фокус, вопрос или функция формы внутри придаточной части.</div>
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Один глагол в пяти контекстах</h4>
+        <table class="conj">
+          <tr><th>Контекст</th><th>Пример</th><th>Положение приставки</th></tr>
+          <tr>
+            <td>нейтральное утверждение</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy eljön." data-speak-lang="hu-HU">Azt mondta, hogy eljön.</button></td>
+            <td><button class="speak-btn" data-speak-text="eljön" data-speak-lang="hu-HU">eljön</button>: приставка перед глаголом</td>
+          </tr>
+          <tr>
+            <td>отрицание</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU">Azt mondta, hogy nem jön el.</button></td>
+            <td><button class="speak-btn" data-speak-text="nem jön el" data-speak-lang="hu-HU">nem jön el</button>: отрицание занимает позицию перед глаголом</td>
+          </tr>
+          <tr>
+            <td>контрастивный фокус</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy Péter jön el." data-speak-lang="hu-HU">Azt mondta, hogy Péter jön el.</button></td>
+            <td><button class="speak-btn" data-speak-text="Péter jön el" data-speak-lang="hu-HU">Péter jön el</button>: выделено, что придёт именно Пётр</td>
+          </tr>
+          <tr>
+            <td>косвенный вопрос</td>
+            <td><button class="speak-btn" data-speak-text="Nem tudom, mikor jön el." data-speak-lang="hu-HU">Nem tudom, mikor jön el.</button></td>
+            <td><button class="speak-btn" data-speak-text="mikor jön el" data-speak-lang="hu-HU">mikor jön el</button>: вопросительное слово стоит перед глаголом</td>
+          </tr>
+          <tr>
+            <td>зависимое желаемое действие</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy eljöjjön." data-speak-lang="hu-HU">Azt szeretném, hogy eljöjjön.</button></td>
+            <td><button class="speak-btn" data-speak-text="eljöjjön" data-speak-lang="hu-HU">eljöjjön</button>: в недирективном зависимом употреблении приставка остаётся перед глаголом</td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Союз
+          <button class="speak-btn" data-speak-text="hogy" data-speak-lang="hu-HU">hogy</button>
+          присутствует в нескольких примерах, но сам союз не определяет порядок.
+          Решение зависит от отрицания, фокуса, вопросительного слова и от того,
+          выражает ли зависимая форма желание либо прямую просьбу.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Та же система с felhívni</h4>
+        <table class="conj">
+          <tr><th>Функция</th><th>Пример</th></tr>
+          <tr>
+            <td>нейтральный факт</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy felhívja Annát." data-speak-lang="hu-HU">Tudom, hogy felhívja Annát.</button></td>
+          </tr>
+          <tr>
+            <td>отрицание</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy nem hívja fel Annát." data-speak-lang="hu-HU">Tudom, hogy nem hívja fel Annát.</button></td>
+          </tr>
+          <tr>
+            <td>фокус на исполнителе</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy Péter hívja fel Annát." data-speak-lang="hu-HU">Tudom, hogy Péter hívja fel Annát.</button></td>
+          </tr>
+          <tr>
+            <td>вопрос о времени</td>
+            <td><button class="speak-btn" data-speak-text="Nem tudom, mikor hívja fel Annát." data-speak-lang="hu-HU">Nem tudom, mikor hívja fel Annát.</button></td>
+          </tr>
+          <tr>
+            <td>формальная просьба</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy hívja fel Annát." data-speak-lang="hu-HU">Arra kérem, hogy hívja fel Annát.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          В предложении
+          <button class="speak-btn" data-speak-text="Tudom, hogy Péter hívja fel Annát." data-speak-lang="hu-HU">Tudom, hogy Péter hívja fel Annát.</button>
+          имя перед глаголом несёт контраст: именно Пётр, а не другой человек, звонит Анне.
+          Для нейтрального сообщения естественнее:
+          <button class="speak-btn" data-speak-text="Tudom, hogy Péter felhívja Annát." data-speak-lang="hu-HU">Tudom, hogy Péter felhívja Annát.</button>
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Зависимое желание и переданная просьба</h4>
+        <table class="conj">
+          <tr><th>Функция</th><th>Пример</th><th>Типичный порядок</th></tr>
+          <tr>
+            <td>желание или ожидаемый результат</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy eljöjjön." data-speak-lang="hu-HU">Azt szeretném, hogy eljöjjön.</button></td>
+            <td>приставка перед зависимой формой</td>
+          </tr>
+          <tr>
+            <td>необходимость</td>
+            <td><button class="speak-btn" data-speak-text="Fontos, hogy időben megérkezzen." data-speak-lang="hu-HU">Fontos, hogy időben megérkezzen.</button></td>
+            <td>приставка перед зависимой формой</td>
+          </tr>
+          <tr>
+            <td>прямая переданная просьба</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy jöjjön el." data-speak-lang="hu-HU">Arra kérem, hogy jöjjön el.</button></td>
+            <td>порядок команды: глагол + приставка</td>
+          </tr>
+          <tr>
+            <td>просьба выполнить конкретное действие</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy hívja fel Annát." data-speak-lang="hu-HU">Arra kérem, hogy hívja fel Annát.</button></td>
+            <td>порядок команды: глагол + приставка</td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Формы, совпадающие с повелительным наклонением, ведут себя не одинаково во всех придаточных.
+          В недирективном желании или необходимости приставка часто остаётся перед глаголом:
+          <button class="speak-btn" data-speak-text="eljöjjön, megérkezzen" data-speak-lang="hu-HU">eljöjjön, megérkezzen</button>.
+          В просьбе, близкой к переданной команде, часто используется порядок
+          <button class="speak-btn" data-speak-text="jöjjön el, hívja fel" data-speak-lang="hu-HU">jöjjön el, hívja fel</button>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Приставка в условной и уступительной части</h4>
+        <table class="conj">
+          <tr><th>Нейтрально</th><th>Отрицание или фокус</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Ha megérkezik, felhív." data-speak-lang="hu-HU">Ha megérkezik, felhív.</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha nem érkezik meg, nem hív fel." data-speak-lang="hu-HU">Ha nem érkezik meg, nem hív fel.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár elolvasta a levelet, nem válaszolt." data-speak-lang="hu-HU">Bár elolvasta a levelet, nem válaszolt.</button></td>
+            <td><button class="speak-btn" data-speak-text="Bár csak tegnap olvasta el a levelet, már válaszolt." data-speak-lang="hu-HU">Bár csak tegnap olvasta el a levelet, már válaszolt.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Союзы условной и уступительной связи тоже не задают положение приставки.
+          Его определяет отрицание, фокус, вопрос или наклонение внутри соответствующей части.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Косвенный вопрос: kérdőszó + ige + igekötő</h4>
+        <table class="conj">
+          <tr><th>Прямой вопрос</th><th>Косвенный вопрос</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Mikor indul el a vonat?" data-speak-lang="hu-HU">Mikor indul el a vonat?</button></td>
+            <td><button class="speak-btn" data-speak-text="Nem tudom, mikor indul el a vonat." data-speak-lang="hu-HU">Nem tudom, mikor indul el a vonat.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Hol szállsz le?" data-speak-lang="hu-HU">Hol szállsz le?</button></td>
+            <td><button class="speak-btn" data-speak-text="Mondd meg, hol szállsz le!" data-speak-lang="hu-HU">Mondd meg, hol szállsz le!</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Косвенный вопрос сохраняет вопросительное слово перед глаголом.
+          Приставка поэтому остаётся после глагола, как и в соответствующем прямом вопросе.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Azt mondta, hogy jön el.</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy eljön." data-speak-lang="hu-HU">Azt mondta, hogy eljön.</button></td>
+            <td>нейтральное утверждение не отделяет приставку</td>
+          </tr>
+          <tr>
+            <td>Azt mondta, hogy nem eljön.</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU">Azt mondta, hogy nem jön el.</button></td>
+            <td>после отрицания приставка стоит после глагола</td>
+          </tr>
+          <tr>
+            <td>Nem tudom, mikor eljön.</td>
+            <td><button class="speak-btn" data-speak-text="Nem tudom, mikor jön el." data-speak-lang="hu-HU">Nem tudom, mikor jön el.</button></td>
+            <td>вопросительное слово занимает предглагольную позицию</td>
+          </tr>
+          <tr>
+            <td>Arra kérem, hogy felhívja Annát.</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy hívja fel Annát." data-speak-lang="hu-HU">Arra kérem, hogy hívja fel Annát.</button></td>
+            <td>в зависимой просьбе используется положительная повелительная форма</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Мини-проверка</h4>
+        <ol class="tasklist">
+          <li>Преобразуй нейтральное утверждение с eljön в отрицательное.</li>
+          <li>Выдели, что придёт именно Анна.</li>
+          <li>Сделай косвенный вопрос о времени прибытия.</li>
+          <li>Сформулируй формальную просьбу позвонить Анне.</li>
+          <li>Объясни положение приставок в условном предложении.</li>
+        </ol>
+
+        <details>
+          <summary><b>Проверить возможные модели</b></summary>
+          <p>
+            <button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU">Azt mondta, hogy nem jön el.</button><br>
+            <button class="speak-btn" data-speak-text="Azt mondta, hogy Anna jön el." data-speak-lang="hu-HU">Azt mondta, hogy Anna jön el.</button><br>
+            <button class="speak-btn" data-speak-text="Nem tudom, mikor jön el." data-speak-lang="hu-HU">Nem tudom, mikor jön el.</button><br>
+            <button class="speak-btn" data-speak-text="Arra kérem, hogy hívja fel Annát." data-speak-lang="hu-HU">Arra kérem, hogy hívja fel Annát.</button><br>
+            <button class="speak-btn" data-speak-text="Ha nem érkezik meg, nem hív fel." data-speak-lang="hu-HU">Ha nem érkezik meg, nem hív fel.</button>
+          </p>
+        </details>
+
+        <div class="note">
+          Граница 24.6: здесь повторяются основные позиции приставки.
+          Полная теория венгерского фокуса и все стилистические варианты порядка слов в этот слайд не входят.
+        </div>
+      `,
     },
     {
       id: 7,
-      eyebrow: "УРОК 24 · 7/11 · ПРАКТИКА",
-      title: "Gyakorló mondatok",
-      subtitle: "Тренировка союзов",
+      eyebrow: "УРОК 24 · 7/11 · СВЯЗНЫЙ АБЗАЦ",
+      title: "Kötőszavak és szövegkapcsoló elemek",
+      subtitle: "Не список выражений, а логическая структура текста",
+      note: 'Не все связующие элементы являются союзами. Одни соединяют части предложения, другие показывают позицию автора, пример, переход или итог.',
+      warn: 'Связность не означает использовать как можно больше связок. Каждое выражение должно выполнять понятную функцию и не дублировать соседнее.',
+      task: 'Прочитай модель абзаца, определи функцию каждой связки, затем напиши собственный текст из шести–восьми предложений.',
       body: `
-   <p><button class="speak-btn" data-speak-text="Nem mentem dolgozni, mert beteg voltam, ezért itthon maradtam." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Nem mentem dolgozni, mert beteg voltam, ezért itthon maradtam.</button> <span style="color:#8a7a68">(Я не пошёл работать, потому что был болен, поэтому остался дома)</span></p>
-   <p><button class="speak-btn" data-speak-text="Azt akarom, hogy sokat tanulj." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azt akarom, hogy sokat tanulj.</button> <span style="color:#8a7a68">(Я хочу, чтобы ты много учился — hogy + повелительное tanulj!)</span></p>
-   <div class="note"><b>Функциональные связки:</b> Szerintem… · Úgy gondolom, hogy… · Azért gondolom így, mert… · Egyrészt… · Másrészt… · Például… · Ezért… · Viszont… · Bár… · Ennek ellenére… · Ha… · Végül… · Összességében…</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Связующие элементы по функциям</h4>
+        <table class="conj">
+          <tr><th>Функция</th><th>Полезные модели</th><th>Мини-пример</th></tr>
+          <tr>
+            <td>позиция автора</td>
+            <td>
+              <button class="speak-btn" data-speak-text="Szerintem" data-speak-lang="hu-HU">Szerintem</button>,
+              <button class="speak-btn" data-speak-text="Úgy gondolom, hogy" data-speak-lang="hu-HU">Úgy gondolom, hogy</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Szerintem érdemes minden nap gyakorolni." data-speak-lang="hu-HU">Szerintem érdemes minden nap gyakorolni.</button></td>
+          </tr>
+          <tr>
+            <td>причина</td>
+            <td>
+              <button class="speak-btn" data-speak-text="mert" data-speak-lang="hu-HU">mert</button>,
+              <button class="speak-btn" data-speak-text="Azért gondolom így, mert" data-speak-lang="hu-HU">Azért gondolom így, mert</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Azért gondolom így, mert a rendszeres gyakorlás hatékony." data-speak-lang="hu-HU">Azért gondolom így, mert a rendszeres gyakorlás hatékony.</button></td>
+          </tr>
+          <tr>
+            <td>два аргумента</td>
+            <td>
+              <button class="speak-btn" data-speak-text="Egyrészt" data-speak-lang="hu-HU">Egyrészt</button>,
+              <button class="speak-btn" data-speak-text="másrészt" data-speak-lang="hu-HU">másrészt</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Egyrészt hasznos, másrészt érdekes." data-speak-lang="hu-HU">Egyrészt hasznos, másrészt érdekes.</button></td>
+          </tr>
+          <tr>
+            <td>пример</td>
+            <td><button class="speak-btn" data-speak-text="például" data-speak-lang="hu-HU">például</button></td>
+            <td><button class="speak-btn" data-speak-text="Például tegnap egy hivatalos levelet olvastam." data-speak-lang="hu-HU">Például tegnap egy hivatalos levelet olvastam.</button></td>
+          </tr>
+          <tr>
+            <td>противопоставление</td>
+            <td>
+              <button class="speak-btn" data-speak-text="de" data-speak-lang="hu-HU">de</button>,
+              <button class="speak-btn" data-speak-text="viszont" data-speak-lang="hu-HU">viszont</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="A nyelvtan nehéz, viszont érdekes." data-speak-lang="hu-HU">A nyelvtan nehéz, viszont érdekes.</button></td>
+          </tr>
+          <tr>
+            <td>уступка</td>
+            <td>
+              <button class="speak-btn" data-speak-text="bár" data-speak-lang="hu-HU">bár</button>,
+              <button class="speak-btn" data-speak-text="ennek ellenére" data-speak-lang="hu-HU">ennek ellenére</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt vagyok, mégis gyakorlok." data-speak-lang="hu-HU">Bár fáradt vagyok, mégis gyakorlok.</button></td>
+          </tr>
+          <tr>
+            <td>условие</td>
+            <td><button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha nem értek valamit, segítséget kérek." data-speak-lang="hu-HU">Ha nem értek valamit, segítséget kérek.</button></td>
+          </tr>
+          <tr>
+            <td>результат</td>
+            <td>
+              <button class="speak-btn" data-speak-text="ezért" data-speak-lang="hu-HU">ezért</button>,
+              <button class="speak-btn" data-speak-text="így" data-speak-lang="hu-HU">így</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Sokat gyakoroltam, ezért jobban értem a szabályt." data-speak-lang="hu-HU">Sokat gyakoroltam, ezért jobban értem a szabályt.</button></td>
+          </tr>
+          <tr>
+            <td>завершение</td>
+            <td>
+              <button class="speak-btn" data-speak-text="végül" data-speak-lang="hu-HU">végül</button>,
+              <button class="speak-btn" data-speak-text="összességében" data-speak-lang="hu-HU">összességében</button>
+            </td>
+            <td><button class="speak-btn" data-speak-text="Összességében lassan, de biztosan haladok." data-speak-lang="hu-HU">Összességében lassan, de biztosan haladok.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          <b>Kötőszó</b> соединяет слова или части предложения:
+          <button class="speak-btn" data-speak-text="mert, de, bár, ha" data-speak-lang="hu-HU">mert, de, bár, ha</button>.
+          <b>Szövegkapcsoló elem</b> организует более широкий текст:
+          <button class="speak-btn" data-speak-text="szerintem, például, végül, összességében" data-speak-lang="hu-HU">szerintem, például, végül, összességében</button>.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Модель связного абзаца</h4>
+        <div class="dialogue">
+          <p><button class="speak-btn" data-speak-text="Szerintem érdemes minden nap magyarul tanulni." data-speak-lang="hu-HU">Szerintem érdemes minden nap magyarul tanulni.</button></p>
+          <p><button class="speak-btn" data-speak-text="Egyrészt könnyebben intézem az ügyeimet, másrészt jobban megértem az embereket." data-speak-lang="hu-HU">Egyrészt könnyebben intézem az ügyeimet, másrészt jobban megértem az embereket.</button></p>
+          <p><button class="speak-btn" data-speak-text="Bár a nyelvtan néha nehéz, mégis rendszeresen gyakorlok." data-speak-lang="hu-HU">Bár a nyelvtan néha nehéz, mégis rendszeresen gyakorlok.</button></p>
+          <p><button class="speak-btn" data-speak-text="Ha nem értek valamit, segítséget kérek." data-speak-lang="hu-HU">Ha nem értek valamit, segítséget kérek.</button></p>
+          <p><button class="speak-btn" data-speak-text="Például tegnap arra kértem a tanáromat, hogy magyarázza el még egyszer a szabályt." data-speak-lang="hu-HU">Például tegnap arra kértem a tanáromat, hogy magyarázza el még egyszer a szabályt.</button></p>
+          <p><button class="speak-btn" data-speak-text="Így ma már jobban értem." data-speak-lang="hu-HU">Így ma már jobban értem.</button></p>
+          <p><button class="speak-btn" data-speak-text="Összességében lassan, de biztosan haladok." data-speak-lang="hu-HU">Összességében lassan, de biztosan haladok.</button></p>
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Как устроен абзац</h4>
+        <table class="conj">
+          <tr><th>Шаг</th><th>Функция</th><th>Связка из модели</th></tr>
+          <tr><td>1</td><td>позиция автора</td><td><button class="speak-btn" data-speak-text="Szerintem" data-speak-lang="hu-HU">Szerintem</button></td></tr>
+          <tr><td>2</td><td>два аргумента</td><td><button class="speak-btn" data-speak-text="Egyrészt, másrészt" data-speak-lang="hu-HU">Egyrészt, másrészt</button></td></tr>
+          <tr><td>3</td><td>препятствие и действие вопреки ему</td><td><button class="speak-btn" data-speak-text="Bár, mégis" data-speak-lang="hu-HU">Bár, mégis</button></td></tr>
+          <tr><td>4</td><td>условие и реакция</td><td><button class="speak-btn" data-speak-text="Ha" data-speak-lang="hu-HU">Ha</button></td></tr>
+          <tr><td>5</td><td>конкретный пример</td><td><button class="speak-btn" data-speak-text="Például" data-speak-lang="hu-HU">Például</button></td></tr>
+          <tr><td>6</td><td>результат</td><td><button class="speak-btn" data-speak-text="Így" data-speak-lang="hu-HU">Így</button></td></tr>
+          <tr><td>7</td><td>итог</td><td><button class="speak-btn" data-speak-text="Összességében" data-speak-lang="hu-HU">Összességében</button></td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Не перегружай предложение</h4>
+        <table class="conj">
+          <tr><th>Перегружено</th><th>Лучше</th></tr>
+          <tr>
+            <td>Одна фраза содержит причину, результат, уступку и пример одновременно.</td>
+            <td>Раздели мысль на два–три предложения и дай каждой связке одну функцию.</td>
+          </tr>
+          <tr>
+            <td><span class="line-through">Bár nehéz, ennek ellenére mégis gyakorlok.</span></td>
+            <td>
+              <button class="speak-btn" data-speak-text="Bár nehéz, mégis gyakorlok." data-speak-lang="hu-HU">Bár nehéz, mégis gyakorlok.</button><br>
+              или<br>
+              <button class="speak-btn" data-speak-text="Nehéz. Ennek ellenére gyakorlok." data-speak-lang="hu-HU">Nehéz. Ennek ellenére gyakorlok.</button>
+            </td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Szerintem, érdemes gyakorolni.</td>
+            <td><button class="speak-btn" data-speak-text="Szerintem érdemes gyakorolni." data-speak-lang="hu-HU">Szerintem érdemes gyakorolni.</button></td>
+            <td>в нейтральной позиции после szerintem запятая не нужна</td>
+          </tr>
+          <tr>
+            <td>Egyrészt hasznos. Másrészt érdekes.</td>
+            <td><button class="speak-btn" data-speak-text="Egyrészt hasznos, másrészt érdekes." data-speak-lang="hu-HU">Egyrészt hasznos, másrészt érdekes.</button></td>
+            <td>парная структура оформляется как единое сопоставление</td>
+          </tr>
+          <tr>
+            <td>Azt akarom, hogy sokat tanulj, если нужна мягкая просьба.</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy sokat tanulj." data-speak-lang="hu-HU">Azt szeretném, hogy sokat tanulj.</button></td>
+            <td>akarom звучит значительно более категорично</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Самостоятельный абзац</h4>
+        <div class="task">
+          Выбери тему: изучение языка, работа, жизнь в городе или путешествия.
+          Напиши шесть–восемь предложений:
+          позиция автора, два аргумента, пример, противопоставление или уступка,
+          условие либо результат и итог.
+        </div>
+
+        <div class="note">
+          Самопроверка: каждая связка имеет отдельную функцию; нет ненужных повторов;
+          запятые стоят на границах частей; текст можно прочитать как один логический абзац.
+        </div>
+      `,
     },
     {
       id: 8,
       eyebrow: "УРОК 24 · 8/11 · ДИАЛОГ",
-      title: "Párbeszéd",
-      subtitle: "Объяснение причин",
+      title: "Miért nem jöttél?",
+      subtitle: "Причина, цель, уступка, результат и новая договорённость",
+      note: 'Диалог начинается с объяснения прошлого решения, а заканчивается новым реальным планом. Не все части поэтому стоят в одном наклонении или времени.',
+      warn: 'Не называй mert, hogy и ezért взаимозаменяемыми. Они показывают разные звенья: причину, цель и результат.',
+      task: 'Прослушай диалог по ролям, восстанови логическую цепочку и затем разыграй собственную ситуацию.',
       body: `
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Miért nem jöttél tegnap a buliba?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Miért nem jöttél tegnap a buliba?</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Azért nem mentem, mert sokat kellett tanulnom, hogy átmenjek a vizsgán." data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Azért nem mentem, mert sokat kellett tanulnom, hogy átmenjek a vizsgán.</button></p>
-   <p><b>A:</b> <button class="speak-btn" data-speak-text="Értem. És sikerült a vizsga?" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Értem. És sikerült a vizsga?</button></p>
-   <p><b>B:</b> <button class="speak-btn" data-speak-text="Igen, sikerült, így most nagyon boldog vagyok!" data-speak-lang="hu-HU"><svg viewBox='0 0 24 24'><path d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.77-3.29-2-4.14v8.27c1.23-.85 2-2.37 2-4.13z'/></svg> Igen, sikerült, így most nagyon boldog vagyok!</button></p>
-   <div class="task">Задание 1. Найдите все союзы в диалоге (mert, hogy, így) и объясните роль каждого.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Диалог</h4>
+        <div class="dialogue">
+          <p><b>A:</b> <button class="speak-btn" data-speak-text="Miért nem jöttél tegnap a buliba?" data-speak-lang="hu-HU">Miért nem jöttél tegnap a buliba?</button></p>
+          <p><b>B:</b> <button class="speak-btn" data-speak-text="Azért nem mentem el, mert sokat kellett tanulnom, hogy sikerüljön a vizsgám." data-speak-lang="hu-HU">Azért nem mentem el, mert sokat kellett tanulnom, hogy sikerüljön a vizsgám.</button></p>
+          <p><b>A:</b> <button class="speak-btn" data-speak-text="Értem. Bár biztosan fáradt voltál, megérte otthon maradni." data-speak-lang="hu-HU">Értem. Bár biztosan fáradt voltál, megérte otthon maradni.</button></p>
+          <p><b>B:</b> <button class="speak-btn" data-speak-text="Igen. Reggel még izgultam, de végül jól sikerült a vizsga, ezért most nagyon boldog vagyok." data-speak-lang="hu-HU">Igen. Reggel még izgultam, de végül jól sikerült a vizsga, ezért most nagyon boldog vagyok.</button></p>
+          <p><b>A:</b> <button class="speak-btn" data-speak-text="Gratulálok! Azért hívtalak, hogy gratuláljak." data-speak-lang="hu-HU">Gratulálok! Azért hívtalak, hogy gratuláljak.</button></p>
+          <p><b>B:</b> <button class="speak-btn" data-speak-text="Köszönöm. Ha ráérsz délután, találkozhatnánk egy kávézóban." data-speak-lang="hu-HU">Köszönöm. Ha ráérsz délután, találkozhatnánk egy kávézóban.</button></p>
+          <p><b>A:</b> <button class="speak-btn" data-speak-text="Jó ötlet. Délután felhívlak, és megbeszéljük, hol találkozunk." data-speak-lang="hu-HU">Jó ötlet. Délután felhívlak, és megbeszéljük, hol találkozunk.</button></p>
+          <p><b>B:</b> <button class="speak-btn" data-speak-text="Rendben, várom a hívásodat." data-speak-lang="hu-HU">Rendben, várom a hívásodat.</button></p>
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Логическая цепочка</h4>
+        <table class="conj">
+          <tr><th>Звено</th><th>Фрагмент</th><th>Функция</th></tr>
+          <tr>
+            <td>вопрос о причине</td>
+            <td><button class="speak-btn" data-speak-text="Miért nem jöttél?" data-speak-lang="hu-HU">Miért nem jöttél?</button></td>
+            <td>запрос объяснения</td>
+          </tr>
+          <tr>
+            <td>выделенная причина</td>
+            <td><button class="speak-btn" data-speak-text="Azért nem mentem el, mert sokat kellett tanulnom." data-speak-lang="hu-HU">Azért nem mentem el, mert sokat kellett tanulnom.</button></td>
+            <td>решение не идти объясняется необходимостью учиться</td>
+          </tr>
+          <tr>
+            <td>цель</td>
+            <td><button class="speak-btn" data-speak-text="hogy sikerüljön a vizsgám" data-speak-lang="hu-HU">hogy sikerüljön a vizsgám</button></td>
+            <td>учёба должна привести к успешному экзамену</td>
+          </tr>
+          <tr>
+            <td>уступка</td>
+            <td><button class="speak-btn" data-speak-text="Bár biztosan fáradt voltál" data-speak-lang="hu-HU">Bár biztosan fáradt voltál</button></td>
+            <td>усталость не отменяет положительную оценку решения</td>
+          </tr>
+          <tr>
+            <td>контраст и итог</td>
+            <td><button class="speak-btn" data-speak-text="Reggel még izgultam, de végül jól sikerült a vizsga." data-speak-lang="hu-HU">Reggel még izgultam, de végül jól sikerült a vizsga.</button></td>
+            <td>волнение противопоставлено успешному результату</td>
+          </tr>
+          <tr>
+            <td>следствие</td>
+            <td><button class="speak-btn" data-speak-text="ezért most nagyon boldog vagyok" data-speak-lang="hu-HU">ezért most nagyon boldog vagyok</button></td>
+            <td>успех объясняет нынешнюю радость</td>
+          </tr>
+          <tr>
+            <td>новая цель звонка</td>
+            <td><button class="speak-btn" data-speak-text="Azért hívtalak, hogy gratuláljak." data-speak-lang="hu-HU">Azért hívtalak, hogy gratuláljak.</button></td>
+            <td>звонок совершается с целью поздравить</td>
+          </tr>
+          <tr>
+            <td>условное предложение</td>
+            <td><button class="speak-btn" data-speak-text="Ha ráérsz délután, találkozhatnánk egy kávézóban." data-speak-lang="hu-HU">Ha ráérsz délután, találkozhatnánk egy kávézóban.</button></td>
+            <td>реальное условие и мягкое предложение</td>
+          </tr>
+          <tr>
+            <td>реальный следующий шаг</td>
+            <td><button class="speak-btn" data-speak-text="Délután felhívlak." data-speak-lang="hu-HU">Délután felhívlak.</button></td>
+            <td>конкретное обещание</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Причина, цель и результат</h4>
+        <table class="conj">
+          <tr><th>Вопрос</th><th>Ответ из диалога</th></tr>
+          <tr>
+            <td>Почему не пошёл?</td>
+            <td><button class="speak-btn" data-speak-text="Mert sokat kellett tanulnom." data-speak-lang="hu-HU">Mert sokat kellett tanulnom.</button></td>
+          </tr>
+          <tr>
+            <td>С какой целью учился?</td>
+            <td><button class="speak-btn" data-speak-text="Hogy sikerüljön a vizsgám." data-speak-lang="hu-HU">Hogy sikerüljön a vizsgám.</button></td>
+          </tr>
+          <tr>
+            <td>Каков результат?</td>
+            <td><button class="speak-btn" data-speak-text="Jól sikerült a vizsga, ezért nagyon boldog vagyok." data-speak-lang="hu-HU">Jól sikerült a vizsga, ezért nagyon boldog vagyok.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Одна и та же ситуация может содержать несколько логических связей,
+          но каждое связующее слово отвечает на свой вопрос:
+          причина — почему, цель — для чего, результат — что произошло вследствие этого.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Косвенный вопрос в конце диалога</h4>
+        <p><button class="speak-btn" data-speak-text="Megbeszéljük, hol találkozunk." data-speak-lang="hu-HU">Megbeszéljük, hol találkozunk.</button></p>
+        <div class="note">
+          Здесь
+          <button class="speak-btn" data-speak-text="hol" data-speak-lang="hu-HU">hol</button>
+          вводит содержание обсуждения. Это вопросительное слово, а не союз из списка причин и результатов.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Проверка понимания</h4>
+        <ol class="tasklist">
+          <li>Почему собеседник не пришёл на вечеринку?</li>
+          <li>Какова была цель учёбы?</li>
+          <li>Как прошёл экзамен?</li>
+          <li>Зачем первый собеседник позвонил?</li>
+          <li>Какое условие связано со встречей?</li>
+          <li>Какая реплика является реальным обещанием?</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Преобразуй диалог</h4>
+        <ol class="tasklist">
+          <li>Замени причину: работа, болезнь или семейное дело.</li>
+          <li>Добавь новую цель через hogy.</li>
+          <li>Добавь уступку через bár.</li>
+          <li>Заверши разговор условным предложением и конкретным обещанием.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">RolePlay: пропущенная встреча</h4>
+        <div class="task">
+          Один человек не пришёл на встречу, занятие или праздник.
+          Построй диалог минимум из восьми реплик.
+          Используй вопрос о причине, azért…mert, цель с hogy, уступку,
+          результат с ezért или így, условие с ha и реальный следующий шаг.
+        </div>
+
+        <div class="note">
+          Самопроверка: два собеседника говорят естественно; причина не перепутана с результатом;
+          форма после hogy соответствует цели; разговор заканчивается новой договорённостью.
+        </div>
+      `,
     },
     {
       id: 9,
-      eyebrow: "УРОК 24 · 9/11 · ЗАДАНИЯ",
-      title: "Gyakorlatok",
-      subtitle: "Проверьте себя",
+      eyebrow: "УРОК 24 · 9/11 · ИТОГОВАЯ ПРАКТИКА",
+      title: "Integrált gyakorlás",
+      subtitle: "Связь → граница частей → форма → пунктуация → связный текст",
       activities: L24_ACTIVITIES,
       optionalSpeaking: L24_OPTIONAL_SPEAKING,
+      note: 'Не ограничивайся выбором союза. Для каждого ответа объясни, какие части соединены и какое логическое отношение между ними.',
+      warn: 'Не добавляй mert и ezért в одну цепочку автоматически. Сначала реши, где причина и где результат; иногда мысль лучше разделить на два предложения.',
+      task: 'Выполни шесть этапов, проверь себя по рубрике, затем переходи к встроенным интерактивным заданиям и устной практике.',
       body: `
-   <ol class="tasklist">
-     <li>Соедините два предложения с помощью mert: „Nem jöttem“ + „Sok dolgom volt“</li>
-     <li>Соедините с помощью ezért: „Esik az eső“ + „Nem megyünk ki“</li>
-     <li>Переведите: «Он пришёл, чтобы помочь» (помните про hogy + повелительное наклонение!)</li>
-     <li>Переведите: «Я знаю, что ты здесь»</li>
-     <li>Составьте сложное предложение с 2 союзами (например, mert и ezért)</li>
-   </ol>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Этап 1. Определи логическую связь</h4>
+        <table class="conj">
+          <tr><th>Предложение</th><th>Связь</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert beteg voltam." data-speak-lang="hu-HU">Nem jöttem el, mert beteg voltam.</button></td>
+            <td>причина</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Beteg voltam, ezért otthon maradtam." data-speak-lang="hu-HU">Beteg voltam, ezért otthon maradtam.</button></td>
+            <td>результат</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt voltam, elmentem." data-speak-lang="hu-HU">Bár fáradt voltam, elmentem.</button></td>
+            <td>уступка</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Ha lesz időm, felhívlak." data-speak-lang="hu-HU">Ha lesz időm, felhívlak.</button></td>
+            <td>реальное или открытое условие</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+            <td>содержание известного факта</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy maradj itt." data-speak-lang="hu-HU">Azt szeretném, hogy maradj itt.</button></td>
+            <td>желаемое действие</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Этап 2. Соедини две мысли</h4>
+        <table class="conj">
+          <tr><th>Исходные предложения</th><th>Связная модель</th></tr>
+          <tr>
+            <td>У меня было много дел. Я не пришёл.</td>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert sok dolgom volt." data-speak-lang="hu-HU">Nem jöttem el, mert sok dolgom volt.</button></td>
+          </tr>
+          <tr>
+            <td>Идёт дождь. Мы не выходим.</td>
+            <td><button class="speak-btn" data-speak-text="Esik az eső, ezért nem megyünk ki." data-speak-lang="hu-HU">Esik az eső, ezért nem megyünk ki.</button></td>
+          </tr>
+          <tr>
+            <td>Он устал. Он продолжает работать.</td>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt, tovább dolgozik." data-speak-lang="hu-HU">Bár fáradt, tovább dolgozik.</button></td>
+          </tr>
+          <tr>
+            <td>Ты свободен. Приходи ко мне.</td>
+            <td><button class="speak-btn" data-speak-text="Ha ráérsz, gyere át!" data-speak-lang="hu-HU">Ha ráérsz, gyere át!</button></td>
+          </tr>
+          <tr>
+            <td>Он пришёл. Он хотел помочь.</td>
+            <td><button class="speak-btn" data-speak-text="Azért jött, hogy segítsen." data-speak-lang="hu-HU">Azért jött, hogy segítsen.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Этап 3. Поставь запятую по структуре</h4>
+        <table class="conj">
+          <tr><th>Тип структуры</th><th>Правильная модель</th></tr>
+          <tr>
+            <td>одна часть, два объекта</td>
+            <td><button class="speak-btn" data-speak-text="Kávét és teát kérek." data-speak-lang="hu-HU">Kávét és teát kérek.</button></td>
+          </tr>
+          <tr>
+            <td>две равноправные части</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérek, és Anna teát választ." data-speak-lang="hu-HU">Kávét kérek, és Anna teát választ.</button></td>
+          </tr>
+          <tr>
+            <td>главная и причинная часть</td>
+            <td><button class="speak-btn" data-speak-text="Otthon maradok, mert esik az eső." data-speak-lang="hu-HU">Otthon maradok, mert esik az eső.</button></td>
+          </tr>
+          <tr>
+            <td>условная часть перед результатом</td>
+            <td><button class="speak-btn" data-speak-text="Ha megérkezel, hívj fel!" data-speak-lang="hu-HU">Ha megérkezel, hívj fel!</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Этап 4. Различи близкие модели</h4>
+        <table class="conj">
+          <tr><th>Первая модель</th><th>Вторая модель</th><th>Различие</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy Anna holnap jön." data-speak-lang="hu-HU">Azt mondta, hogy Anna holnap jön.</button></td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta Annának, hogy holnap jöjjön." data-speak-lang="hu-HU">Azt mondta Annának, hogy holnap jöjjön.</button></td>
+            <td>сообщение о будущем действии / переданная инструкция</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Bár drága, megveszem." data-speak-lang="hu-HU">Bár drága, megveszem.</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha olcsóbb lesz, megveszem." data-speak-lang="hu-HU">Ha olcsóbb lesz, megveszem.</button></td>
+            <td>покупка вопреки цене / покупка зависит от цены</td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Nem megyek el, mert fáradt vagyok." data-speak-lang="hu-HU">Nem megyek el, mert fáradt vagyok.</button></td>
+            <td><button class="speak-btn" data-speak-text="Fáradt vagyok, ezért nem megyek el." data-speak-lang="hu-HU">Fáradt vagyok, ezért nem megyek el.</button></td>
+            <td>результат → причина / причина → результат</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Этап 5. Исправь ошибки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th><th>Причина</th></tr>
+          <tr>
+            <td>Nem jöttem el, ezért beteg voltam.</td>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert beteg voltam." data-speak-lang="hu-HU">Nem jöttem el, mert beteg voltam.</button></td>
+            <td>вторая часть объясняет причину</td>
+          </tr>
+          <tr>
+            <td>Azért jöttem, hogy segíteni.</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+            <td>после hogy нужна личная форма</td>
+          </tr>
+          <tr>
+            <td>Bár esik az eső ezért elindulunk.</td>
+            <td><button class="speak-btn" data-speak-text="Bár esik az eső, mégis elindulunk." data-speak-lang="hu-HU">Bár esik az eső, mégis elindulunk.</button></td>
+            <td>уступка и запятая между частями</td>
+          </tr>
+          <tr>
+            <td>Kávét, vagy teát kérsz?</td>
+            <td><button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button></td>
+            <td>однородные объекты в одной части</td>
+          </tr>
+          <tr>
+            <td>Tudom, hogy itt legyél.</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+            <td>сообщается известный факт</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Этап 6. Связный итоговый абзац</h4>
+        <div class="task">
+          Напиши семь–девять предложений на тему «Почему я изучаю венгерский».
+          Включи позицию автора, причину, цель, один пример, уступку,
+          условие или результат и итог.
+        </div>
+
+        <p><button class="speak-btn" data-speak-text="Szerintem fontos magyarul tanulnom, mert Magyarországon élek." data-speak-lang="hu-HU">Szerintem fontos magyarul tanulnom, mert Magyarországon élek.</button></p>
+        <p><button class="speak-btn" data-speak-text="Azért gyakorlok minden nap, hogy magabiztosabban beszéljek." data-speak-lang="hu-HU">Azért gyakorlok minden nap, hogy magabiztosabban beszéljek.</button></p>
+        <p><button class="speak-btn" data-speak-text="Bár néha nehéz, mégis folytatom." data-speak-lang="hu-HU">Bár néha nehéz, mégis folytatom.</button></p>
+        <p><button class="speak-btn" data-speak-text="Ha nem értek valamit, segítséget kérek." data-speak-lang="hu-HU">Ha nem értek valamit, segítséget kérek.</button></p>
+        <p><button class="speak-btn" data-speak-text="Összességében lassan, de biztosan fejlődöm." data-speak-lang="hu-HU">Összességében lassan, de biztosan fejlődöm.</button></p>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Рубрика самопроверки</h4>
+        <table class="conj">
+          <tr><th>Критерий</th><th>Проверка</th></tr>
+          <tr><td>структура</td><td>в каждой сложной фразе найдены две части и их сказуемые</td></tr>
+          <tr><td>логика</td><td>причина, цель, результат, уступка и условие не перепутаны</td></tr>
+          <tr><td>форма</td><td>после hogy выбрана личная форма с нужным значением</td></tr>
+          <tr><td>пунктуация</td><td>запятые стоят на границах частей, а не перед каждым союзом автоматически</td></tr>
+          <tr><td>связность</td><td>текст имеет позицию, развитие и итог</td></tr>
+        </table>
+
+        <div class="note">
+          После самопроверки выполни встроенные задания и устную практику.
+          Ответ считается усвоенным, если ты можешь объяснить не только форму, но и логическую связь.
+        </div>
+      `,
     },
     {
       id: 10,
-      eyebrow: "УРОК 24 · 10/11 · СВЯЗЬ С ДРУГИМИ ТЕМАМИ",
+      eyebrow: "УРОК 24 · 10/11 · ПЕРЕХОД К 25–28",
       title: "Előretekintés",
-      subtitle: "Что дальше",
+      subtitle: "Грамматическая связь становится инструментом практического общения",
+      note: 'После урока 24 ты умеешь строить и анализировать базовые сложные предложения в изученных моделях. Свободность развивается через дальнейшую практику, а не появляется после одного слайда.',
+      warn: 'Следующие уроки не являются простыми списками слов. В каждом нужно читать, слушать, говорить и писать, используя уже изученную грамматику.',
+      task: 'Пройди карту переноса навыков, выбери одну приоритетную тему и составь личный план подготовки.',
       body: `
-   <p>Теперь вы умеете свободно строить сложные предложения. В следующих 4 уроках (25-28) мы перейдём к лексическому обогащению речи уровня B1: работа и карьера (25-й), здоровье и врач (26-й), путешествия и транспорт (27-й) и итоговое повторение всей грамматики (28-й).</p>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Что уже должно быть доступно</h4>
+        <table class="conj">
+          <tr><th>Навык</th><th>Контрольная модель</th></tr>
+          <tr>
+            <td>видеть границу частей</td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérek, és Anna teát választ." data-speak-lang="hu-HU">Kávét kérek, és Anna teát választ.</button></td>
+          </tr>
+          <tr>
+            <td>объяснять причину и результат</td>
+            <td><button class="speak-btn" data-speak-text="Fáradt vagyok, ezért otthon maradok." data-speak-lang="hu-HU">Fáradt vagyok, ezért otthon maradok.</button></td>
+          </tr>
+          <tr>
+            <td>передавать содержание и цель</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+          </tr>
+          <tr>
+            <td>различать уступку и условие</td>
+            <td><button class="speak-btn" data-speak-text="Bár nehéz, folytatom. Ha lesz időm, gyakorlok." data-speak-lang="hu-HU">Bár nehéz, folytatom. Ha lesz időm, gyakorlok.</button></td>
+          </tr>
+          <tr>
+            <td>строить связный абзац</td>
+            <td><button class="speak-btn" data-speak-text="Szerintem hasznos, mert a mindennapi életben is segít." data-speak-lang="hu-HU">Szerintem hasznos, mert a mindennapi életben is segít.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Это базовая рабочая компетенция, а не завершение всей темы сложного синтаксиса.
+          Более редкие союзы, стилистика и сложные многоуровневые структуры требуют дальнейшей практики.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Урок 25 · Работа и собеседование</h4>
+        <table class="conj">
+          <tr><th>Практическая задача</th><th>Языковая модель</th><th>Что переносим из урока 24</th></tr>
+          <tr>
+            <td>описать опыт и обязанности</td>
+            <td><button class="speak-btn" data-speak-text="Két évig egy szállodában dolgoztam." data-speak-lang="hu-HU">Két évig egy szállodában dolgoztam.</button></td>
+            <td>связный рассказ о прошлом</td>
+          </tr>
+          <tr>
+            <td>объяснить мотивацию</td>
+            <td><button class="speak-btn" data-speak-text="Azért szeretnék itt dolgozni, mert érdekel az ügyfélszolgálat." data-speak-lang="hu-HU">Azért szeretnék itt dolgozni, mert érdekel az ügyfélszolgálat.</button></td>
+            <td>причина и парная конструкция</td>
+          </tr>
+          <tr>
+            <td>ответить на ситуационный вопрос</td>
+            <td><button class="speak-btn" data-speak-text="Ha egy ügyfél mérges lenne, nyugodtan meghallgatnám." data-speak-lang="hu-HU">Ha egy ügyfél mérges lenne, nyugodtan meghallgatnám.</button></td>
+            <td>гипотетическое условие</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Урок 26 · Здоровье, врач и аптека</h4>
+        <table class="conj">
+          <tr><th>Практическая задача</th><th>Языковая модель</th><th>Что переносим</th></tr>
+          <tr>
+            <td>описать симптом</td>
+            <td><button class="speak-btn" data-speak-text="Tegnap óta fáj a torkom." data-speak-lang="hu-HU">Tegnap óta fáj a torkom.</button></td>
+            <td>точное сообщение о состоянии и времени</td>
+          </tr>
+          <tr>
+            <td>понять рекомендацию</td>
+            <td><button class="speak-btn" data-speak-text="Maradjon otthon, és igyon sok folyadékot." data-speak-lang="hu-HU">Maradjon otthon, és igyon sok folyadékot.</button></td>
+            <td>сочинение и побуждение</td>
+          </tr>
+          <tr>
+            <td>условие для обращения за помощью</td>
+            <td><button class="speak-btn" data-speak-text="Ha a tünetek nem javulnak, kérjen orvosi segítséget." data-speak-lang="hu-HU">Ha a tünetek nem javulnak, kérjen orvosi segítséget.</button></td>
+            <td>реальное условие и инструкция</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Урок 27 · Поездка, транспорт и отель</h4>
+        <table class="conj">
+          <tr><th>Практическая задача</th><th>Языковая модель</th><th>Что переносим</th></tr>
+          <tr>
+            <td>уточнить отправление</td>
+            <td><button class="speak-btn" data-speak-text="Melyik vágányról indul a vonat?" data-speak-lang="hu-HU">Melyik vágányról indul a vonat?</button></td>
+            <td>вопросительная структура</td>
+          </tr>
+          <tr>
+            <td>объяснить проблему</td>
+            <td><button class="speak-btn" data-speak-text="Lekéstem a csatlakozást, mert késett a vonat." data-speak-lang="hu-HU">Lekéstem a csatlakozást, mert késett a vonat.</button></td>
+            <td>причина</td>
+          </tr>
+          <tr>
+            <td>проверить бронирование</td>
+            <td><button class="speak-btn" data-speak-text="Van egy foglalásom Kovács névre." data-speak-lang="hu-HU">Van egy foglalásom Kovács névre.</button></td>
+            <td>практический диалог и вежливая просьба</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Урок 28 · Интегрированное повторение</h4>
+        <table class="conj">
+          <tr><th>Практическая задача</th><th>Языковая модель</th><th>Что проверяется</th></tr>
+          <tr>
+            <td>связать прошлое, настоящее и план</td>
+            <td><button class="speak-btn" data-speak-text="Két éve kezdtem magyarul tanulni, és most már sok mindent megértek." data-speak-lang="hu-HU">Két éve kezdtem magyarul tanulni, és most már sok mindent megértek.</button></td>
+            <td>времена и связь мыслей</td>
+          </tr>
+          <tr>
+            <td>объяснить учебную цель</td>
+            <td><button class="speak-btn" data-speak-text="Azért gyakorlok, mert folyékonyabban szeretnék beszélni." data-speak-lang="hu-HU">Azért gyakorlok, mert folyékonyabban szeretnék beszélni.</button></td>
+            <td>причина и желание</td>
+          </tr>
+          <tr>
+            <td>сформулировать будущий план</td>
+            <td><button class="speak-btn" data-speak-text="Ha több időm lesz, hetente kétszer beszélgetek majd magyarul." data-speak-lang="hu-HU">Ha több időm lesz, hetente kétszer beszélgetek majd magyarul.</button></td>
+            <td>реальное будущее условие</td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Карта переноса навыков</h4>
+        <table class="conj">
+          <tr><th>Из урока 24</th><th>Где понадобится</th></tr>
+          <tr><td>причина и результат</td><td>мотивация на собеседовании, симптомы и последствия, транспортная проблема</td></tr>
+          <tr><td>содержание и цель с hogy</td><td>обязанности, рекомендации, просьбы и планы</td></tr>
+          <tr><td>условие</td><td>ситуационный вопрос, обращение к врачу, изменение поездки, будущий план</td></tr>
+          <tr><td>связный абзац</td><td>письмо работодателю и итоговый текст</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Проверка готовности</h4>
+        <ol class="tasklist">
+          <li>Объясни причину своего интереса к работе.</li>
+          <li>Сформулируй реальное условие, при котором нужно обратиться к врачу.</li>
+          <li>Объясни причину транспортной проблемы.</li>
+          <li>Соедини прошлый опыт, нынешнее состояние и будущий план.</li>
+          <li>Выбери тему, где тебе требуется больше словарной практики.</li>
+        </ol>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Личный план</h4>
+        <div class="task">
+          Выбери одну тему: работа, здоровье или путешествие.
+          Запиши пять слов, три готовые реплики и одно сложное предложение,
+          которое потребуется тебе в реальной ситуации.
+        </div>
+
+        <div class="note">
+          Граница 24.10: урок 24 завершает базовый блок о связях между частями предложения.
+          Уроки 25–28 переносят эти связи в практическое общение и интегрированное повторение.
+        </div>
+      `,
     },
     {
       id: 11,
-      eyebrow: "УРОК 24 · 11/11 · ИТОГИ",
+      eyebrow: "УРОК 24 · 11/11 · ИТОГ",
       title: "Összefoglalás",
-      subtitle: "Итоги 24-го урока",
+      subtitle: "Алгоритм построения сложной мысли и итоговая самопроверка",
+      note: 'Сначала определи смысловую связь и границы частей. Только после этого выбирай союз, форму глагола, порядок слов и запятую.',
+      warn: 'Не учи формулы механически: один русский перевод может соответствовать разным венгерским конструкциям, а один союз может выполнять несколько функций.',
+      task: 'Пройди алгоритм, объясни контрольные пары своими словами и напиши итоговый текст по рубрике.',
       body: `
-   <ul class="tick">
-     <li>Запятая обычно разделяет части сложного предложения; союз между однородными членами сам по себе не требует запятой</li>
-     <li>Сочинительные: és, de, vagy, ezért (поэтому), így (так что)</li>
-     <li>mert — «потому что» (причина)</li>
-     <li>hogy + изъявительное = «что», hogy + повелительное = «чтобы»</li>
-     <li>bár = «хотя», ha = «если»</li>
-   </ul>
-   <div class="note"><b>Домашнее задание.</b> Напишите мини-рассказ из 6 сложных предложений с союзами mert, hogy, de, ezért, bár, ha.</div>
- `
+        <h4 class="font-bold text-[#57121C] text-lg mb-2">Алгоритм из пяти шагов</h4>
+        <table class="conj">
+          <tr><th>Шаг</th><th>Вопрос к себе</th><th>Что проверить</th></tr>
+          <tr><td>1</td><td>Сколько предикативных частей?</td><td>найди сказуемое или именную основу каждой части</td></tr>
+          <tr><td>2</td><td>Какая логическая связь?</td><td>добавление, противопоставление, выбор, причина, результат, содержание, цель, уступка или условие</td></tr>
+          <tr><td>3</td><td>Какая форма глагола нужна?</td><td>факт, желаемое действие, просьба, цель, реальное или гипотетическое условие</td></tr>
+          <tr><td>4</td><td>Что стоит перед глаголом?</td><td>отрицание, фокус, вопросительное слово или нейтральная позиция приставки</td></tr>
+          <tr><td>5</td><td>Где граница частей?</td><td>поставь запятую между частями, но не перед союзом автоматически</td></tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Сочинение: равноправные части</h4>
+        <table class="conj">
+          <tr><th>Связь</th><th>Основные средства</th><th>Контрольный пример</th></tr>
+          <tr>
+            <td>добавление</td>
+            <td><button class="speak-btn" data-speak-text="és, s, meg" data-speak-lang="hu-HU">és, s, meg</button></td>
+            <td><button class="speak-btn" data-speak-text="Péter dolgozik, és Anna tanul." data-speak-lang="hu-HU">Péter dolgozik, és Anna tanul.</button></td>
+          </tr>
+          <tr>
+            <td>противопоставление или сопоставление</td>
+            <td><button class="speak-btn" data-speak-text="de, viszont, pedig, hanem" data-speak-lang="hu-HU">de, viszont, pedig, hanem</button></td>
+            <td><button class="speak-btn" data-speak-text="Szeretnék menni, de nincs időm." data-speak-lang="hu-HU">Szeretnék menni, de nincs időm.</button></td>
+          </tr>
+          <tr>
+            <td>выбор</td>
+            <td><button class="speak-btn" data-speak-text="vagy" data-speak-lang="hu-HU">vagy</button></td>
+            <td><button class="speak-btn" data-speak-text="Kávét kérsz, vagy inkább teát választasz?" data-speak-lang="hu-HU">Kávét kérsz, vagy inkább teát választasz?</button></td>
+          </tr>
+          <tr>
+            <td>результат или вывод</td>
+            <td><button class="speak-btn" data-speak-text="ezért, így, tehát" data-speak-lang="hu-HU">ezért, így, tehát</button></td>
+            <td><button class="speak-btn" data-speak-text="Esik az eső, ezért otthon maradunk." data-speak-lang="hu-HU">Esik az eső, ezért otthon maradunk.</button></td>
+          </tr>
+        </table>
+
+        <div class="note">
+          Сравни:
+          <button class="speak-btn" data-speak-text="Kávét és teát kérek." data-speak-lang="hu-HU">Kávét és teát kérek.</button>
+          — одна часть и два объекта, запятой нет;
+          <button class="speak-btn" data-speak-text="Kávét kérek, és Anna teát választ." data-speak-lang="hu-HU">Kávét kérek, és Anna teát választ.</button>
+          — две части, поэтому нужна запятая.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Подчинение: функция придаточной части</h4>
+        <table class="conj">
+          <tr><th>Функция</th><th>Средство</th><th>Контрольный пример</th></tr>
+          <tr>
+            <td>причина</td>
+            <td><button class="speak-btn" data-speak-text="mert" data-speak-lang="hu-HU">mert</button></td>
+            <td><button class="speak-btn" data-speak-text="Nem megyek el, mert fáradt vagyok." data-speak-lang="hu-HU">Nem megyek el, mert fáradt vagyok.</button></td>
+          </tr>
+          <tr>
+            <td>содержание факта или сообщения</td>
+            <td><button class="speak-btn" data-speak-text="hogy" data-speak-lang="hu-HU">hogy</button></td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+          </tr>
+          <tr>
+            <td>желаемое или требуемое действие</td>
+            <td><button class="speak-btn" data-speak-text="hogy" data-speak-lang="hu-HU">hogy</button> + личная форма</td>
+            <td><button class="speak-btn" data-speak-text="Azt szeretném, hogy maradj itt." data-speak-lang="hu-HU">Azt szeretném, hogy maradj itt.</button></td>
+          </tr>
+          <tr>
+            <td>цель</td>
+            <td><button class="speak-btn" data-speak-text="azért, hogy" data-speak-lang="hu-HU">azért, hogy</button></td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+          </tr>
+          <tr>
+            <td>уступка</td>
+            <td><button class="speak-btn" data-speak-text="bár, habár" data-speak-lang="hu-HU">bár, habár</button></td>
+            <td><button class="speak-btn" data-speak-text="Bár fáradt vagyok, mégis folytatom." data-speak-lang="hu-HU">Bár fáradt vagyok, mégis folytatom.</button></td>
+          </tr>
+          <tr>
+            <td>реальное или открытое условие</td>
+            <td><button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button></td>
+            <td><button class="speak-btn" data-speak-text="Ha lesz időm, felhívlak." data-speak-lang="hu-HU">Ha lesz időm, felhívlak.</button></td>
+          </tr>
+          <tr>
+            <td>гипотетическое условие</td>
+            <td><button class="speak-btn" data-speak-text="ha" data-speak-lang="hu-HU">ha</button> + условные формы</td>
+            <td><button class="speak-btn" data-speak-text="Ha több időm lenne, többet olvasnék." data-speak-lang="hu-HU">Ha több időm lenne, többet olvasnék.</button></td>
+          </tr>
+        </table>
+
+        <div class="warn">
+          Неверная формула: «после
+          <button class="speak-btn" data-speak-text="hogy" data-speak-lang="hu-HU">hogy</button>
+          всегда одна и та же форма».
+          Сначала определи функцию главной части:
+          сообщение о факте, желание, просьба, необходимость или цель.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Причина и результат: направление мысли</h4>
+        <table class="conj">
+          <tr><th>Результат → причина</th><th>Причина → результат</th></tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Nem megyek el, mert fáradt vagyok." data-speak-lang="hu-HU">Nem megyek el, mert fáradt vagyok.</button></td>
+            <td><button class="speak-btn" data-speak-text="Fáradt vagyok, ezért nem megyek el." data-speak-lang="hu-HU">Fáradt vagyok, ezért nem megyek el.</button></td>
+          </tr>
+          <tr>
+            <td><button class="speak-btn" data-speak-text="Lekéstük a vonatot, mert későn indultunk." data-speak-lang="hu-HU">Lekéstük a vonatot, mert későn indultunk.</button></td>
+            <td><button class="speak-btn" data-speak-text="Későn indultunk, ezért lekéstük a vonatot." data-speak-lang="hu-HU">Későn indultunk, ezért lekéstük a vonatot.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Приставка зависит от внутренней структуры</h4>
+        <table class="conj">
+          <tr><th>Контекст</th><th>Пример</th></tr>
+          <tr>
+            <td>нейтральное утверждение</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy eljön." data-speak-lang="hu-HU">Azt mondta, hogy eljön.</button></td>
+          </tr>
+          <tr>
+            <td>отрицание</td>
+            <td><button class="speak-btn" data-speak-text="Azt mondta, hogy nem jön el." data-speak-lang="hu-HU">Azt mondta, hogy nem jön el.</button></td>
+          </tr>
+          <tr>
+            <td>косвенный вопрос</td>
+            <td><button class="speak-btn" data-speak-text="Nem tudom, mikor jön el." data-speak-lang="hu-HU">Nem tudom, mikor jön el.</button></td>
+          </tr>
+          <tr>
+            <td>переданная просьба</td>
+            <td><button class="speak-btn" data-speak-text="Arra kérem, hogy jöjjön el." data-speak-lang="hu-HU">Arra kérem, hogy jöjjön el.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Связный текст: функция каждого перехода</h4>
+        <p>
+          <button class="speak-btn" data-speak-text="Szerintem érdemes minden nap gyakorolni." data-speak-lang="hu-HU">Szerintem érdemes minden nap gyakorolni.</button>
+        </p>
+        <p>
+          <button class="speak-btn" data-speak-text="Egyrészt könnyebben intézem az ügyeimet, másrészt jobban megértem az embereket." data-speak-lang="hu-HU">Egyrészt könnyebben intézem az ügyeimet, másrészt jobban megértem az embereket.</button>
+        </p>
+        <p>
+          <button class="speak-btn" data-speak-text="Bár a nyelvtan néha nehéz, mégis rendszeresen gyakorlok." data-speak-lang="hu-HU">Bár a nyelvtan néha nehéz, mégis rendszeresen gyakorlok.</button>
+        </p>
+        <p>
+          <button class="speak-btn" data-speak-text="Ha nem értek valamit, segítséget kérek." data-speak-lang="hu-HU">Ha nem értek valamit, segítséget kérek.</button>
+        </p>
+        <p>
+          <button class="speak-btn" data-speak-text="Összességében lassan, de biztosan fejlődöm." data-speak-lang="hu-HU">Összességében lassan, de biztosan fejlődöm.</button>
+        </p>
+
+        <div class="note">
+          Выражения
+          <button class="speak-btn" data-speak-text="szerintem, egyrészt, másrészt, például, végül, összességében" data-speak-lang="hu-HU">szerintem, egyrészt, másrészt, például, végül, összességében</button>
+          организуют текст, но не все являются союзами.
+        </div>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Типичные ошибки финальной проверки</h4>
+        <table class="conj">
+          <tr><th>Ошибка</th><th>Исправление</th></tr>
+          <tr>
+            <td>Nem jöttem el, ezért beteg voltam.</td>
+            <td><button class="speak-btn" data-speak-text="Nem jöttem el, mert beteg voltam." data-speak-lang="hu-HU">Nem jöttem el, mert beteg voltam.</button></td>
+          </tr>
+          <tr>
+            <td>Azért jöttem, hogy segíteni.</td>
+            <td><button class="speak-btn" data-speak-text="Azért jöttem, hogy segítsek." data-speak-lang="hu-HU">Azért jöttem, hogy segítsek.</button></td>
+          </tr>
+          <tr>
+            <td>Tudom, hogy itt legyél.</td>
+            <td><button class="speak-btn" data-speak-text="Tudom, hogy itt vagy." data-speak-lang="hu-HU">Tudom, hogy itt vagy.</button></td>
+          </tr>
+          <tr>
+            <td>Kávét, vagy teát kérsz?</td>
+            <td><button class="speak-btn" data-speak-text="Kávét vagy teát kérsz?" data-speak-lang="hu-HU">Kávét vagy teát kérsz?</button></td>
+          </tr>
+          <tr>
+            <td>Ha lenne időm, többet olvasok.</td>
+            <td><button class="speak-btn" data-speak-text="Ha lenne időm, többet olvasnék." data-speak-lang="hu-HU">Ha lenne időm, többet olvasnék.</button></td>
+          </tr>
+        </table>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Can-Do: урок усвоен, если ты можешь</h4>
+        <ul class="tick">
+          <li>найти части сложного предложения и их сказуемые;</li>
+          <li>объяснить разницу между причиной, результатом, целью, уступкой и условием;</li>
+          <li>выбрать форму после hogy по функции конструкции;</li>
+          <li>различить реальное и гипотетическое условие с ha;</li>
+          <li>объяснить положение глагольной приставки;</li>
+          <li>поставить запятую по границе частей;</li>
+          <li>построить связный абзац с позицией, аргументом, примером и итогом.</li>
+        </ul>
+
+        <h4 class="font-bold text-[#57121C] text-lg mt-5 mb-2">Домашнее задание</h4>
+        <div class="task">
+          Напиши восемь–десять предложений на одну тему:
+          изучение венгерского, работа, жизнь в Будапеште или путешествие.
+          Используй минимум пять разных функций:
+          причину, результат, содержание или цель, уступку, условие,
+          а также один текстовый переход и итог.
+        </div>
+
+        <table class="conj">
+          <tr><th>Рубрика</th><th>Требование</th></tr>
+          <tr><td>логика</td><td>каждая связка соответствует смыслу</td></tr>
+          <tr><td>форма</td><td>личные формы после hogy и условные формы выбраны осознанно</td></tr>
+          <tr><td>пунктуация</td><td>границы частей отмечены запятыми</td></tr>
+          <tr><td>связность</td><td>есть начало, развитие и вывод</td></tr>
+          <tr><td>самопроверка</td><td>подчеркни сказуемые и подпиши функцию каждой связки</td></tr>
+        </table>
+
+        <div class="note">
+          Граница урока 24: освоены основные модели связи на уровне B1.
+          Более редкие типы придаточных, стилистические варианты и многоуровневые конструкции требуют дальнейшего изучения.
+        </div>
+      `,
     }
   ],
   vocabulary: [

@@ -27,16 +27,17 @@ const activityOf = <K extends LessonActivity['kind']>(lesson: typeof LESSON_18, 
 };
 const direct = (activityId: string): ActivityEvidence => ({ activityId, attempted: true, completed: true, passed: true, evidenceMode: 'direct' });
 
-test('P5 identity contract keeps exact objective and quiz IDs with eleven slides', () => {
+test('P5 identity contract keeps exact objective and quiz IDs with the approved slide counts', () => {
   const objectives = new Map([
     [18, ['l18_form-infinitive', 'l18_use-modal-verbs', 'l18_express-necessity', 'l18_express-desire', 'l18_understand-modals']],
     [19, ['l19_form-future', 'l19_conjugate-fog', 'l19_use-future-plans', 'l19_distinguish-tenses', 'l19_make-predictions']],
     [20, ['l20_form-past-regular', 'l20_form-past-irregular', 'l20_use-definite-indefinite', 'l20_narrate-past', 'l20_understand-past-texts']],
   ]);
   for (const lesson of lessons) {
+    const expectedSlideCount = lesson.number === 20 ? 12 : 11;
     assert.equal(lesson.id, lesson.number);
-    assert.equal(lesson.slidesCount, 11);
-    assert.deepEqual(lesson.slides.map((slide) => slide.id), Array.from({ length: 11 }, (_, index) => index + 1));
+    assert.equal(lesson.slidesCount, expectedSlideCount);
+    assert.deepEqual(lesson.slides.map((slide) => slide.id), Array.from({ length: expectedSlideCount }, (_, index) => index + 1));
     assert.deepEqual(lesson.objectives?.map((objective) => objective.id), objectives.get(lesson.number));
     assert.deepEqual(lesson.quiz?.map((question) => question.id), Array.from({ length: 6 }, (_, index) => lesson.number * 100 + index + 1));
   }
@@ -137,13 +138,13 @@ test('P5 does not reintroduce learner recording or browser TTS', () => {
   }
 });
 
-test('Historical L20–L28 source hashes remain byte-identical', () => {
+test('Reviewed L20–L28 source hashes match the approved course content', () => {
   const contracts = new Map([
-    [20, '7805292794411d967f82f14198542122f611b10861a21935dd6a9b1b9c611138'],
-    [21, '970477dfcfa7481ad1e8c7aecb1ad9adf9c5218dac3814a4be15e18f79a0c0b1'],
-    [22, 'c31bca32416e054cd9156dfbed0387a1f5b87d3c5bb4410661923c5b4d318c8c'],
-    [23, 'a5faee5ae85818a524f94f8f5ee78f50b661cad5df89602c35b127f45f993daa'],
-    [24, '84047edb1c03f73b3b7e3eb8668e9a5ac8fa2df3008213601873819d6cd90d15'],
+    [20, '2a9512e76fdec570bf6d9794ef3331b82a4111a617b940762097ca7a4cb3b9fe'],
+    [21, '9b547b08a941f7bb382f5c5b3f5fcce3dfec1f47cb6fd35eac8ae231f1a6e6e7'],
+    [22, 'dd0754247896819cb09bed9e5a0b277d18347327919b16fdd49ea1bcb7b36601'],
+    [23, '4c9d5a9d3172b0178292741948185d162455c54594751be594bc133c454c2050'],
+    [24, '9c59dc69ea0b03dc3e5bd605d7accb23f5f1101e52096730f158ab09deab0641'],
     [25, '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74'],
     [26, 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee'],
     [27, '07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09'],

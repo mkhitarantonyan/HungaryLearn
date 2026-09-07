@@ -94,10 +94,9 @@ test('every course slide resolves only its own versioned narration file', async 
     }
   }
 
-  assert.equal(slideCount, 308);
-  // P2/P3/P4/P5 keep physical 8.12/13.12/15.12/16.12/18.12/20.12 narration MP3 files byte-identical
-  // after those lessons return to the 11-slide course identity. Runtime slides
-  // must all resolve; preserved orphan files may remain harmlessly in the manifest.
+  assert.equal(slideCount, 309);
+  // P2/P3/P4/P5 keep physical 8.12/13.12/15.12/16.12/18.12 narration MP3 files byte-identical.
+  // Runtime slides must all resolve; preserved orphan files may remain harmlessly in the manifest.
   assert.ok([...expectedManifestKeys].every((key) => key in SLIDE_AUDIO_VERSIONS));
 });
 

@@ -48,9 +48,13 @@ export function assertSlideAudioManifest(): void {
 export async function assertLessonContracts(from: number, to: number): Promise<void> {
   for (let number = from; number <= to; number++) {
     const lesson = await loadLesson(number);
+    const expectedSlideCount = number === 20 ? 12 : 11;
     assert.ok(lesson, `L${number} exists`);
-    assert.deepEqual([lesson.id, lesson.number, lesson.slidesCount, lesson.slides.length], [number, number, 11, 11]);
-    assert.deepEqual(lesson.slides.map(slide => slide.id), Array.from({ length: 11 }, (_, i) => i + 1));
+    assert.deepEqual(
+      [lesson.id, lesson.number, lesson.slidesCount, lesson.slides.length],
+      [number, number, expectedSlideCount, expectedSlideCount],
+    );
+    assert.deepEqual(lesson.slides.map(slide => slide.id), Array.from({ length: expectedSlideCount }, (_, i) => i + 1));
     assert.deepEqual(lesson.quiz?.map(question => question.id), Array.from({ length: 6 }, (_, i) => number * 100 + i + 1));
     const objectives = lesson.objectives?.map(objective => objective.id) || [];
     assert.ok(objectives.length > 0);
