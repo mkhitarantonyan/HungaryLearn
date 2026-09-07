@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import { runInNewContext } from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { createHmac } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 
 interface JsonResult { success?: boolean; url?: string; message?: string; duplicate?: boolean; ignored?: boolean }
 interface RouteLayer { handle: (req: unknown, res: unknown, next: () => void) => void | Promise<void> }
@@ -24,11 +25,12 @@ const compiled = await build({
   } }],
 });
 
-function harness() {
+function harness(overrides: Record<string, string | boolean> = {}) {
   const params: Record<string, string | boolean> = {
     appUrl: 'https://example.com', lemonApiKey: 'fixture-api-key', lemonStoreId: '11', lemonTestMode: false,
     lemonLegacyVariantId: '99', lemonVariantIdMonthly: '22', lemonVariantIdQuarterly: '23', lemonVariantIdYearly: '24',
     lemonWebhookSecret: 'fixture-signing-secret',
+    ...overrides,
   };
   const documents = new Map<string, Record<string, unknown>>();
   const writes: string[] = [];
@@ -176,4 +178,76 @@ test('webhook rejects bad signatures and ignores unknown/legacy variants, wrong 
   h.params.lemonVariantIdMonthly = h.params.lemonVariantIdQuarterly = h.params.lemonVariantIdYearly = '';
   assert.equal((await h.webhook({})).json.ignored, true);
   assert.equal(h.writes.length, 0);
+});
+
+// Read the actual dotenv literals written by the deployment workflow. No live API calls.
+const productionWorkflow = readFileSync(new URL('../.github/workflows/firebase-hosting-merge.yml', import.meta.url), 'utf8');
+const productionStep = productionWorkflow.split('- name: Configure Functions production parameters')[1]?.split('- name: Deploy Firebase Functions')[0] ?? '';
+const productionEnv = Object.fromEntries([...productionStep.matchAll(/'([A-Z_]+)=([^']*)'/g)].map(match => [match[1], match[2]]));
+function productionHarness() {
+  return harness({
+    appUrl: productionEnv.APP_URL,
+    lemonStoreId: productionEnv.LEMONSQUEEZY_STORE_ID,
+    lemonTestMode: productionEnv.LEMONSQUEEZY_TEST_MODE === 'true',
+    lemonVariantIdMonthly: productionEnv.LEMONSQUEEZY_VARIANT_ID_MONTHLY,
+    lemonVariantIdQuarterly: productionEnv.LEMONSQUEEZY_VARIANT_ID_QUARTERLY,
+    lemonVariantIdYearly: productionEnv.LEMONSQUEEZY_VARIANT_ID_YEARLY,
+    lemonLegacyVariantId: productionEnv.LEMONSQUEEZY_VARIANT_ID,
+  });
+}
+
+test('production workflow supplies the approved LIVE parameters without embedding billing secrets', () => {
+  assert.deepEqual(productionEnv, {
+    LEMONSQUEEZY_TEST_MODE: 'false', LEMONSQUEEZY_STORE_ID: '461197',
+    LEMONSQUEEZY_VARIANT_ID_MONTHLY: '2100676', LEMONSQUEEZY_VARIANT_ID_QUARTERLY: '2097546',
+    LEMONSQUEEZY_VARIANT_ID_YEARLY: '2100672', LEMONSQUEEZY_VARIANT_ID: '2097546',
+    APP_URL: 'https://hungarylearn.web.app',
+  });
+  assert.doesNotMatch(productionWorkflow, /LEMONSQUEEZY_API_KEY|LEMONSQUEEZY_WEBHOOK_SECRET/);
+  assert.match(productionStep, /> functions\/\.env\.hungarylearn/);
+  const params = readFileSync(new URL('../functions/src/billing/params.ts', import.meta.url), 'utf8');
+  assert.match(params, /defineSecret\('LEMONSQUEEZY_API_KEY'\)/);
+  assert.match(params, /defineSecret\('LEMONSQUEEZY_WEBHOOK_SECRET'\)/);
+  for (const name of ['plans', 'params', 'routes', 'webhook']) {
+    assert.doesNotMatch(readFileSync(new URL(`../functions/src/billing/${name}.ts`, import.meta.url), 'utf8'), /2100676|2097546|2100672/);
+  }
+});
+
+test('production checkout maps plan to its configured LIVE variant and rejects client overrides', async () => {
+  const h = productionHarness();
+  for (const [plan, variant] of [['monthly', '2100676'], ['quarterly', '2097546'], ['yearly', '2100672']]) {
+    assert.equal((await h.request(checkout, { plan })).status, 200);
+    const payload = JSON.parse(String(h.requests.at(-1)?.init.body));
+    assert.equal(payload.data.relationships.variant.data.id, variant);
+    assert.equal(payload.data.relationships.store.data.id, '461197');
+    assert.equal(payload.data.attributes.test_mode, false);
+    const count = h.requests.length;
+    assert.equal((await h.request(checkout, { plan, variantId: '2100676' })).status, 400);
+    assert.equal((await h.request(checkout, { variantId: variant })).status, 400);
+    assert.equal(h.requests.length, count);
+  }
+});
+
+test('production webhook grants access to all three configured IDs including reused quarterly ID', async () => {
+  for (const variant_id of [2100676, 2097546, 2100672]) {
+    const h = productionHarness();
+    const result = await h.webhook({ store_id: 461197, variant_id });
+    assert.equal(result.status, 200);
+    assert.equal(result.json.ignored, undefined);
+    const entitlement = h.documents.get('entitlements/verified-user');
+    assert.equal(entitlement?.subscriptionStatus, 'active');
+    assert.equal(entitlement?.testMode, false);
+    assert.equal(entitlement?.lemonVariantId, String(variant_id));
+    assert.equal(entitlement?.isPrivileged, false);
+  }
+  for (const attributes of [
+    { store_id: 461197, variant_id: 2100675 },
+    { store_id: 461197, variant_id: 99 },
+    { store_id: 461198, variant_id: 2100676 },
+    { store_id: 461197, variant_id: 2100676, test_mode: true },
+  ]) {
+    const h = productionHarness();
+    assert.equal((await h.webhook(attributes)).json.ignored, true);
+    assert.equal(h.writes.length, 0);
+  }
 });

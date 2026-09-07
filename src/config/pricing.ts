@@ -17,7 +17,7 @@ export function formatHuf(amount: number): string {
   return `${new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(amount)} Ft`;
 }
 
-const monthlyPriceHuf = 7990;
+const monthlyPriceHuf = 8990;
 
 function plan(
   key: BillingPlanKey, title: string, priceHuf: number, months: number,
@@ -33,8 +33,8 @@ function plan(
 
 export const BILLING_PLANS: readonly BillingPlan[] = [
   plan('monthly', '1 месяц', monthlyPriceHuf, 1, 'каждый месяц', null, false, 'Для знакомства с Premium в своём темпе.'),
-  plan('quarterly', '3 месяца', 19990, 3, 'каждые 3 месяца', 'Самый популярный', true, 'Для регулярных занятий и уверенного прогресса.'),
-  plan('yearly', '1 год', 59990, 12, 'каждый год', 'Лучшая цена', false, 'Для долгосрочного изучения венгерского.'),
+  plan('quarterly', '3 месяца', 22990, 3, 'каждые 3 месяца', 'Самый популярный', true, 'Для регулярных занятий и уверенного прогресса.'),
+  plan('yearly', '1 год', 64990, 12, 'каждый год', 'Лучшая цена', false, 'Для долгосрочного изучения венгерского.'),
 ];
 
 export function isBillingPlanKey(value: unknown): value is BillingPlanKey {

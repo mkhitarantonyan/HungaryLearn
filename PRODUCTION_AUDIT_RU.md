@@ -65,9 +65,9 @@ Blaze уже включён. Основной остаток — Live-конфи
 
 1. Переключиться в Live mode.
 2. Скопировать Test product в Live или создать финальный Live product.
-3. Создать три тарифа без trial: 7 990 Ft за 1 месяц, 19 990 Ft за 3 месяца, 59 990 Ft за 1 год. Цены UI централизованы в `src/config/pricing.ts`; суммы и периоды Lemon должны совпадать.
+3. Проверить три созданных LIVE тарифа без trial: 8 990 Ft за 1 месяц, 22 990 Ft за 3 месяца, 64 990 Ft за 1 год. Цены UI централизованы в `src/config/pricing.ts`; суммы и периоды Lemon должны совпадать.
 4. Сохранить существующий Live Store ID.
-5. Записать три реальных Live Variant ID в соответствующие параметры; до создания вариантов оставить новые значения пустыми.
+5. Использовать подтверждённые LIVE ID из workflow: monthly 2100676, quarterly 2097546, yearly 2100672.
 6. Сохранить существующий Live API key в Firebase Secret Manager.
 7. Сохранить существующий webhook signing secret там же.
 
@@ -115,10 +115,10 @@ firebase functions:secrets:set LEMONSQUEEZY_WEBHOOK_SECRET
 Core/admin `api` можно развернуть до активации Lemon. Billing-параметры имеют безопасные defaults: пустые Store/Variant (billing fail-closed), `APP_URL=https://hungarylearn.web.app`, `LEMONSQUEEZY_TEST_MODE=false`. Перед первым **billing** deploy задать реальные Live значения:
 
 ```text
-LEMONSQUEEZY_STORE_ID=<LIVE Store ID>
-LEMONSQUEEZY_VARIANT_ID_MONTHLY=
-LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
-LEMONSQUEEZY_VARIANT_ID_YEARLY=
+LEMONSQUEEZY_STORE_ID=461197
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=2100676
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=2097546
+LEMONSQUEEZY_VARIANT_ID_YEARLY=2100672
 APP_URL=https://hungarylearn.web.app
 LEMONSQUEEZY_TEST_MODE=false
 ```
@@ -221,10 +221,12 @@ order_refunded
 
 ## Обновление тарифов — 7 сентября 2026
 
-Новые `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, `LEMONSQUEEZY_VARIANT_ID_YEARLY` имеют default `''`. Build/deploy возможен без них; checkout ненастроенного тарифа возвращает 503. Workflow читает одноимённые GitHub Actions variables; заглушки и будущие ID в исходники не добавляются. Существующие Store ID, Firebase project и Secret Manager secrets сохраняются.
+Firebase params сохраняют безопасный default `''` для сред без конфигурации. Production workflow явно записывает подтверждённые LIVE параметры: Store 461197, monthly 2100676, quarterly 2097546, yearly 2100672, TEST_MODE=false. Локальный `functions/.env.hungarylearn` синхронизирован и исключён из Git. Пустые GitHub Actions variables больше не влияют на production mapping. Secrets остаются в Firebase Secret Manager.
 
 Frontend передаёт только plan key. Backend отклоняет неизвестный plan и дополнительные поля, в том числе variantId (400). Старый параметр `LEMONSQUEEZY_VARIANT_ID` используется только для Customer Portal. Fallback на старый checkout отсутствует.
 
 По решению владельца webhook принимает строго три новых настроенных варианта. Старые события продления и возврата будут игнорироваться после будущего deploy: перед публикацией требуется вручную проверить и мигрировать/закрыть старые подписки. Подпись, Store ID, test/live, UID binding, дедупликация, hydration, refund и trusted hasPaidAccess сохранены. У всех тарифов одинаковый доступ; политика возврата 14 дней не менялась.
 
 Этот coding task не выполняет deploy, push или создание продуктов. Результаты локальных проверок новой сетки приведены в отчёте задачи; ограничения запуска тестов из первоначального аудита выше относятся к тому аудиту.
+
+Quarterly ID 2097546 совпадает с прежним числовым ID. Webhook принимает его как один из трёх разрешённых production variants; неизвестные ID доступа не дают.

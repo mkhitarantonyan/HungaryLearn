@@ -1,6 +1,9 @@
 import { useEffect, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import PublicInfoLayout from './PublicInfoLayout';
+import { BILLING_PLANS, type BillingPlanKey } from '../config/pricing';
+
+const PLAN_PERIODS: Record<BillingPlanKey, string> = { monthly: '1 month', quarterly: '3 months', yearly: '1 year' };
 
 const UPDATED = 'September 7, 2026';
 
@@ -48,6 +51,11 @@ function ProductSummary() {
         subscription payment is covered by a 14-day money-back guarantee. Payments are
         intended to be processed by Lemon Squeezy as Merchant of Record.
       </p>
+      <ul className="mt-3 list-disc pl-5">
+        {BILLING_PLANS.map(plan => (
+          <li key={plan.key}>{plan.formattedPrice} / {PLAN_PERIODS[plan.key]}</li>
+        ))}
+      </ul>
     </div>
   );
 }

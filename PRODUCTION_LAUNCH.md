@@ -56,7 +56,7 @@ Create the three live variants before enabling purchases. Both Functions can bui
 
 Use Live Variant IDs only in production and Test Variant IDs only in the test environment.
 
-The frontend price source is `src/config/pricing.ts`: Monthly **7 990 Ft / 1 month**, Quarterly **19 990 Ft / 3 months**, Yearly **59 990 Ft / 1 year**. All variants grant the same Premium features. Match each full-period amount and renewal interval in Lemon, with no trial.
+The frontend price source is `src/config/pricing.ts`: Monthly **8 990 Ft / 1 month**, Quarterly **22 990 Ft / 3 months**, Yearly **64 990 Ft / 1 year**. All variants grant the same Premium features. Match each full-period amount and renewal interval in Lemon, with no trial.
 
 ### Secrets
 
@@ -71,15 +71,15 @@ Keep the existing working Live API key and webhook signing secret in Firebase Se
 
 ### Non-secret parameters
 
-`LEMONSQUEEZY_STORE_ID`, the three `LEMONSQUEEZY_VARIANT_ID_*` parameters below, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. They have production-safe defaults so the core/admin `api` Function can deploy without Lemon configuration: empty Store/Variant values make billing fail closed, `APP_URL` defaults to the Firebase Hosting URL, and Test mode defaults to `false`. The new Variant IDs intentionally remain empty until Lemon variants exist; no fallback checkout is available.
+`LEMONSQUEEZY_STORE_ID`, the three `LEMONSQUEEZY_VARIANT_ID_*` parameters below, `APP_URL`, and `LEMONSQUEEZY_TEST_MODE` are Firebase parameterized configuration. They have production-safe defaults so the core/admin `api` Function can deploy without Lemon configuration: empty Store/Variant values make billing fail closed, `APP_URL` defaults to the Firebase Hosting URL, and Test mode defaults to `false`. The approved LIVE IDs are configured in the production workflow and local ignored `functions/.env.hungarylearn`; no fallback checkout is available.
 
 Enter:
 
 ```text
 LEMONSQUEEZY_STORE_ID=<LIVE store id>
-LEMONSQUEEZY_VARIANT_ID_MONTHLY=
-LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
-LEMONSQUEEZY_VARIANT_ID_YEARLY=
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=2100676
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=2097546
+LEMONSQUEEZY_VARIANT_ID_YEARLY=2100672
 APP_URL=https://hungarylearn.web.app
 LEMONSQUEEZY_TEST_MODE=false
 ```
@@ -200,8 +200,8 @@ Do not copy production secrets into local files unless you intentionally need a 
 
 ## Pricing migration / GitHub Actions
 
-Set repository Actions variables `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, and `LEMONSQUEEZY_VARIANT_ID_YEARLY` only after copying their actual IDs from Lemon. The merge workflow writes them to `functions/.env.hungarylearn` through quoted environment values; absent variables stay empty. Do not enter placeholders. API key and webhook secret remain Firebase Secret Manager secrets, not GitHub plaintext.
+The merge workflow writes the approved non-secret LIVE parameters directly to `functions/.env.hungarylearn`: Store 461197, monthly 2100676, quarterly 2097546, yearly 2100672, TEST_MODE=false. It does not depend on repository Actions variables for these IDs. API key and webhook secret remain Firebase Secret Manager secrets.
 
-The old `LEMONSQUEEZY_VARIANT_ID` is retained exclusively for Customer Portal compatibility. It is never a checkout fallback and is excluded from the webhook allowlist. By explicit migration decision, legacy subscription events (including renewal/refund) are ignored after this code is deployed. Before deployment, review existing legacy subscriptions and arrange their migration/closure manually in Lemon; do not assume their entitlements will keep updating. The existing Store ID and Firebase project remain unchanged.
+The old `LEMONSQUEEZY_VARIANT_ID` parameter is retained only for Customer Portal compatibility, never as a checkout fallback. The webhook accepts only the three configured plan IDs. The approved quarterly ID 2097546 is also the previous numeric ID, so events with this ID are now allowlisted; it must not be rejected merely because it existed before migration. Unknown IDs remain ignored. The Store ID and Firebase project are unchanged.
 
 The browser sends only `{ plan: 'monthly' | 'quarterly' | 'yearly' }`. Invalid bodies, extra fields and client `variantId` return 400; a missing/malformed selected Variant ID returns 503 without contacting Lemon. Webhooks accept only configured new IDs, the configured store and exact test/live mode. Signature, UID binding, deduplication and refund rules remain in place.

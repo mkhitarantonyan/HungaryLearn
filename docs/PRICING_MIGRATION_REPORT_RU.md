@@ -51,9 +51,9 @@
 
 | Тариф | Цена периода | Эквивалент в месяц | Экономия | Отметка |
 |---|---:|---:|---:|---|
-| 1 месяц | 7 990 Ft | 7 990 Ft | 0 Ft | — |
-| 3 месяца | 19 990 Ft | ≈ 6 663 Ft | 3 980 Ft | Самый популярный |
-| 1 год | 59 990 Ft | ≈ 4 999 Ft | 35 890 Ft | Лучшая цена |
+| 1 месяц | 8 990 Ft | 8 990 Ft | 0 Ft | — |
+| 3 месяца | 22 990 Ft | ≈ 7 663 Ft | 3 980 Ft | Самый популярный |
+| 1 год | 64 990 Ft | ≈ 5 416 Ft | 42 890 Ft | Лучшая цена |
 
 Pricing page показывает три карточки с одинаковыми Premium features. В кабинете по умолчанию выбран quarterly; кнопка отражает полную цену периода. Для управляемых Lemon подписок используется Customer Portal, для privileged сохраняется административный доступ. Ветвление Portal опирается на серверный subscriptionStatus, поэтому временно просроченная дата отображения не открывает повторный checkout. Высокое содержимое кабинета прокручивается внутри viewport.
 
@@ -71,29 +71,27 @@ Billing details и legal text описывают продление на выб�
 
 Общие API key, Store ID, APP_URL и test mode отделены от checkout variant. Это позволяет Customer Portal и hydration работать независимо от заполнения новых ID. Проверка повторной подписки и обработка ошибок Lemon сохранены.
 
-Старый `LEMONSQUEEZY_VARIANT_ID` оставлен исключительно для Customer Portal существующих подписок. Он не является fallback нового checkout и не входит в webhook allowlist.
+Старый `LEMONSQUEEZY_VARIANT_ID` оставлен исключительно для Customer Portal существующих подписок. Он не является fallback нового checkout. Allowlist строится по трём plan params; числовой ID 2097546 теперь входит в него как подтверждённый quarterly ID.
 
 ## 5. Webhook и доступ
 
-Webhook принимает только ID из трёх новых серверных параметров. Пустой список, неизвестный или старый variant, другой Store ID и несовпадение test/live не изменяют entitlement.
+Webhook принимает только ID из трёх новых серверных параметров. Пустой список, variant вне текущего списка, другой Store ID и несовпадение test/live не изменяют entitlement.
 
 Проверка подписи rawBody/HMAC/timingSafeEqual не изменялась. Firebase UID binding, восстановление UID из billingSubscriptions, hydration, транзакционная дедупликация, refund handling и сохранение известных billing IDs сохранены. Entitlement продолжает хранить status, accessUntil, variantId и testMode. Все тарифы используют существующий trusted hasPaidAccess; plan key не выдаёт доступ.
 
-**Решение владельца:** принимать строго три новых варианта. Поэтому после будущего deploy webhook будет игнорировать события старых подписок, включая продления и возвраты. Customer Portal для них остаётся. Существующие старые подписки необходимо проверить перед публикацией; их entitlement не будет автоматически обновляться по старым событиям.
+**Уточнение владельца по LIVE ID:** принимать строго monthly 2100676, quarterly 2097546, yearly 2100672. Ранее обсуждавшееся исключение «старого variant» не применяется к 2097546, поскольку этот номер подтверждён для quarterly. Другие номера вне allowlist игнорируются.
 
-## 6. Будущая конфигурация
+## 6. Подтверждённая production-конфигурация
 
-Сейчас новые параметры имеют default пустая строка:
+Production workflow и локальный игнорируемый env используют:
 
 ```dotenv
-LEMONSQUEEZY_VARIANT_ID_MONTHLY=
-LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
-LEMONSQUEEZY_VARIANT_ID_YEARLY=
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=2100676
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=2097546
+LEMONSQUEEZY_VARIANT_ID_YEARLY=2100672
 ```
 
-После создания вариантов заполнить одноимённые GitHub Actions repository variables фактическими Live ID. Workflow безопасно читает значения через env, проверяет формат и записывает functions/.env.hungarylearn. Отсутствующие значения остаются пустыми; build/deploy не требуют выдуманных ID. Manifest functions/functions.yaml обновлён сборкой и содержит новые параметры с пустыми defaults.
-
-LEMONSQUEEZY_STORE_ID остаётся общим и неизменным. LEMONSQUEEZY_API_KEY и LEMONSQUEEZY_WEBHOOK_SECRET остаются в Firebase Secret Manager. Firebase project не менялся. Реальные будущие Variant IDs и placeholder values в исходники или production environment не записывались.
+Workflow явно записывает эти публичные ID, Store 461197, APP_URL=https://hungarylearn.web.app и TEST_MODE=false в functions/.env.hungarylearn. GitHub Actions variables для ID больше не требуются. Бизнес-логика получает значения через Firebase params, без hardcoded ID. Defaults params остаются пустыми для неконфигурированных сред. API key и webhook secret остаются в Firebase Secret Manager.
 
 ## 7. Проверки
 
@@ -143,8 +141,8 @@ Fallback на старую цену полностью отсутствует. �
 
 ## 9. Следующие ручные шаги
 
-1. В существующем Lemon Store создать три subscription variants: 7 990 Ft / 1 month, 19 990 Ft / 3 months, 59 990 Ft / 1 year, без trial. Убедиться в правильных валюте, полной цене периода и renewal interval.
-2. Записать фактические Live ID в три соответствующие server/Actions variables. Store ID, API key, webhook secret и Firebase project сохранить.
-3. Проверить старые подписки и согласовать их миграцию/закрытие: после публикации этого кода старые webhook variants намеренно игнорируются.
+1. Проверить три уже созданных LIVE subscription variants в существующем Lemon Store: 8 990 Ft / 1 month, 22 990 Ft / 3 months, 64 990 Ft / 1 year, без trial. Убедиться в правильных валюте, полной цене периода и renewal interval.
+2. Production ID уже заданы в workflow и локальном env. Store ID, API key, webhook secret и Firebase project сохранены.
+3. Учитывать повторное использование 2097546 для quarterly: его события принимаются; другие ID вне allowlist игнорируются.
 4. В отдельном test-окружении проверить каждый тариф, checkout price/period, подписанный webhook, entitlement, Portal, отмену и возвраты. Не смешивать Test и Live параметры.
 5. Разобрать ошибки полного suite до production publication; deploy/push выполнить отдельно после решения владельца. Затем провести контролируемую Live smoke-проверку каждого настроенного тарифа.

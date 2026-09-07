@@ -63,7 +63,7 @@ The first Functions deployment prompts for non-secret parameters:
 
 - `APP_URL` — the final HTTPS origin without a trailing slash.
 - `LEMONSQUEEZY_STORE_ID` — the real store ID.
-- `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, `LEMONSQUEEZY_VARIANT_ID_YEARLY` — real IDs for the three plans. Each defaults to an empty string until created; its checkout returns 503.
+- `LEMONSQUEEZY_VARIANT_ID_MONTHLY`, `LEMONSQUEEZY_VARIANT_ID_QUARTERLY`, `LEMONSQUEEZY_VARIANT_ID_YEARLY` — real IDs for the three plans. Runtime defaults remain empty for unconfigured environments; production uses the approved LIVE values below.
 - `LEMONSQUEEZY_VARIANT_ID` — optional existing legacy ID for Customer Portal only, never checkout or webhook.
 - `LEMONSQUEEZY_TEST_MODE` — `true` during test mode; switch to `false` only together with live IDs and secrets.
 
@@ -71,10 +71,10 @@ Never add API keys, signing secrets or service-account JSON to a `VITE_*` variab
 
 ## Configure Lemon Squeezy
 
-1. Enable **Test Mode**.
-2. Create three subscription variants with no trial: **7 990 Ft / 1 month**, **19 990 Ft / 3 months**, **59 990 Ft / 1 year**. All grant the same Premium access.
-3. Record their actual Variant IDs in the matching server parameters. Keep the existing Store ID. Do not invent IDs or use the legacy variant for a new plan.
-4. Settings → API → create an API key.
+1. Use the existing **LIVE** store 461197 for production; use separate TEST resources only in a test environment.
+2. Verify the three existing LIVE subscription variants with no trial: **8 990 Ft / 1 month**, **22 990 Ft / 3 months**, **64 990 Ft / 1 year**. All grant the same Premium access.
+3. Use monthly 2100676, quarterly 2097546, yearly 2100672 in the matching server parameters. Quarterly intentionally reuses the previous numeric ID.
+4. Keep the existing API key in Firebase Secret Manager.
 5. Settings → Webhooks → add `https://YOUR_DOMAIN/api/webhooks/lemonsqueezy` and record its signing secret.
 6. Subscribe to `subscription_created`, `subscription_updated`, `subscription_cancelled`, `subscription_resumed`, `subscription_expired`, `subscription_paused`, `subscription_unpaused`, `subscription_payment_success`, `subscription_payment_failed`, `subscription_payment_recovered` and `order_refunded`.
 
@@ -147,16 +147,16 @@ Firebase Console → Hosting → **Add custom domain**. Enter the final domain, 
 
 Keep a local source archive and the last known-good build before first deployment. If a code release fails, roll Hosting back to the previous release in Firebase Console, redeploy the last known-good Functions source, and temporarily disable the Lemon webhook while investigating. Do not delete Firestore billing or entitlement records. Restore webhook delivery only after signature, idempotency and access smoke tests pass again.
 
-## Before the new variants exist
+## Approved LIVE production parameters
 
-Leave these non-secret parameters empty (also see `functions/.env.example`):
+The production workflow writes these non-secret parameters to `functions/.env.hungarylearn`:
 
 ```dotenv
-LEMONSQUEEZY_VARIANT_ID_MONTHLY=
-LEMONSQUEEZY_VARIANT_ID_QUARTERLY=
-LEMONSQUEEZY_VARIANT_ID_YEARLY=
+LEMONSQUEEZY_VARIANT_ID_MONTHLY=2100676
+LEMONSQUEEZY_VARIANT_ID_QUARTERLY=2097546
+LEMONSQUEEZY_VARIANT_ID_YEARLY=2100672
 ```
 
-The authenticated checkout accepts only a `plan` field (`monthly`, `quarterly`, `yearly`); additional fields including `variantId` and unknown plans return 400. Empty or invalid selected IDs return 503 with a safe UI message. There is no legacy fallback. Populate the same-named GitHub Actions variables after creating the actual variants. Keep API key and webhook secret in Firebase Secret Manager unchanged.
+The authenticated checkout accepts only a `plan` field (`monthly`, `quarterly`, `yearly`); additional fields including `variantId` and unknown plans return 400. Empty or invalid selected IDs return 503 with a safe UI message. There is no legacy fallback. The workflow uses the approved explicit LIVE values and does not depend on GitHub Actions variables for them. Keep API key and webhook secret in Firebase Secret Manager unchanged.
 
-The legacy parameter remains for Customer Portal management only. Per the migration decision, webhooks ignore legacy variants, including their renewal/refund events. Review and migrate/close any legacy subscriptions manually before deploying this change. The three new variants retain existing signature verification, UID binding, deduplication, hydration, refund handling and trusted server entitlement logic.
+The legacy parameter remains for Customer Portal management only. Webhooks accept the three configured IDs; 2097546 is the approved quarterly ID even though it was also used before migration. Unknown IDs are ignored. Signature verification, UID binding, deduplication, hydration, refund handling and trusted server entitlement logic remain unchanged.

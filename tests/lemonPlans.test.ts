@@ -12,7 +12,7 @@ const base = { apiKey: 'test-only-key', storeId: '11', appUrl: 'https://example.
 
 test('all prices, equivalents, savings and default recommendation are correct', () => {
   assert.deepEqual(BILLING_PLANS.map(p => [p.key, p.priceHuf, p.monthlyEquivalentHuf, p.savingsHuf]), [
-    ['monthly', 7990, 7990, 0], ['quarterly', 19990, 6663, 3980], ['yearly', 59990, 4999, 35890],
+    ['monthly', 8990, 8990, 0], ['quarterly', 22990, 7663, 3980], ['yearly', 64990, 5416, 42890],
   ]);
   assert.deepEqual(BILLING_PLANS.filter(p => p.recommended).map(p => p.key), ['quarterly']);
   for (const plan of BILLING_PLANS) assert.equal(plan.formattedPrice, formatHuf(plan.priceHuf));

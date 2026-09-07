@@ -78,8 +78,9 @@ test('account renders quarterly selection by default and preserves portal and pr
   const unpaid = render({});
   assert.equal((unpaid.match(/type="radio"/g) || []).length, 3);
   assert.match(unpaid, /checked="" value="quarterly"/);
-  assert.match(unpaid, /Оформить за 19\s990 Ft/);
+  assert.match(unpaid, /Оформить за 22\s990 Ft/);
   assert.match(unpaid, /Самый популярный/);
+  for (const price of [/8\s990 Ft/, /22\s990 Ft/, /64\s990 Ft/]) assert.match(unpaid, price);
   for (const subscriptionStatus of ['active', 'cancelled', 'past_due', 'paused']) {
     const existing = render({ provider: 'lemonsqueezy', subscriptionStatus, accessUntil: '2000-01-01T00:00:00Z' });
     assert.match(existing, /Управлять подпиской/);
@@ -88,4 +89,23 @@ test('account renders quarterly selection by default and preserves portal and pr
   const privileged = render({ isPrivileged: true });
   assert.match(privileged, /Доступ предоставлен администратором/);
   assert.doesNotMatch(privileged, /type="radio"|Оформить за/);
+});
+
+const legalCompiled = await build({
+  entryPoints: [fileURLToPath(new URL('../src/pages/LegalPages.tsx', import.meta.url))],
+  bundle: true, write: false, platform: 'node', format: 'cjs', packages: 'external',
+});
+
+test('terms and refund pages display the same three current prices and periods as pricing and account', () => {
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const { MemoryRouter } = require('react-router-dom');
+  const module = { exports: {} as Pick<typeof import('../src/pages/LegalPages.tsx'), 'TermsPage' | 'PrivacyPage' | 'RefundPage'> };
+  runInNewContext(legalCompiled.outputFiles[0].text, { module, exports: module.exports, require });
+  for (const Component of [module.exports.TermsPage, module.exports.RefundPage]) {
+    const markup = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(Component)));
+    for (const price of [/8\s990 Ft/, /22\s990 Ft/, /64\s990 Ft/]) assert.match(markup, price);
+    for (const period of ['1 month', '3 months', '1 year']) assert.ok(markup.includes(period));
+    assert.doesNotMatch(markup, /44[ ,.\u00a0]?500|7[ ,.\u00a0]990|19[ ,.\u00a0]990|59[ ,.\u00a0]990/);
+  }
 });
