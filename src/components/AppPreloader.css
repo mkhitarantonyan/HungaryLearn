@@ -1,0 +1,268 @@
+.magyaro-preloader {
+  --preloader-blue-deep: #12295c;
+  --preloader-blue-mid: #1e50c4;
+  --preloader-blue-bright: #2f6fed;
+  --preloader-gold: #f4b73f;
+  --preloader-paper: #eef3ff;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 55%),
+    radial-gradient(circle at 75% 80%, rgba(244, 183, 63, 0.1), transparent 45%),
+    linear-gradient(160deg, var(--preloader-blue-deep) 0%, var(--preloader-blue-mid) 55%, var(--preloader-blue-bright) 100%);
+  color: #fff;
+  font-family: var(--font-sans);
+  animation: magyaro-preloader-appear 240ms ease-out both;
+}
+
+.magyaro-preloader__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.magyaro-preloader__mark {
+  display: flex;
+  width: 104px;
+  height: 104px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  background: linear-gradient(145deg, #fff 0%, var(--preloader-paper) 100%);
+  box-shadow:
+    0 10px 30px rgba(8, 20, 50, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+  animation:
+    magyaro-preloader-pop 700ms cubic-bezier(0.2, 1.4, 0.4, 1) both,
+    magyaro-preloader-hover 3.2s ease-in-out 700ms infinite;
+}
+
+.magyaro-preloader__mark svg {
+  display: block;
+  width: 58px;
+  height: 58px;
+  overflow: visible;
+}
+
+.magyaro-preloader__mark svg path,
+.magyaro-preloader__mark svg polyline {
+  fill: none;
+  stroke: var(--preloader-blue-mid);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: magyaro-preloader-draw 1.6s ease 350ms forwards;
+}
+
+.magyaro-preloader__mark svg .magyaro-preloader__tassel {
+  fill: var(--preloader-gold);
+  opacity: 0;
+  transform-origin: 60px 32px;
+  animation:
+    magyaro-preloader-tassel 2.4s ease-in-out 900ms infinite,
+    magyaro-preloader-fade-in 400ms ease 1.7s forwards;
+}
+
+.magyaro-preloader__word {
+  display: flex;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.magyaro-preloader__word span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: magyaro-preloader-letter-up 500ms ease var(--letter-delay) forwards;
+}
+
+.magyaro-preloader__rotator {
+  position: relative;
+  width: 220px;
+  height: 20px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.magyaro-preloader__rotator span {
+  position: absolute;
+  right: 0;
+  left: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.5px;
+  opacity: 0;
+  animation: magyaro-preloader-cycle 6s ease-in-out infinite;
+}
+
+.magyaro-preloader__rotator span:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.magyaro-preloader__rotator span:nth-child(3) {
+  animation-delay: 3s;
+}
+
+.magyaro-preloader__rotator span:nth-child(4) {
+  animation-delay: 4.5s;
+}
+
+.magyaro-preloader__progress {
+  width: 220px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.magyaro-preloader__progress-fill {
+  width: 46%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--preloader-gold), #ffd98a);
+  box-shadow: 0 0 12px rgba(244, 183, 63, 0.35);
+  animation: magyaro-preloader-progress 1.35s ease-in-out infinite;
+}
+
+.magyaro-preloader__message {
+  min-height: 18px;
+  margin: -8px 0 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.magyaro-preloader__spark {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--preloader-paper);
+  opacity: 0;
+  animation: magyaro-preloader-drift 5.5s ease-in-out infinite;
+}
+
+.magyaro-preloader__spark--one {
+  top: 70%;
+  left: 12%;
+  width: 5px;
+  height: 5px;
+  animation-delay: 200ms;
+}
+
+.magyaro-preloader__spark--two {
+  top: 65%;
+  left: 82%;
+  width: 4px;
+  height: 4px;
+  animation-delay: 1.1s;
+}
+
+.magyaro-preloader__spark--three {
+  top: 30%;
+  left: 25%;
+  width: 3px;
+  height: 3px;
+  animation-delay: 2s;
+}
+
+.magyaro-preloader__spark--four {
+  top: 25%;
+  left: 70%;
+  width: 6px;
+  height: 6px;
+  animation-delay: 2.8s;
+}
+
+.magyaro-preloader__spark--five {
+  top: 80%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  animation-delay: 700ms;
+}
+
+@keyframes magyaro-preloader-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes magyaro-preloader-pop {
+  from { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes magyaro-preloader-hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes magyaro-preloader-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes magyaro-preloader-tassel {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+@keyframes magyaro-preloader-fade-in {
+  to { opacity: 1; }
+}
+
+@keyframes magyaro-preloader-letter-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes magyaro-preloader-cycle {
+  0%, 4% { opacity: 0; transform: translateY(6px); }
+  8%, 17% { opacity: 1; transform: translateY(0); }
+  22%, 100% { opacity: 0; transform: translateY(-6px); }
+}
+
+@keyframes magyaro-preloader-progress {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(260%); }
+}
+
+@keyframes magyaro-preloader-drift {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  15% { opacity: 0.55; }
+  85% { opacity: 0.15; }
+  100% { opacity: 0; transform: translateY(-140px) scale(1.1); }
+}
+
+@media (max-width: 480px) {
+  .magyaro-preloader__mark {
+    width: 92px;
+    height: 92px;
+    border-radius: 23px;
+  }
+
+  .magyaro-preloader__mark svg {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magyaro-preloader__progress-fill {
+    width: 100%;
+    transform: none;
+  }
+}

@@ -17,6 +17,7 @@ import { UserAuthModal } from './components/UserAuthModal';
 import { SlideAudioModal } from './components/SlideAudioModal';
 import { NarrationPlayer } from './components/NarrationPlayer';
 import { PracticeMenu } from './components/PracticeMenu';
+import { AppPreloader } from './components/AppPreloader';
 import { useLessonNarration } from './hooks/useLessonNarration';
 import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
@@ -27,7 +28,7 @@ import { getLessonProgressState } from './utils/lessonProgress';
 import { humanizeLearnerText } from './utils/learnerCopy';
 import { beginProgressHydration, isCurrentProgressHydration, mergeActivityEvidence } from './utils/progressMerge';
 import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizAttemptToServer, syncActivityAttemptToServer, syncActivityEvidenceToServer } from './utils/userStore';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
   const numbers = new Set<number>();
@@ -503,14 +504,7 @@ useEffect(() => {
   };
 
   if (!authReady) {
-    return (
-      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans" role="status">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#116EEE] animate-spin" />
-          <span className="font-mono text-sm font-semibold text-[#252B2F]">Восстановление сессии…</span>
-        </div>
-      </div>
-    );
+    return <AppPreloader message="Восстановление сессии…" />;
   }
 
   if (viewMode === 'list') {
@@ -592,14 +586,7 @@ useEffect(() => {
   }
 
   if (isLoadingLesson || !activeLesson) {
-    return (
-      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#116EEE] animate-spin" />
-          <span className="font-mono text-sm font-semibold text-[#252B2F]">Загрузка урока...</span>
-        </div>
-      </div>
-    );
+    return <AppPreloader message="Загрузка урока…" />;
   }
 
   if (showWarmup) {

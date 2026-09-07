@@ -1,5 +1,4 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Loader2 } from 'lucide-react';
 import {
   checkAdminSessionServer,
   getAdminAuthSnapshot,
@@ -7,6 +6,7 @@ import {
   type AdminAuthSnapshot,
 } from '../utils/adminStore';
 import { AdminLoginScreen } from './AdminLoginScreen';
+import { AppPreloader } from './AppPreloader';
 
 /**
  * Route guard for all /admin/* pages.
@@ -24,16 +24,7 @@ export default function AdminGuard({ children }: { children: ReactNode }) {
   }, []);
 
   if (auth.status === 'initializing' || auth.status === 'checking') {
-    return (
-      <div className="min-h-screen bg-gray-50 text-gray-900 flex items-center justify-center p-4 font-sans">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
-          <span className="text-sm font-semibold text-gray-600">
-            Проверка прав администратора…
-          </span>
-        </div>
-      </div>
-    );
+    return <AppPreloader message="Проверка прав администратора…" />;
   }
 
   if (auth.status !== 'authorized') {

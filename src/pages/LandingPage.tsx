@@ -15,11 +15,11 @@ import {
   MousePointerClick,
   Check,
   Star,
-  Loader2,
 } from 'lucide-react';
 import { getCurrentUser, isUserAuthReady, subscribeUserAuthReady, subscribeUserState } from '../utils/userStore';
 import { UserAuthModal } from '../components/UserAuthModal';
 import { AdminAccessModal } from '../components/AdminAccessModal';
+import { AppPreloader } from '../components/AppPreloader';
 
 /* ------------------------------------------------------------------ */
 /*  Scroll-reveal helper — fade-in + slide-up when a section appears   */
@@ -904,14 +904,7 @@ export default function LandingPage() {
   };
 
   if (!authReady) {
-    return (
-      <div className="min-h-screen bg-[#F2F7FD] text-[#252B2F] flex items-center justify-center p-4" role="status">
-        <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-8 animate-spin" />
-          <span className="font-mono text-sm font-semibold">Восстановление сессии…</span>
-        </div>
-      </div>
-    );
+    return <AppPreloader message="Восстановление сессии…" />;
   }
 
   return (
