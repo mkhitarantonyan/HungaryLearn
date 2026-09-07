@@ -102,7 +102,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
         exit={{ opacity: 0, scale: 0.95 }}
         className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative flex flex-col min-h-[500px]"
       >
-        {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[#D6DEE6]">
           <div>
             <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
@@ -128,7 +127,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
           </button>
         </div>
 
-        {/* Progress Bar */}
         <div className="w-full bg-[#D6DEE6]/40 h-1.5 rounded-full my-4 overflow-hidden">
           <div
             className="bg-[#116EEE] h-full transition-all duration-300"
@@ -136,7 +134,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
           />
         </div>
 
-        {/* Card */}
         <div className="flex-1 flex flex-col items-center justify-center my-2">
           <div className="w-full bg-white border border-[#D6DEE6] rounded-2xl shadow-md p-6 flex flex-col items-center text-center relative">
             <div className="text-xs text-[#666E7E] font-mono absolute top-4 left-4">
@@ -146,7 +143,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
               {isHuToRu ? 'HU → RU' : 'RU → HU'}
             </div>
 
-            {/* Source text */}
             <div className="mt-6 mb-4">
               <div className="text-2xl md:text-3xl font-mono font-bold text-[#252B2F]">
                 {currentCard.sourceText}
@@ -158,7 +154,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
               )}
             </div>
 
-            {/* Input or Answer */}
             {!isFlipped ? (
               <div className="w-full mt-2">
                 <input
@@ -234,7 +229,6 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
           </div>
         </div>
 
-        {/* Action Controls */}
         <div className="flex items-center justify-between gap-3 pt-2">
           <button
             onClick={handlePrev}

@@ -176,6 +176,7 @@ test('local canonical cache survives refresh-shaped read/write', () => {
   const storage = { getItem: (key: string) => map.get(key) ?? null, setItem: (key: string, value: string) => void map.set(key, value) };
   const saved = {
     viewedSlides: ['l4_s11'],
+    resumePositions: { 4: { lessonNumber: 4, slideId: 11, updatedAt: 1234 } },
     passedQuizzes: [4],
     activityEvidence: { 'l4-cp-recognize-text': direct('l4-cp-recognize-text') },
     reviewCards: {},

@@ -54,7 +54,6 @@ export const SlideContent: React.FC<SlideContentProps> = ({
       {audioUnavailable && (
         <p className="text-xs text-red-700" role="alert">Записанное аудио недоступно.</p>
       )}
-      {/* Primary HTML body content from lesson data */}
       {slide.body && (
         <div
           onClick={handleContentClick}
@@ -63,7 +62,6 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         />
       )}
 
-      {/* Interactive Widget: Words Practice */}
       {slide.type === 'words-practice' && (
         <div className="space-y-4 pt-2">
           <div className="flex items-center justify-between bg-white/60 p-3 rounded-xl border border-[#D6DEE6]">
@@ -138,7 +136,6 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         </section>
       )}
 
-      {/* Reusable Context Boxes: Note, Warning, Task */}
       {slide.note && (
         <motion.div 
           initial={{ opacity: 0, y: 5 }}

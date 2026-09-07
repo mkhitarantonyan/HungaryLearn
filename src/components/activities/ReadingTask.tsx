@@ -144,7 +144,6 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
         <ProseContentView activityId={data.id} content={content} />
       )}
 
-      {/* Comprehension questions */}
       <QuestionSet
         questions={data.questions}
         allowRetry

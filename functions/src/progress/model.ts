@@ -1,4 +1,8 @@
 import { mergeActivityEvidence as mergeCanonicalActivityEvidence } from '../../../src/utils/progressMerge.ts';
+import {
+  mergeLessonResumePositions,
+  type LessonResumePositions,
+} from '../../../src/utils/lessonResume.ts';
 
 export interface StoredActivityEvidence {
   activityId: string;
@@ -13,6 +17,7 @@ export interface StoredActivityEvidence {
 
 export interface ProgressState {
   viewedSlides: string[];
+  resumePositions?: LessonResumePositions;
   passedQuizzes: number[];
   activityEvidence?: Record<string, StoredActivityEvidence>;
   reviewCards: Record<string, unknown>;
@@ -30,6 +35,7 @@ export function mergeProgressState(
   existing: ProgressState,
   update: {
     viewedSlides?: string[];
+    resumePositions?: LessonResumePositions;
     quiz?: { lessonNumber: number; score: number; total: number };
     activityEvidence?: Record<string, StoredActivityEvidence>;
   }
@@ -40,6 +46,7 @@ export function mergeProgressState(
   return {
     ...existing,
     viewedSlides: update.viewedSlides ? [...new Set([...existing.viewedSlides, ...update.viewedSlides])] : existing.viewedSlides,
+    resumePositions: mergeLessonResumePositions(existing.resumePositions, update.resumePositions),
     passedQuizzes: passed,
     activityEvidence: update.activityEvidence
       ? mergeActivityEvidence(existing.activityEvidence ?? {}, update.activityEvidence)

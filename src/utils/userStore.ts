@@ -6,6 +6,11 @@ import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
 import { sanitizeActivityEvidence } from './lessonProgress';
 import { mergeActivityEvidence } from './progressMerge';
 import { isBillingPlanKey, type BillingPlanKey } from '../config/pricing';
+import {
+  mergeLessonResumePositions,
+  sanitizeLessonResumePositions,
+  type LessonResumePositions,
+} from './lessonResume';
 
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'past_due' | 'paused' | 'unpaid';
 export type BillingProvider = 'lemonsqueezy' | null;
@@ -24,6 +29,7 @@ export interface UserProfile {
 
 export interface UserProgressData {
   viewedSlides: string[];
+  resumePositions?: LessonResumePositions;
   passedQuizzes?: number[];
   activityEvidence?: Record<string, ActivityEvidence>;
   reviewCards?: Record<string, ReviewCardState>;
@@ -38,6 +44,7 @@ const PROGRESS_CACHE_PREFIX = 'hungarylearn:progress:v2:';
 export function emptyProgressData(): UserProgressData {
   return {
     viewedSlides: [],
+    resumePositions: {},
     passedQuizzes: [],
     activityEvidence: {},
     reviewCards: {},
@@ -60,6 +67,7 @@ export function readCachedProgress(
     const parsed = JSON.parse(storage.getItem(progressCacheKey(ownerId)) ?? '{}') as UserProgressData;
     return {
       viewedSlides: Array.isArray(parsed.viewedSlides) ? parsed.viewedSlides : [],
+      resumePositions: sanitizeLessonResumePositions(parsed.resumePositions),
       passedQuizzes: Array.isArray(parsed.passedQuizzes)
         ? [...new Set(parsed.passedQuizzes.filter((item) => Number.isInteger(item) && item >= 1 && item <= 28))]
         : [],
@@ -81,6 +89,7 @@ export function mergeProgressData(...sources: UserProgressData[]): UserProgressD
   let reviewCards: Record<string, ReviewCardState> = {};
   let activityAttempts: Record<string, ActivityAttempt> = {};
   let quizAttempts: Record<string, QuizAttempt> = {};
+  let resumePositions: LessonResumePositions = {};
   for (const source of sources) {
     for (const slide of source.viewedSlides ?? []) if (typeof slide === 'string') viewedSlides.add(slide);
     for (const lesson of source.passedQuizzes ?? []) {
@@ -93,9 +102,11 @@ export function mergeProgressData(...sources: UserProgressData[]): UserProgressD
     reviewCards = { ...reviewCards, ...(source.reviewCards ?? {}) };
     activityAttempts = { ...activityAttempts, ...(source.activityAttempts ?? {}) };
     quizAttempts = { ...quizAttempts, ...(source.quizAttempts ?? {}) };
+    resumePositions = mergeLessonResumePositions(resumePositions, source.resumePositions);
   }
   return {
     viewedSlides: [...viewedSlides],
+    resumePositions,
     passedQuizzes: [...passedQuizzes],
     activityEvidence,
     reviewCards,
@@ -255,6 +266,18 @@ export async function syncProgressToServer(viewedSlides: string[]): Promise<bool
     })).ok;
   }
   catch { return false; }
+}
+export async function syncResumePositionsToServer(resumePositions: LessonResumePositions): Promise<boolean> {
+  if (!currentUser) return false;
+  try {
+    return (await apiFetch('/api/user/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ resumePositions }),
+    })).ok;
+  } catch {
+    return false;
+  }
 }
 export async function syncReviewCardToServer(cardId: string, grade: 'again' | 'hard' | 'good' | 'easy'): Promise<boolean> {
   if (!currentUser) return false;

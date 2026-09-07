@@ -1,10 +1,6 @@
 import React, { type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 
-/* ------------------------------------------------------------------ */
-/*  Small SaaS-style UI primitives used across the admin dashboard     */
-/* ------------------------------------------------------------------ */
-
 const inputBase =
   'w-full px-3.5 py-2.5 rounded-[10px] border border-gray-300 bg-white text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-colors disabled:bg-gray-50 disabled:text-gray-500';
 
@@ -170,7 +166,6 @@ export function ConfirmDialog({
   );
 }
 
-/* Shared dashboard page header */
 export function PageHeader({
   title,
   subtitle,

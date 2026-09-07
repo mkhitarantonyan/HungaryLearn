@@ -3,9 +3,14 @@ import type { Entitlement } from '../domain/entitlements.js';
 import type { StoredActivityEvidence } from '../progress/model.js';
 import { firestore } from '../firebase/admin.js';
 import { sanitizePassedQuizzes } from '../progress/model.js';
+import {
+  sanitizeLessonResumePositions,
+  type LessonResumePositions,
+} from '../../../src/utils/lessonResume.ts';
 
 export interface ProgressData {
   viewedSlides: string[];
+  resumePositions: LessonResumePositions;
   passedQuizzes: number[];
   activityEvidence: Record<string, StoredActivityEvidence>;
   reviewCards: Record<string, unknown>;
@@ -73,6 +78,7 @@ export async function getProgress(uid: string): Promise<ProgressData> {
   const data = snapshot.data() || {};
   return {
     viewedSlides: Array.isArray(data.viewedSlides) ? data.viewedSlides : [],
+    resumePositions: sanitizeLessonResumePositions(data.resumePositions),
     passedQuizzes: sanitizePassedQuizzes(data.passedQuizzes),
     activityEvidence: data.activityEvidence && typeof data.activityEvidence === 'object' ? data.activityEvidence : {},
     reviewCards: data.reviewCards && typeof data.reviewCards === 'object' ? data.reviewCards : {},

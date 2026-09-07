@@ -362,7 +362,6 @@ export async function resetAllAudioOverrides(
 
   notifyAudioChanges();
   const success = localCleanupSucceeded && failedServerKeys.length === 0;
-  console.log(`[AudioRegistry] Reset all overrides. Processed ${allKeysArray.length} keys:`, allKeysArray);
   return {
     count: allKeysArray.length,
     keys: allKeysArray,
@@ -491,7 +490,6 @@ export function playRecordedAudio(
     try {
       stopActiveAudio();
 
-      console.log('[Audio] Playing recorded file:', { key, url: customUrl });
       const audio = new Audio(customUrl);
       audio.preload = 'auto';
       currentActiveAudio = audio;

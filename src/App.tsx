@@ -21,13 +21,31 @@ import { AppPreloader } from './components/AppPreloader';
 import { useLessonNarration } from './hooks/useLessonNarration';
 import { countDueCards } from './utils/spacedRepetition';
 import { isAdminLoggedIn, subscribeAdminState } from './utils/adminStore';
-import { emptyProgressData, isLessonAccessible, getCurrentUser, isUserAuthReady, logoutUserServer, mergeProgressData, readCachedProgress, writeCachedProgress, subscribeUserAuthReady } from './utils/userStore';
+import {
+  emptyProgressData,
+  fetchUserProgress,
+  getCurrentUser,
+  isLessonAccessible,
+  isUserAuthReady,
+  logoutUserServer,
+  mergeProgressData,
+  readCachedProgress,
+  subscribeUserAuthReady,
+  subscribeUserState,
+  syncActivityAttemptToServer,
+  syncActivityEvidenceToServer,
+  syncProgressToServer,
+  syncQuizAttemptToServer,
+  syncResumePositionsToServer,
+  syncReviewCardToServer,
+  writeCachedProgress,
+} from './utils/userStore';
 import { subscribeAudioChanges } from './utils/audioRegistry';
 import { clearActivityEvidence } from './utils/activityUtils';
 import { getLessonProgressState } from './utils/lessonProgress';
 import { humanizeLearnerText } from './utils/learnerCopy';
 import { beginProgressHydration, isCurrentProgressHydration, mergeActivityEvidence } from './utils/progressMerge';
-import { subscribeUserState, fetchUserProgress, syncProgressToServer, syncReviewCardToServer, syncQuizAttemptToServer, syncActivityAttemptToServer, syncActivityEvidenceToServer } from './utils/userStore';
+import { getLessonResumeSlideIndex, type LessonResumePositions } from './utils/lessonResume';
 import { AlertCircle } from 'lucide-react';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
@@ -67,6 +85,7 @@ export default function App() {
   const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
 
   const [viewedSlideIds, setViewedSlideIds] = useState<string[]>(initialProgress.viewedSlides);
+  const [resumePositions, setResumePositions] = useState<LessonResumePositions>(initialProgress.resumePositions ?? {});
   const [passedQuizzes, setPassedQuizzes] = useState<number[]>(initialProgress.passedQuizzes ?? []);
   const [reviewCardStates, setReviewCardStates] = useState<Record<string, ReviewCardState>>(initialProgress.reviewCards ?? {});
   const [activityEvidence, setActivityEvidence] = useState<Record<string, ActivityEvidence>>(initialProgress.activityEvidence ?? {});
@@ -78,6 +97,8 @@ export default function App() {
   const [progressOwnerId, setProgressOwnerId] = useState<string | null>(() => getCurrentUser()?.id ?? null);
   const [authReady, setAuthReady] = useState(isUserAuthReady());
   const progressHydrationRevision = useRef(0);
+  const requestedResumePositionsRef = useRef<LessonResumePositions>({});
+  const lastSyncedResumeHashRef = useRef('');
 
   const visitedLessonNumbers = useMemo(
     () => extractVisitedLessonNumbers(viewedSlideIds),
@@ -141,11 +162,13 @@ export default function App() {
 useEffect(() => {
   const unsubscribeUser = subscribeUserState((user) => {
     const hydrationRevision = beginProgressHydration(progressHydrationRevision);
+    lastSyncedResumeHashRef.current = '';
     setIsProgressHydrated(false);
     setProgressOwnerId(user?.id ?? null);
     if (!user) {
       const cached = readCachedProgress(null);
       setViewedSlideIds(cached.viewedSlides);
+      setResumePositions(cached.resumePositions ?? {});
       setPassedQuizzes(cached.passedQuizzes ?? []);
       setActivityEvidence(cached.activityEvidence ?? {});
       setActivityAttempts(cached.activityAttempts ?? {});
@@ -161,6 +184,7 @@ useEffect(() => {
       const server = data ?? emptyProgressData();
       const merged = mergeProgressData(anonymous, cached, server);
       const mergedViewed = merged.viewedSlides;
+      const mergedResumePositions = merged.resumePositions ?? {};
       const mergedPassed = merged.passedQuizzes ?? [];
       const mergedEvidence = merged.activityEvidence ?? {};
       const mergedReviewCards = merged.reviewCards ?? {};
@@ -169,6 +193,7 @@ useEffect(() => {
       writeCachedProgress(user.id, merged);
       writeCachedProgress(null, emptyProgressData());
       setViewedSlideIds(mergedViewed);
+      setResumePositions(mergedResumePositions);
       setPassedQuizzes(mergedPassed);
       setActivityEvidence(mergedEvidence);
       setReviewCardStates(mergedReviewCards);
@@ -198,13 +223,14 @@ useEffect(() => {
   if (!isProgressHydrated) return;
   writeCachedProgress(progressOwnerId, {
     viewedSlides: viewedSlideIds,
+    resumePositions,
     passedQuizzes,
     activityEvidence,
     reviewCards: reviewCardStates,
     activityAttempts,
     quizAttempts,
   });
-}, [progressOwnerId, viewedSlideIds, passedQuizzes, activityEvidence, reviewCardStates, activityAttempts, quizAttempts, isProgressHydrated]);
+}, [progressOwnerId, viewedSlideIds, resumePositions, passedQuizzes, activityEvidence, reviewCardStates, activityAttempts, quizAttempts, isProgressHydrated]);
 
 useEffect(() => {
   if (viewMode !== 'lesson') {
@@ -228,6 +254,12 @@ useEffect(() => {
         return;
       }
 
+      setCurrentSlideIndex(getLessonResumeSlideIndex(
+        lesson.number,
+        lesson.slides,
+        requestedResumePositionsRef.current,
+      ));
+      setSlideDirection(0);
       setActiveLesson(lesson);
     } catch (error: unknown) {
       if (cancelled) return;
@@ -253,14 +285,15 @@ useEffect(() => {
 }, [selectedLessonId, viewMode, isAdmin, lessonLoadAttempt]);
 
   const handleSelectLesson = (lessonId: number) => {
-    // Guard: prevent opening a lesson the user hasn't unlocked yet.
     const lessonMeta = LESSONS_META.find((l) => l.id === lessonId);
     if (lessonMeta && !isLessonAccessible(lessonMeta.number, getCurrentUser(), isAdmin)) {
       return;
     }
     narration.stop();
+    requestedResumePositionsRef.current = resumePositions;
     setSelectedLessonId(lessonId);
     setCurrentSlideIndex(0);
+    setActiveLesson(null);
     setIsQuizActive(false);
     setActivityRuntime({});
     setLessonLoadError(null);
@@ -299,8 +332,6 @@ const handleCardGraded = (cardId: string, grade: 'again' | 'hard' | 'good' | 'ea
     setActivityRuntime((prev) => ({ ...prev, [activityId]: { ...prev[activityId], ...patch } }));
   };
 
-  // Tracks the last state that was already synced to the server,
-  // so the sync effect below only fires when completed slides actually change.
   const lastSyncedSlidesRef = useRef<string[]>([]);
 
 useEffect(() => {
@@ -310,6 +341,14 @@ useEffect(() => {
 
   const viewedId = buildViewedSlideId(activeLesson.number, currentSlide.id);
   setViewedSlideIds((prev) => (prev.includes(viewedId) ? prev : [...prev, viewedId]));
+  setResumePositions((prev) => ({
+    ...prev,
+    [String(activeLesson.number)]: {
+      lessonNumber: activeLesson.number,
+      slideId: currentSlide.id,
+      updatedAt: Date.now(),
+    },
+  }));
 }, [viewMode, activeLesson, currentSlide, isAdmin]);
 
 useEffect(() => {
@@ -339,6 +378,35 @@ useEffect(() => {
     }, 3000);
   })();
 }, [viewedSlideIds, isProgressHydrated]);
+
+useEffect(() => {
+  if (!isProgressHydrated || !progressOwnerId || Object.keys(resumePositions).length === 0) return;
+
+  const snapshotHash = JSON.stringify(resumePositions);
+  if (snapshotHash === lastSyncedResumeHashRef.current) return;
+
+  let cancelled = false;
+  let retryTimer: number | null = null;
+  const sync = async () => {
+    const success = await syncResumePositionsToServer(resumePositions);
+    if (cancelled) return;
+    if (success) {
+      lastSyncedResumeHashRef.current = snapshotHash;
+      return;
+    }
+    retryTimer = window.setTimeout(() => {
+      void syncResumePositionsToServer(resumePositions).then((retrySuccess) => {
+        if (!cancelled && retrySuccess) lastSyncedResumeHashRef.current = snapshotHash;
+      });
+    }, 3000);
+  };
+  void sync();
+
+  return () => {
+    cancelled = true;
+    if (retryTimer !== null) window.clearTimeout(retryTimer);
+  };
+}, [resumePositions, isProgressHydrated, progressOwnerId]);
 
   const handleNext = useCallback(() => {
     if (currentSlideIndex < slides.length - 1) {
@@ -503,7 +571,7 @@ useEffect(() => {
     })
   };
 
-  if (!authReady) {
+  if (!authReady || !isProgressHydrated) {
     return <AppPreloader message="Восстановление сессии…" />;
   }
 
@@ -518,10 +586,10 @@ useEffect(() => {
           onOpenUserModal={handleOpenUserModal}
           passedQuizzes={passedQuizzes}
           activityEvidence={activityEvidence}
+          resumePositions={resumePositions}
           dueReviewCount={countDueCards(reviewCardStates, visitedLessonNumbers)}
         />
 
-        {/* Modals on main list page as well */}
         <AdminAccessModal
           isOpen={isAdminLoginOpen}
           onClose={() => setIsAdminLoginOpen(false)}
@@ -631,7 +699,6 @@ useEffect(() => {
         />
       )}
 
-      {/* Main learning canvas */}
       <main className="flex-1 p-4 md:p-8">
         <div className="w-full max-w-6xl mx-auto">
           {isQuizActive ? (
@@ -715,7 +782,6 @@ useEffect(() => {
         </div>
       </main>
 
-      {/* Bottom Navigation */}
       {!isQuizActive && (
         <Navigation
           currentSlide={currentSlideIndex}
@@ -726,7 +792,6 @@ useEffect(() => {
         />
       )}
 
-      {/* Slide Drawer (Index) */}
       <SlideDrawer
         isOpen={isDrawerOpen}
         slides={slides}
@@ -736,7 +801,6 @@ useEffect(() => {
         onSelectSlide={handleSelectSlide}
       />
 
-      {/* Word Trainer Modal */}
       <WordTrainerModal
         isOpen={isTrainerOpen}
         onClose={() => setIsTrainerOpen(false)}
@@ -747,20 +811,17 @@ useEffect(() => {
         }}
       />
 
-      {/* Translation Trainer Modal */}
       <TranslationTrainerModal
         isOpen={isTranslationsOpen}
         onClose={() => setIsTranslationsOpen(false)}
         lesson={activeLesson}
       />
 
-      {/* User Auth & Profile Modal */}
       <UserAuthModal
         isOpen={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
       />
 
-      {/* Admin Login Modal */}
       <AdminAccessModal
         isOpen={isAdminLoginOpen}
         onClose={() => {
@@ -771,7 +832,6 @@ useEffect(() => {
         }}
       />
 
-      {/* Slide Audio Management Modal */}
       <SlideAudioModal
         isOpen={isSlideAudioModalOpen}
         lessonNumber={activeLesson.number}

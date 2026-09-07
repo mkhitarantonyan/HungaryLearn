@@ -40,7 +40,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
-      {/* Brand */}
       <div className="flex items-center gap-3 px-5 h-16 border-b border-gray-200">
         <span className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-indigo-600/25">
           <GraduationCap className="w-5 h-5" />
@@ -55,7 +54,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </div>
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 px-3 py-5 space-y-1">
         <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">
           Управление
@@ -104,7 +102,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </button>
       </nav>
 
-      {/* Admin badge */}
       <div className="m-3 p-3.5 rounded-xl bg-indigo-800 text-white">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4" />
@@ -133,12 +130,10 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans antialiased">
       <div className="flex min-h-screen">
-        {/* Desktop sidebar */}
         <aside className="hidden lg:block lg:w-64 shrink-0 border-r border-gray-200 bg-white sticky top-0 h-screen">
           <SidebarContent />
         </aside>
 
-        {/* Mobile sidebar */}
         {sidebarOpen && (
           <div className="lg:hidden fixed inset-0 z-50">
             <div
@@ -151,9 +146,7 @@ export default function AdminLayout() {
           </div>
         )}
 
-        {/* Main column */}
         <div className="flex-1 flex flex-col min-w-0">
-          {/* Header */}
           <header className="sticky top-0 z-40 h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 md:px-8 gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <button
@@ -163,7 +156,6 @@ export default function AdminLayout() {
               >
                 <Menu className="w-5 h-5" />
               </button>
-              {/* Breadcrumb */}
               <div className="flex items-center gap-1.5 text-sm min-w-0">
                 <span className="text-gray-400 hidden sm:inline">Администрирование</span>
                 <span className="text-gray-300 hidden sm:inline">/</span>
@@ -171,7 +163,6 @@ export default function AdminLayout() {
               </div>
             </div>
 
-            {/* Profile */}
             <div className="flex items-center gap-3">
               <div className="hidden sm:flex items-center gap-3">
                 <div className="flex items-center gap-2.5">
@@ -201,7 +192,6 @@ export default function AdminLayout() {
             </div>
           </header>
 
-          {/* Content */}
           <main className="flex-1 p-4 md:p-8">
             <AdminDataProvider>
               <Outlet />

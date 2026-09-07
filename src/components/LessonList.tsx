@@ -18,6 +18,7 @@ import type { UserProfile } from '../utils/userStore';
 import { getCourseProgressPercentage, getLessonProgressState } from '../utils/lessonProgress';
 import type { LessonProgressDefinition, LessonProgressSnapshot, LessonProgressState } from '../utils/lessonProgress';
 import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
+import type { LessonResumePosition, LessonResumePositions } from '../utils/lessonResume';
 
 interface LessonListProps {
   lessons: LessonMeta[];
@@ -27,6 +28,7 @@ interface LessonListProps {
   onOpenUserModal?: () => void;
   passedQuizzes?: number[];
   activityEvidence?: Record<string, ActivityEvidence>;
+  resumePositions?: LessonResumePositions;
   dueReviewCount?: number;
 }
 
@@ -44,7 +46,6 @@ function lessonProgress(
   });
 }
 
-/* ---- Curriculum level modules ---- */
 const LEVELS = [
   { key: 'A0', title: 'Основы', from: 1, to: 6 },
   { key: 'A1', title: 'Грамматика и падежи', from: 7, to: 14 },
@@ -59,19 +60,18 @@ const LEVEL_CHIP: Record<string, string> = {
   B1: 'bg-[#252B2F] text-white',
 };
 
-/** Strip the "Урок N · " prefix for a compact, scanable title. */
 function shortTitle(lesson: LessonMeta): string {
   const stripped = lesson.title.replace(/^Урок\s+\d+\s*·\s*/i, '').trim();
   return stripped || lesson.title;
 }
 
-/* ---- "Continue learning" resolution — uses only existing progress ---- */
-function determineCurrentLesson(
+export function determineCurrentLesson(
   lessons: LessonMeta[],
   activityEvidence: Record<string, ActivityEvidence>,
   passedQuizzes: number[],
+  resumePositions: LessonResumePositions,
   isAccessibleFn: (n: number) => boolean
-): { lesson: LessonMeta; status: LessonProgressState } | null {
+): { lesson: LessonMeta; status: LessonProgressState; resumePosition?: LessonResumePosition } | null {
   const accessible = lessons
     .filter((l) => isAccessibleFn(l.number))
     .sort((a, b) => a.number - b.number);
@@ -81,8 +81,22 @@ function determineCurrentLesson(
     accessible.map((lesson) => [lesson.number, lessonProgress(lesson, activityEvidence, passedQuizzes)])
   );
 
+  const mostRecentResume = accessible
+    .map((lesson) => ({
+      lesson,
+      status: progressByLesson.get(lesson.number)!.state,
+      resumePosition: resumePositions[String(lesson.number)],
+    }))
+    .filter((item) => item.resumePosition && item.status !== 'completed')
+    .sort((a, b) => b.resumePosition!.updatedAt - a.resumePosition!.updatedAt)[0];
+  if (mostRecentResume) return mostRecentResume;
+
   const inProgress = accessible.find((lesson) => progressByLesson.get(lesson.number)?.state === 'in_progress');
-  if (inProgress) return { lesson: inProgress, status: 'in_progress' };
+  if (inProgress) return {
+    lesson: inProgress,
+    status: 'in_progress',
+    resumePosition: resumePositions[String(inProgress.number)],
+  };
 
   const next = accessible.find((lesson) => progressByLesson.get(lesson.number)?.state === 'not_started');
   if (next) return { lesson: next, status: 'not_started' };
@@ -90,11 +104,11 @@ function determineCurrentLesson(
   return { lesson: accessible[accessible.length - 1], status: 'completed' };
 }
 
-/* ---- Single lesson card ---- */
 function LessonCard({
   lesson,
   accessible,
   progress,
+  resumePosition,
   highlight,
   onSelect,
   onLockedClick,
@@ -102,16 +116,19 @@ function LessonCard({
   lesson: LessonMeta;
   accessible: boolean;
   progress: LessonProgressSnapshot;
+  resumePosition?: LessonResumePosition;
   highlight: 'current' | 'next' | null;
   onSelect: (id: number) => void;
   onLockedClick: (lesson: LessonMeta) => void;
 }) {
-  const { status, percentage } = { status: progress.state, percentage: progress.percentage };
+  const status = progress.state;
+  const percentage = progress.percentage;
+  const hasResume = accessible && status !== 'completed' && Boolean(resumePosition);
   const StatusIcon = !accessible
     ? Lock
     : status === 'completed'
       ? CheckCircle2
-      : status === 'in_progress'
+      : status === 'in_progress' || hasResume
         ? CircleDot
         : Circle;
 
@@ -119,7 +136,7 @@ function LessonCard({
     ? 'Доступ по подписке'
     : status === 'completed'
       ? 'Урок выполнен'
-        : status === 'in_progress'
+        : status === 'in_progress' || hasResume
           ? 'В процессе'
           : 'Не начат';
 
@@ -127,7 +144,7 @@ function LessonCard({
     ? 'text-[#666E7E]'
     : status === 'completed'
       ? 'text-[#3B1E90]'
-      : status === 'in_progress'
+      : status === 'in_progress' || hasResume
         ? 'text-[#C77B00]'
         : 'text-[#666E7E]';
 
@@ -180,7 +197,7 @@ function LessonCard({
         )}
       </div>
 
-      <p className={`mt-1.5 text-sm leading-snug line-clamp-2 ${accessible ? 'text-[#666E7E]' : 'text-[#666E7E]'}`}>
+      <p className="mt-1.5 text-sm leading-snug line-clamp-2 text-[#666E7E]">
         {lesson.subtitle}
       </p>
 
@@ -189,6 +206,11 @@ function LessonCard({
           <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${statusColor}`}>
             <StatusIcon className="w-4 h-4" />
             {statusLabel}
+            {hasResume && resumePosition && (
+              <span className="font-normal text-[#666E7E]">
+                · шаг {Math.min(resumePosition.slideId, lesson.slidesCount)}
+              </span>
+            )}
           </span>
           {accessible && <span className="font-mono text-xs font-bold text-[#252B2F]">{percentage}%</span>}
           <ChevronRight className={`w-4 h-4 transition-all ${accessible ? 'text-[#8D99A8] group-hover:translate-x-0.5 group-hover:text-[#116EEE]' : 'text-[#AAB4C0]'}`} />
@@ -198,13 +220,13 @@ function LessonCard({
   );
 }
 
-/* ---- Level module wrapper ---- */
 function LevelSection({
   level,
   lessons,
   isAccessibleFn,
   activityEvidence,
   passedQuizzes,
+  resumePositions,
   highlightFor,
   onSelect,
   onLockedClick,
@@ -214,6 +236,7 @@ function LevelSection({
   isAccessibleFn: (n: number) => boolean;
   activityEvidence: Record<string, ActivityEvidence>;
   passedQuizzes: number[];
+  resumePositions: LessonResumePositions;
   highlightFor: (lesson: LessonMeta) => 'current' | 'next' | null;
   onSelect: (id: number) => void;
   onLockedClick: (l: LessonMeta) => void;
@@ -260,6 +283,7 @@ function LevelSection({
               lesson={lesson}
               accessible={isAccessibleFn(lesson.number)}
               progress={lessonProgress(lesson, activityEvidence, passedQuizzes)}
+              resumePosition={resumePositions[String(lesson.number)]}
               highlight={highlightFor(lesson)}
               onSelect={onSelect}
               onLockedClick={onLockedClick}
@@ -278,6 +302,7 @@ export const LessonList: React.FC<LessonListProps> = ({
   onOpenUserModal,
   passedQuizzes = [],
   activityEvidence = {},
+  resumePositions = {},
   dueReviewCount = 0,
 }) => {
   const [user, setUser] = useState<UserProfile | null>(getCurrentUser());
@@ -290,13 +315,14 @@ export const LessonList: React.FC<LessonListProps> = ({
 
   const isAccessibleFn = (lessonNumber: number) => isLessonAccessible(lessonNumber, user, isAdmin);
 
-  const current = determineCurrentLesson(lessons, activityEvidence, passedQuizzes, isAccessibleFn);
+  const current = determineCurrentLesson(lessons, activityEvidence, passedQuizzes, resumePositions, isAccessibleFn);
   const currentNumber = current?.lesson.number ?? null;
   const currentStatus = current?.status ?? null;
+  const currentResumePosition = current?.resumePosition;
 
   const highlightFor = (lesson: LessonMeta): 'current' | 'next' | null => {
     if (lesson.number !== currentNumber) return null;
-    if (currentStatus === 'in_progress') return 'current';
+    if (currentStatus === 'in_progress' || currentResumePosition) return 'current';
     if (currentStatus === 'not_started') return 'next';
     return null;
   };
@@ -306,15 +332,15 @@ export const LessonList: React.FC<LessonListProps> = ({
   const showPayBanner = user && !isAdmin && !isAccessibleFn(FREE_LESSON_COUNT + 1);
 
   const currentCtaLabel =
-    currentStatus === 'in_progress'
+    currentStatus === 'in_progress' || currentResumePosition
       ? 'Продолжить урок'
       : currentStatus === 'not_started'
         ? 'Начать урок'
         : 'Открыть урок';
 
   const currentEyebrow =
-    currentStatus === 'in_progress'
-      ? 'Ваш текущий урок'
+    currentStatus === 'in_progress' || currentResumePosition
+      ? 'Вы остановились здесь'
       : currentStatus === 'completed'
         ? 'Все обязательные части выполнены'
         : currentStatus === 'not_started'
@@ -323,7 +349,6 @@ export const LessonList: React.FC<LessonListProps> = ({
 
   return (
     <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex flex-col font-sans selection:bg-[#116EEE] selection:text-white">
-      {/* Header */}
       <header className="border-b border-[#D6DEE6] bg-[#FFFFFF]">
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-8">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
@@ -376,7 +401,6 @@ export const LessonList: React.FC<LessonListProps> = ({
         </div>
       </header>
 
-      {/* Main body */}
       <main className="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
         <section aria-label="Общий прогресс курса" className="rounded-2xl border border-[#D6DEE6] bg-white p-5 mb-4 shadow-sm">
           <div className="flex items-center justify-between gap-3 text-sm">
@@ -387,7 +411,6 @@ export const LessonList: React.FC<LessonListProps> = ({
             <div className="h-full rounded-full bg-[#3B1E90] transition-all duration-500" style={{ width: `${getCourseProgressPercentage(LESSON_PROGRESS_DEFINITIONS, activityEvidence, passedQuizzes)}%` }} />
           </div>
         </section>
-        {/* Continue learning + SRS review */}
         <div className="grid lg:grid-cols-[1fr_320px] gap-4 mb-4">
           <section
             aria-labelledby="continue-heading"
@@ -411,6 +434,11 @@ export const LessonList: React.FC<LessonListProps> = ({
                     Урок {current.lesson.number} · {shortTitle(current.lesson)}
                   </p>
                   <p className="mt-1 text-sm text-[#666E7E]">{current.lesson.subtitle}</p>
+                  {currentResumePosition && currentStatus !== 'completed' && (
+                    <p className="mt-2 text-sm font-semibold text-[#116EEE]">
+                      Продолжить с шага {Math.min(currentResumePosition.slideId, current.lesson.slidesCount)} из {current.lesson.slidesCount}
+                    </p>
+                  )}
                   {currentStatus === 'completed' && hasLockedLessons && (
                     <p className="mt-1.5 text-xs text-[#666E7E]">
                       Все обязательные части доступных уроков выполнены — подписка откроет следующие уровни.
@@ -461,7 +489,6 @@ export const LessonList: React.FC<LessonListProps> = ({
           </div>
         )}
 
-        {/* Subscription banner */}
         {showPayBanner && (
           <div className="rounded-2xl border border-[#C77B00]/30 bg-[#C77B00]/12 px-5 py-4 mb-4 flex items-center gap-3">
             <CreditCard className="w-5 h-5 text-[#C77B00] shrink-0" />
@@ -477,7 +504,6 @@ export const LessonList: React.FC<LessonListProps> = ({
           </div>
         )}
 
-        {/* Curriculum modules */}
         {LEVELS.map((level) => (
           <LevelSection
             key={level.key}
@@ -486,6 +512,7 @@ export const LessonList: React.FC<LessonListProps> = ({
             isAccessibleFn={isAccessibleFn}
             activityEvidence={activityEvidence}
             passedQuizzes={passedQuizzes}
+            resumePositions={resumePositions}
             highlightFor={highlightFor}
             onSelect={onSelectLesson}
             onLockedClick={() => onOpenUserModal?.()}
@@ -493,7 +520,6 @@ export const LessonList: React.FC<LessonListProps> = ({
         ))}
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-[#D6DEE6] py-5 px-8 text-center text-sm text-[#666E7E] bg-[#FFFFFF]">
         Венгерский язык для русскоязычных учащихся · Уроки 1–28 (A0–B1)
       </footer>

@@ -27,7 +27,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
   const [showConfirmReset, setShowConfirmReset] = useState(false);
   const [audioError, setAudioError] = useState('');
 
-  // Microphone recording state
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -161,7 +160,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
         exit={{ opacity: 0, scale: 0.95 }}
         className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative space-y-4"
       >
-        {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-[#D6DEE6]">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
@@ -186,7 +184,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
         </div>
 
         <form onSubmit={handleSave} className="space-y-4">
-          {/* Original Word Display */}
           <div className="p-3 bg-[#EDF4FB] border border-[#D6DEE6] rounded-xl flex items-center justify-between">
             <div>
               <div className="text-[10px] font-mono font-bold text-[#666E7E] uppercase">Оригинальная фраза</div>
@@ -202,7 +199,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
             </button>
           </div>
 
-          {/* Edit Display Word */}
           <div className="space-y-1">
             <label className="text-xs font-mono font-semibold text-[#252B2F] flex items-center justify-between">
               <span>Измененный текст / произносимое слово</span>
@@ -217,7 +213,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
             />
           </div>
 
-          {/* Audio recording & file upload */}
           <div className="p-4 rounded-xl border border-[#D6DEE6] bg-white space-y-3">
             <div className="flex items-center justify-between">
               <div className="text-xs font-mono font-bold text-[#252B2F]">
@@ -230,7 +225,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
               )}
             </div>
 
-            {/* Mic Record option */}
             {!isRecording ? (
               <button
                 type="button"
@@ -253,7 +247,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
 
             <div className="text-[11px] text-[#666E7E] text-center font-mono">или</div>
 
-            {/* File upload option */}
             <div className="flex items-center gap-2">
               <label className="flex-1 px-3 py-2 rounded-xl border border-dashed border-[#116EEE]/40 bg-[#116EEE]/5 hover:bg-[#116EEE]/10 text-[#116EEE] font-mono text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors">
                 <Upload className="w-4 h-4" />
@@ -292,7 +285,6 @@ export const EditWordModal: React.FC<EditWordModalProps> = ({
             </div>
           )}
 
-          {/* Action buttons */}
           <div className="pt-2 flex items-center justify-between gap-2 border-t border-[#D6DEE6]">
             <button
               type="button"

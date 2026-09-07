@@ -179,7 +179,6 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#182230]/45 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="bg-white text-[#252B2F] w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] relative">
-        {/* Modal Header */}
         <div className="bg-[#116EEE] text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
@@ -203,7 +202,6 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Body */}
         <div className="p-6">
           {errorMsg && (
             <div role="alert" aria-live="polite" className="mb-4 p-3 bg-red-100 border border-red-300 text-red-800 text-xs rounded-lg flex items-center gap-2">
@@ -252,7 +250,6 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                 )}
               </div>
 
-              {/* SUBSCRIPTION / PAYMENT CARD */}
               <div className="bg-[#3B1E90] text-white p-5 rounded-xl shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-[#D9E6FF]" />
@@ -322,7 +319,6 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                 </div>
               </div>
 
-              {/* LOGOUT BUTTON */}
               <div className="pt-2 flex justify-end">
                 <button
                   onClick={handleLogout}
@@ -337,7 +333,6 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           ) : (
             /* AUTH FORM MODE (LOGIN / REGISTER) */
             <div>
-              {/* Tab Selector */}
               <div className="flex rounded-xl bg-[#EFE6D5] p-1 mb-5">
                 <button
                   type="button"

@@ -76,7 +76,6 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         ) : null}
       </div>
 
-      {/* Audio stimulus */}
       {canDirect && audioSrc ? (
         <div
           className="min-w-0 overflow-hidden rounded-xl border border-[#D6DEE6] bg-white p-3"
@@ -111,7 +110,6 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         </div>
       )}
 
-      {/* Questions */}
       <QuestionSet
         questions={data.questions}
         submitLabel="Ответить и показать текст"
@@ -123,7 +121,6 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         }}
       />
 
-      {/* Transcript: hidden until submission */}
       {submitted && (
         <div
           className="rounded-xl border border-[#3B1E90]/30 bg-[#3B1E90]/5 p-4"

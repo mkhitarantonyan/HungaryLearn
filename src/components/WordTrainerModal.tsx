@@ -17,7 +17,6 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
 
-  // Reset index when lesson changes or modal opens
   useEffect(() => {
     if (isOpen) {
       setCurrentIndex(0);
@@ -74,7 +73,6 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
         exit={{ opacity: 0, scale: 0.95 }}
         className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative flex flex-col min-h-[480px]"
       >
-        {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[#D6DEE6]">
           <div>
             <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
@@ -93,7 +91,6 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
           </button>
         </div>
 
-        {/* Progress Bar */}
         <div className="w-full bg-[#D6DEE6]/40 h-1.5 rounded-full my-4 overflow-hidden">
           <div 
             className="bg-[#116EEE] h-full transition-all duration-300"
@@ -101,7 +98,6 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
           />
         </div>
 
-        {/* Card Flip Container */}
         <div className="flex-1 flex flex-col items-center justify-center my-4">
           <div 
             onClick={() => setIsFlipped(!isFlipped)}
@@ -147,7 +143,6 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
           </div>
         </div>
 
-        {/* Action Controls */}
         <div className="flex items-center justify-between gap-3 pt-2">
           <button
             onClick={handlePrev}

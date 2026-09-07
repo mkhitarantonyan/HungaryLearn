@@ -202,7 +202,6 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
         exit={{ opacity: 0, scale: 0.95 }}
         className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-lg p-6 shadow-2xl relative space-y-4"
       >
-        {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-[#D6DEE6]">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
@@ -227,7 +226,6 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
           </button>
         </div>
 
-        {/* Current status */}
         <div className="p-3 bg-white border border-[#D6DEE6] rounded-xl flex items-center justify-between">
           <div>
             <div className="text-[10px] font-mono uppercase font-bold text-[#666E7E]">Статус озвучки:</div>
@@ -279,7 +277,6 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
           </div>
         ) : (
           <form onSubmit={handleSave} className="space-y-4">
-            {/* Method 1: Record Microphone */}
             <div className="p-4 bg-white border border-[#D6DEE6] rounded-xl space-y-3">
               <div className="text-xs font-mono font-bold text-[#252B2F] flex items-center gap-1.5">
                 <Mic className="w-4 h-4 text-[#116EEE]" />
@@ -320,7 +317,6 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
               )}
             </div>
 
-            {/* Method 2: Upload MP3 File */}
             <div className="p-4 bg-white border border-[#D6DEE6] rounded-xl space-y-3">
               <div className="text-xs font-mono font-bold text-[#252B2F] flex items-center gap-1.5">
                 <Upload className="w-4 h-4 text-[#116EEE]" />
@@ -360,7 +356,6 @@ export const SlideAudioModal: React.FC<SlideAudioModalProps> = ({
               </div>
             )}
 
-            {/* Bottom actions */}
             <div className="pt-2 flex items-center justify-between gap-2 border-t border-[#D6DEE6]">
               {hasCustomAudio ? (
                 <button

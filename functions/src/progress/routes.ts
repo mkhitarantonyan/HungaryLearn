@@ -16,6 +16,10 @@ import {
 } from '../../../src/utils/lessonProgress.ts';
 import { validActivityEvidence } from './validation.js';
 import { gradeActivityAttempt, gradeQuizAttempt } from './grading.js';
+import {
+  parseLessonResumePositions,
+  sanitizeLessonResumePositions,
+} from '../../../src/utils/lessonResume.ts';
 
 type Grade = 'again' | 'hard' | 'good' | 'easy';
 
@@ -58,6 +62,13 @@ progressRouter.post('/api/user/progress', requireAuth, asyncHandler<Authenticate
     res.status(400).json({ success: false, message: 'Некорректный список слайдов' });
     return;
   }
+  const resumePositions = req.body?.resumePositions === undefined
+    ? undefined
+    : parseLessonResumePositions(req.body.resumePositions);
+  if (req.body?.resumePositions !== undefined && !resumePositions) {
+    res.status(400).json({ success: false, message: 'Некорректная позиция в уроке' });
+    return;
+  }
   if (req.body?.passedQuizzes !== undefined) {
     res.status(400).json({ success: false, message: 'Пройденные тесты принимаются только как проверенный quiz attempt' });
     return;
@@ -91,6 +102,7 @@ progressRouter.post('/api/user/progress', requireAuth, asyncHandler<Authenticate
     const existing = snapshot.data() || {};
     const current: ProgressState = {
       viewedSlides: Array.isArray(existing.viewedSlides) ? existing.viewedSlides : [],
+      resumePositions: sanitizeLessonResumePositions(existing.resumePositions),
       passedQuizzes: sanitizePassedQuizzes(existing.passedQuizzes),
       activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, existing.activityEvidence),
       reviewCards: existing.reviewCards && typeof existing.reviewCards === 'object' ? existing.reviewCards : {},
@@ -98,6 +110,7 @@ progressRouter.post('/api/user/progress', requireAuth, asyncHandler<Authenticate
     };
     const merged = mergeProgressState(current, {
       ...(viewedSlides ? { viewedSlides } : {}),
+      ...(resumePositions ? { resumePositions } : {}),
       ...(quiz ? { quiz } : {}),
       ...((activityEvidence || directEvidence) ? {
         activityEvidence: {
@@ -129,6 +142,7 @@ progressRouter.post('/api/user/review/grade', requireAuth, asyncHandler<Authenti
     const data = snapshot.data() || {};
     const current: ProgressState = {
       viewedSlides: Array.isArray(data.viewedSlides) ? data.viewedSlides : [],
+      resumePositions: sanitizeLessonResumePositions(data.resumePositions),
       passedQuizzes: sanitizePassedQuizzes(data.passedQuizzes),
       activityEvidence: sanitizeActivityEvidence(LESSON_PROGRESS_DEFINITIONS, data.activityEvidence),
       reviewCards: data.reviewCards && typeof data.reviewCards === 'object' ? data.reviewCards : {},

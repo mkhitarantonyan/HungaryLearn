@@ -169,7 +169,6 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         )}
       </div>
 
-      {/* Continue for non-choice turns */}
       {!isChoice && (
         <div className="flex justify-end pt-2">
           <button

@@ -19,7 +19,7 @@ interface WritingTaskProps {
 }
 
 /**
- * Functional writing task with rubric self-review (no automatic AI score).
+ * Functional writing task with rubric self-review and no automatic language score.
  * Evidence mode is PARTIAL: completed means "non-empty + self-reviewed",
  * never auto-scored language mastery.
  *

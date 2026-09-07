@@ -79,7 +79,6 @@ export const AdminAccessModal: React.FC<AdminAccessModalProps> = ({
               </div>
             </div>
 
-            {/* Audio overrides status and reset section */}
             <div className="p-4 rounded-xl bg-white border border-[#D6DEE6] space-y-3">
               <div className="flex items-center justify-between">
                 <div className="font-mono font-bold text-xs text-[#252B2F] uppercase tracking-wider flex items-center gap-1.5">

@@ -34,12 +34,8 @@ import {
   Pill,
 } from '../../components/admin/AdminUi';
 
-/* ------------------------------------------------------------------ */
-/*  Types                                                             */
-/* ------------------------------------------------------------------ */
-
 interface AdminWord {
-  key: string; // normalized hu
+  key: string;
   hu: string;
   ru: string;
   phonetic?: string;
@@ -52,10 +48,6 @@ interface AdminSlide {
 }
 
 type Tab = 'words' | 'slides';
-
-/* ------------------------------------------------------------------ */
-/*  Words tab                                                         */
-/* ------------------------------------------------------------------ */
 
 function WordsTab({
   wordMap,
@@ -90,7 +82,6 @@ function WordsTab({
 
   return (
     <div>
-      {/* Toolbar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex-1 relative max-w-md">
           <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -235,10 +226,6 @@ function WordsTab({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Slides tab                                                        */
-/* ------------------------------------------------------------------ */
-
 function SlidesTab({
   slides,
   lessonNumber,
@@ -369,23 +356,17 @@ function SlidesTab({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Admin Audio page                                                  */
-/* ------------------------------------------------------------------ */
-
 export default function AdminAudio() {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
   const tab: Tab = tabParam === 'slides' ? 'slides' : 'words';
 
-  // Words state
   const [wordMap, setWordMap] = useState<Map<string, AdminWord>>(new Map());
   const [loadingWords, setLoadingWords] = useState(true);
   const [editWord, setEditWord] = useState<AdminWord | null>(null);
   const [resetWord, setResetWord] = useState<AdminWord | null>(null);
   const [playingWordKey, setPlayingWordKey] = useState<string | null>(null);
 
-  // Slides state
   const initialLesson = Number(searchParams.get('lesson')) || 1;
   const [lessonNumber, setLessonNumber] = useState<number>(initialLesson);
   const [slides, setSlides] = useState<AdminSlide[]>([]);
@@ -398,7 +379,6 @@ export default function AdminAudio() {
   const [, setAudioVersion] = useState(0);
   useEffect(() => subscribeAudioChanges(() => setAudioVersion((v) => v + 1)), []);
 
-  /* ---------- words loading ---------- */
   useEffect(() => {
     let cancelled = false;
     setLoadingWords(true);
@@ -437,7 +417,6 @@ export default function AdminAudio() {
     };
   }, []);
 
-  /* ---------- slides loading ---------- */
   useEffect(() => {
     let cancelled = false;
     setLoadingSlides(true);
@@ -451,7 +430,6 @@ export default function AdminAudio() {
     };
   }, [lessonNumber]);
 
-  /* ---------- handlers ---------- */
   const switchTab = (next: Tab) => {
     const params = new URLSearchParams(searchParams);
     params.set('tab', next);
@@ -459,7 +437,6 @@ export default function AdminAudio() {
   };
 
   const playWord = (w: AdminWord) => {
-    // Toggle: if this word is already playing, stop it.
     if (playingWordKey === w.key) {
       stopRecordedAudio();
       setPlayingWordKey(null);
@@ -477,7 +454,6 @@ export default function AdminAudio() {
 
   const playSlide = (slide: AdminSlide) => {
     const key = `${lessonNumber}-${slide.id}`;
-    // Toggle: if this slide is already playing, stop it.
     if (playingSlideKey === key) {
       stopRecordedAudio();
       setPlayingSlideKey(null);
@@ -526,7 +502,6 @@ export default function AdminAudio() {
         subtitle="Записи голоса для слов и чтение диктора для слайдов — слышны всем ученикам"
       />
 
-      {/* Override Reset Banner */}
       <div className="mb-6 p-4 rounded-2xl bg-white border border-gray-200 shadow-sm space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -583,7 +558,6 @@ export default function AdminAudio() {
         )}
       </div>
 
-      {/* Tabs */}
       <div className="inline-flex rounded-xl bg-gray-100 p-1 mb-8 gap-1">
         <button
           onClick={() => switchTab('words')}
@@ -627,7 +601,6 @@ export default function AdminAudio() {
         />
       )}
 
-      {/* Word voice editing (reuses existing EditWordModal) */}
       {editWord && (
         <EditWordModal
           isOpen
@@ -637,7 +610,6 @@ export default function AdminAudio() {
         />
       )}
 
-      {/* Slide narrator recording (reuses existing SlideAudioModal) */}
       {slideModal && (
         <SlideAudioModal
           isOpen
@@ -649,7 +621,6 @@ export default function AdminAudio() {
         />
       )}
 
-      {/* Confirms */}
       <ConfirmDialog
         open={resetWord !== null}
         title="Сбросить голос слова?"

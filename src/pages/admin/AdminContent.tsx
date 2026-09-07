@@ -25,10 +25,6 @@ import { LESSONS_META } from '../../data/lessons';
 import { LESSON_VOCABULARY_MAP, LESSON_TRANSLATION_MAP } from '../../utils/lessonQuizAndVocab';
 import type { VocabularyItem, TranslationItem } from '../../types';
 
-/* ------------------------------------------------------------------ */
-/*  Local storage helpers — persist edits across sessions              */
-/* ------------------------------------------------------------------ */
-
 const STORAGE_KEY_VOCAB = 'admin_content_vocab_overrides';
 const STORAGE_KEY_TRANS = 'admin_content_trans_overrides';
 
@@ -51,10 +47,6 @@ function saveOverrides<T>(key: string, data: T): void {
     /* ignore quota errors */
   }
 }
-
-/* ------------------------------------------------------------------ */
-/*  Vocabulary edit modal                                              */
-/* ------------------------------------------------------------------ */
 
 interface VocabFormValues {
   hu: string;
@@ -168,10 +160,6 @@ function VocabFormModal({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Translation edit modal                                             */
-/* ------------------------------------------------------------------ */
-
 interface TransFormValues {
   direction: 'hu-to-ru' | 'ru-to-hu';
   sourceText: string;
@@ -267,10 +255,6 @@ function TransFormModal({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Main page                                                          */
-/* ------------------------------------------------------------------ */
-
 export default function AdminContent() {
   const [activeTab, setActiveTab] = useState<'vocab' | 'trans'>('vocab');
   const [selectedLesson, setSelectedLesson] = useState<number>(1);
@@ -284,7 +268,6 @@ export default function AdminContent() {
     loadOverrides<TransOverrides>(STORAGE_KEY_TRANS) ?? {}
   );
 
-  // Modal state
   const [vocabModalOpen, setVocabModalOpen] = useState(false);
   const [editingVocab, setEditingVocab] = useState<VocabularyItem | null>(null);
   const [deletingVocab, setDeletingVocab] = useState<VocabularyItem | null>(null);
@@ -324,7 +307,6 @@ export default function AdminContent() {
     );
   }, [currentTrans, search]);
 
-  /* ----- Vocabulary CRUD ----- */
 
   const handleVocabSave = (values: VocabFormValues) => {
     const list = [...currentVocab];
@@ -358,7 +340,6 @@ export default function AdminContent() {
     setDeletingVocab(null);
   };
 
-  /* ----- Translation CRUD ----- */
 
   const handleTransSave = (values: TransFormValues) => {
     const list = [...currentTrans];
@@ -394,7 +375,6 @@ export default function AdminContent() {
     setDeletingTrans(null);
   };
 
-  /* ----- Export / Import ----- */
 
   const handleExport = () => {
     const data = activeTab === 'vocab' ? vocabOverrides : transOverrides;
@@ -469,7 +449,6 @@ export default function AdminContent() {
         }
       />
 
-      {/* Tabs + Lesson selector */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
         <div className="flex items-center gap-2 bg-gray-100 rounded-xl p-1">
           <button
@@ -512,7 +491,6 @@ export default function AdminContent() {
         </div>
       </div>
 
-      {/* Search */}
       <div className="relative mb-5 max-w-md">
         <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         <input
@@ -523,7 +501,6 @@ export default function AdminContent() {
         />
       </div>
 
-      {/* Add button */}
       <div className="mb-4">
         <PrimaryButton
           onClick={() => {
@@ -541,7 +518,6 @@ export default function AdminContent() {
         </PrimaryButton>
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           {activeTab === 'vocab' ? (
@@ -671,13 +647,11 @@ export default function AdminContent() {
         </div>
       </div>
 
-      {/* Count footer */}
       <div className="mt-3 text-xs text-gray-400">
         Всего записей: {totalCount}
         {hasOverrides && <span className="ml-2 text-amber-600">· есть несохранённые изменения</span>}
       </div>
 
-      {/* Modals */}
       {vocabModalOpen && (
         <VocabFormModal
           initial={editingVocab}

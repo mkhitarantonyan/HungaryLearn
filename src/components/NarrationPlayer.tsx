@@ -56,7 +56,6 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
   return (
     <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-[#D6DEE6]">
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-3 flex items-center gap-3 md:gap-4">
-        {/* Play / Pause */}
         <button
           type="button"
           onClick={onPlayPause}
@@ -75,7 +74,6 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           <div className="text-[11px] text-[#666E7E] truncate">{slideLabel}</div>
         </div>
 
-        {/* Speed cycle */}
         <button
           type="button"
           onClick={cycleRate}
@@ -85,7 +83,6 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           {playbackRate}×
         </button>
 
-        {/* Autoplay toggle */}
         <button
           type="button"
           onClick={onToggleAutoplay}
@@ -105,7 +102,6 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           />
         </button>
 
-        {/* Overflow */}
         {isAdmin && onOpenAudioEditor && <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
