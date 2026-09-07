@@ -43,7 +43,11 @@ test('checkout sends the exact Lemon JSON:API relationships, string IDs and bool
     data: {
       type: 'checkouts',
       attributes: {
-        checkout_data: { email: 'student@example.com', custom: { firebase_uid: 'firebase-user-1' } },
+        checkout_data: {
+          email: 'student@example.com',
+          billing_address: { country: 'HU' },
+          custom: { firebase_uid: 'firebase-user-1' },
+        },
         checkout_options: { skip_trial: true },
         product_options: { redirect_url: 'https://hungarylearn.example/?payment=success' },
         test_mode: true,
@@ -58,6 +62,14 @@ test('checkout sends the exact Lemon JSON:API relationships, string IDs and bool
   assert.equal(typeof data.relationships.store.data.id, 'string');
   assert.equal(typeof data.relationships.variant.data.id, 'string');
   assert.equal(typeof data.attributes.test_mode, 'boolean');
+  const checkoutData = (payload.data as {
+    attributes: { checkout_data: { billing_address: Record<string, unknown> } };
+  }).attributes.checkout_data;
+  assert.deepEqual(checkoutData.billing_address, { country: 'HU' });
+  assert.equal('state' in checkoutData.billing_address, false);
+  assert.equal('zip' in checkoutData.billing_address, false);
+  assert.equal('city' in checkoutData.billing_address, false);
+  assert.equal('address' in checkoutData.billing_address, false);
 });
 
 test('checkout config trims IDs and rejects stale/default/missing resource IDs', () => {

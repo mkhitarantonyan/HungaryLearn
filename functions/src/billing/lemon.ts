@@ -114,7 +114,11 @@ export function buildCheckoutPayload(config: LemonConfig, uid: string, email: st
     data: {
       type: 'checkouts',
       attributes: {
-        checkout_data: { email, custom: { firebase_uid: uid } },
+        checkout_data: {
+          email,
+          billing_address: { country: 'HU' },
+          custom: { firebase_uid: uid },
+        },
         checkout_options: { skip_trial: true },
         product_options: { redirect_url: `${normalized.appUrl}/?payment=success` },
         test_mode: normalized.testMode,
