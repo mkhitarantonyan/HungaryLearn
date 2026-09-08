@@ -125,7 +125,7 @@ test('L25 nominal-predicate guidance no longer points to L9', () => {
 
 test('L25 does not claim that -ként was taught in L16', () => {
   const body = slideBody(25, 2);
-  assert.match(body, /-ként означает «в качестве \/ в роли»/i);
+  assert.match(body, /-ként<\/b> означает «в качестве \/ в роли»/i);
   assert.doesNotMatch(body, /-ként из 16-го урока/i);
 });
 
@@ -143,7 +143,7 @@ test('L26 body-part possessives no longer point to L15', () => {
 
 test('L26 does not claim that temporal -ig was taught in L11', () => {
   const body = slideBody(26, 7);
-  assert.match(body, /három napig означает «в течение трёх дней»/i);
+  assert.match(body, /három napig<\/span> означает «в течение трёх дней»/i);
   assert.doesNotMatch(body, /-ig из 11-го урока/i);
 });
 
@@ -155,14 +155,14 @@ test('Q2605 does not use natural fejfájásra as an unambiguously wrong distract
 
 test('L27 defines vágány as track rather than platform', () => {
   const body = slideBody(27, 3);
-  assert.match(body, /vágány[\s\S]*железнодорожный путь \/ номер пути/i);
-  assert.doesNotMatch(body, /vágány[\s\S]{0,200}платформа/i);
+  assert.match(body, /vágány<\/button><\/td>\s*<td>железнодорожный путь \/ номер пути/i);
+  assert.doesNotMatch(body, /vágány<\/button><\/td>\s*<td>платформа/i);
 });
 
 test('L27 visibly writes Retúrjegyet as one word', () => {
   const body = slideBody(27, 4);
-  assert.match(body, /> Retúrjegyet kérek\.<\/button>/);
-  assert.doesNotMatch(body, /> Retúr jegyet kérek\.<\/button>/);
+  assert.match(body, />\s*Retúrjegyet kérek\.<\/button>/);
+  assert.doesNotMatch(body, />\s*Retúr jegyet kérek\.<\/button>/);
 });
 
 test('Q2701 accurately explains busz plus val to busszal', () => {

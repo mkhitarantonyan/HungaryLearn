@@ -70,7 +70,7 @@ test('L15–L27 retain lesson identities and valid objective/evidence graphs', a
   }
 });
 
-test('P3 leaves L28 byte-identical',()=>{assert.equal(sha256(new URL('../src/data/lessons/lesson28.ts',import.meta.url)),'617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc');});
+test('reviewed L28 source matches the approved expanded lesson',()=>{assert.equal(sha256(new URL('../src/data/lessons/lesson28.ts',import.meta.url)),'7b95decd733b4862450beddf5edb33ef0055980a244a8c11d5adfce084773971');});
 
 test('P3 vocabulary audit classifies selective content without runtime or audio expansion',()=>{
   const audit=readFileSync(new URL('../docs/P3_VOCABULARY_AUDIT.md',import.meta.url),'utf8');for(const label of ['CORE','FUNCTIONAL CHUNK','RECEPTIVE','RECYCLED'])assert.match(audit,new RegExp(label));for(const row of ['| L11 | 16 | 8 | 10 | 8 | 12 |','| L12 | 16 | 8 | 14 | 8 | 14 |','| L13 | 16 | 10 | 11 | 8 | 12 |','| L14 | 14 | 10 | 12 | 8 | 18 |'])assert.ok(audit.includes(row));assert.match(audit,/adds no runtime vocabulary card.*wordAudioMap.*word MP3/s);assert.match(audit,/L11 intentionally has no learner-facing Listening/);

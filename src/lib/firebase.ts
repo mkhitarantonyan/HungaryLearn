@@ -5,6 +5,10 @@ let authInstance: Auth | null = null;
 
 function firebaseApp(): FirebaseApp {
   if (getApps().length) return getApp();
+  const useEmulators = import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true';
+  if (import.meta.env.DEV && !useEmulators) {
+    throw new Error('Vite development requires Firebase Emulator Suite. Run npm run dev:full.');
+  }
   const config = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,

@@ -13,6 +13,21 @@
 
 L1–L2 are local and free. L3–L28 stay outside the browser bundle and are returned only by `/api/lessons/:lessonNumber` after Firebase token and server-owned entitlement checks. There is no trial access.
 
+## Local development
+
+Prerequisites: Node.js 22 and Java 21 or newer. The local `demo-hungarylearn` project does not require `firebase login`.
+
+```powershell
+npm ci
+npm run dev:full
+```
+
+Open `http://127.0.0.1:5173`. This starts Vite with HMR plus the Firebase Auth, Functions, Firestore, Hosting, and Storage emulators. The Emulator UI is available at `http://127.0.0.1:4000`, and `http://127.0.0.1:5173/api/health` verifies the complete Vite → Hosting Emulator → local `api` Function path.
+
+The command uses the isolated `demo-hungarylearn` project, forces the Firebase client and Admin SDK to use local emulators, clears `GOOGLE_APPLICATION_CREDENTIALS` for its child processes, and does not start the billing Function. Firebase demo projects have no live resources, so production Firebase data and Lemon Squeezy cannot be reached. Press `Ctrl+C` once to stop Vite and every emulator. Fixed ports are listed at startup; if one is occupied, the command exits with a clear error instead of choosing another port.
+
+`dev:full` supplies safe local Firebase Web SDK placeholders, so `.env.local`, Admin credentials, and billing secrets are not required. `.env.example` remains the template for production builds and production-like preview commands.
+
 ## Local validation
 
 ```powershell
@@ -27,7 +42,8 @@ npm run lint
 npm run audit:legacy
 ```
 
-Use `npm run emulators` for the integrated Hosting/Auth/Firestore/Functions/Storage emulators. `npm run dev` is a frontend-only Vite server and proxies API requests to the Hosting emulator on port 5000.
+`npm run dev` remains a frontend-only Vite server and requires an explicitly enabled emulator environment. Use `npm run dev:full` for the complete local stack.
+`npm run site` remains a separate production-like Hosting/Functions mode and may require `GOOGLE_APPLICATION_CREDENTIALS`; it is not needed for normal development.
 
 ## Setup and deployment
 

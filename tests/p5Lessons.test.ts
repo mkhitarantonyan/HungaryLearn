@@ -145,10 +145,10 @@ test('Reviewed L20–L28 source hashes match the approved course content', () =>
     [22, 'dd0754247896819cb09bed9e5a0b277d18347327919b16fdd49ea1bcb7b36601'],
     [23, '4c9d5a9d3172b0178292741948185d162455c54594751be594bc133c454c2050'],
     [24, '9c59dc69ea0b03dc3e5bd605d7accb23f5f1101e52096730f158ab09deab0641'],
-    [25, '94dfc11633622c67447973b10ca3fc3c70c8f6ed298ed454af979996ecdffc74'],
-    [26, 'fb9572913f6caaf591e3d11ed7420674ca567932c8478f0d3e1d70d2db5f39ee'],
-    [27, '07e435af05a388958d88aeb5a521b5def76ff31462dd4368b228bca5dad98b09'],
-    [28, '617f7df1bbd486161a0dba0f63ae0be08011eeacd2b69a060d282ea3e7de2fcc'],
+    [25, '084588adba95c21e7bcbead7d5d9222e66e0c621e1e42e0d15f545882e962273'],
+    [26, '12f06373c67d1058010cf45b43e4bd480895b2f9a9c06422f5defef440d54b57'],
+    [27, 'ace72b5d1c447ce50a9fbfca47547e0e13865da45e29db8485bfbf9327ba8d50'],
+    [28, '7b95decd733b4862450beddf5edb33ef0055980a244a8c11d5adfce084773971'],
   ]);
   for (const [lesson, expected] of contracts) {
     const bytes = readFileSync(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url));

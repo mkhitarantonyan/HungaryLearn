@@ -5,9 +5,10 @@ import path from 'node:path';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const functionsRoot = path.join(projectRoot, 'functions');
+const entryFile = process.env.LOCAL_DEV_API_ONLY === 'true' ? 'local.ts' : 'index.ts';
 await build({
   absWorkingDir: projectRoot,
-  entryPoints: [path.join(functionsRoot, 'src', 'index.ts')],
+  entryPoints: [path.join(functionsRoot, 'src', entryFile)],
   outfile: path.join(functionsRoot, 'lib', 'index.cjs'),
   bundle: true,
   platform: 'node',

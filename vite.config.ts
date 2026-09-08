@@ -12,6 +12,9 @@ export default defineConfig(() => {
       },
     },
     server: {
+      host: '127.0.0.1',
+      port: 5173,
+      strictPort: true,
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
       proxy: {
