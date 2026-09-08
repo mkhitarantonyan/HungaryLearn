@@ -1,4 +1,14 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  onAuthStateChanged,
+  reauthenticateWithCredential,
+  reload,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 import type { ActivityAttempt, ActivityEvidence, QuizAttempt, ReviewCardState } from '../types';
 import { ApiRequestError, apiFetch, apiJson } from '../lib/apiClient';
 import { getFirebaseAuth } from '../lib/firebase';
@@ -6,6 +16,7 @@ import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
 import { sanitizeActivityEvidence } from './lessonProgress';
 import { mergeActivityEvidence } from './progressMerge';
 import { isBillingPlanKey, type BillingPlanKey } from '../config/pricing';
+import { AUTOPLAY_STORAGE_KEY } from './narrationPrefs';
 import {
   mergeLessonResumePositions,
   sanitizeLessonResumePositions,
@@ -18,6 +29,7 @@ export type BillingProvider = 'lemonsqueezy' | null;
 export interface UserProfile {
   id: string;
   email: string;
+  emailVerified: boolean;
   createdAt: string;
   subscriptionStatus: SubscriptionStatus;
   accessUntil?: string | null;
@@ -55,6 +67,17 @@ export function emptyProgressData(): UserProgressData {
 
 function progressCacheKey(ownerId: string | null): string {
   return `${PROGRESS_CACHE_PREFIX}${ownerId ?? 'anonymous'}`;
+}
+
+function clearLocalAccountData(ownerId: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.removeItem(progressCacheKey(ownerId));
+    window.localStorage.removeItem(progressCacheKey(null));
+    window.localStorage.removeItem(AUTOPLAY_STORAGE_KEY);
+  } catch {
+    return;
+  }
 }
 
 /** Local cache of the canonical progress shape; Firestore remains authoritative for signed-in users. */
@@ -181,6 +204,13 @@ export function validateRegistration(email: string, password: string, confirmPas
   return null;
 }
 
+export function validateAccountEmail(email: string): string | null {
+  const normalizedEmail = email.trim();
+  if (!normalizedEmail) return 'Введите e-mail, указанный при регистрации.';
+  if (!/^\S+@\S+\.\S+$/.test(normalizedEmail)) return 'Проверьте правильность e-mail.';
+  return null;
+}
+
 export async function checkUserSessionServer(): Promise<UserProfile | null> {
   if (typeof window === 'undefined') {
     setCurrentUser(null);
@@ -198,7 +228,7 @@ export async function checkUserSessionServer(): Promise<UserProfile | null> {
     markAuthReady();
     return data.user;
   } catch (error) {
-    if (error instanceof ApiRequestError && error.status === 401) {
+    if (error instanceof ApiRequestError && (error.status === 401 || error.status === 410)) {
       await signOut(getFirebaseAuth()).catch(() => undefined);
     }
     setCurrentUser(null);
@@ -209,9 +239,22 @@ export async function checkUserSessionServer(): Promise<UserProfile | null> {
 
 export async function registerUserServer(email: string, pass: string): Promise<{ success: boolean; message: string; user?: UserProfile; alreadyExists?: boolean }> {
   try {
-    await createUserWithEmailAndPassword(getFirebaseAuth(), email.trim(), pass);
+    const credential = await createUserWithEmailAndPassword(getFirebaseAuth(), email.trim(), pass);
+    let verificationSent = true;
+    try {
+      await sendEmailVerification(credential.user);
+    } catch {
+      verificationSent = false;
+    }
     const user = await checkUserSessionServer();
-    return user ? { success: true, message: 'Аккаунт создан', user } : { success: false, message: 'Не удалось загрузить профиль.' };
+    if (!user) return { success: false, message: 'Не удалось загрузить профиль.' };
+    return {
+      success: true,
+      message: verificationSent
+        ? 'Аккаунт создан. Мы отправили письмо для подтверждения e-mail.'
+        : 'Аккаунт создан, но письмо не отправилось. Отправьте его повторно из личного кабинета.',
+      user,
+    };
   } catch (error) {
     const message = userAuthMessage(error, 'Не удалось зарегистрироваться.');
     return { success: false, message, alreadyExists: message.includes('уже существует') };
@@ -231,6 +274,30 @@ export async function loginUserServer(email: string, pass: string): Promise<{ su
 export async function logoutUserServer(): Promise<void> {
   await signOut(getFirebaseAuth());
   setCurrentUser(null);
+}
+
+export async function deleteAccountServer(password: string): Promise<{ success: boolean; message: string }> {
+  const auth = getFirebaseAuth();
+  const firebaseUser = auth.currentUser;
+  if (!firebaseUser?.email) return { success: false, message: 'Войдите в аккаунт повторно.' };
+  if (!password) return { success: false, message: 'Введите текущий пароль.' };
+  const ownerId = firebaseUser.uid;
+  try {
+    await reauthenticateWithCredential(firebaseUser, EmailAuthProvider.credential(firebaseUser.email, password));
+    await firebaseUser.getIdToken(true);
+    await apiJson('/api/auth/account', { method: 'DELETE' });
+    await signOut(auth).catch(() => undefined);
+    clearLocalAccountData(ownerId);
+    setCurrentUser(null);
+    return { success: true, message: 'Аккаунт и учебные данные удалены.' };
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof ApiRequestError
+        ? error.message
+        : userAuthMessage(error, 'Не удалось удалить аккаунт. Попробуйте позже.'),
+    };
+  }
 }
 
 export async function createLemonCheckout(plan: BillingPlanKey): Promise<{ success: boolean; url?: string; message?: string }> {
@@ -277,6 +344,57 @@ export async function syncResumePositionsToServer(resumePositions: LessonResumeP
     })).ok;
   } catch {
     return false;
+  }
+}
+
+export async function requestPasswordReset(email: string): Promise<{ success: boolean; message: string }> {
+  const validationError = validateAccountEmail(email);
+  if (validationError) return { success: false, message: validationError };
+  try {
+    await sendPasswordResetEmail(getFirebaseAuth(), email.trim());
+    return {
+      success: true,
+      message: 'Если аккаунт с таким e-mail существует, Firebase отправит письмо для установки нового пароля.',
+    };
+  } catch (error) {
+    const code = typeof error === 'object' && error && 'code' in error ? String(error.code) : '';
+    if (code.includes('user-not-found')) {
+      return {
+        success: true,
+        message: 'Если аккаунт с таким e-mail существует, Firebase отправит письмо для установки нового пароля.',
+      };
+    }
+    return { success: false, message: userAuthMessage(error, 'Не удалось отправить письмо. Попробуйте позже.') };
+  }
+}
+
+export async function resendVerificationEmail(): Promise<{ success: boolean; message: string }> {
+  const firebaseUser = getFirebaseAuth().currentUser;
+  if (!firebaseUser) return { success: false, message: 'Войдите в аккаунт, чтобы подтвердить e-mail.' };
+  if (firebaseUser.emailVerified) return { success: true, message: 'E-mail уже подтверждён.' };
+  try {
+    await sendEmailVerification(firebaseUser);
+    return { success: true, message: 'Новое письмо для подтверждения отправлено.' };
+  } catch (error) {
+    return { success: false, message: userAuthMessage(error, 'Не удалось отправить письмо. Попробуйте позже.') };
+  }
+}
+
+export async function refreshEmailVerification(): Promise<{ success: boolean; verified: boolean; message: string }> {
+  const firebaseUser = getFirebaseAuth().currentUser;
+  if (!firebaseUser) return { success: false, verified: false, message: 'Войдите в аккаунт.' };
+  try {
+    await reload(firebaseUser);
+    await firebaseUser.getIdToken(true);
+    const user = await checkUserSessionServer();
+    const verified = user?.emailVerified === true;
+    return {
+      success: verified,
+      verified,
+      message: verified ? 'E-mail подтверждён.' : 'E-mail пока не подтверждён. Перейдите по ссылке из письма.',
+    };
+  } catch (error) {
+    return { success: false, verified: false, message: userAuthMessage(error, 'Не удалось обновить статус e-mail.') };
   }
 }
 export async function syncReviewCardToServer(cardId: string, grade: 'again' | 'hard' | 'good' | 'easy'): Promise<boolean> {

@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
-import { BadgeCheck, KeyRound, Loader2, Mail, RefreshCw, Search } from 'lucide-react';
+import { BadgeCheck, Ban, KeyRound, Loader2, Mail, RefreshCw, Search, ShieldCheck, Trash2 } from 'lucide-react';
 import { useAdminData } from '../../admin/AdminDataContext';
 import type { AdminUser } from '../../admin/types';
-import { PageHeader, Pill, SecondaryButton } from '../../components/admin/AdminUi';
+import { ConfirmDialog, PageHeader, Pill, SecondaryButton } from '../../components/admin/AdminUi';
+
+type ConfirmedAction = { kind: 'block' | 'delete'; user: AdminUser } | null;
 
 function subscriptionLabel(user: AdminUser): string {
   if (user.isPrivileged) return 'Полный доступ';
@@ -21,9 +23,19 @@ function accessDate(value: string | undefined): string {
 }
 
 export default function AdminUsers() {
-  const { users, loading, error, pendingUserIds, refresh, setUserPrivilege } = useAdminData();
+  const {
+    users,
+    loading,
+    error,
+    pendingUserIds,
+    refresh,
+    setUserPrivilege,
+    setUserBlocked,
+    deleteUser,
+  } = useAdminData();
   const [search, setSearch] = useState('');
   const [actionError, setActionError] = useState('');
+  const [confirmedAction, setConfirmedAction] = useState<ConfirmedAction>(null);
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     return query ? users.filter((user) => user.email.toLowerCase().includes(query)) : users;
@@ -35,6 +47,21 @@ export default function AdminUsers() {
       await setUserPrivilege(user.id, !user.isPrivileged);
     } catch (cause) {
       setActionError(cause instanceof Error ? cause.message : 'Не удалось сохранить изменение.');
+    }
+  };
+
+  const runConfirmedAction = async () => {
+    if (!confirmedAction) return;
+    setActionError('');
+    try {
+      if (confirmedAction.kind === 'block') {
+        await setUserBlocked(confirmedAction.user.id, !confirmedAction.user.disabled);
+      } else {
+        await deleteUser(confirmedAction.user.id);
+      }
+      setConfirmedAction(null);
+    } catch (cause) {
+      setActionError(cause instanceof Error ? cause.message : 'Не удалось выполнить действие.');
     }
   };
 
@@ -52,7 +79,7 @@ export default function AdminUsers() {
       />
 
       <div className="mb-5 rounded-xl border border-indigo-100 bg-indigo-50 p-3.5 text-xs leading-relaxed text-indigo-900/80">
-        Подписками управляет Lemon Squeezy. Здесь можно выдать или отозвать привилегию полного доступа; изменение подтверждается Cloud Function и сохраняется в Firestore.
+        Подписками управляет Lemon Squeezy. Администратор может менять привилегию доступа, блокировать вход и удалять аккаунты. Аккаунт с активной подпиской можно удалить только после её отмены.
       </div>
 
       {(error || actionError) && (
@@ -82,9 +109,9 @@ export default function AdminUsers() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1100px] text-left">
+            <table className="w-full min-w-[1250px] text-left">
               <thead className="border-b border-gray-200 bg-gray-50 text-xs uppercase tracking-wider text-gray-500">
-                <tr><th className="px-5 py-3">E-mail</th><th className="px-5 py-3">Регистрация</th><th className="px-5 py-3">Доступ</th><th className="px-5 py-3">До</th><th className="px-5 py-3">Lemon Squeezy</th><th className="px-5 py-3 text-right">Привилегия</th></tr>
+                <tr><th className="px-5 py-3">E-mail</th><th className="px-5 py-3">Регистрация</th><th className="px-5 py-3">Доступ</th><th className="px-5 py-3">Вход</th><th className="px-5 py-3">До</th><th className="px-5 py-3">Lemon Squeezy</th><th className="px-5 py-3 text-right">Действия</th></tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filtered.map((user) => {
@@ -96,6 +123,11 @@ export default function AdminUsers() {
                       </td>
                       <td className="px-5 py-3.5 text-sm text-gray-600">{new Date(user.createdAt).toLocaleDateString('ru-RU')}</td>
                       <td className="px-5 py-3.5"><Pill tone={user.isPrivileged ? 'green' : user.subscriptionStatus === 'past_due' ? 'red' : 'gray'}>{subscriptionLabel(user)}</Pill></td>
+                      <td className="px-5 py-3.5">
+                        <Pill tone={user.disabled ? 'red' : user.authExists ? 'green' : 'gray'}>
+                          {user.disabled ? 'Заблокирован' : user.authExists ? 'Разрешён' : 'Нет в Auth'}
+                        </Pill>
+                      </td>
                       <td className="px-5 py-3.5 text-sm text-gray-600">{accessDate(user.accessUntil)}</td>
                       <td className="px-5 py-3.5 text-xs text-gray-500">
                         {user.provider === 'lemonsqueezy' ? (
@@ -106,7 +138,8 @@ export default function AdminUsers() {
                           </div>
                         ) : '—'}
                       </td>
-                      <td className="px-5 py-3.5 text-right">
+                      <td className="px-5 py-3.5">
+                        <div className="flex justify-end gap-2">
                         <button
                           type="button"
                           onClick={() => void togglePrivilege(user)}
@@ -116,6 +149,27 @@ export default function AdminUsers() {
                           {pending ? <Loader2 className="w-3.5 animate-spin" /> : <KeyRound className="w-3.5" />}
                           {user.isPrivileged ? 'Отозвать' : 'Выдать'}
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => user.disabled
+                            ? void setUserBlocked(user.id, false).catch((cause) => setActionError(cause instanceof Error ? cause.message : 'Не удалось разблокировать пользователя.'))
+                            : setConfirmedAction({ kind: 'block', user })}
+                          disabled={pending || !user.authExists}
+                          className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-50 ${user.disabled ? 'border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100'}`}
+                        >
+                          {pending ? <Loader2 className="w-3.5 animate-spin" /> : user.disabled ? <ShieldCheck className="w-3.5" /> : <Ban className="w-3.5" />}
+                          {user.disabled ? 'Разблокировать' : 'Заблокировать'}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmedAction({ kind: 'delete', user })}
+                          disabled={pending}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          {pending ? <Loader2 className="w-3.5 animate-spin" /> : <Trash2 className="w-3.5" />}
+                          Удалить
+                        </button>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -125,6 +179,21 @@ export default function AdminUsers() {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={confirmedAction !== null}
+        title={confirmedAction?.kind === 'delete' ? 'Удалить аккаунт?' : 'Заблокировать аккаунт?'}
+        message={confirmedAction?.kind === 'delete' ? (
+          <>
+            Аккаунт <strong>{confirmedAction.user.email}</strong>, его профиль, прогресс, настройки, карточки повторения и доступ будут удалены. Обязательные billing-записи сохранятся без Firebase UID. Действие нельзя отменить.
+          </>
+        ) : (
+          <>Пользователь <strong>{confirmedAction?.user.email}</strong> не сможет войти в аккаунт, а его действующие серверные сессии будут отозваны.</>
+        )}
+        confirmLabel={confirmedAction?.kind === 'delete' ? 'Удалить аккаунт' : 'Заблокировать'}
+        onConfirm={() => void runConfirmedAction()}
+        onCancel={() => setConfirmedAction(null)}
+      />
     </div>
   );
 }

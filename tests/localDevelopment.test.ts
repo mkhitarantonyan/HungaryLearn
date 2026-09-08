@@ -67,3 +67,32 @@ test('the frontend Auth emulator is fixed and production deployment stays in pro
   assert.match(productionWorkflow, /VITE_USE_FIREBASE_EMULATORS: false/);
   assert.doesNotMatch(productionWorkflow, /start-local-dev|dev:full/);
 });
+
+test('production deployment starts only after the complete CI gate passes', () => {
+  const productionWorkflow = read('.github/workflows/firebase-hosting-merge.yml');
+  const firstDeploy = productionWorkflow.indexOf('- name: Deploy Firebase Functions');
+  assert.ok(firstDeploy > 0, 'Functions deploy step must exist');
+
+  const requiredChecks = [
+    'npm run validate:lessons',
+    'npm run validate:vocabulary',
+    'npm run validate:listening',
+    'npm test',
+    'npm run lint',
+    'npm run test:rules',
+    'npm run functions:typecheck',
+    'npm run functions:build',
+    'npm run build',
+  ];
+  for (const command of requiredChecks) {
+    const checkPosition = productionWorkflow.indexOf(command);
+    assert.ok(checkPosition >= 0, `${command} must run in production CI`);
+    assert.ok(checkPosition < firstDeploy, `${command} must finish before production deploy`);
+  }
+
+  assert.doesNotMatch(productionWorkflow.slice(0, firstDeploy), /continue-on-error:\s*true/);
+  assert.match(productionWorkflow, /uses: actions\/setup-java@v4/);
+
+  const packageJson = JSON.parse(read('package.json')) as { scripts: Record<string, string> };
+  assert.equal(packageJson.scripts.postbuild, 'tsx scripts/verify-public-bundle.ts');
+});

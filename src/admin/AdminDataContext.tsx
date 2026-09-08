@@ -8,7 +8,13 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { getAdminLessons, getAdminUsers, updateAdminUserPrivilege } from '../api/adminApi';
+import {
+  deleteAdminUser,
+  getAdminLessons,
+  getAdminUsers,
+  updateAdminUserBlocked,
+  updateAdminUserPrivilege,
+} from '../api/adminApi';
 import type { AdminLesson, AdminUser } from './types';
 
 interface AdminDataContextValue {
@@ -19,6 +25,8 @@ interface AdminDataContextValue {
   pendingUserIds: ReadonlySet<string>;
   refresh: () => Promise<void>;
   setUserPrivilege: (id: string, privileged: boolean) => Promise<AdminUser>;
+  setUserBlocked: (id: string, blocked: boolean) => Promise<AdminUser>;
+  deleteUser: (id: string) => Promise<void>;
 }
 
 const AdminDataContext = createContext<AdminDataContextValue | null>(null);
@@ -74,6 +82,41 @@ export function AdminDataProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const setUserBlocked = useCallback(async (id: string, blocked: boolean) => {
+    if (pendingUserIdsRef.current.has(id)) throw new Error('Изменение этого пользователя уже выполняется.');
+    pendingUserIdsRef.current.add(id);
+    setPendingUserIds(new Set(pendingUserIdsRef.current));
+    setError(null);
+    try {
+      const saved = await updateAdminUserBlocked(id, blocked);
+      setUsers((current) => current.map((user) => user.id === id ? saved : user));
+      return saved;
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'Не удалось изменить блокировку.');
+      throw cause;
+    } finally {
+      pendingUserIdsRef.current.delete(id);
+      setPendingUserIds(new Set(pendingUserIdsRef.current));
+    }
+  }, []);
+
+  const deleteUser = useCallback(async (id: string) => {
+    if (pendingUserIdsRef.current.has(id)) throw new Error('Изменение этого пользователя уже выполняется.');
+    pendingUserIdsRef.current.add(id);
+    setPendingUserIds(new Set(pendingUserIdsRef.current));
+    setError(null);
+    try {
+      await deleteAdminUser(id);
+      setUsers((current) => current.filter((user) => user.id !== id));
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'Не удалось удалить пользователя.');
+      throw cause;
+    } finally {
+      pendingUserIdsRef.current.delete(id);
+      setPendingUserIds(new Set(pendingUserIdsRef.current));
+    }
+  }, []);
+
   const value = useMemo(() => ({
     users,
     lessons,
@@ -82,7 +125,9 @@ export function AdminDataProvider({ children }: { children: ReactNode }) {
     pendingUserIds,
     refresh,
     setUserPrivilege,
-  }), [users, lessons, loading, error, pendingUserIds, refresh, setUserPrivilege]);
+    setUserBlocked,
+    deleteUser,
+  }), [users, lessons, loading, error, pendingUserIds, refresh, setUserPrivilege, setUserBlocked, deleteUser]);
 
   return <AdminDataContext.Provider value={value}>{children}</AdminDataContext.Provider>;
 }

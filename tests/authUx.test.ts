@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { subscriptionDisplay } from '../src/utils/subscriptionValidity.ts';
-import { validateRegistration, userAuthMessage } from '../src/utils/userStore.ts';
+import { validateAccountEmail, validateRegistration, userAuthMessage } from '../src/utils/userStore.ts';
 
 const now = new Date('2026-08-27T12:00:00.000Z');
 const future = '2026-09-27T12:00:00.000Z';
@@ -20,6 +20,34 @@ test('Firebase user errors are translated without exposing raw codes', () => {
   assert.equal(userAuthMessage({ code: 'auth/invalid-credential' }, 'fallback'), 'Неверный e-mail или пароль.');
   assert.match(userAuthMessage({ code: 'auth/network-request-failed' }, 'fallback'), /Ошибка сети/);
   assert.match(userAuthMessage({ code: 'auth/too-many-requests' }, 'fallback'), /Слишком много попыток/);
+});
+
+test('password reset validates the account email and uses Firebase without revealing account existence', () => {
+  assert.match(validateAccountEmail('') || '', /Введите e-mail/);
+  assert.match(validateAccountEmail('invalid') || '', /правильность/);
+  assert.equal(validateAccountEmail(' student@example.com '), null);
+
+  const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
+  const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  assert.match(store, /sendPasswordResetEmail\(getFirebaseAuth\(\), email\.trim\(\)\)/);
+  assert.match(store, /Если аккаунт с таким e-mail существует/);
+  assert.match(modal, /Забыли пароль\?/);
+  assert.match(modal, /id="user-reset-email"/);
+  assert.match(modal, /Отправить ссылку для сброса/);
+});
+
+test('registration sends email verification and the account can refresh or resend it', () => {
+  const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
+  const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  const authRoute = readFileSync(new URL('../functions/src/auth/routes.ts', import.meta.url), 'utf8');
+  const billingRoute = readFileSync(new URL('../functions/src/billing/routes.ts', import.meta.url), 'utf8');
+  assert.match(store, /sendEmailVerification\(credential\.user\)/);
+  assert.match(store, /sendEmailVerification\(firebaseUser\)/);
+  assert.match(store, /await reload\(firebaseUser\)[\s\S]*getIdToken\(true\)/);
+  assert.match(authRoute, /emailVerified: req\.auth!\.email_verified === true/);
+  assert.match(billingRoute, /email_verified !== true[\s\S]*Подтвердите e-mail/);
+  assert.match(modal, /Отправить письмо повторно/);
+  assert.match(modal, /Я подтвердил e-mail/);
 });
 
 test('normal user auth uses Firebase registration, login, logout and session restoration', () => {

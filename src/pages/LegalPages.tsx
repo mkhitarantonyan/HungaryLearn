@@ -5,7 +5,7 @@ import { BILLING_PLANS, type BillingPlanKey } from '../config/pricing';
 
 const PLAN_PERIODS: Record<BillingPlanKey, string> = { monthly: '1 month', quarterly: '3 months', yearly: '1 year' };
 
-const UPDATED = 'September 7, 2026';
+const UPDATED = 'September 8, 2026';
 
 function usePageTitle(title: string) {
   useEffect(() => {
@@ -279,12 +279,35 @@ export function PrivacyPage() {
               <p>
                 Account and learning-progress data are retained while the account is in
                 use and for a reasonable period afterwards where required for security,
-                dispute resolution, or legal obligations. Payment records may be retained
-                by the payment provider according to its own legal obligations.
+                dispute resolution, or legal obligations. Payment and transaction records
+                may be retained by Magyaro and the payment provider where required for
+                accounting, tax, fraud prevention, refunds, disputes, or other legal obligations.
               </p>
             </Section>
 
-            <Section title="8. Your rights">
+            <Section title="8. Account deletion">
+              <p>
+                The self-service deletion control removes the Firebase Authentication account,
+                Magyaro profile, learning progress, exercise and quiz results, settings,
+                vocabulary review cards, entitlement, and the account-specific progress cache
+                on the current device. This deletion is permanent.
+              </p>
+              <p>
+                An active, paused, or past-due Lemon Squeezy subscription must first be cancelled
+                through Customer Portal so that account deletion cannot leave future charges
+                unmanaged. A cancelled subscription may be deleted immediately, but any remaining
+                Premium access is lost and cannot be restored to the deleted account.
+              </p>
+              <p>
+                Billing and webhook records that must be retained are kept separately for the
+                purposes described above. Magyaro removes their direct Firebase UID link where
+                possible and retains a minimal pseudonymous deletion marker solely to prevent a
+                later billing webhook from recreating the deleted entitlement. Lemon Squeezy may
+                retain its own transaction records under its legal obligations.
+              </p>
+            </Section>
+
+            <Section title="9. Your rights">
               <p>
                 Depending on applicable law, users may have rights to access, correct,
                 delete, restrict, or receive a copy of their personal information, and to
@@ -293,14 +316,14 @@ export function PrivacyPage() {
               </p>
             </Section>
 
-            <Section title="9. Security">
+            <Section title="10. Security">
               <p>
                 We use technical and organisational measures intended to protect accounts
                 and data. However, no online service can guarantee absolute security.
               </p>
             </Section>
 
-            <Section title="10. Children">
+            <Section title="11. Children">
               <p>
                 Where the law in a user's country requires consent from a parent or legal
                 guardian for a child to use an online service, that consent must be
@@ -308,7 +331,7 @@ export function PrivacyPage() {
               </p>
             </Section>
 
-            <Section title="11. Privacy requests">
+            <Section title="12. Privacy requests">
               <p>
                 For privacy-related requests, use the support/contact channel associated
                 with Magyaro or your purchase and identify the email address of your

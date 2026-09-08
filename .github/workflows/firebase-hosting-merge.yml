@@ -32,22 +32,40 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Use Java 21 for Firebase emulators
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
       - name: Install app dependencies
         run: npm ci
 
       - name: Install Functions dependencies
         run: npm --prefix functions ci
 
-      - name: Validate lessons
+      - name: Validate lesson content and audio
         run: |
           npm run validate:lessons
           npm run validate:vocabulary
           npm run validate:listening
 
+      - name: Run full test suite
+        run: npm test
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Test Firebase security rules
+        run: npm run test:rules
+
       - name: Typecheck Functions
         run: npm run functions:typecheck
 
-      - name: Build production frontend
+      - name: Build Functions
+        run: npm run functions:build
+
+      - name: Build production frontend and verify public bundle
         run: npm run build
 
       - name: Configure Firebase service account

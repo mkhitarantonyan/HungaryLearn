@@ -63,3 +63,22 @@ export async function updateAdminUserPrivilege(id: string, privileged: boolean):
   }
   return data.user as AdminUser;
 }
+
+export async function updateAdminUserBlocked(id: string, blocked: boolean): Promise<AdminUser> {
+  const data = await requestJson<{ user?: unknown }>(`/api/admin/users/${encodeURIComponent(id)}/block`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ blocked }),
+  });
+  if (!data.user || typeof data.user !== 'object') {
+    throw new AdminApiError('Сервер не вернул сохранённого пользователя.', 200);
+  }
+  return data.user as AdminUser;
+}
+
+export async function deleteAdminUser(id: string): Promise<{ retainedBillingRecords: number }> {
+  return requestJson<{ success: true; retainedBillingRecords: number }>(
+    `/api/admin/users/${encodeURIComponent(id)}`,
+    { method: 'DELETE' },
+  );
+}

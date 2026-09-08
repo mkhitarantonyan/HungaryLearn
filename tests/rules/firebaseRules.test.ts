@@ -30,6 +30,13 @@ test('unauthenticated clients cannot read private account or progress documents'
   await assertFails(getDoc(doc(db, 'users/alice')));
   await assertFails(getDoc(doc(db, 'entitlements/alice')));
   await assertFails(getDoc(doc(db, 'progress/alice')));
+  await assertFails(getDoc(doc(db, 'accountDeletions/pseudonymous-marker')));
+});
+
+test('clients cannot read or create account deletion markers', async () => {
+  const db = (await env()).authenticatedContext('alice').firestore();
+  await assertFails(getDoc(doc(db, 'accountDeletions/pseudonymous-marker')));
+  await assertFails(setDoc(doc(db, 'accountDeletions/pseudonymous-marker'), { deletedAt: new Date().toISOString() }));
 });
 
 test('client cannot modify entitlement or make itself admin', async () => {

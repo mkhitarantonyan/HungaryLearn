@@ -18,6 +18,8 @@ export interface AdminUser {
   lemonSubscriptionId?: string | null;
   lemonVariantId?: string | null;
   testMode?: boolean;
+  disabled: boolean;
+  authExists: boolean;
 }
 
 export interface AdminLesson {

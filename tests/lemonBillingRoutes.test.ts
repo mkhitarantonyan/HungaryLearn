@@ -4,7 +4,7 @@ import { build } from 'esbuild';
 import { createRequire } from 'node:module';
 import { runInNewContext } from 'node:vm';
 import { fileURLToPath } from 'node:url';
-import { createHmac } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 
 interface JsonResult { success?: boolean; url?: string; message?: string; duplicate?: boolean; ignored?: boolean }
@@ -56,8 +56,8 @@ function harness(overrides: Record<string, string | boolean> = {}) {
     require: (id: string) => {
       if (id === 'test-admin') return { firestore, adminAuth: { verifyIdToken: async (token: string, revoked: boolean) => {
         assert.equal(revoked, true);
-        if (token !== 'valid-token') throw new Error('invalid');
-        return { uid: 'verified-user', email: 'verified@example.com' };
+        if (token !== 'valid-token' && token !== 'unverified-token') throw new Error('invalid');
+        return { uid: 'verified-user', email: 'verified@example.com', email_verified: token === 'valid-token' };
       } } };
       if (id === 'test-params') return Object.fromEntries(Object.keys(params).map(key => [key, { value: () => params[key] }]));
       return require(id);
@@ -76,9 +76,12 @@ function harness(overrides: Record<string, string | boolean> = {}) {
     }
     return { status, json };
   }
-  async function webhook(attributes: Record<string, unknown>, options: { signature?: string; event?: string; type?: string } = {}) {
+  async function webhook(attributes: Record<string, unknown>, options: { signature?: string; event?: string; type?: string; includeUid?: boolean } = {}) {
     const rawBody = Buffer.from(JSON.stringify({
-      meta: { event_name: options.event || 'subscription_updated', custom_data: { firebase_uid: 'verified-user' } },
+      meta: {
+        event_name: options.event || 'subscription_updated',
+        custom_data: options.includeUid === false ? {} : { firebase_uid: 'verified-user' },
+      },
       data: { type: options.type || 'subscriptions', id: 'sub-fixture', attributes: {
         store_id: 11, variant_id: 22, test_mode: false, status: 'active', renews_at: '2099-01-01T00:00:00Z', ...attributes,
       } },
@@ -117,6 +120,20 @@ test('checkout route maps all three plans and binds identity to verified token',
     assert.equal(payload.data.attributes.checkout_data.email, 'verified@example.com');
     assert.equal(payload.data.attributes.test_mode, false);
   }
+});
+
+test('checkout requires a verified email without changing authenticated portal access', async () => {
+  const h = harness();
+  const checkoutResult = await h.request(checkout, { plan: 'monthly' }, 'unverified-token');
+  assert.equal(checkoutResult.status, 403);
+  assert.match(checkoutResult.json.message || '', /Подтвердите e-mail/);
+  assert.equal(h.requests.length, 0);
+
+  h.documents.set('entitlements/verified-user', {
+    provider: 'lemonsqueezy', testMode: false, lemonSubscriptionId: 'owned-sub', subscriptionStatus: 'active',
+  });
+  h.respond({ store_id: 11, variant_id: 22, test_mode: false, urls: { customer_portal: 'https://example.com/portal' } });
+  assert.equal((await h.request(portal, {}, 'unverified-token')).json.url, 'https://example.com/portal');
 });
 
 test('empty/malformed selected variants fail with 503 and no Lemon request even when legacy exists', async () => {
@@ -178,6 +195,28 @@ test('webhook rejects bad signatures and ignores unknown/legacy variants, wrong 
   h.params.lemonVariantIdMonthly = h.params.lemonVariantIdQuarterly = h.params.lemonVariantIdYearly = '';
   assert.equal((await h.webhook({})).json.ignored, true);
   assert.equal(h.writes.length, 0);
+});
+
+test('webhook cannot recreate entitlement after account deletion', async () => {
+  const h = harness();
+  const marker = createHash('sha256').update('verified-user').digest('hex');
+  h.documents.set(`accountDeletions/${marker}`, { deletedAt: 'server-time' });
+  const result = await h.webhook({ variant_id: 22 });
+  assert.equal(result.status, 200);
+  assert.equal(result.json.ignored, true);
+  assert.equal(h.documents.has('entitlements/verified-user'), false);
+  assert.equal(h.documents.has('billingSubscriptions/sub-fixture'), false);
+
+  const renewal = harness();
+  renewal.documents.set(`accountDeletions/${marker}`, { deletedAt: 'server-time' });
+  renewal.documents.set('billingSubscriptions/sub-fixture', { accountDeletionKey: marker, status: 'cancelled' });
+  const renewalResult = await renewal.webhook(
+    { subscription_id: 'sub-fixture' },
+    { includeUid: false, type: 'subscription-invoices' },
+  );
+  assert.equal(renewalResult.status, 200);
+  assert.equal(renewalResult.json.ignored, true);
+  assert.equal(renewal.documents.has('entitlements/verified-user'), false);
 });
 
 // Read the actual dotenv literals written by the deployment workflow. No live API calls.

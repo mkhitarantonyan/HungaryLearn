@@ -69,7 +69,7 @@ test('account renders quarterly selection by default and preserves portal and pr
     runInNewContext(modalCompiled.outputFiles[0].text, {
       module, exports: module.exports,
       require: (id: string) => id === 'test-user-store' ? {
-        getCurrentUser: () => ({ id: 'fixture-user', email: 'fixture@example.com', paidAccess: false, subscriptionStatus: 'unpaid', ...profile }),
+        getCurrentUser: () => ({ id: 'fixture-user', email: 'fixture@example.com', emailVerified: true, paidAccess: false, subscriptionStatus: 'unpaid', ...profile }),
         isUserAuthReady: () => true,
       } : require(id),
     });
@@ -81,6 +81,10 @@ test('account renders quarterly selection by default and preserves portal and pr
   assert.match(unpaid, /Оформить за 22\s990 Ft/);
   assert.match(unpaid, /Самый популярный/);
   for (const price of [/8\s990 Ft/, /22\s990 Ft/, /64\s990 Ft/]) assert.match(unpaid, price);
+  const unverified = render({ emailVerified: false });
+  assert.match(unverified, /Подтвердите e-mail, чтобы оформить подписку/);
+  assert.match(unverified, /<fieldset disabled=""/);
+  assert.match(unverified, /Отправить письмо повторно/);
   for (const subscriptionStatus of ['active', 'cancelled', 'past_due', 'paused']) {
     const existing = render({ provider: 'lemonsqueezy', subscriptionStatus, accessUntil: '2000-01-01T00:00:00Z' });
     assert.match(existing, /Управлять подпиской/);

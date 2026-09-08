@@ -32,3 +32,12 @@ export function parsePrivilegeUpdate(body: unknown): boolean {
   if (typeof privileged !== 'boolean') throw new Error('Поле privileged должно быть boolean');
   return privileged;
 }
+
+export function parseBlockUpdate(body: unknown): boolean {
+  if (!body || typeof body !== 'object' || !('blocked' in body)) {
+    throw new Error('Поле blocked обязательно');
+  }
+  const blocked = (body as { blocked?: unknown }).blocked;
+  if (typeof blocked !== 'boolean') throw new Error('Поле blocked должно быть boolean');
+  return blocked;
+}

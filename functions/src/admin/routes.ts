@@ -1,8 +1,9 @@
-import { Router } from 'express';
+import { Router, type Response } from 'express';
 import { FieldValue, Timestamp, type DocumentData } from 'firebase-admin/firestore';
 import { requireAdmin, requireAuth, type AuthenticatedRequest } from '../auth/middleware.js';
-import { firestore } from '../firebase/admin.js';
-import { parseAdminUserListQuery, parsePrivilegeUpdate } from '../../../src/server/adminValidation.ts';
+import { ActiveSubscriptionError, deleteUserAccount } from '../auth/accountDeletion.js';
+import { adminAuth, firestore } from '../firebase/admin.js';
+import { parseAdminUserListQuery, parseBlockUpdate, parsePrivilegeUpdate } from '../../../src/server/adminValidation.ts';
 import { loadServerLesson } from '../../../src/server/lessonLoader.ts';
 import { asyncHandler } from '../http/asyncHandler.js';
 
@@ -29,6 +30,39 @@ function entitlementSummary(entitlement: DocumentData): Record<string, unknown> 
   };
 }
 
+async function authSummary(uid: string): Promise<{ disabled: boolean; authExists: boolean }> {
+  try {
+    const user = await adminAuth.getUser(uid);
+    return { disabled: user.disabled, authExists: true };
+  } catch (error) {
+    const code = typeof error === 'object' && error && 'code' in error ? String(error.code) : '';
+    if (code === 'auth/user-not-found') return { disabled: false, authExists: false };
+    throw error;
+  }
+}
+
+async function adminUser(uid: string): Promise<Record<string, unknown>> {
+  const [profileSnapshot, entitlementSnapshot, auth] = await Promise.all([
+    firestore.collection('users').doc(uid).get(),
+    firestore.collection('entitlements').doc(uid).get(),
+    authSummary(uid),
+  ]);
+  const profile = profileSnapshot.data();
+  return {
+    id: uid,
+    email: profile?.email || '',
+    createdAt: iso(profile?.createdAt),
+    ...entitlementSummary(entitlementSnapshot.data() || {}),
+    ...auth,
+  };
+}
+
+function rejectSelfAction(req: AuthenticatedRequest, res: Response): boolean {
+  if (req.params.uid !== req.auth!.uid) return false;
+  res.status(400).json({ success: false, message: 'Администратор не может изменить собственный аккаунт.' });
+  return true;
+}
+
 adminRouter.get('/api/admin/users', async (req, res) => {
   try {
     const parsed = parseAdminUserListQuery(req.query);
@@ -42,16 +76,7 @@ adminRouter.get('/api/admin/users', async (req, res) => {
         .startAt(normalized).endAt(`${normalized}\uf8ff`).offset(parsed.offset).limit(parsed.limit);
     }
     const [snapshot, countSnapshot] = await Promise.all([query.get(), firestore.collection('users').count().get()]);
-    const users = await Promise.all(snapshot.docs.map(async (doc) => {
-      const profile = doc.data();
-      const entitlement = (await firestore.collection('entitlements').doc(doc.id).get()).data() || {};
-      return {
-        id: doc.id,
-        email: profile.email || '',
-        createdAt: iso(profile.createdAt),
-        ...entitlementSummary(entitlement),
-      };
-    }));
+    const users = await Promise.all(snapshot.docs.map((doc) => adminUser(doc.id)));
     res.json({ users, pagination: { total: countSnapshot.data().count, limit: parsed.limit, offset: parsed.offset } });
   } catch (error) {
     res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Некорректный запрос' });
@@ -67,16 +92,39 @@ adminRouter.patch('/api/admin/users/:uid/privilege', async (req: AuthenticatedRe
       updatedByAdmin: req.auth!.uid,
       updatedAt: FieldValue.serverTimestamp(),
     }, { merge: true });
-    const profile = (await firestore.collection('users').doc(req.params.uid).get()).data();
-    const entitlement = (await ref.get()).data() || {};
-    res.json({ user: {
-      id: req.params.uid,
-      email: profile?.email || '',
-      createdAt: iso(profile?.createdAt),
-      ...entitlementSummary(entitlement),
-    } });
+    res.json({ user: await adminUser(req.params.uid) });
   } catch (error) {
     res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Некорректный запрос' });
+  }
+});
+
+adminRouter.patch('/api/admin/users/:uid/block', async (req: AuthenticatedRequest, res) => {
+  if (rejectSelfAction(req, res)) return;
+  try {
+    const blocked = parseBlockUpdate(req.body);
+    await adminAuth.updateUser(req.params.uid, { disabled: blocked });
+    if (blocked) await adminAuth.revokeRefreshTokens(req.params.uid);
+    res.json({ user: await adminUser(req.params.uid) });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error instanceof Error ? error.message : 'Не удалось изменить блокировку.' });
+  }
+});
+
+adminRouter.delete('/api/admin/users/:uid', async (req: AuthenticatedRequest, res) => {
+  if (rejectSelfAction(req, res)) return;
+  try {
+    const result = await deleteUserAccount(req.params.uid);
+    res.json({ success: true, retainedBillingRecords: result.retainedBillingRecords });
+  } catch (error) {
+    if (error instanceof ActiveSubscriptionError) {
+      res.status(409).json({
+        success: false,
+        message: 'Сначала необходимо отменить активную подписку пользователя, затем повторить удаление.',
+      });
+      return;
+    }
+    console.error('Admin account deletion failed', error instanceof Error ? error.message : 'unknown error');
+    res.status(500).json({ success: false, message: 'Не удалось удалить аккаунт пользователя.' });
   }
 });
 

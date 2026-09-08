@@ -23,6 +23,7 @@ import {
 } from './webhook.js';
 import { appUrl, lemonApiKey, lemonStoreId, lemonTestMode, lemonLegacyVariantId, lemonVariantIdMonthly, lemonVariantIdQuarterly, lemonVariantIdYearly, lemonWebhookSecret } from './params.js';
 import { checkoutConfig, checkoutPlan, configuredVariantIds, type PlanVariantIds } from './plans.js';
+import { accountDeletionKey } from '../auth/accountDeletionPolicy.js';
 
 function planVariants(): PlanVariantIds {
   return { monthly: lemonVariantIdMonthly.value(), quarterly: lemonVariantIdQuarterly.value(), yearly: lemonVariantIdYearly.value() };
@@ -77,6 +78,10 @@ billingRouter.post('/api/billing/create-checkout', requireAuth, async (req: Auth
     return;
   }
   try {
+    if (req.auth?.email_verified !== true) {
+      res.status(403).json({ success: false, message: 'Подтвердите e-mail перед оформлением подписки.' });
+      return;
+    }
     const email = req.auth?.email;
     if (!email) {
       res.status(400).json({ success: false, message: 'У аккаунта отсутствует e-mail' });
@@ -140,6 +145,7 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
     const eventName = getWebhookEventName(payload);
     const subscriptionId = getWebhookSubscriptionId(payload);
     let firebaseUid = getWebhookFirebaseUid(payload);
+    let deletedAccountKey: string | null = null;
 
     // Lemon documents checkout custom_data for Order/Subscription objects, but
     // recurring payment events use Subscription Invoice objects. If a payment
@@ -150,6 +156,41 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
       const mapped = await firestore.collection('billingSubscriptions').doc(subscriptionId).get();
       const mappedUid = mapped.data()?.firebaseUid;
       if (typeof mappedUid === 'string' && mappedUid.trim()) firebaseUid = mappedUid.trim();
+      const mappedDeletionKey = mapped.data()?.accountDeletionKey;
+      if (!firebaseUid && typeof mappedDeletionKey === 'string' && mappedDeletionKey.trim()) {
+        deletedAccountKey = mappedDeletionKey.trim();
+      }
+    }
+
+    if (!firebaseUid && deletedAccountKey) {
+      const eventId = webhookHash(rawBody);
+      const eventRef = firestore.collection('billingWebhookEvents').doc(eventId);
+      const deletionRef = firestore.collection('accountDeletions').doc(deletedAccountKey);
+      let duplicate = false;
+      let confirmedDeletion = false;
+      await firestore.runTransaction(async transaction => {
+        const [existing, deletion] = await Promise.all([
+          transaction.get(eventRef),
+          transaction.get(deletionRef),
+        ]);
+        if (existing.exists) {
+          duplicate = true;
+          return;
+        }
+        if (!deletion.exists) return;
+        confirmedDeletion = true;
+        transaction.create(eventRef, {
+          eventName,
+          objectId: subscriptionId,
+          ignoredReason: 'account-deleted',
+          receivedAt: FieldValue.serverTimestamp(),
+          processedAt: FieldValue.serverTimestamp(),
+        });
+      });
+      if (confirmedDeletion || duplicate) {
+        res.status(200).json({ success: true, ignored: true, duplicate });
+        return;
+      }
     }
 
     let hydrated: Record<string, unknown> | undefined;
@@ -171,10 +212,26 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
     const eventId = webhookHash(rawBody);
     const eventRef = firestore.collection('billingWebhookEvents').doc(eventId);
     let duplicate = false;
+    let deletedAccount = false;
     await firestore.runTransaction(async (transaction) => {
-      const existing = await transaction.get(eventRef);
+      const deletionRef = firestore.collection('accountDeletions').doc(accountDeletionKey(update.uid));
+      const [existing, deletion] = await Promise.all([
+        transaction.get(eventRef),
+        transaction.get(deletionRef),
+      ]);
       if (existing.exists) {
         duplicate = true;
+        return;
+      }
+      if (deletion.exists) {
+        deletedAccount = true;
+        transaction.create(eventRef, {
+          eventName: update.eventName,
+          objectId: update.objectId,
+          ignoredReason: 'account-deleted',
+          receivedAt: FieldValue.serverTimestamp(),
+          processedAt: FieldValue.serverTimestamp(),
+        });
         return;
       }
       const entitlementRef = firestore.collection('entitlements').doc(update.uid);
@@ -207,6 +264,10 @@ export async function lemonWebhookHandler(req: FirebaseRawRequest, res: Response
         processedAt: FieldValue.serverTimestamp(),
       });
     });
+    if (deletedAccount) {
+      res.status(200).json({ success: true, ignored: true });
+      return;
+    }
     res.status(200).json({ success: true, duplicate });
   } catch (error) {
     console.error('Lemon webhook processing failed', error instanceof Error ? error.message : 'unknown error');
