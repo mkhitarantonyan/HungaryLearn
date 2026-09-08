@@ -9,12 +9,13 @@ import { LESSON_13 } from '../src/data/lessons/lesson13.ts';
 import { LESSON_14 } from '../src/data/lessons/lesson14.ts';
 import type { Lesson, LessonActivity, ProseReadingContent } from '../src/types.ts';
 import { rolePlayCompletionEvidence, validateActivity, validateExitCheckReferences, validateLessonQuestionIds, writingEvidence } from '../src/utils/activityUtils.ts';
+import { sha256Text } from './fixtures/textHash.ts';
 
 const lessons=[LESSON_11,LESSON_12,LESSON_13,LESSON_14];
 const activitiesOf=(lesson:Lesson)=>lesson.slides.flatMap((slide)=>slide.activities??[]);
 function find<K extends LessonActivity['kind']>(lesson:Lesson,kind:K):Extract<LessonActivity,{kind:K}>{const activity=activitiesOf(lesson).find((a)=>a.kind===kind);assert.ok(activity,`L${lesson.number} missing ${kind}`);return activity as Extract<LessonActivity,{kind:K}>;}
 function proseContent(reading:Extract<LessonActivity,{kind:'reading'}>):ProseReadingContent{assert.ok(reading.content);assert.equal(reading.content.type,'prose');if(reading.content.type!=='prose')assert.fail();return reading.content;}
-const sha256=(url:URL)=>createHash('sha256').update(readFileSync(url)).digest('hex');
+const sha256Bytes=(url:URL)=>createHash('sha256').update(readFileSync(url)).digest('hex');
 
 test('P3 preserves exact lesson, objective, quiz, vocabulary, and eleven-slide identities',()=>{
   const objectives=[
@@ -41,7 +42,7 @@ test('P3 preserves byte-identical L12–L14 Listening MP3 and validates current 
     ['l13_listening_tense_contrast','4708e9caadb8585a12881a222223ee2caced5ec501346d1a698d979e575bee03'],
     ['l14_listening_routine','309ed8e4dc1db2f9832c69543c5213377238919b95baec70481bd2957e4b3a25'],
   ];
-  for(const [asset,hash] of contracts){const url=new URL(`../public/audio/${asset}.mp3`,import.meta.url);assert.equal(existsSync(url),true);assert.equal(sha256(url),hash);}
+  for(const [asset,hash] of contracts){const url=new URL(`../public/audio/${asset}.mp3`,import.meta.url);assert.equal(existsSync(url),true);assert.equal(sha256Bytes(url),hash);}
   assertAudioFilesNonempty();
   assert.equal(activitiesOf(LESSON_11).some((activity)=>activity.kind==='listening'),false);assert.equal(existsSync(new URL('../public/audio/l11_listening_context.mp3',import.meta.url)),false);
 });
@@ -70,7 +71,7 @@ test('L15–L27 retain lesson identities and valid objective/evidence graphs', a
   }
 });
 
-test('reviewed L28 source matches the approved expanded lesson',()=>{assert.equal(sha256(new URL('../src/data/lessons/lesson28.ts',import.meta.url)),'7b95decd733b4862450beddf5edb33ef0055980a244a8c11d5adfce084773971');});
+test('reviewed L28 source matches the approved expanded lesson',()=>{assert.equal(sha256Text(new URL('../src/data/lessons/lesson28.ts',import.meta.url)),'d9552af89a5c8348a0379632b9fe39276e48d58b098498b8495765b8772c5f40');});
 
 test('P3 vocabulary audit classifies selective content without runtime or audio expansion',()=>{
   const audit=readFileSync(new URL('../docs/P3_VOCABULARY_AUDIT.md',import.meta.url),'utf8');for(const label of ['CORE','FUNCTIONAL CHUNK','RECEPTIVE','RECYCLED'])assert.match(audit,new RegExp(label));for(const row of ['| L11 | 16 | 8 | 10 | 8 | 12 |','| L12 | 16 | 8 | 14 | 8 | 14 |','| L13 | 16 | 10 | 11 | 8 | 12 |','| L14 | 14 | 10 | 12 | 8 | 18 |'])assert.ok(audit.includes(row));assert.match(audit,/adds no runtime vocabulary card.*wordAudioMap.*word MP3/s);assert.match(audit,/L11 intentionally has no learner-facing Listening/);

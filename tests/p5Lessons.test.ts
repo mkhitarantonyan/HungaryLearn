@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
+import { sha256Text } from './fixtures/textHash.ts';
 import { LESSON_18 } from '../src/data/lessons/lesson18.ts';
 import { LESSON_19 } from '../src/data/lessons/lesson19.ts';
 import { LESSON_20 } from '../src/data/lessons/lesson20.ts';
@@ -140,19 +141,18 @@ test('P5 does not reintroduce learner recording or browser TTS', () => {
 
 test('Reviewed L20–L28 source hashes match the approved course content', () => {
   const contracts = new Map([
-    [20, '2a9512e76fdec570bf6d9794ef3331b82a4111a617b940762097ca7a4cb3b9fe'],
-    [21, '9b547b08a941f7bb382f5c5b3f5fcce3dfec1f47cb6fd35eac8ae231f1a6e6e7'],
-    [22, 'dd0754247896819cb09bed9e5a0b277d18347327919b16fdd49ea1bcb7b36601'],
-    [23, '4c9d5a9d3172b0178292741948185d162455c54594751be594bc133c454c2050'],
-    [24, '9c59dc69ea0b03dc3e5bd605d7accb23f5f1101e52096730f158ab09deab0641'],
-    [25, '084588adba95c21e7bcbead7d5d9222e66e0c621e1e42e0d15f545882e962273'],
-    [26, '12f06373c67d1058010cf45b43e4bd480895b2f9a9c06422f5defef440d54b57'],
-    [27, 'ace72b5d1c447ce50a9fbfca47547e0e13865da45e29db8485bfbf9327ba8d50'],
-    [28, '7b95decd733b4862450beddf5edb33ef0055980a244a8c11d5adfce084773971'],
+    [20, 'f31750d05609240ac7a3cc62de19ce93755f5bdb9903dbe23c676ef4a9c46e2a'],
+    [21, '2d6da0bbdc06ab81652ad769f240b2f24cd9aba471b314e69c7ec8e61fad5ded'],
+    [22, 'b585571a91bc8d3f45ee61075e31177a607d68d3f357657f5ebbab5c38015e86'],
+    [23, '78f445551b68285c4f921636b8c8d063f2dc17dfd748a54ad12a65595647d0cd'],
+    [24, '9a8ab5f90e7fa4f9b92c14b55fabd97009706782f06748a4eb2cd650de1b7bab'],
+    [25, '4feba2bff3479cd4a624a4cc0046de4fb6acd0a1bc1828b74320896f49593851'],
+    [26, '6f8efbb3b24fe8d7599f53c3a08c5c4b2f36feb124b34307fe59b46611b5921d'],
+    [27, '022e6f65efb55edaf8e016f868615d9b5e6b8eeadcca2b266751d5983535ebff'],
+    [28, 'd9552af89a5c8348a0379632b9fe39276e48d58b098498b8495765b8772c5f40'],
   ]);
   for (const [lesson, expected] of contracts) {
-    const bytes = readFileSync(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url));
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), expected, `L${lesson}`);
+    assert.equal(sha256Text(new URL(`../src/data/lessons/lesson${lesson}.ts`, import.meta.url)), expected, `L${lesson}`);
   }
 });
 

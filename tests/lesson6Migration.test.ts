@@ -1,8 +1,8 @@
 import { assertSlideAudioManifest, lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
+import { sha256Text } from './fixtures/textHash.ts';
 import { LESSON_6 } from '../src/data/lessons/lesson6.ts';
 import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 import type { ActivityEvidence, LessonActivity } from '../src/types.ts';
@@ -18,7 +18,7 @@ import {
 } from '../src/utils/activityUtils.ts';
 
 function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
+  return sha256Text(url).toUpperCase();
 }
 
 const L6_ACTIVITIES = LESSON_6.slides.flatMap((slide) => slide.activities ?? []);

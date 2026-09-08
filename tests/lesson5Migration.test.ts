@@ -1,8 +1,8 @@
 import { lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
+import { sha256Text } from './fixtures/textHash.ts';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { LESSON_2 } from '../src/data/lessons/lesson2.ts';
@@ -26,7 +26,7 @@ import {
 } from '../src/components/activities/QuestionSet.tsx';
 
 function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
+  return sha256Text(url).toUpperCase();
 }
 
 const L5_ACTIVITIES = LESSON_5.slides.flatMap((slide) => slide.activities ?? []);

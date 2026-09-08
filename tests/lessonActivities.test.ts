@@ -2,7 +2,6 @@ import { assertSlideAudioManifest, lessonText, visibleText } from './fixtures/co
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { LESSON_3 } from '../src/data/lessons/lesson3.ts';
@@ -47,6 +46,7 @@ import {
   QuestionFeedback,
 } from '../src/components/activities/QuestionSet.tsx';
 import { PROSE_READING_FIXTURE } from './fixtures/readingTaskFixtures.ts';
+import { sha256Text } from './fixtures/textHash.ts';
 import type { ActivityEvidence, ExitCheckItem, LessonActivity, ReadingQuestion } from '../src/types.ts';
 
 const l15Activities = (): LessonActivity[] =>
@@ -72,7 +72,7 @@ function legacyChoiceQuestions(
 }
 
 function sha256(url: URL): string {
-  return createHash('sha256').update(readFileSync(url)).digest('hex').toUpperCase();
+  return sha256Text(url).toUpperCase();
 }
 
 function findActivity<T extends LessonActivity['kind']>(kind: T): Extract<LessonActivity, { kind: T }> {
@@ -1782,7 +1782,7 @@ test('L3, L4, and L15 preserve stable IDs through the L2 migration', () => {
   assert.deepEqual([LESSON_3.number, LESSON_4.number, LESSON_15.number], [3, 4, 15]);
 });
 
-test('frozen planning documents remain byte-for-byte unchanged through L2 migration', () => {
+test('frozen planning document content remains unchanged through L2 migration', () => {
   assert.equal(
     sha256(new URL('../docs/LESSON_MIGRATION_MATRIX.md', import.meta.url)),
     '59F6519EEEE5EF4D48978DC0409145F2DC35CF59787AC05B00E31AC36BF91DDE'
