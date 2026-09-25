@@ -4,6 +4,7 @@ import { lessonRouter } from './lessons/routes.js';
 import { progressRouter } from './progress/routes.js';
 import { adminRouter } from './admin/routes.js';
 import { audioRouter } from './audio/routes.js';
+import { organizationRouter } from './organizations/routes.js';
 
 export const app = express();
 app.disable('x-powered-by');
@@ -17,6 +18,7 @@ app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'hungarylear
 app.use(authRouter);
 app.use(lessonRouter);
 app.use(progressRouter);
+app.use(organizationRouter);
 app.use(adminRouter);
 
 app.use('/api', (_req, res) => res.status(404).json({ success: false, message: 'API endpoint not found' }));

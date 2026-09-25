@@ -12,6 +12,8 @@ import AdminLessons from './pages/admin/AdminLessons';
 import AdminContent from './pages/admin/AdminContent';
 import AdminAudio from './pages/admin/AdminAudio';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminOrganizations from './pages/admin/AdminOrganizations';
+import AdminOrganizationDetail from './pages/admin/AdminOrganizationDetail';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -44,6 +46,8 @@ export default function AppRoutes() {
         >
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path="organizations" element={<AdminOrganizations />} />
+          <Route path="organizations/:organizationId" element={<AdminOrganizationDetail />} />
           <Route path="lessons" element={<AdminLessons />} />
           <Route path="content" element={<AdminContent />} />
           <Route path="audio" element={<AdminAudio />} />

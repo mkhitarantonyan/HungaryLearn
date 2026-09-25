@@ -5,6 +5,8 @@ import { getLessonVocabulary } from '../utils/lessonQuizAndVocab';
 import { getCanonicalCardIdForVocabulary } from '../data/vocabularyCatalog';
 import { SpeechButton } from './SpeechButton';
 import { X, RotateCcw, Check, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useI18n } from '../i18n';
+import { getLocalizedWordTranslation } from '../i18n/content';
 
 interface WordTrainerModalProps {
   isOpen: boolean;
@@ -14,6 +16,7 @@ interface WordTrainerModalProps {
 }
 
 export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onClose, lesson, onGrade }) => {
+  const { language, t } = useI18n();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -26,7 +29,7 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
 
   if (!isOpen) return null;
 
-  const vocabulary = lesson ? getLessonVocabulary(lesson) : [];
+  const vocabulary = lesson ? getLessonVocabulary(lesson, language) : [];
   
   if (vocabulary.length === 0) {
     return (
@@ -35,8 +38,8 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
           <button onClick={onClose} className="absolute top-4 right-4 p-2 text-[#116EEE]">
             <X className="w-5 h-5" />
           </button>
-          <h3 className="text-xl font-bold font-mono text-[#252B2F] mb-2">Слова не найдены</h3>
-          <p className="text-sm text-[#666E7E]">Для этого урока пока нет сохраненных карточек слов.</p>
+          <h3 className="text-xl font-bold font-mono text-[#252B2F] mb-2">{t('trainer.wordsMissing')}</h3>
+          <p className="text-sm text-[#666E7E]">{t('trainer.wordsMissingBody')}</p>
         </div>
       </div>
     );
@@ -77,14 +80,14 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
           <div>
             <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5" />
-              <span id="word-trainer-title">Тренажёр слов · Урок {lesson?.number || 1} ({vocabulary.length} карточек)</span>
+              <span id="word-trainer-title">{t('trainer.wordsTitle', { lesson: lesson?.number || 1, count: vocabulary.length })}</span>
             </div>
-            <div className="text-sm font-bold text-[#252B2F]">Категория: {currentWord.category || lesson?.title}</div>
+            <div className="text-sm font-bold text-[#252B2F]">{t('trainer.category', { category: currentWord.category || lesson?.title || '' })}</div>
           </div>
 
           <button 
             onClick={onClose}
-            aria-label="Закрыть"
+            aria-label={t('common.close')}
             className="p-2 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -109,7 +112,7 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
 
             <div className="text-xs text-[#C77B00] font-mono absolute top-4 right-4 flex items-center gap-1">
               <RotateCcw className="w-3 h-3" />
-              <span>Кликните для перевода</span>
+              <span>{t('trainer.flip')}</span>
             </div>
 
             {!isFlipped ? (
@@ -122,21 +125,21 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
                   {currentWord.ipa && <span className="ml-2 text-gray-400">/ {currentWord.ipa}</span>}
                 </div>
                 <div className="pt-2">
-                  <SpeechButton text={currentWord.hu} label="Послушать 🔊" variant="primary" />
+                  <SpeechButton text={currentWord.hu} label={t('trainer.listen')} variant="primary" />
                 </div>
               </motion.div>
             ) : (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
                 <div className="text-2xl md:text-3xl font-sans font-bold text-[#3B1E90]">
-                  {currentWord.ru}
+                  {getLocalizedWordTranslation(currentWord, language)}
                 </div>
                 {currentWord.exampleSentence && (
                   <div className="text-xs text-[#666E7E] italic font-mono max-w-xs">
-                    Пример: {currentWord.exampleSentence}
+                    {t('trainer.example', { example: currentWord.exampleSentence })}
                   </div>
                 )}
                 <div className="pt-2">
-                  <SpeechButton text={currentWord.hu} label="Послушать 🔊" />
+                  <SpeechButton text={currentWord.hu} label={t('trainer.listen')} />
                 </div>
               </motion.div>
             )}
@@ -146,7 +149,7 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
         <div className="flex items-center justify-between gap-3 pt-2">
           <button
             onClick={handlePrev}
-            aria-label="Предыдущая карточка"
+            aria-label={t('trainer.previous')}
             className="p-3 rounded-xl border border-[#D6DEE6] bg-white hover:bg-[#EDF4FB] text-[#252B2F] transition-colors cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -157,20 +160,20 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
               onClick={() => markKnown(false)}
               className="flex-1 py-3 px-2 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs md:text-sm font-semibold hover:bg-red-100 transition-colors cursor-pointer"
             >
-              Ещё повторить
+              {t('trainer.again')}
             </button>
             <button
               onClick={() => markKnown(true)}
               className="flex-1 py-3 px-2 rounded-xl bg-[#3B1E90] text-white text-xs md:text-sm font-semibold hover:bg-[#3B1E90]/90 transition-colors cursor-pointer flex items-center justify-center gap-1"
             >
               <Check className="w-4 h-4" />
-              <span>Знаю слово</span>
+              <span>{t('trainer.know')}</span>
             </button>
           </div>
 
           <button
             onClick={handleNext}
-            aria-label="Следующая карточка"
+            aria-label={t('trainer.next')}
             className="p-3 rounded-xl border border-[#D6DEE6] bg-white hover:bg-[#EDF4FB] text-[#252B2F] transition-colors cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />

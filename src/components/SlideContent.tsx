@@ -5,9 +5,11 @@ import { SlideData, LearningObjective, ActivityAttempt, ActivityEvidence, Activi
 import { SpeechButton } from './SpeechButton';
 import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
-import { playRecordedAudio } from '../utils/speech';
+import { playPronunciationAudio } from '../utils/speech';
 import { humanizeLearnerHtml, humanizeLearnerText } from '../utils/learnerCopy';
 import { Info, AlertTriangle, BookOpen, Eye, EyeOff } from 'lucide-react';
+import { useI18n } from '../i18n';
+import { getLocalizedWordTranslation } from '../i18n/content';
 
 interface SlideContentProps {
   slide: SlideData;
@@ -28,6 +30,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
   activityRuntime,
   onActivityRuntimeChange,
 }) => {
+  const { language, t } = useI18n();
   // Local state for interactive word cards reveal
   const [revealedWords, setRevealedWords] = useState<Record<string, boolean>>({});
   const [hideAllTranslations, setHideAllTranslations] = useState(false);
@@ -43,16 +46,17 @@ export const SlideContent: React.FC<SlideContentProps> = ({
     const text = btn.dataset.speakText;
     if (text) {
       setAudioUnavailable(false);
-      playRecordedAudio(text, undefined, undefined, () => setAudioUnavailable(true));
+      playPronunciationAudio(text, undefined, undefined, () => setAudioUnavailable(true));
     }
   };
 
-  const first10 = VOCABULARY_LIST.filter(v => v.category === 'Первые слова');
+  const firstCategory = VOCABULARY_LIST[0]?.category;
+  const first10 = VOCABULARY_LIST.filter(v => v.category === firstCategory);
 
   return (
     <div className="space-y-4">
       {audioUnavailable && (
-        <p className="text-xs text-red-700" role="alert">Записанное аудио недоступно.</p>
+        <p className="text-xs text-red-700" role="alert">{t('slide.audioUnavailable')}</p>
       )}
       {slide.body && (
         <div
@@ -66,14 +70,14 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         <div className="space-y-4 pt-2">
           <div className="flex items-center justify-between bg-white/60 p-3 rounded-xl border border-[#D6DEE6]">
             <span className="text-xs font-mono font-semibold text-[#666E7E]">
-              Тренажёр карточек (10 главных слов)
+              {t('slide.cardTrainer')}
             </span>
             <button
               onClick={() => setHideAllTranslations(!hideAllTranslations)}
               className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-semibold bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors cursor-pointer"
             >
               {hideAllTranslations ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-              <span>{hideAllTranslations ? "Показать всё" : "Скрыть переводы"}</span>
+              <span>{hideAllTranslations ? t('slide.showAll') : t('slide.hideTranslations')}</span>
             </button>
           </div>
 
@@ -98,10 +102,10 @@ export const SlideContent: React.FC<SlideContentProps> = ({
                   <div className="text-xs font-medium font-sans">
                     {isHidden ? (
                       <span className="text-[#666E7E] italic border-b border-dashed border-[#666E7E]">
-                        клик для ответа
+                        {t('slide.clickAnswer')}
                       </span>
                     ) : (
-                      <span className="text-[#3B1E90] font-bold">— {item.ru}</span>
+                      <span className="text-[#3B1E90] font-bold">— {getLocalizedWordTranslation(item, language)}</span>
                     )}
                   </div>
                 </div>
@@ -114,8 +118,8 @@ export const SlideContent: React.FC<SlideContentProps> = ({
       {/* Legacy read-aloud slide: optional text-only self-practice, never evidence. */}
       {slide.type === 'sentence-reading' && (
         <div className="rounded-2xl border border-[#D6DEE6] bg-[#EDF4FB]/70 p-4 space-y-2">
-          <p className="font-mono text-sm font-bold text-[#252B2F]">Устная практика (необязательно)</p>
-          <p className="text-xs text-[#435064]">Прочитай фразу вслух и сравни своё произношение с примерами урока.</p>
+          <p className="font-mono text-sm font-bold text-[#252B2F]">{t('slide.speakingTitle')}</p>
+          <p className="text-xs text-[#435064]">{t('slide.speakingInstructions')}</p>
           <p className="font-mono text-sm text-[#252B2F]">{slide.targetText || "Budapesten élek, és nagyon szeretek magyarul tanulni."}</p>
           {slide.targetPhonetic && <p className="text-xs text-[#666E7E]">{slide.targetPhonetic}</p>}
           {slide.targetTranslation && <p className="text-xs text-[#3B1E90]">{slide.targetTranslation}</p>}
@@ -132,7 +136,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
               {slide.optionalSpeaking.rubric.map((item) => <li key={item}>{humanizeLearnerText(item)}</li>)}
             </ul>
           )}
-          <p className="text-xs text-[#666E7E]">Необязательная самопрактика: произнеси ответ вслух и сравни его с примерами урока.</p>
+          <p className="text-xs text-[#666E7E]">{t('slide.speakingNote')}</p>
         </section>
       )}
 

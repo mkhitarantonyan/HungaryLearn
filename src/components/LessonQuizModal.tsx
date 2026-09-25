@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Lesson } from '../types';
 import { getLessonQuiz } from '../utils/lessonQuizAndVocab';
 import { CheckCircle2, XCircle, Award, RotateCcw, ArrowRight, HelpCircle } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface LessonQuizModalProps {
   onClose: () => void;
@@ -11,6 +12,7 @@ interface LessonQuizModalProps {
 }
 
 export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesson, onQuizComplete }) => {
+  const { language, t } = useI18n();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -29,24 +31,24 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
 
   useEffect(() => {
     if (isCompleted && lesson && onQuizComplete) {
-      const total = getLessonQuiz(lesson).length;
+      const total = getLessonQuiz(lesson, language).length;
       onQuizComplete(lesson.number, score, total, answers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompleted]);
 
-  const questions = lesson ? getLessonQuiz(lesson) : [];
+  const questions = lesson ? getLessonQuiz(lesson, language) : [];
 
   if (questions.length === 0) {
     return (
       <div className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl p-6 max-w-xl mx-auto space-y-5 shadow-xl text-center">
-        <h3 className="text-xl font-bold font-mono text-[#252B2F]">Тест для этого урока ещё не опубликован</h3>
-        <p className="text-sm text-[#666E7E]">Вопросы для этого урока пока не добавлены.</p>
+        <h3 className="text-xl font-bold font-mono text-[#252B2F]">{t('quiz.unavailable')}</h3>
+        <p className="text-sm text-[#666E7E]">{t('quiz.unavailableBody')}</p>
         <button
           onClick={onClose}
           className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm cursor-pointer"
         >
-          Вернуться к слайдам
+          {t('quiz.back')}
         </button>
       </div>
     );
@@ -96,17 +98,17 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
           <Award className="w-10 h-10" />
         </div>
         <h3 className="text-2xl font-bold font-mono text-[#252B2F]">
-          {passed ? 'Тест пройден!' : 'Тест завершён'}
+          {passed ? t('quiz.passed') : t('quiz.completed')}
         </h3>
-        <p className="text-xs font-mono text-[#C77B00] uppercase font-bold">Урок {lesson?.number}: {lesson?.title}</p>
+        <p className="text-xs font-mono text-[#C77B00] uppercase font-bold">{t('quiz.lessonResult', { lesson: lesson?.number || 1, title: lesson?.title || '' })}</p>
         <p className="text-sm text-[#252B2F]">
-          Вы правильно ответили на <strong className="text-[#116EEE]">{score} из {questions.length}</strong> вопросов ({percentage}%).
+          {t('quiz.scoreSummary', { score, total: questions.length, percentage })}
         </p>
 
         <div className="p-4 bg-white rounded-xl border border-[#D6DEE6] text-xs text-[#666E7E]">
           {passed
-            ? 'Отличный результат! Порог этой проверки достигнут.'
-            : 'Хорошая попытка! Рекомендуем просмотреть слайды ещё раз для закрепления.'}
+            ? t('quiz.passFeedback')
+            : t('quiz.retryFeedback')}
         </div>
 
         <div className="flex justify-center gap-3">
@@ -115,13 +117,13 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#116EEE] text-[#116EEE] font-semibold text-xs md:text-sm hover:bg-[#116EEE]/10 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Пройти заново</span>
+            <span>{t('quiz.restart')}</span>
           </button>
           <button
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm hover:bg-[#0D5ED0] cursor-pointer"
           >
-            Вернуться к слайдам
+            {t('quiz.back')}
           </button>
         </div>
       </div>
@@ -133,9 +135,9 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
       <div className="flex items-center justify-between pb-3 border-b border-[#D6DEE6]">
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#116EEE]">
           <HelpCircle className="w-4 h-4" />
-          <span>Тест Урока {lesson?.number || 1} (Вопрос {currentIdx + 1} из {questions.length})</span>
+          <span>{t('quiz.progress', { lesson: lesson?.number || 1, current: currentIdx + 1, total: questions.length })}</span>
         </div>
-        <span className="text-xs font-mono text-[#666E7E]">Счёт: {score}</span>
+        <span className="text-xs font-mono text-[#666E7E]">{t('quiz.score', { score })}</span>
       </div>
 
       <h4 className="text-base md:text-lg font-bold text-[#252B2F] font-mono leading-snug">
@@ -177,14 +179,14 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
       {showExplanation && (
         <motion.div initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="space-y-3 pt-2">
           <div className="p-3.5 rounded-xl bg-[#3B1E90]/10 border border-[#3B1E90]/30 text-xs text-[#3B1E90] leading-relaxed">
-            <strong>Пояснение:</strong> {question.explanation}
+            <strong>{t('quiz.explanation')}</strong> {question.explanation}
           </div>
 
           <button
             onClick={handleNext}
             className="w-full py-3 rounded-xl bg-[#116EEE] text-white font-semibold text-xs md:text-sm hover:bg-[#0D5ED0] transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>{currentIdx + 1 < questions.length ? 'Следующий вопрос' : 'Посмотреть результаты'}</span>
+            <span>{currentIdx + 1 < questions.length ? t('quiz.nextQuestion') : t('quiz.results')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>

@@ -62,7 +62,8 @@ test('commercial UI uses shared pricing and has no legacy price; portal uses pro
   const pricing = read('src/pages/PricingPage.tsx');
   const modal = read('src/components/UserAuthModal.tsx');
   assert.doesNotMatch(pricing + modal + read('src/pages/LegalPages.tsx'), /44[, .]?500|44500|One simple Premium plan/);
-  assert.match(pricing, /BILLING_PLANS\.map/);
+  assert.match(pricing, /getBillingPlans\(language\)/);
+  assert.match(pricing, /billingPlans\.map/);
   assert.match(pricing, /lg:grid-cols-3/);
   assert.match(modal, /useState<BillingPlanKey>\('quarterly'\)/);
   assert.match(modal, /createLemonCheckout\(selectedPlan\)/);

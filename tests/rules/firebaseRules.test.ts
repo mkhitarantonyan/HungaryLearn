@@ -75,3 +75,24 @@ test('admin custom claim can read account data but still cannot write entitlemen
   await assertSucceeds(getDoc(doc(db, 'entitlements/alice')));
   await assertFails(setDoc(doc(db, 'entitlements/alice'), { subscriptionStatus: 'active' }));
 });
+
+test('organization licensing collections are inaccessible to browser clients', async () => {
+  const collections = [
+    'organizations',
+    'organizationLicenses',
+    'organizationSeats',
+    'organizationAccessKeys',
+    'organizationAuditLogs',
+    'organizationRedeemLimits',
+    'organizationSeatGuards',
+  ];
+  for (const claims of [undefined, { admin: true }]) {
+    const db = claims
+      ? (await env()).authenticatedContext('admin-user', claims).firestore()
+      : (await env()).authenticatedContext('alice').firestore();
+    for (const collection of collections) {
+      await assertFails(getDoc(doc(db, collection, 'sample')));
+      await assertFails(setDoc(doc(db, collection, 'sample'), { forged: true }));
+    }
+  }
+});

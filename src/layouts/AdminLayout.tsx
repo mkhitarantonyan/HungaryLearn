@@ -11,6 +11,7 @@ import {
   GraduationCap,
   AudioLines,
   Languages,
+  Building2,
 } from 'lucide-react';
 import { getAdminAuthSnapshot, logoutAdmin, subscribeAdminAuthState } from '../utils/adminStore';
 import { AdminDataProvider } from '../admin/AdminDataContext';
@@ -18,6 +19,7 @@ import { AdminDataProvider } from '../admin/AdminDataContext';
 const NAV_ITEMS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/admin/users', label: 'Пользователи', icon: Users, end: false },
+  { to: '/admin/organizations', label: 'Организации', icon: Building2, end: false },
   { to: '/admin/lessons', label: 'Уроки', icon: BookOpen, end: false },
   { to: '/admin/content', label: 'Слова и переводы', icon: Languages, end: false },
   { to: '/admin/audio', label: 'Озвучка', icon: AudioLines, end: false },
@@ -27,6 +29,7 @@ const NAV_ITEMS = [
 const PAGE_TITLES: Record<string, string> = {
   '/admin': 'Обзор',
   '/admin/users': 'Пользователи',
+  '/admin/organizations': 'Организации',
   '/admin/lessons': 'Уроки',
   '/admin/content': 'Слова и переводы',
   '/admin/audio': 'Озвучка',
@@ -123,7 +126,7 @@ export default function AdminLayout() {
   useEffect(() => subscribeAdminAuthState((snapshot) => setAdminEmail(snapshot.email)), []);
 
   const pageTitle = useMemo(
-    () => PAGE_TITLES[location.pathname] ?? 'Администрирование',
+    () => PAGE_TITLES[location.pathname] ?? (location.pathname.startsWith('/admin/organizations/') ? 'Организация' : 'Администрирование'),
     [location.pathname]
   );
 

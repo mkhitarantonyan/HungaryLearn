@@ -37,6 +37,11 @@ export interface UserProfile {
   provider?: BillingProvider;
   cancelAtPeriodEnd?: boolean;
   paidAccess: boolean;
+  organizationAccess?: {
+    status: 'scheduled' | 'active' | 'paused' | 'expired' | 'cancelled' | 'inactive';
+    organizationName: string;
+    accessUntil: string;
+  } | null;
 }
 
 export interface UserProgressData {
@@ -333,6 +338,23 @@ export async function syncProgressToServer(viewedSlides: string[]): Promise<bool
     })).ok;
   }
   catch { return false; }
+}
+
+export async function redeemOrganizationAccessKey(code: string): Promise<{ success: boolean; message: string; user?: UserProfile }> {
+  if (!code.trim()) return { success: false, message: 'Введите код организации.' };
+  try {
+    await apiJson('/api/auth/redeem-organization-key', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: code.trim() }),
+    });
+    const user = await checkUserSessionServer();
+    return user
+      ? { success: true, message: 'Код активирован. Организационный Premium-доступ подключён.', user }
+      : { success: false, message: 'Код активирован, но профиль не удалось обновить.' };
+  } catch (error) {
+    return { success: false, message: error instanceof ApiRequestError ? error.message : 'Не удалось активировать код организации.' };
+  }
 }
 export async function syncResumePositionsToServer(resumePositions: LessonResumePositions): Promise<boolean> {
   if (!currentUser) return false;

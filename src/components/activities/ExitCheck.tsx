@@ -6,23 +6,14 @@ import {
   describeExitCheckStatus,
   type EvidenceStatus,
 } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY, formatActivityCopy } from '../../i18n/activityCopy';
 
 interface ExitCheckProps {
   data: ExitCheckData;
   evidence: Record<string, ActivityEvidence>;
   objectives?: LearningObjective[];
 }
-
-const EVIDENCE_LABELS: Record<EvidenceKind, string> = {
-  reading: 'Чтение',
-  listening: 'Аудирование',
-  grammar: 'Грамматика',
-  vocabulary: 'Лексика',
-  speaking: 'Говорение',
-  interaction: 'Диалог',
-  writing: 'Письмо',
-  pronunciation: 'Произношение',
-};
 
 interface StatusView {
   label: string;
@@ -36,51 +27,54 @@ interface StatusView {
  * as "met" — speaking/writing require human review (no fake auto-scoring).
  */
 export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
+  const evidenceLabels: Record<EvidenceKind, string> = copy.evidence;
   const objectiveById = new Map((objectives ?? []).map((o) => [o.id, o]));
 
   const statusViewOf = (status: EvidenceStatus): StatusView => {
     switch (status.kind) {
       case 'direct-met':
         return {
-          label: 'Готово',
+          label: copy.ready,
           tone: 'text-emerald-700',
           icon: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
         };
       case 'direct-not-met':
         return {
-          label: 'Попробуй ещё раз',
+          label: copy.tryAgain,
           tone: 'text-[#C77B00]',
           icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'none':
         return {
-          label: 'Пока недоступно',
+          label: copy.unavailable,
           tone: 'text-[#C77B00]',
           icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'composite-incomplete':
       case 'partial-components':
         return {
-          label: 'Нужно завершить задания',
+          label: copy.completeTasks,
           tone: 'text-[#C77B00]',
           icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'partial-review':
         return {
-          label: 'Лучше проверить с преподавателем',
+          label: copy.teacherReview,
           tone: 'text-[#C77B00]',
           icon: <AlertCircle className="w-4 h-4 text-[#C77B00]" />,
         };
       case 'partial-incomplete':
         return {
-          label: 'Не завершено',
+          label: copy.incomplete,
           tone: 'text-[#666E7E]',
           icon: <Circle className="w-4 h-4 text-[#D6DEE6]" />,
         };
       case 'not-started':
       default:
         return {
-          label: 'Не начато',
+          label: copy.notStarted,
           tone: 'text-[#666E7E]',
           icon: <Circle className="w-4 h-4 text-[#D6DEE6]" />,
         };
@@ -92,13 +86,12 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
       <div className="flex items-center gap-2">
         <ClipboardCheck className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Проверка урока'}
+          {data.title ?? copy.exitTitle}
         </h3>
       </div>
 
       <p className="text-xs text-[#666E7E]">
-        Посмотри, что уже получилось. Зелёная отметка означает, что задание выполнено успешно.
-        Письмо и свободную речь лучше дополнительно показать преподавателю или носителю языка.
+        {copy.exitIntro}
       </p>
 
       <ul className="space-y-2" aria-live="polite">
@@ -122,13 +115,13 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                   {objective ? objective.text : check.objectiveId}
                 </p>
                 <p className="text-[11px] text-[#666E7E] mt-0.5">
-                  <span className="font-mono">{EVIDENCE_LABELS[check.evidenceKind]}</span>
+                  <span className="font-mono">{evidenceLabels[check.evidenceKind]}</span>
                 </p>
                 {hasComponentBreakdown && (
                   <div className="mt-2 space-y-1 text-[11px] text-[#435064]">
                     <p>
                       <span className="font-mono font-semibold">
-                        {EVIDENCE_LABELS[check.evidenceKind]}
+                        {evidenceLabels[check.evidenceKind]}
                       </span>
                       {' · '}
                       <span className={primaryStatus.tone}>{primaryStatus.label}</span>
@@ -140,7 +133,7 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                       return (
                         <p key={`${component.activityId}-${component.evidenceKind}`}>
                           <span className="font-mono font-semibold">
-                            {EVIDENCE_LABELS[component.evidenceKind]}
+                            {evidenceLabels[component.evidenceKind]}
                           </span>
                           {' · '}
                           <span className={componentStatus.tone}>{componentStatus.label}</span>
@@ -149,16 +142,16 @@ export const ExitCheck: React.FC<ExitCheckProps> = ({ data, evidence, objectives
                     })}
                     {practiceComponents.map((component) => (
                       <p key={component}>
-                        <span className="font-mono font-semibold">{EVIDENCE_LABELS[component]}</span>
+                        <span className="font-mono font-semibold">{evidenceLabels[component]}</span>
                         {' · '}
-                        <span className="text-[#666E7E]">Дополнительная практика</span>
+                        <span className="text-[#666E7E]">{copy.extraPractice}</span>
                       </p>
                     ))}
                   </div>
                 )}
               </div>
               <span className={`ml-auto min-w-0 max-w-[45%] text-right text-[10px] font-mono uppercase font-bold [overflow-wrap:anywhere] ${overallStatus.tone}`}>
-                {hasComponentBreakdown ? `Итог: ${overallStatus.label}` : overallStatus.label}
+                {hasComponentBreakdown ? formatActivityCopy(copy.total, { status: overallStatus.label }) : overallStatus.label}
               </span>
             </li>
           );

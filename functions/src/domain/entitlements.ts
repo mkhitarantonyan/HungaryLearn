@@ -46,6 +46,22 @@ export function hasPaidAccess(
   return false;
 }
 
+export function evaluateAccessSources(
+  entitlement: Entitlement | null | undefined,
+  organizationGranted: boolean,
+  now = new Date(),
+  expectedTestMode?: boolean,
+) {
+  const privileged = entitlement?.isPrivileged === true;
+  const lemon = !privileged && hasPaidAccess(entitlement, now, expectedTestMode);
+  return {
+    privileged,
+    lemon,
+    organization: organizationGranted,
+    paidAccess: privileged || lemon || organizationGranted,
+  };
+}
+
 export function normalizeLemonStatus(rawStatus: string, cancelled = false): SubscriptionStatus {
   if (rawStatus === 'on_trial') return 'unpaid';
   if (cancelled || rawStatus === 'cancelled') return 'cancelled';

@@ -7,6 +7,8 @@ import {
   restoreRolePlayTurnId,
   rolePlayCompletionEvidence,
 } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY } from '../../i18n/activityCopy';
 
 interface RolePlayProps {
   data: RolePlayData;
@@ -23,6 +25,8 @@ interface RolePlayProps {
  * or text-only self-practice. No learner audio is captured or evaluated.
  */
 export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, runtime, onRuntimeChange }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const [currentTurnId, setCurrentTurnId] = useState<string>(() => restoreRolePlayTurnId(data, runtime));
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isEnded, setIsEnded] = useState<boolean>(() => evidence?.completed === true);
@@ -52,15 +56,15 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         <div className="flex items-center gap-2">
           <MessageCircle className="w-4 h-4 text-[#116EEE]" />
           <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-            {data.title ?? 'Ролевая игра'}
+            {data.title ?? copy.rolePlay}
           </h3>
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5" /> Сценарий пройден
+            <CheckCircle2 className="w-3.5 h-3.5" /> {copy.scenarioComplete}
           </span>
         </div>
         <p className="text-sm text-[#252B2F]">
           {data.completionMessage ??
-            'Отличная работа! Ты выполнил(а) сценарий: заказ, реакция на отказ и просьба счёта.'}
+            copy.scenarioMessage}
         </p>
       </div>
     );
@@ -88,11 +92,11 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
       <div className="flex items-center gap-2">
         <MessageCircle className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Ролевая игра'}
+          {data.title ?? copy.rolePlay}
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold">
-            ✓ Сценарий пройден
+            ✓ {copy.scenarioComplete}
           </span>
         )}
       </div>
@@ -112,7 +116,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
           <div className="flex justify-start">
             <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white border border-[#D6DEE6] p-3 shadow-2xs">
               <div className="text-[10px] font-mono uppercase tracking-wider text-[#C77B00] font-bold mb-1">
-                {data.partnerLabel ?? 'Pincér · Официант'}
+                {data.partnerLabel ?? copy.partner}
               </div>
               <p className="text-sm md:text-base text-[#252B2F]">{turn.prompt}</p>
             </div>
@@ -123,7 +127,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
           <div className="flex justify-end">
             <div className="w-full max-w-[90%] rounded-2xl rounded-tr-sm bg-[#3B1E90]/10 border border-[#3B1E90]/30 p-3">
               <div className="text-[10px] font-mono uppercase tracking-wider text-[#3B1E90] font-bold mb-1">
-                Te · Ты
+                {copy.learner}
               </div>
               {turn.prompt && <p className="text-xs text-[#666E7E] mb-2">{turn.prompt}</p>}
               {turn.model && (
@@ -131,14 +135,12 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
               )}
               {isSelfPractice && (
                 <p className="text-xs text-[#666E7E]">
-                  Произнеси ответ вслух и сравни его с примером. Если можешь, попроси преподавателя
-                  или носителя дать обратную связь.
+                  {copy.selfPractice}
                 </p>
               )}
               {isSystemCategory && (
                 <p className="text-xs text-[#666E7E]">
-                  Эту реплику лучше проверить с преподавателем или носителем — они помогут оценить
-                  естественность и произношение.
+                  {copy.naturalReview}
                 </p>
               )}
             </div>
@@ -175,7 +177,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
             onClick={() => advanceTo(turn.next)}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#116EEE] text-white text-xs md:text-sm font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 cursor-pointer"
           >
-            <span>{isLearner ? 'Я ответил(а) — дальше' : 'Дальше'}</span>
+            <span>{isLearner ? copy.answeredNext : copy.next}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

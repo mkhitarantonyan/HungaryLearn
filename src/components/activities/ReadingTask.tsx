@@ -9,6 +9,8 @@ import type {
 } from '../../types';
 import { readingEvidence, resolveReadingContent } from '../../utils/activityUtils';
 import { QuestionSet } from './QuestionSet';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY } from '../../i18n/activityCopy';
 
 interface ReadingTaskProps {
   data: ReadingTaskData;
@@ -71,15 +73,16 @@ const MenuContentView: React.FC<MenuContentViewProps> = ({ activityId, content }
 interface ProseContentViewProps {
   activityId: string;
   content: ProseReadingContent;
+  fallbackTitle: string;
 }
 
-const ProseContentView: React.FC<ProseContentViewProps> = ({ activityId, content }) => {
+const ProseContentView: React.FC<ProseContentViewProps> = ({ activityId, content, fallbackTitle }) => {
   const headingId = activityId + '-prose-title';
   return (
     <article
       className="min-w-0 rounded-xl border border-[#D6DEE6] bg-white p-4 md:p-5"
       aria-labelledby={content.title ? headingId : undefined}
-      aria-label={content.title ? undefined : 'Текст для чтения'}
+      aria-label={content.title ? undefined : fallbackTitle}
     >
       {content.title && (
         <h4 id={headingId} className="font-mono font-bold text-[#116EEE] text-sm md:text-base mb-3">
@@ -106,9 +109,11 @@ const ProseContentView: React.FC<ProseContentViewProps> = ({ activityId, content
  * content is exposure. Direct evidence comes only from scored questions.
  */
 export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvidence, onResetEvidence }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const content = resolveReadingContent(data);
   const passCount = data.passCount ?? 3;
-  const defaultTitle = content.type === 'menu' ? 'Чтение: меню' : 'Чтение: текст';
+  const defaultTitle = content.type === 'menu' ? copy.readingMenu : copy.readingProse;
 
   const handleAllAnswered = (score: number, total: number, answers: Record<string, number | string>) => {
     const result = readingEvidence(score, total, passCount);
@@ -127,7 +132,7 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · {evidence.passed ? 'Готово' : 'Попробуй ещё раз'}
+            {evidence.score}/{evidence.total} · {evidence.passed ? copy.ready : copy.tryAgain}
           </span>
         )}
       </div>
@@ -141,7 +146,7 @@ export const ReadingTask: React.FC<ReadingTaskProps> = ({ data, evidence, onEvid
       {content.type === 'menu' ? (
         <MenuContentView activityId={data.id} content={content} />
       ) : (
-        <ProseContentView activityId={data.id} content={content} />
+        <ProseContentView activityId={data.id} content={content} fallbackTitle={copy.readingText} />
       )}
 
       <QuestionSet

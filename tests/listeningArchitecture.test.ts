@@ -212,8 +212,11 @@ test('ListeningTask remains mobile-safe, accessible, repeatable, and free of nar
   );
   assert.match(source, /<audio\s+controls/);
   assert.match(source, /block w-full max-w-full/);
-  assert.match(source, /Повтор разрешён/);
+  assert.match(source, /copy\.listenHint/);
   assert.match(source, /role="alert"/);
-  assert.match(source, /Аудиозапись: \$\{data\.title/);
+  assert.match(source, /formatActivityCopy\(copy\.audioLabel/);
+  const copy = readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8');
+  assert.match(copy, /Повтор разрешён/);
+  assert.match(copy, /Аудиозапись: \{title\}/);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|slideNarrat|playRecordedAudio/);
 });

@@ -19,6 +19,9 @@ import { getCourseProgressPercentage, getLessonProgressState } from '../utils/le
 import type { LessonProgressDefinition, LessonProgressSnapshot, LessonProgressState } from '../utils/lessonProgress';
 import { LESSON_PROGRESS_DEFINITIONS } from '../data/lessonProgressCatalog';
 import type { LessonResumePosition, LessonResumePositions } from '../utils/lessonResume';
+import { LanguageSelector } from './LanguageSelector';
+import { useI18n } from '../i18n';
+import { CATALOG_COPY, formatCatalogCopy, type CatalogCopy } from '../i18n/catalogCopy';
 
 interface LessonListProps {
   lessons: LessonMeta[];
@@ -47,10 +50,10 @@ function lessonProgress(
 }
 
 const LEVELS = [
-  { key: 'A0', title: 'Основы', from: 1, to: 6 },
-  { key: 'A1', title: 'Грамматика и падежи', from: 7, to: 14 },
-  { key: 'A2', title: 'Разговорные темы', from: 15, to: 20 },
-  { key: 'B1', title: 'Продвинутый уровень', from: 21, to: 28 },
+  { key: 'A0', from: 1, to: 6 },
+  { key: 'A1', from: 7, to: 14 },
+  { key: 'A2', from: 15, to: 20 },
+  { key: 'B1', from: 21, to: 28 },
 ] as const;
 
 const LEVEL_CHIP: Record<string, string> = {
@@ -61,7 +64,7 @@ const LEVEL_CHIP: Record<string, string> = {
 };
 
 function shortTitle(lesson: LessonMeta): string {
-  const stripped = lesson.title.replace(/^Урок\s+\d+\s*·\s*/i, '').trim();
+  const stripped = lesson.title.replace(/^(?:Урок|Lesson|Lección)\s+\d+\s*·\s*/iu, '').trim();
   return stripped || lesson.title;
 }
 
@@ -110,6 +113,7 @@ function LessonCard({
   progress,
   resumePosition,
   highlight,
+  copy,
   onSelect,
   onLockedClick,
 }: {
@@ -118,6 +122,7 @@ function LessonCard({
   progress: LessonProgressSnapshot;
   resumePosition?: LessonResumePosition;
   highlight: 'current' | 'next' | null;
+  copy: CatalogCopy;
   onSelect: (id: number) => void;
   onLockedClick: (lesson: LessonMeta) => void;
 }) {
@@ -133,12 +138,12 @@ function LessonCard({
         : Circle;
 
   const statusLabel = !accessible
-    ? 'Доступ по подписке'
+    ? copy.subscription
     : status === 'completed'
-      ? 'Урок выполнен'
+      ? copy.completed
         : status === 'in_progress' || hasResume
-          ? 'В процессе'
-          : 'Не начат';
+          ? copy.inProgress
+          : copy.notStarted;
 
   const statusColor = !accessible
     ? 'text-[#666E7E]'
@@ -171,14 +176,14 @@ function LessonCard({
       type="button"
       onClick={() => (accessible ? onSelect(lesson.id) : onLockedClick(lesson))}
       aria-current={highlight === 'current' ? 'step' : undefined}
-      aria-label={`Урок ${lesson.number} — ${shortTitle(lesson)}, статус: ${statusLabel}`}
+      aria-label={`${copy.lesson} ${lesson.number} — ${shortTitle(lesson)}, ${copy.status}: ${statusLabel}`}
       className={`group relative text-left w-full h-full flex flex-col rounded-2xl border p-5 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE] ${surface} ${hover}`}
     >
       <div className="flex items-center justify-between mb-3">
         <span className={`font-mono text-[11px] font-bold tracking-wide ${accessible ? 'text-[#116EEE]' : 'text-[#666E7E]'}`}>
-          {lesson.level} · УРОК {lesson.number}
+          {lesson.level} · {copy.lesson.toUpperCase()} {lesson.number}
         </span>
-        <span className="font-mono text-[11px] text-[#666E7E]">{lesson.slidesCount} шагов</span>
+        <span className="font-mono text-[11px] text-[#666E7E]">{lesson.slidesCount} {copy.steps}</span>
       </div>
 
       <div className="flex items-start justify-between gap-3">
@@ -187,12 +192,12 @@ function LessonCard({
         </h3>
         {highlight === 'current' && (
           <span className="shrink-0 px-2 py-0.5 rounded-md bg-[#116EEE] text-white text-[10px] font-bold uppercase tracking-wide">
-            Текущий
+            {copy.current}
           </span>
         )}
         {highlight === 'next' && (
           <span className="shrink-0 px-2 py-0.5 rounded-md bg-[#C77B00] text-white text-[10px] font-bold uppercase tracking-wide">
-            Следующий
+            {copy.next}
           </span>
         )}
       </div>
@@ -208,7 +213,7 @@ function LessonCard({
             {statusLabel}
             {hasResume && resumePosition && (
               <span className="font-normal text-[#666E7E]">
-                · шаг {Math.min(resumePosition.slideId, lesson.slidesCount)}
+                · {copy.step} {Math.min(resumePosition.slideId, lesson.slidesCount)}
               </span>
             )}
           </span>
@@ -230,8 +235,9 @@ function LevelSection({
   highlightFor,
   onSelect,
   onLockedClick,
+  copy,
 }: {
-  level: { key: string; title: string; from: number; to: number };
+  level: { key: keyof CatalogCopy['levels']; from: number; to: number };
   lessons: LessonMeta[];
   isAccessibleFn: (n: number) => boolean;
   activityEvidence: Record<string, ActivityEvidence>;
@@ -240,6 +246,7 @@ function LevelSection({
   highlightFor: (lesson: LessonMeta) => 'current' | 'next' | null;
   onSelect: (id: number) => void;
   onLockedClick: (l: LessonMeta) => void;
+  copy: CatalogCopy;
 }) {
   if (lessons.length === 0) return null;
   const definitions = LESSON_PROGRESS_DEFINITIONS.filter((definition) =>
@@ -248,24 +255,24 @@ function LevelSection({
   const pct = getCourseProgressPercentage(definitions, activityEvidence, passedQuizzes);
 
   return (
-    <section aria-label={`Уровень ${level.key} — ${level.title}`} className="mb-9">
+    <section aria-label={`${copy.level} ${level.key} — ${copy.levels[level.key]}`} className="mb-9">
       <div className="flex items-baseline justify-between gap-3 flex-wrap mb-3">
         <div className="flex items-center gap-2.5 min-w-0">
           <span className={`px-2.5 py-1 rounded-md font-mono text-xs font-bold ${LEVEL_CHIP[level.key]}`}>
             {level.key}
           </span>
-          <h2 className="text-lg md:text-xl font-bold text-[#252B2F] tracking-tight">{level.title}</h2>
+          <h2 className="text-lg md:text-xl font-bold text-[#252B2F] tracking-tight">{copy.levels[level.key]}</h2>
           <span className="font-mono text-xs text-[#666E7E] whitespace-nowrap">
-            уроки {level.from}–{level.to}
+            {copy.lessonsRange} {level.from}–{level.to}
           </span>
         </div>
         <span className="text-sm text-[#666E7E] whitespace-nowrap">
-          Прогресс уровня: <span className="font-bold text-[#3B1E90]">{pct}%</span>
+          {copy.levelProgress}: <span className="font-bold text-[#3B1E90]">{pct}%</span>
         </span>
       </div>
       <div
         role="progressbar"
-        aria-label={`Учебный прогресс уровня ${level.key}`}
+        aria-label={`${copy.levelProgressAria} ${level.key}`}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={pct}
@@ -287,6 +294,7 @@ function LevelSection({
               highlight={highlightFor(lesson)}
               onSelect={onSelect}
               onLockedClick={onLockedClick}
+              copy={copy}
             />
           ))}
       </div>
@@ -305,6 +313,8 @@ export const LessonList: React.FC<LessonListProps> = ({
   resumePositions = {},
   dueReviewCount = 0,
 }) => {
+  const { language } = useI18n();
+  const copy = CATALOG_COPY[language];
   const [user, setUser] = useState<UserProfile | null>(getCurrentUser());
 
   useEffect(() => {
@@ -333,19 +343,19 @@ export const LessonList: React.FC<LessonListProps> = ({
 
   const currentCtaLabel =
     currentStatus === 'in_progress' || currentResumePosition
-      ? 'Продолжить урок'
+      ? copy.continueLesson
       : currentStatus === 'not_started'
-        ? 'Начать урок'
-        : 'Открыть урок';
+        ? copy.startLesson
+        : copy.openLesson;
 
   const currentEyebrow =
     currentStatus === 'in_progress' || currentResumePosition
-      ? 'Вы остановились здесь'
+      ? copy.stoppedHere
       : currentStatus === 'completed'
-        ? 'Все обязательные части выполнены'
+        ? copy.requiredComplete
         : currentStatus === 'not_started'
-          ? 'Рекомендуемый урок'
-          : 'Квиз этого урока пройден';
+          ? copy.recommended
+          : copy.quizPassed;
 
   return (
     <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex flex-col font-sans selection:bg-[#116EEE] selection:text-white">
@@ -362,27 +372,28 @@ export const LessonList: React.FC<LessonListProps> = ({
                     Magyar<span className="text-[#116EEE]">o</span>
                   </div>
                   <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#666E7E] mt-1">
-                    Венгерский с нуля
+                    {copy.tagline}
                   </div>
                 </div>
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-[#252B2F] tracking-tight">
-                Интерактивный курс венгерского языка
+                {copy.title}
               </h1>
               <p className="mt-1.5 text-sm text-[#666E7E]">
-                От алфавита A0 до разговорного B1 — 28 уроков в одном учебном пути.
+                {copy.subtitle}
               </p>
             </div>
 
             <div className="flex items-center gap-2.5 flex-wrap shrink-0">
+              <LanguageSelector compact />
               {onOpenUserModal && (
                 <button
                   onClick={onOpenUserModal}
                   className="px-4 py-2.5 rounded-xl border border-[#116EEE]/30 bg-white text-[#116EEE] hover:bg-[#116EEE]/10 transition-colors cursor-pointer text-sm font-semibold inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE]"
-                  title={user ? `Личный кабинет: ${user.email}` : 'Войти или зарегистрироваться'}
+                  title={user ? `${copy.accountTitle}: ${user.email}` : copy.signInTitle}
                 >
                   <User className="w-4 h-4" />
-                  {user ? `Кабинет (${user.email.split('@')[0]})` : 'Вход / Регистрация'}
+                  {user ? `${copy.account} (${user.email.split('@')[0]})` : copy.signIn}
                 </button>
               )}
 
@@ -390,10 +401,10 @@ export const LessonList: React.FC<LessonListProps> = ({
                 <button
                   onClick={onOpenAdmin}
                   className="px-4 py-2.5 rounded-xl bg-[#3B1E90] text-white border border-[#3B1E90] cursor-pointer text-sm font-semibold inline-flex items-center gap-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3B1E90]"
-                  title="Вы вошли как администратор"
+                  title={copy.adminTitle}
                 >
                   <ShieldCheck className="w-4 h-4 text-[#C77B00]" />
-                  Администратор
+                  {copy.admin}
                 </button>
               )}
             </div>
@@ -402,12 +413,12 @@ export const LessonList: React.FC<LessonListProps> = ({
       </header>
 
       <main className="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
-        <section aria-label="Общий прогресс курса" className="rounded-2xl border border-[#D6DEE6] bg-white p-5 mb-4 shadow-sm">
+        <section aria-label={copy.courseProgress} className="rounded-2xl border border-[#D6DEE6] bg-white p-5 mb-4 shadow-sm">
           <div className="flex items-center justify-between gap-3 text-sm">
-            <span className="font-semibold text-[#252B2F]">Общий прогресс курса</span>
+            <span className="font-semibold text-[#252B2F]">{copy.courseProgress}</span>
             <span className="font-mono font-bold text-[#3B1E90]">{getCourseProgressPercentage(LESSON_PROGRESS_DEFINITIONS, activityEvidence, passedQuizzes)}%</span>
           </div>
-          <div role="progressbar" aria-label="Общий учебный прогресс курса" aria-valuemin={0} aria-valuemax={100} aria-valuenow={getCourseProgressPercentage(LESSON_PROGRESS_DEFINITIONS, activityEvidence, passedQuizzes)} className="mt-3 h-2 rounded-full bg-[#D6DEE6]/70 overflow-hidden">
+          <div role="progressbar" aria-label={copy.courseProgressAria} aria-valuemin={0} aria-valuemax={100} aria-valuenow={getCourseProgressPercentage(LESSON_PROGRESS_DEFINITIONS, activityEvidence, passedQuizzes)} className="mt-3 h-2 rounded-full bg-[#D6DEE6]/70 overflow-hidden">
             <div className="h-full rounded-full bg-[#3B1E90] transition-all duration-500" style={{ width: `${getCourseProgressPercentage(LESSON_PROGRESS_DEFINITIONS, activityEvidence, passedQuizzes)}%` }} />
           </div>
         </section>
@@ -417,7 +428,7 @@ export const LessonList: React.FC<LessonListProps> = ({
             className="rounded-2xl border border-[#D6DEE6] bg-white p-6 md:p-7 shadow-sm"
           >
             <h2 id="continue-heading" className="sr-only">
-              Продолжить обучение
+              {copy.continueLearning}
             </h2>
             {current ? (
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
@@ -431,17 +442,17 @@ export const LessonList: React.FC<LessonListProps> = ({
                     </span>
                   </div>
                   <p className="text-xl md:text-2xl font-bold text-[#252B2F] tracking-tight leading-snug">
-                    Урок {current.lesson.number} · {shortTitle(current.lesson)}
+                    {copy.lesson} {current.lesson.number} · {shortTitle(current.lesson)}
                   </p>
                   <p className="mt-1 text-sm text-[#666E7E]">{current.lesson.subtitle}</p>
                   {currentResumePosition && currentStatus !== 'completed' && (
                     <p className="mt-2 text-sm font-semibold text-[#116EEE]">
-                      Продолжить с шага {Math.min(currentResumePosition.slideId, current.lesson.slidesCount)} из {current.lesson.slidesCount}
+                      {formatCatalogCopy(copy.continueFrom, { current: Math.min(currentResumePosition.slideId, current.lesson.slidesCount), total: current.lesson.slidesCount })}
                     </p>
                   )}
                   {currentStatus === 'completed' && hasLockedLessons && (
                     <p className="mt-1.5 text-xs text-[#666E7E]">
-                      Все обязательные части доступных уроков выполнены — подписка откроет следующие уровни.
+                      {copy.completedLocked}
                     </p>
                   )}
                 </div>
@@ -454,21 +465,21 @@ export const LessonList: React.FC<LessonListProps> = ({
                 </button>
               </div>
             ) : (
-              <p className="text-sm text-[#666E7E]">Уроки загружаются…</p>
+              <p className="text-sm text-[#666E7E]">{copy.loading}</p>
             )}
           </section>
 
           {dueReviewCount > 0 && (
             <aside
-              aria-label="Карточки к повторению"
+              aria-label={copy.reviewAria}
               className="rounded-2xl border border-[#3B1E90]/25 bg-[#3B1E90]/8 p-5 flex flex-col justify-center"
             >
               <div className="flex items-center gap-2 text-[#3B1E90]">
                 <RefreshCw className="w-4 h-4 shrink-0" />
-                <span className="font-bold text-sm">{dueReviewCount} карточек к повторению</span>
+                <span className="font-bold text-sm">{formatCatalogCopy(copy.reviewCount, { count: dueReviewCount })}</span>
               </div>
               <p className="mt-1.5 text-xs text-[#2F236B]">
-                Откройте пройденный урок, чтобы начать разминку.
+                {copy.reviewHint}
               </p>
             </aside>
           )}
@@ -478,13 +489,13 @@ export const LessonList: React.FC<LessonListProps> = ({
           <div className="rounded-2xl border border-[#116EEE]/25 bg-white px-5 py-4 mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
             <User className="w-5 h-5 text-[#116EEE] shrink-0" />
             <span className="text-sm text-[#252B2F] flex-1">
-              Уроки 1–2 доступны бесплатно. Войдите или зарегистрируйтесь, чтобы сохранять прогресс и оформить доступ к урокам 3–28.
+              {copy.authBanner}
             </span>
             <button
               onClick={onOpenUserModal}
               className="shrink-0 px-4 py-2 rounded-xl bg-[#116EEE] text-white hover:bg-[#0D5ED0] transition-colors cursor-pointer text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE]"
             >
-              Войти / Зарегистрироваться
+              {copy.authCta}
             </button>
           </div>
         )}
@@ -493,13 +504,13 @@ export const LessonList: React.FC<LessonListProps> = ({
           <div className="rounded-2xl border border-[#C77B00]/30 bg-[#C77B00]/12 px-5 py-4 mb-4 flex items-center gap-3">
             <CreditCard className="w-5 h-5 text-[#C77B00] shrink-0" />
             <span className="text-sm text-[#252B2F] flex-1">
-              У вас открыты бесплатные уроки 1–2. Оформите подписку, чтобы открыть все {lessons.length} уроков.
+              {formatCatalogCopy(copy.payBanner, { count: lessons.length })}
             </span>
             <button
               onClick={onOpenUserModal}
               className="shrink-0 px-4 py-2 rounded-xl bg-[#116EEE] text-white hover:bg-[#0D5ED0] transition-colors cursor-pointer text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE]"
             >
-              Оформить подписку
+              {copy.subscribe}
             </button>
           </div>
         )}
@@ -516,12 +527,13 @@ export const LessonList: React.FC<LessonListProps> = ({
             highlightFor={highlightFor}
             onSelect={onSelectLesson}
             onLockedClick={() => onOpenUserModal?.()}
+            copy={copy}
           />
         ))}
       </main>
 
       <footer className="border-t border-[#D6DEE6] py-5 px-8 text-center text-sm text-[#666E7E] bg-[#FFFFFF]">
-        Венгерский язык для русскоязычных учащихся · Уроки 1–28 (A0–B1)
+        {copy.footer}
       </footer>
     </div>
   );

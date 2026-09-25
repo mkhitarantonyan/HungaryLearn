@@ -212,8 +212,12 @@ test('generated catalog matches all current lesson definitions', async () => {
 test('UI uses one activity-based percentage and no viewed-slide completion copy', () => {
   const listSource = readFileSync(new URL('../src/components/LessonList.tsx', import.meta.url), 'utf8');
   const barSource = readFileSync(new URL('../src/components/LessonProgress.tsx', import.meta.url), 'utf8');
-  assert.match(listSource, /Общий прогресс курса/);
-  assert.match(barSource, /Учебный прогресс урока/);
+  const localeSource = readFileSync(new URL('../src/i18n/index.tsx', import.meta.url), 'utf8');
+  const catalogCopy = readFileSync(new URL('../src/i18n/catalogCopy.ts', import.meta.url), 'utf8');
+  assert.match(listSource, /copy\.courseProgress/);
+  assert.match(catalogCopy, /Общий прогресс курса/);
+  assert.match(barSource, /progress\.aria/);
+  assert.match(localeSource, /Учебный прогресс урока/);
   assert.doesNotMatch(listSource, /Материал пройден|квизов пройдено/);
   assert.doesNotMatch(barSource, /Прогресс материала/);
 });

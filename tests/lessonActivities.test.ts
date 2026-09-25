@@ -1973,7 +1973,8 @@ test('L2 published MP3 is available without browser-speech fallback', () => {
   );
   assert.equal(canProduceDirectListeningEvidence(listening), true);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|TTS-превью/);
-  assert.match(source, /Вернись к этому заданию позже/);
+  assert.match(source, /copy\.returnLater/);
+  assert.match(readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8'), /Вернись к этому заданию позже/);
 });
 
 test('L2 listening questions test register, identity, basic detail, response, and closing', () => {
@@ -2012,7 +2013,8 @@ test('L2 listening transcript is gated until after submission', () => {
     new URL('../src/components/activities/ListeningTask.tsx', import.meta.url),
     'utf8'
   );
-  assert.match(source, /submitLabel="Ответить и показать текст"/);
+  assert.match(source, /submitLabel=\{copy\.answerAndTranscript\}/);
+  assert.match(readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8'), /Ответить и показать текст/);
 });
 
 test('l2_greet-introduce remains overall PARTIAL with receptive DIRECT plus interaction', () => {
@@ -2279,7 +2281,8 @@ test('RolePlay generic labels, wrapping, and keyboard focus hooks remain lesson-
     new URL('../src/components/activities/RolePlay.tsx', import.meta.url),
     'utf8'
   );
-  assert.match(source, /data\.partnerLabel \?\? 'Pincér · Официант'/);
+  assert.match(source, /data\.partnerLabel \?\? copy\.partner/);
+  assert.match(readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8'), /Pincér · Официант/);
   assert.match(source, /data\.completionMessage \?\?/);
   assert.match(source, /\[overflow-wrap:anywhere\]/);
   assert.match(source, /focus-visible:ring-2/);

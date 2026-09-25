@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, ClipboardCheck } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface NavigationProps {
   currentSlide: number;
@@ -16,6 +17,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   onNext,
   onFinish
 }) => {
+  const { t } = useI18n();
   const isFirst = currentSlide === 0;
   const isLast = currentSlide === totalSlides - 1;
 
@@ -25,7 +27,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         <button
           onClick={onPrev}
           disabled={isFirst}
-          aria-label="Предыдущий шаг"
+          aria-label={t('navigation.previous')}
           className={`flex items-center gap-2 min-h-11 px-5 rounded-[10px] bg-white font-semibold text-sm transition-colors cursor-pointer border ${
             isFirst
               ? 'opacity-40 border-[#D6DEE6] text-[#666E7E] cursor-not-allowed'
@@ -33,25 +35,25 @@ export const Navigation: React.FC<NavigationProps> = ({
           }`}
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Назад</span>
+          <span>{t('common.back')}</span>
         </button>
 
         {!isLast ? (
           <button
             onClick={onNext}
-            aria-label="Следующий шаг"
+            aria-label={t('navigation.next')}
             className="flex items-center gap-2 min-h-11 px-7 rounded-[10px] bg-[#116EEE] text-white font-semibold text-sm hover:bg-[#0D5ED0] transition-colors cursor-pointer shadow-sm"
           >
-            <span>Вперёд</span>
+            <span>{t('common.next')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         ) : (
           <button
             onClick={onFinish}
-            aria-label="Проверить себя"
+            aria-label={t('navigation.check')}
             className="flex items-center gap-2 min-h-11 px-7 rounded-[10px] bg-[#3B1E90] text-white font-semibold text-sm hover:bg-[#2F176F] transition-colors cursor-pointer shadow-sm"
           >
-            <span>Проверить себя</span>
+            <span>{t('navigation.check')}</span>
             <ClipboardCheck className="w-4 h-4" />
           </button>
         )}

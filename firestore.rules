@@ -22,6 +22,13 @@ service cloud.firestore {
     match /billingSubscriptions/{document=**} { allow read, write: if false; }
     match /billingWebhookEvents/{document=**} { allow read, write: if false; }
     match /accountDeletions/{document=**} { allow read, write: if false; }
+    match /organizations/{document=**} { allow read, write: if false; }
+    match /organizationLicenses/{document=**} { allow read, write: if false; }
+    match /organizationSeats/{document=**} { allow read, write: if false; }
+    match /organizationAccessKeys/{document=**} { allow read, write: if false; }
+    match /organizationAuditLogs/{document=**} { allow read, write: if false; }
+    match /organizationRedeemLimits/{document=**} { allow read, write: if false; }
+    match /organizationSeatGuards/{document=**} { allow read, write: if false; }
     match /audioOverrides/{document=**} { allow read, write: if false; }
     match /wordOverrides/{document=**} { allow read, write: if false; }
     match /{document=**} { allow read, write: if false; }

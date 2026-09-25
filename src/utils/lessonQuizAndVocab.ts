@@ -1,6 +1,8 @@
 import { Lesson, VocabularyItem, QuizQuestion, TranslationItem } from '../types';
 import { LESSON_TRANSLATION_MAP } from '../data/lessonTranslations';
 import { LESSON_VOCABULARY_MAP } from '../data/vocabularyCatalog';
+import type { InstructionLanguage } from '../i18n/types';
+import { localizeDisplayValue } from '../i18n/lessonContent';
 
 export { LESSON_TRANSLATION_MAP };
 export { LESSON_VOCABULARY_MAP };
@@ -165,9 +167,9 @@ function buildQuizMap(): Record<number, QuizQuestion[]> { return {
  * Returns vocabulary for the specified lesson.
  * Checks localStorage overrides from admin panel first, then falls back to built-in data.
  */
-export function getLessonVocabulary(lesson: Lesson): VocabularyItem[] {
+export function getLessonVocabulary(lesson: Lesson, language: InstructionLanguage = 'ru'): VocabularyItem[] {
   if (lesson.vocabulary && lesson.vocabulary.length > 0) {
-    return lesson.vocabulary;
+    return localizeDisplayValue(lesson.vocabulary, language);
   }
 
   // Check admin overrides in localStorage
@@ -177,14 +179,14 @@ export function getLessonVocabulary(lesson: Lesson): VocabularyItem[] {
       if (raw) {
         const overrides: Record<number, VocabularyItem[]> = JSON.parse(raw);
         if (lesson.number in overrides) {
-          return overrides[lesson.number];
+          return localizeDisplayValue(overrides[lesson.number], language);
         }
       }
     } catch { /* ignore */ }
   }
 
   if (LESSON_VOCABULARY_MAP[lesson.number]) {
-    return LESSON_VOCABULARY_MAP[lesson.number];
+    return localizeDisplayValue(LESSON_VOCABULARY_MAP[lesson.number], language);
   }
 
   return [];
@@ -193,16 +195,16 @@ export function getLessonVocabulary(lesson: Lesson): VocabularyItem[] {
 /**
  * Returns quiz questions tailored for the specified lesson.
  */
-export function getLessonQuiz(lesson: Lesson): QuizQuestion[] {
-  if (lesson.quiz?.length) return lesson.quiz;
-  return LESSON_QUIZ_MAP[lesson.number] ?? [];
+export function getLessonQuiz(lesson: Lesson, language: InstructionLanguage = 'ru'): QuizQuestion[] {
+  if (lesson.quiz?.length) return localizeDisplayValue(lesson.quiz, language);
+  return localizeDisplayValue(LESSON_QUIZ_MAP[lesson.number] ?? [], language);
 }
 
 /**
  * Returns translation exercises for the specified lesson.
  * Checks localStorage overrides from admin panel first, then falls back to built-in data.
  */
-export function getLessonTranslations(lesson: Lesson): TranslationItem[] {
+export function getLessonTranslations(lesson: Lesson, language: InstructionLanguage = 'ru'): TranslationItem[] {
   // Check admin overrides in localStorage
   if (typeof window !== 'undefined') {
     try {
@@ -210,11 +212,11 @@ export function getLessonTranslations(lesson: Lesson): TranslationItem[] {
       if (raw) {
         const overrides: Record<number, TranslationItem[]> = JSON.parse(raw);
         if (lesson.number in overrides) {
-          return overrides[lesson.number];
+          return localizeDisplayValue(overrides[lesson.number], language);
         }
       }
     } catch { /* ignore */ }
   }
 
-  return LESSON_TRANSLATION_MAP[lesson.number] ?? [];
+  return localizeDisplayValue(LESSON_TRANSLATION_MAP[lesson.number] ?? [], language);
 }

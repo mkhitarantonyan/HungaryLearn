@@ -86,7 +86,7 @@ test('Listening, word audio, narration, and physical MP3 playback assets remain 
   const narrationSource = readFileSync(join(srcRoot, 'hooks', 'useLessonNarration.ts'), 'utf8');
   assert.match(listeningSource, /<audio/);
   assert.match(wordAudioSource, /\.mp3/);
-  assert.match(narrationSource, /playRecordedSequence|stopRecordedAudio/);
+  assert.match(narrationSource, /playNarrationSequence|stopNarrationAudio/);
 
   const mp3Files = filesBelow(join(root, 'public', 'audio')).filter((path) => extname(path).toLowerCase() === '.mp3');
   assert.ok(mp3Files.length >= 1123, `expected at least 1123 MP3 files, found ${mp3Files.length}`);

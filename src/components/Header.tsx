@@ -3,6 +3,8 @@ import { ListOrdered, ShieldCheck, ArrowLeft, User } from 'lucide-react';
 import { isAdminLoggedIn, subscribeAdminState } from '../utils/adminStore';
 import { getCurrentUser, subscribeUserState, UserProfile } from '../utils/userStore';
 import { LessonProgress } from './LessonProgress';
+import { LanguageSelector } from './LanguageSelector';
+import { useI18n } from '../i18n';
 
 interface HeaderProps {
   lessonNumber: number;
@@ -29,6 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenUserModal,
   onBackToLessons,
 }) => {
+  const { t } = useI18n();
   const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
   const [user, setUser] = useState<UserProfile | null>(getCurrentUser());
 
@@ -45,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
     };
   }, []);
 
-  const conceptTitle = lessonTitle.replace(/^Урок\s+\d+\s*·\s*/i, '').trim() || lessonTitle;
+  const conceptTitle = lessonTitle.replace(/^(?:Урок|Lesson|Lección)\s+\d+\s*·\s*/iu, '').trim() || lessonTitle;
 
   return (
     <header className="border-b border-[#D6DEE6] bg-white px-4 md:px-8 py-3.5">
@@ -53,16 +56,16 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToLessons}
-            aria-label="Вернуться ко всем урокам"
+            aria-label={t('header.backToLessons')}
             className="shrink-0 h-10 w-10 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/40 hover:bg-[#EDF4FB] hover:text-[#116EEE] transition-colors cursor-pointer flex items-center justify-center"
-            title="Все уроки"
+            title={t('header.allLessons')}
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
 
           <div className="min-w-0 flex-1">
             <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
-              {lessonLevel} · Урок {lessonNumber}
+              {lessonLevel} · {t('common.lesson')} {lessonNumber}
             </div>
             <h1 className="text-sm md:text-base font-bold text-[#252B2F] truncate leading-snug">
               {conceptTitle}
@@ -70,12 +73,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
+            <LanguageSelector compact />
             {isAdmin && (
               <button
                 onClick={onOpenAdmin}
-                aria-label="Администратор"
+                aria-label={t('header.admin')}
                 className="h-10 w-10 rounded-[10px] bg-[#3B1E90] text-white cursor-pointer flex items-center justify-center shadow-sm"
-                title="Администратор"
+                title={t('header.administrator')}
               >
                 <ShieldCheck className="w-4 h-4" />
               </button>
@@ -83,20 +87,20 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={onOpenDrawer}
-              aria-label="Содержание урока"
+              aria-label={t('header.contents')}
               className="h-10 px-3 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] transition-colors cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
-              title="Этапы урока"
+              title={t('header.lessonStages')}
             >
               <ListOrdered className="w-4 h-4" />
-              <span className="hidden md:inline">Содержание</span>
+              <span className="hidden md:inline">{t('header.contents')}</span>
             </button>
 
             {onOpenUserModal && (
               <button
                 onClick={onOpenUserModal}
-                aria-label={user ? 'Личный кабинет' : 'Вход или регистрация'}
+                aria-label={t('header.profile')}
                 className="h-10 w-10 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] hover:text-[#116EEE] transition-colors cursor-pointer flex items-center justify-center"
-                title={user ? `Личный кабинет: ${user.email}` : 'Войти или зарегистрироваться'}
+                title={user ? t('header.accountTitle', { email: user.email }) : t('header.signInTitle')}
               >
                 <User className="w-4 h-4" />
               </button>

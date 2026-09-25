@@ -9,6 +9,8 @@ import {
   isListeningQuestionAnswerCorrect,
   isListeningTextInputQuestion,
 } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY, formatActivityCopy } from '../../i18n/activityCopy';
 
 interface QuestionSetProps {
   questions: ListeningQuestion[];
@@ -43,6 +45,8 @@ export const QuestionFeedback: React.FC<QuestionFeedbackProps> = ({
   chosen,
   feedbackId,
 }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const isCorrect = chosen === question.correctIndex;
 
   return (
@@ -53,10 +57,10 @@ export const QuestionFeedback: React.FC<QuestionFeedbackProps> = ({
       aria-live="polite"
     >
       {isCorrect ? (
-        <span className="text-emerald-700 font-semibold">Верно.</span>
+        <span className="text-emerald-700 font-semibold">{copy.correct}</span>
       ) : (
         <span className="text-red-700 font-semibold">
-          Неверно. Правильный ответ: {question.options[question.correctIndex]}.
+          {formatActivityCopy(copy.wrong, { answer: question.options[question.correctIndex] })}
         </span>
       )}
       {question.explanation && (
@@ -78,14 +82,16 @@ export const TextInputQuestionFeedback: React.FC<TextInputQuestionFeedbackProps>
   answer,
   feedbackId,
 }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const isCorrect = isListeningQuestionAnswerCorrect(question, answer);
   return (
     <div id={feedbackId} className="text-xs text-[#252B2F]" role="status" aria-live="polite">
       {isCorrect ? (
-        <span className="text-emerald-700 font-semibold">Верно.</span>
+        <span className="text-emerald-700 font-semibold">{copy.correct}</span>
       ) : (
         <span className="text-red-700 font-semibold">
-          Неверно. Правильный ответ: {question.accept[0]}.
+          {formatActivityCopy(copy.wrong, { answer: question.accept[0] })}
         </span>
       )}
       {question.explanation && (
@@ -107,6 +113,8 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
   onSubmit,
   onRetry,
 }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const [selected, setSelected] = useState<Record<string, number | string>>({});
   const [inputs, setInputs] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -203,7 +211,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
                     aria-describedby={promptId}
                     className="w-full shrink-0 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
                   >
-                    Проверить
+                    {copy.check}
                   </button>
                 </div>
                 {isAnswered && typeof answer === 'string' && (
@@ -262,7 +270,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
-              <span>Пройти заново</span>
+              <span>{copy.retry}</span>
             </button>
           )}
           {onSubmit && (
@@ -271,7 +279,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
               onClick={handleSubmit}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
-              <span>{submitLabel ?? 'Завершить'}</span>
+              <span>{submitLabel ?? copy.finish}</span>
               <ArrowRight aria-hidden="true" className="w-4 h-4" />
             </button>
           )}
@@ -281,7 +289,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
       {submitted && (
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-xs text-emerald-700 font-semibold" aria-live="polite">
-            Отвечено: {score} / {questions.length}.
+            {formatActivityCopy(copy.answered, { score, total: questions.length })}
           </p>
           {allowRetry && (
             <button
@@ -290,7 +298,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
-              <span>Пройти заново</span>
+              <span>{copy.retry}</span>
             </button>
           )}
         </div>

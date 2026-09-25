@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import './AppPreloader.css';
+import { useI18n } from '../i18n';
 
 interface AppPreloaderProps {
   message?: string;
@@ -7,14 +8,16 @@ interface AppPreloaderProps {
 
 const WORDMARK = Array.from('Magyaro');
 
-export function AppPreloader({ message = 'Загрузка…' }: AppPreloaderProps) {
+export function AppPreloader({ message }: AppPreloaderProps) {
+  const { t } = useI18n();
+  const resolvedMessage = message ?? t('common.loading');
   return (
     <div
       className="magyaro-preloader"
       role="status"
       aria-live="polite"
       aria-busy="true"
-      aria-label={message}
+      aria-label={resolvedMessage}
     >
       <div className="magyaro-preloader__stage">
         <div className="magyaro-preloader__mark" aria-hidden="true">
@@ -43,7 +46,7 @@ export function AppPreloader({ message = 'Загрузка…' }: AppPreloaderPr
 
         <div className="magyaro-preloader__rotator" aria-hidden="true">
           <span>Szia! 👋</span>
-          <span>Привет!</span>
+          <span>{t('preloader.hello')}</span>
           <span>Բարեւ Ձեզ</span>
           <span>Tanuljunk magyarul!</span>
         </div>
@@ -51,7 +54,7 @@ export function AppPreloader({ message = 'Загрузка…' }: AppPreloaderPr
         <div className="magyaro-preloader__progress" aria-hidden="true">
           <div className="magyaro-preloader__progress-fill" />
         </div>
-        <p className="magyaro-preloader__message">{message}</p>
+        <p className="magyaro-preloader__message">{resolvedMessage}</p>
       </div>
 
       <span className="magyaro-preloader__spark magyaro-preloader__spark--one" aria-hidden="true" />

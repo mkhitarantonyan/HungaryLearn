@@ -463,19 +463,24 @@ export function hasAudioForSlide(slideId: number, lessonNumber: number = 1): boo
   return keys.some(key => !!getAudioFileUrl(key));
 }
 
-let currentActiveAudio: HTMLAudioElement | null = null;
+export type AudioPlaybackChannel = 'general' | 'narration' | 'pronunciation';
+const activeAudioByChannel = new Map<AudioPlaybackChannel, HTMLAudioElement>();
 
-export function stopActiveAudio(): void {
-  if (currentActiveAudio) {
+export function stopActiveAudio(channel?: AudioPlaybackChannel): void {
+  const entries = channel
+    ? ([[channel, activeAudioByChannel.get(channel)]] as const)
+    : Array.from(activeAudioByChannel.entries());
+  for (const [activeChannel, audio] of entries) {
+    if (!audio) continue;
     try {
-      currentActiveAudio.pause();
-      currentActiveAudio.currentTime = 0;
-      currentActiveAudio.onended = null;
-      currentActiveAudio.onerror = null;
+      audio.pause();
+      audio.currentTime = 0;
+      audio.onended = null;
+      audio.onerror = null;
     } catch (e) {
       console.warn('Error stopping active audio:', e);
     }
-    currentActiveAudio = null;
+    activeAudioByChannel.delete(activeChannel);
   }
 }
 
@@ -483,16 +488,17 @@ export function playRecordedAudio(
   key: string,
   rate?: number,
   onEnd?: () => void,
-  onError?: (error: unknown) => void
+  onError?: (error: unknown) => void,
+  channel: AudioPlaybackChannel = 'general',
 ): boolean {
   const customUrl = getAudioFileUrl(key);
   if (customUrl) {
     try {
-      stopActiveAudio();
+      stopActiveAudio(channel);
 
       const audio = new Audio(customUrl);
       audio.preload = 'auto';
-      currentActiveAudio = audio;
+      activeAudioByChannel.set(channel, audio);
 
       if (rate) audio.playbackRate = rate;
 
@@ -502,15 +508,15 @@ export function playRecordedAudio(
         if (errorFired) return;
         errorFired = true;
         console.warn(`Recorded audio is unavailable: ${customUrl}`, e);
-        if (currentActiveAudio === audio) {
-          currentActiveAudio = null;
+        if (activeAudioByChannel.get(channel) === audio) {
+          activeAudioByChannel.delete(channel);
         }
         if (onError) onError(e);
       };
 
       audio.onended = () => {
-        if (currentActiveAudio === audio) {
-          currentActiveAudio = null;
+        if (activeAudioByChannel.get(channel) === audio) {
+          activeAudioByChannel.delete(channel);
         }
         if (onEnd) onEnd();
       };
@@ -528,7 +534,7 @@ export function playRecordedAudio(
       return true;
     } catch (e) {
       console.warn(`Recorded audio is unavailable: ${customUrl}`, e);
-      stopActiveAudio();
+      stopActiveAudio(channel);
       onError?.(e);
       return false;
     }

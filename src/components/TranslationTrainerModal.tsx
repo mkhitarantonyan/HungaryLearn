@@ -4,6 +4,7 @@ import { Lesson } from '../types';
 import { getLessonTranslations } from '../utils/lessonQuizAndVocab';
 import { SpeechButton } from './SpeechButton';
 import { X, RotateCcw, Check, Languages, ChevronLeft, ChevronRight, ArrowRightLeft } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 function normalizeAnswer(value: string): string {
   return value
@@ -20,6 +21,7 @@ interface TranslationTrainerModalProps {
 }
 
 export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = ({ isOpen, onClose, lesson }) => {
+  const { language, t } = useI18n();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [userInput, setUserInput] = useState('');
@@ -36,7 +38,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
 
   if (!isOpen) return null;
 
-  const translations = lesson ? getLessonTranslations(lesson) : [];
+  const translations = lesson ? getLessonTranslations(lesson, language) : [];
 
   if (translations.length === 0) {
     return (
@@ -45,8 +47,8 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
           <button onClick={onClose} className="absolute top-4 right-4 p-2 text-[#116EEE]">
             <X className="w-5 h-5" />
           </button>
-          <h3 className="text-xl font-bold font-mono text-[#252B2F] mb-2">Карточки не найдены</h3>
-          <p className="text-sm text-[#666E7E]">Для этого урока пока нет карточек перевода.</p>
+          <h3 className="text-xl font-bold font-mono text-[#252B2F] mb-2">{t('translation.missing')}</h3>
+          <p className="text-sm text-[#666E7E]">{t('translation.missingBody')}</p>
         </div>
       </div>
     );
@@ -107,20 +109,22 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
             <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
               <Languages className="w-3.5 h-3.5" />
               <span id="translation-trainer-title">
-                Перевод · Урок {lesson?.number || 1} ({translations.length} карточек)
+                {t('translation.title', { lesson: lesson?.number || 1, count: translations.length })}
               </span>
             </div>
             <div className="text-sm font-bold text-[#252B2F] flex items-center gap-1.5 mt-0.5">
               <ArrowRightLeft className="w-3.5 h-3.5 text-[#666E7E]" />
               <span>
-                {isHuToRu ? 'Венгерский → Русский' : 'Русский → Венгерский'}
+                {isHuToRu
+                  ? t('translation.huTo', { language: t(`language.${language}`) })
+                  : t('translation.toHu', { language: t(`language.${language}`) })}
               </span>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            aria-label="Закрыть"
+            aria-label={t('common.close')}
             className="p-2 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -140,7 +144,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
               {currentIndex + 1} / {translations.length}
             </div>
             <div className="text-xs text-[#C77B00] font-mono absolute top-4 right-4">
-              {isHuToRu ? 'HU → RU' : 'RU → HU'}
+              {isHuToRu ? `HU → ${language.toUpperCase()}` : `${language.toUpperCase()} → HU`}
             </div>
 
             <div className="mt-6 mb-4">
@@ -149,7 +153,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
               </div>
               {isHuToRu && (
                 <div className="mt-2">
-                  <SpeechButton text={currentCard.sourceText} label="Послушать 🔊" variant="primary" />
+                  <SpeechButton text={currentCard.sourceText} label={t('trainer.listen')} variant="primary" />
                 </div>
               )}
             </div>
@@ -161,7 +165,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleCheck()}
-                  placeholder="Введите перевод..."
+                  placeholder={t('translation.input')}
                   autoFocus
                   className="w-full px-4 py-3 rounded-xl border border-[#D6DEE6] bg-[#EDF4FB]/50 text-center font-sans text-base text-[#252B2F] placeholder:text-[#666E7E]/60 focus:outline-none focus:ring-2 focus:ring-[#116EEE]/20 focus:border-[#116EEE] transition-all"
                 />
@@ -171,14 +175,14 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
                     className="flex-1 py-2.5 rounded-xl bg-[#3B1E90] text-white text-sm font-semibold hover:bg-[#3B1E90]/90 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <Check className="w-4 h-4" />
-                    Проверить
+                    {t('translation.check')}
                   </button>
                   <button
                     onClick={handleShowAnswer}
                     className="flex-1 py-2.5 rounded-xl border border-[#D6DEE6] bg-white text-[#666E7E] text-sm font-medium hover:bg-[#EDF4FB] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <RotateCcw className="w-4 h-4" />
-                    Показать ответ
+                    {t('translation.show')}
                   </button>
                 </div>
               </div>
@@ -202,26 +206,26 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
 
                 {feedback === 'wrong' && userInput.trim() && (
                   <div className="text-xs text-red-500 font-mono">
-                    Ваш ответ: {userInput}
+                    {t('translation.yourAnswer', { answer: userInput })}
                   </div>
                 )}
 
                 {currentCard.acceptableVariants && currentCard.acceptableVariants.length > 0 && (
                   <div className="text-xs text-[#666E7E] font-mono">
-                    Также принято: {currentCard.acceptableVariants.join(' / ')}
+                    {t('translation.alsoAccepted', { answers: currentCard.acceptableVariants.join(' / ') })}
                   </div>
                 )}
 
                 {!isHuToRu && (
                   <div className="flex justify-center">
-                    <SpeechButton text={currentCard.targetText} label="Послушать 🔊" />
+                    <SpeechButton text={currentCard.targetText} label={t('trainer.listen')} />
                   </div>
                 )}
 
                 {currentCard.grammaticalTag && (
                   <div className="text-[11px] text-[#C77B00] font-mono mt-1">
-                    Грамматика: {currentCard.grammaticalTag}
-                    {currentCard.relatedLessonId && ` · Урок ${currentCard.relatedLessonId}`}
+                    {t('translation.grammar', { tag: currentCard.grammaticalTag })}
+                    {currentCard.relatedLessonId && ` · ${t('common.lesson')} ${currentCard.relatedLessonId}`}
                   </div>
                 )}
               </motion.div>
@@ -232,7 +236,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
         <div className="flex items-center justify-between gap-3 pt-2">
           <button
             onClick={handlePrev}
-            aria-label="Предыдущая карточка"
+            aria-label={t('trainer.previous')}
             className="p-3 rounded-xl border border-[#D6DEE6] bg-white hover:bg-[#EDF4FB] text-[#252B2F] transition-colors cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -242,7 +246,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
             onClick={handleNext}
             className="flex-1 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer flex items-center justify-center gap-1.5"
           >
-            <span>Следующая</span>
+            <span>{t('translation.next')}</span>
             <ChevronRight className="w-4 h-4 hidden md:inline" />
           </button>
         </div>

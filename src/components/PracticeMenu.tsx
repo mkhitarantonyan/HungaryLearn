@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BookOpen, Languages, RefreshCw } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface PracticeMenuProps {
   dueReviewCount: number;
@@ -14,6 +15,7 @@ export const PracticeMenu: React.FC<PracticeMenuProps> = ({
   onOpenTranslations,
   onOpenReview,
 }) => {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -42,7 +44,7 @@ export const PracticeMenu: React.FC<PracticeMenuProps> = ({
         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D6DEE6] bg-white text-[#252B2F] text-xs font-semibold hover:bg-[#EDF4FB] transition-colors cursor-pointer"
       >
         <BookOpen className="w-3.5 h-3.5 text-[#C77B00]" />
-        Практика
+        {t('practice.menu')}
         {dueReviewCount > 0 && (
           <span className="px-1.5 py-0.5 rounded-full bg-[#C77B00]/20 text-[#252B2F] text-[10px] font-mono font-bold">
             {dueReviewCount}
@@ -65,7 +67,7 @@ export const PracticeMenu: React.FC<PracticeMenuProps> = ({
             className="w-full text-left px-3 py-2 text-sm text-[#252B2F] hover:bg-[#EDF4FB] cursor-pointer flex items-center gap-2"
           >
             <BookOpen className="w-4 h-4 text-[#C77B00]" />
-            Слова
+            {t('practice.words')}
           </button>
           <button
             type="button"
@@ -77,7 +79,7 @@ export const PracticeMenu: React.FC<PracticeMenuProps> = ({
             className="w-full text-left px-3 py-2 text-sm text-[#252B2F] hover:bg-[#EDF4FB] cursor-pointer flex items-center gap-2"
           >
             <Languages className="w-4 h-4 text-[#116EEE]" />
-            Перевод
+            {t('practice.translation')}
           </button>
           <button
             type="button"
@@ -89,9 +91,9 @@ export const PracticeMenu: React.FC<PracticeMenuProps> = ({
             className="w-full text-left px-3 py-2 text-sm text-[#252B2F] hover:bg-[#EDF4FB] cursor-pointer flex items-center gap-2"
           >
             <RefreshCw className="w-4 h-4 text-[#3B1E90]" />
-            Повторение
+            {t('practice.review')}
             {dueReviewCount > 0 && (
-              <span className="ml-auto text-[10px] text-[#666E7E] font-mono">{dueReviewCount} к повторению</span>
+              <span className="ml-auto text-[10px] text-[#666E7E] font-mono">{t('practice.due', { count: dueReviewCount })}</span>
             )}
           </button>
         </div>

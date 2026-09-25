@@ -58,6 +58,7 @@ function deletionHarness(initial: Record<string, Record<string, unknown>>, authD
   const documents = new Map(Object.entries(initial));
   const deletedAuthUsers: string[] = [];
   const deleteField = Symbol('delete-field');
+  const incrementField = (amount: number) => ({ __increment: amount });
   const snapshot = (ref: DocumentRef) => ({
     exists: documents.has(ref.path),
     data: () => documents.get(ref.path),
@@ -83,6 +84,9 @@ function deletionHarness(initial: Record<string, Record<string, unknown>>, authD
         const next = options?.merge ? { ...(documents.get(ref.path) || {}) } : {};
         for (const [key, value] of Object.entries(data)) {
           if (value === deleteField) delete next[key];
+          else if (value && typeof value === 'object' && '__increment' in value) {
+            next[key] = Number(next[key] || 0) + Number(value.__increment);
+          }
           else next[key] = value;
         }
         documents.set(ref.path, next);
@@ -101,7 +105,7 @@ function deletionHarness(initial: Record<string, Record<string, unknown>>, authD
         } } };
       }
       if (id === 'firebase-admin/firestore') {
-        return { FieldValue: { delete: () => deleteField, serverTimestamp: () => 'server-time' } };
+        return { FieldValue: { delete: () => deleteField, increment: incrementField, serverTimestamp: () => 'server-time' } };
       }
       return require(id);
     },
@@ -121,6 +125,12 @@ test('account deletion removes learner data and anonymises retained billing reco
       firebaseUid: uid, customerId: 'customer-1', orderId: 'order-1', status: 'cancelled',
     },
     'billingWebhookEvents/event-1': { eventName: 'subscription_cancelled', objectId: 'sub-cancelled' },
+    'organizationSeats/seat-1': { organizationId: 'org-1', licenseId: 'license-1', uid, status: 'active' },
+    'organizationLicenses/license-1': { organizationId: 'org-1', capacityRevision: 2 },
+    [`organizationSeatGuards/${accountDeletionKey(uid)}`]: { capacityRevision: 4 },
+    'organizationAccessKeys/key-1': { organizationId: 'org-1', licenseId: 'license-1', redeemedByUid: uid, status: 'redeemed' },
+    'organizationAuditLogs/log-1': { organizationId: 'org-1', actorUid: uid, targetUid: uid, action: 'seat.assigned' },
+    'organizationAuditLogs/log-2': { organizationId: 'org-1', actorUid: uid, action: 'key.redeemed' },
   });
 
   assert.equal((await harness.api.deleteUserAccount(uid)).retainedBillingRecords, 1);
@@ -134,6 +144,25 @@ test('account deletion removes learner data and anonymises retained billing reco
   assert.equal(billingRecord.customerId, 'customer-1');
   assert.equal(billingRecord.orderId, 'order-1');
   assert.equal(harness.documents.has('billingWebhookEvents/event-1'), true);
+  const organizationSeat = harness.documents.get('organizationSeats/seat-1')!;
+  assert.equal(organizationSeat.status, 'released');
+  assert.equal('uid' in organizationSeat, false);
+  assert.equal(organizationSeat.formerAccountKey, accountDeletionKey(uid));
+  assert.equal(harness.documents.get('organizationLicenses/license-1')?.capacityRevision, 3);
+  assert.equal(harness.documents.has(`organizationSeatGuards/${accountDeletionKey(uid)}`), false);
+  const organizationKey = harness.documents.get('organizationAccessKeys/key-1')!;
+  assert.equal(organizationKey.status, 'redeemed');
+  assert.equal('redeemedByUid' in organizationKey, false);
+  assert.equal(organizationKey.redeemedByDeletionKey, accountDeletionKey(uid));
+  const organizationLog = harness.documents.get('organizationAuditLogs/log-1')!;
+  assert.equal('targetUid' in organizationLog, false);
+  assert.equal(organizationLog.targetAccountDeletionKey, accountDeletionKey(uid));
+  assert.equal(organizationLog.actorUid, 'system:deleted-account');
+  assert.equal(organizationLog.actorAccountDeletionKey, accountDeletionKey(uid));
+  const actorOnlyOrganizationLog = harness.documents.get('organizationAuditLogs/log-2')!;
+  assert.equal(actorOnlyOrganizationLog.actorUid, 'system:deleted-account');
+  assert.equal(actorOnlyOrganizationLog.actorAccountDeletionKey, accountDeletionKey(uid));
+  assert.equal(harness.documents.get(`organizationAuditLogs/${accountDeletionKey(uid)}-org-1`)?.action, 'seat.released_on_account_deletion');
   const markers = [...harness.documents.keys()].filter(path => path.startsWith('accountDeletions/'));
   assert.equal(markers.length, 1);
   assert.doesNotMatch(markers[0], /alice/);
@@ -168,14 +197,24 @@ test('account deletion requires password reauthentication and documents retained
   const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
   const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
   const privacy = readFileSync(new URL('../src/pages/LegalPages.tsx', import.meta.url), 'utf8');
+  const authCopy = readFileSync(new URL('../src/i18n/authCopy.ts', import.meta.url), 'utf8');
+  const legalCopy = readFileSync(new URL('../src/i18n/legalCopy.ts', import.meta.url), 'utf8');
   const authRoutes = readFileSync(new URL('../functions/src/auth/routes.ts', import.meta.url), 'utf8');
   assert.match(store, /reauthenticateWithCredential\(firebaseUser, EmailAuthProvider\.credential/);
   assert.match(store, /apiJson\('\/api\/auth\/account', \{ method: 'DELETE' \}\)/);
   assert.match(store, /removeItem\(progressCacheKey\(ownerId\)\)/);
   assert.match(authRoutes, /delete\('\/api\/auth\/account', requireAuth/);
   assert.match(authRoutes, /authAgeSeconds > 300/);
-  assert.match(modal, /Безвозвратное удаление аккаунта/);
-  assert.match(modal, /Открыть Customer Portal/);
-  assert.match(privacy, /minimal pseudonymous deletion marker/);
-  assert.match(privacy, /account-specific progress cache/);
+  assert.match(modal, /copy\.deleteTitle/);
+  assert.match(modal, /copy\.openPortal/);
+  assert.match(authCopy, /Безвозвратное удаление аккаунта/);
+  assert.match(authCopy, /Открыть Customer Portal/);
+  const redemptionForm = modal.indexOf('onSubmit={handleOrganizationCode}');
+  const deletionPanel = modal.indexOf('{showDeletion &&');
+  assert.ok(redemptionForm > 0 && redemptionForm < deletionPanel);
+  assert.doesNotMatch(modal.slice(deletionPanel), /onSubmit=\{handleOrganizationCode\}/);
+  assert.doesNotMatch(modal.slice(deletionPanel), /user\.organizationAccess\?\.status === 'active'/);
+  assert.match(privacy, /LEGAL_COPY/);
+  assert.match(legalCopy, /minimal pseudonymous marker/);
+  assert.match(legalCopy, /account cache on the current device/);
 });

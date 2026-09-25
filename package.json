@@ -23,6 +23,7 @@
     "functions:typecheck": "npm --prefix functions run typecheck",
     "firebase:set-admin": "tsx scripts/set-firebase-admin.ts",
     "audit:legacy": "tsx scripts/audit-legacy.ts",
+    "audit:localization": "tsx scripts/audit-localization.ts",
     "test:rules": "firebase emulators:exec --project hungarylearn-rules-test --only firestore \"tsx --test tests/rules/firebaseRules.test.ts\"",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint .",

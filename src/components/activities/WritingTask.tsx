@@ -8,6 +8,8 @@ import {
   restoreWritingDraft,
   restoreWritingRubric,
 } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY } from '../../i18n/activityCopy';
 
 interface WritingTaskProps {
   data: WritingTaskData;
@@ -33,6 +35,8 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
   runtime,
   onRuntimeChange,
 }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const [text, setText] = useState<string>(() => restoreWritingDraft(runtime));
   const [checked, setChecked] = useState<Record<string, boolean>>(() => restoreWritingRubric(runtime));
   const [showModel, setShowModel] = useState(false);
@@ -78,11 +82,11 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
       <div className="flex items-center gap-2">
         <PenLine className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Письмо'}
+          {data.title ?? copy.writing}
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase text-emerald-700 font-semibold">
-            ✓ Самопроверка завершена
+            ✓ {copy.selfReviewComplete}
           </span>
         )}
       </div>
@@ -99,12 +103,12 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
         className="w-full rounded-xl border border-[#D6DEE6] bg-white px-3 py-2.5 text-sm text-[#252B2F] leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#116EEE]/40 resize-y disabled:opacity-60 disabled:cursor-not-allowed"
       />
       <div className="text-right text-[11px] font-mono text-[#666E7E]">
-        {text.trim().length} / {MIN_WRITING_LENGTH}+ символов
+        {text.trim().length} / {MIN_WRITING_LENGTH}+ {copy.characters}
       </div>
 
       <div className="rounded-xl border border-[#D6DEE6] bg-white p-3">
         <p className="text-[10px] font-mono uppercase tracking-wider text-[#666E7E] font-bold mb-2">
-          Самооценка (отметь все пункты)
+          {copy.rubric}
         </p>
         <ul className="text-xs text-[#252B2F] space-y-1.5">
           {data.rubric.map((criterion) => (
@@ -130,7 +134,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D6DEE6] bg-white text-[#252B2F] text-xs font-semibold hover:bg-[#EDF4FB] cursor-pointer"
         >
           {showModel ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-          <span>{showModel ? 'Скрыть пример' : 'Показать пример'}</span>
+          <span>{showModel ? copy.hideExample : copy.showExample}</span>
         </button>
         {locked ? (
           <button
@@ -138,7 +142,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-[#116EEE] bg-white text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer"
           >
             <PencilLine className="w-3.5 h-3.5" />
-            <span>Редактировать снова</span>
+            <span>{copy.editAgain}</span>
           </button>
         ) : (
           <button
@@ -147,7 +151,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
             className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Я проверил(а) себя</span>
+            <span>{copy.reviewed}</span>
           </button>
         )}
       </div>
@@ -155,7 +159,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
       {showModel && (
         <div className="rounded-xl border border-[#3B1E90]/30 bg-[#3B1E90]/5 p-4" aria-live="polite">
           <p className="text-[10px] font-mono uppercase tracking-wider text-[#3B1E90] font-bold mb-2">
-            Пример ответа
+            {copy.modelAnswer}
           </p>
           {data.modelAnswer.map((line) => (
             <p key={line} className="text-sm text-[#252B2F] font-mono">

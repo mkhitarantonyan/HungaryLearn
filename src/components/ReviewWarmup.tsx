@@ -1,9 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, ArrowRight, Flame } from 'lucide-react';
-import { playRecordedAudio } from '../utils/speech';
-import { getWarmupSession, getGrammarReminder } from '../utils/spacedRepetition';
+import { playPronunciationAudio } from '../utils/speech';
+import { getWarmupSession } from '../utils/spacedRepetition';
+import { LESSONS_META } from '../data/lessons';
 import type { ReviewCardState, ReviewGrade, DueReviewCard } from '../types';
+import { useI18n } from '../i18n';
+import { localizeLessonText } from '../i18n/lessonContent';
 
 interface ReviewWarmupProps {
   userCardStates: Record<string, ReviewCardState>;
@@ -12,11 +15,11 @@ interface ReviewWarmupProps {
   onDone: () => void;
 }
 
-const GRADE_BUTTONS: { grade: ReviewGrade; label: string; color: string }[] = [
-  { grade: 'again', label: 'Не помню', color: '#C23B4A' },
-  { grade: 'hard', label: 'Трудно', color: '#C77B00' },
-  { grade: 'good', label: 'Помню', color: '#3B1E90' },
-  { grade: 'easy', label: 'Легко', color: '#3F7D5C' },
+const GRADE_BUTTONS: { grade: ReviewGrade; key: 'review.again' | 'review.hard' | 'review.good' | 'review.easy'; color: string }[] = [
+  { grade: 'again', key: 'review.again', color: '#C23B4A' },
+  { grade: 'hard', key: 'review.hard', color: '#C77B00' },
+  { grade: 'good', key: 'review.good', color: '#3B1E90' },
+  { grade: 'easy', key: 'review.easy', color: '#3F7D5C' },
 ];
 
 export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
@@ -25,6 +28,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   onCardGraded,
   onDone,
 }) => {
+  const { language, t } = useI18n();
   const session = useMemo(
     () => getWarmupSession(userCardStates, completedLessonNumbers, 8),
     [userCardStates, completedLessonNumbers]
@@ -47,7 +51,15 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   }
 
   const card: DueReviewCard = session[index];
-  const reminder = getGrammarReminder(card);
+  const reminderLesson = card.relatedLessonId
+    ? LESSONS_META.find((lesson) => lesson.number === card.relatedLessonId)
+    : undefined;
+  const reminder = reminderLesson
+    ? t('review.grammarReminder', {
+        title: localizeLessonText(reminderLesson.title, language),
+        subtitle: localizeLessonText(reminderLesson.subtitle, language),
+      })
+    : null;
 
   const handleGrade = (grade: ReviewGrade) => {
     onCardGraded(card.state.cardId, grade);
@@ -63,7 +75,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
 
   const playAudio = () => {
     setAudioUnavailable(false);
-    playRecordedAudio(card.hu, undefined, undefined, () => setAudioUnavailable(true));
+    playPronunciationAudio(card.hu, undefined, undefined, () => setAudioUnavailable(true));
   };
 
   return (
@@ -76,13 +88,13 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2 text-xs font-mono text-[#666E7E]">
             <Flame className="w-4 h-4 text-[#C77B00]" />
-            <span>Разминка · {index + 1}/{session.length}</span>
+            <span>{t('review.warmup', { current: index + 1, total: session.length })}</span>
           </div>
           <button
             onClick={onDone}
             className="text-xs text-[#666E7E] hover:text-[#116EEE] underline cursor-pointer"
           >
-            Пропустить
+            {t('review.skip')}
           </button>
         </div>
 
@@ -95,7 +107,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
         </div>
 
         <div className="text-[11px] font-mono uppercase tracking-wider text-[#C77B00] mb-2">
-          {card.lessonTitle}
+          {localizeLessonText(card.lessonTitle, language)}
         </div>
 
         <div
@@ -116,7 +128,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
           </div>
           {card.phonetic && <div className="text-xs text-[#666E7E] font-mono mb-3">{card.phonetic}</div>}
           {audioUnavailable && (
-            <div className="text-xs text-red-700 mb-3" role="alert">Записанное аудио недоступно.</div>
+            <div className="text-xs text-red-700 mb-3" role="alert">{t('slide.audioUnavailable')}</div>
           )}
 
           <AnimatePresence mode="wait">
@@ -127,7 +139,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-1"
               >
-                <div className="text-lg font-semibold text-[#3B1E90]">{card.ru}</div>
+                <div className="text-lg font-semibold text-[#3B1E90]">{localizeLessonText(card.ru, language)}</div>
                 {card.exampleSentence && (
                   <div className="text-xs text-[#252B2F]/70 italic">{card.exampleSentence}</div>
                 )}
@@ -139,7 +151,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 animate={{ opacity: 1 }}
                 className="text-xs text-[#666E7E] italic border-b border-dashed border-[#666E7E] pb-0.5"
               >
-                нажми, чтобы вспомнить перевод
+                {t('review.revealHint')}
               </motion.div>
             )}
           </AnimatePresence>
@@ -162,7 +174,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = btn.color)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'white')}
               >
-                {btn.label}
+                {t(btn.key)}
               </button>
             ))}
           </div>
@@ -171,7 +183,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
             onClick={() => setIsFlipped(true)}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
           >
-            <span>Показать перевод</span>
+            <span>{t('review.showTranslation')}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         )}

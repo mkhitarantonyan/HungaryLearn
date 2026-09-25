@@ -1,6 +1,9 @@
 import type { ReactNode } from 'react';
 import { GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { LanguageSelector } from '../components/LanguageSelector';
+import { useI18n } from '../i18n';
+import { LANDING_COPY } from '../i18n/landingCopy';
 
 interface PublicInfoLayoutProps {
   eyebrow: string;
@@ -15,6 +18,8 @@ export default function PublicInfoLayout({
   intro,
   children,
 }: PublicInfoLayoutProps) {
+  const { language, t } = useI18n();
+  const landingCopy = LANDING_COPY[language];
   return (
     <div className="min-h-screen bg-[#F2F7FD] text-[#252B2F] font-sans antialiased">
       <header className="sticky top-0 z-30 border-b border-[#D6DEE6]/80 bg-[#F2F7FD]/95 backdrop-blur">
@@ -29,17 +34,18 @@ export default function PublicInfoLayout({
           </Link>
 
           <nav className="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm font-semibold text-[#435064]">
+            <LanguageSelector compact />
             <Link to="/pricing" className="hover:text-[#116EEE] transition-colors">
-              Pricing
+              {t('public.pricing')}
             </Link>
             <Link to="/terms" className="hidden sm:inline hover:text-[#116EEE] transition-colors">
-              Terms
+              {t('public.terms')}
             </Link>
             <Link
               to="/?auth=register"
               className="px-4 py-2 rounded-xl bg-[#116EEE] text-white hover:bg-[#0D5ED0] transition-colors"
             >
-              Get started
+              {landingCopy.start}
             </Link>
           </nav>
         </div>
@@ -70,15 +76,15 @@ export default function PublicInfoLayout({
               Magyar<span className="text-[#116EEE]">o</span>
             </div>
             <div className="mt-1 text-xs text-[#666E7E]">
-              Self-study digital Hungarian course, A0–B1.
+              {landingCopy.footerBody}
             </div>
           </div>
 
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-[#666E7E]">
-            <Link to="/pricing" className="hover:text-[#116EEE]">Pricing</Link>
-            <Link to="/terms" className="hover:text-[#116EEE]">Terms of Service</Link>
-            <Link to="/privacy" className="hover:text-[#116EEE]">Privacy Policy</Link>
-            <Link to="/refund" className="hover:text-[#116EEE]">Refund Policy</Link>
+            <Link to="/pricing" className="hover:text-[#116EEE]">{t('public.pricing')}</Link>
+            <Link to="/terms" className="hover:text-[#116EEE]">{t('public.terms')}</Link>
+            <Link to="/privacy" className="hover:text-[#116EEE]">{t('public.privacy')}</Link>
+            <Link to="/refund" className="hover:text-[#116EEE]">{t('public.refund')}</Link>
           </nav>
         </div>
       </footer>

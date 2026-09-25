@@ -47,6 +47,8 @@ import { humanizeLearnerText } from './utils/learnerCopy';
 import { beginProgressHydration, isCurrentProgressHydration, mergeActivityEvidence } from './utils/progressMerge';
 import { getLessonResumeSlideIndex, type LessonResumePositions } from './utils/lessonResume';
 import { AlertCircle } from 'lucide-react';
+import { useI18n } from './i18n';
+import { localizeLesson, localizeLessonCatalog } from './i18n/lessonContent';
 
 function extractVisitedLessonNumbers(viewedSlides: string[]): number[] {
   const numbers = new Set<number>();
@@ -64,10 +66,11 @@ function buildViewedSlideId(lessonNumber: number, slideId: number): string {
 }
 
 export default function App() {
+  const { language, t } = useI18n();
   const initialProgress = useMemo(() => readCachedProgress(getCurrentUser()?.id ?? null), []);
   const [viewMode, setViewMode] = useState<'list' | 'lesson'>('list');
   const [selectedLessonId, setSelectedLessonId] = useState<number>(1);
-  const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
+  const [sourceLesson, setSourceLesson] = useState<Lesson | null>(null);
   const [isLoadingLesson, setIsLoadingLesson] = useState(false);
   const [lessonLoadError, setLessonLoadError] = useState<{ message: string; status?: number } | null>(null);
   const [lessonLoadAttempt, setLessonLoadAttempt] = useState(0);
@@ -107,7 +110,11 @@ export default function App() {
 
   const [, setAudioVersion] = useState(0);
 
-  const allLessons = LESSONS_META;
+  const allLessons = useMemo(() => localizeLessonCatalog(LESSONS_META, language), [language]);
+  const activeLesson = useMemo(
+    () => sourceLesson ? localizeLesson(sourceLesson, language) : null,
+    [sourceLesson, language]
+  );
 
   const slides = useMemo(() => activeLesson?.slides ?? [], [activeLesson]);
   const currentSlide = slides[currentSlideIndex] ?? slides[0];
@@ -244,13 +251,13 @@ useEffect(() => {
     setLessonLoadError(null);
 
     try {
-      const lesson = await loadLesson(selectedLessonId, { admin: isAdmin });
+      const lesson = await loadLesson(selectedLessonId, { admin: isAdmin, language });
 
       if (cancelled) return;
 
       if (!lesson) {
-        setActiveLesson(null);
-        setLessonLoadError({ message: 'Урок не найден.', status: 404 });
+        setSourceLesson(null);
+        setLessonLoadError({ message: t('app.lessonNotFound'), status: 404 });
         return;
       }
 
@@ -260,14 +267,22 @@ useEffect(() => {
         requestedResumePositionsRef.current,
       ));
       setSlideDirection(0);
-      setActiveLesson(lesson);
+      setSourceLesson(lesson);
     } catch (error: unknown) {
       if (cancelled) return;
 
-      setActiveLesson(null);
-      const failure = error instanceof LessonLoadError
-        ? { message: error.message, status: error.status }
-        : { message: error instanceof Error ? error.message : 'Урок сейчас недоступен.' };
+      setSourceLesson(null);
+      const status = error instanceof LessonLoadError ? error.status : undefined;
+      const failure = {
+        status,
+        message: status === 401
+          ? t('app.sessionExpired')
+          : status === 403
+            ? t('app.subscriptionRequired')
+            : status === 404
+              ? t('app.lessonNotFound')
+              : t('app.lessonUnavailable'),
+      };
       if (failure.status === 401) await logoutUserServer().catch(() => undefined);
       setLessonLoadError(failure);
     } finally {
@@ -282,7 +297,7 @@ useEffect(() => {
   return () => {
     cancelled = true;
   };
-}, [selectedLessonId, viewMode, isAdmin, lessonLoadAttempt]);
+}, [selectedLessonId, viewMode, isAdmin, lessonLoadAttempt, language, t]);
 
   const handleSelectLesson = (lessonId: number) => {
     const lessonMeta = LESSONS_META.find((l) => l.id === lessonId);
@@ -293,7 +308,7 @@ useEffect(() => {
     requestedResumePositionsRef.current = resumePositions;
     setSelectedLessonId(lessonId);
     setCurrentSlideIndex(0);
-    setActiveLesson(null);
+    setSourceLesson(null);
     setIsQuizActive(false);
     setActivityRuntime({});
     setLessonLoadError(null);
@@ -572,7 +587,7 @@ useEffect(() => {
   };
 
   if (!authReady || !isProgressHydrated) {
-    return <AppPreloader message="Восстановление сессии…" />;
+    return <AppPreloader message={t('landing.session')} />;
   }
 
   if (viewMode === 'list') {
@@ -605,12 +620,12 @@ useEffect(() => {
   if (lessonLoadError) {
     const status = lessonLoadError.status;
     const title = status === 401
-      ? 'Сессия истекла'
+      ? t('app.sessionExpired')
       : status === 403
-        ? 'Нужна подписка'
+        ? t('app.subscriptionRequired')
         : status === 404
-          ? 'Урок недоступен'
-          : 'Не удалось открыть урок';
+          ? t('app.lessonUnavailable')
+          : t('app.cannotOpenLesson');
     return (
       <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
         <div className="max-w-md rounded-2xl border border-[#D6DEE6] bg-white p-7 text-center shadow-sm">
@@ -624,7 +639,7 @@ useEffect(() => {
                 onClick={() => setIsUserModalOpen(true)}
                 className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0]"
               >
-                {status === 401 ? 'Войти / Зарегистрироваться' : 'Открыть подписку'}
+                {status === 401 ? t('app.signIn') : t('app.openSubscription')}
               </button>
             )}
             {(status === undefined || status >= 500) && (
@@ -636,7 +651,7 @@ useEffect(() => {
                 }}
                 className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0]"
               >
-                Повторить
+                {t('app.retry')}
               </button>
             )}
             <button
@@ -644,7 +659,7 @@ useEffect(() => {
               onClick={handleBackToLessons}
               className="px-5 py-2.5 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold hover:bg-[#EDF4FB]"
             >
-              К списку уроков
+              {t('app.backToLessons')}
             </button>
           </div>
         </div>
@@ -654,7 +669,7 @@ useEffect(() => {
   }
 
   if (isLoadingLesson || !activeLesson) {
-    return <AppPreloader message="Загрузка урока…" />;
+    return <AppPreloader message={t('common.loading')} />;
   }
 
   if (showWarmup) {
@@ -685,6 +700,7 @@ useEffect(() => {
 
       {!isQuizActive && (
         <NarrationPlayer
+          available={narration.available}
           isPlaying={narration.isPlaying}
           autoplayEnabled={narration.autoplayEnabled}
           playbackRate={narration.playbackRate}
@@ -763,7 +779,7 @@ useEffect(() => {
                 <div className="pt-6 mt-6 border-t border-[#D6DEE6]/40 flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex items-center gap-2 text-xs text-[#666E7E]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#3B1E90]"></span>
-                    <span>Клавиши ← и → для переключения</span>
+                    <span>{t('app.keyboardNavigation')}</span>
                   </div>
 
                   <PracticeMenu
@@ -795,7 +811,7 @@ useEffect(() => {
       <SlideDrawer
         isOpen={isDrawerOpen}
         slides={slides}
-        lessonTitle={`Оглавление Урока ${activeLesson.number}`}
+        lessonTitle={t('app.lessonContents', { number: activeLesson.number })}
         currentSlide={currentSlideIndex}
         onClose={() => setIsDrawerOpen(false)}
         onSelectSlide={handleSelectSlide}

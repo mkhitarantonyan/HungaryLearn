@@ -1,13 +1,13 @@
 import type { SlideData } from '../types';
+import type { NarrationLanguage } from '../config/narration';
+import { getNarrationSource } from '../config/narration';
 import type { RecordedAudioItem } from './speech';
-import { getAudioFileUrl, getSlideCandidateKeys } from './audioRegistry';
 
 export function getSlideNarrativeSequence(
   slide: SlideData,
-  lessonNumber: number = 1
+  lessonNumber: number = 1,
+  language: NarrationLanguage = 'ru',
 ): RecordedAudioItem[] {
-  const audioKey = getSlideCandidateKeys(slide.id, lessonNumber)
-    .find((candidate) => getAudioFileUrl(candidate) !== null);
-
-  return audioKey ? [{ key: audioKey }] : [];
+  const source = getNarrationSource(lessonNumber, language, slide.id);
+  return source ? [{ key: source.audioKey }] : [];
 }

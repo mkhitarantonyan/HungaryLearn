@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, Pencil } from 'lucide-react';
 import { motion } from 'motion/react';
-import { playRecordedAudio } from '../utils/speech';
+import { playPronunciationAudio } from '../utils/speech';
 import { getAudioFileUrl } from '../utils/audioRegistry';
 import { getDisplayWord, isAdminLoggedIn, subscribeAdminState } from '../utils/adminStore';
 import { EditWordModal } from './EditWordModal';
+import { useI18n } from '../i18n';
 
 interface SpeechButtonProps {
   text: string;
@@ -21,6 +22,7 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
   variant = 'pill',
   className = ''
 }) => {
+  const { t } = useI18n();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAdmin, setIsAdmin] = useState(isAdminLoggedIn());
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -43,7 +45,7 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
     e.stopPropagation();
     setAudioUnavailable(false);
     setIsPlaying(true);
-    playRecordedAudio(
+    playPronunciationAudio(
       text,
       rate,
       () => setIsPlaying(false),
@@ -68,23 +70,23 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
             whileTap={{ scale: 0.95 }}
             onClick={handlePlay}
             disabled={!hasAudio}
-            aria-label={`Воспроизвести произношение: ${displayText}`}
+            aria-label={t('pronunciation.play', { text: displayText })}
             className={`inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
-            title={hasAudio ? `Послушать произношение: ${displayText}` : 'Записанное аудио недоступно'}
+            title={hasAudio ? t('pronunciation.play', { text: displayText }) : t('pronunciation.unavailable')}
           >
             <Volume2 className={`w-4 h-4 ${isPlaying ? 'animate-pulse text-[#C77B00]' : ''}`} />
           </motion.button>
           {isAdmin && (
             <button
               onClick={handleEditClick}
-              aria-label="Редактировать слово или озвучку"
+              aria-label={t('pronunciation.edit')}
               className="p-1 rounded-full bg-[#C77B00]/15 hover:bg-[#C77B00] text-[#8A6715] hover:text-white transition-colors cursor-pointer"
-              title="Админ: изменить слово/звук"
+              title={t('pronunciation.adminEdit')}
             >
               <Pencil className="w-3 h-3" />
             </button>
           )}
-          {audioUnavailable && <span className="text-xs text-red-700" role="alert">Аудио недоступно</span>}
+          {audioUnavailable && <span className="text-xs text-red-700" role="alert">{t('pronunciation.unavailable')}</span>}
         </div>
         <EditWordModal
           isOpen={isEditOpen}
@@ -105,7 +107,7 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
             whileTap={{ scale: 0.98 }}
             onClick={handlePlay}
             disabled={!hasAudio}
-            aria-label={`Воспроизвести произношение: ${displayText}`}
+            aria-label={t('pronunciation.play', { text: displayText })}
             className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#116EEE] text-[#FFFFFF] font-semibold hover:bg-[#0D5ED0] shadow-sm transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
           >
             <Volume2 className={`w-5 h-5 ${isPlaying ? 'animate-bounce text-[#C77B00]' : ''}`} />
@@ -121,14 +123,14 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
           {isAdmin && (
             <button
               onClick={handleEditClick}
-              aria-label="Редактировать слово или озвучку"
+              aria-label={t('pronunciation.edit')}
               className="p-1.5 rounded-full bg-[#C77B00]/20 hover:bg-[#C77B00] text-[#252B2F] hover:text-white transition-colors cursor-pointer"
-              title="Админ: изменить слово/звук"
+              title={t('pronunciation.adminEdit')}
             >
               <Pencil className="w-3.5 h-3.5" />
             </button>
           )}
-          {audioUnavailable && <span className="text-xs text-red-700" role="alert">Аудио недоступно</span>}
+          {audioUnavailable && <span className="text-xs text-red-700" role="alert">{t('pronunciation.unavailable')}</span>}
         </div>
         <EditWordModal
           isOpen={isEditOpen}
@@ -149,7 +151,7 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
           whileTap={{ scale: 0.97 }}
           onClick={handlePlay}
           disabled={!hasAudio}
-          aria-label={`Воспроизвести произношение: ${displayText}`}
+          aria-label={t('pronunciation.play', { text: displayText })}
           className={`inline-flex items-center gap-1.5 bg-[#116EEE] hover:bg-[#0D5ED0] text-[#FFFFFF] font-mono font-medium text-xs md:text-sm px-3 py-1.5 rounded-full transition-all shadow-sm cursor-pointer border border-[#116EEE]/20 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
         >
           <Volume2 className={`w-3.5 h-3.5 ${isPlaying ? 'text-[#C77B00] animate-spin' : ''}`} />
@@ -158,14 +160,14 @@ export const SpeechButton: React.FC<SpeechButtonProps> = ({
         {isAdmin && (
           <button
             onClick={handleEditClick}
-            aria-label="Редактировать слово или озвучку"
+            aria-label={t('pronunciation.edit')}
             className="p-1.5 rounded-full bg-[#C77B00]/20 hover:bg-[#C77B00] text-[#252B2F] hover:text-white transition-colors cursor-pointer"
-            title="Админ: изменить слово/звук"
+            title={t('pronunciation.adminEdit')}
           >
             <Pencil className="w-3 h-3" />
           </button>
         )}
-        {audioUnavailable && <span className="text-xs text-red-700" role="alert">Аудио недоступно</span>}
+        {audioUnavailable && <span className="text-xs text-red-700" role="alert">{t('pronunciation.unavailable')}</span>}
       </div>
       <EditWordModal
         isOpen={isEditOpen}

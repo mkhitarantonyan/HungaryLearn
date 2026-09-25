@@ -196,7 +196,8 @@ test('one transcript and asset serve both L5 listening tasks with gated disclosu
   assert.equal(schedule.transcript, L5_LISTENING_TRANSCRIPT);
   const source = readFileSync(new URL('../src/components/activities/ListeningTask.tsx', import.meta.url), 'utf8');
   assert.match(source, /submitted &&/);
-  assert.match(source, /Текст записи \(после ответа\)/);
+  assert.match(source, /copy\.transcript/);
+  assert.match(readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8'), /Текст записи \(после ответа\)/);
 });
 
 test('time/schedule listening has five genuine detail questions and a 4/5 threshold', () => {

@@ -2,6 +2,7 @@ import { Lesson, LessonMeta } from '../../types';
 import { LESSON_1 } from './lesson1';
 import { LESSON_2 } from './lesson2';
 import { apiFetch } from '../../lib/apiClient';
+import type { InstructionLanguage } from '../../i18n/types';
 
 export const LESSONS_META: LessonMeta[] = [
   {
@@ -278,6 +279,7 @@ interface LessonApiResponse {
 
 interface LessonLoadOptions {
   admin?: boolean;
+  language?: InstructionLanguage;
 }
 
 const freeLessons: Record<number, Lesson> = {
@@ -313,20 +315,21 @@ export async function loadLesson(id: number, options: LessonLoadOptions = {}): P
     return lesson;
   }
 
-  const endpoint = options.admin ? `/api/admin/lessons/${id}` : `/api/lessons/${id}`;
+  const endpointPath = options.admin ? `/api/admin/lessons/${id}` : `/api/lessons/${id}`;
+  const endpoint = `${endpointPath}?language=${encodeURIComponent(options.language ?? 'ru')}`;
   let response: Response;
   try {
     response = await apiFetch(endpoint, {
       headers: { Accept: 'application/json' },
     });
   } catch {
-    throw new LessonLoadError('Не удалось связаться с сервером. Попробуйте ещё раз.');
+    throw new LessonLoadError('Lesson request failed.', 503);
   }
 
   const payload = await response.json().catch(() => ({})) as LessonApiResponse;
   if (!response.ok || !payload.lesson) {
     throw new LessonLoadError(
-      payload.message || 'Урок сейчас недоступен.',
+      payload.message || 'Lesson unavailable.',
       response.status
     );
   }

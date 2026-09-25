@@ -29,16 +29,20 @@ test('password reset validates the account email and uses Firebase without revea
 
   const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
   const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  const copy = readFileSync(new URL('../src/i18n/authCopy.ts', import.meta.url), 'utf8');
   assert.match(store, /sendPasswordResetEmail\(getFirebaseAuth\(\), email\.trim\(\)\)/);
   assert.match(store, /Если аккаунт с таким e-mail существует/);
-  assert.match(modal, /Забыли пароль\?/);
+  assert.match(modal, /copy\.forgot/);
+  assert.match(copy, /Забыли пароль\?/);
   assert.match(modal, /id="user-reset-email"/);
-  assert.match(modal, /Отправить ссылку для сброса/);
+  assert.match(modal, /copy\.sendReset/);
+  assert.match(copy, /Отправить ссылку для сброса/);
 });
 
 test('registration sends email verification and the account can refresh or resend it', () => {
   const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
   const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  const copy = readFileSync(new URL('../src/i18n/authCopy.ts', import.meta.url), 'utf8');
   const authRoute = readFileSync(new URL('../functions/src/auth/routes.ts', import.meta.url), 'utf8');
   const billingRoute = readFileSync(new URL('../functions/src/billing/routes.ts', import.meta.url), 'utf8');
   assert.match(store, /sendEmailVerification\(credential\.user\)/);
@@ -46,19 +50,23 @@ test('registration sends email verification and the account can refresh or resen
   assert.match(store, /await reload\(firebaseUser\)[\s\S]*getIdToken\(true\)/);
   assert.match(authRoute, /emailVerified: req\.auth!\.email_verified === true/);
   assert.match(billingRoute, /email_verified !== true[\s\S]*Подтвердите e-mail/);
-  assert.match(modal, /Отправить письмо повторно/);
-  assert.match(modal, /Я подтвердил e-mail/);
+  assert.match(modal, /copy\.resend/);
+  assert.match(modal, /copy\.refresh/);
+  assert.match(copy, /Отправить письмо повторно/);
+  assert.match(copy, /Я подтвердил e-mail/);
 });
 
 test('normal user auth uses Firebase registration, login, logout and session restoration', () => {
   const store = readFileSync(new URL('../src/utils/userStore.ts', import.meta.url), 'utf8');
   const modal = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  const copy = readFileSync(new URL('../src/i18n/authCopy.ts', import.meta.url), 'utf8');
   assert.match(store, /createUserWithEmailAndPassword\(getFirebaseAuth\(\), email\.trim\(\), pass\)/);
   assert.match(store, /signInWithEmailAndPassword\(getFirebaseAuth\(\), email\.trim\(\), pass\)/);
   assert.match(store, /logoutUserServer[\s\S]*signOut\(getFirebaseAuth\(\)\)/);
   assert.match(store, /onAuthStateChanged\(getFirebaseAuth\(\)/);
   assert.doesNotMatch(store, /localStorage[\s\S]{0,120}(?:auth|session)|\/api\/auth\/(?:login|register|logout)/);
-  assert.match(modal, /!authReady[\s\S]*Проверка аккаунта/);
+  assert.match(modal, /!authReady[\s\S]*copy\.checking/);
+  assert.match(copy, /Проверка аккаунта/);
   assert.match(modal, /mode === 'login'/);
   assert.match(modal, /mode === 'register'/);
 });
@@ -108,16 +116,20 @@ test('admin logout has no legacy endpoint and clears the authorized snapshot', (
 
 test('paid lesson error UI separates auth, paywall, unavailable and retry states', () => {
   const source = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
-  assert.match(source, /status === 401[\s\S]*Сессия истекла/);
-  assert.match(source, /status === 403[\s\S]*Нужна подписка/);
-  assert.match(source, /status === 404[\s\S]*Урок недоступен/);
-  assert.match(source, /Повторить/);
-  assert.match(source, /Войти \/ Зарегистрироваться/);
+  const copy = readFileSync(new URL('../src/i18n/index.tsx', import.meta.url), 'utf8');
+  assert.match(source, /status === 401[\s\S]*app\.sessionExpired/);
+  assert.match(source, /status === 403[\s\S]*app\.subscriptionRequired/);
+  assert.match(source, /status === 404[\s\S]*app\.lessonUnavailable/);
+  assert.match(source, /app\.retry/);
+  assert.match(source, /app\.signIn/);
+  assert.match(copy, /Сессия истекла/);
 });
 
 test('learner-facing UI contains no trial offer', () => {
   const landing = readFileSync(new URL('../src/pages/LandingPage.tsx', import.meta.url), 'utf8');
   const account = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
-  assert.doesNotMatch(`${landing}\n${account}`, /trial|пробн/i);
-  assert.match(landing, /Уроки 1–2 бесплатно/);
+  const landingCopy = readFileSync(new URL('../src/i18n/landingCopy.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(`${landing}\n${account}\n${landingCopy}`, /trial|пробн/i);
+  assert.match(landing, /copy\.free/);
+  assert.match(landingCopy, /Уроки 1–2 бесплатно/);
 });

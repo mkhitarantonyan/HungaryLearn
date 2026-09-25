@@ -270,8 +270,10 @@ test('L1 has no Recording activity and keeps read-aloud as optional text-only pr
 test('L1 controlled and listening controls expose textual feedback, focus, and narrow-screen wrapping', () => {
   const controlledSource = readFileSync(new URL('../src/components/activities/ControlledPractice.tsx', import.meta.url), 'utf8');
   const listeningSource = readFileSync(new URL('../src/components/activities/ListeningTask.tsx', import.meta.url), 'utf8');
-  assert.match(controlledSource, /state\.correct \? 'Верно\.'/);
-  assert.match(controlledSource, /Неверно\. Правильный ответ:/);
+  const copy = readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8');
+  assert.match(controlledSource, /state\.correct \? copy\.correct/);
+  assert.match(controlledSource, /copy\.wrong/);
+  assert.match(copy, /Неверно\. Правильный ответ:/);
   assert.match(controlledSource, /role="status"/);
   assert.match(controlledSource, /aria-live="polite"/);
   assert.match(controlledSource, /aria-hidden="true"/);
@@ -571,9 +573,12 @@ test('summary keeps corrected phonetic categories and does not group ly with gy/
 
 test('slideNarrator contains no synthesized fallback script', () => {
   const source = readFileSync(new URL('../src/utils/slideNarrator.ts', import.meta.url), 'utf8');
+  const configSource = readFileSync(new URL('../src/config/narration.ts', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /SpeechSynthesis|fallbackSequence|44 буквы|русское смягчение/);
-  assert.match(source, /getAudioFileUrl/);
-  assert.match(source, /return audioKey \? \[\{ key: audioKey \}\] : \[\]/);
+  assert.match(source, /getNarrationSource/);
+  assert.match(source, /return source \? \[\{ key: source\.audioKey \}\] : \[\]/);
+  assert.match(configSource, /getAudioFileUrl/);
+  assert.match(configSource, /if \(!config\.available\) return null/);
   assert.doesNotMatch(source, /44 звука|Мягкие согласные: дь, ть, нь, й|всегда падает исключительно/iu);
 });
 

@@ -20,6 +20,9 @@ import { getCurrentUser, isUserAuthReady, subscribeUserAuthReady, subscribeUserS
 import { UserAuthModal } from '../components/UserAuthModal';
 import { AdminAccessModal } from '../components/AdminAccessModal';
 import { AppPreloader } from '../components/AppPreloader';
+import { LanguageSelector } from '../components/LanguageSelector';
+import { useI18n } from '../i18n';
+import { LANDING_COPY } from '../i18n/landingCopy';
 
 function Reveal({
   children,
@@ -95,6 +98,8 @@ interface HeaderProps {
 }
 
 function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -105,10 +110,10 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
   }, []);
 
   const navLinks = [
-    { href: '#features', label: 'Возможности' },
-    { href: '#how', label: 'Как это работает' },
-    { href: '#preview', label: 'Программа курса' },
-    { href: '/pricing', label: 'Pricing' },
+    { href: '#features', label: copy.nav[0] },
+    { href: '#how', label: copy.nav[1] },
+    { href: '#preview', label: copy.nav[2] },
+    { href: '/pricing', label: copy.nav[3] },
   ];
 
   return (
@@ -130,7 +135,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                 Magyar<span className="text-[#116EEE]">o</span>
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#666E7E] mt-0.5">
-                венгерский с нуля
+                {copy.tagline}
               </span>
             </span>
           </a>
@@ -148,12 +153,13 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSelector compact />
             {user ? (
               <button
                 onClick={onStart}
                 className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-all shadow-sm cursor-pointer"
               >
-                Продолжить обучение
+                {copy.continue}
               </button>
             ) : (
               <>
@@ -161,13 +167,13 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                   onClick={onLogin}
                   className="px-5 py-2.5 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold hover:border-[#116EEE]/40 hover:text-[#116EEE] transition-all cursor-pointer"
                 >
-                  Войти
+                  {copy.login}
                 </button>
                 <button
                   onClick={onSignup}
                   className="px-5 py-2.5 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-all shadow-sm cursor-pointer"
                 >
-                  Регистрация
+                  {copy.signup}
                 </button>
               </>
             )}
@@ -175,7 +181,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
             className="md:hidden p-2 rounded-lg text-[#252B2F] hover:bg-[#116EEE]/10 transition-colors cursor-pointer"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -184,6 +190,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
 
         {menuOpen && (
           <div className="md:hidden pb-5 pt-1 space-y-1">
+            <div className="px-3 py-2"><LanguageSelector /></div>
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -203,7 +210,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                   }}
                   className="w-full px-5 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
                 >
-                  Продолжить обучение
+                  {copy.continue}
                 </button>
               ) : (
                 <>
@@ -214,7 +221,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                     }}
                     className="w-full px-5 py-3 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold transition-colors cursor-pointer"
                   >
-                    Войти
+                    {copy.login}
                   </button>
                   <button
                     onClick={() => {
@@ -223,7 +230,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                     }}
                     className="w-full px-5 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
                   >
-                    Регистрация
+                    {copy.signup}
                   </button>
                 </>
               )}
@@ -236,6 +243,8 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
 }
 
 function Hero({ onStart, user }: { onStart: () => void; user: { email: string } | null }) {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -249,22 +258,19 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
           <Reveal>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#D6DEE6] shadow-xs text-xs font-semibold text-[#252B2F] mb-7">
               <Star className="w-3.5 h-3.5 text-[#C77B00] fill-[#C77B00]" />
-              28 уроков · уровни A0–B1 · для начинающих
+              {copy.heroBadge}
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#252B2F] tracking-tight leading-[1.05]">
-              Заговорите по-венгерски{' '}
+              {copy.heroTitle}{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">с первых уроков</span>
+                <span className="relative z-10">{copy.heroAccent}</span>
                 <span aria-hidden className="absolute left-0 right-0 bottom-1 h-3 bg-[#C77B00]/30 rounded-sm" />
               </span>
             </h1>
 
             <p className="mt-6 text-base md:text-lg text-[#666E7E] leading-relaxed max-w-xl">
-              Интерактивные уроки с живой озвучкой носителя, встроенными
-              тренажёрами слов и умной системой повторения. Изучайте
-              грамматику, слушайте произношение и закрепляйте слова — в своём
-              темпе, на любом устройстве.
+              {copy.heroBody}
             </p>
 
             <div className="mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
@@ -273,7 +279,7 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
                 className="group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[#116EEE] text-white text-base font-bold hover:bg-[#0D5ED0] hover:shadow-md transition-all cursor-pointer"
               >
                 <Play className="w-5 h-5 fill-current" />
-                {user ? 'Продолжить обучение' : 'Начать учиться'}
+                {user ? copy.continue : copy.start}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -281,20 +287,20 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
                 href="#how"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[#D6DEE6] bg-white text-[#252B2F] text-base font-semibold hover:border-[#116EEE]/40 hover:text-[#116EEE] transition-all cursor-pointer"
               >
-                Как это работает
+                {copy.how}
               </a>
             </div>
 
             {!user && (
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#666E7E]">
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#3B1E90]" /> Уроки 1–2 бесплатно
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> {copy.free}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#3B1E90]" /> Без карты
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> {copy.noCard}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Check className="w-4 h-4 text-[#3B1E90]" /> Отмена в любой момент
+                  <Check className="w-4 h-4 text-[#3B1E90]" /> {copy.cancel}
                 </span>
               </div>
             )}
@@ -310,6 +316,8 @@ function Hero({ onStart, user }: { onStart: () => void; user: { email: string } 
 }
 
 function HeroMockup() {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <div className="relative mx-auto max-w-lg lg:max-w-none">
       <div aria-hidden className="absolute -inset-5 bg-[#116EEE]/7 blur-2xl rounded-2xl" />
@@ -320,8 +328,8 @@ function HeroMockup() {
             <Headphones className="w-4.5 h-4.5" />
           </span>
           <div>
-            <div className="text-xs font-bold text-[#252B2F] leading-none">Озвучка носителя</div>
-            <div className="text-[10px] text-[#666E7E] mt-1">в каждом слайде</div>
+            <div className="text-xs font-bold text-[#252B2F] leading-none">{copy.narration}</div>
+            <div className="text-[10px] text-[#666E7E] mt-1">{copy.everySlide}</div>
           </div>
         </div>
       </div>
@@ -332,8 +340,8 @@ function HeroMockup() {
             <BookOpen className="w-4.5 h-4.5" />
           </span>
           <div>
-            <div className="text-xs font-bold text-[#252B2F] leading-none">28 уроков</div>
-            <div className="text-[10px] text-[#666E7E] mt-1">780+ слов и фраз</div>
+            <div className="text-xs font-bold text-[#252B2F] leading-none">{copy.lessons}</div>
+            <div className="text-[10px] text-[#666E7E] mt-1">{copy.words}</div>
           </div>
         </div>
       </div>
@@ -342,10 +350,10 @@ function HeroMockup() {
         <div className="px-5 pt-5 flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
-              A0 · Урок 2
+              A0 · {copy.lessonLabel} 2
             </div>
             <div className="text-base font-bold text-[#252B2F] truncate mt-0.5">
-              Приветствия и глагол «быть»
+              {copy.demoTitle}
             </div>
           </div>
           <div className="flex gap-1 shrink-0" aria-hidden>
@@ -369,17 +377,17 @@ function HeroMockup() {
 
         <div className="mx-5 mt-4 rounded-2xl border border-[#D6DEE6] bg-[#FFFFFF] p-4 flex items-center gap-4">
           <button
-            aria-label="Прослушать фразу"
+            aria-label={copy.listenPhrase}
             className="w-11 h-11 shrink-0 rounded-full bg-[#116EEE] text-white flex items-center justify-center shadow-lg shadow-[#116EEE]/30 transition-transform cursor-pointer"
           >
             <Play className="w-5 h-5 fill-current ml-0.5" />
           </button>
           <div className="min-w-0 flex-1">
             <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666E7E]">
-              Озвучка
+              {copy.audio}
             </div>
             <div className="text-sm font-bold text-[#252B2F] mt-0.5 truncate">
-              Jó napot! — Добрый день
+              {copy.demoPhrase}
             </div>
             <div className="flex items-end gap-0.5 h-5 mt-1.5" aria-hidden>
               {[10, 18, 14, 24, 16, 22, 12, 20].map((h, i) => (
@@ -395,13 +403,13 @@ function HeroMockup() {
 
         <div className="mx-5 mt-4 rounded-2xl border border-[#D6DEE6] p-4 mb-5">
           <div className="text-xs font-bold text-[#252B2F] mb-3">
-            Выберите перевод «Szia»
+            {copy.chooseTranslation}
           </div>
           <div className="flex flex-wrap gap-2">
             {[
-              { label: 'Привет', correct: true },
-              { label: 'Спасибо', correct: false },
-              { label: 'До встречи', correct: false },
+              { label: copy.demoOptions[0], correct: true },
+              { label: copy.demoOptions[1], correct: false },
+              { label: copy.demoOptions[2], correct: false },
             ].map((opt) => (
               <span
                 key={opt.label}
@@ -417,9 +425,9 @@ function HeroMockup() {
             ))}
           </div>
           <div className="mt-3 pt-3 border-t border-[#D6DEE6]/70 flex items-center justify-between text-[10px] text-[#666E7E]">
-            <span>Ответ засчитан</span>
+            <span>{copy.accepted}</span>
             <span className="inline-flex items-center gap-1 text-[#3B1E90] font-semibold">
-              <Check className="w-3 h-3" /> прогресс сохранён
+              <Check className="w-3 h-3" /> {copy.saved}
             </span>
           </div>
         </div>
@@ -431,50 +439,44 @@ function HeroMockup() {
 const FEATURES = [
   {
     icon: BookOpen,
-    title: 'Интерактивные уроки',
-    text: 'Теория, живые примеры и тренажёры — в одном слайде. Читайте, слушайте и сразу проверяйте себя.',
     accent: 'text-[#116EEE] bg-[#116EEE]/10 border-[#116EEE]/15',
   },
   {
     icon: Headphones,
-    title: 'Живая озвучка носителя',
-    text: 'Произношение воспроизводится только из заранее записанных аудиофайлов диктора.',
     accent: 'text-[#3B1E90] bg-[#3B1E90]/10 border-[#3B1E90]/15',
   },
   {
     icon: Brain,
-    title: 'Умное повторение',
-    text: 'Интервальное повторение подскажет, какие слова пора освежить, — лексика закрепляется надолго.',
     accent: 'text-[#C77B00] bg-[#C77B00]/10 border-[#C77B00]/15',
   },
   {
     icon: Cloud,
-    title: 'Прогресс в облаке',
-    text: 'Уроки и карточки сохраняются на сервере. Продолжайте с любого устройства.',
     accent: 'text-[#666E7E] bg-[#666E7E]/10 border-[#666E7E]/15',
   },
 ];
 
 function Features() {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <section id="features" className="scroll-mt-24 py-16 md:py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
-            eyebrow="Возможности"
+            eyebrow={copy.featuresEyebrow}
             title={
               <>
-                Всё, что нужно, чтобы{' '}
-                <span className="text-[#116EEE]">заговорить</span>
+                {copy.featuresTitle}{' '}
+                <span className="text-[#116EEE]">{copy.featuresAccent}</span>
               </>
             }
-            subtitle="Платформа построена вокруг практики: минимум скучной теории, максимум озвучки, заданий и повторения."
+            subtitle={copy.featuresSubtitle}
           />
         </Reveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {FEATURES.map((feature, idx) => (
-            <Reveal key={feature.title} delay={idx * 100}>
+            <Reveal key={copy.features[idx].title} delay={idx * 100}>
               <div className="group h-full p-7 rounded-2xl bg-[#FFFFFF] border border-[#D6DEE6] hover:bg-white hover:border-[#116EEE]/25 hover:-translate-y-1.5 hover:shadow-md transition-all duration-300">
                 <div
                   className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-5 transition-transform ${feature.accent}`}
@@ -482,9 +484,9 @@ function Features() {
                   <feature.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-bold text-[#252B2F] tracking-tight">
-                  {feature.title}
+                  {copy.features[idx].title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{feature.text}</p>
+                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{copy.features[idx].text}</p>
               </div>
             </Reveal>
           ))}
@@ -497,44 +499,37 @@ function Features() {
 const STEPS = [
   {
     icon: UserPlus,
-    step: 'Шаг 1',
-    title: 'Начните бесплатно',
-    text: 'Уроки 1–2 доступны без оплаты. Создайте аккаунт, чтобы сохранять прогресс и повторения.',
   },
   {
     icon: MousePointerClick,
-    step: 'Шаг 2',
-    title: 'Выберите урок',
-    text: 'Начните с алфавита и базовых фраз или сразу переходите к интересующей теме — 28 уроков от A0 до B1.',
   },
   {
     icon: Sparkles,
-    step: 'Шаг 3',
-    title: 'Слушайте и повторяйте',
-    text: 'Проходите слайды, повторяйте слова с озвучкой и проходите тесты. Система напомнит, что пора повторить.',
   },
 ];
 
 function HowItWorks() {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <section id="how" className="scroll-mt-24 py-16 md:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
-            eyebrow="Как это работает"
+            eyebrow={copy.how}
             title={
               <>
-                Три шага до первого{' '}
-                <span className="text-[#3B1E90]">разговора</span>
+                {copy.howTitle}{' '}
+                <span className="text-[#3B1E90]">{copy.howAccent}</span>
               </>
             }
-            subtitle="Никакой сложной настройки. От первого визита до интерактивного урока — меньше минуты."
+            subtitle={copy.howSubtitle}
           />
         </Reveal>
 
         <div className="grid md:grid-cols-3 gap-5 md:gap-6">
           {STEPS.map((step, idx) => (
-            <Reveal key={step.title} delay={idx * 120}>
+            <Reveal key={copy.steps[idx].title} delay={idx * 120}>
               <div className="relative h-full p-7 md:p-8 rounded-2xl bg-white border border-[#D6DEE6] hover:border-[#116EEE]/30 hover:-translate-y-1.5 hover:shadow-md transition-all duration-300">
                 <div className="flex items-center justify-between mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
@@ -545,9 +540,9 @@ function HowItWorks() {
                   </span>
                 </div>
                 <h3 className="text-lg font-bold text-[#252B2F] tracking-tight">
-                  {step.title}
+                  {copy.steps[idx].title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{step.text}</p>
+                <p className="mt-2.5 text-sm text-[#435064] leading-relaxed">{copy.steps[idx].text}</p>
               </div>
             </Reveal>
           ))}
@@ -558,12 +553,12 @@ function HowItWorks() {
 }
 
 const PREVIEW_PATH = [
-  { number: 1, hu: 'Üdvözöllek!', ru: 'Алфавит и базовые звуки' },
-  { number: 2, hu: 'Köszönés & lenni', ru: 'Приветствия и глагол «быть»' },
-  { number: 3, hu: 'Főnév, névelő, többes szám', ru: 'Артикли и множественное число' },
-  { number: 4, hu: 'Jelen idő', ru: 'Настоящее время' },
-  { number: 5, hu: 'Számok, idő, napok', ru: 'Числа, время, дни' },
-  { number: 6, hu: 'A0 összefoglaló', ru: 'Повторение уровня A0' },
+  { number: 1, hu: 'Üdvözöllek!' },
+  { number: 2, hu: 'Köszönés & lenni' },
+  { number: 3, hu: 'Főnév, névelő, többes szám' },
+  { number: 4, hu: 'Jelen idő' },
+  { number: 5, hu: 'Számok, idő, napok' },
+  { number: 6, hu: 'A0 összefoglaló' },
 ];
 
 const NEXT_LEVELS = [
@@ -579,19 +574,16 @@ const NEXT_LEVEL_CHIP: Record<string, string> = {
 };
 
 function SneakPeek({ onStart }: { onStart: () => void }) {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <section id="preview" className="scroll-mt-24 py-16 md:py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeader
-            eyebrow="Программа курса"
-            title={
-              <>
-                Один учебный путь —{' '}
-                <span className="text-[#116EEE]">28 уроков</span>
-              </>
-            }
-            subtitle="От звуков и алфавита до разговорного уровня B1. Вот как начинается ваш путь."
+            eyebrow={copy.courseEyebrow}
+            title={copy.courseTitle}
+            subtitle={copy.courseSubtitle}
           />
         </Reveal>
 
@@ -600,15 +592,15 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
             <div className="flex items-center justify-between gap-3 px-6 md:px-8 py-5 border-b border-[#D6DEE6] bg-white/60">
               <div className="flex items-center gap-3">
                 <span className="px-2.5 py-1 rounded-lg bg-[#116EEE] text-white text-[11px] font-bold">
-                  A0 · Основы
+                  A0 · {copy.basics}
                 </span>
-                <span className="text-sm text-[#666E7E]">Старт курса · 6 уроков</span>
+                <span className="text-sm text-[#666E7E]">{copy.courseStart}</span>
               </div>
               <span className="font-mono text-xs text-[#666E7E] hidden sm:block">01–06</span>
             </div>
 
             <ol className="divide-y divide-[#D6DEE6]/70">
-              {PREVIEW_PATH.map((row) => (
+              {PREVIEW_PATH.map((row, index) => (
                 <li
                   key={row.number}
                   className="flex items-center gap-4 px-6 md:px-8 py-3.5 hover:bg-white/70 transition-colors"
@@ -618,7 +610,7 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
                   </span>
                   <span className="font-bold text-[#252B2F]">{row.hu}</span>
                   <span className="ml-auto text-right text-xs text-[#666E7E] hidden sm:block">
-                    {row.ru}
+                    {copy.preview[index]}
                   </span>
                 </li>
               ))}
@@ -626,14 +618,14 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 md:px-8 py-5 border-t border-[#D6DEE6] bg-white/60">
               <div>
-                <div className="text-sm font-semibold text-[#252B2F]">Дальше по программе</div>
+                <div className="text-sm font-semibold text-[#252B2F]">{copy.next}</div>
                 <div className="mt-1.5 flex gap-2 flex-wrap">
                   {NEXT_LEVELS.map((l) => (
                     <span
                       key={l.level}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold ${NEXT_LEVEL_CHIP[l.level]}`}
                     >
-                      {l.level} · {l.count} уроков
+                      {l.level} · {l.count} {copy.lessonPlural}
                     </span>
                   ))}
                 </div>
@@ -642,7 +634,7 @@ function SneakPeek({ onStart }: { onStart: () => void }) {
                 onClick={onStart}
                 className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#116EEE] text-white text-sm font-bold hover:bg-[#0D5ED0] transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#116EEE]"
               >
-                Посмотреть все 28 уроков
+                {copy.viewAll}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -664,6 +656,8 @@ function BottomCta({
   onSignup: () => void;
   onLogin: () => void;
 }) {
+  const { language } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <section id="cta" className="scroll-mt-24 py-14 md:py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -676,13 +670,13 @@ function BottomCta({
 
             <div className="relative">
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight max-w-2xl mx-auto">
-                {user ? 'Продолжите обучение прямо сейчас' : 'Готовы заговорить по-венгерски?'}
+                {user ? copy.ctaUserTitle : copy.ctaGuestTitle}
               </h2>
 
               <p className="mt-4 text-base md:text-lg text-[#D9E6FF] max-w-xl mx-auto leading-relaxed">
                 {user
-                  ? 'Ваш прогресс сохранён. Вернитесь к урокам и продолжайте там, где остановились.'
-                  : 'Откройте бесплатные уроки 1–2 или создайте аккаунт, чтобы сохранять прогресс.'}
+                  ? copy.ctaUserBody
+                  : copy.ctaGuestBody}
               </p>
 
               <div className="mt-8">
@@ -690,7 +684,7 @@ function BottomCta({
                   onClick={user ? onStart : onSignup}
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-white text-[#252B2F] text-base font-bold hover:bg-[#EDF4FB] transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  {user ? 'Продолжить обучение' : 'Создать аккаунт'}
+                  {user ? copy.continue : copy.createAccount}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -700,7 +694,7 @@ function BottomCta({
                   onClick={onLogin}
                   className="mt-4 text-sm text-[#D9E6FF] underline underline-offset-4 hover:text-white transition-colors cursor-pointer"
                 >
-                  Уже есть аккаунт — войти
+                  {copy.existingAccount}
                 </button>
               )}
             </div>
@@ -712,6 +706,8 @@ function BottomCta({
 }
 
 function Footer() {
+  const { language, t } = useI18n();
+  const copy = LANDING_COPY[language];
   return (
     <footer className="border-t border-[#D6DEE6] bg-[#FFFFFF]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -726,27 +722,25 @@ function Footer() {
               </span>
             </div>
             <p className="mt-4 text-sm text-[#666E7E] leading-relaxed max-w-sm">
-              Интерактивный курс венгерского языка для русскоязычных учащихся:
-              фонетика, грамматика, живая озвучка и тренажёры в 28 уроках
-              от A0 до B1.
+              {copy.footerBody}
             </p>
           </div>
 
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#252B2F] mb-4">
-              Навигация
+              {copy.navigation}
             </h4>
             <ul className="space-y-2.5 text-sm text-[#666E7E]">
-              <li><a href="#features" className="hover:text-[#116EEE] transition-colors">Возможности</a></li>
-              <li><a href="#how" className="hover:text-[#116EEE] transition-colors">Как это работает</a></li>
-              <li><a href="#preview" className="hover:text-[#116EEE] transition-colors">Программа курса</a></li>
-              <li><a href="/pricing" className="hover:text-[#116EEE] transition-colors">Pricing</a></li>
+              <li><a href="#features" className="hover:text-[#116EEE] transition-colors">{copy.nav[0]}</a></li>
+              <li><a href="#how" className="hover:text-[#116EEE] transition-colors">{copy.nav[1]}</a></li>
+              <li><a href="#preview" className="hover:text-[#116EEE] transition-colors">{copy.nav[2]}</a></li>
+              <li><a href="/pricing" className="hover:text-[#116EEE] transition-colors">{copy.nav[3]}</a></li>
               <li>
                 <a
                   href="/lessons"
                   className="hover:text-[#116EEE] transition-colors"
                 >
-                  Уроки
+                  {t('public.lessons')}
                 </a>
               </li>
             </ul>
@@ -754,22 +748,22 @@ function Footer() {
 
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#252B2F] mb-4">
-              Документы
+              {copy.documents}
             </h4>
             <ul className="space-y-2.5 text-sm text-[#666E7E]">
-              <li><a href="/terms" className="hover:text-[#116EEE] transition-colors">Terms of Service</a></li>
-              <li><a href="/privacy" className="hover:text-[#116EEE] transition-colors">Privacy Policy</a></li>
-              <li><a href="/refund" className="hover:text-[#116EEE] transition-colors">Refund Policy</a></li>
+              <li><a href="/terms" className="hover:text-[#116EEE] transition-colors">{t('public.terms')}</a></li>
+              <li><a href="/privacy" className="hover:text-[#116EEE] transition-colors">{t('public.privacy')}</a></li>
+              <li><a href="/refund" className="hover:text-[#116EEE] transition-colors">{t('public.refund')}</a></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-[#D6DEE6] flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-[#666E7E]">
-            © {new Date().getFullYear()} Magyaro. Все права защищены.
+            © {new Date().getFullYear()} Magyaro. {copy.rights}
           </p>
           <p className="text-xs text-[#666E7E]">
-            Сделано с <span className="text-[#116EEE]">♥</span> для изучающих венгерский
+            Magyaro <span className="text-[#116EEE]">♥</span> {copy.madeFor}
           </p>
         </div>
       </div>
@@ -778,6 +772,7 @@ function Footer() {
 }
 
 export default function LandingPage() {
+  const { t, language } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState<{ email: string } | null>(getCurrentUser());
@@ -827,8 +822,8 @@ export default function LandingPage() {
   }, [location, navigate]);
 
   useEffect(() => {
-    document.title = 'Magyaro — венгерский язык с нуля';
-  }, []);
+    document.title = t('landing.title');
+  }, [language, t]);
 
   const openAuth = (mode: 'login' | 'register') => {
     if (getCurrentUser()) {
@@ -845,7 +840,7 @@ export default function LandingPage() {
   };
 
   if (!authReady) {
-    return <AppPreloader message="Восстановление сессии…" />;
+    return <AppPreloader message={t('landing.session')} />;
   }
 
   return (

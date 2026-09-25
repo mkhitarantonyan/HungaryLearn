@@ -1,7 +1,7 @@
 ﻿import { Router } from 'express';
 import { requireAuth, type AuthenticatedRequest } from './middleware.js';
 import { ensureUserProfile, getEntitlement } from '../firestore/repositories.js';
-import { hasPaidAccess } from '../domain/entitlements.js';
+import { evaluateAccessSources } from '../domain/entitlements.js';
 import { asyncHandler } from '../http/asyncHandler.js';
 import { lemonTestMode } from '../runtime/params.js';
 import {
@@ -9,6 +9,7 @@ import {
   deleteUserAccount,
   isAccountDeletionMarked,
 } from './accountDeletion.js';
+import { organizationGrantsAccess } from '../organizations/service.js';
 
 export const authRouter = Router();
 
@@ -20,9 +21,13 @@ authRouter.get('/api/auth/me', requireAuth, asyncHandler<AuthenticatedRequest>(a
     return;
   }
   await ensureUserProfile(uid, email);
-  const entitlement = await getEntitlement(uid);
+  const [entitlement, organizationResult] = await Promise.all([
+    getEntitlement(uid),
+    organizationGrantsAccess(uid),
+  ]);
   const expectedTestMode = lemonTestMode.value();
   const billingEnvironmentMatches = entitlement?.provider !== 'lemonsqueezy' || entitlement.testMode === expectedTestMode;
+  const accessSources = evaluateAccessSources(entitlement, organizationResult.granted, new Date(), expectedTestMode);
   res.json({
     success: true,
     user: {
@@ -36,7 +41,9 @@ authRouter.get('/api/auth/me', requireAuth, asyncHandler<AuthenticatedRequest>(a
       isPrivileged: entitlement?.isPrivileged === true,
       provider: billingEnvironmentMatches ? (entitlement?.provider || null) : null,
       cancelAtPeriodEnd: billingEnvironmentMatches && entitlement?.cancelAtPeriodEnd === true,
-      paidAccess: hasPaidAccess(entitlement, new Date(), expectedTestMode),
+      paidAccess: accessSources.paidAccess,
+      accessSources,
+      organizationAccess: organizationResult.organization,
     },
   });
 }));
@@ -52,7 +59,7 @@ authRouter.delete('/api/auth/account', requireAuth, async (req: AuthenticatedReq
     const result = await deleteUserAccount(req.auth!.uid);
     res.json({
       success: true,
-      deleted: ['firebaseAuth', 'profile', 'progress', 'settings', 'reviewCards', 'entitlement'],
+      deleted: ['firebaseAuth', 'profile', 'progress', 'settings', 'reviewCards', 'entitlement', 'organizationSeatLink'],
       retainedBillingRecords: result.retainedBillingRecords,
     });
   } catch (error) {

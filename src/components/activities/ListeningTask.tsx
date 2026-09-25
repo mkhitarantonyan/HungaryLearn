@@ -4,6 +4,8 @@ import type { ActivityAttempt, ActivityEvidence, ListeningTaskData } from '../..
 import { QuestionSet } from './QuestionSet';
 import { audioUrl } from '../../utils/audioConfig';
 import { canProduceDirectListeningEvidence, listeningEvidence } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY, formatActivityCopy } from '../../i18n/activityCopy';
 
 interface ListeningTaskProps {
   data: ListeningTaskData;
@@ -27,6 +29,8 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
   onEvidence,
   onResetEvidence,
 }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const [submitted, setSubmitted] = useState(false);
   const [audioError, setAudioError] = useState(false);
   const [audioReady, setAudioReady] = useState(false);
@@ -59,19 +63,19 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
       <div className="flex items-center gap-2">
         <Headphones className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Аудирование'}
+          {data.title ?? copy.listening}
         </h3>
         {evidence?.passed ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · Готово
+            {evidence.score}/{evidence.total} · {copy.ready}
           </span>
         ) : evidence?.completed && evidence.evidenceMode === 'direct' ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
-            {evidence.score}/{evidence.total} · Попробуй ещё раз
+            {evidence.score}/{evidence.total} · {copy.tryAgain}
           </span>
         ) : evidence?.completed ? (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-[#666E7E]">
-            Запись недоступна
+            {copy.recordingUnavailable}
           </span>
         ) : null}
       </div>
@@ -80,7 +84,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
         <div
           className="min-w-0 overflow-hidden rounded-xl border border-[#D6DEE6] bg-white p-3"
           role="region"
-          aria-label={`Аудиозапись: ${data.title ?? 'аудирование'}`}
+          aria-label={formatActivityCopy(copy.audioLabel, { title: data.title ?? copy.listening })}
         >
           <audio
             controls
@@ -94,25 +98,25 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
           />
           {audioError && (
             <p className="text-xs text-red-700 mt-2" role="alert">
-              Аудиозапись недоступна или не может быть воспроизведена.
+              {copy.audioFailed}
             </p>
           )}
           <p className="text-[11px] text-[#666E7E] mt-1">
-            Прослушайте запись. Повтор разрешён: первый раз — общий смысл, второй раз — детали.
+            {copy.listenHint}
           </p>
         </div>
       ) : (
         <div className="rounded-xl border border-[#C77B00]/40 bg-[#C77B00]/10 p-3 text-xs md:text-sm text-[#252B2F]">
-          <p className="font-semibold">Аудиозапись для этого задания ещё не опубликована.</p>
+          <p className="font-semibold">{copy.unpublishedAudio}</p>
           <p className="text-[#666E7E] mt-1">
-            Вернись к этому заданию позже.
+            {copy.returnLater}
           </p>
         </div>
       )}
 
       <QuestionSet
         questions={data.questions}
-        submitLabel="Ответить и показать текст"
+        submitLabel={copy.answerAndTranscript}
         allowRetry
         onSubmit={handleSubmit}
         onRetry={() => {
@@ -127,7 +131,7 @@ export const ListeningTask: React.FC<ListeningTaskProps> = ({
           aria-live="polite"
         >
           <p className="text-[10px] font-mono uppercase tracking-wider text-[#3B1E90] font-bold mb-2">
-            Текст записи (после ответа)
+            {copy.transcript}
           </p>
           <pre className="whitespace-pre-wrap text-xs md:text-sm text-[#252B2F] font-sans leading-relaxed">
             {data.transcript}

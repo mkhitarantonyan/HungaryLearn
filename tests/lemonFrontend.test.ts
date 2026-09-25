@@ -109,7 +109,7 @@ test('terms and refund pages display the same three current prices and periods a
   for (const Component of [module.exports.TermsPage, module.exports.RefundPage]) {
     const markup = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(Component)));
     for (const price of [/8\s990 Ft/, /22\s990 Ft/, /64\s990 Ft/]) assert.match(markup, price);
-    for (const period of ['1 month', '3 months', '1 year']) assert.ok(markup.includes(period));
+    for (const period of ['1 месяц', '3 месяца', '1 год']) assert.ok(markup.includes(period));
     assert.doesNotMatch(markup, /44[ ,.\u00a0]?500|7[ ,.\u00a0]990|19[ ,.\u00a0]990|59[ ,.\u00a0]990/);
   }
 });

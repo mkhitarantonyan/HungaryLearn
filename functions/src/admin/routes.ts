@@ -5,6 +5,8 @@ import { ActiveSubscriptionError, deleteUserAccount } from '../auth/accountDelet
 import { adminAuth, firestore } from '../firebase/admin.js';
 import { parseAdminUserListQuery, parseBlockUpdate, parsePrivilegeUpdate } from '../../../src/server/adminValidation.ts';
 import { loadServerLesson } from '../../../src/server/lessonLoader.ts';
+import { parseInstructionLanguage } from '../../../src/i18n/types.ts';
+import { localizeServerLesson } from '../../../src/server/lessonLocalization.ts';
 import { asyncHandler } from '../http/asyncHandler.js';
 
 export const adminRouter = Router();
@@ -136,9 +138,10 @@ adminRouter.get('/api/admin/lessons', asyncHandler(async (_req, res) => {
 
 adminRouter.get('/api/admin/lessons/:lessonNumber', asyncHandler(async (req, res) => {
   const lessonNumber = Number(req.params.lessonNumber);
+  const language = parseInstructionLanguage(req.query.language);
   if (!Number.isInteger(lessonNumber) || lessonNumber < 1 || lessonNumber > 28) {
     res.status(400).json({ success: false, message: 'Некорректный номер урока' }); return;
   }
   const lesson = await loadServerLesson(lessonNumber);
-  res.status(lesson ? 200 : 404).json(lesson ? { success: true, lesson } : { success: false, message: 'Урок не найден' });
+  res.status(lesson ? 200 : 404).json(lesson ? { success: true, lesson: localizeServerLesson(lesson, language) } : { success: false, message: 'Урок не найден' });
 }));

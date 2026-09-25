@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, User, Lock, Mail, CreditCard, CheckCircle2, LogOut, ArrowRight, Loader2, Clock3, Trash2 } from 'lucide-react';
+import { X, User, Lock, Mail, CreditCard, CheckCircle2, LogOut, ArrowRight, Loader2, Clock3, Trash2, Building2, KeyRound } from 'lucide-react';
 import {
   UserProfile,
   getCurrentUser,
@@ -17,9 +17,12 @@ import {
   resendVerificationEmail,
   refreshEmailVerification,
   deleteAccountServer,
+  redeemOrganizationAccessKey,
 } from '../utils/userStore';
 import { subscriptionDisplay } from '../utils/subscriptionValidity';
-import { BILLING_PLANS, type BillingPlanKey } from '../config/pricing';
+import { getBillingPlans, type BillingPlanKey } from '../config/pricing';
+import { useI18n } from '../i18n';
+import { AUTH_COPY, formatAuthCopy, localizeAccountMessage } from '../i18n/authCopy';
 
 interface UserAuthModalProps {
   isOpen: boolean;
@@ -32,6 +35,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
   onClose,
   initialMode = 'login',
 }) => {
+  const { language } = useI18n();
+  const copy = AUTH_COPY[language];
   const [user, setUser] = useState<UserProfile | null>(getCurrentUser());
   const [mode, setMode] = useState<'login' | 'register' | 'reset' | 'profile'>(initialMode);
   const [email, setEmail] = useState('');
@@ -47,18 +52,21 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [authReady, setAuthReady] = useState(isUserAuthReady());
   const [selectedPlan, setSelectedPlan] = useState<BillingPlanKey>('quarterly');
-  const selectedPricing = BILLING_PLANS.find(plan => plan.key === selectedPlan)!;
+  const [organizationCode, setOrganizationCode] = useState('');
+  const [isRedeemingCode, setIsRedeemingCode] = useState(false);
+  const billingPlans = getBillingPlans(language);
+  const selectedPricing = billingPlans.find(plan => plan.key === selectedPlan)!;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
     if (params.get('payment') !== 'success') return;
-    setSuccessMsg('Платёж обрабатывается. Доступ появится после подтверждения Lemon Squeezy.');
+    setSuccessMsg(copy.paymentPending);
     void checkUserSessionServer();
     params.delete('payment');
     const query = params.toString();
     window.history.replaceState({}, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
-  }, []);
+  }, [copy.paymentPending]);
 
   useEffect(() => subscribeUserAuthReady(setAuthReady), []);
 
@@ -95,7 +103,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setSuccessMsg('');
 
     if (!email.trim() || !password) {
-      setErrorMsg('Пожалуйста, введите e-mail и пароль.');
+      setErrorMsg(copy.required);
       return;
     }
 
@@ -105,15 +113,15 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
     if (result.success) {
       setSuccessMsg(result.user?.emailVerified
-        ? 'Успешный вход в аккаунт!'
-        : 'Вход выполнен. Подтвердите e-mail по ссылке из письма.');
+        ? copy.loginSuccess
+        : copy.verifyAfterLogin);
       setEmail('');
       setPassword('');
       if (result.user?.emailVerified) {
         setTimeout(() => setSuccessMsg(''), 2000);
       }
     } else {
-      setErrorMsg(result.message);
+      setErrorMsg(localizeAccountMessage(result.message, language));
     }
   };
 
@@ -124,7 +132,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
     const validationError = validateRegistration(email, password, confirmPassword);
     if (validationError) {
-      setErrorMsg(validationError);
+      setErrorMsg(localizeAccountMessage(validationError, language));
       return;
     }
 
@@ -133,18 +141,18 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setIsLoading(false);
 
     if (result.success) {
-      setSuccessMsg(result.message);
+      setSuccessMsg(localizeAccountMessage(result.message, language));
       setEmail('');
       setPassword('');
       setConfirmPassword('');
     } else if (result.alreadyExists) {
       // Email already registered — switch to login tab with a helpful message
-      setErrorMsg(result.message);
+      setErrorMsg(localizeAccountMessage(result.message, language));
       setMode('login');
       setPassword('');
       setConfirmPassword('');
     } else {
-      setErrorMsg(result.message);
+      setErrorMsg(localizeAccountMessage(result.message, language));
     }
   };
 
@@ -155,8 +163,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setIsLoading(true);
     const result = await requestPasswordReset(email);
     setIsLoading(false);
-    if (result.success) setSuccessMsg(result.message);
-    else setErrorMsg(result.message);
+    if (result.success) setSuccessMsg(localizeAccountMessage(result.message, language));
+    else setErrorMsg(localizeAccountMessage(result.message, language));
   };
 
   const handleResendVerification = async () => {
@@ -165,8 +173,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setIsLoading(true);
     const result = await resendVerificationEmail();
     setIsLoading(false);
-    if (result.success) setSuccessMsg(result.message);
-    else setErrorMsg(result.message);
+    if (result.success) setSuccessMsg(localizeAccountMessage(result.message, language));
+    else setErrorMsg(localizeAccountMessage(result.message, language));
   };
 
   const handleRefreshVerification = async () => {
@@ -175,8 +183,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setIsLoading(true);
     const result = await refreshEmailVerification();
     setIsLoading(false);
-    if (result.success) setSuccessMsg(result.message);
-    else setErrorMsg(result.message);
+    if (result.success) setSuccessMsg(localizeAccountMessage(result.message, language));
+    else setErrorMsg(localizeAccountMessage(result.message, language));
   };
 
   const handleLogout = async () => {
@@ -202,9 +210,9 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
       setShowDeletion(false);
       setDeletionConfirmed(false);
       setMode('login');
-      setSuccessMsg(result.message);
+      setSuccessMsg(localizeAccountMessage(result.message, language));
     } else {
-      setErrorMsg(result.message);
+      setErrorMsg(localizeAccountMessage(result.message, language));
     }
   };
 
@@ -219,7 +227,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     if (result.success && result.url) {
       window.location.href = result.url;
     } else {
-      setErrorMsg(result.message || 'Оплата временно недоступна. Попробуйте позже.');
+      setErrorMsg(result.message ? localizeAccountMessage(result.message, language) : copy.checkoutUnavailable);
     }
   };
 
@@ -229,10 +237,23 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     const result = await getSubscriptionPortal();
     setIsUpgrading(false);
     if (result.success && result.url) window.location.href = result.url;
-    else setErrorMsg(result.message || 'Управление подпиской временно недоступно.');
+    else setErrorMsg(result.message ? localizeAccountMessage(result.message, language) : copy.portalUnavailable);
   };
 
-  const subscription = user ? subscriptionDisplay(user) : null;
+  const handleOrganizationCode = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setErrorMsg('');
+    setSuccessMsg('');
+    setIsRedeemingCode(true);
+    const result = await redeemOrganizationAccessKey(organizationCode);
+    setIsRedeemingCode(false);
+    if (result.success) {
+      setOrganizationCode('');
+      setSuccessMsg(localizeAccountMessage(result.message, language));
+    } else setErrorMsg(localizeAccountMessage(result.message, language));
+  };
+
+  const subscription = user ? subscriptionDisplay(user, new Date(), language) : null;
   const subscriptionTone = subscription?.status === 'privileged'
     ? 'bg-indigo-100 text-indigo-800 border-indigo-300'
     : subscription?.status === 'active'
@@ -243,12 +264,12 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           ? 'bg-red-100 text-red-800 border-red-300'
           : 'bg-gray-100 text-gray-700 border-gray-300';
   const modalTitle = user
-    ? 'Личный кабинет ученика'
+    ? copy.profileTitle
     : mode === 'login'
-      ? 'Вход в аккаунт'
+      ? copy.loginTitle
       : mode === 'reset'
-        ? 'Восстановление пароля'
-        : 'Регистрация ученика';
+        ? copy.resetTitle
+        : copy.registerTitle;
   const deletionBlockedBySubscription = user?.provider === 'lemonsqueezy'
     && ['active', 'past_due', 'paused'].includes(user.subscriptionStatus);
 
@@ -265,13 +286,13 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                 {modalTitle}
               </h3>
               <p className="text-xs text-[#D9E6FF]">
-                {user ? user.email : 'Сохранение прогресса и доступ к урокам'}
+                {user ? user.email : copy.subtitle}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            aria-label="Закрыть окно аккаунта"
+            aria-label={copy.close}
             className="p-1.5 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -296,30 +317,30 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           {!authReady ? (
             <div className="flex min-h-56 flex-col items-center justify-center gap-3 text-[#252B2F]" role="status">
               <Loader2 className="w-7 animate-spin" />
-              <span className="text-sm font-semibold">Проверка аккаунта…</span>
+              <span className="text-sm font-semibold">{copy.checking}</span>
             </div>
           ) : user ? (
             <div className="space-y-5">
               <div className="bg-white p-4 rounded-xl border border-[#E4EBF3] shadow-xs space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-                  <span className="text-xs text-gray-500">Учётная запись</span>
+                  <span className="text-xs text-gray-500">{copy.account}</span>
                   <span className="text-sm font-semibold text-[#116EEE] font-mono">{user.email}</span>
                 </div>
 
                 <div className="flex items-center justify-between gap-3 pb-3 border-b border-gray-100">
-                  <span className="text-xs text-gray-500">Подтверждение e-mail</span>
+                  <span className="text-xs text-gray-500">{copy.emailVerification}</span>
                   <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium ${
                     user.emailVerified
                       ? 'border-emerald-300 bg-emerald-100 text-emerald-800'
                       : 'border-amber-300 bg-amber-100 text-amber-800'
                   }`}>
                     {user.emailVerified ? <CheckCircle2 className="w-3 h-3" /> : <Clock3 className="w-3 h-3" />}
-                    {user.emailVerified ? 'Подтверждён' : 'Не подтверждён'}
+                    {user.emailVerified ? copy.verified : copy.unverified}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
-                  <span className="text-xs text-gray-500">Статус подписки</span>
+                  <span className="text-xs text-gray-500">{copy.subscriptionStatus}</span>
                   <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium ${subscriptionTone}`}>
                     {subscription?.status === 'active' || subscription?.status === 'privileged'
                       ? <CheckCircle2 className="w-3 h-3" />
@@ -343,9 +364,9 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   <div className="flex items-start gap-2.5">
                     <Mail className="mt-0.5 h-4 w-4 shrink-0" />
                     <div>
-                      <p className="text-sm font-semibold">Подтвердите e-mail</p>
+                      <p className="text-sm font-semibold">{copy.verifyTitle}</p>
                       <p className="mt-1 text-xs leading-relaxed">
-                        Перейдите по ссылке в письме от Firebase. После подтверждения вернитесь сюда и обновите статус.
+                        {copy.verifyBody}
                       </p>
                     </div>
                   </div>
@@ -356,7 +377,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       disabled={isLoading}
                       className="rounded-lg border border-amber-400 bg-white px-3 py-1.5 text-xs font-medium hover:bg-amber-100 disabled:opacity-50"
                     >
-                      Отправить письмо повторно
+                      {copy.resend}
                     </button>
                     <button
                       type="button"
@@ -364,7 +385,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       disabled={isLoading}
                       className="rounded-lg bg-amber-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-amber-800 disabled:opacity-50"
                     >
-                      Я подтвердил e-mail
+                      {copy.refresh}
                     </button>
                   </div>
                 </div>
@@ -373,16 +394,23 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
               <div className="bg-[#3B1E90] text-white p-5 rounded-xl shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-[#D9E6FF]" />
-                  <h4 className="font-semibold text-sm">Полный доступ ко всем урокам</h4>
+                  <h4 className="font-semibold text-sm">{copy.premiumTitle}</h4>
                 </div>
                 <p className="text-xs text-[#D9E6FF] leading-relaxed">
-                  Подписка включает неограниченный доступ ко всем интерактивным урокам венгерского языка, озвучке слов и аудио-тренажерам.
+                  {copy.premiumBody}
                 </p>
+
+                {user.organizationAccess && (
+                  <div className={`rounded-lg border p-3 text-xs ${user.organizationAccess.status === 'active' ? 'border-emerald-300/60 bg-emerald-400/15' : 'border-white/20 bg-white/10'}`}>
+                    <div className="flex items-center gap-2 font-semibold"><Building2 className="h-4 w-4" />{user.organizationAccess.status === 'active' ? copy.organizationActive : copy.organizationInactive}</div>
+                    <div className="mt-1 text-[#D9E6FF]">{user.organizationAccess.organizationName} · {formatAuthCopy(copy.until, { date: new Date(user.organizationAccess.accessUntil).toLocaleDateString(language) })}</div>
+                  </div>
+                )}
 
                 <div className="pt-2 border-t border-white/10">
                   {subscription?.status === 'privileged' ? (
                     <span className="text-xs font-semibold text-indigo-200 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Доступ предоставлен администратором
+                      <CheckCircle2 className="w-3.5 h-3.5" /> {copy.adminAccess}
                     </span>
                   ) : user.provider === 'lemonsqueezy' && (
                     user.subscriptionStatus === 'active'
@@ -395,13 +423,13 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       disabled={isUpgrading}
                       className="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium transition-colors cursor-pointer disabled:opacity-50"
                     >
-                      {isUpgrading ? 'Загрузка…' : 'Управлять подпиской'}
+                      {isUpgrading ? copy.loading : copy.manage}
                     </button>
                   ) : (
                     <>
                       <fieldset disabled={isUpgrading || !user.emailVerified} className="space-y-2 mb-3 disabled:opacity-60">
-                        <legend className="text-xs font-medium mb-2">Выберите срок подписки</legend>
-                        {BILLING_PLANS.map(plan => (
+                        <legend className="text-xs font-medium mb-2">{copy.chooseTerm}</legend>
+                        {billingPlans.map(plan => (
                           <label key={plan.key} className={`flex items-center gap-2.5 rounded-lg border p-3 cursor-pointer ${selectedPlan === plan.key ? 'border-white/70 bg-white/15' : 'border-white/20 hover:bg-white/10'}`}>
                             <input type="radio" name="billing-plan" value={plan.key}
                               checked={selectedPlan === plan.key}
@@ -417,9 +445,9 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         ))}
                       </fieldset>
                       {!user.emailVerified && (
-                        <p className="mb-3 text-xs font-medium text-amber-200">Подтвердите e-mail, чтобы оформить подписку.</p>
+                        <p className="mb-3 text-xs font-medium text-amber-200">{copy.verifyToSubscribe}</p>
                       )}
-                      <p className="text-xs text-[#D9E6FF] mb-3">Списание {selectedPricing.formattedPrice} {selectedPricing.billingLabel}. Все тарифы включают одинаковый Premium доступ.</p>
+                      <p className="text-xs text-[#D9E6FF] mb-3">{formatAuthCopy(copy.charge, { price: selectedPricing.formattedPrice, period: selectedPricing.billingLabel })}</p>
                       <button
                         onClick={handlePaymentCheckout}
                         disabled={isUpgrading || !user.emailVerified}
@@ -428,11 +456,11 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         {isUpgrading ? (
                           <>
                             <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span>Обработка...</span>
+                            <span>{copy.processing}</span>
                           </>
                         ) : (
                           <>
-                            <span>Оформить за {selectedPricing.formattedPrice}</span>
+                            <span>{formatAuthCopy(copy.buy, { price: selectedPricing.formattedPrice })}</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </>
                         )}
@@ -441,6 +469,26 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   )}
                 </div>
               </div>
+
+              {user.organizationAccess?.status !== 'active' && (
+                <form onSubmit={handleOrganizationCode} className="rounded-xl border border-[#D6DEE6] bg-white p-4 shadow-xs">
+                  <div className="flex items-center gap-2 text-sm font-semibold"><KeyRound className="h-4 w-4 text-[#116EEE]" />{copy.organizationCodeTitle}</div>
+                  <p className="mt-1 text-xs leading-relaxed text-gray-500">{copy.organizationCodeBody}</p>
+                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                    <input
+                      value={organizationCode}
+                      onChange={event => setOrganizationCode(event.target.value.toUpperCase())}
+                      placeholder="MG-XXXX-XXXX-XXXX-XXXX"
+                      autoCapitalize="characters"
+                      spellCheck={false}
+                      className="min-w-0 flex-1 rounded-lg border border-[#D6DEE6] px-3 py-2 font-mono text-xs focus:border-[#116EEE] focus:outline-none"
+                    />
+                    <button type="submit" disabled={isRedeemingCode || !organizationCode.trim()} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+                      {isRedeemingCode && <Loader2 className="h-4 w-4 animate-spin" />}{copy.activate}
+                    </button>
+                  </div>
+                </form>
+              )}
 
               <div className="pt-2 flex flex-wrap justify-between gap-2">
                 <button
@@ -453,7 +501,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   className="px-4 py-2 border border-red-300 bg-white hover:bg-red-50 text-red-700 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <Trash2 className="w-4 h-4" />
-                  <span>Удалить аккаунт</span>
+                  <span>{copy.deleteAccount}</span>
                 </button>
                 <button
                   onClick={handleLogout}
@@ -461,29 +509,25 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                   className="px-4 py-2 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 rounded-xl text-xs font-medium transition-colors cursor-pointer flex items-center gap-2"
                 >
                   <LogOut className="w-4 h-4 text-gray-500" />
-                  <span>Выйти из аккаунта</span>
+                  <span>{copy.logout}</span>
                 </button>
               </div>
 
               {showDeletion && (
                 <div className="rounded-xl border border-red-300 bg-red-50 p-4 text-red-950">
-                  <h4 className="text-sm font-bold">Безвозвратное удаление аккаунта</h4>
-                  <p className="mt-2 text-xs leading-relaxed">Будут удалены:</p>
+                  <h4 className="text-sm font-bold">{copy.deleteTitle}</h4>
+                  <p className="mt-2 text-xs leading-relaxed">{copy.deleteLead}</p>
                   <ul className="mt-1 list-disc space-y-1 pl-5 text-xs leading-relaxed">
-                    <li>учётная запись Firebase Auth и профиль;</li>
-                    <li>прогресс, результаты заданий, настройки и review cards;</li>
-                    <li>entitlement и связь с Premium-доступом;</li>
-                    <li>локальный кэш учебного прогресса на этом устройстве.</li>
+                    {copy.deleteItems.map((item) => <li key={item}>{item}</li>)}
                   </ul>
                   <p className="mt-3 text-xs leading-relaxed">
-                    Минимальные записи о платежах и webhook-событиях могут храниться для бухгалтерских,
-                    налоговых, возвратных и юридических обязательств. Прямая связь сохранённой записи с Firebase UID удаляется.
+                    {copy.retention}
                   </p>
 
                   {deletionBlockedBySubscription ? (
                     <div className="mt-4 rounded-lg border border-red-300 bg-white p-3">
                       <p className="text-xs font-semibold leading-relaxed">
-                        Сначала отмените активную подписку, чтобы исключить будущие списания.
+                        {copy.cancelFirst}
                       </p>
                       <button
                         type="button"
@@ -491,14 +535,14 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         disabled={isUpgrading}
                         className="mt-2 rounded-lg bg-[#3B1E90] px-3 py-1.5 text-xs font-medium text-white disabled:opacity-50"
                       >
-                        {isUpgrading ? 'Загрузка…' : 'Открыть Customer Portal'}
+                        {isUpgrading ? copy.loading : copy.openPortal}
                       </button>
                     </div>
                   ) : (
                     <form onSubmit={handleDeleteAccount} className="mt-4 space-y-3">
                       <div>
                         <label htmlFor="account-delete-password" className="block text-xs font-medium mb-1">
-                          Текущий пароль
+                          {copy.currentPassword}
                         </label>
                         <input
                           id="account-delete-password"
@@ -517,7 +561,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                           onChange={(event) => setDeletionConfirmed(event.target.checked)}
                           className="mt-0.5"
                         />
-                        <span>Я понимаю, что данные и оставшийся Premium-доступ нельзя будет восстановить.</span>
+                        <span>{copy.deletionConsent}</span>
                       </label>
                       <button
                         type="submit"
@@ -525,7 +569,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         className="inline-flex items-center gap-2 rounded-lg bg-red-700 px-3 py-2 text-xs font-semibold text-white hover:bg-red-800 disabled:opacity-50"
                       >
                         {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                        Удалить безвозвратно
+                        {copy.deleteForever}
                       </button>
                     </form>
                   )}
@@ -550,7 +594,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
-                    Вход
+                    {copy.loginTab}
                   </button>
                   <button
                     type="button"
@@ -565,7 +609,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
-                    Регистрация
+                    {copy.registerTab}
                   </button>
                 </div>
               )}
@@ -574,7 +618,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                 <form onSubmit={handleLoginSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="user-login-email" className="block text-xs font-medium text-gray-700 mb-1">
-                      Электронная почта (e-mail)
+                      {copy.email}
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -595,7 +639,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
                   <div>
                     <label htmlFor="user-login-password" className="block text-xs font-medium text-gray-700 mb-1">
-                      Пароль
+                      {copy.password}
                     </label>
                     <div className="relative">
                       <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -623,7 +667,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       }}
                       className="text-xs font-medium text-[#116EEE] underline-offset-2 hover:underline"
                     >
-                      Забыли пароль?
+                      {copy.forgot}
                     </button>
                   </div>
 
@@ -635,18 +679,18 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <span>Войти в систему</span>
+                      <span>{copy.signIn}</span>
                     )}
                   </button>
                 </form>
               ) : mode === 'reset' ? (
                 <form onSubmit={handlePasswordReset} className="space-y-4">
                   <p className="text-sm leading-relaxed text-gray-600">
-                    Введите e-mail аккаунта. Firebase отправит ссылку, по которой можно установить новый пароль.
+                    {copy.resetHelp}
                   </p>
                   <div>
                     <label htmlFor="user-reset-email" className="block text-xs font-medium text-gray-700 mb-1">
-                      Электронная почта (e-mail)
+                      {copy.email}
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -669,7 +713,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                     disabled={isLoading}
                     className="w-full py-2.5 bg-[#116EEE] hover:bg-[#0D5ED0] text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
                   >
-                    {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Отправить ссылку для сброса'}
+                    {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : copy.sendReset}
                   </button>
                   <button
                     type="button"
@@ -680,14 +724,14 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                     }}
                     className="w-full py-2 text-xs font-medium text-[#116EEE] hover:underline"
                   >
-                    Вернуться ко входу
+                    {copy.backToLogin}
                   </button>
                 </form>
               ) : (
                 <form onSubmit={handleRegisterSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="user-register-email" className="block text-xs font-medium text-gray-700 mb-1">
-                      Ваш e-mail
+                      {copy.yourEmail}
                     </label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -708,7 +752,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
                   <div>
                     <label htmlFor="user-register-password" className="block text-xs font-medium text-gray-700 mb-1">
-                      Придумайте пароль (минимум 6 символов)
+                      {copy.createPassword}
                     </label>
                     <div className="relative">
                       <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -728,7 +772,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
 
                   <div>
                     <label htmlFor="user-register-confirm" className="block text-xs font-medium text-gray-700 mb-1">
-                      Повторите пароль
+                      {copy.repeatPassword}
                     </label>
                     <div className="relative">
                       <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -754,7 +798,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <span>Зарегистрироваться и начать учебу</span>
+                      <span>{copy.register}</span>
                     )}
                   </button>
                 </form>

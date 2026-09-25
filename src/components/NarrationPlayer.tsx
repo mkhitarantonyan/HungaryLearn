@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, Square, Settings2, Mic, RotateCw } from 'lucide-react';
 import { NARRATION_PLAYBACK_RATES, type NarrationPlaybackRate } from '../hooks/useLessonNarration';
+import { useI18n } from '../i18n';
 
 interface NarrationPlayerProps {
+  available?: boolean;
   isPlaying: boolean;
   autoplayEnabled: boolean;
   playbackRate: NarrationPlaybackRate;
@@ -17,6 +19,7 @@ interface NarrationPlayerProps {
 }
 
 export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
+  available = true,
   isPlaying,
   autoplayEnabled,
   playbackRate,
@@ -29,6 +32,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
   isAdmin = false,
   onOpenAudioEditor,
 }) => {
+  const { t } = useI18n();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,9 +63,10 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
         <button
           type="button"
           onClick={onPlayPause}
-          aria-label={isPlaying ? 'Остановить пересказ слайда' : 'Пересказать слайд'}
+          disabled={!available}
+          aria-label={isPlaying ? t('narration.stop') : t('narration.play')}
           className={`shrink-0 h-11 w-11 rounded-full flex items-center justify-center text-white shadow-sm transition-all cursor-pointer ${
-            isPlaying ? 'bg-[#3B1E90]' : 'bg-[#116EEE] hover:bg-[#0D5ED0] hover:shadow-md'
+            !available ? 'bg-[#9AA6B2] cursor-not-allowed' : isPlaying ? 'bg-[#3B1E90]' : 'bg-[#116EEE] hover:bg-[#0D5ED0] hover:shadow-md'
           }`}
         >
           {isPlaying ? <Square className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current translate-x-px" />}
@@ -69,7 +74,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
 
         <div className="flex-1 min-w-0">
           <div className="text-sm font-semibold text-[#252B2F] truncate">
-            {isPlaying ? 'Пересказ слайда…' : 'Пересказ слайда'}
+            {isPlaying ? t('narration.playing') : t('narration.title')}
           </div>
           <div className="text-[11px] text-[#666E7E] truncate">{slideLabel}</div>
         </div>
@@ -77,7 +82,8 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
         <button
           type="button"
           onClick={cycleRate}
-          aria-label={`Скорость воспроизведения: ${playbackRate}×`}
+          disabled={!available}
+          aria-label={t('narration.speed', { rate: playbackRate })}
           className="shrink-0 h-9 px-3 rounded-[10px] border border-[#D6DEE6] bg-white text-[#252B2F] text-xs font-semibold hover:border-[#116EEE]/35 hover:bg-[#EDF4FB] transition-colors cursor-pointer font-mono"
         >
           {playbackRate}×
@@ -86,8 +92,9 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
         <button
           type="button"
           onClick={onToggleAutoplay}
+          disabled={!available}
           aria-pressed={autoplayEnabled}
-          aria-label="Автопересказ слайдов"
+          aria-label={t('narration.autoplay')}
           className={`shrink-0 h-9 px-3 rounded-[10px] border text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 ${
             autoplayEnabled
               ? 'bg-[#116EEE] text-white border-[#116EEE]'
@@ -95,20 +102,20 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
           }`}
         >
           <RotateCw className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Авто</span>
+          <span className="hidden sm:inline">{t('narration.auto')}</span>
           <span
             aria-hidden="true"
             className={`w-1.5 h-1.5 rounded-full ${autoplayEnabled ? 'bg-white' : 'bg-[#D6DEE6]'}`}
           />
         </button>
 
-        {isAdmin && onOpenAudioEditor && <div className="relative shrink-0" ref={menuRef}>
+        {available && isAdmin && onOpenAudioEditor && <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
             aria-haspopup="menu"
             aria-expanded={menuOpen}
-            aria-label="Дополнительные настройки пересказа"
+            aria-label={t('narration.settings')}
             className="h-9 w-9 rounded-[10px] border border-[#D6DEE6] text-[#252B2F] hover:bg-[#EDF4FB] transition-colors cursor-pointer flex items-center justify-center"
           >
             <Settings2 className="w-4 h-4" />
@@ -129,24 +136,32 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
                   className="w-full text-left px-3 py-2 text-sm text-[#252B2F] hover:bg-[#EDF4FB] cursor-pointer flex items-center gap-2"
                 >
                   <Mic className="w-4 h-4 text-[#3B1E90]" />
-                  Изменить аудио слайда
+                  {t('narration.editAudio')}
               </button>
             </div>
           )}
         </div>}
       </div>
 
+      {!available && (
+        <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
+          <p className="text-[11px] text-[#666E7E] font-medium" role="status">
+            {t('narration.languageUnavailable')}
+          </p>
+        </div>
+      )}
+
       {needsUserGesture && (
         <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
           <p className="text-[11px] text-[#C77B00] font-medium" role="status">
-            Нажмите ▶ один раз, чтобы разрешить автопересказ.
+            {t('narration.gesture')}
           </p>
         </div>
       )}
       {audioUnavailable && (
         <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
           <p className="text-[11px] text-red-700 font-medium" role="alert">
-            Записанное аудио для этого слайда недоступно.
+            {t('narration.audioUnavailable')}
           </p>
         </div>
       )}

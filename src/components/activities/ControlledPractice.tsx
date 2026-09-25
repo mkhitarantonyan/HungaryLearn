@@ -3,6 +3,8 @@ import { CheckCircle2, XCircle, ListChecks, RotateCcw } from 'lucide-react';
 import type { ActivityAttempt, ActivityEvidence, ControlledExercise, ControlledPracticeData } from '../../types';
 import { isAnswerAccepted } from '../../utils/answerNormalization';
 import { controlledEvidence } from '../../utils/activityUtils';
+import { useI18n } from '../../i18n';
+import { ACTIVITY_COPY, formatActivityCopy } from '../../i18n/activityCopy';
 
 interface ControlledPracticeProps {
   data: ControlledPracticeData;
@@ -22,6 +24,8 @@ interface ExerciseState {
  * Practice completion is NOT mastery.
  */
 export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, evidence, onEvidence, onResetEvidence }) => {
+  const { language } = useI18n();
+  const copy = ACTIVITY_COPY[language];
   const [states, setStates] = useState<Record<string, ExerciseState>>({});
   const [inputs, setInputs] = useState<Record<string, string>>({});
   const [answers, setAnswers] = useState<Record<string, number | string>>({});
@@ -82,11 +86,11 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
       <div className="flex items-center gap-2">
         <ListChecks className="w-4 h-4 text-[#116EEE]" />
         <h3 className="font-mono font-bold text-[#252B2F] text-sm md:text-base">
-          {data.title ?? 'Отработка форм'}
+          {data.title ?? copy.practiceTitle}
         </h3>
         {evidence?.completed && (
           <span className="ml-auto text-[10px] font-mono uppercase font-semibold text-emerald-700">
-            {evidence.score}/{evidence.total} · {evidence.passed ? 'Готово' : 'Стоит повторить'}
+            {evidence.score}/{evidence.total} · {evidence.passed ? copy.ready : copy.review}
           </span>
         )}
       </div>
@@ -136,7 +140,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
                       ) : (
                         <XCircle aria-hidden="true" className="w-3.5 h-3.5" />
                       )}
-                      {state.correct ? 'Верно.' : `Неверно. Правильный ответ: ${ex.options[ex.correctIndex]}`}
+                      {state.correct ? copy.correct : formatActivityCopy(copy.wrong, { answer: ex.options[ex.correctIndex] })}
                     </p>
                   )}
                 </div>
@@ -164,13 +168,13 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
                       disabled={state?.done}
                       className="w-full min-h-11 sm:w-auto shrink-0 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:opacity-40 cursor-pointer"
                     >
-                      Проверить
+                      {copy.check}
                     </button>
                   </div>
                   {state?.done && (
                     <p className={`text-xs flex items-center gap-1 ${state.correct ? 'text-emerald-700' : 'text-red-700'}`} role="status" aria-live="polite">
                       {state.correct ? <CheckCircle2 aria-hidden="true" className="w-3.5 h-3.5" /> : <XCircle aria-hidden="true" className="w-3.5 h-3.5" />}
-                      {state.correct ? 'Верно.' : `Неверно. Правильный ответ: ${ex.accept[0]}`}
+                      {state.correct ? copy.correct : formatActivityCopy(copy.wrong, { answer: ex.accept[0] })}
                     </p>
                   )}
                 </div>
@@ -190,7 +194,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
           className="flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>Повторить ошибки</span>
+          <span>{copy.retryErrors}</span>
         </button>
       )}
 
@@ -198,7 +202,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
         <p className="text-xs font-semibold" aria-live="polite">
           {score}/{total} ·{' '}
           <span className={evidence?.passed ? 'text-emerald-700' : 'text-[#C77B00]'}>
-            {evidence?.passed ? 'Готово' : 'Стоит повторить'}
+            {evidence?.passed ? copy.ready : copy.review}
           </span>
         </p>
       )}

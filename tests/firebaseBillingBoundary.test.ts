@@ -9,8 +9,10 @@ test('checkout identity comes from verified token rather than request body', () 
 });
 test('payment success redirect is display-only and cannot mutate entitlement', () => {
   const source = readFileSync(new URL('../src/components/UserAuthModal.tsx', import.meta.url), 'utf8');
+  const copy = readFileSync(new URL('../src/i18n/authCopy.ts', import.meta.url), 'utf8');
   assert.match(source, /params\.get\('payment'\) !== 'success'/);
-  assert.match(source, /Платёж обрабатывается/);
+  assert.match(source, /copy\.paymentPending/);
+  assert.match(copy, /Платёж обрабатывается/);
   assert.doesNotMatch(source, /payment[\s\S]{0,500}(?:subscriptionStatus\s*=|paidAccess\s*=|isPrivileged\s*=)/);
 });
 test('webhook uses Firebase rawBody and a Firestore transaction marker', () => {

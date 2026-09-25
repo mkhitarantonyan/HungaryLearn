@@ -18,6 +18,16 @@ export function playRecordedAudio(
   return playRegisteredAudio(key, rate, onEnd, onError);
 }
 
+export function playPronunciationAudio(
+  key: string,
+  rate?: number,
+  onEnd?: () => void,
+  onError?: (error: unknown) => void,
+): boolean {
+  stopActiveAudio('pronunciation');
+  return playRegisteredAudio(key, rate, onEnd, onError, 'pronunciation');
+}
+
 export function playRecordedSequence(
   items: RecordedAudioItem[],
   onItemChange?: (index: number) => void,
@@ -26,7 +36,7 @@ export function playRecordedSequence(
   onAutoplayBlocked?: () => void,
   onUnavailable?: (error: unknown) => void
 ): void {
-  stopRecordedAudio();
+  stopActiveAudio('narration');
 
   if (items.length === 0) {
     onUnavailable?.(new Error('Recorded audio is unavailable'));
@@ -37,7 +47,7 @@ export function playRecordedSequence(
   let index = 0;
   const playNext = (): void => {
     if (isCancelled?.()) {
-      stopRecordedAudio();
+      stopActiveAudio('narration');
       onComplete?.();
       return;
     }
@@ -56,14 +66,15 @@ export function playRecordedSequence(
         playNext();
       },
       (error) => {
-        stopRecordedAudio();
+        stopActiveAudio('narration');
         if (isAutoplayBlockedError(error)) {
           onAutoplayBlocked?.();
         } else {
           onUnavailable?.(error);
         }
         onComplete?.();
-      }
+      },
+      'narration',
     );
   };
 
@@ -71,8 +82,11 @@ export function playRecordedSequence(
 }
 
 export function stopRecordedAudio(): void {
-  stopActiveAudio();
+  stopActiveAudio('narration');
 }
+
+export const playNarrationSequence = playRecordedSequence;
+export const stopNarrationAudio = stopRecordedAudio;
 
 function isAutoplayBlockedError(error: unknown): boolean {
   if (typeof error !== 'object' || error === null) return false;

@@ -36,10 +36,14 @@ export interface Lesson extends LessonMeta {
   objectives?: LearningObjective[];   // <-- ДОБАВЛЕНА ЭТА СТРОЧКА
 }
 
+import type { SupportedLanguage } from './i18n/types';
+
 export interface VocabularyItem {
   id: string;
   hu: string;
   ru: string;
+  /** Optional localized meanings. The existing Russian `ru` value remains the canonical fallback. */
+  translations?: Partial<Record<SupportedLanguage, string>>;
   phonetic?: string;
   ipa?: string;
   category: string;

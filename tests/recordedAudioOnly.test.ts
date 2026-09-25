@@ -121,9 +121,27 @@ test('existing MP3 plays normally with its playback rate', async () => {
   assert.equal(synthesisCalls, 0);
 });
 
+test('narration and Hungarian pronunciation use independent playback channels', async () => {
+  registerAudioFile('test-narration-channel', '/audio/test-narration.mp3');
+  registerAudioFile('test-pronunciation-channel', '/audio/test-pronunciation.mp3');
+
+  assert.equal(playRecordedAudio('test-narration-channel', 1, undefined, undefined, 'narration'), true);
+  assert.equal(playRecordedAudio('test-pronunciation-channel', 1, undefined, undefined, 'pronunciation'), true);
+  await Promise.resolve();
+
+  const [narration, pronunciation] = FakeAudio.instances;
+  stopActiveAudio('narration');
+  assert.equal(narration.pauseCalls, 1);
+  assert.equal(pronunciation.pauseCalls, 0);
+  stopActiveAudio('pronunciation');
+  assert.equal(pronunciation.pauseCalls, 1);
+});
+
 test('listening tasks expose missing audio without a browser-speech fallback', () => {
   const source = readFileSync(new URL('../src/components/activities/ListeningTask.tsx', import.meta.url), 'utf8');
-  assert.match(source, /Вернись к этому заданию позже/);
+  const copy = readFileSync(new URL('../src/i18n/activityCopy.ts', import.meta.url), 'utf8');
+  assert.match(source, /copy\.returnLater/);
+  assert.match(copy, /Вернись к этому заданию позже/);
   assert.doesNotMatch(source, /speechSynthesis|SpeechSynthesisUtterance|speakText|playRecordedAudio/);
 });
 

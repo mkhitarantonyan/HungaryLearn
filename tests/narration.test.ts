@@ -200,7 +200,9 @@ test('navigation handlers are dependency-safe and use latest playback rate', () 
   assert.match(appSource, /viewMode,\s*\n\s*handleNext,\s*\n\s*handlePrev,/);
 
   const hookSource = readFileSync(new URL('../src/hooks/useLessonNarration.ts', import.meta.url), 'utf8');
-  assert.match(hookSource, /\[lessonNumber, currentSlide, playbackRate\]/);
+  assert.match(hookSource, /\[available, lessonNumber, currentSlide, language, playbackRate\]/);
+  assert.match(hookSource, /isNarrationAvailable\(language\)/);
+  assert.match(hookSource, /stopNarrationAudio\(\)/);
   assert.match(hookSource, /applyPlaybackRate\(/);
 });
 

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { SlideData } from '../types';
 import { X, BookOpen, ChevronRight } from 'lucide-react';
 import { humanizeLearnerText } from '../utils/learnerCopy';
+import { useI18n } from '../i18n';
 
 interface SlideDrawerProps {
   isOpen: boolean;
@@ -16,12 +17,14 @@ interface SlideDrawerProps {
 export const SlideDrawer: React.FC<SlideDrawerProps> = ({
   isOpen,
   slides,
-  lessonTitle = "Содержание урока",
+  lessonTitle,
   currentSlide,
   onClose,
   onSelectSlide
 }) => {
+  const { t } = useI18n();
   if (!isOpen) return null;
+  const resolvedLessonTitle = lessonTitle ?? t('drawer.title');
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-[#252B2F]/50 backdrop-blur-xs">
@@ -38,11 +41,11 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
         <div className="flex items-center justify-between pb-4 border-b border-[#D6DEE6]">
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-[#116EEE]" />
-            <h3 id="slide-drawer-title" className="font-mono font-bold text-[#252B2F] text-base">{lessonTitle}</h3>
+            <h3 id="slide-drawer-title" className="font-mono font-bold text-[#252B2F] text-base">{resolvedLessonTitle}</h3>
           </div>
           <button
             onClick={onClose}
-            aria-label="Закрыть"
+            aria-label={t('common.close')}
             className="p-2 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
