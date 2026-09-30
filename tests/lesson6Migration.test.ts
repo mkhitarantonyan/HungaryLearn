@@ -1,6 +1,6 @@
 import { assertSlideAudioManifest, lessonText } from './fixtures/courseContracts';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import test from 'node:test';
 import { sha256Text } from './fixtures/textHash.ts';
 import { LESSON_6 } from '../src/data/lessons/lesson6.ts';
