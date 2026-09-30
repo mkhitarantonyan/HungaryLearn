@@ -6,7 +6,7 @@ import { SpeechButton } from './SpeechButton';
 import { LessonActivityRenderer } from './activities/LessonActivityRenderer';
 import { VOCABULARY_LIST } from '../data/lessonData';
 import { playPronunciationAudio } from '../utils/speech';
-import { humanizeLearnerHtml, humanizeLearnerText } from '../utils/learnerCopy';
+import { humanizeLearnerHtml, humanizeLearnerText, makeLearnerBlanksInteractive } from '../utils/learnerCopy';
 import { Info, AlertTriangle, BookOpen, Eye, EyeOff } from 'lucide-react';
 import { useI18n } from '../i18n';
 import { getLocalizedWordTranslation } from '../i18n/content';
@@ -62,7 +62,15 @@ export const SlideContent: React.FC<SlideContentProps> = ({
         <div
           onClick={handleContentClick}
           className="space-y-3 text-[#252B2F] leading-relaxed text-sm md:text-base font-sans"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(humanizeLearnerHtml(slide.body)) }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              makeLearnerBlanksInteractive(humanizeLearnerHtml(slide.body), t('slide.answerField')),
+              {
+                ADD_TAGS: ['input'],
+                ADD_ATTR: ['aria-label', 'autocomplete', 'autocapitalize', 'spellcheck', 'data-lesson-blank'],
+              },
+            ),
+          }}
         />
       )}
 
@@ -94,7 +102,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
                     <span className="text-xs font-mono text-[#666E7E] w-4">{idx + 1}.</span>
                     <SpeechButton text={item.hu} />
                     <span className="text-xs text-[#666E7E] font-mono">
-                      {item.phonetic}
+                      {language === 'ru' && item.phonetic}
                       {item.ipa && <span className="ml-1 text-gray-400">/ {item.ipa}</span>}
                     </span>
                   </div>
@@ -121,7 +129,7 @@ export const SlideContent: React.FC<SlideContentProps> = ({
           <p className="font-mono text-sm font-bold text-[#252B2F]">{t('slide.speakingTitle')}</p>
           <p className="text-xs text-[#435064]">{t('slide.speakingInstructions')}</p>
           <p className="font-mono text-sm text-[#252B2F]">{slide.targetText || "Budapesten élek, és nagyon szeretek magyarul tanulni."}</p>
-          {slide.targetPhonetic && <p className="text-xs text-[#666E7E]">{slide.targetPhonetic}</p>}
+          {language === 'ru' && slide.targetPhonetic && <p className="text-xs text-[#666E7E]">{slide.targetPhonetic}</p>}
           {slide.targetTranslation && <p className="text-xs text-[#3B1E90]">{slide.targetTranslation}</p>}
         </div>
       )}

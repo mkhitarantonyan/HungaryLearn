@@ -126,7 +126,7 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
               <Volume2 className="w-4 h-4" />
             </button>
           </div>
-          {card.phonetic && <div className="text-xs text-[#666E7E] font-mono mb-3">{card.phonetic}</div>}
+          {language === 'ru' && card.phonetic && <div className="text-xs text-[#666E7E] font-mono mb-3">{card.phonetic}</div>}
           {audioUnavailable && (
             <div className="text-xs text-red-700 mb-3" role="alert">{t('slide.audioUnavailable')}</div>
           )}

@@ -80,6 +80,44 @@ export function humanizeLearnerHtml(value: string): string {
   return humanizeLearnerText(value);
 }
 
+const LEGACY_BLANK_PATTERN = /_{3,}/gu;
+const HTML_TAG_PATTERN = /(<[^>]+>)/gu;
+
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/**
+ * Older lesson slides used runs of underscores as printable answer lines.
+ * Turn those text-node placeholders into real keyboard-accessible fields while
+ * leaving tag names and attributes untouched. The result is still sanitized by
+ * SlideContent before it reaches the DOM.
+ */
+export function makeLearnerBlanksInteractive(value: string, answerLabel: string): string {
+  const escapedLabel = escapeHtmlAttribute(answerLabel);
+
+  return value
+    .split(HTML_TAG_PATTERN)
+    .map((part, index) => {
+      if (index % 2 === 1) return part;
+
+      return part.replace(LEGACY_BLANK_PATTERN, (placeholder) => {
+        const width = placeholder.length <= 6
+          ? 'short'
+          : placeholder.length <= 16
+            ? 'medium'
+            : 'long';
+
+        return `<input type="text" class="lesson-inline-answer lesson-inline-answer--${width}" aria-label="${escapedLabel}" autocomplete="off" autocapitalize="none" spellcheck="false" data-lesson-blank>`;
+      });
+    })
+    .join('');
+}
+
 export function containsLearnerMetaLanguage(value: string): boolean {
   return /\b(?:PARTIAL|DIRECT|NONE|evidence|score)\b|CEFR-сертификац|A[012]\s+achieved/iu.test(value);
 }

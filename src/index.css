@@ -224,6 +224,49 @@ audio {
     border-bottom: none;
   }
 
+  /* Editable replacements for legacy underscore answer lines in slide HTML. */
+  .lesson-inline-answer {
+    display: inline-block;
+    max-width: 100%;
+    margin: 0.125rem 0.2rem;
+    padding: 0.3rem 0.5rem;
+    vertical-align: middle;
+    color: #252B2F;
+    background: #ffffff;
+    border: 1px solid #AEBBC9;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    line-height: 1.25;
+  }
+
+  .lesson-inline-answer--short {
+    width: 7rem;
+  }
+
+  .lesson-inline-answer--medium {
+    width: 11rem;
+  }
+
+  .lesson-inline-answer--long {
+    width: 16rem;
+  }
+
+  .lesson-inline-answer:hover {
+    border-color: #7F91A5;
+  }
+
+  .lesson-inline-answer:focus {
+    border-color: #116EEE;
+    box-shadow: 0 0 0 3px rgba(17, 110, 238, 0.18);
+    outline: none;
+  }
+
+  table.conj td > .lesson-inline-answer {
+    width: 100%;
+    min-width: 6rem;
+    margin: 0;
+  }
+
   /* Tick Lists */
   ul.tick {
     list-style: none;
