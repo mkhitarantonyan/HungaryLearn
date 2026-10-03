@@ -106,7 +106,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
       >
         <div className="flex items-center justify-between pb-4 border-b border-[#D6DEE6]">
           <div>
-            <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
+            <div className="text-xs font-mono font-bold text-[#A86400] uppercase tracking-wider flex items-center gap-1.5">
               <Languages className="w-3.5 h-3.5" />
               <span id="translation-trainer-title">
                 {t('translation.title', { lesson: lesson?.number || 1, count: translations.length })}
@@ -143,7 +143,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
             <div className="text-xs text-[#666E7E] font-mono absolute top-4 left-4">
               {currentIndex + 1} / {translations.length}
             </div>
-            <div className="text-xs text-[#C77B00] font-mono absolute top-4 right-4">
+            <div className="text-xs text-[#A86400] font-mono absolute top-4 right-4">
               {isHuToRu ? `HU → ${language.toUpperCase()}` : `${language.toUpperCase()} → HU`}
             </div>
 
@@ -167,7 +167,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
                   onKeyDown={(e) => e.key === 'Enter' && handleCheck()}
                   placeholder={t('translation.input')}
                   autoFocus
-                  className="w-full px-4 py-3 rounded-xl border border-[#D6DEE6] bg-[#EDF4FB]/50 text-center font-sans text-base text-[#252B2F] placeholder:text-[#666E7E]/60 focus:outline-none focus:ring-2 focus:ring-[#116EEE]/20 focus:border-[#116EEE] transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D6DEE6] bg-[#EDF4FB]/50 text-center font-sans text-base text-[#252B2F] placeholder:text-[#666E7E]/60 focus:outline-none focus:ring-2 focus:ring-[#116EEE] focus:border-[#116EEE] transition-all"
                 />
                 <div className="flex gap-2 mt-3">
                   <button
@@ -223,7 +223,7 @@ export const TranslationTrainerModal: React.FC<TranslationTrainerModalProps> = (
                 )}
 
                 {currentCard.grammaticalTag && (
-                  <div className="text-[11px] text-[#C77B00] font-mono mt-1">
+                  <div className="text-[11px] text-[#A86400] font-mono mt-1">
                     {t('translation.grammar', { tag: currentCard.grammaticalTag })}
                     {currentCard.relatedLessonId && ` · ${t('common.lesson')} ${currentCard.relatedLessonId}`}
                   </div>

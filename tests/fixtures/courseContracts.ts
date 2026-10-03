@@ -41,8 +41,7 @@ export function assertSlideAudioManifest(): void {
   assert.deepEqual(SLIDE_AUDIO_VERSIONS, versions);
 }
 
-/** Permanent contracts supersede one-time migration assertions about other lessons' source bytes.
- * Historical hashes and reviewed diffs remain in docs/test-suite-repair.
+/** Permanent contracts supersede the removed one-time migration assertions and repair archive.
  * Published Listening MP3 hashes are still checked separately without any changes.
  */
 export async function assertLessonContracts(from: number, to: number): Promise<void> {

@@ -78,7 +78,7 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
       >
         <div className="flex items-center justify-between pb-4 border-b border-[#D6DEE6]">
           <div>
-            <div className="text-xs font-mono font-bold text-[#C77B00] uppercase tracking-wider flex items-center gap-1.5">
+            <div className="text-xs font-mono font-bold text-[#A86400] uppercase tracking-wider flex items-center gap-1.5">
               <BookOpen className="w-3.5 h-3.5" />
               <span id="word-trainer-title">{t('trainer.wordsTitle', { lesson: lesson?.number || 1, count: vocabulary.length })}</span>
             </div>
@@ -110,7 +110,7 @@ export const WordTrainerModal: React.FC<WordTrainerModalProps> = ({ isOpen, onCl
               {currentIndex + 1} / {vocabulary.length}
             </div>
 
-            <div className="text-xs text-[#C77B00] font-mono absolute top-4 right-4 flex items-center gap-1">
+            <div className="text-xs text-[#A86400] font-mono absolute top-4 right-4 flex items-center gap-1">
               <RotateCcw className="w-3 h-3" />
               <span>{t('trainer.flip')}</span>
             </div>

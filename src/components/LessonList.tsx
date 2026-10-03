@@ -150,7 +150,7 @@ function LessonCard({
     : status === 'completed'
       ? 'text-[#3B1E90]'
       : status === 'in_progress' || hasResume
-        ? 'text-[#C77B00]'
+        ? 'text-[#A86400]'
         : 'text-[#666E7E]';
 
   const surface = !accessible
@@ -369,7 +369,7 @@ export const LessonList: React.FC<LessonListProps> = ({
                 </span>
                 <div className="leading-none">
                   <div className="font-black text-[#252B2F] tracking-tight text-lg">
-                    Magyar<span className="text-[#116EEE]">o</span>
+                    Magyar<span className="text-[#0D5ED0]">o</span>
                   </div>
                   <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#666E7E] mt-1">
                     {copy.tagline}
@@ -412,7 +412,7 @@ export const LessonList: React.FC<LessonListProps> = ({
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+      <main id="main-content" tabIndex={-1} className="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
         <section aria-label={copy.courseProgress} className="rounded-2xl border border-[#D6DEE6] bg-white p-5 mb-4 shadow-sm">
           <div className="flex items-center justify-between gap-3 text-sm">
             <span className="font-semibold text-[#252B2F]">{copy.courseProgress}</span>

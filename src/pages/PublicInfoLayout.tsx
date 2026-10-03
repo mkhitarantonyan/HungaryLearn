@@ -51,7 +51,7 @@ export default function PublicInfoLayout({
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <main id="main-content" tabIndex={-1} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         <div className="mb-8 md:mb-10">
           <div className="text-xs font-bold uppercase tracking-[0.18em] text-[#116EEE] mb-3">
             {eyebrow}

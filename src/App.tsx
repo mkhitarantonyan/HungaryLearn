@@ -627,7 +627,7 @@ useEffect(() => {
           ? t('app.lessonUnavailable')
           : t('app.cannotOpenLesson');
     return (
-      <div className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#EDF4FB] text-[#252B2F] flex items-center justify-center p-4 font-sans">
         <div className="max-w-md rounded-2xl border border-[#D6DEE6] bg-white p-7 text-center shadow-sm">
           <AlertCircle className="w-9 h-9 text-[#116EEE] mx-auto" />
           <h1 className="mt-3 text-xl font-bold text-[#252B2F]">{title}</h1>
@@ -664,7 +664,7 @@ useEffect(() => {
           </div>
         </div>
         <UserAuthModal isOpen={isUserModalOpen} onClose={() => setIsUserModalOpen(false)} />
-      </div>
+      </main>
     );
   }
 
@@ -715,7 +715,7 @@ useEffect(() => {
         />
       )}
 
-      <main className="flex-1 p-4 md:p-8">
+      <main id="main-content" tabIndex={-1} className="flex-1 p-4 md:p-8">
         <div className="w-full max-w-6xl mx-auto">
           {isQuizActive ? (
             <motion.div
@@ -758,9 +758,9 @@ useEffect(() => {
                   <div className="text-xs font-semibold uppercase tracking-wide text-[#666E7E] mb-2">
                     {currentSlide.eyebrow}
                   </div>
-                  <h1 className="text-2xl md:text-4xl font-extrabold text-[#252B2F] tracking-tight leading-[1.15]">
+                  <h2 className="text-2xl md:text-4xl font-extrabold text-[#252B2F] tracking-tight leading-[1.15]">
                     {humanizeLearnerText(currentSlide.title)}
-                  </h1>
+                  </h2>
                   {currentSlide.subtitle && (
                     <p className="text-sm md:text-base text-[#666E7E] mt-2 mb-6">{humanizeLearnerText(currentSlide.subtitle)}</p>
                   )}

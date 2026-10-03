@@ -153,7 +153,7 @@ export const NarrationPlayer: React.FC<NarrationPlayerProps> = ({
 
       {needsUserGesture && (
         <div className="max-w-6xl mx-auto px-4 md:px-8 pb-2">
-          <p className="text-[11px] text-[#C77B00] font-medium" role="status">
+          <p className="text-[11px] text-[#A86400] font-medium" role="status">
             {t('narration.gesture')}
           </p>
         </div>

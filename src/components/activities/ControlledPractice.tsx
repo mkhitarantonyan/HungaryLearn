@@ -122,7 +122,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
                         key={oi}
                         onClick={() => handleChoice(ex, oi)}
                         disabled={isAnswered}
-                        className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 ${style}`}
+                        className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2 ${style}`}
                       >
                         <span className="min-w-0 break-words">{option}</span>
                         {isAnswered && isCorrect && <CheckCircle2 aria-hidden="true" className="w-4 h-4 text-emerald-600" />}
@@ -161,12 +161,12 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
                       }}
                       disabled={state?.done}
                       aria-label={ex.prompt}
-                      className="w-full min-w-0 flex-1 rounded-lg border border-[#D6DEE6] bg-white px-3 py-2 text-sm text-[#252B2F] focus:outline-none focus:ring-2 focus:ring-[#116EEE]/40"
+                      className="w-full min-w-0 flex-1 rounded-lg border border-[#D6DEE6] bg-white px-3 py-2 text-sm text-[#252B2F] focus:outline-none focus:ring-2 focus:ring-[#116EEE]"
                     />
                     <button
                       onClick={() => handleCheck(ex)}
                       disabled={state?.done}
-                      className="w-full min-h-11 sm:w-auto shrink-0 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:opacity-40 cursor-pointer"
+                      className="w-full min-h-11 sm:w-auto shrink-0 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D5ED0] focus-visible:ring-offset-2 disabled:opacity-40 cursor-pointer"
                     >
                       {copy.check}
                     </button>
@@ -191,7 +191,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
       {allDone && score < total && (
         <button
           onClick={handleRetryIncorrect}
-          className="flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 cursor-pointer"
+          className="flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>{copy.retryErrors}</span>
@@ -201,7 +201,7 @@ export const ControlledPractice: React.FC<ControlledPracticeProps> = ({ data, ev
       {allDone && (
         <p className="text-xs font-semibold" aria-live="polite">
           {score}/{total} ·{' '}
-          <span className={evidence?.passed ? 'text-emerald-700' : 'text-[#C77B00]'}>
+          <span className={evidence?.passed ? 'text-emerald-700' : 'text-[#A86400]'}>
             {evidence?.passed ? copy.ready : copy.review}
           </span>
         </p>

@@ -7,6 +7,7 @@ import { LESSONS_META } from '../data/lessons';
 import type { ReviewCardState, ReviewGrade, DueReviewCard } from '../types';
 import { useI18n } from '../i18n';
 import { localizeLessonText } from '../i18n/lessonContent';
+import { useDialogFocus } from '../hooks/useDialogFocus';
 
 interface ReviewWarmupProps {
   userCardStates: Record<string, ReviewCardState>;
@@ -17,7 +18,7 @@ interface ReviewWarmupProps {
 
 const GRADE_BUTTONS: { grade: ReviewGrade; key: 'review.again' | 'review.hard' | 'review.good' | 'review.easy'; color: string }[] = [
   { grade: 'again', key: 'review.again', color: '#C23B4A' },
-  { grade: 'hard', key: 'review.hard', color: '#C77B00' },
+  { grade: 'hard', key: 'review.hard', color: '#A86400' },
   { grade: 'good', key: 'review.good', color: '#3B1E90' },
   { grade: 'easy', key: 'review.easy', color: '#3F7D5C' },
 ];
@@ -38,6 +39,13 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   const [isFlipped, setIsFlipped] = useState(false);
   const [gradedCount, setGradedCount] = useState(0);
   const [audioUnavailable, setAudioUnavailable] = useState(false);
+  const overlayRef = React.useRef<HTMLDivElement>(null);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const revealButtonRef = React.useRef<HTMLButtonElement>(null);
+  const firstGradeButtonRef = React.useRef<HTMLButtonElement>(null);
+  const previousIndexRef = React.useRef(index);
+
+  useDialogFocus(session.length > 0, onDone, dialogRef, overlayRef);
 
   React.useEffect(() => {
     if (session.length === 0) {
@@ -45,6 +53,15 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session.length]);
+
+  React.useEffect(() => {
+    if (isFlipped) {
+      window.requestAnimationFrame(() => firstGradeButtonRef.current?.focus());
+    } else if (previousIndexRef.current !== index) {
+      window.requestAnimationFrame(() => revealButtonRef.current?.focus());
+    }
+    previousIndexRef.current = index;
+  }, [index, isFlipped]);
 
   if (session.length === 0) {
     return null;
@@ -79,26 +96,39 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252B2F]/70 backdrop-blur-xs">
+    <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#252B2F]/70 backdrop-blur-xs">
       <motion.div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="review-warmup-title"
+        tabIndex={-1}
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl w-full max-w-md p-6 shadow-2xl"
       >
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2 text-xs font-mono text-[#666E7E]">
-            <Flame className="w-4 h-4 text-[#C77B00]" />
-            <span>{t('review.warmup', { current: index + 1, total: session.length })}</span>
+            <Flame aria-hidden="true" className="w-4 h-4 text-[#A86400]" />
+            <h2 id="review-warmup-title">{t('review.warmup', { current: index + 1, total: session.length })}</h2>
           </div>
           <button
+            type="button"
             onClick={onDone}
-            className="text-xs text-[#666E7E] hover:text-[#116EEE] underline cursor-pointer"
+            className="min-h-11 px-2 text-xs text-[#666E7E] hover:text-[#116EEE] underline cursor-pointer"
           >
             {t('review.skip')}
           </button>
         </div>
 
-        <div className="h-1.5 bg-[#D6DEE6]/50 rounded-full mb-6 overflow-hidden">
+        <div
+          role="progressbar"
+          aria-label={t('review.progress')}
+          aria-valuemin={0}
+          aria-valuemax={session.length}
+          aria-valuenow={gradedCount}
+          className="h-1.5 bg-[#D6DEE6]/50 rounded-full mb-6 overflow-hidden"
+        >
           <motion.div
             className="h-full bg-[#116EEE] rounded-full"
             animate={{ width: `${(gradedCount / session.length) * 100}%` }}
@@ -106,24 +136,23 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
           />
         </div>
 
-        <div className="text-[11px] font-mono uppercase tracking-wider text-[#C77B00] mb-2">
+        <div className="text-[11px] font-mono uppercase tracking-wider text-[#A86400] mb-2">
           {localizeLessonText(card.lessonTitle, language)}
         </div>
 
-        <div
-          onClick={() => setIsFlipped((f) => !f)}
-          className="min-h-[140px] flex flex-col items-center justify-center text-center cursor-pointer rounded-xl border border-[#D6DEE6] bg-white p-6 mb-5"
-        >
+        <div className="min-h-[140px] flex flex-col items-center justify-center text-center rounded-xl border border-[#D6DEE6] bg-white p-6 mb-5">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-2xl font-bold font-mono text-[#252B2F]">{card.hu}</span>
             <button
+              type="button"
+              aria-label={t('pronunciation.play', { text: card.hu })}
               onClick={(e) => {
                 e.stopPropagation();
                 playAudio();
               }}
-              className="p-1.5 rounded-full bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors"
+              className="h-11 w-11 rounded-full bg-[#116EEE]/10 hover:bg-[#116EEE] text-[#116EEE] hover:text-white transition-colors inline-flex items-center justify-center"
             >
-              <Volume2 className="w-4 h-4" />
+              <Volume2 aria-hidden="true" className="w-4 h-4" />
             </button>
           </div>
           {language === 'ru' && card.phonetic && <div className="text-xs text-[#666E7E] font-mono mb-3">{card.phonetic}</div>}
@@ -137,6 +166,9 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
                 key="answer"
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
                 className="space-y-1"
               >
                 <div className="text-lg font-semibold text-[#3B1E90]">{localizeLessonText(card.ru, language)}</div>
@@ -165,12 +197,14 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
 
         {isFlipped ? (
           <div className="grid grid-cols-4 gap-2">
-            {GRADE_BUTTONS.map((btn) => (
+            {GRADE_BUTTONS.map((btn, buttonIndex) => (
               <button
+                ref={buttonIndex === 0 ? firstGradeButtonRef : undefined}
+                type="button"
                 key={btn.grade}
                 onClick={() => handleGrade(btn.grade)}
                 style={{ borderColor: btn.color, color: btn.color }}
-                className="text-[11px] font-semibold py-2 rounded-lg border-2 bg-white hover:text-white transition-colors cursor-pointer"
+                className="min-h-11 text-[11px] font-semibold py-2 rounded-lg border-2 bg-white hover:text-white transition-colors cursor-pointer"
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = btn.color)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'white')}
               >
@@ -180,11 +214,13 @@ export const ReviewWarmup: React.FC<ReviewWarmupProps> = ({
           </div>
         ) : (
           <button
+            ref={revealButtonRef}
+            type="button"
             onClick={() => setIsFlipped(true)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
+            className="min-h-11 w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
           >
             <span>{t('review.showTranslation')}</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight aria-hidden="true" className="w-4 h-4" />
           </button>
         )}
       </motion.div>

@@ -11,7 +11,7 @@ interface AdminLoginScreenProps {
 export function AdminLoginScreen({ initialError, onSuccess, onRetrySession }: AdminLoginScreenProps) {
   return (
     <div className="min-h-screen bg-[#EDF4FB] px-4 py-10 text-[#252B2F] font-sans">
-      <main className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-md items-center">
+      <main id="main-content" tabIndex={-1} className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-md items-center">
         <section aria-labelledby="admin-login-title" className="w-full rounded-3xl border border-[#D6DEE6] bg-[#FFFFFF] p-6 shadow-xl shadow-[#252B2F]/10 sm:p-8">
           <div className="mb-7 text-center">
             <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#116EEE] text-white shadow-md shadow-[#116EEE]/25">

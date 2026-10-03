@@ -1,13 +1,19 @@
+import { useRef } from 'react';
 import { ArrowRight, BookOpenCheck, Languages, Sparkles } from 'lucide-react';
 import { SUPPORTED_LANGUAGES, useI18n } from '../i18n';
+import { useDialogFocus } from '../hooks/useDialogFocus';
 
 export function LanguageOnboarding() {
   const { preferenceSelected, setLanguage, t } = useI18n();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
+  useDialogFocus(!preferenceSelected, null, dialogRef, overlayRef);
+
   if (preferenceSelected) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#152033]/70 p-4 backdrop-blur-md">
-      <section role="dialog" aria-modal="true" aria-labelledby="language-onboarding-title" aria-describedby="language-onboarding-description" className="relative my-auto w-full max-w-[620px] overflow-hidden rounded-[30px] border border-white/70 bg-white shadow-[0_30px_100px_rgba(11,25,49,0.34)]">
+    <div ref={overlayRef} className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#152033]/70 p-4 backdrop-blur-md">
+      <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="language-onboarding-title" aria-describedby="language-onboarding-description" tabIndex={-1} className="relative my-auto w-full max-w-[620px] overflow-hidden rounded-[30px] border border-white/70 bg-white shadow-[0_30px_100px_rgba(11,25,49,0.34)]">
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_15%_0%,rgba(17,110,238,0.22),transparent_48%),radial-gradient(circle_at_85%_10%,rgba(92,58,180,0.18),transparent_45%)]" />
         <div aria-hidden="true" className="absolute -right-12 top-9 h-28 w-28 rounded-full border-[18px] border-[#116EEE]/[0.06]" />
 
@@ -34,7 +40,7 @@ export function LanguageOnboarding() {
 
           <div className="mt-7 grid gap-2.5">
             {SUPPORTED_LANGUAGES.map((language) => (
-              <button key={language} type="button" onClick={() => setLanguage(language)} className="group flex min-h-[70px] w-full items-center gap-4 rounded-2xl border border-[#DCE5EF] bg-white px-4 py-3 text-left shadow-[0_3px_12px_rgba(35,55,80,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-[#9FC1ED] hover:bg-[#F7FAFF] hover:shadow-[0_10px_25px_rgba(35,55,80,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/35 sm:px-5">
+              <button key={language} type="button" onClick={() => setLanguage(language)} className="group flex min-h-[70px] w-full items-center gap-4 rounded-2xl border border-[#DCE5EF] bg-white px-4 py-3 text-left shadow-[0_3px_12px_rgba(35,55,80,0.05)] transition duration-200 hover:-translate-y-0.5 hover:border-[#9FC1ED] hover:bg-[#F7FAFF] hover:shadow-[0_10px_25px_rgba(35,55,80,0.10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2 sm:px-5">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#E8F2FF] to-[#F1EDFF] text-xs font-black tracking-[0.08em] text-[#116EEE] transition group-hover:from-[#116EEE] group-hover:to-[#5145CD] group-hover:text-white">
                   {t(`language.short.${language}`)}
                 </span>

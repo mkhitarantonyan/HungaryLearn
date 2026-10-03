@@ -105,7 +105,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         {isStage && (
           <div className="flex items-center gap-3 py-2" role="separator">
             <span className="flex-1 h-px bg-[#D6DEE6]" />
-            <span className="font-mono text-xs font-bold text-[#C77B00] uppercase tracking-wider text-center">
+            <span className="font-mono text-xs font-bold text-[#A86400] uppercase tracking-wider text-center">
               {turn.stageLabel ?? turn.prompt}
             </span>
             <span className="flex-1 h-px bg-[#D6DEE6]" />
@@ -115,7 +115,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         {isWaiter && (
           <div className="flex justify-start">
             <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white border border-[#D6DEE6] p-3 shadow-2xs">
-              <div className="text-[10px] font-mono uppercase tracking-wider text-[#C77B00] font-bold mb-1">
+              <div className="text-[10px] font-mono uppercase tracking-wider text-[#A86400] font-bold mb-1">
                 {data.partnerLabel ?? copy.partner}
               </div>
               <p className="text-sm md:text-base text-[#252B2F]">{turn.prompt}</p>
@@ -156,14 +156,14 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
                 <button
                   key={option}
                   onClick={() => handleChoice(option)}
-                  className="w-full min-w-0 text-left p-3 rounded-xl border border-[#D6DEE6] bg-white text-sm text-[#252B2F] [overflow-wrap:anywhere] hover:border-[#116EEE]/60 hover:bg-[#EDF4FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 transition-all cursor-pointer"
+                  className="w-full min-w-0 text-left p-3 rounded-xl border border-[#D6DEE6] bg-white text-sm text-[#252B2F] [overflow-wrap:anywhere] hover:border-[#116EEE]/60 hover:bg-[#EDF4FB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] transition-all cursor-pointer"
                 >
                   {option}
                 </button>
               ))}
             </div>
             {feedback && (
-              <p className="text-xs text-[#C77B00] font-medium" role="status">
+              <p className="text-xs text-[#A86400] font-medium" role="status">
                 {feedback}
               </p>
             )}
@@ -175,7 +175,7 @@ export const RolePlay: React.FC<RolePlayProps> = ({ data, evidence, onEvidence, 
         <div className="flex justify-end pt-2">
           <button
             onClick={() => advanceTo(turn.next)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#116EEE] text-white text-xs md:text-sm font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#116EEE] text-white text-xs md:text-sm font-semibold hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D5ED0] focus-visible:ring-offset-2 cursor-pointer"
           >
             <span>{isLearner ? copy.answeredNext : copy.next}</span>
             <ArrowRight className="w-4 h-4" />

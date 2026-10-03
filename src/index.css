@@ -69,13 +69,11 @@
 }
 
 html {
-  min-width: 320px;
   background: var(--ui-canvas);
   scroll-behavior: smooth;
 }
 
 body {
-  min-width: 320px;
   min-height: 100vh;
   margin: 0;
   background: var(--ui-canvas);
@@ -99,7 +97,7 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(17, 110, 238, 0.34);
+  outline: 3px solid #0d5ed0;
   outline-offset: 2px;
 }
 
@@ -258,7 +256,11 @@ audio {
   .lesson-inline-answer:focus {
     border-color: #116EEE;
     box-shadow: 0 0 0 3px rgba(17, 110, 238, 0.18);
-    outline: none;
+  }
+
+  .lesson-inline-answer:focus-visible {
+    outline: 3px solid #0D5ED0;
+    outline-offset: 2px;
   }
 
   table.conj td > .lesson-inline-answer {

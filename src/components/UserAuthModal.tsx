@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, User, Lock, Mail, CreditCard, CheckCircle2, LogOut, ArrowRight, Loader2, Clock3, Trash2, Building2, KeyRound } from 'lucide-react';
 import {
   UserProfile,
@@ -23,6 +23,7 @@ import { subscriptionDisplay } from '../utils/subscriptionValidity';
 import { getBillingPlans, type BillingPlanKey } from '../config/pricing';
 import { useI18n } from '../i18n';
 import { AUTH_COPY, formatAuthCopy, localizeAccountMessage } from '../i18n/authCopy';
+import { useDialogFocus } from '../hooks/useDialogFocus';
 
 interface UserAuthModalProps {
   isOpen: boolean;
@@ -54,6 +55,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
   const [selectedPlan, setSelectedPlan] = useState<BillingPlanKey>('quarterly');
   const [organizationCode, setOrganizationCode] = useState('');
   const [isRedeemingCode, setIsRedeemingCode] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const billingPlans = getBillingPlans(language);
   const selectedPricing = billingPlans.find(plan => plan.key === selectedPlan)!;
 
@@ -94,6 +97,8 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     setDeletionPassword('');
     setDeletionConfirmed(false);
   }, [isOpen]);
+
+  useDialogFocus(isOpen, onClose, dialogRef, overlayRef);
 
   if (!isOpen) return null;
 
@@ -274,15 +279,22 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
     && ['active', 'past_due', 'paused'].includes(user.subscriptionStatus);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#182230]/45 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white text-[#252B2F] w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] relative">
+    <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#182230]/45 backdrop-blur-xs animate-in fade-in duration-200">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="user-auth-modal-title"
+        tabIndex={-1}
+        className="bg-white text-[#252B2F] w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl shadow-[0_18px_48px_rgba(29,45,65,0.18)] border border-[#D6DEE6] relative"
+      >
         <div className="bg-[#116EEE] text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
               <User className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-lg leading-tight">
+              <h3 id="user-auth-modal-title" className="font-bold text-lg leading-tight">
                 {modalTitle}
               </h3>
               <p className="text-xs text-[#D9E6FF]">
@@ -293,7 +305,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           <button
             onClick={onClose}
             aria-label={copy.close}
-            className="p-1.5 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white cursor-pointer"
+            className="h-11 w-11 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white cursor-pointer inline-flex items-center justify-center"
           >
             <X className="w-5 h-5" />
           </button>
@@ -308,7 +320,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
           )}
 
           {successMsg && (
-            <div className="mb-4 p-3 bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs rounded-lg flex items-center gap-2">
+            <div role="status" aria-live="polite" className="mb-4 p-3 bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs rounded-lg flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{successMsg}</span>
             </div>
@@ -481,7 +493,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                       placeholder="MG-XXXX-XXXX-XXXX-XXXX"
                       autoCapitalize="characters"
                       spellCheck={false}
-                      className="min-w-0 flex-1 rounded-lg border border-[#D6DEE6] px-3 py-2 font-mono text-xs focus:border-[#116EEE] focus:outline-none"
+                      className="min-w-0 flex-1 rounded-lg border border-[#D6DEE6] px-3 py-2 font-mono text-xs focus:border-[#116EEE] focus:outline-none focus:ring-2 focus:ring-[#116EEE]"
                     />
                     <button type="submit" disabled={isRedeemingCode || !organizationCode.trim()} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
                       {isRedeemingCode && <Loader2 className="h-4 w-4 animate-spin" />}{copy.activate}
@@ -551,7 +563,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                           required
                           value={deletionPassword}
                           onChange={(event) => setDeletionPassword(event.target.value)}
-                          className="w-full rounded-lg border border-red-300 bg-white px-3 py-2 text-xs focus:outline-none focus:border-red-600"
+                          className="w-full rounded-lg border border-red-300 bg-white px-3 py-2 text-xs focus:outline-none focus:border-red-700 focus:ring-2 focus:ring-red-700"
                         />
                       </div>
                       <label className="flex items-start gap-2 text-xs leading-relaxed">
@@ -632,7 +644,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="student@example.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -651,7 +663,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -704,7 +716,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="student@example.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -745,7 +757,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="student@example.com"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -765,7 +777,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>
@@ -785,7 +797,7 @@ export const UserAuthModal: React.FC<UserAuthModalProps> = ({
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE]"
+                        className="w-full pl-9 pr-3 py-2 bg-white border border-[#D6DEE6] rounded-xl text-xs focus:outline-none focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]"
                       />
                     </div>
                   </div>

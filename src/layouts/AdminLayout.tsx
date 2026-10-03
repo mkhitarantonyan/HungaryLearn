@@ -195,7 +195,7 @@ export default function AdminLayout() {
             </div>
           </header>
 
-          <main className="flex-1 p-4 md:p-8">
+          <main id="main-content" tabIndex={-1} className="flex-1 p-4 md:p-8">
             <AdminDataProvider>
               <Outlet />
             </AdminDataProvider>

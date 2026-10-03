@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AppPreloader } from './components/AppPreloader';
+import { SkipLink } from './components/SkipLink';
 
 const App = lazy(() => import('./App'));
 const LandingPage = lazy(() => import('./pages/LandingPage'));
@@ -30,6 +31,7 @@ function ScrollToTop() {
 export default function AppRoutes() {
   return (
     <>
+      <SkipLink />
       <ScrollToTop />
       <Suspense fallback={<AppPreloader />}>
         <Routes>

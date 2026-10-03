@@ -202,14 +202,14 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
                     aria-describedby={isAnswered ? feedbackId : undefined}
                     autoComplete="off"
                     spellCheck={false}
-                    className="w-full min-w-0 flex-1 rounded-lg border border-[#D6DEE6] bg-white px-3 py-2 text-sm text-[#252B2F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:opacity-70"
+                    className="w-full min-w-0 flex-1 rounded-lg border border-[#D6DEE6] bg-white px-3 py-2 text-sm text-[#252B2F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2 disabled:opacity-70"
                   />
                   <button
                     type="button"
                     onClick={() => handleTextCheck(q)}
                     disabled={isAnswered}
                     aria-describedby={promptId}
-                    className="w-full shrink-0 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
+                    className="w-full shrink-0 rounded-lg bg-[#116EEE] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0D5ED0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D5ED0] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
                   >
                     {copy.check}
                   </button>
@@ -236,7 +236,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
                     disabled={isAnswered}
                     aria-label={option}
                     aria-describedby={getQuestionOptionFeedbackId(chosen, idx, feedbackId)}
-                    className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2 ${style}`}
+                    className={`w-full min-w-0 text-left p-3 rounded-xl border text-xs md:text-sm transition-all flex items-center justify-between cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2 ${style}`}
                   >
                     <span className="min-w-0 break-words">{option}</span>
                     {isAnswered && idx === q.correctIndex && (
@@ -267,7 +267,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
             <button
               type="button"
               onClick={handleRetry}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
               <span>{copy.retry}</span>
@@ -277,7 +277,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
             <button
               type="button"
               onClick={handleSubmit}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#116EEE] text-white text-xs font-semibold hover:bg-[#0D5ED0] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D5ED0] focus-visible:ring-offset-2"
             >
               <span>{submitLabel ?? copy.finish}</span>
               <ArrowRight aria-hidden="true" className="w-4 h-4" />
@@ -295,7 +295,7 @@ export const QuestionSet: React.FC<QuestionSetProps> = ({
             <button
               type="button"
               onClick={handleRetry}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/50 focus-visible:ring-offset-2"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[#116EEE] text-[#116EEE] text-xs font-semibold hover:bg-[#116EEE]/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2"
             >
               <RotateCcw aria-hidden="true" className="w-3.5 h-3.5" />
               <span>{copy.retry}</span>

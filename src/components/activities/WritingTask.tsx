@@ -100,7 +100,7 @@ export const WritingTask: React.FC<WritingTaskProps> = ({
         placeholder="Írd ide a válaszod…"
         aria-label={data.prompt}
         disabled={locked}
-        className="w-full rounded-xl border border-[#D6DEE6] bg-white px-3 py-2.5 text-sm text-[#252B2F] leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#116EEE]/40 resize-y disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full rounded-xl border border-[#D6DEE6] bg-white px-3 py-2.5 text-sm text-[#252B2F] leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#116EEE] resize-y disabled:opacity-60 disabled:cursor-not-allowed"
       />
       <div className="text-right text-[11px] font-mono text-[#666E7E]">
         {text.trim().length} / {MIN_WRITING_LENGTH}+ {copy.characters}

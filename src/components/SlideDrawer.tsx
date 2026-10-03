@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'motion/react';
 import { SlideData } from '../types';
 import { X, BookOpen, ChevronRight } from 'lucide-react';
 import { humanizeLearnerText } from '../utils/learnerCopy';
 import { useI18n } from '../i18n';
+import { useDialogFocus } from '../hooks/useDialogFocus';
 
 interface SlideDrawerProps {
   isOpen: boolean;
@@ -23,15 +24,21 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
   onSelectSlide
 }) => {
   const { t } = useI18n();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(isOpen, onClose, dialogRef, overlayRef);
+
   if (!isOpen) return null;
   const resolvedLessonTitle = lessonTitle ?? t('drawer.title');
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-[#252B2F]/50 backdrop-blur-xs">
+    <div ref={overlayRef} className="fixed inset-0 z-50 flex justify-end bg-[#252B2F]/50 backdrop-blur-xs">
       <motion.div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="slide-drawer-title"
+        tabIndex={-1}
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
@@ -46,7 +53,7 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
           <button
             onClick={onClose}
             aria-label={t('common.close')}
-            className="p-2 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer"
+            className="h-11 w-11 rounded-full hover:bg-[#116EEE]/10 text-[#116EEE] transition-colors cursor-pointer inline-flex items-center justify-center"
           >
             <X className="w-5 h-5" />
           </button>
@@ -77,7 +84,7 @@ export const SlideDrawer: React.FC<SlideDrawerProps> = ({
                   {idx + 1}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${isActive ? 'text-[#C77B00]' : 'text-[#666E7E]'}`}>
+                  <div className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${isActive ? 'text-white' : 'text-[#666E7E]'}`}>
                     {slide.eyebrow}
                   </div>
                   <div className="text-sm font-bold mt-0.5 truncate">{humanizeLearnerText(slide.title)}</div>

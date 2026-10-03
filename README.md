@@ -53,4 +53,6 @@ Never commit `.env`, service-account JSON, Lemon API keys or webhook secrets. Fi
 
 ## Content editing
 
-Lesson source remains under `src/data/lessons/`. Run `npm run validate:lessons` and the full validation suite after content changes. Do not add browser TTS fallbacks: all learner-facing audio must resolve to a recorded physical file or a validated admin override.
+Lesson source remains under `src/data/lessons/`. The lesson-by-lesson editing, translation, shared-key protection, regeneration and validation process is documented in [docs/LESSON_LOCALIZATION_WORKFLOW.md](docs/LESSON_LOCALIZATION_WORKFLOW.md). Audio replacement and validation are documented in [docs/AUDIO_MAINTENANCE.md](docs/AUDIO_MAINTENANCE.md).
+
+Do not commit one-off repair scripts, `.bak` copies or generated audit output. Use Git for rollback. Do not add browser TTS fallbacks: all learner-facing audio must resolve to a recorded physical file or a validated admin override.

@@ -8,11 +8,21 @@ coverage/
 desktop.ini
 Thumbs.db
 *.log
+*.bak
+*.backup
+*.old
+*.tmp
+*~
+*.swp
+*.swo
 .env*
 !.env.example
 /data/db.json
-/data/db.json.bak
 /data/audio/
+/artifacts/
+/.tmp/
+/tmp/
+/scratch/
 gcs-service-account.json
 *.pem
 

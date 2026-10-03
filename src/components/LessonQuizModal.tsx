@@ -94,13 +94,13 @@ export const LessonQuizModal: React.FC<LessonQuizModalProps> = ({ onClose, lesso
     const passed = percentage >= 80;
     return (
       <div className="bg-[#FFFFFF] border border-[#D6DEE6] rounded-2xl p-6 max-w-lg mx-auto text-center space-y-6 shadow-xl">
-        <div className="w-16 h-16 bg-[#C77B00]/20 text-[#C77B00] rounded-full flex items-center justify-center mx-auto">
+        <div className="w-16 h-16 bg-[#C77B00]/20 text-[#A86400] rounded-full flex items-center justify-center mx-auto">
           <Award className="w-10 h-10" />
         </div>
         <h3 className="text-2xl font-bold font-mono text-[#252B2F]">
           {passed ? t('quiz.passed') : t('quiz.completed')}
         </h3>
-        <p className="text-xs font-mono text-[#C77B00] uppercase font-bold">{t('quiz.lessonResult', { lesson: lesson?.number || 1, title: lesson?.title || '' })}</p>
+        <p className="text-xs font-mono text-[#A86400] uppercase font-bold">{t('quiz.lessonResult', { lesson: lesson?.number || 1, title: lesson?.title || '' })}</p>
         <p className="text-sm text-[#252B2F]">
           {t('quiz.scoreSummary', { score, total: questions.length, percentage })}
         </p>

@@ -31,7 +31,7 @@ export function LanguageSelector({ compact = false }: { compact?: boolean }) {
         aria-label={t('language.label')}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`${compact ? 'h-9 px-2.5 sm:px-3' : 'h-10 px-3.5'} group inline-flex items-center gap-2 rounded-xl border border-[#D8E1EC] bg-white/95 text-xs font-bold text-[#263247] shadow-[0_3px_12px_rgba(35,55,80,0.08)] transition hover:-translate-y-px hover:border-[#AFC8EA] hover:shadow-[0_6px_18px_rgba(35,55,80,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE]/30`}
+        className={`${compact ? 'h-9 px-2.5 sm:px-3' : 'h-10 px-3.5'} group inline-flex items-center gap-2 rounded-xl border border-[#D8E1EC] bg-white/95 text-xs font-bold text-[#263247] shadow-[0_3px_12px_rgba(35,55,80,0.08)] transition hover:-translate-y-px hover:border-[#AFC8EA] hover:shadow-[0_6px_18px_rgba(35,55,80,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#116EEE] focus-visible:ring-offset-2`}
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-[#E8F2FF] to-[#F0ECFF] text-[#116EEE]">
           <Languages aria-hidden="true" className="h-3.5 w-3.5" />

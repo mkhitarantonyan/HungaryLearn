@@ -65,7 +65,7 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
             autoFocus
             required
             disabled={loading || retrying}
-            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-3 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]/20 disabled:opacity-60"
+            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-3 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE] disabled:opacity-60"
           />
         </div>
       </div>
@@ -84,7 +84,7 @@ export function AdminLoginForm({ onSuccess, initialError, onRetrySession }: Admi
             autoComplete="current-password"
             required
             disabled={loading || retrying}
-            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-11 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE]/20 disabled:opacity-60"
+            className="w-full rounded-xl border border-[#D6DEE6] bg-white py-3 pl-10 pr-11 text-sm text-[#252B2F] outline-none transition focus:border-[#116EEE] focus:ring-2 focus:ring-[#116EEE] disabled:opacity-60"
           />
           <button
             type="button"

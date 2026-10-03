@@ -76,7 +76,7 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-2xl mx-auto text-center mb-10 md:mb-14">
-      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#116EEE]/10 border border-[#116EEE]/15 text-[#116EEE] text-xs font-bold uppercase tracking-widest mb-5">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#116EEE]/10 border border-[#116EEE]/15 text-[#0D5ED0] text-xs font-bold uppercase tracking-widest mb-5">
         <Sparkles className="w-3.5 h-3.5" />
         {eyebrow}
       </div>
@@ -132,7 +132,7 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
             </span>
             <span className="flex flex-col leading-none">
               <span className="font-extrabold text-[#252B2F] tracking-tight text-lg">
-                Magyar<span className="text-[#116EEE]">o</span>
+                Magyar<span className="text-[#0D5ED0]">o</span>
               </span>
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#666E7E] mt-0.5">
                 {copy.tagline}
@@ -180,16 +180,20 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
           </div>
 
           <button
+            type="button"
+            data-dialog-return-focus
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? copy.closeMenu : copy.openMenu}
-            className="md:hidden p-2 rounded-lg text-[#252B2F] hover:bg-[#116EEE]/10 transition-colors cursor-pointer"
+            aria-expanded={menuOpen}
+            aria-controls="landing-mobile-menu"
+            className="md:hidden h-11 w-11 rounded-lg text-[#252B2F] hover:bg-[#116EEE]/10 transition-colors cursor-pointer inline-flex items-center justify-center"
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {menuOpen && (
-          <div className="md:hidden pb-5 pt-1 space-y-1">
+          <div id="landing-mobile-menu" className="md:hidden pb-5 pt-1 space-y-1">
             <div className="px-3 py-2"><LanguageSelector /></div>
             {navLinks.map((link) => (
               <a
@@ -216,7 +220,6 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                 <>
                   <button
                     onClick={() => {
-                      setMenuOpen(false);
                       onLogin();
                     }}
                     className="w-full px-5 py-3 rounded-xl border border-[#D6DEE6] bg-white text-[#252B2F] text-sm font-semibold transition-colors cursor-pointer"
@@ -225,7 +228,6 @@ function LandingHeader({ user, onLogin, onSignup, onStart }: HeaderProps) {
                   </button>
                   <button
                     onClick={() => {
-                      setMenuOpen(false);
                       onSignup();
                     }}
                     className="w-full px-5 py-3 rounded-xl bg-[#116EEE] text-white text-sm font-semibold hover:bg-[#0D5ED0] transition-colors cursor-pointer"
@@ -447,7 +449,7 @@ const FEATURES = [
   },
   {
     icon: Brain,
-    accent: 'text-[#C77B00] bg-[#C77B00]/10 border-[#C77B00]/15',
+    accent: 'text-[#A86400] bg-[#C77B00]/10 border-[#C77B00]/15',
   },
   {
     icon: Cloud,
@@ -535,7 +537,7 @@ function HowItWorks() {
                   <div className="w-12 h-12 rounded-2xl bg-[#116EEE]/10 text-[#116EEE] flex items-center justify-center">
                     <step.icon className="w-6 h-6" />
                   </div>
-                  <span className="font-mono text-sm font-bold text-[#C77B00]">
+                  <span className="font-mono text-sm font-bold text-[#A86400]">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                 </div>
@@ -569,7 +571,7 @@ const NEXT_LEVELS = [
 
 const NEXT_LEVEL_CHIP: Record<string, string> = {
   A1: 'bg-[#3B1E90]/10 text-[#3B1E90]',
-  A2: 'bg-[#C77B00]/10 text-[#C77B00]',
+  A2: 'bg-[#C77B00]/10 text-[#A86400]',
   B1: 'bg-[#116EEE]/10 text-[#116EEE]',
 };
 
@@ -718,7 +720,7 @@ function Footer() {
                 <GraduationCap className="w-5 h-5" />
               </span>
               <span className="font-extrabold text-[#252B2F] tracking-tight text-lg">
-                Magyar<span className="text-[#116EEE]">o</span>
+                Magyar<span className="text-[#0D5ED0]">o</span>
               </span>
             </div>
             <p className="mt-4 text-sm text-[#666E7E] leading-relaxed max-w-sm">
@@ -852,7 +854,7 @@ export default function LandingPage() {
         onStart={handleStart}
       />
 
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero onStart={handleStart} user={user} />
         <Features />
         <HowItWorks />
