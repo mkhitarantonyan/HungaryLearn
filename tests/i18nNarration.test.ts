@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createHash } from 'node:crypto';
+import { readdirSync, readFileSync } from 'node:fs';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
@@ -23,6 +25,8 @@ import { getSlideNarrativeSequence } from '../src/utils/slideNarrator.ts';
 import { getLocalizedWordTranslation } from '../src/i18n/content.ts';
 import type { SlideData } from '../src/types.ts';
 import { getAudioFileUrl } from '../src/utils/audioRegistry.ts';
+import { SPANISH_NARRATION_VERSIONS } from '../src/data/spanishNarrationManifest.ts';
+import { LESSONS_META, loadLesson } from '../src/data/lessons/index.ts';
 
 test('language preference resolution is stored-choice first with Russian fallback', () => {
   assert.equal(LANGUAGE_STORAGE_KEY, 'hungarylearn:language:v1');
@@ -72,18 +76,47 @@ test('narration capability is locale-driven and RU assets stay separate from pro
   assert.deepEqual(NARRATION_CONFIG, {
     ru: { available: true, assetNamespace: null },
     en: { available: false, assetNamespace: 'narration/en' },
-    es: { available: false, assetNamespace: 'narration/es' },
+    es: { available: true, assetNamespace: 'narration/es' },
   });
   assert.equal(isNarrationAvailable('ru'), true);
   assert.equal(isNarrationAvailable('en'), false);
-  assert.equal(isNarrationAvailable('es'), false);
+  assert.equal(isNarrationAvailable('es'), true);
 
   const slide = { id: 1, eyebrow: '', title: '', subtitle: '' } satisfies SlideData;
   assert.ok(getNarrationSource(1, 'ru', 1));
   assert.equal(getNarrationSource(1, 'en', 1), null);
-  assert.equal(getNarrationSource(1, 'es', 1), null);
+  assert.match(getNarrationSource(1, 'es', 1)?.url ?? '', /^\/audio\/narration\/es\/1\.1\.mp3\?v=[a-f0-9]{12}$/u);
+  assert.equal(getNarrationSource(1, 'es', 12), null);
   assert.deepEqual(getSlideNarrativeSequence(slide, 1, 'en'), []);
-  assert.deepEqual(getSlideNarrativeSequence(slide, 1, 'es'), []);
+  assert.deepEqual(getSlideNarrativeSequence(slide, 1, 'es'), [{ key: 'narration/es/l1_s1' }]);
+});
+
+test('every Spanish slide has its own nonempty, versioned MP3 without falling back to Russian', async () => {
+  const dir = new URL('../public/audio/narration/es/', import.meta.url);
+  const names = readdirSync(dir).filter(name => name.endsWith('.mp3'));
+  const expected = new Set<string>();
+
+  for (const meta of LESSONS_META) {
+    const lesson = await loadLesson(meta.number);
+    assert.ok(lesson, `Lesson ${meta.number} is loadable`);
+    for (const slide of lesson.slides) {
+      const key = `${meta.number}.${slide.id}`;
+      const name = `${key}.mp3`;
+      expected.add(name);
+      assert.ok(names.includes(name), `Missing Spanish narration: ${name}`);
+      const contents = readFileSync(new URL(name, dir));
+      assert.ok(contents.length > 0, `Empty Spanish narration: ${name}`);
+      const version = createHash('sha256').update(contents).digest('hex').slice(0, 12);
+      assert.equal(SPANISH_NARRATION_VERSIONS[key], version, `Stale Spanish narration manifest: ${name}`);
+      const source = getNarrationSource(meta.number, 'es', slide.id);
+      assert.equal(source?.audioKey, `narration/es/l${meta.number}_s${slide.id}`);
+      assert.equal(source?.url, `/audio/narration/es/${name}?v=${version}`);
+      assert.notEqual(source?.url, getNarrationSource(meta.number, 'ru', slide.id)?.url);
+    }
+  }
+
+  assert.deepEqual(new Set(names), expected, 'Spanish narration has unexpected or duplicate slide files');
+  assert.equal(Object.keys(SPANISH_NARRATION_VERSIONS).length, expected.size);
 });
 
 test('localized vocabulary metadata falls back to the existing Russian meaning', () => {

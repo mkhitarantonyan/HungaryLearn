@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "generate:manifest": "tsx scripts/generate-audio-manifest.ts",
+    "generate:manifest": "tsx scripts/generate-audio-manifest.ts && tsx scripts/generate-spanish-narration-manifest.ts",
     "generate:progress": "tsx scripts/generate-lesson-progress-catalog.ts",
     "validate:progress": "tsx scripts/generate-lesson-progress-catalog.ts --check",
     "verify:audio": "node scripts/verifyAudioLinks.mjs",

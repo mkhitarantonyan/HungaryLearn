@@ -9,6 +9,7 @@ import { uploadAudioToServer, deleteAudioFromServer, loadServerAudioRegistry } f
 import { wordAudioMap } from '../data/wordAudioMap';
 import { audioUrl } from './audioConfig';
 import { PRESENT_SLIDE_AUDIO, SLIDE_AUDIO_VERSIONS } from '../data/slideAudioManifest';
+import { SPANISH_NARRATION_VERSIONS } from '../data/spanishNarrationManifest';
 
 export interface AudioMap {
   [key: string]: string; // Maps word/phrase or ID to audio URL
@@ -71,6 +72,13 @@ function buildStaticAudioRegistry(): AudioMap {
     registry[`${lesson}.${slide}`] = url;
     registry[`${lesson}_${slide}`] = url;
     registry[`${lesson}.${slide}.mp3`] = url;
+  }
+  for (const [slideKey, version] of Object.entries(SPANISH_NARRATION_VERSIONS)) {
+    const match = /^(\d+)\.(\d+)$/.exec(slideKey);
+    if (!match) continue;
+    const [, lesson, slide] = match;
+    const baseUrl = audioUrl(`narration/es/${slideKey}.mp3`);
+    registry[`narration/es/l${lesson}_s${slide}`] = `${baseUrl}?v=${version}`;
   }
   return registry;
 }

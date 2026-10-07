@@ -12,7 +12,7 @@ interface NarrationLocaleConfig {
 export const NARRATION_CONFIG: Readonly<Record<NarrationLanguage, NarrationLocaleConfig>> = {
   ru: { available: true, assetNamespace: null },
   en: { available: false, assetNamespace: 'narration/en' },
-  es: { available: false, assetNamespace: 'narration/es' },
+  es: { available: true, assetNamespace: 'narration/es' },
 };
 
 export interface NarrationSource {
